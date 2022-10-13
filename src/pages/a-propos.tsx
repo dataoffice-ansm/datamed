@@ -1,3 +1,16 @@
+import { useEffect, useState } from 'react';
+
 export const Index = () => {
-  return <p> TODO </p>;
+  const [enabled, enable] = useState(false);
+
+  useEffect(() => {
+    enable(true);
+  }, []);
+
+  return (
+    <>
+      <p> TODO </p>
+      {enabled && <p>TEMP</p>}
+    </>
+  );
 };
