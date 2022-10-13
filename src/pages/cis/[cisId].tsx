@@ -31,6 +31,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     return { paths: cisIds, fallback: false };
   } catch (err) {
     console.log(err);
+    return { paths: [], fallback: true };
   }
 };
 
