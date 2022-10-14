@@ -1,16 +1,9 @@
-import { useEffect, useState } from 'react';
-
 const HomePage = () => {
-  const [enabled, enable] = useState(false);
-  useEffect(() => {
-    enable(true);
-  }, []);
-
   return (
-    <>
+    <div className="container">
+      <h1>welcome</h1>
       <p className="bg-red-500 border border-solid">TODO</p>
-      {enabled && <p>TEMP</p>}
-    </>
+    </div>
   );
 };
 
