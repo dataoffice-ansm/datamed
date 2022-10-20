@@ -40,6 +40,7 @@ next-env.d.ts
 #3rd
 .swc
 
-# ide file
+# ide config
 .idea
+.vscode
 
