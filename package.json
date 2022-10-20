@@ -8,12 +8,14 @@
     "start": "next start",
     "lint": "next lint",
     "test": "jest --watch",
+    "test:coverage": "jest --coverage",
     "test:ci": "jest --ci",
     "postinstall": "husky install"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.3",
     "apollo-server-micro": "^3.10.2",
+    "classnames": "^2.3.2",
     "graphql": "^16.6.0",
     "graphql-iso-date": "^3.6.1",
     "kysely": "^0.22.0",

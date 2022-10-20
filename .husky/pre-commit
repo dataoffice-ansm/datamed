@@ -6,12 +6,22 @@ echo 'please be patient, this may take a while...'
 
 # Check ESLint Standards
 yarn lint ||
-(
+  (
     echo '🔨❌ Yoo, you have a problem in your code. Check linter 🔨❌
-          Run yarn lint, add changes and try commit again.';
-    false;
-)
+          Run yarn lint, add changes and try commit again.'
+    false
+  )
 
-echo '🎉 No error found: committing this now.... ✨🚀🏄‍♂️🍻'
+echo '🎉 [Linter] No error found: committing this now.... ✨🚀🏄‍♂️🍻'
+
+# Run Unit tests
+yarn test:coverage ||
+  (
+    echo '🔨❌ Yoo, you have a problem in your code. Check your unit tests 🔨❌
+          Run yarn test, add changes and try commit again.'
+    false
+  )
+
+echo '🎉 [Tests] No error found: committing this now.... ✨🚀🏄‍♂️🍻'
 
 npx lint-staged
