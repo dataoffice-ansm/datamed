@@ -1,9 +1,15 @@
-const HomePage = () => {
+import Layout from '../components/Layout';
+import type { NextPageWithLayout } from './_app';
+
+const HomePage: NextPageWithLayout = () => {
+  return <p>hello world</p>;
+};
+
+HomePage.getLayout = function getLayout(page) {
   return (
-    <div className="container">
-      <h1>welcome</h1>
-      <p className="bg-red-500 border border-solid">TODO</p>
-    </div>
+    <Layout>
+      <main>{page}</main>
+    </Layout>
   );
 };
 
