@@ -1,11 +1,11 @@
-import Footer from './Footer';
+import { Footer } from './Footer';
 import React from 'react';
 
 type LayoutProps = {
   children: React.ReactNode;
 };
 
-export default function Layout({ children }: LayoutProps) {
+export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <nav></nav>
@@ -13,4 +13,4 @@ export default function Layout({ children }: LayoutProps) {
       <Footer />
     </>
   );
-}
+};

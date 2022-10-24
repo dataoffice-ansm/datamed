@@ -1,6 +1,14 @@
-import { FamilyLink } from './models';
+export interface NavLink {
+  name: string;
+  url: string;
+}
 
-export const familyLinks: FamilyLink[] = [
+export interface NavLinkGroup {
+  title: string;
+  links: NavLink[];
+}
+
+export const footerLinks: NavLinkGroup[] = [
   {
     title: 'Partenaires',
     links: [
