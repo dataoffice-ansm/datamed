@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "tsc": "tsc --noEmit",
     "lint": "next lint",
     "test": "jest --watch",
     "test:coverage": "jest --coverage",

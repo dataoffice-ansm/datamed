@@ -1,5 +1,3 @@
-import * as themeColors from '../../theme/colors';
-
 const UiPage = () => {
   return (
     <div className="container">

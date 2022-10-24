@@ -35,8 +35,15 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/deploym
 
 When you work on a branch, you need to respect a commit message the conventional commit format:
 
-- JIRA-NUMBER (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test): some feature
+- [JIRA_PROJECT]-[JIRA_TICKET_NUMBER] (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test): some feature
 
 we used [commitlint](https://github.com/conventional-changelog/commitlint#what-is-commitlint) to check commit's message.
 
-- JIRA = DATS
+Exemples:
+
+- DATS-211 feat: commitling improve config
+- DATS-34 fix: commitling fix bug + card fix padding
+
+For quick fix (hotFix) without JIRA relating issue, naming convention prefix is DATS-0000
+
+- DATS-000 fix: commitling fix bug
