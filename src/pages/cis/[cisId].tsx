@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 
-export const Index = () => {
+const PageCis = () => {
   return <p> TODO </p>;
 };
 
@@ -43,10 +43,12 @@ export const getStaticProps: GetStaticProps = async (context) => {
   // Call an external API endpoint to get posts.
   // You can use any data fetching library
   const res = await fetch(`/api/cis/${id}`);
-  const posts = await res.json();
+  const data = await res.json();
 
   return {
     // Passed to the page component as props
-    props: { post: {} },
+    props: { data },
   };
 };
+
+export default PageCis;
