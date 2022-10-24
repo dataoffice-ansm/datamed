@@ -17,6 +17,7 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
+  "ignorePatterns": ["jest.config.js"],
   "plugins": [
     "@typescript-eslint"
   ]

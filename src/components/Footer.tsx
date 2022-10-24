@@ -21,7 +21,7 @@ export const Footer = () => {
             </div>
           ))}
           <div className="mb-4  flex">
-            <Image alt="logo ansm" height={200} width={200} src="logo-ansm-white.svg" />
+            <Image alt="logo ansm" height={200} width={200} src="/logo-ansm-white.svg" />
           </div>
         </div>
       </div>

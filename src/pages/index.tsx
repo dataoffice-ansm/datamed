@@ -1,4 +1,5 @@
 import { FullWidthRow } from '../components/FullWidthRow';
+import { Tooltip } from '../components/Tooltip';
 
 const HomePage = () => {
   return (
@@ -7,6 +8,16 @@ const HomePage = () => {
         <div className="p-8">
           <div className="text-4xl">First section</div>
           <div>
+            <Tooltip
+              content="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos porro minus
+            doloribus quod labore nesciunt, culpa cumque doloremque debitis accusamus alias vel
+            amet, maxime sequi cupiditate laudantium molestiae! Nostrum, veritatis."
+              title="Philou"
+              theme={'turquoise'}
+            >
+              <span>a topic</span>
+            </Tooltip>
+            <br />
             Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos porro minus
             doloribus quod labore nesciunt, culpa cumque doloremque debitis accusamus alias vel
             amet, maxime sequi cupiditate laudantium molestiae! Nostrum, veritatis.

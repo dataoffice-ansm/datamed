@@ -4,6 +4,7 @@ const colors = require('./tailwind.palette.colors');
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ['./src/**/*.{,ts,tsx}'],
+  important: true,
   theme: {
     fontFamily: {
       roboto: ['Roboto Slab', 'sans-serif'],
