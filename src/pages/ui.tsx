@@ -138,7 +138,7 @@ const UiPage = () => {
             <strong>BLUE</strong>
             <div>900 - DEFAULT</div>
           </div>
-          <div className="p-4 font-bold bg-blue-20">50</div>
+          <div className="p-4 font-bold bg-blue-20">20</div>
           <div className="p-4 font-bold bg-blue-50">50</div>
           <div className="p-4 font-bold bg-blue-100">100</div>
           <div className="p-4 font-bold bg-blue-200">200</div>
