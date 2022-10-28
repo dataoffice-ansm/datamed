@@ -11,6 +11,7 @@
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:snap": "jest --coverage -u",
+    "test:clean": "jest --clear-cache",
     "test:ci": "jest --ci",
     "postinstall": "husky install"
   },
