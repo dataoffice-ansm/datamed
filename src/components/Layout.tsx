@@ -1,4 +1,5 @@
 import { Footer } from './Footer';
+import Logo from '../assets/images/logo-ansm-v2.svg';
 import React from 'react';
 
 type LayoutProps = {
@@ -8,7 +9,9 @@ type LayoutProps = {
 export const Layout = ({ children }: LayoutProps) => {
   return (
     <>
-      <nav></nav>
+      <nav>
+        <Logo aria-label="Website logo" height={100} width={200} />
+      </nav>
       <main>{children}</main>
       <Footer />
     </>

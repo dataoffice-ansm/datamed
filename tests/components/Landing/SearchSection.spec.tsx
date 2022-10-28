@@ -1,4 +1,4 @@
-import { getAllByAltText, getByRole, getByText, render } from '@testing-library/react';
+import { getByRole, getByTestId, getByText, render } from '@testing-library/react';
 import { SearchSection } from '../../../src/components/Landing/SearchSection';
 
 describe(SearchSection.name, () => {
@@ -11,7 +11,7 @@ describe(SearchSection.name, () => {
     expect(title.tagName).toEqual('H2');
 
     expect(getByRole(container, 'search'));
-    expect(getAllByAltText(container, 'Illustration de microscope et analyse'));
+    expect(getByTestId(container, 'Illustration de microscope et analyse'));
 
     expect(container).toMatchSnapshot();
   });

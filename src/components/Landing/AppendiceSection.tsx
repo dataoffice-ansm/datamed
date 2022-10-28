@@ -1,6 +1,5 @@
-import Image from 'next/image';
 import Link from 'next/link';
-import MouseScrollSvg from '../../icons/mouse_scroll.svg';
+import MouseScrollSvg from '../../assets/images/mouse_scroll.svg';
 
 export const AppendiceSection = () => {
   return (
@@ -11,7 +10,7 @@ export const AppendiceSection = () => {
         <Link href="#search" scroll={false}>
           <a>
             <div className="animate-bounce">
-              <Image src={MouseScrollSvg} alt="scroll" />
+              <MouseScrollSvg className="h-14 w-14" alt="scroll" />
             </div>
           </a>
         </Link>

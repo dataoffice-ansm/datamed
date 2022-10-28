@@ -1,5 +1,5 @@
 import { footerLinks } from '../config/footerLinks';
-import Image from 'next/image';
+import LogoWhite from '../assets/images/logo-ansm-white.svg';
 
 export const Footer = () => {
   return (
@@ -21,7 +21,7 @@ export const Footer = () => {
             </div>
           ))}
           <div className="mb-4  flex">
-            <Image alt="logo ansm" height={200} width={200} src="/logo-ansm-white.svg" />
+            <LogoWhite height={200} width={200} />
           </div>
         </div>
       </div>
