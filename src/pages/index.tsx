@@ -9,18 +9,21 @@ const HomePage = () => {
           <div className="text-4xl">First section</div>
           <div>
             <Tooltip
+              title="Philou"
               content="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos porro minus
             doloribus quod labore nesciunt, culpa cumque doloremque debitis accusamus alias vel
             amet, maxime sequi cupiditate laudantium molestiae! Nostrum, veritatis."
-              title="Philou"
-              theme={'turquoise'}
-            >
-              <span>a topic</span>
-            </Tooltip>
+              render={(refCb) => <span ref={refCb}>ICON</span>}
+            />
             <br />
-            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos porro minus
+            <Tooltip
+              title="Philou"
+              theme="turquoise"
+              content="Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos porro minus
             doloribus quod labore nesciunt, culpa cumque doloremque debitis accusamus alias vel
-            amet, maxime sequi cupiditate laudantium molestiae! Nostrum, veritatis.
+            amet, maxime sequi cupiditate laudantium molestiae! Nostrum, veritatis."
+              render={(refCb) => <span ref={refCb}>a topic</span>}
+            />
           </div>
         </div>
       </FullWidthRow>

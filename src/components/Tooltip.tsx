@@ -1,67 +1,57 @@
-import { cloneElement, ReactNode, SetStateAction } from 'react';
+import type { Dispatch, ReactNode, SetStateAction } from 'react';
 import { usePopperTooltip } from 'react-popper-tooltip';
-import { Placement } from '@popperjs/core';
-import classNames from 'classnames';
+import type { Placement } from '@popperjs/core';
 import 'react-popper-tooltip/dist/styles.css';
-type Theme = 'white' | 'turquoise';
 
-interface TooltipProps {
-  content: ReactNode;
-  title?: string;
-  theme?: Theme;
-  placement?: Placement;
-  children: JSX.Element;
-}
+type TooltipTheme = 'white' | 'turquoise';
 
-export const Tooltip = ({
-  placement = 'right',
-  children,
+/**
+ *
+ * @param title
+ * @param content
+ * @param theme
+ * @param placement
+ * @param children
+ * @constructor
+ */
+export function Tooltip({
   title,
   content,
   theme = 'white',
-}: TooltipProps) => {
+  placement = 'right',
+  render,
+}: {
+  enable?: boolean;
+  title?: string;
+  content: ReactNode;
+  theme?: TooltipTheme;
+  placement?: Placement;
+  render: (refCb: Dispatch<SetStateAction<HTMLElement | null>>) => ReactNode;
+}) {
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
-      placement: placement,
+      placement,
+      delayShow: 100,
+      delayHide: 200,
       trigger: 'hover',
     });
-  const colorTooltip = classNames(
-    { 'bg-turquoise text-white': theme === 'turquoise' },
-    { 'bg-white text-black': theme === 'white' }
-  );
-
-  const classTooltip = classNames(
-    `${colorTooltip} p-4 shadow-lg shadow-black-500/40 text-base rounded w-1/2`
-  );
-
-  // help to override border right arrow color
-  const colorArrow =
-    theme === 'white'
-      ? "after-[data-popper-placement*='right']:border-r-white"
-      : "after-[data-popper-placement*='right']:border-r-turquoise";
 
   return (
     <>
-      {cloneElement(children, {
-        ref: (ref: SetStateAction<HTMLElement | null>) => setTriggerRef(ref),
-        ...children.props,
-      })}
-
+      {render(setTriggerRef)}
       {visible && (
         <div
           ref={setTooltipRef}
-          role={'tooltip'}
-          {...getTooltipProps({ className: `tooltip-container ${classTooltip}` })}
+          role="tooltip"
+          {...getTooltipProps()}
+          className="tooltip-container"
+          data-theme={theme}
         >
-          <div
-            {...getArrowProps({
-              className: `tooltip-arrow ${colorArrow}`,
-            })}
-          />
+          <div className="tooltip-arrow" {...getArrowProps()} />
           {title && <h2 className="font-bold font-medium">{title}</h2>}
           {content}
         </div>
       )}
     </>
   );
-};
+}
