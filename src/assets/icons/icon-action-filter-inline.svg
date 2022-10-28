@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 40 40" data-name="button area">
+    <g id="icon-button-filter" transform="translate(-614 -328)">
+        <rect id="button_area" width="40" height="40" transform="translate(614 328)"
+              fill="#f6f6f6" opacity="0"/>
+        <g id="icon-filter" transform="translate(115.563 50.83)">
+            <g id="Group_200">
+                <path id="Path_8364"
+                      d="M18,4.692C18,2.018,14.131,0,9,0S0,2.018,0,4.692H0a8.963,8.963,0,0,0,6.154,8.532v4.39a2.846,2.846,0,1,0,5.692,0v-4.39A8.963,8.963,0,0,0,18,4.693h0M9,2c4.273,0,7,1.594,7,2.692v0c0,1.1-2.728,2.69-7,2.69S2,5.791,2,4.694v0C2,3.594,4.728,2,9,2m1.616,9.5a1,1,0,0,0-.77.973v5.145a.846.846,0,1,1-1.692,0V12.47a1,1,0,0,0-.769-.973A6.968,6.968,0,0,1,2.968,8.226,14.671,14.671,0,0,0,9,9.384a14.671,14.671,0,0,0,6.032-1.158A6.969,6.969,0,0,1,10.616,11.5"
+                      transform="translate(509.438 286.17)" fill="currentColor"/>
+            </g>
+        </g>
+    </g>
+</svg>

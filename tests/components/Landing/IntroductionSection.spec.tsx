@@ -1,4 +1,4 @@
-import { getAllByAltText, getByText, render } from '@testing-library/react';
+import { getByTestId, getByText, render } from '@testing-library/react';
 import { IntroductionSection } from '../../../src/components/Landing/IntroductionSection';
 
 describe(IntroductionSection.name, () => {
@@ -12,7 +12,7 @@ describe(IntroductionSection.name, () => {
     expect(title.tagName).toEqual('H2');
 
     expect(getByText(container, expectedDescription));
-    expect(getAllByAltText(container, 'Illustration de recherches et médicaments'));
+    expect(getByTestId(container, 'Illustration de recherches et médicaments'));
 
     expect(container).toMatchSnapshot();
   });

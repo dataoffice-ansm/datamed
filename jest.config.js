@@ -10,6 +10,9 @@ const customJestConfig = {
   testEnvironment: 'jest-environment-jsdom',
   collectCoverage: true,
   coverageReporters: ['json', 'lcov', 'text'],
+  moduleNameMapper: {
+    '^.+\\.(svg)$': '<rootDir>/tests/__mocks__/svgrMock.tsx',
+  },
 };
 
 module.exports = createJestConfig(customJestConfig);
