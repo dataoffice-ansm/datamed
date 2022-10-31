@@ -61,11 +61,11 @@ const turquoise = {
   300: '#99E1EB',
   400: '#7FD8E5',
   500: '#66D1E0',
+  DEFAULT: '#66D1E0',
   600: '#4DCADC',
   700: '#33C2D6',
   800: '#1ABBD2',
   900: '#00B3CC',
-  DEFAULT: '#00B3CC',
 };
 
 const green = {

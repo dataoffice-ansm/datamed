@@ -2,13 +2,64 @@ const UiPage = () => {
   return (
     <div className="container">
       <h2 className="mt-8 mb-2 text-2xl">UI / Colors Datamed</h2>
-      <h3 className="mb-2 text-xl">Primary colors</h3>
+
+      <h3 className="mb-2 text-xl">Palette</h3>
+
+      <div className="flex flex-wrap">
+        <div>
+          <div className="border w-64 m-2 p-4 bg-primary">primary</div>
+          <div className="border w-64 m-2 p-4 bg-primary-variant">primary-variant</div>
+          <div className="border w-64 m-2 p-4 bg-secondary">secondary</div>
+          <div className="border w-64 m-2 p-4 bg-secondary-variant">secondary-variant</div>
+        </div>
+
+        <div>
+          <div className="border w-64 m-2 p-4 bg-surface">surface</div>
+          <div className="border w-64 m-2 p-4 bg-background">background</div>
+          <div className="border w-64 m-2 p-4 bg-secondary-background">secondary-background</div>
+          <div className="border w-64 m-2 p-4 bg-border">border</div>
+          <div className="border w-64 m-2 p-4 text-white bg-menu-active">menu-active</div>
+          <div className="border w-64 m-2 p-4 bg-menu-inactive">menu-inactive</div>
+        </div>
+
+        <div>
+          <div className="border w-64 m-2 p-4 bg-error">error</div>
+          <div className="border w-64 m-2 p-4 bg-success">success</div>
+          <div className="border w-64 m-2 p-4 bg-warning">warning</div>
+          <div className="border w-64 m-2 p-4 bg-info">info</div>
+          <div className="border w-64 m-2 p-4 bg-tags">tags</div>
+        </div>
+
+        <div>
+          <div className="border w-64 m-2 p-4 bg-primary-chart">primary-chart</div>
+          <div className="border w-64 m-2 p-4 bg-primary-chart-1">primary-chart-1</div>
+          <div className="border w-64 m-2 p-4 bg-primary-chart-2">primary-chart-2</div>
+          <div className="border w-64 m-2 p-4 bg-primary-chart-3">primary-chart-3</div>
+          <div className="border w-64 m-2 p-4 bg-primary-chart-4">primary-chart-4</div>
+          <div className="border w-64 m-2 p-4 bg-primary-chart-5">primary-chart-5</div>
+          <div className="border w-64 m-2 p-4 bg-primary-chart-6">primary-chart-6</div>
+          <div className="border w-64 m-2 p-4 bg-primary-chart-7">primary-chart-7</div>
+        </div>
+
+        <div>
+          <div className="border w-64 m-2 p-4 bg-secondary-chart">secondary-chart</div>
+          <div className="border w-64 m-2 p-4 bg-secondary-chart-1">secondary-chart-1</div>
+          <div className="border w-64 m-2 p-4 bg-secondary-chart-2">secondary-chart-2</div>
+          <div className="border w-64 m-2 p-4 bg-secondary-chart-3">secondary-chart-3</div>
+          <div className="border w-64 m-2 p-4 bg-secondary-chart-4">secondary-chart-4</div>
+          <div className="border w-64 m-2 p-4 bg-secondary-chart-5">secondary-chart-5</div>
+          <div className="border w-64 m-2 p-4 bg-secondary-chart-6">secondary-chart-6</div>
+          <div className="border w-64 m-2 p-4 bg-secondary-chart-7">secondary-chart-7</div>
+        </div>
+      </div>
+
+      <h3 className="mt-16 mb-2 text-xl">Colors</h3>
 
       <div className="flex flex-wrap">
         <div className="w-64 m-2">
           <div className="p-4 font-bold text-white bg-dark-violet">
             <strong>DARK VIOLET</strong>
-            <div>900 - DEFAULT</div>
+            <div>800 - DEFAULT</div>
           </div>
           <div className="p-4 font-bold bg-dark-violet-50">50</div>
           <div className="p-4 font-bold bg-dark-violet-100">100</div>
@@ -72,18 +123,18 @@ const UiPage = () => {
         <div className="w-64 m-2">
           <div className="p-4 font-bold text-white bg-turquoise">
             <strong>TURQUOISE</strong>
-            <div>900 - DEFAULT</div>
+            <div>500 - DEFAULT</div>
           </div>
           <div className="p-4 font-bold bg-turquoise-50">50</div>
           <div className="p-4 font-bold bg-turquoise-100">100</div>
           <div className="p-4 font-bold bg-turquoise-200">200</div>
           <div className="p-4 font-bold bg-turquoise-300">300</div>
           <div className="p-4 font-bold bg-turquoise-400">400</div>
-          <div className="p-4 font-bold bg-turquoise-500">500</div>
+          <div className="p-4 font-bold bg-turquoise-500">500 (DEFAULT)</div>
           <div className="p-4 font-bold bg-turquoise-600">600</div>
           <div className="p-4 font-bold bg-turquoise-700">700</div>
           <div className="p-4 font-bold bg-turquoise-800">800</div>
-          <div className="p-4 font-bold bg-turquoise-900 text-white">900 (DEFAULT)</div>
+          <div className="p-4 font-bold bg-turquoise-900 text-white">900</div>
         </div>
         <div className="w-64 m-2">
           <div className="p-4 font-bold text-white bg-green">
