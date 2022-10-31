@@ -8,7 +8,7 @@
     "start": "next start",
     "tsc": "tsc --noEmit",
     "lint": "next lint",
-    "test": "jest --watch",
+    "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
     "test:snap": "jest --coverage -u",
     "test:ci": "jest --ci",

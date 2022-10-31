@@ -1,12 +1,33 @@
 import classnames from 'classnames';
+import { HTMLAttributes } from 'react';
 
-export const FullWidthRow = ({ className, children }: React.HTMLAttributes<HTMLDivElement>) => {
-  const classname = classnames('w-screen absolute h-full left-1/2 m-[0_auto_0_-50vw]', className);
-
+/**
+ *
+ * @param className
+ * @param classNameInner
+ * @param children
+ * @param props
+ * @constructor
+ */
+export const FullWidthRow = ({
+  className,
+  classNameInner,
+  children,
+  ...props
+}: HTMLAttributes<HTMLDivElement> & { classNameInner?: string }) => {
   return (
-    <div className="relative">
-      <div className={classname}></div>
-      <div className="relative">{children}</div>
-    </div>
+    <>
+      <div className="fullWidthRowContainer relative">
+        <div
+          className={classnames('w-screen absolute h-full left-1/2 m-[0_auto_0_-50vw]', className)}
+        />
+        <div
+          className={classnames('fullWidthRowInner flex items-center relative', classNameInner)}
+          {...props}
+        >
+          {children}
+        </div>
+      </div>
+    </>
   );
 };
