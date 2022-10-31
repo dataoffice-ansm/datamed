@@ -4,8 +4,8 @@ import { FullScreenSection } from '../FullScreenSection';
 
 export const IntroductionSection = () => (
   // TODO: offsetHeight en dur en attendant le context HeaderHeight
-  <FullScreenSection className="bg-white" appendixAnchor="/search" offsetHeight={102}>
-    <div className="flex justify-center items-center lg:items-start md:flex-row gap-8 flex-col">
+  <FullScreenSection className="bg-white" appendixAnchor="#search" offsetHeight={102}>
+    <div className="flex justify-center items-center lg:items-start md:flex-row gap-8 flex-col w-full">
       <div className="max-w-3xl">
         <Logo alt="Logo DATAMED ANSM" className="w-48" />
         <h2 className="pt-8 text-2xl md:text-3xl font-medium">
