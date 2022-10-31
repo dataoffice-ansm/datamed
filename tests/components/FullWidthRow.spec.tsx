@@ -20,13 +20,13 @@ describe(FullWidthRow.name, () => {
     const fixture = render(<FullWidthRow className="bg-blue-20" />);
 
     const rootItem = fixture.container.children.item(0);
-    expect(rootItem!.className).toEqual('relative');
+    expect(rootItem?.className).toContain('relative');
 
     const children = rootItem?.children;
     expect(children?.length).toEqual(2);
     expect(children?.item(0)?.className).toEqual(
       'w-screen absolute h-full left-1/2 m-[0_auto_0_-50vw] bg-blue-20'
     );
-    expect(children?.item(1)?.className).toEqual('relative');
+    expect(children?.item(1)?.className).toContain('relative');
   });
 });

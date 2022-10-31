@@ -1,12 +1,12 @@
-import { FullWidthRow } from '../FullWidthRow';
-import AppendiceSection from './AppendiceSection';
 import LandingIllustration from '../../assets/images/landing_illustration.svg';
 import Logo from '../../assets/images/logo_ansm.svg';
+import { FullScreenSection } from '../FullScreenSection';
 
 export const IntroductionSection = () => {
+  //TODO: offsetHeight en dur en attendant le context HeaderHeight
   return (
-    <FullWidthRow className="bg-white">
-      <div className="pt-32 pb-32 flex justify-center items-center lg:items-start md:flex-row gap-8 flex-col">
+    <FullScreenSection className="bg-white" appendixAnchor="/search" offsetHeight={102}>
+      <div className="flex justify-center items-center lg:items-start md:flex-row gap-8 flex-col">
         <div className="max-w-3xl">
           <Logo alt="Logo DATAMED ANSM" className="w-48" />
           <h2 className="pt-8 text-2xl md:text-3xl font-medium">
@@ -18,9 +18,10 @@ export const IntroductionSection = () => {
             ses partenaires.
           </p>
         </div>
-        <LandingIllustration className="max-w-xs" alt="Illustration de recherches et médicaments" />
+        <div className="max-w-xs">
+          <LandingIllustration className="w-full" alt="Illustration de recherches et médicaments" />
+        </div>
       </div>
-      <AppendiceSection />
-    </FullWidthRow>
+    </FullScreenSection>
   );
 };
