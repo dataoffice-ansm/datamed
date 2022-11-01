@@ -8,6 +8,11 @@ export type NavLinkGroup = {
   links: NavLink[];
 };
 
+export type NavigationLinkItem = {
+  href: string;
+  text: string;
+};
+
 export const footerLinks: NavLinkGroup[] = [
   {
     title: 'Partenaires',
@@ -48,3 +53,5 @@ export const footerLinks: NavLinkGroup[] = [
     ],
   },
 ];
+
+export const navIconSize = 24;

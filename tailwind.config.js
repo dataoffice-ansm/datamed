@@ -1,5 +1,5 @@
 // eslint-disable-next-line @typescript-eslint/no-var-requires
-const colors = require('./tailwind.palette');
+const colors = require('./tailwind.palette.config');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {

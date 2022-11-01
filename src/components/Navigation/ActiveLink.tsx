@@ -1,29 +1,23 @@
-import Link, { LinkProps } from "next/link";
-import { useRouter } from "next/router";
-import { ReactNode } from "react";
+import type { LinkProps } from 'next/link';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+import type { ReactNode } from 'react';
 
-type ActiveLinkProps = LinkProps & {
-  children: ReactNode;
-  activeClassName: string;
-  className: string;
-};
-
+/**
+ *
+ * @param children
+ * @param render
+ * @param props
+ * @constructor
+ */
 export const ActiveLink = ({
-  children,
-  className,
-  activeClassName,
+  render,
   ...props
-}: ActiveLinkProps) => {
+}: LinkProps & {
+  render: (isActive: boolean) => ReactNode;
+}) => {
   const router = useRouter();
+  const isActive = router.asPath === props.href || router.asPath === props.as;
 
-  const classNames =
-    router.asPath === props.href || router.asPath === props.as
-      ? `${className} ${activeClassName}`.trim()
-      : className;
-
-  return (
-    <Link {...props}>
-      <a className={classNames}>{children}</a>
-    </Link>
-  );
+  return <Link {...props}>{render(isActive)}</Link>;
 };
