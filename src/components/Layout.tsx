@@ -6,14 +6,17 @@ type LayoutProps = {
   children: React.ReactNode;
 };
 
-export const Layout = ({ children }: LayoutProps) => {
-  return (
-    <>
-      <nav>
-        <Logo aria-label="Website logo" height={100} width={200} />
-      </nav>
-      <main>{children}</main>
-      <Footer />
-    </>
-  );
-};
+/**
+ *
+ * @param children
+ * @constructor
+ */
+export const Layout = ({ children }: LayoutProps) => (
+  <>
+    <nav>
+      <Logo aria-label="Website logo" height={100} width={200} />
+    </nav>
+    <main>{children}</main>
+    <Footer />
+  </>
+);

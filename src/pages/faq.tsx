@@ -1,5 +1,3 @@
-const PageFAQ = () => {
-  return <p> TODO </p>;
-};
+const PageFaq = () => <p> TODO </p>;
 
-export default PageFAQ;
+export default PageFaq;

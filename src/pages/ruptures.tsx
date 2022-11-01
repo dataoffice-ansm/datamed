@@ -1,5 +1,3 @@
-const PageRuptures = () => {
-  return <p> TODO </p>;
-};
+const PageRuptures = () => <p> TODO </p>;
 
 export default PageRuptures;

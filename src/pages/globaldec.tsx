@@ -1,5 +1,3 @@
-const PageGlobalDec = () => {
-  return <p> TODO </p>;
-};
+const PageGlobalDec = () => <p> TODO </p>;
 
 export default PageGlobalDec;

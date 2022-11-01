@@ -5,7 +5,7 @@ import type { AppProps } from 'next/app';
 import React from 'react';
 import { Layout } from '../components/Layout';
 
-export type NextPageWithLayout<P = object, IP = P> = NextPage<P, IP> & {
+export type NextPageWithLayout<P = Record<string, unknown>, Ip = P> = NextPage<P, Ip> & {
   getLayout?: (page: ReactElement) => ReactNode;
 };
 
@@ -13,10 +13,10 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout;
 };
 
-export default function MyApp({ Component, pageProps }: AppPropsWithLayout) {
-  return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
-  );
-}
+const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => (
+  <Layout>
+    <Component {...pageProps} />
+  </Layout>
+);
+
+export default MyApp;

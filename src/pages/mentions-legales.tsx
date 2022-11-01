@@ -1,5 +1,3 @@
-const PageLegal = () => {
-  return <p> TODO </p>;
-};
+const PageLegal = () => <p> TODO </p>;
 
 export default PageLegal;
