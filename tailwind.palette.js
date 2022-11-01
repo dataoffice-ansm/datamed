@@ -309,16 +309,15 @@ const skin6 = {
 };
 
 const white = '#FFFFFF';
-const black = '#000000';
 
 module.exports = {
-  black,
   white,
-  darkViolet,
-  lightViolet,
+  black: grey.DEFAULT,
+  darkViolet: { ...darkViolet, light: darkViolet['50'] },
+  lightViolet: { ...lightViolet, lightViolet: lightViolet['50'] },
   orange,
   red,
-  turquoise,
+  turquoise: { ...turquoise, light: turquoise['50'] },
   green,
   darkGreen,
   grey,

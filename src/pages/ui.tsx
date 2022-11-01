@@ -1,67 +1,144 @@
 const UiPage = () => {
   return (
-    <div className="container">
-      <h2 className="mt-8 mb-2 text-2xl">UI / Colors Datamed</h2>
+    <div className="container mb-5">
+      <h2 className="underline"> Typos </h2>
 
-      <h3 className="mb-2 text-xl">Palette</h3>
+      <ul>
+        <li>
+          <h1 className="inline-block">Heading 1</h1>
+        </li>
+        <li>
+          <h2 className="inline-block">Heading 2</h2>
+        </li>
+        <li>
+          <h3 className="inline-block">Heading 3</h3>
+        </li>
+        <li>
+          <h4 className="inline-block">Heading 4</h4>
+        </li>
+        <li>
+          <h5 className="inline-block">Heading 5</h5>
+        </li>
+        <li>
+          <h6 className="inline-block">Heading 6</h6>
+        </li>
+      </ul>
 
-      <div className="flex flex-wrap">
-        <div>
-          <div className="border w-64 m-2 p-4 bg-primary">primary</div>
-          <div className="border w-64 m-2 p-4 bg-primary-variant">primary-variant</div>
-          <div className="border w-64 m-2 p-4 bg-secondary">secondary</div>
-          <div className="border w-64 m-2 p-4 bg-secondary-variant">secondary-variant</div>
+      <h2 className="underline">UI / Colors Datamed</h2>
+
+      <div className="flex flex-wrap gap-2 my-4">
+        <div className="flex-1">
+          <h4 className="text-xl">Primary</h4>
+          <div className="p-4 bg-primary-50">50 (light)</div>
+          <div className="p-4 bg-primary-100">100</div>
+          <div className="p-4 bg-primary-200">200</div>
+          <div className="p-4 bg-primary-300">300</div>
+          <div className="p-4 bg-primary-400">400</div>
+          <div className="p-4 bg-primary-500">500</div>
+          <div className="p-4 bg-primary-600">600</div>
+          <div className="p-4 bg-primary-700">700</div>
+          <div className="p-4 bg-primary-800">800</div>
+          <div className="p-4 bg-primary-900">900 (DEFAULT)</div>
         </div>
 
-        <div>
-          <div className="border w-64 m-2 p-4 bg-surface">surface</div>
-          <div className="border w-64 m-2 p-4 bg-background">background</div>
-          <div className="border w-64 m-2 p-4 bg-secondary-background">secondary-background</div>
-          <div className="border w-64 m-2 p-4 bg-border">border</div>
-          <div className="border w-64 m-2 p-4 text-white bg-menu-active">menu-active</div>
-          <div className="border w-64 m-2 p-4 bg-menu-inactive">menu-inactive</div>
+        <div className="flex-1">
+          <h4 className="text-xl">Primary Variant</h4>
+          <div className="p-4 font-bold bg-primary-variant-50">50 (light)</div>
+          <div className="p-4 font-bold bg-primary-variant-100">100</div>
+          <div className="p-4 font-bold bg-primary-variant-200">200</div>
+          <div className="p-4 font-bold bg-primary-variant-300">300</div>
+          <div className="p-4 font-bold bg-primary-variant-400">400</div>
+          <div className="p-4 font-bold bg-primary-variant-500">500</div>
+          <div className="p-4 font-bold bg-primary-variant-600">600</div>
+          <div className="p-4 font-bold bg-primary-variant-700">700</div>
+          <div className="p-4 font-bold bg-primary-variant-800 text-white">800</div>
+          <div className="p-4 font-bold bg-primary-variant-900 text-white">900 (DEFAULT)</div>
         </div>
 
-        <div>
-          <div className="border w-64 m-2 p-4 bg-error">error</div>
-          <div className="border w-64 m-2 p-4 bg-success">success</div>
-          <div className="border w-64 m-2 p-4 bg-warning">warning</div>
-          <div className="border w-64 m-2 p-4 bg-info">info</div>
-          <div className="border w-64 m-2 p-4 bg-tags">tags</div>
+        <div className="flex-1">
+          <h4 className="text-xl">Secondary</h4>
+          <div className="p-4 font-bold bg-secondary-50">50</div>
+          <div className="p-4 font-bold bg-secondary-100">100</div>
+          <div className="p-4 font-bold bg-secondary-200">200</div>
+          <div className="p-4 font-bold bg-secondary-300">300</div>
+          <div className="p-4 font-bold bg-secondary-400">400</div>
+          <div className="p-4 font-bold bg-secondary-500">500 (DEFAULT)</div>
+          <div className="p-4 font-bold bg-secondary-600">600</div>
+          <div className="p-4 font-bold bg-secondary-700">700</div>
+          <div className="p-4 font-bold bg-secondary-800">800</div>
+          <div className="p-4 font-bold bg-secondary-900 text-white">900</div>
         </div>
 
-        <div>
-          <div className="border w-64 m-2 p-4 bg-primary-chart">primary-chart</div>
-          <div className="border w-64 m-2 p-4 bg-primary-chart-1">primary-chart-1</div>
-          <div className="border w-64 m-2 p-4 bg-primary-chart-2">primary-chart-2</div>
-          <div className="border w-64 m-2 p-4 bg-primary-chart-3">primary-chart-3</div>
-          <div className="border w-64 m-2 p-4 bg-primary-chart-4">primary-chart-4</div>
-          <div className="border w-64 m-2 p-4 bg-primary-chart-5">primary-chart-5</div>
-          <div className="border w-64 m-2 p-4 bg-primary-chart-6">primary-chart-6</div>
-          <div className="border w-64 m-2 p-4 bg-primary-chart-7">primary-chart-7</div>
-        </div>
-
-        <div>
-          <div className="border w-64 m-2 p-4 bg-secondary-chart">secondary-chart</div>
-          <div className="border w-64 m-2 p-4 bg-secondary-chart-1">secondary-chart-1</div>
-          <div className="border w-64 m-2 p-4 bg-secondary-chart-2">secondary-chart-2</div>
-          <div className="border w-64 m-2 p-4 bg-secondary-chart-3">secondary-chart-3</div>
-          <div className="border w-64 m-2 p-4 bg-secondary-chart-4">secondary-chart-4</div>
-          <div className="border w-64 m-2 p-4 bg-secondary-chart-5">secondary-chart-5</div>
-          <div className="border w-64 m-2 p-4 bg-secondary-chart-6">secondary-chart-6</div>
-          <div className="border w-64 m-2 p-4 bg-secondary-chart-7">secondary-chart-7</div>
+        <div className="flex-1">
+          <h4 className="text-xl">Secondary Variant</h4>
+          <div className="p-4 font-bold bg-secondary-variant-50">50</div>
+          <div className="p-4 font-bold bg-secondary-variant-100">100</div>
+          <div className="p-4 font-bold bg-secondary-variant-200">200</div>
+          <div className="p-4 font-bold bg-secondary-variant-300">300</div>
+          <div className="p-4 font-bold bg-secondary-variant-400">400</div>
+          <div className="p-4 font-bold bg-secondary-variant-500">500</div>
+          <div className="p-4 font-bold bg-secondary-variant-600">600</div>
+          <div className="p-4 font-bold bg-secondary-variant-700">700</div>
+          <div className="p-4 font-bold bg-secondary-variant-800">800</div>
+          <div className="p-4 font-bold bg-secondary-variant-900">900 (DEFAULT)</div>
         </div>
       </div>
 
-      <h3 className="mt-16 mb-2 text-xl">Colors</h3>
+      <div className="flex flex-wrap gap-2">
+        <div className="flex-1">
+          <h4 className="text-xl">Primary Chart</h4>
+          <div className="p-4 bg-primary-chart">primary-chart</div>
+          <div className="p-4 bg-primary-chart-1">primary-chart-1</div>
+          <div className="p-4 bg-primary-chart-2">primary-chart-2</div>
+          <div className="p-4 bg-primary-chart-3">primary-chart-3</div>
+          <div className="p-4 bg-primary-chart-4">primary-chart-4</div>
+          <div className="p-4 bg-primary-chart-5">primary-chart-5</div>
+          <div className="p-4 bg-primary-chart-6">primary-chart-6</div>
+          <div className="p-4 bg-primary-chart-7">primary-chart-7</div>
+        </div>
 
-      <div className="flex flex-wrap">
-        <div className="w-64 m-2">
+        <div className="flex-1">
+          <h4 className="text-xl">Secondary Chart</h4>
+          <div className="p-4 bg-secondary-chart">secondary-chart</div>
+          <div className="p-4 bg-secondary-chart-1">secondary-chart-1</div>
+          <div className="p-4 bg-secondary-chart-2">secondary-chart-2</div>
+          <div className="p-4 bg-secondary-chart-3">secondary-chart-3</div>
+          <div className="p-4 bg-secondary-chart-4">secondary-chart-4</div>
+          <div className="p-4 bg-secondary-chart-5">secondary-chart-5</div>
+          <div className="p-4 bg-secondary-chart-6">secondary-chart-6</div>
+          <div className="p-4 bg-secondary-chart-7">secondary-chart-7</div>
+        </div>
+
+        <div className="flex-1">
+          <h4 className="text-xl">Bootstrap</h4>
+          <div className="p-4 bg-error">error</div>
+          <div className="p-4 bg-success">success</div>
+          <div className="p-4 bg-warning">warning</div>
+          <div className="p-4 bg-info">info</div>
+          <div className="p-4 bg-tags">tags</div>
+        </div>
+
+        <div className="flex-1">
+          <h4 className="text-xl">Others </h4>
+          <div className="p-4 bg-surface">surface</div>
+          <div className="p-4 bg-background">background</div>
+          <div className="p-4 bg-secondary-background">secondary-background</div>
+          <div className="p-4 bg-border">border</div>
+          <div className="p-4 bg-menu-inactive">menu-inactive</div>
+          <div className="p-4 text-white bg-menu-active">menu-active</div>
+          <div className="p-4 bg-black text-white">black</div>
+        </div>
+      </div>
+
+      <h3 className="mt-16 mb-2 text-xl">Colors Palette</h3>
+
+      <div className="flex flex-wrap gap-2">
+        <div>
           <div className="p-4 font-bold text-white bg-dark-violet">
             <strong>DARK VIOLET</strong>
             <div>800 - DEFAULT</div>
           </div>
-          <div className="p-4 font-bold bg-dark-violet-50">50</div>
+          <div className="p-4 font-bold bg-dark-violet-50">50 (light)</div>
           <div className="p-4 font-bold bg-dark-violet-100">100</div>
           <div className="p-4 font-bold bg-dark-violet-200">200</div>
           <div className="p-4 font-bold bg-dark-violet-300">300</div>
@@ -72,7 +149,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-dark-violet-800 text-white">800</div>
           <div className="p-4 font-bold bg-dark-violet-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-light-violet">
             <strong>LIGHT VIOLET</strong>
             <div>900 - DEFAULT</div>
@@ -88,7 +166,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-light-violet-800 text-white">800</div>
           <div className="p-4 font-bold bg-light-violet-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-orange">
             <strong>ORANGE</strong>
             <div>900 - DEFAULT</div>
@@ -104,7 +183,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-orange-800">800</div>
           <div className="p-4 font-bold bg-orange-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-red">
             <strong>RED</strong>
             <div>900 - DEFAULT</div>
@@ -120,7 +200,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-red-800">800</div>
           <div className="p-4 font-bold bg-red-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-turquoise">
             <strong>TURQUOISE</strong>
             <div>500 - DEFAULT</div>
@@ -136,7 +217,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-turquoise-800">800</div>
           <div className="p-4 font-bold bg-turquoise-900 text-white">900</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-green">
             <strong>GREEN</strong>
             <div>900 - DEFAULT</div>
@@ -152,7 +234,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-green-800">800</div>
           <div className="p-4 font-bold bg-green-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-dark-green">
             <strong>DARK GREEN</strong>
             <div>900 - DEFAULT</div>
@@ -168,7 +251,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-dark-green-800">800</div>
           <div className="p-4 font-bold bg-dark-green-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-dark-blue">
             <strong>DARK BLUE</strong>
             <div>900 - DEFAULT</div>
@@ -184,7 +268,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-dark-blue-800 text-white">800</div>
           <div className="p-4 font-bold bg-dark-blue-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-blue">
             <strong>BLUE</strong>
             <div>900 - DEFAULT</div>
@@ -201,7 +286,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-blue-800 text-white">800</div>
           <div className="p-4 font-bold bg-blue-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-dark-yellow">
             <strong>DARK YELLOW</strong>
             <div>900 - DEFAULT</div>
@@ -217,7 +303,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-dark-yellow-800 text-white">800</div>
           <div className="p-4 font-bold bg-dark-yellow-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold bg-yellow">
             <strong>YELLOW</strong>
             <div>900 - DEFAULT</div>
@@ -233,7 +320,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-yellow-800">800</div>
           <div className="p-4 font-bold bg-yellow-900">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-dark-red">
             <strong>DARK RED</strong>
             <div>900 - DEFAULT</div>
@@ -249,7 +337,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-dark-red-800 text-white">800</div>
           <div className="p-4 font-bold bg-dark-red-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-pink">
             <strong>PINK</strong>
             <div>900 - DEFAULT</div>
@@ -265,7 +354,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-pink-800 text-white">800</div>
           <div className="p-4 font-bold bg-pink-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-teal">
             <strong>TEAL</strong>
             <div>900 - DEFAULT</div>
@@ -281,7 +371,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-teal-800 text-white">800</div>
           <div className="p-4 font-bold bg-teal-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold bg-mint">
             <strong>MINT</strong>
             <div>900 - DEFAULT</div>
@@ -297,7 +388,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-mint-800">800</div>
           <div className="p-4 font-bold bg-mint-900">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold bg-skin-1">
             <strong>SKIN 1</strong>
             <div>900 - DEFAULT</div>
@@ -313,7 +405,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-skin-1-800">800</div>
           <div className="p-4 font-bold bg-skin-1-900">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold bg-skin-2">
             <strong>SKIN 2</strong>
             <div>900 - DEFAULT</div>
@@ -329,7 +422,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-skin-2-800">800</div>
           <div className="p-4 font-bold bg-skin-2-900">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-skin-3">
             <strong>SKIN 3</strong>
             <div>900 - DEFAULT</div>
@@ -345,7 +439,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-skin-3-800 text-white">800</div>
           <div className="p-4 font-bold bg-skin-3-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-skin-4">
             <strong>SKIN 4</strong>
             <div>900 - DEFAULT</div>
@@ -361,7 +456,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-skin-4-800 text-white">800</div>
           <div className="p-4 font-bold bg-skin-4-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-skin-5">
             <strong>SKIN 5</strong>
             <div>900 - DEFAULT</div>
@@ -377,7 +473,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-skin-5-800 text-white">800</div>
           <div className="p-4 font-bold bg-skin-5-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-skin-6">
             <strong>SKIN 6</strong>
             <div>900 - DEFAULT</div>
@@ -393,7 +490,8 @@ const UiPage = () => {
           <div className="p-4 font-bold bg-skin-6-800 text-white">800</div>
           <div className="p-4 font-bold bg-skin-6-900 text-white">900 (DEFAULT)</div>
         </div>
-        <div className="w-64 m-2">
+
+        <div>
           <div className="p-4 font-bold text-white bg-grey">
             <strong>BLACK/GREY</strong>
             <div>900 - DEFAULT</div>

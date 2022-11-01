@@ -1,5 +1,6 @@
 {
   "env": {
+    "node": true,
     "browser": true,
     "es2021": true
   },
@@ -17,7 +18,17 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
-  "ignorePatterns": ["jest.config.js"],
+  "ignorePatterns": [
+    ".next",
+    ".swc",
+    "build",
+    "coverage",
+    "public",
+    "bin",
+    "tailwind.debug.js",
+    "jest.config.js",
+    "next-env.d.ts"
+  ],
   "plugins": [
     "@typescript-eslint"
   ]

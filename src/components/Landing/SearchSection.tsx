@@ -3,7 +3,7 @@ import LandingIllustrationSearch from '../../assets/images/landing_illustration_
 
 export const SearchSection = () => {
   return (
-    <FullWidthRow className="bg-blue-20 shadow-inner">
+    <FullWidthRow className="bg-secondary-light shadow-inner">
       <div className="pt-32 pb-32 flex justify-center items-center lg:items-start flex-col-reverse lg:flex-row gap-16">
         <LandingIllustrationSearch
           className="max-w-xs"
