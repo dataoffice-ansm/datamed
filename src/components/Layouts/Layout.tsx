@@ -16,7 +16,7 @@ export const Layout = ({ children }: { children: React.ReactNode }) => {
     <>
       <NavigationBar />
       <main style={{ paddingTop: `${headerHeight}px` }}>
-        <div className="md:container max-w-full md:mx-auto">{children}</div>
+        <div className="max-md:px-3 md:container max-w-full md:mx-auto">{children}</div>
       </main>
       <Footer />
     </>
