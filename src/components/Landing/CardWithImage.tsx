@@ -1,7 +1,17 @@
 import Link from 'next/link';
 import classnames from 'classnames';
-import type { ReactNode } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 
+/**
+ *
+ * @param className
+ * @param image
+ * @param title
+ * @param description
+ * @param href
+ * @param source
+ * @constructor
+ */
 export const CardWithImage = ({
   className,
   image,
@@ -9,7 +19,7 @@ export const CardWithImage = ({
   description,
   href,
   source,
-}: React.HTMLAttributes<HTMLDivElement> & {
+}: HTMLAttributes<HTMLDivElement> & {
   image: ReactNode;
   title: string;
   description: string;
