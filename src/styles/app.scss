@@ -1,2 +1,141 @@
-@import 'globals';
-@import 'libs/tooltip-themes';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  box-sizing: border-box;
+  @apply leading-normal;
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  @apply text-black font-roboto
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1 {
+  @apply my-10 text-4xl font-bold;
+}
+
+h2 {
+  @apply my-8 text-3xl font-semibold;
+}
+
+h3 {
+  @apply my-6 text-2xl font-semibold;
+}
+
+h4 {
+  @apply my-5 text-xl font-semibold;
+}
+
+h5 {
+  @apply my-4 text-lg font-medium;
+}
+
+h6 {
+  @apply my-3 text-base font-medium;
+}
+
+// Paragraphs
+p {
+  @apply my-3;
+}
+
+// Blockquotes
+blockquote {
+  @apply my-4 px-8 border-l-4 border-grey-200;
+}
+
+// Horizontal Rules
+hr {
+  @apply my-6 border-t;
+}
+
+// Lists
+dl, ol, ul {
+  @apply my-4 pl-3 list-inside;
+}
+
+// Definition Lists
+dl {
+  dt {
+    @apply font-semibold;
+  }
+
+  dd {
+    @apply ml-6;
+  }
+}
+
+// Ordered Lists
+ol {
+  @apply list-decimal;
+}
+
+// Unordered Lists
+ul {
+  @apply list-disc;
+}
+
+// Anchors
+a {
+  @apply underline;
+}
+
+// Tables
+table {
+  @apply table border-separate border-grey-200 align-middle text-left bg-grey-200 rounded;
+
+  caption {
+    @apply p-3;
+  }
+
+  thead tr th {
+    @apply py-2 px-4;
+  }
+
+  tbody tr td {
+    @apply py-2 px-4;
+  }
+
+  tfoot tr th {
+    @apply py-2 px-4;
+  }
+}
+
+// Forms
+input, textarea {
+  @apply block px-3 py-2 border rounded text-sm;
+}
+
+input:focus, textarea:focus {
+  @apply outline-none;
+}
+
+label {
+  @apply block mb-2 text-sm font-semibold;
+}
+
+input[type="submit"], input[type="button"], input[type="reset"] {
+  @apply inline-block px-4 py-2 bg-grey-200 font-semibold;
+}
+
+// Images
+figure {
+  @apply inline-block;
+
+  img {
+    @apply block w-full;
+  }
+
+  figcaption {
+    @apply block p-3 text-center text-sm;
+  }
+}

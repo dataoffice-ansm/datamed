@@ -13,7 +13,7 @@ export const Footer = () => {
               </h3>
               {footerLink.links.map((link) => (
                 <p key={link.name} className="mb-4">
-                  <a href={link.url} className="text-white">
+                  <a href={link.url} className="text-sm text-white">
                     {link.name}
                   </a>
                 </p>
