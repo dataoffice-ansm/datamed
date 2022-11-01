@@ -8,10 +8,12 @@ export type NavLinkGroup = {
   links: NavLink[];
 };
 
-export type NavigationLinkItem = {
+export type NavLinkItem = {
   href: string;
   text: string;
 };
+
+export const navIconSize = 24;
 
 export const footerLinks: NavLinkGroup[] = [
   {
@@ -53,5 +55,3 @@ export const footerLinks: NavLinkGroup[] = [
     ],
   },
 ];
-
-export const navIconSize = 24;

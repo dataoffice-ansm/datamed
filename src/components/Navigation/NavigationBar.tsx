@@ -8,12 +8,12 @@ import LogoBrand from '../../icons/logo.svg';
 import MenuIcon from '../../icons/menu.svg';
 import CloseIcon from '../../icons/close.svg';
 import { useRefHeight } from '../../hooks/useRefHeight';
-import type { NavigationLinkItem } from '../../config/config';
+import type { NavLinkItem } from '../../config/config';
 import { navIconSize } from '../../config/config';
 import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 
-const links: NavigationLinkItem[] = [
+const links: NavLinkItem[] = [
   {
     text: 'FAQ',
     href: '/faq',

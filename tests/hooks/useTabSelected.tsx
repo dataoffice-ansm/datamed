@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { useTabSelected } from '../../src/hooks/useTabSelected.hook';
+import { useTabSelected } from '../../src/hooks/useTabSelected';
 
 describe(useTabSelected.name, () => {
   const menu = [
