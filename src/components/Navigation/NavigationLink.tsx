@@ -1,30 +1,54 @@
-import { LinkProps } from 'next/link';
-import classnames from 'classnames';
-import { useRouter } from 'next/router';
+import type { LinkProps } from 'next/link';
 import { ActiveLink } from './ActiveLink';
+import type { HTMLAttributes } from 'react';
+import classNames from 'classnames';
 
+/**
+ *
+ * @param children
+ * @param href
+ * @param className
+ * @param enableAnimation
+ * @constructor
+ */
 export const NavigationLink = ({
   children,
   href,
   className,
-}: React.HTMLAttributes<HTMLAnchorElement> & LinkProps) => {
-  const { asPath } = useRouter();
+  enableAnimation,
+}: HTMLAttributes<HTMLAnchorElement> &
+  LinkProps & {
+    enableAnimation?: boolean;
+  }) => (
+  <ActiveLink
+    href={href}
+    render={(isActive) => (
+      <div className={classNames('navbarLink group', className)}>
+        <a
+          className={classNames(
+            'block',
+            'px-6 py-2 no-underline',
+            isActive
+              ? 'hover:text-primary focus:text-primary'
+              : 'hover:text-primary-700 focus:text-primary-700'
+          )}
+        >
+          {children}
+        </a>
 
-  const navbarLinkClassName = classnames(
-    'px-8 py-4 md:py-2 border-l-4 md:border-l-0 md:border-b-4',
-    'hover:border-primary-100 hover:text-primary-100',
-    'focus:border-primary-100 focus:text-primary-100',
-    { 'border-white': asPath !== href },
-    className
-  );
-
-  return (
-    <ActiveLink
-      className={navbarLinkClassName}
-      href={href}
-      activeClassName="text-primary border-primary"
-    >
-      {children}
-    </ActiveLink>
-  );
-};
+        {enableAnimation && (
+          <div
+            className={classNames(
+              'navbarLinkBottom',
+              'bg-primary-00 h-[2px] text-center m-auto',
+              'transition-all duration-200 ease-in-out',
+              isActive
+                ? 'isActive w-full bg-primary'
+                : 'isNotActive w-0 group-hover:w-full bg-primary-700'
+            )}
+          />
+        )}
+      </div>
+    )}
+  />
+);

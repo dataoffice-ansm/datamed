@@ -42,7 +42,7 @@
     "@typescript-eslint"
   ],
   "rules": {
-    "capitalized-comments": "warn",
+    "capitalized-comments": "off",
     "no-unused-vars": "warn",
     "@typescript-eslint/no-unused-vars": [
       "warn",

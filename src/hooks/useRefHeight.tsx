@@ -1,6 +1,11 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import type React from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
-export function useElementHeight(elementRef: React.RefObject<HTMLDivElement>) {
+/**
+ *
+ * @param elementRef
+ */
+export const useRefHeight = (elementRef: React.RefObject<HTMLDivElement>) => {
   const [navbarHeight, setNavbarHeight] = useState<number | undefined>(0);
 
   const handleElementHeight = useCallback(() => {
@@ -19,5 +24,5 @@ export function useElementHeight(elementRef: React.RefObject<HTMLDivElement>) {
     };
   }, [handleElementHeight]);
 
-  return navbarHeight || 0;
-}
+  return navbarHeight ?? 0;
+};
