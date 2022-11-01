@@ -1,9 +1,3 @@
-const PageAbout = () => {
-  return (
-    <>
-      <p> TODO </p>
-    </>
-  );
-};
+const PageAbout = () => <p> TODO </p>;
 
 export default PageAbout;

@@ -1,12 +1,12 @@
-export interface NavLink {
+export type NavLink = {
   name: string;
   url: string;
-}
+};
 
-export interface NavLinkGroup {
+export type NavLinkGroup = {
   title: string;
   links: NavLink[];
-}
+};
 
 export const footerLinks: NavLinkGroup[] = [
   {

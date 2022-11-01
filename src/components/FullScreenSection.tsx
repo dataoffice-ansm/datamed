@@ -1,5 +1,5 @@
 import AppendixAnchor from './AppendixAnchor';
-import { HTMLAttributes } from 'react';
+import type { HTMLAttributes } from 'react';
 import { FullWidthRow } from './FullWidthRow';
 
 /**
@@ -17,15 +17,12 @@ export const FullScreenSection = ({
   offsetHeight = 0,
 }: HTMLAttributes<HTMLDivElement> & {
   appendixAnchor?: string;
-  containerClassnames?: string;
   offsetHeight?: number;
-}) => {
-  return (
-    <>
-      <FullWidthRow className={className} style={{ height: `calc(100vh - ${offsetHeight}px` }}>
-        {children}
-      </FullWidthRow>
-      {appendixAnchor && <AppendixAnchor appendixAnchor={appendixAnchor} />}
-    </>
-  );
-};
+}) => (
+  <>
+    <FullWidthRow className={className} style={{ height: `calc(100vh - ${offsetHeight}px` }}>
+      {children}
+    </FullWidthRow>
+    {appendixAnchor && <AppendixAnchor appendixAnchor={appendixAnchor} />}
+  </>
+);

@@ -14,7 +14,7 @@ type TooltipTheme = 'white' | 'turquoise';
  * @param children
  * @constructor
  */
-export function Tooltip({
+export const Tooltip = ({
   title,
   content,
   theme = 'white',
@@ -27,7 +27,7 @@ export function Tooltip({
   theme?: TooltipTheme;
   placement?: Placement;
   render: (refCb: Dispatch<SetStateAction<HTMLElement | null>>) => ReactNode;
-}) {
+}) => {
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
       placement,
@@ -54,4 +54,4 @@ export function Tooltip({
       )}
     </>
   );
-}
+};
