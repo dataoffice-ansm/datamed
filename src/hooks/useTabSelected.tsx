@@ -1,13 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Events, scroller } from 'react-scroll';
-import type { SideMenuItemProps } from '../components/Layouts/SideMenuPageLayout';
+import type { SectionNavProps } from '../components/Layouts/NavPageLayout';
 
 /**
  * hook to help mange tab selected index
  * @param items represents a Section Page list from a Side Menu
  * @param initState By default 0
  */
-export function useTabSelected(items: SideMenuItemProps[], initState = 0) {
+export function useTabSelected(items: SectionNavProps[], initState = 0) {
   const [selectedIndex, setSelectedIndex] = useState<number>(initState);
 
   const updateTabIndex = (index: number) => {
