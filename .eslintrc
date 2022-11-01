@@ -1,10 +1,15 @@
 {
   "env": {
-    "node": true,
     "browser": true,
-    "es2021": true
+    "es2021": true,
+    "jest": true,
+    "node": true,
+    "commonjs": true
   },
   "extends": [
+    "xo",
+    "xo-react",
+    "xo-typescript",
     "plugin:@typescript-eslint/recommended",
     "next",
     "next/core-web-vitals",
@@ -19,17 +24,52 @@
     "sourceType": "module"
   },
   "ignorePatterns": [
+    ".cache",
+    "dist",
+    "build",
+    "node_modules",
     ".next",
     ".swc",
     "build",
     "coverage",
-    "public",
-    "bin",
+    "*.config.js",
     "tailwind.debug.js",
     "jest.config.js",
     "next-env.d.ts"
   ],
   "plugins": [
+    "simple-import-sort",
     "@typescript-eslint"
-  ]
+  ],
+  "rules": {
+    "capitalized-comments": "warn",
+    "no-unused-vars": "warn",
+    "@typescript-eslint/no-unused-vars": [
+      "warn",
+      // or "error"
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_"
+      }
+    ],
+    "@typescript-eslint/ban-types": [
+      "error",
+      {
+        "types": {
+          // un-ban a type that's banned by default
+          "{}": false
+        },
+        "extendDefaults": true
+      }
+    ],
+    "no-warning-comments": "warn",
+    "react/no-unused-prop-types": "warn",
+    "react/function-component-definition": [
+      "warn",
+      {
+        "namedComponents": "arrow-function"
+      }
+    ]
+  }
 }
