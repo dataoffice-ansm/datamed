@@ -25,10 +25,10 @@ export const NavigationLink = ({
     render={(isActive) => (
       <a
         className={classNames(
-          'navbarLink group no-underline',
+          'navbarLink group no-underline border-l-4 border-transparent',
           className,
           isActive
-            ? 'hover:text-primary focus:text-primary'
+            ? 'hover:text-primary focus:text-primary border-primary md:border-none'
             : 'hover:text-primary-700 focus:text-primary-700'
         )}
       >
