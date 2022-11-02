@@ -12,22 +12,26 @@ export const MoreInformationSection = () => (
       actives autorisés sur le territoire national.
     </p>
 
-    <CardWithImage
-      className="mb-8"
-      title="Ruptures de stock de médicaments"
-      description="Renseignez-vous sur l'historique des ruptures de stock des médicaments d'intérêt thérapeutique majeur, ainsi que les chiffres autour de la gestion des ruptures."
-      source="Trustmed Base de déclaration des rutpures de stock"
-      href="/ruptures"
-      image={<OutOfStockSvg />}
-    />
+    <div className="m-auto max-w-xl lg:max-w-6xl">
+      <CardWithImage
+        className="mb-8"
+        title="Ruptures de stock de médicaments"
+        description="Renseignez-vous sur l'historique des ruptures de stock des médicaments d'intérêt thérapeutique majeur, ainsi que les chiffres autour de la gestion des ruptures."
+        source="Trustmed Base de déclaration des rutpures de stock"
+        href="/ruptures"
+        image={<OutOfStockSvg />}
+      />
+    </div>
 
-    <CardWithImage
-      className="mb-8"
-      title="Déclarations de cas d’effets indésirables"
-      description="Consultez les données de déclaration d’effets indésirables reçues, utilisées par les agents de l’ANSM dans le cadre de la surveillance des effets indésirables tout au long de la vie du médicament."
-      source="Base de données publiques du médicament, Système National des Données de Santé (CNAM)"
-      href="/globaldec"
-      image={<SickPersonSvg className="h-full" />}
-    />
+    <div className="m-auto max-w-xl lg:max-w-6xl">
+      <CardWithImage
+        className="mb-8"
+        title="Déclarations de cas d’effets indésirables"
+        description="Consultez les données de déclaration d’effets indésirables reçues, utilisées par les agents de l’ANSM dans le cadre de la surveillance des effets indésirables tout au long de la vie du médicament."
+        source="Base de données publiques du médicament, Système National des Données de Santé (CNAM)"
+        href="/globaldec"
+        image={<SickPersonSvg className="h-full" />}
+      />
+    </div>
   </div>
 );
