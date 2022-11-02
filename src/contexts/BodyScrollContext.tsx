@@ -1,5 +1,5 @@
 import type { Dispatch, HTMLAttributes, SetStateAction } from 'react';
-import { createContext, useMemo, useState, useEffect } from 'react';
+import { createContext, useMemo, useState, useEffect, useContext } from 'react';
 
 export const bodyScrollContext = createContext<{
   scrollEnabled: boolean;
@@ -31,4 +31,16 @@ export const BodyScrollProvider = ({ children }: HTMLAttributes<HTMLDivElement>)
   }, [scrollEnabled]);
 
   return <Provider value={value}>{children}</Provider>;
+};
+
+export const useBodyScrollContext = () => {
+  const context = useContext(bodyScrollContext);
+
+  if (context === undefined) {
+    throw new Error(
+      `${useBodyScrollContext.name} must be used within a ${BodyScrollProvider.name}.`
+    );
+  }
+
+  return context;
 };

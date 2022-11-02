@@ -7,12 +7,13 @@ import { SearchBar } from './SearchBar';
 import LogoBrand from '../../icons/logo.svg';
 import MenuIcon from '../../icons/menu.svg';
 import CloseIcon from '../../icons/close.svg';
-import { useRefHeight } from '../../hooks/useRefHeight';
 import type { NavLinkItem } from '../../config/config';
 import { navIconSize } from '../../config/config';
 import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
-import { useBodyScrollContext } from '../../hooks/useBodyScrollContext';
+import { useRefHeight } from '../../hooks/useRefHeight';
+import { useNavigationBarHeightContext } from '../../contexts/NavigationBarHeightContext';
+import { useBodyScrollContext } from '../../contexts/BodyScrollContext';
 
 const links: NavLinkItem[] = [
   {
@@ -30,10 +31,15 @@ export const NavigationBar = () => {
   const navbarHeight = useRefHeight(navbarRef);
   const { scrollY } = useScrollPosition();
   const isDesktop = useBreakpoint('md');
+  const { setHeight } = useNavigationBarHeightContext();
   const { setScrollEnabled } = useBodyScrollContext();
 
   const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
   const pageScrolled = scrollY > navbarHeight;
+
+  useEffect(() => {
+    setHeight(navbarHeight);
+  }, [navbarHeight, setHeight]);
 
   /**
    * @name toggleSidePanel
