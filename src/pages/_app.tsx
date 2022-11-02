@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app';
 import React from 'react';
 import { Layout } from '../components/Layouts/Layout';
 import { BodyScrollProvider } from '../contexts/BodyScrollContext';
+import { NavigationBarHeightProvider } from '../contexts/NavigationBarHeightContext';
 
 export type NextPageWithLayout<P = Record<string, unknown>, Ip = P> = NextPage<P, Ip> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -16,9 +17,11 @@ type AppPropsWithLayout = AppProps & {
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => (
   <BodyScrollProvider>
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <NavigationBarHeightProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </NavigationBarHeightProvider>
   </BodyScrollProvider>
 );
 
