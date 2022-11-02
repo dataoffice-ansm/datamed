@@ -23,19 +23,16 @@ export const NavigationLink = ({
   <ActiveLink
     href={href}
     render={(isActive) => (
-      <div className={classNames('navbarLink group', className)}>
-        <a
-          className={classNames(
-            'block',
-            'px-6 py-2 no-underline',
-            isActive
-              ? 'hover:text-primary focus:text-primary'
-              : 'hover:text-primary-700 focus:text-primary-700'
-          )}
-        >
-          {children}
-        </a>
-
+      <a
+        className={classNames(
+          'navbarLink group no-underline',
+          className,
+          isActive
+            ? 'hover:text-primary focus:text-primary'
+            : 'hover:text-primary-700 focus:text-primary-700'
+        )}
+      >
+        <div className="block px-6 py-2">{children}</div>
         {enableAnimation && (
           <div
             className={classNames(
@@ -48,7 +45,7 @@ export const NavigationLink = ({
             )}
           />
         )}
-      </div>
+      </a>
     )}
   />
 );
