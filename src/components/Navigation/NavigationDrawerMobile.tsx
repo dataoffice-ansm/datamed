@@ -20,7 +20,7 @@ export const NavigationDrawerMobile = ({
   links: Array<{ href: string; text: string }>;
 } & HTMLAttributes<HTMLDivElement>) => (
   <div
-    className={classnames('NavigationMenu fixed left-0 right-0 bottom-0 bg-[#00000070] z-[2]')}
+    className={classnames('NavigationMenu fixed left-0 right-0 bottom-0 z-[2]')}
     style={{ top: `${topFromNavbar}px` }}
     onClick={toggleOverlay}
   >

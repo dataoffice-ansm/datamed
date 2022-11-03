@@ -309,6 +309,7 @@ const skin6 = {
 };
 
 const white = '#FFFFFF';
+const overlay = '#00000070';
 
 module.exports = {
   white,
@@ -335,4 +336,5 @@ module.exports = {
   skin4,
   skin5,
   skin6,
+  overlay,
 };

@@ -1,5 +1,5 @@
 import { getByRole, getByTestId, getByText, render } from '@testing-library/react';
-import { SearchSection } from '../../../src/components/Landing/SearchSection';
+import { SearchSection } from './SearchSection';
 
 describe(SearchSection.name, () => {
   test('should render', () => {

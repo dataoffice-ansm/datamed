@@ -1,5 +1,5 @@
 import { getByTestId, render } from '@testing-library/react';
-import { AppendixAnchor } from '../../src/components/AppendixAnchor';
+import { AppendixAnchor } from './AppendixAnchor';
 
 describe(AppendixAnchor.name, () => {
   test('should render', () => {

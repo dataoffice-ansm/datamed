@@ -12,7 +12,7 @@ body {
   padding: 0;
   margin: 0;
   scroll-behavior: smooth;
-  @apply text-black font-roboto
+  @apply text-black font-roboto;
 }
 
 a {
@@ -60,7 +60,9 @@ hr {
 }
 
 // Lists
-dl, ol, ul {
+dl,
+ol,
+ul {
   @apply my-4 pl-3 list-inside;
 }
 
@@ -112,11 +114,13 @@ table {
 }
 
 // Forms
-input, textarea {
+input,
+textarea {
   @apply block px-3 py-2 border rounded text-sm;
 }
 
-input:focus, textarea:focus {
+input:focus,
+textarea:focus {
   @apply outline-none;
 }
 
@@ -124,7 +128,9 @@ label {
   @apply block mb-2 text-sm font-semibold;
 }
 
-input[type="submit"], input[type="button"], input[type="reset"] {
+input[type='submit'],
+input[type='button'],
+input[type='reset'] {
   @apply inline-block px-4 py-2 bg-grey-200 font-semibold;
 }
 
