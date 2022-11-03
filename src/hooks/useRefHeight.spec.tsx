@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
 import type { RefObject } from 'react';
 import React from 'react';
-import { useRefHeight } from '../../src/hooks/useRefHeight';
+import { useRefHeight } from './useRefHeight';
 
 describe(useRefHeight.name, () => {
   test('should trigger component height', async () => {

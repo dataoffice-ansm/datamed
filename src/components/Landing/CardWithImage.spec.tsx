@@ -1,5 +1,5 @@
 import { getByTestId, getByText, render } from '@testing-library/react';
-import { CardWithImage } from '../../../src/components/Landing/CardWithImage';
+import { CardWithImage } from './CardWithImage';
 
 describe(CardWithImage.name, () => {
   test('should render', () => {
@@ -10,7 +10,7 @@ describe(CardWithImage.name, () => {
         href="fake_url"
         source="fake_source"
         className="testclassname"
-        image={<div data-testid="fake_image"></div>}
+        image={<div data-testid="fake_image" />}
       />
     );
 

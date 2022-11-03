@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react';
-import { NavigationBar } from '../../src/components/Navigation/NavigationBar';
+import { NavigationBar } from './NavigationBar';
 
 describe(NavigationBar.name, () => {
   test.skip('should render', () => {

@@ -12,6 +12,7 @@ import type { NavLinkItem } from '../../config/config';
 import { navIconSize } from '../../config/config';
 import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
+import { useBodyScrollContext } from '../../hooks/useBodyScrollContext';
 
 const links: NavLinkItem[] = [
   {
@@ -29,6 +30,7 @@ export const NavigationBar = () => {
   const navbarHeight = useRefHeight(navbarRef);
   const { scrollY } = useScrollPosition();
   const isDesktop = useBreakpoint('md');
+  const { setScrollEnabled } = useBodyScrollContext();
 
   const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
   const pageScrolled = scrollY > navbarHeight;
@@ -44,6 +46,14 @@ export const NavigationBar = () => {
   const toggleSidePanel = useCallback(() => {
     setMobileMenuOpened((v) => !v);
   }, []);
+
+  useEffect(() => {
+    if (mobileMenuOpened) {
+      setScrollEnabled(false);
+    } else {
+      setScrollEnabled(true);
+    }
+  }, [mobileMenuOpened, setScrollEnabled]);
 
   useEffect(() => {
     if (isDesktop) {

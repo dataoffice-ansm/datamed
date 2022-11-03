@@ -3,8 +3,8 @@ import { footerLinks } from '../config/config';
 
 export const Footer = () => (
   <footer className="text-center lg:text-left bg-black text-gray-600">
-    <div className="mx-6 py-10 text-center md:text-left">
-      <div className="grid grid-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div className="py-10 text-center md:text-left container">
+      <div className="grid grid-1 md:grid-cols-3 gap-8">
         {footerLinks.map((footerLink) => (
           <div key={footerLink.title}>
             <h3 className="uppercase font-semibold mb-4 flex justify-center md:justify-start text-white">
@@ -19,7 +19,7 @@ export const Footer = () => (
             ))}
           </div>
         ))}
-        <div className="mb-4  flex">
+        <div className="mb-4 flex flex-auto justify-center items-center md:justify-end">
           <LogoWhite height={200} width={200} />
         </div>
       </div>

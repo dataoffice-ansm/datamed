@@ -49,6 +49,7 @@ module.exports = {
       'skin-4': colors.skin4,
       'skin-5': colors.skin5,
       'skin-6': colors.skin6,
+      overlay: colors.overlay,
 
       // primary
       primary: colors.darkViolet,

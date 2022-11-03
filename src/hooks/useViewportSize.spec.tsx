@@ -1,5 +1,5 @@
 import { renderHook } from '@testing-library/react';
-import { useViewportSize } from '../../src/hooks/useViewportSize';
+import { useViewportSize } from './useViewportSize';
 
 describe(useViewportSize.name, () => {
   it('should be defined', () => {

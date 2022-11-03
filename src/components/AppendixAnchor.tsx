@@ -11,10 +11,9 @@ import type { HTMLAttributes } from 'react';
 export const AppendixAnchor = ({
   appendixAnchor,
 }: HTMLAttributes<HTMLDivElement> & { appendixAnchor: string }) => (
-  <div className="appendixAnchor flex justify-center items-center relative">
-    <div className="h-28 w-28 absolute rotate-45 z-[1] bg-white shadow flex justify-center items-center" />
-    <div className="h-28 w-28 absolute z-[1] flex justify-center items-center duration-700">
-      {/* @TODO: Update scroll strategy when feature will be ready */}
+  <div className="appendixAnchor flex justify-center items-center relative z-[1]">
+    <div className="h-28 w-28 absolute rotate-45 bg-white shadow flex justify-center items-center" />
+    <div className="h-28 w-28 absolute flex justify-center items-center duration-700">
       <Link href={appendixAnchor} scroll={false}>
         <a>
           <div className="animate-bounce">
