@@ -2,34 +2,51 @@ import classnames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
 import CountUp from 'react-countup';
 import Link from 'next/link';
-import { convertToPercentage, formatPercentage } from '../utils/format';
+import { formatDecimalToUnit } from '../utils/format';
 
+/**
+ *
+ * @param value
+ * @param description
+ * @param link
+ * @param icon
+ * @param valueClassName
+ * @param id
+ * @param unit default is '%'
+ * @param className
+ * @constructor
+ */
 export const GraphFigure = ({
-  percentage,
+  value,
   description,
   link,
   icon,
-  percentageClassName = 'text-primary',
-  id,
+  unit = '%',
   className,
+  valueClassName = 'text-primary',
+  ...props
 }: HTMLAttributes<HTMLDivElement> & {
-  percentage: number;
+  value: number;
   description: string;
   link: string;
   icon: ReactNode;
-  percentageClassName?: string;
+  unit?: string;
+  valueClassName?: string;
 }) => (
   <div
-    id={id}
-    className={classnames('GraphFigure flex flex-col justify-center item-center', className)}
+    className={classnames(
+      'GraphFigure flex flex-col justify-center items-center max-w-max',
+      className
+    )}
+    {...props}
   >
     <div>{icon}</div>
-    <div className={classnames('text-3xl pl-14', percentageClassName)}>
-      <CountUp formattingFn={formatPercentage} end={convertToPercentage(percentage)} />
+    <div className={classnames('GraphFigureCountUp text-3xl', valueClassName)}>
+      <CountUp formattingFn={(n) => formatDecimalToUnit(n, unit)} end={value} />
     </div>
-    <div className="ml-12">{description}</div>
+    <div className="GraphFigureDescription">{description}</div>
     <Link href={link}>
-      <a className="text-primary ml-10">Voir détails</a>
+      <a className="GraphFigureDetails text-primary">Voir détails</a>
     </Link>
   </div>
 );

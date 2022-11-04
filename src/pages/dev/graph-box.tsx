@@ -1,6 +1,6 @@
 import { GraphBox } from '../../components/GraphBox';
 import SickPerson from '../../assets/images/sick_person.svg';
-import { DevPageLayout } from '../../components/Layouts/DevLayout';
+import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
 
 export const GraphBoxPage = () => (
   <DevPageLayout title="GraphBox">

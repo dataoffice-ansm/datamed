@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useNavBarContext } from '../../contexts/navBarContext';
 
-const components = ['/', 'graph-box'];
+const components = ['/', 'graph-box', 'graph-figure'];
 
 /**
  *
@@ -38,12 +38,8 @@ export const DevPageLayout = ({ title, children }: { title?: string; children?: 
       </div>
 
       <div className="component flex-1 p-2">
-        {title && children && (
-          <>
-            <h2 className="mt-0">{title}</h2>
-            <div className="my-4">{children}</div>
-          </>
-        )}
+        {title && <h2 className="mt-0">{title}</h2>}
+        {children && <div className="my-4">{children}</div>}
       </div>
     </div>
   );
