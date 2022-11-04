@@ -3,6 +3,8 @@ import type { ReactElement, ReactNode } from 'react';
 import type { NextPage } from 'next';
 import type { AppProps } from 'next/app';
 import React from 'react';
+import { SWRConfig } from 'swr';
+
 import { Layout } from '../components/Layouts/Layout';
 import { BodyScrollProvider } from '../contexts/bodyScrollContext';
 import { NavBarProvider } from '../contexts/navBarContext';
@@ -16,13 +18,15 @@ type AppPropsWithLayout = AppProps & {
 };
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => (
-  <BodyScrollProvider>
-    <NavBarProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </NavBarProvider>
-  </BodyScrollProvider>
+  <SWRConfig>
+    <BodyScrollProvider>
+      <NavBarProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </NavBarProvider>
+    </BodyScrollProvider>
+  </SWRConfig>
 );
 
 export default MyApp;

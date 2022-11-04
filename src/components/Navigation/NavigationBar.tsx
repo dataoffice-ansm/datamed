@@ -24,6 +24,10 @@ const links: NavLinkItem[] = [
     text: 'A propos',
     href: '/a-propos',
   },
+  {
+    text: 'DEV',
+    href: '/dev',
+  },
 ];
 
 export const NavigationBar = () => {
