@@ -2,7 +2,7 @@ import { Footer } from '../Footer';
 import React from 'react';
 import { NavigationBar } from '../Navigation/NavigationBar';
 
-import { useNavBarContext } from '../../contexts/navBarContext';
+import { useLayoutContext } from '../../contexts/layoutContext';
 import { useBodyScrollContext } from '../../contexts/bodyScrollContext';
 
 /**
@@ -11,7 +11,7 @@ import { useBodyScrollContext } from '../../contexts/bodyScrollContext';
  * @constructor
  */
 export const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { navBarHeight } = useNavBarContext();
+  const { navBarHeight } = useLayoutContext();
   const { scrollEnabled } = useBodyScrollContext();
 
   return (

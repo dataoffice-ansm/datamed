@@ -2,6 +2,7 @@ import { NavPageLayout } from '../../components/Layouts/NavPageLayout';
 
 export const Index = () => (
   <NavPageLayout
+    category="sub"
     colorMenu="primary"
     sections={[
       {
@@ -15,13 +16,7 @@ export const Index = () => (
         content: <section className="h-96"> section 2 </section>,
       },
     ]}
-    render={(content) => (
-      <>
-        <div>beforeContent</div>
-        {content}
-        <div>afterContent</div>
-      </>
-    )}
+    render={(content) => content}
   />
 );
 
