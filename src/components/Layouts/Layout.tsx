@@ -11,13 +11,16 @@ import { useBodyScrollContext } from '../../contexts/BodyScrollContext';
  * @constructor
  */
 export const Layout = ({ children }: { children: React.ReactNode }) => {
-  const { height } = useNavigationBarHeightContext();
+  const { height: navigationBarHeight } = useNavigationBarHeightContext();
   const { scrollEnabled } = useBodyScrollContext();
 
   return (
     <>
       <NavigationBar />
-      <main style={{ paddingTop: `${height}px` }}>
+      <main
+        className="ease-linear transition-padding duration-200"
+        style={{ paddingTop: `${navigationBarHeight}px` }}
+      >
         <div className="max-md:px-3 md:container max-w-full md:mx-auto">{children}</div>
       </main>
       <Footer />

@@ -1,5 +1,5 @@
 import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
-import { Tooltip } from '../../src/components/Tooltip';
+import { Tooltip } from './Tooltip';
 
 describe(Tooltip.name, () => {
   const expectOnMouseEnter = async (resultToFind: string) => {

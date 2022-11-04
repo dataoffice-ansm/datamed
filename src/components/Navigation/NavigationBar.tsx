@@ -28,18 +28,21 @@ const links: NavLinkItem[] = [
 
 export const NavigationBar = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
-  const navbarHeight = useRefHeight(navbarRef);
+  const navigationBarRefHeight = useRefHeight(navbarRef);
+
   const { scrollY } = useScrollPosition();
   const isDesktop = useBreakpoint('md');
-  const { setHeight } = useNavigationBarHeightContext();
+  const { height: navigationBarContextHeight, setHeight } = useNavigationBarHeightContext();
   const { setScrollEnabled } = useBodyScrollContext();
 
   const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
-  const pageScrolled = scrollY > navbarHeight;
+  const pageScrolled = scrollY > navigationBarContextHeight;
 
   useEffect(() => {
-    setHeight(navbarHeight);
-  }, [navbarHeight, setHeight]);
+    if (navigationBarRefHeight) {
+      setHeight(navigationBarRefHeight);
+    }
+  }, [navigationBarRefHeight, setHeight]);
 
   /**
    * @name toggleSidePanel
@@ -74,9 +77,12 @@ export const NavigationBar = () => {
         className={classnames(
           'navbar',
           'flex justify-between items-center gap-4',
-          'z-[2] fixed p-4 md:p-6 left-0 right-0 bg-white top-0',
+          'z-[2] fixed px-6 left-0 right-0 bg-white top-0',
           'ease-in-out duration-200 transition-padding',
-          pageScrolled && 'py-2 md:py-3 shadow'
+          {
+            'h-20': !pageScrolled,
+            'h-14 md:h-16 py-2 md:py-3 shadow': pageScrolled,
+          }
         )}
       >
         <button
@@ -117,7 +123,7 @@ export const NavigationBar = () => {
         <NavigationDrawerMobile
           links={links}
           toggleOverlay={toggleSidePanel}
-          topFromNavbar={navbarHeight}
+          topFromNavbar={navigationBarContextHeight}
         />
       )}
     </>
