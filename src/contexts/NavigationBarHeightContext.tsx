@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
 
-export const defaultNavigationBarHeightPx = 114;
+export const defaultNavigationBarHeightPx = 80;
 
 export const navigationBarContext = createContext<{
   setHeight: (height: number) => void;
