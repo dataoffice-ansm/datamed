@@ -12,8 +12,8 @@ import { navIconSize } from '../../config/config';
 import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { useRefHeight } from '../../hooks/useRefHeight';
-import { useNavigationBarHeightContext } from '../../contexts/NavigationBarHeightContext';
-import { useBodyScrollContext } from '../../contexts/BodyScrollContext';
+import { useNavBarContext } from '../../contexts/navBarContext';
+import { useBodyScrollContext } from '../../contexts/bodyScrollContext';
 
 const links: NavLinkItem[] = [
   {
@@ -28,21 +28,21 @@ const links: NavLinkItem[] = [
 
 export const NavigationBar = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
-  const navigationBarRefHeight = useRefHeight(navbarRef);
+  const navBarRefHeight = useRefHeight(navbarRef);
 
   const { scrollY } = useScrollPosition();
   const isDesktop = useBreakpoint('md');
-  const { height: navigationBarContextHeight, setHeight } = useNavigationBarHeightContext();
+  const { height: navBarContextHeight, setHeight } = useNavBarContext();
   const { setScrollEnabled } = useBodyScrollContext();
 
   const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
-  const pageScrolled = scrollY > navigationBarContextHeight;
+  const pageScrolled = scrollY > navBarContextHeight;
 
   useEffect(() => {
-    if (navigationBarRefHeight) {
-      setHeight(navigationBarRefHeight);
+    if (navBarRefHeight) {
+      setHeight(navBarRefHeight);
     }
-  }, [navigationBarRefHeight, setHeight]);
+  }, [navBarRefHeight, setHeight]);
 
   /**
    * @name toggleSidePanel
@@ -123,7 +123,7 @@ export const NavigationBar = () => {
         <NavigationDrawerMobile
           links={links}
           toggleOverlay={toggleSidePanel}
-          topFromNavbar={navigationBarContextHeight}
+          topFromNavbar={navBarContextHeight}
         />
       )}
     </>

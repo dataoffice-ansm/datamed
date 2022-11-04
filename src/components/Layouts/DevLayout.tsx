@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { useNavigationBarHeightContext } from '../../contexts/NavigationBarHeightContext';
+import { useNavBarContext } from '../../contexts/navBarContext';
 
 const components = ['/', 'graph-box'];
 
@@ -11,7 +11,7 @@ const components = ['/', 'graph-box'];
  * @constructor
  */
 export const DevPageLayout = ({ title, children }: { title?: string; children?: ReactNode }) => {
-  const { height } = useNavigationBarHeightContext();
+  const { height } = useNavBarContext();
   return (
     <div className="ComponentDevLayout flex gap-2 relative">
       <div className="ComponentDevNav border-r border-solid border-grey-400 p-2 w-40">
