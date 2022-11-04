@@ -1,16 +1,16 @@
-import { GraphFigure } from '../../src/components/GraphFigure';
-import { getByAltText, getByTestId, getByText, render } from '@testing-library/react';
+import { GraphFigure } from './GraphFigure';
+import { getByTestId, getByText, render } from '@testing-library/react';
 import WomanIllustration from '../../src/assets/images/woman_illustration.svg';
 
 describe(GraphFigure.name, () => {
   test('should render', () => {
     const graphFigure = render(
       <GraphFigure
-        percentage={0}
-        percentageClassName="text-turquoise"
+        value={0}
+        valueClassName="text-turquoise"
         description="fake description"
         link="http://fake.com"
-        icon={<WomanIllustration alt="woman-svg" width={150} heigth={150} />}
+        icon={<WomanIllustration alt="woman-svg" width={150} height={150} />}
       />
     );
 

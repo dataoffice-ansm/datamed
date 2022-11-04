@@ -1,4 +1,4 @@
-import { DevPageLayout } from '../../components/Layouts/DevLayout';
+import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
 
 const UiPage = () => (
   <DevPageLayout title="Palette colors">
