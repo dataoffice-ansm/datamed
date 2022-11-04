@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useNavigationBarHeightContext } from '../../contexts/NavigationBarHeightContext';
 
-const components = ['/'];
+const components = ['/', 'graph-box'];
 
 /**
  *

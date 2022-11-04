@@ -1,13 +1,15 @@
 import { GraphBox } from '../../components/GraphBox';
 import SickPerson from '../../assets/images/sick_person.svg';
+import { DevPageLayout } from '../../components/Layouts/DevLayout';
 
 export const GraphBoxPage = () => (
-  <div>
-    <h2 className="underline"> GraphBox </h2>
-    <GraphBox title="Répartition par sexe des patients traités">
-      <SickPerson width={150} heigth={150} />
-    </GraphBox>
-  </div>
+  <DevPageLayout title="GraphBox">
+    <div className="my-4">
+      <GraphBox title="Répartition par sexe des patients traités">
+        <SickPerson width={150} heigth={150} />
+      </GraphBox>
+    </div>
+  </DevPageLayout>
 );
 
 export default GraphBoxPage;
