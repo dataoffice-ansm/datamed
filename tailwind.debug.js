@@ -6,7 +6,7 @@ Please re-run script in /bin folder to refresh it
 
 const theme = {
   fontFamily: {
-    roboto: ['Roboto Slab', 'sans-serif'],
+    roboto: ['Roboto', 'sans-serif'],
   },
   container: {
     center: true,
