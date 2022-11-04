@@ -1,10 +1,10 @@
 import LandingIllustration from '../../assets/images/landing_illustration.svg';
 import Logo from '../../assets/images/logo_ansm.svg';
 import { FullScreenSection } from '../FullScreenSection';
-import { useNavBarContext } from '../../contexts/navBarContext';
+import { useLayoutContext } from '../../contexts/layoutContext';
 
 export const IntroductionSection = () => {
-  const { navBarHeight } = useNavBarContext();
+  const { navBarHeight } = useLayoutContext();
 
   return (
     <FullScreenSection className="bg-white" appendixAnchor="#search" offsetHeight={navBarHeight}>

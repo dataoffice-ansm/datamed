@@ -7,7 +7,7 @@ import { SWRConfig } from 'swr';
 
 import { Layout } from '../components/Layouts/Layout';
 import { BodyScrollProvider } from '../contexts/bodyScrollContext';
-import { NavBarProvider } from '../contexts/navBarContext';
+import { LayoutProvider } from '../contexts/layoutContext';
 
 export type NextPageWithLayout<P = Record<string, unknown>, Ip = P> = NextPage<P, Ip> & {
   getLayout?: (page: ReactElement) => ReactNode;
@@ -19,13 +19,13 @@ type AppPropsWithLayout = AppProps & {
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => (
   <SWRConfig>
-    <BodyScrollProvider>
-      <NavBarProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </NavBarProvider>
-    </BodyScrollProvider>
+  <BodyScrollProvider>
+    <LayoutProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </LayoutProvider>
+  </BodyScrollProvider>
   </SWRConfig>
 );
 

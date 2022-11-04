@@ -1,11 +1,6 @@
 .tooltip-container {
-
-  .tooltip-arrow::after {
-    left: 5px !important;
-  }
-
   //white
-  &[data-theme="white"] {
+  &[data-theme='white'] {
     @apply bg-white text-black border-white;
 
     &[data-popper-placement*='right'] {
@@ -34,7 +29,7 @@
   }
 
   //turquoise
-  &[data-theme="turquoise"] {
+  &[data-theme='turquoise'] {
     @apply bg-turquoise text-white border-turquoise;
 
     &[data-popper-placement*='right'] {

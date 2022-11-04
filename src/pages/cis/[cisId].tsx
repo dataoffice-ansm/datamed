@@ -1,5 +1,4 @@
 import { NavPageLayout } from '../../components/Layouts/NavPageLayout';
-import React from 'react';
 
 const SectionOneGlobalInformation = () => (
   <div className="min-h-screen text-center">
@@ -21,6 +20,7 @@ const SectionThree = () => (
 
 const PageSpeciality = () => (
   <NavPageLayout
+    category="cis"
     colorMenu="primary"
     sections={[
       {
@@ -39,13 +39,7 @@ const PageSpeciality = () => (
         content: <SectionThree />,
       },
     ]}
-    render={(content) => (
-      <>
-        <div>beforeContent</div>
-        {content}
-        <div>afterContent</div>
-      </>
-    )}
+    render={(content) => content}
   />
 );
 

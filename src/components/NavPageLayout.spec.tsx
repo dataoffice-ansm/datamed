@@ -28,6 +28,7 @@ describe(NavPageLayout.name, () => {
   ])('should render %s with theme %p', (color, colorTheme) => {
     const wrapper = render(
       <NavPageLayout
+        category="cis"
         colorMenu={colorTheme}
         sections={[
           {

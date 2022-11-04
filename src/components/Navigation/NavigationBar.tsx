@@ -12,7 +12,7 @@ import { navIconSize } from '../../config/config';
 import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { useRefHeight } from '../../hooks/useRefHeight';
-import { useNavBarContext } from '../../contexts/navBarContext';
+import { useLayoutContext } from '../../contexts/layoutContext';
 import { useBodyScrollContext } from '../../contexts/bodyScrollContext';
 
 const links: NavLinkItem[] = [
@@ -36,7 +36,7 @@ export const NavigationBar = () => {
 
   const { scrollY } = useScrollPosition();
   const isDesktop = useBreakpoint('md');
-  const { navBarHeight, setNavBarHeight } = useNavBarContext();
+  const { navBarHeight, setNavBarHeight } = useLayoutContext();
   const { setScrollEnabled } = useBodyScrollContext();
 
   const [mobileMenuOpened, setMobileMenuOpened] = useState(false);

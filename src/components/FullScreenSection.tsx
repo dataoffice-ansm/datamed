@@ -20,7 +20,7 @@ export const FullScreenSection = ({
   offsetHeight?: number;
 }) => (
   <>
-    <FullWidthRow className={className} style={{ height: `calc(100vh - ${offsetHeight}px` }}>
+    <FullWidthRow className={className} style={{ minHeight: `calc(100vh - ${offsetHeight}px)` }}>
       {children}
     </FullWidthRow>
     {appendixAnchor && <AppendixAnchor appendixAnchor={appendixAnchor} />}

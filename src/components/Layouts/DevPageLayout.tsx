@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { useNavBarContext } from '../../contexts/navBarContext';
+import { useLayoutContext } from '../../contexts/layoutContext';
 
 const components = ['graph-box', 'graph-figure'];
 
@@ -11,7 +11,7 @@ const components = ['graph-box', 'graph-figure'];
  * @constructor
  */
 export const DevPageLayout = ({ title, children }: { title?: string; children?: ReactNode }) => {
-  const { navBarHeight } = useNavBarContext();
+  const { navBarHeight } = useLayoutContext();
   return (
     <div className="ComponentDevLayout flex gap-2 relative">
       <div className="ComponentDevNav border-r border-solid border-grey-400 p-2 w-40">
