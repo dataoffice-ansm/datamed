@@ -1,5 +1,6 @@
 import type React from 'react';
-import { useState, useLayoutEffect } from 'react';
+import { useState } from 'react';
+import { useIsomorphicLayoutEffect } from '../utils/web';
 
 /**
  *
@@ -8,7 +9,7 @@ import { useState, useLayoutEffect } from 'react';
 export const useRefHeight = (elementRef: React.RefObject<HTMLDivElement>) => {
   const [elementHeight, setElementHeight] = useState<number | undefined>(undefined);
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     setElementHeight(elementRef.current?.offsetHeight);
   }, [elementRef, elementRef.current?.offsetHeight]);
 

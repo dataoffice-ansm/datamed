@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useNavBarContext } from '../../contexts/navBarContext';
 
-const components = ['/', 'graph-box', 'graph-figure'];
+const components = ['graph-box', 'graph-figure'];
 
 /**
  *
