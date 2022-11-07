@@ -23,7 +23,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   const data = await getSpecialitiesPaths();
-  if (data.codes) {
+  if (data?.codes) {
     const paths = data.codes.map((cisId) => ({
       params: { cisId },
     }));
