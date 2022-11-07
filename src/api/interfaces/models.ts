@@ -17,10 +17,10 @@ type MedicalError = {
   name: string;
 };
 
-type Substance = {
+export type Substance = {
   id: string;
   name: string;
-  code: string;
+  description: string;
 };
 
 type RepartitionTuple = {

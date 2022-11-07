@@ -1,8 +1,11 @@
 import type { NextApiRequest } from 'next';
 import { mockSpecialitiesData } from '../mocks/specialities.mock';
+import { mockSubstancesData } from '../mocks/substances.mock';
 import type { NextApiResponse } from 'next';
-import type { GetSingleCisControllerResponse } from '../services/interfaces';
-import type { GetCisPathsControllerResponse } from '../services/interfaces';
+import type { GetSingleCisControllerResponse } from '../interfaces/services';
+import type { GetCisPathsControllerResponse } from '../interfaces/services';
+import type { GetFindResultsControllerResponse } from '../interfaces/services';
+import type { GetFindResultResponse } from '../interfaces/services';
 
 /**
  *

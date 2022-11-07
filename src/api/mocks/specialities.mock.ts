@@ -1,4 +1,4 @@
-import type { Speciality } from '../models';
+import type { Speciality } from '../interfaces/models';
 
 export const mockSpecialitiesData: Speciality[] = [
   {

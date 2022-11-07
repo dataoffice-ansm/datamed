@@ -1,6 +1,6 @@
 import type { GetStaticPaths, GetStaticProps } from 'next';
 import { getSpecialitiesPaths, getSingleSpeciality } from '../../../services/specialities';
-import type { Speciality } from '../../../api/models';
+import type { Speciality } from '../../../api/interfaces/models';
 import type { ParsedUrlQuery } from 'querystring';
 import { SpecialityPage } from '../../../components/Speciality/SpecialityPage';
 
