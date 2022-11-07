@@ -11,11 +11,11 @@ const components = ['graph-box', 'graph-figure'];
  * @constructor
  */
 export const DevPageLayout = ({ title, children }: { title?: string; children?: ReactNode }) => {
-  const { height } = useNavBarContext();
+  const { navBarHeight } = useNavBarContext();
   return (
     <div className="ComponentDevLayout flex gap-2 relative">
       <div className="ComponentDevNav border-r border-solid border-grey-400 p-2 w-40">
-        <div className="sticky" style={{ top: height + 10 }}>
+        <div className="sticky" style={{ top: navBarHeight + 10 }}>
           <p className="font-bold mt-0">Components</p>
           <ul>
             {components.map((componentName) => (

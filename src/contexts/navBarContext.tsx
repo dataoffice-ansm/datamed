@@ -4,18 +4,18 @@ import { createContext, useContext, useMemo, useState } from 'react';
 export const defaultNavBarHeightPx = 80;
 
 export const navBarContext = createContext<{
-  setHeight: Dispatch<SetStateAction<number>>;
-  height: number;
+  setNavBarHeight: Dispatch<SetStateAction<number>>;
+  navBarHeight: number;
 }>({
-  setHeight: () => null,
-  height: defaultNavBarHeightPx,
+  setNavBarHeight: () => null,
+  navBarHeight: defaultNavBarHeightPx,
 });
 
 const { Provider } = navBarContext;
 
 export const NavBarProvider = ({ children }: HTMLAttributes<HTMLDivElement>) => {
-  const [height, setHeight] = useState(defaultNavBarHeightPx);
-  const value = useMemo(() => ({ setHeight, height }), [height, setHeight]);
+  const [navBarHeight, setNavBarHeight] = useState(defaultNavBarHeightPx);
+  const value = useMemo(() => ({ navBarHeight, setNavBarHeight }), [navBarHeight, setNavBarHeight]);
 
   return <Provider value={value}>{children}</Provider>;
 };
