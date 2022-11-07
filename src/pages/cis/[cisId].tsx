@@ -1,5 +1,6 @@
 import { NavPageLayout } from '../../components/Layouts/NavPageLayout';
 import React from 'react';
+import CisSvg from '../../assets/icons/cis.svg';
 
 const SectionOneGlobalInformation = () => (
   <div className="min-h-screen text-center">

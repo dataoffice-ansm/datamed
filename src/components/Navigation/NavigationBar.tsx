@@ -32,17 +32,17 @@ export const NavigationBar = () => {
 
   const { scrollY } = useScrollPosition();
   const isDesktop = useBreakpoint('md');
-  const { height: navBarContextHeight, setHeight } = useNavBarContext();
+  const { navBarHeight, setNavBarHeight } = useNavBarContext();
   const { setScrollEnabled } = useBodyScrollContext();
 
   const [mobileMenuOpened, setMobileMenuOpened] = useState(false);
-  const pageScrolled = scrollY > navBarContextHeight;
+  const pageScrolled = scrollY > navBarHeight;
 
   useEffect(() => {
     if (navBarRefHeight) {
-      setHeight(navBarRefHeight);
+      setNavBarHeight(navBarRefHeight);
     }
-  }, [navBarRefHeight, setHeight]);
+  }, [navBarRefHeight, setNavBarHeight]);
 
   /**
    * @name toggleSidePanel
@@ -123,7 +123,7 @@ export const NavigationBar = () => {
         <NavigationDrawerMobile
           links={links}
           toggleOverlay={toggleSidePanel}
-          topFromNavbar={navBarContextHeight}
+          topFromNavbar={navBarHeight}
         />
       )}
     </>
