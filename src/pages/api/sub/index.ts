@@ -1,9 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSingleCisController } from '../../../api/controllers/specialitiesController';
 
-const userHandler = async (req: NextApiRequest, res: NextApiResponse) => {
+const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
-
   switch (method) {
     // Preflight Check:
     case 'OPTIONS': {
@@ -12,9 +10,10 @@ const userHandler = async (req: NextApiRequest, res: NextApiResponse) => {
       break;
     }
 
-    case 'GET':
-      getSingleCisController(req, res);
+    case 'GET': {
+      res.end('root');
       break;
+    }
 
     default:
       res.setHeader('Allow', ['GET', 'OPTIONS']);
@@ -22,4 +21,4 @@ const userHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   }
 };
 
-export default userHandler;
+export default handler;

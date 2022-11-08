@@ -11,7 +11,9 @@ type ContextParams = {
 // eslint-disable-next-line @typescript-eslint/naming-convention
 const PageCisSSR = ({ cis }: { cis: Speciality }) => <SpecialityPage cis={cis} />;
 
-export const getServerSideProps: GetServerSideProps<{ cis?: Speciality }> = async (context) => {
+export const getServerSideProps: GetServerSideProps<{ cis?: Partial<Speciality> }> = async (
+  context
+) => {
   const { cisId } = context.params as ContextParams;
   const cis = await getSingleSpeciality(cisId);
 

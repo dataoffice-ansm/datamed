@@ -4,13 +4,13 @@ export type Speciality = {
   name: string;
   description: string;
   pharmaForm: 'capsule';
-  substances?: Substance[];
-  genderRepartition?: {
+  substances: Substance[];
+  genderRepartition: {
     male: number;
     female: number;
   };
-  ageRepartition?: RepartitionTuple[];
-  medicalErrors?: MedicalError[];
+  ageRepartition: RepartitionTuple[];
+  medicalErrors: MedicalError[];
 };
 
 type MedicalError = {

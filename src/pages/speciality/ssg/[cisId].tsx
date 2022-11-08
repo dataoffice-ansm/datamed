@@ -33,7 +33,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   return { paths: [], fallback: true };
 };
 
-export const getStaticProps: GetStaticProps<{ cis?: Speciality }> = async (context) => {
+export const getStaticProps: GetStaticProps<{ cis?: Partial<Speciality> }> = async (context) => {
   const { cisId } = context.params as ContextParams;
   const cis = await getSingleSpeciality(cisId);
 
