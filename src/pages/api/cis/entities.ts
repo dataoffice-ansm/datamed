@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getListEntitiesController } from '../../../api/controllers/entitiesController';
+import { getCisEntitiesController } from '../../../api/controllers/specialitiesController';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -12,7 +12,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     case 'GET': {
-      getListEntitiesController(req, res);
+      getCisEntitiesController(req, res);
       break;
     }
 

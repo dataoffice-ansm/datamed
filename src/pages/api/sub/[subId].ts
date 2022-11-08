@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getSingleCisController } from '../../../api/controllers/specialitiesController';
+import { getSingleSubstanceController } from '../../../api/controllers/substancesController';
 
 const userHandler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
@@ -13,7 +13,7 @@ const userHandler = async (req: NextApiRequest, res: NextApiResponse) => {
     }
 
     case 'GET':
-      getSingleCisController(req, res);
+      getSingleSubstanceController(req, res);
       break;
 
     default:

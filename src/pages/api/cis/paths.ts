@@ -1,5 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import { getCisPathsController } from '../../../api/controllers/cisController';
+import { getCisPathsController } from '../../../api/controllers/specialitiesController';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
