@@ -1,9 +1,9 @@
-import { NavPageLayout } from '../../components/Layouts/NavPageLayout';
+import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
 
 export const Index = () => (
-  <NavPageLayout
+  <EntityPageLayout
     category="sub"
-    colorMenu="primary"
+    colorMenu="secondary"
     sections={[
       {
         id: 'section1',
