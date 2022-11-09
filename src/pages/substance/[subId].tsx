@@ -16,6 +16,11 @@ export const Index = () => (
           label: 'section2',
           content: <section className="h-96"> section 2 </section>,
         },
+        {
+          id: 'section3',
+          label: 'section3',
+          content: <section className="h-96"> section 3 </section>,
+        },
       ]}
       render={(content) => content}
     />
