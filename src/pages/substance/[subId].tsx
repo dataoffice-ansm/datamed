@@ -1,23 +1,25 @@
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
+import { EntityProvider } from '../../contexts/EntityContext';
 
 export const Index = () => (
-  <EntityPageLayout
-    category="sub"
-    colorMenu="secondary"
-    sections={[
-      {
-        id: 'section1',
-        label: 'section1',
-        content: <section className="h-96"> section 1 </section>,
-      },
-      {
-        id: 'section2',
-        label: 'section2',
-        content: <section className="h-96"> section 2 </section>,
-      },
-    ]}
-    render={(content) => content}
-  />
+  <EntityProvider cis={null}>
+    <EntityPageLayout
+      colorMenu="primary"
+      sections={[
+        {
+          id: 'section1',
+          label: 'section1',
+          content: <section className="h-96"> section 1 </section>,
+        },
+        {
+          id: 'section2',
+          label: 'section2',
+          content: <section className="h-96"> section 2 </section>,
+        },
+      ]}
+      render={(content) => content}
+    />
+  </EntityProvider>
 );
 
 export default Index;

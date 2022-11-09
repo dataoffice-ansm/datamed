@@ -12,8 +12,8 @@ import { navIconSize } from '../../config/config';
 import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { useRefHeight } from '../../hooks/useRefHeight';
-import { useLayoutContext } from '../../contexts/layoutContext';
-import { useBodyScrollContext } from '../../contexts/bodyScrollContext';
+import { useLayoutContext } from '../../contexts/LayoutContext';
+import { useBodyScrollContext } from '../../contexts/BodyScrollContext';
 
 const links: NavLinkItem[] = [
   {

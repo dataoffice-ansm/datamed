@@ -5,9 +5,10 @@ import type { ReactNode } from 'react';
 import React, { Fragment, useMemo } from 'react';
 import { Link } from 'react-scroll';
 import { useBreakpoint } from '../../../hooks/useTailwindBreakpoint';
-import { useLayoutContext } from '../../../contexts/layoutContext';
+import { useLayoutContext } from '../../../contexts/LayoutContext';
 import { HeroHeader } from '../../HeroHeader/HeroHeader';
 import { FullWidthRow } from '../../FullWidthRow/FullWidthRow';
+import { useEntityContext } from '../../../contexts/EntityContext';
 
 export type SectionNavProps = {
   id: string;
@@ -32,16 +33,15 @@ export const EntityPageLayout = ({
   render,
   sections,
   id,
-  category,
 }: React.HTMLAttributes<HTMLDivElement> & {
   defaultSelectedSection?: number;
   colorMenu?: 'primary' | 'secondary';
   sections: SectionItemProps[];
   render: (content: ReactNode) => ReactNode;
-  category: 'sub' | 'cis';
 }) => {
   const { navBarHeight, stickyHeroHeight } = useLayoutContext();
   const isDesktop = useBreakpoint('md');
+  const { currentCis } = useEntityContext();
   const sectionsNav: SectionNavProps[] = sections.map(({ id, label }) => ({
     id,
     label,
@@ -72,7 +72,7 @@ export const EntityPageLayout = ({
                   tabIndex={1}
                   id={id}
                   className={classnames(
-                    'outline-0 text-grey cursor-pointer md:text-right pr-6',
+                    'text-grey cursor-pointer md:text-right pr-6',
                     selected ? 'selected font-bold' : 'notSelected',
                     colorMenu === 'primary' && 'hover:text-primary',
                     colorMenu === 'secondary' && 'hover:text-secondary',
@@ -131,7 +131,7 @@ export const EntityPageLayout = ({
 
   const renderLayout = (children: ReactNode): JSX.Element => (
     <div>
-      <HeroHeader category={category} />
+      <HeroHeader />
       <FullWidthRow className="bg-background">
         <div className="w-full">{children}</div>
       </FullWidthRow>

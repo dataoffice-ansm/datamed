@@ -1,8 +1,8 @@
 import type { Dispatch, HTMLAttributes, SetStateAction } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
 
-export const defaultNavBarHeightPx = 80;
-export const defaultStickyHeroHeight = 64;
+export const navBarHeightPx = 80;
+export const stickyHeroHeightPx = 64;
 
 export const layoutContext = createContext<{
   navBarHeight: number;
@@ -10,8 +10,8 @@ export const layoutContext = createContext<{
   setNavBarHeight: Dispatch<SetStateAction<number>>;
   setStickyHeroHeight: Dispatch<SetStateAction<number>>;
 }>({
-  navBarHeight: defaultNavBarHeightPx,
-  stickyHeroHeight: defaultStickyHeroHeight,
+  navBarHeight: navBarHeightPx,
+  stickyHeroHeight: stickyHeroHeightPx,
   setNavBarHeight: () => null,
   setStickyHeroHeight: () => null,
 });
@@ -19,8 +19,9 @@ export const layoutContext = createContext<{
 const { Provider } = layoutContext;
 
 export const LayoutProvider = ({ children }: HTMLAttributes<HTMLDivElement>) => {
-  const [navBarHeight, setNavBarHeight] = useState(defaultNavBarHeightPx);
-  const [stickyHeroHeight, setStickyHeroHeight] = useState(defaultStickyHeroHeight);
+  const [navBarHeight, setNavBarHeight] = useState(navBarHeightPx);
+  const [stickyHeroHeight, setStickyHeroHeight] = useState(stickyHeroHeightPx);
+
   const value = useMemo(
     () => ({
       navBarHeight,

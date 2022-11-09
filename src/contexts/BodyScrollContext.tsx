@@ -1,15 +1,13 @@
 import type { Dispatch, HTMLAttributes, SetStateAction } from 'react';
 import { createContext, useMemo, useState, useEffect, useContext } from 'react';
 
-export const bodyScrollContext = createContext<{
+export const BodyScrollContext = createContext<{
   scrollEnabled: boolean;
   setScrollEnabled: Dispatch<SetStateAction<boolean>>;
 }>({
   scrollEnabled: true,
   setScrollEnabled: () => null,
 });
-
-const { Provider } = bodyScrollContext;
 
 export const BodyScrollProvider = ({ children }: HTMLAttributes<HTMLDivElement>) => {
   const [scrollEnabled, setScrollEnabled] = useState(true);
@@ -30,11 +28,11 @@ export const BodyScrollProvider = ({ children }: HTMLAttributes<HTMLDivElement>)
     };
   }, [scrollEnabled]);
 
-  return <Provider value={value}>{children}</Provider>;
+  return <BodyScrollContext.Provider value={value}>{children}</BodyScrollContext.Provider>;
 };
 
 export const useBodyScrollContext = () => {
-  const context = useContext(bodyScrollContext);
+  const context = useContext(BodyScrollContext);
 
   if (context === undefined) {
     throw new Error(
