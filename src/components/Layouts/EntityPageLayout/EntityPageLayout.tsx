@@ -41,7 +41,6 @@ export const EntityPageLayout = ({
 }) => {
   const { navBarHeight, stickyHeroHeight } = useLayoutContext();
   const isDesktop = useBreakpoint('md');
-  const { currentCis } = useEntityContext();
   const sectionsNav: SectionNavProps[] = sections.map(({ id, label }) => ({
     id,
     label,
@@ -114,19 +113,14 @@ export const EntityPageLayout = ({
       <div className="content flex-1 my-4">
         {render(
           sections.map(({ id, content }) => (
-            <section
-              key={id}
-              id={id}
-              className="ease-linear duration-300 transition-padding my-2"
-              style={{ paddingTop: stickyHeroHeight }}
-            >
+            <section key={id} id={id} className="ease-linear duration-300 transition-padding my-2">
               <div className="border border-solid border-gray-500">{content}</div>
             </section>
           ))
         )}
       </div>
     ),
-    [render, sections, stickyHeroHeight]
+    [render, sections]
   );
 
   const renderLayout = (children: ReactNode): JSX.Element => (

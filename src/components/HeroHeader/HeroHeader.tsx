@@ -34,15 +34,19 @@ const entitiesOptionsMapping: {
   },
 };
 
+/**
+ *
+ * @param id
+ * @constructor
+ */
 export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
   const { navBarHeight, setStickyHeroHeight } = useLayoutContext();
   const { scrollY } = useScrollPosition();
   const ref = useRef<HTMLDivElement>(null);
   const heightRef = useRefHeight(ref);
   const { currentCis } = useEntityContext();
-  const pageScrolled = heightRef && scrollY > heightRef;
+  const pageScrolled = heightRef && scrollY >= heightRef;
   const entityType = currentCis ? 'cis' : 'sub';
-
   const { theme, icon, tooltip } = entitiesOptionsMapping[entityType];
 
   useEffect(() => {
