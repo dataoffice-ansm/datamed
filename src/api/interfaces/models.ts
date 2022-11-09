@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-warning-comments
 // TODO Draft a cabler avec la BDD en cours de préparation
 export type Speciality = {
   id: string;
