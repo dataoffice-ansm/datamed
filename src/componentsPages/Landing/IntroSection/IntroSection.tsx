@@ -1,7 +1,7 @@
 import LandingIllustration from '../../../assets/images/landing_illustration.svg';
 import Logo from '../../../assets/images/logo_ansm.svg';
 import { FullScreenSection } from '../../../components/FullScreenSection/FullScreenSection';
-import { useLayoutContext } from '../../../contexts/layoutContext';
+import { useLayoutContext } from '../../../contexts/LayoutContext';
 
 export const IntroSection = () => {
   const { navBarHeight } = useLayoutContext();

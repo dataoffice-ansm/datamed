@@ -2,8 +2,8 @@ import { Footer } from '../Footer';
 import React from 'react';
 import { NavigationBar } from '../NavBar/NavigationBar';
 
-import { useLayoutContext } from '../../contexts/layoutContext';
-import { useBodyScrollContext } from '../../contexts/bodyScrollContext';
+import { useLayoutContext } from '../../contexts/LayoutContext';
+import { useBodyScrollContext } from '../../contexts/BodyScrollContext';
 
 /**
  *

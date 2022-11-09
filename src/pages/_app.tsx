@@ -6,8 +6,8 @@ import React from 'react';
 import { SWRConfig } from 'swr';
 
 import { AppLayout } from '../components/Layouts/AppLayout';
-import { BodyScrollProvider } from '../contexts/bodyScrollContext';
-import { LayoutProvider } from '../contexts/layoutContext';
+import { BodyScrollProvider } from '../contexts/BodyScrollContext';
+import { LayoutProvider } from '../contexts/LayoutContext';
 
 export type NextPageWithLayout<P = Record<string, unknown>, Ip = P> = NextPage<P, Ip> & {
   getLayout?: (page: ReactElement) => ReactNode;

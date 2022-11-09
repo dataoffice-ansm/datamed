@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
-import { useLayoutContext } from '../../contexts/layoutContext';
+import { useLayoutContext } from '../../contexts/LayoutContext';
 
 const components = ['graph-box', 'graph-figure'];
 
