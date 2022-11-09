@@ -1,11 +1,18 @@
 // eslint-disable-next-line no-warning-comments
 // TODO Draft a cabler avec la BDD en cours de préparation
-export type Speciality = {
-  id: string;
+
+type RepartitionTuple = {
+  codePart: string;
+  value: number;
+};
+
+type MedicalError = {
   name: string;
+};
+
+export type EntityData = {
   description: string;
   pharmaForm: 'capsule';
-  substances: Substance[];
   genderRepartition: {
     male: number;
     female: number;
@@ -14,17 +21,17 @@ export type Speciality = {
   medicalErrors: MedicalError[];
 };
 
-type MedicalError = {
-  name: string;
-};
-
-export type Substance = {
+export type Entity = Partial<EntityData> & {
   id: string;
   name: string;
-  description: string;
+  type: 'cis' | 'sub';
 };
 
-type RepartitionTuple = {
-  codePart: string;
-  value: number;
+export type Substance = Entity & {
+  type: 'sub';
+};
+
+export type Speciality = Entity & {
+  type: 'cis';
+  substances?: Substance[];
 };

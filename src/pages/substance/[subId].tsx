@@ -1,30 +1,19 @@
-import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
-import { EntityProvider } from '../../contexts/EntityContext';
+import { useRouter } from 'next/router';
+import { useFetchSubstance } from '../../services/substances';
+import { SubstancePage } from '../../componentsPages/Substance/SubstancePage';
+import Page404 from '../[404]';
 
-export const Index = () => (
-  <EntityProvider cis={null}>
-    <EntityPageLayout
-      colorMenu="primary"
-      sections={[
-        {
-          id: 'section1',
-          label: 'section1',
-          content: <section className="h-96"> section 1 </section>,
-        },
-        {
-          id: 'section2',
-          label: 'section2',
-          content: <section className="h-96"> section 2 </section>,
-        },
-        {
-          id: 'section3',
-          label: 'section3',
-          content: <section className="h-96"> section 3 </section>,
-        },
-      ]}
-      render={(content) => content}
-    />
-  </EntityProvider>
-);
+// eslint-disable-next-line @typescript-eslint/naming-convention
+const PageSubCSR = () => {
+  const { query } = useRouter();
+  const subId = query.subId as string;
+  const { data, error } = useFetchSubstance(subId);
 
-export default Index;
+  if (error ?? !data) {
+    return <Page404 />;
+  }
+
+  return <SubstancePage sub={data} />;
+};
+
+export default PageSubCSR;
