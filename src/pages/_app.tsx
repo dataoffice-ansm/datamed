@@ -5,7 +5,7 @@ import type { AppProps } from 'next/app';
 import React from 'react';
 import { SWRConfig } from 'swr';
 
-import { Layout } from '../components/Layouts/Layout';
+import { AppLayout } from '../components/Layouts/AppLayout';
 import { BodyScrollProvider } from '../contexts/bodyScrollContext';
 import { LayoutProvider } from '../contexts/layoutContext';
 
@@ -19,13 +19,13 @@ type AppPropsWithLayout = AppProps & {
 
 const MyApp = ({ Component, pageProps }: AppPropsWithLayout) => (
   <SWRConfig>
-  <BodyScrollProvider>
-    <LayoutProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </LayoutProvider>
-  </BodyScrollProvider>
+    <BodyScrollProvider>
+      <LayoutProvider>
+        <AppLayout>
+          <Component {...pageProps} />
+        </AppLayout>
+      </LayoutProvider>
+    </BodyScrollProvider>
   </SWRConfig>
 );
 

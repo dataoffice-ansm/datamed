@@ -1,6 +1,6 @@
 import ManFigure from '../../assets/images/man_illustration.svg';
 import WomanFigure from '../../assets/images/woman_illustration.svg';
-import { GraphFigure } from '../../components/GraphFigure';
+import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
 
 const GraphFigurePage = () => (

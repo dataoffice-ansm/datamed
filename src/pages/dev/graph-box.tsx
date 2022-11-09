@@ -1,4 +1,4 @@
-import { GraphBox } from '../../components/GraphBox';
+import { GraphBox } from '../../components/GraphBox/GraphBox';
 import SickPerson from '../../assets/images/sick_person.svg';
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
 

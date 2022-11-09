@@ -1,12 +1,12 @@
-import { SearchSection } from '../components/Landing/SearchSection';
-import { IntroductionSection } from '../components/Landing/IntroductionSection';
-import { MoreInformationSection } from '../components/Landing/MoreInformationSection';
+import { SearchSection } from '../componentsPages/Landing/SearchSection/SearchSection';
+import { IntroSection } from '../componentsPages/Landing/IntroSection/IntroSection';
+import { MoreInfoSection } from '../componentsPages/Landing/MoreInfo/MoreInfoSection';
 
 const HomePage = () => (
   <>
-    <IntroductionSection />
+    <IntroSection />
     <SearchSection />
-    <MoreInformationSection />
+    <MoreInfoSection />
   </>
 );
 

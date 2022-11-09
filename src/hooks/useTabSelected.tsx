@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Events, scroller } from 'react-scroll';
-import type { SectionNavProps } from '../components/Layouts/NavPageLayout';
+import type { SectionNavProps } from '../components/Layouts/EntityPageLayout/EntityPageLayout';
 
 /**
  * hook to help mange tab selected index
