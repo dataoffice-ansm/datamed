@@ -2,9 +2,8 @@ import type { HTMLAttributes } from 'react';
 import Contact from '../assets/images/contact.svg';
 import classnames from 'classnames';
 import Link from 'next/link';
-import { FullWidthRow } from '../components/FullWidthRow';
 import { SmallContainer } from '../components/SmallContainer';
-import { useBreakpoint } from '../hooks/useTailwindBreakpoint';
+import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 
 const SectionContact = ({
   title,
