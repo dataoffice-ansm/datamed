@@ -54,7 +54,7 @@ export const getSingleCisController = (
   const cisId = req.query.cisId as string;
   const match = specialitiesJson.find((cis) => cis.cis === cisId);
   if (match) {
-    res.json({ id: match.cis, name: match.nom });
+    res.json({ id: match.cis, name: match.nom, type: 'cis' });
   } else {
     res.status(400);
   }

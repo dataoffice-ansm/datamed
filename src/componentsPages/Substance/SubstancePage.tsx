@@ -1,4 +1,4 @@
-import type { Speciality } from '../../api/interfaces/models';
+import type { Substance } from '../../api/interfaces/models';
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
 import { EntityProvider } from '../../contexts/EntityContext';
 
@@ -20,8 +20,8 @@ const SectionThree = () => (
   </div>
 );
 
-export const SpecialityPage = ({ cis }: { cis: Speciality }) => (
-  <EntityProvider entity={cis}>
+export const SubstancePage = ({ sub }: { sub: Substance }) => (
+  <EntityProvider entity={sub}>
     <EntityPageLayout
       colorMenu="primary"
       sections={[
@@ -41,7 +41,13 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => (
           content: <SectionThree />,
         },
       ]}
-      render={(content) => content}
+      render={(content) => (
+        <div>
+          <div className="py-10 my-2">before content</div>
+          {content}
+          <div className="py-10 my-2">after content</div>
+        </div>
+      )}
     />
   </EntityProvider>
 );

@@ -1,6 +1,6 @@
 import type { Speciality, Substance } from './models';
 
-export type GetSingleCisControllerResponse = Partial<Speciality> | null;
+export type GetSingleCisControllerResponse = Speciality | null;
 
 export type GetCisPathsControllerResponse = {
   codes: string[];
@@ -21,7 +21,7 @@ export type GetCisEntitiesControllerResponse = {
 
 // SUBSTANCES //
 
-export type GetSingleSubstanceControllerResponse = Partial<Substance> | null;
+export type GetSingleSubstanceControllerResponse = Substance | null;
 
 export type GetSubstancesPathsControllerResponse = {
   codes: string[];

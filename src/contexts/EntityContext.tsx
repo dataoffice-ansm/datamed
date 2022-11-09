@@ -1,40 +1,30 @@
 import type { Dispatch, HTMLAttributes, SetStateAction } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
+import type { Entity } from '../api/interfaces/models';
 import type { Speciality } from '../api/interfaces/models';
 
 export type CisType = Partial<Speciality> | null;
 
 export const EntityContext = createContext<{
-  // currentEntity: Speciality | Substance | null;
-  // setCurrentEntity: Dispatch<SetStateAction<Speciality | Substance | null>>;
-
-  currentCis: CisType;
-  setCurrentCis: Dispatch<SetStateAction<CisType>>;
-
-  // currentEntity: Speciality | Substance | null;
-  // setCurrentEntity: Dispatch<SetStateAction<Speciality | Substance | null>>;
+  currentEntity: Entity;
+  setCurrentEntity: Dispatch<SetStateAction<Entity>>;
 }>({
-  currentCis: null,
-  setCurrentCis: () => null,
-  // currentEntity: null,
-  // setCurrentEntity: () => null,
+  currentEntity: { type: 'sub', id: '', name: '' },
+  setCurrentEntity: () => null,
 });
 
 export const EntityProvider = ({
-  cis,
+  entity,
   children,
-}: HTMLAttributes<HTMLDivElement> & { cis: CisType }) => {
-  // const [currentEntity, setCurrentEntity] = useState<Speciality | Substance | null>(null);
-  const [currentCis, setCurrentCis] = useState<CisType>(cis);
+}: HTMLAttributes<HTMLDivElement> & { entity: Entity }) => {
+  const [currentEntity, setCurrentEntity] = useState<Entity>(entity);
 
   const value = useMemo(
     () => ({
-      // currentEntity,
-      // setCurrentEntity,
-      currentCis,
-      setCurrentCis,
+      currentEntity,
+      setCurrentEntity,
     }),
-    [currentCis, setCurrentCis]
+    [currentEntity]
   );
 
   return <EntityContext.Provider value={value}>{children}</EntityContext.Provider>;

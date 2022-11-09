@@ -28,7 +28,7 @@ describe(EntityPageLayout.name, () => {
     ['secondary', 'secondary'],
   ])('should render %s with theme %p', (color, colorTheme) => {
     const wrapper = render(
-      <EntityProvider cis={null}>
+      <EntityProvider entity={{ type: 'cis', id: '99', name: 'FakeName' }}>
         <EntityPageLayout
           colorMenu={colorTheme}
           sections={[

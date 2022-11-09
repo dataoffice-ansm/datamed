@@ -53,10 +53,10 @@ export const getSingleSubstanceController = (
   req: NextApiRequest,
   res: NextApiResponse<GetSingleSubstanceControllerResponse>
 ) => {
-  const cisId = req.query.cisId as string;
-  const match = substancesJson.find((cis) => cis.code === cisId);
+  const subId = req.query.subId as string;
+  const match = substancesJson.find((sub) => sub.code === subId);
   if (match) {
-    res.json({ id: match.code, name: match.nom });
+    res.json({ id: match.code, name: match.nom, type: 'sub' });
   } else {
     res.status(400);
   }

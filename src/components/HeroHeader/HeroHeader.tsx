@@ -18,10 +18,7 @@ type EntityOptions = {
   icon: ReactNode;
 };
 
-const entitiesOptionsMapping: {
-  sub: EntityOptions;
-  cis: EntityOptions;
-} = {
+const entitiesOptionsMapping: Record<'sub' | 'cis', EntityOptions> = {
   sub: {
     tooltip: <SubTooltip />,
     theme: 'bg-secondary',
@@ -44,10 +41,9 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
   const { scrollY } = useScrollPosition();
   const ref = useRef<HTMLDivElement>(null);
   const heightRef = useRefHeight(ref);
-  const { currentCis } = useEntityContext();
+  const { currentEntity } = useEntityContext();
   const pageScrolled = heightRef && scrollY >= heightRef;
-  const entityType = currentCis ? 'cis' : 'sub';
-  const { theme, icon, tooltip } = entitiesOptionsMapping[entityType];
+  const { theme, icon, tooltip } = entitiesOptionsMapping[currentEntity.type];
 
   useEffect(() => {
     setStickyHeroHeight(pageScrolled ? stickyHeroHeightPx : 0);
@@ -69,7 +65,7 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
         <div className="max-md:px-3 md:container max-w-full md:mx-auto flex gap-8 h-full items-center text-xl">
           <div className="w-11 h-11">{icon}</div>
           <div className="text-2xl font-medium text-ellipsis overflow-hidden whitespace-nowrap">
-            {currentCis?.name}
+            {currentEntity.name}
           </div>
         </div>
       </div>
@@ -78,12 +74,14 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
         className="HeroHeader flex flex-col md:flex-row min-h[20rem] max-w-4xl pt-24 md:pt-48 pb-16 md:pb-24 gap-16 text-white"
       >
         <div className="w-24 h-24 md:w-36 md:h-36">{icon}</div>
-        <div>
-          <div className="text-3xl font-medium mb-4">{currentCis?.name}</div>
-          <div className="text-xl mb-8">
-            lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-            lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-          </div>
+        <div className="flex flex-col justify-center">
+          <div className="text-3xl font-medium mb-4">{currentEntity.name}</div>
+          {currentEntity.description && (
+            <div className="text-xl mb-8">
+              lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+              lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
+            </div>
+          )}
           {tooltip}
         </div>
       </div>
