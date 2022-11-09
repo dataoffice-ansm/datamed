@@ -11,7 +11,7 @@ export const layoutContext = createContext<{
   setStickyHeroHeight: Dispatch<SetStateAction<number>>;
 }>({
   navBarHeight: navBarHeightPx,
-  stickyHeroHeight: stickyHeroHeightPx,
+  stickyHeroHeight: 0,
   setNavBarHeight: () => null,
   setStickyHeroHeight: () => null,
 });
@@ -20,7 +20,7 @@ const { Provider } = layoutContext;
 
 export const LayoutProvider = ({ children }: HTMLAttributes<HTMLDivElement>) => {
   const [navBarHeight, setNavBarHeight] = useState(navBarHeightPx);
-  const [stickyHeroHeight, setStickyHeroHeight] = useState(stickyHeroHeightPx);
+  const [stickyHeroHeight, setStickyHeroHeight] = useState(0);
 
   const value = useMemo(
     () => ({

@@ -41,13 +41,7 @@ export const SpecialityPage = ({ cis }: { cis: Partial<Speciality> }) => (
           content: <SectionThree />,
         },
       ]}
-      render={(content) => (
-        <div>
-          <div className="py-10 my-2">before content</div>
-          {content}
-          <div className="py-10 my-2">after content</div>
-        </div>
-      )}
+      render={(content) => content}
     />
   </EntityProvider>
 );

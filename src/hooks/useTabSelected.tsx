@@ -10,7 +10,7 @@ import type { SectionNavProps } from '../components/Layouts/EntityPageLayout/Ent
 export function useTabSelected(items: SectionNavProps[], initState = 0) {
   const [selectedIndex, setSelectedIndex] = useState<number>(initState);
 
-  const updateTabIndex = (index: number) => {
+  const updateTabIndex = (index: number): void => {
     setSelectedIndex(index);
   };
 

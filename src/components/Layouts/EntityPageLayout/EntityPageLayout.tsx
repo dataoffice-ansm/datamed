@@ -8,7 +8,6 @@ import { useBreakpoint } from '../../../hooks/useTailwindBreakpoint';
 import { useLayoutContext } from '../../../contexts/LayoutContext';
 import { HeroHeader } from '../../HeroHeader/HeroHeader';
 import { FullWidthRow } from '../../FullWidthRow/FullWidthRow';
-import { useEntityContext } from '../../../contexts/EntityContext';
 
 export type SectionNavProps = {
   id: string;
@@ -56,15 +55,27 @@ export const EntityPageLayout = ({
     itemClassName: string;
   }) => (
     <Tab.Group
+      manual
       vertical={vertical}
       selectedIndex={selectedIndex}
       onChange={(anchor) => {
         handleSelectedIndex(anchor);
       }}
     >
-      <Tab.List id={id} className="relative mt-8 mr-4">
-        {sections.map(({ id, label }) => (
-          <Link key={id} spy smooth className="no-underline" to={id} duration={200} offset={-80}>
+      <Tab.List id={id} className="relative my-8 mr-4">
+        {sections.map(({ id, label }, index) => (
+          <Link
+            key={id}
+            spy
+            smooth
+            className="no-underline"
+            to={id}
+            duration={200}
+            offset={-(navBarHeight + stickyHeroHeight)}
+            onSetActive={() => {
+              handleSelectedIndex(index);
+            }}
+          >
             <Tab as={Fragment}>
               {({ selected }) => (
                 <div
