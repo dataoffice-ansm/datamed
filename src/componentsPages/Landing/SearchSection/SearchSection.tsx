@@ -1,4 +1,5 @@
 import { FullWidthRow } from '../../../components/FullWidthRow/FullWidthRow';
+import { Autocomplete } from '../../../components/Autocomplete/Autocomplete';
 import LandingIllustrationSearch from '../../../assets/images/landing_illustration_search.svg';
 
 export const SearchSection = () => (
@@ -13,12 +14,7 @@ export const SearchSection = () => (
           Trouvez des données statistiques autour du médicament à partir du nom du médicament ou de
           la substance active.
         </h2>
-        <input
-          role="search"
-          className="p-2 rounded-lg border-grey-200 border-2"
-          type="text"
-          placeholder="Rechercher"
-        />
+        <Autocomplete />
       </div>
     </div>
   </FullWidthRow>

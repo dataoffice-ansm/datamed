@@ -1,6 +1,6 @@
 import { SearchSection } from '../componentsPages/Landing/SearchSection/SearchSection';
 import { IntroSection } from '../componentsPages/Landing/IntroSection/IntroSection';
-import { MoreInfoSection } from '../componentsPages/Landing/MoreInfo/MoreInfoSection';
+import { MoreInfoSection } from '../componentsPages/Landing/MoreInfoSection/MoreInfoSection';
 
 const HomePage = () => (
   <>

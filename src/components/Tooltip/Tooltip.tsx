@@ -48,7 +48,7 @@ export const Tooltip = ({
           data-theme={theme}
         >
           <div className="tooltip-arrow" {...getArrowProps()} />
-          {title && <h2 className="font-bold font-medium">{title}</h2>}
+          {title && <h2 className="font-medium">{title}</h2>}
           {content}
         </div>
       )}
