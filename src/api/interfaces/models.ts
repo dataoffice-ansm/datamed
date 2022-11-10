@@ -35,3 +35,9 @@ export type Speciality = Entity & {
   type: 'cis';
   substances?: Substance[];
 };
+
+export const entityTypeLabel = (type: 'cis' | 'sub') => {
+  if (type === 'cis') return 'Specialité';
+
+  return 'Substance';
+};

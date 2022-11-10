@@ -10,7 +10,7 @@ describe(SearchSection.name, () => {
     const title = getByText(container, expectedTitle);
     expect(title.tagName).toEqual('H2');
 
-    expect(getByRole(container, 'search'));
+    expect(getByRole(container, 'combobox'));
     expect(getByTestId(container, 'Illustration de microscope et analyse'));
 
     expect(container).toMatchSnapshot();
