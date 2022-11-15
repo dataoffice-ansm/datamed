@@ -1,6 +1,6 @@
 import type { Dispatch, HTMLAttributes, SetStateAction } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
-import type { Speciality, Substance } from '../api/interfaces/models';
+import type { Speciality } from '../api/interfaces/models';
 
 export type CisType = Partial<Speciality> | null;
 

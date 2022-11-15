@@ -10,15 +10,9 @@ import type { SectionNavProps } from '../components/Layouts/EntityPageLayout/Ent
 export function useTabSelected(items: SectionNavProps[], initState = 0) {
   const [selectedIndex, setSelectedIndex] = useState<number>(initState);
 
-  const updateTabIndex = (index: number): void => {
+  const updateTabIndex = (index: number) => {
     setSelectedIndex(index);
   };
-
-  useEffect(() => {
-    Events.scrollEvent.register('begin', (scrollAnchor) => {
-      setSelectedIndex(items.findIndex((item) => item.id === scrollAnchor));
-    });
-  }, [items]);
 
   /**
    * function to active scroll move when user use keyboard
@@ -28,6 +22,12 @@ export function useTabSelected(items: SectionNavProps[], initState = 0) {
     updateTabIndex(index);
     scroller.scrollTo(items[index].id, null);
   };
+
+  useEffect(() => {
+    Events.scrollEvent.register('begin', (scrollAnchor) => {
+      setSelectedIndex(items.findIndex((item) => item.id === scrollAnchor));
+    });
+  }, [items]);
 
   return [selectedIndex, updateTabIndex, handleSelectedIndex] as const;
 }

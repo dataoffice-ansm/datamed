@@ -7,13 +7,13 @@ import Page404 from '../[404]';
 const PageCisCSR = () => {
   const { query } = useRouter();
   const cisId = query.cisId as string;
-  const { data, error } = useFetchSpeciality(cisId);
+  const { data, isLoading } = useFetchSpeciality(cisId);
 
-  if (error ?? !data) {
-    return <Page404 />;
+  if (!isLoading && data) {
+    return <SpecialityPage cis={data} />;
   }
 
-  return <SpecialityPage cis={data} />;
+  return <Page404 />;
 };
 
 export default PageCisCSR;
