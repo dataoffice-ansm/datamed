@@ -57,7 +57,8 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
     <FullWidthRow id={id} className={theme}>
       <div
         className={classnames(
-          'HeroHeader HeroHeaderSticky h-16 fixed left-0 right-0 z-[1] ease-in-out duration-500 transition-all',
+          'HeroHeader HeroHeaderSticky h-16 fixed left-0 right-0 z-[1]',
+          'ease-in-out duration-500 transition-all',
           'text-white',
           theme
         )}
@@ -74,7 +75,7 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
       </div>
       <div
         ref={ref}
-        className="HeroHeader text-white pt-24 md:pt-48 pb-16 md:pb-24 gap-16 flex flex-col md:flex-row max-w-4xl"
+        className="HeroHeader flex flex-col md:flex-row min-h[20rem] max-w-4xl pt-24 md:pt-48 pb-16 md:pb-24 gap-16 text-white"
       >
         <div className="w-24 h-24 md:w-36 md:h-36">{icon}</div>
         <div>

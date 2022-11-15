@@ -1,3 +1,5 @@
-const Page404 = () => <p> TODO 4O4</p>;
+import { FullScreenSection } from '../components/FullScreenSection/FullScreenSection';
+
+const Page404 = () => <FullScreenSection> TODO 4O4</FullScreenSection>;
 
 export default Page404;
