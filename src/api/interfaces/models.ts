@@ -43,7 +43,7 @@ export const entityTypeLabel = (type: 'cis' | 'sub') => {
 };
 
 export const entityTypeRoute = (type: 'cis' | 'sub') => {
-  if (type === 'cis') return 'speciality';
+  if (type === 'cis') return 'specialite';
   if (type === 'sub') return 'substance';
   return null;
 };

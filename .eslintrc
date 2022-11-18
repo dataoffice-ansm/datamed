@@ -66,6 +66,7 @@
       }
     ],
     "no-warning-comments": "warn",
+    "react/boolean-prop-naming": "off",
     "react/no-unused-prop-types": "warn",
     "react/function-component-definition": [
       "warn",
