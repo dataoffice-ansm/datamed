@@ -1,14 +1,55 @@
-import type { HTMLAttributes, ReactNode } from 'react';
-import BlueSparkSVG from '../../assets/icons/spark_blue.svg';
-import BlueChevronSVG from '../../assets/icons/chevron_blue.svg';
+import type { HTMLAttributes } from 'react';
+import SparkSVG from '../../assets/icons/spark/spark.svg';
+import ChevronSVG from '../../assets/icons/chevron/chevron.svg';
 import { Disclosure, Transition } from '@headlessui/react';
 import classnames from 'classnames';
+
+export type AccordionThemeColor =
+  | 'primary'
+  | 'secondary'
+  | 'grey'
+  | 'success'
+  | 'warning'
+  | 'error';
 
 export type AccordionProps = {
   title: string;
   defaultOpen?: boolean;
-  icon?: ReactNode;
-  chevronIcon?: ReactNode;
+  theme?: AccordionThemeColor;
+};
+
+const strokeTheme = (theme: AccordionThemeColor) => {
+  switch (theme) {
+    case 'primary':
+      return 'stroke-primary';
+    case 'secondary':
+      return 'stroke-secondary';
+    case 'success':
+      return 'stroke-success';
+    case 'warning':
+      return 'stroke-warning';
+    case 'error':
+      return 'stroke-error';
+    default:
+      return 'stroke-grey';
+  }
+};
+
+const fillTheme = (theme: AccordionThemeColor) => {
+  switch (theme) {
+    case 'primary':
+      return 'fill-primary';
+    case 'secondary':
+      return 'fill-secondary';
+    case 'success':
+      return 'fill-success';
+    case 'warning':
+      return 'fill-warning';
+    case 'error':
+      return 'fill-error';
+    default:
+      return 'fill-grey';
+  }
 };
 
 export const Accordion = ({
@@ -16,15 +57,16 @@ export const Accordion = ({
   children,
   title,
   defaultOpen = false,
-  icon,
-  chevronIcon,
+  theme = 'secondary',
 }: AccordionProps & HTMLAttributes<HTMLDivElement>) => (
   <div id={id} className="Accordion bg-white border border-grey-200 rounded-lg">
     <Disclosure defaultOpen={defaultOpen}>
       {({ open }) => (
         <>
           <Disclosure.Button className="AccordionTriggerButton py-4 w-full flex gap-4 px-4 items-center font-medium justify-between">
-            <div className="AccordionLeftIcon h-8 w-8">{icon ?? <BlueSparkSVG />}</div>
+            <div className="AccordionLeftIcon h-8 w-8">
+              <SparkSVG className={strokeTheme(theme)} />
+            </div>
             <span className="AccordionTitle text-left flex-1">{title}</span>
             <div
               className={classnames(
@@ -34,7 +76,7 @@ export const Accordion = ({
                 }
               )}
             >
-              {chevronIcon ?? <BlueChevronSVG />}
+              <ChevronSVG className={fillTheme(theme)} />
             </div>
           </Disclosure.Button>
           <Transition

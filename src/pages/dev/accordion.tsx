@@ -1,18 +1,18 @@
 /* eslint-disable react/no-unescaped-entities */
+import type { AccordionProps } from 'components/Accordion/Accordion';
 import { Accordion } from 'components/Accordion/Accordion';
+import type { ReactNode } from 'react';
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
-import RedSparkSVG from '../../assets/icons/spark_red.svg';
-import GreenSparkSVG from '../../assets/icons/spark_green.svg';
 
-import RedChevronSVG from '../../assets/icons/chevron_red.svg';
-import GreenChevronSVG from '../../assets/icons/chevron_green.svg';
+type AccordionDevPreview = {
+  key: string;
+  content: ReactNode;
+} & AccordionProps;
 
-const faq = [
+const faq: AccordionDevPreview[] = [
   {
     defaultOpen: false,
     key: 'faq_1',
-    icon: null,
-    chevron: null,
     title: `Quelle est la différence entre le site de l'ANSM et data.ansm ?`,
     content: (
       <div>
@@ -36,8 +36,7 @@ const faq = [
   {
     defaultOpen: true,
     key: 'faq_2',
-    icon: <RedSparkSVG />,
-    chevronIcon: <RedChevronSVG />,
+    theme: 'primary',
     title: `Beaucoup des données sont basées sur de la déclaration, qu'est-ce que cela implique ? Les données sur les effets indésirables représentent-elles l'exhaustivité des cas ?`,
     content: (
       <div className="py-4">
@@ -52,8 +51,49 @@ const faq = [
   {
     defaultOpen: false,
     key: 'faq_3',
-    icon: <GreenSparkSVG />,
-    chevronIcon: <GreenChevronSVG />,
+    theme: 'success',
+    title: 'Quelles données de la Cnam sont utilisées sur data.ansm ?',
+    content: (
+      <div className="py-4">
+        La Caisse nationale de l'Assurance Maladie alimente la base de données du SNDS (Système
+        national des données de santé). Il existe un libre accès à certaines de ses données
+        présentes dans la base Open Medic. Data.ansm utilise des données des remboursements de
+        médicaments dispensés en pharmacie.
+      </div>
+    ),
+  },
+  {
+    defaultOpen: false,
+    key: 'faq_3',
+    theme: 'warning',
+    title: 'Quelles données de la Cnam sont utilisées sur data.ansm ?',
+    content: (
+      <div className="py-4">
+        La Caisse nationale de l'Assurance Maladie alimente la base de données du SNDS (Système
+        national des données de santé). Il existe un libre accès à certaines de ses données
+        présentes dans la base Open Medic. Data.ansm utilise des données des remboursements de
+        médicaments dispensés en pharmacie.
+      </div>
+    ),
+  },
+  {
+    defaultOpen: false,
+    key: 'faq_3',
+    theme: 'error',
+    title: 'Quelles données de la Cnam sont utilisées sur data.ansm ?',
+    content: (
+      <div className="py-4">
+        La Caisse nationale de l'Assurance Maladie alimente la base de données du SNDS (Système
+        national des données de santé). Il existe un libre accès à certaines de ses données
+        présentes dans la base Open Medic. Data.ansm utilise des données des remboursements de
+        médicaments dispensés en pharmacie.
+      </div>
+    ),
+  },
+  {
+    defaultOpen: false,
+    key: 'faq_3',
+    theme: 'grey',
     title: 'Quelles données de la Cnam sont utilisées sur data.ansm ?',
     content: (
       <div className="py-4">
@@ -69,14 +109,8 @@ const faq = [
 export const AccordionPage = () => (
   <DevPageLayout title="Accordion">
     <div className="my-4 flex flex-col gap-4 m-auto max-w-2xl min-h-screen">
-      {faq.map(({ title, content, key, defaultOpen, icon, chevronIcon }) => (
-        <Accordion
-          key={key}
-          defaultOpen={defaultOpen}
-          title={title}
-          icon={icon}
-          chevronIcon={chevronIcon}
-        >
+      {faq.map(({ title, content, key, defaultOpen, theme }) => (
+        <Accordion key={key} defaultOpen={defaultOpen} title={title} theme={theme}>
           {content}
         </Accordion>
       ))}

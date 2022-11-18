@@ -54,7 +54,23 @@ export const getSingleCisController = (
   const cisId = req.query.cisId as string;
   const match = specialitiesJson.find((cis) => cis.cis === cisId);
   if (match) {
-    res.json({ id: match.cis, name: match.nom, type: 'cis' });
+    res.json({
+      id: match.cis,
+      name: match.nom,
+      type: 'cis',
+      substances: [
+        {
+          id: '09182',
+          name: 'zuclopenthixol (dichlorhydrate de)',
+          type: 'sub',
+        },
+        {
+          id: '78975',
+          name: 'zolmitriptan',
+          type: 'sub',
+        },
+      ],
+    });
   } else {
     res.status(400);
   }
