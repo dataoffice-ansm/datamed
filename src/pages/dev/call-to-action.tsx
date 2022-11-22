@@ -3,24 +3,44 @@ import { CallToAction } from '../../components/CallToAction/CallToAction';
 
 export const CtaPage = () => (
   <DevPageLayout title="CTA">
+    <p>Buttons</p>
     <div className="my-4">
       <CallToAction
-        theme="primary"
-        role="reset"
-        variant="outlined"
         as="button"
         onClick={() => {
-          console.log('click on Button with primary color and variant outlined');
+          console.log('click on Button');
         }}
       >
-        Button with reset role
+        Button
       </CallToAction>
     </div>
     <div className="my-4">
       <CallToAction
+        as="button"
+        type="reset"
+        onClick={() => {
+          console.log('click on Button');
+        }}
+      >
+        Reset Button
+      </CallToAction>
+    </div>
+    <div className="my-4">
+      <CallToAction
+        as="button"
+        type="submit"
+        onClick={() => {
+          console.log('click on Button');
+        }}
+      >
+        Submit Button
+      </CallToAction>
+    </div>
+    <div className="my-4">
+      <CallToAction
+        as="button"
         theme="primary"
         variant="outlined"
-        as="button"
         onClick={() => {
           console.log('click on Button with primary color and variant outlined');
         }}
@@ -30,28 +50,42 @@ export const CtaPage = () => (
     </div>
     <div className="my-4">
       <CallToAction
+        as="button"
+        theme="primary"
+        variant="contained"
+        onClick={() => {
+          console.log('click on Button with primary color and variant contained');
+        }}
+      >
+        Button with primary color and variant contained
+      </CallToAction>
+    </div>
+    <div className="my-4">
+      <CallToAction
+        as="button"
+        theme="secondary"
+        variant="outlined"
+        onClick={() => {
+          console.log('click on Button with secondary color and variant outlined');
+        }}
+      >
+        Button with primary color and variant outlined
+      </CallToAction>
+    </div>
+    <div className="my-4">
+      <CallToAction
+        as="button"
         theme="secondary"
         variant="contained"
-        as="button"
         onClick={() => {
-          console.log('click on cta');
+          console.log('click on Button with secondary color and variant contained');
         }}
       >
         Button with secondary color and variant contained
       </CallToAction>
     </div>
-    <div className="my-4">
-      <CallToAction
-        theme="primary"
-        variant="contained"
-        as="button"
-        onClick={() => {
-          console.log('click on cta');
-        }}
-      >
-        Button with theme primary and variant contained
-      </CallToAction>
-    </div>
+
+    <p>Links</p>
     <div className="my-4">
       <CallToAction theme="secondary" href="#">
         Link with theme secondary

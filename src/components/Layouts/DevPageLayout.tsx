@@ -18,9 +18,8 @@ export const DevPageLayout = ({ title, children }: { title?: string; children?: 
         <div className="sticky" style={{ top: navBarHeight + 10 }}>
           <p className="font-bold mt-0">Components</p>
           <ul>
-            {components.map((componentName, i) => (
-              // eslint-disable-next-line react/no-array-index-key
-              <li key={i} className="my-1">
+            {components.map((componentName) => (
+              <li key={componentName} className="my-1">
                 <Link href={`/dev/${componentName}`}>
                   <a>{componentName}</a>
                 </Link>

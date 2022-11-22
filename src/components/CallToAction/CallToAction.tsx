@@ -1,38 +1,36 @@
-import type { HTMLAttributes } from 'react';
+import type { ButtonHTMLAttributes, HTMLAttributes } from 'react';
 import Link from 'next/link';
 import classnames from 'classnames';
 
-type CtaType = {
-  theme: 'primary' | 'secondary' | 'grey';
+type CallToActionBaseProps = {
+  theme?: 'primary' | 'secondary' | 'grey';
 };
 
-type LinkCta = CtaType &
+type CallToActionLinkProps = CallToActionBaseProps &
   HTMLAttributes<HTMLAnchorElement> & {
+    as: 'link';
     href: string;
   };
 
-type ButtonCta = CtaType &
-  HTMLAttributes<HTMLButtonElement> & {
+type CallToActionButtonProps = CallToActionBaseProps &
+  ButtonHTMLAttributes<HTMLButtonElement> & {
+    as: 'button';
     variant?: 'outlined' | 'contained';
-    role?: 'submit' | 'reset' | 'button';
-    onClick: () => void;
+    type?: 'submit' | 'reset' | 'button';
   };
 
-type Cta = ButtonCta | LinkCta;
+type CallToActionProps = CallToActionButtonProps | CallToActionLinkProps;
 
-export const CallToAction = ({
-  as = 'link',
-  className,
-  children,
-  theme = 'primary',
-  ...props
-}: { as?: 'link' | 'button' } & Cta) => {
-  if (as === 'button') {
-    const { onClick, role = 'button', variant = 'outlined' } = props as ButtonCta;
+export const CallToAction = (props: CallToActionProps) => {
+  const { theme = 'primary' } = props;
+
+  if (props.as === 'button') {
+    const { variant = 'outlined', children, className, type = 'button', ...rest } = props;
+
     return (
       <button
-        // eslint-disable-next-line react/button-has-type
-        type={role}
+        {...rest}
+        type={type}
         className={classnames(
           {
             'bg-primary text-white hover:bg-primary-500 focus:bg-primary-500':
@@ -42,24 +40,23 @@ export const CallToAction = ({
             'bg-grey text-white hover:bg-grey-500': theme === 'grey' && variant === 'contained',
             'border border-primary text-primary hover:bg-primary focus:bg-primary':
               theme === 'primary' && variant === 'outlined',
-            'border-secondary text-secondary hover:bg-secondary focus:bg-secondary':
+            'border border-secondary text-secondary hover:bg-secondary focus:bg-secondary':
               theme === 'secondary' && variant === 'outlined',
-            'border-grey text-grey hover:bg-grey focus:bg-grey':
+            'border border-grey text-grey hover:bg-grey focus:bg-grey':
               theme === 'grey' && variant === 'outlined',
           },
           'cursor:pointer py-2 px-4 rounded hover:text-white focus:text-white',
           className
         )}
-        onClick={onClick}
       >
         {children}
       </button>
     );
   }
 
-  const { href } = props as LinkCta;
+  const { href, children, className, ...rest } = props;
   return (
-    <Link href={href}>
+    <Link {...rest} href={href}>
       <a
         className={classnames(
           {
@@ -77,4 +74,8 @@ export const CallToAction = ({
       </a>
     </Link>
   );
+};
+
+CallToAction.defaultProps = {
+  as: 'link',
 };
