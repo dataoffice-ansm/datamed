@@ -42,6 +42,7 @@
     "@typescript-eslint"
   ],
   "rules": {
+    "react/button-has-type": "off",
     "spaced-comment": "off",
     "capitalized-comments": "off",
     "no-unused-vars": "warn",
