@@ -1,5 +1,6 @@
-import type { SelectOption } from 'components/Select/Select';
-import { Select } from 'components/Select/Select';
+import { HeroHeader } from 'components/HeroHeader/HeroHeader';
+import type { SelectOption } from '../../components/Select/Select';
+import { Select } from '../../components/Select/Select';
 import { useCallback, useMemo, useState } from 'react';
 import type { Speciality } from '../../api/interfaces/models';
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
@@ -74,6 +75,8 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => (
         },
       ]}
       render={(content) => content}
-    />
+    >
+      <HeroHeader />
+    </EntityPageLayout>
   </EntityProvider>
 );

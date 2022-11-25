@@ -1,3 +1,4 @@
+import { HeroHeader } from '../../components/HeroHeader/HeroHeader';
 import type { Substance } from '../../api/interfaces/models';
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
 import { EntityProvider } from '../../contexts/EntityContext';
@@ -48,6 +49,8 @@ export const SubstancePage = ({ sub }: { sub: Substance }) => (
           <div className="py-10 my-2">after content</div>
         </div>
       )}
-    />
+    >
+      <HeroHeader />
+    </EntityPageLayout>
   </EntityProvider>
 );

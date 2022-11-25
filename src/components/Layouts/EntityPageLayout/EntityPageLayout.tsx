@@ -6,7 +6,6 @@ import React, { Fragment, useMemo } from 'react';
 import { Link } from 'react-scroll';
 import { useBreakpoint } from '../../../hooks/useTailwindBreakpoint';
 import { useLayoutContext } from '../../../contexts/LayoutContext';
-import { HeroHeader } from '../../HeroHeader/HeroHeader';
 import { FullWidthRow } from '../../FullWidthRow/FullWidthRow';
 
 export type SectionNavProps = {
@@ -23,6 +22,8 @@ export type SectionItemProps = SectionNavProps & {
  * @param id
  * @param colorMenu
  * @param defaultSelectedSection
+ * @param render
+ * @param sections
  * @param children
  * @constructor
  */
@@ -32,6 +33,7 @@ export const EntityPageLayout = ({
   render,
   sections,
   id,
+  children,
 }: React.HTMLAttributes<HTMLDivElement> & {
   defaultSelectedSection?: number;
   colorMenu?: 'primary' | 'secondary';
@@ -52,7 +54,7 @@ export const EntityPageLayout = ({
     itemClassName,
   }: {
     vertical?: boolean;
-    itemClassName: string;
+    itemClassName?: string;
   }) => (
     <Tab.Group
       manual
@@ -124,8 +126,8 @@ export const EntityPageLayout = ({
       <div className="content flex-1 my-4">
         {render(
           sections.map(({ id, content }) => (
-            <section key={id} id={id} className="ease-linear duration-300 transition-padding my-2">
-              <div className="border border-solid border-gray-500">{content}</div>
+            <section key={id} id={id} className="ease-linear duration-300 transition-padding">
+              {content}
             </section>
           ))
         )}
@@ -135,37 +137,40 @@ export const EntityPageLayout = ({
   );
 
   const renderLayout = (children: ReactNode): JSX.Element => (
-    <div>
-      <HeroHeader />
-      <FullWidthRow className="bg-background">
-        <div className="w-full">{children}</div>
-      </FullWidthRow>
-    </div>
+    <FullWidthRow className="bg-background">
+      <div className="w-full">{children}</div>
+    </FullWidthRow>
   );
 
   if (isDesktop) {
     return renderLayout(
-      <div className="desktopLayout flex gap-2 relative">
-        <div className="sideMenuNav flex flex-col flex-1">
-          <div
-            style={{ top: stickyHeroHeight + navBarHeight }}
-            className="sideMenuInner sticky ease-in-out duration-700 transition-top"
-          >
-            <RenderNavigation vertical itemClassName="h-16 py-4" />
+      <div>
+        {children}
+        <div className="desktopLayout flex gap-2 relative">
+          <div className="sideMenuNav flex flex-col flex-1">
+            <div
+              style={{ top: stickyHeroHeight + navBarHeight }}
+              className="sideMenuInner sticky ease-in-out duration-700 transition-top"
+            >
+              <RenderNavigation vertical itemClassName="h-16 py-4" />
+            </div>
           </div>
+          <div className="flex-[3]">{renderContent}</div>
         </div>
-        <div className="flex-[3]">{renderContent}</div>
       </div>
     );
   }
 
   return renderLayout(
-    <div className="mobileLayout flex flex-col gap-2 relative">
-      <h6 className="m-0 text-primary">Navigation</h6>
-      <div className="mobileNav border-b border-grey border-solid">
-        <RenderNavigation itemClassName="" />
+    <div>
+      {children}
+      <div className="mobileLayout flex flex-col gap-2 relative">
+        <h6 className="m-0 text-primary">Navigation</h6>
+        <div className="mobileNav border-b border-grey border-solid">
+          <RenderNavigation itemClassName="" />
+        </div>
+        {renderContent}
       </div>
-      {renderContent}
     </div>
   );
 };
