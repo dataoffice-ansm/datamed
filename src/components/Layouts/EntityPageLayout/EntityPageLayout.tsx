@@ -40,7 +40,7 @@ export const EntityPageLayout = ({
   defaultSelectedSection?: number;
   colorMenu?: 'primary' | 'secondary';
   sections: SectionItemProps[];
-  render: (content: ReactNode) => ReactNode;
+  render: (_content: ReactNode) => ReactNode;
   offsetContent?: number;
 }) => {
   const { navBarHeight, stickyHeroHeight } = useLayoutContext();

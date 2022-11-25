@@ -3,9 +3,9 @@ import { isBrowser } from '../utils/web';
 import { useEffect } from 'react';
 
 export type CreatorReturnType = {
-  useBreakpoint<B>(breakpoint: B, defaultValue?: boolean): boolean;
-  useBreakpointEffect<B>(breakpoint: B, effect: (match: boolean) => void): void;
-  useBreakpointValue<B, T, U>(breakpoint: B, valid: T, invalid: U): T | U;
+  useBreakpoint<B>(_breakpoint: B, _defaultValue?: boolean): boolean;
+  useBreakpointEffect<B>(_breakpoint: B, _effect: (_match: boolean) => void): void;
+  useBreakpointValue<B, T, U>(_breakpoint: B, _valid: T, _invalid: U): T | U;
 };
 
 /**
@@ -62,7 +62,7 @@ export function createBreakpoint(screens: object | undefined) {
 
   function useBreakpointEffect<Breakpoint extends string>(
     breakpoint: Breakpoint,
-    effect: (match: boolean) => void
+    effect: (_match: boolean) => void
   ) {
     const match = useBreakpoint(breakpoint);
     React.useEffect(() => {

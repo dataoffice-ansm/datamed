@@ -1,13 +1,16 @@
 import { Combobox } from '@headlessui/react';
 import classnames from 'classnames';
-import type { Entity } from '../../api/interfaces/models';
-import { entityTypeLabel, entityTypeRoute } from '../../api/interfaces/models';
 import { useRouter } from 'next/router';
 import type { ChangeEvent, HTMLAttributes } from 'react';
 import { useCallback, useEffect, useState } from 'react';
-import { useFetchSpecialities } from '../../services/specialities';
-import { useFetchSubstances } from '../../services/substances';
 import debounce from 'lodash/debounce';
+import { entityTypeLabel, entityTypeRoute } from '../../helpers/entitiesHelper';
+import type { Entity, EntityCis, EntitySub } from '../../contexts/EntityContext';
+import type { Speciality, Substance } from '../../graphql/__generated__/generated-documents';
+import {
+  useSpecialitiesQuery,
+  useSubstancesQuery,
+} from '../../graphql/__generated__/generated-documents';
 
 /**
  *
@@ -19,25 +22,39 @@ export const Autocomplete = ({
   embedded,
   handleOnSelected,
 }: HTMLAttributes<HTMLDivElement> & { embedded?: boolean; handleOnSelected?: () => void }) => {
-  const { data: specialities } = useFetchSpecialities();
-  const { data: substances } = useFetchSubstances();
+  const { data: cisData, loading: cisLoading } = useSpecialitiesQuery({
+    fetchPolicy: 'no-cache',
+  });
+
+  const { data: subData, loading: subLoading } = useSubstancesQuery({
+    fetchPolicy: 'no-cache',
+  });
+
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
   const [results, setResults] = useState<Entity[]>([]);
 
   useEffect(() => {
     const formattedQuery = query.toLowerCase();
-    if (specialities && substances) {
-      setResults([
-        ...specialities.results
-          .filter(({ name }) => name.toLowerCase().includes(formattedQuery))
-          .slice(0, 50),
-        ...substances.results
-          .filter(({ name }) => name.toLowerCase().includes(formattedQuery))
-          .slice(0, 50),
-      ]);
+    if (cisData?.getSpecialities && subData?.getSubstances) {
+      const specialities = cisData.getSpecialities.specialities as Speciality[];
+      const substances = subData.getSubstances.substances as Substance[];
+
+      const filteredCis = specialities
+        .filter((cis) => cis !== null)
+        .filter((cis) => cis?.name.toLowerCase().includes(formattedQuery))
+        .slice(0, 50)
+        .map((row) => ({ type: 'cis', ...row, cisId: row?.cisId ?? '' })) as EntityCis[];
+
+      const filteredSub = substances
+        .filter((sub) => sub !== null)
+        .filter((sub) => sub?.name.toLowerCase().includes(formattedQuery))
+        .slice(0, 50)
+        .map((row) => ({ type: 'sub', ...row, code: row?.code ?? '' })) as EntitySub[];
+
+      setResults([...filteredCis, ...filteredSub]);
     }
-  }, [query, specialities, substances]);
+  }, [query, cisData?.getSpecialities, subData?.getSubstances]);
 
   const onSelected = async (e: Entity) => {
     const prefix = entityTypeRoute(e.type);
@@ -98,7 +115,8 @@ export const Autocomplete = ({
       <Combobox onChange={onSelected}>
         <Combobox.Input
           autoFocus
-          placeholder="Rechercher"
+          placeholder={cisLoading || subLoading ? '...' : 'Rechercher'}
+          disabled={cisLoading || subLoading}
           className={classnames(
             'AutocompleteInput w-full',
             embedded

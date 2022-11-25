@@ -26,7 +26,7 @@ export const Tooltip = ({
   content: ReactNode;
   theme?: TooltipTheme;
   placement?: Placement;
-  render: (refCb: Dispatch<SetStateAction<HTMLElement | null>>) => ReactNode;
+  render: (_refCb: Dispatch<SetStateAction<HTMLElement | null>>) => ReactNode;
 }) => {
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
