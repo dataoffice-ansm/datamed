@@ -13,7 +13,12 @@ const GraphFigurePage = () => (
           value={53}
           valueClassName="text-secondary"
           description="Hommes"
-          link="http://fake.com"
+          callToActionProps={{
+            as: 'button',
+            onClick() {
+              console.log('GraphFigure Man clicked');
+            },
+          }}
           icon={<ManFigure width={150} height={150} />}
         />
       </div>
@@ -22,7 +27,10 @@ const GraphFigurePage = () => (
         <GraphFigure
           value={47}
           description="Femme"
-          link="http://fake.com"
+          callToActionProps={{
+            as: 'link',
+            href: 'http://fake.com',
+          }}
           icon={<WomanFigure width={150} height={150} />}
         />
       </div>

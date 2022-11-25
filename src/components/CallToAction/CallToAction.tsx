@@ -6,14 +6,14 @@ type CallToActionBaseProps = {
   theme?: 'primary' | 'secondary' | 'grey';
 };
 
-type CallToActionLinkProps = CallToActionBaseProps &
+export type CallToActionLinkProps = CallToActionBaseProps &
   HTMLAttributes<HTMLAnchorElement> & {
     as: 'link';
     externalLink?: boolean;
     href: string;
   };
 
-type CallToActionButtonProps = CallToActionBaseProps &
+export type CallToActionButtonProps = CallToActionBaseProps &
   ButtonHTMLAttributes<HTMLButtonElement> & {
     as: 'button';
     variant?: 'outlined' | 'contained';

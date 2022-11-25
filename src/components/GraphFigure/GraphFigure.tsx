@@ -1,8 +1,9 @@
 import classnames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
 import CountUp from 'react-countup';
-import Link from 'next/link';
 import { formatDecimalToUnit } from '../../utils/format';
+import type { CallToActionButtonProps, CallToActionLinkProps } from '../CallToAction/CallToAction';
+import { CallToAction } from '../CallToAction/CallToAction';
 
 /**
  *
@@ -19,8 +20,8 @@ import { formatDecimalToUnit } from '../../utils/format';
 export const GraphFigure = ({
   value,
   description,
-  link,
   icon,
+  callToActionProps,
   unit = '%',
   className,
   valueClassName = 'text-primary',
@@ -28,8 +29,8 @@ export const GraphFigure = ({
 }: HTMLAttributes<HTMLDivElement> & {
   value: number;
   description: string;
-  link: string;
   icon: ReactNode;
+  callToActionProps: CallToActionLinkProps | CallToActionButtonProps;
   unit?: string;
   valueClassName?: string;
 }) => (
@@ -45,8 +46,8 @@ export const GraphFigure = ({
       <CountUp formattingFn={(n) => formatDecimalToUnit(n, unit)} end={value} />
     </div>
     <div className="GraphFigureDescription">{description}</div>
-    <Link href={link}>
-      <a className="GraphFigureDetails text-primary">Voir détails</a>
-    </Link>
+    <CallToAction {...callToActionProps} className="GraphFigureDetails text-primary">
+      Voir détails
+    </CallToAction>
   </div>
 );
