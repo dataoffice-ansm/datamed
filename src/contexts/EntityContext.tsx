@@ -1,16 +1,28 @@
-import type { Dispatch, HTMLAttributes, SetStateAction } from 'react';
+import type { Context, Dispatch, HTMLAttributes, SetStateAction } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
-import type { Entity } from '../api/interfaces/models';
+import type { Speciality, Substance } from '../graphql/__generated__/generated-documents';
 
-export const EntityContext = createContext<{
-  currentEntity: Entity;
-  setCurrentEntity: Dispatch<SetStateAction<Entity>>;
-}>({
-  currentEntity: { type: 'sub', id: '', name: '' },
+export type EntityCis = Speciality & { type: 'cis' };
+export type EntitySub = Substance & { type: 'sub' };
+export type Entity = EntityCis | EntitySub;
+
+type EntityContextData<T extends Entity> = {
+  currentEntity: T;
+  setCurrentEntity: Dispatch<SetStateAction<T>>;
+};
+
+export const EntityContext = createContext<EntityContextData<EntityCis | EntitySub>>({
+  currentEntity: { type: 'cis', name: 'default', id: 44, cisId: '44444' },
   setCurrentEntity: () => null,
 });
 
-export const EntityProvider = ({
+/**
+ *
+ * @param entity
+ * @param children
+ * @constructor
+ */
+export const EntityContextProvider = ({
   entity,
   children,
 }: HTMLAttributes<HTMLDivElement> & { entity: Entity }) => {
@@ -27,11 +39,15 @@ export const EntityProvider = ({
   return <EntityContext.Provider value={value}>{children}</EntityContext.Provider>;
 };
 
-export const useEntityContext = () => {
-  const context = useContext(EntityContext);
+export const useEntityContext = <T extends Entity = Entity>() => {
+  const context = useContext<EntityContextData<T>>(
+    EntityContext as unknown as Context<EntityContextData<T>>
+  );
 
-  if (context === undefined) {
-    throw new Error(`${EntityProvider.name} must be used within a ${EntityProvider.name}.`);
+  if (!context) {
+    throw new Error(
+      `${EntityContextProvider.name} must be used within a ${EntityContextProvider.name}.`
+    );
   }
 
   return context;

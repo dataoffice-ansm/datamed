@@ -1,0 +1,50 @@
+query Speciality($cisId: String!) {
+    getSpeciality(cisId: $cisId) {
+        id,
+        name,
+        cisId
+        description
+        icon {
+            id,
+            name
+        }
+    }
+}
+
+
+query Specialities {
+    getSpecialities {
+        meta {
+            count
+        }
+        specialities {
+            cisId
+            name
+            id
+            description
+        }
+    }
+}
+
+query Substance($subCodeId: String!) {
+    getSubstance(subCodeId: $subCodeId) {
+        id
+        name
+        code
+        description
+    }
+}
+
+query Substances {
+    getSubstances {
+        meta {
+            count
+        }
+        substances {
+            id
+            name
+            code
+            description
+        }
+    }
+}

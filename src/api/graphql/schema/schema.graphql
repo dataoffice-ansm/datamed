@@ -1,0 +1,78 @@
+type GenderRepartition {
+    male: Int
+    female: Int
+}
+
+type RepartitionTuple {
+    codePart: String
+    value: Int
+}
+
+type MedicalError {
+    name: String
+}
+
+type Speciality {
+    id: Int!
+    cisId: String!
+    name: String!
+    iconId: Int
+    icon: Icon
+    substances: [Substance]
+    description: String
+    #genderRepartition:GenderRepartition
+    #commercialisationState: String;
+    #ageRepartition: RepartitionTuple[];
+    #medicalErrors: MedicalError[];
+    #pharmacoForm: String;
+    #autorizationNumber: String;
+    #ammStatus: String;
+    #ammDate: Date;
+    #ammType: String;
+    #bdpmStatus: String;
+    #surveillance_renforcee: String;
+    #titulaires: String;
+    #administeringMode: String;
+    #substances: [Substance];
+}
+
+type Substance {
+    id: Int!
+    code: String!
+    name: String!
+    pharmaForm: String
+    dosage: String
+    description: String
+}
+
+type Icon {
+    id: Int!
+    name: String
+}
+
+type Meta {
+    count: Int
+}
+
+##### QUERIES #####
+
+type SpecialitiesReturn {
+    specialities: [Speciality]
+    meta: Meta
+}
+
+type SubstancesReturn {
+    substances: [Substance]
+    meta: Meta
+}
+
+type Query {
+    getSpeciality(cisId: String!): Speciality
+    getSpecialities: SpecialitiesReturn
+    getSubstance(subCodeId: String!): Substance
+    getSubstances: SubstancesReturn
+}
+
+#type Mutation {
+#    addBook(title: String, author: String): AddBookMutationResponse
+#}
