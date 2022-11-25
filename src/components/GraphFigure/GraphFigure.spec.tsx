@@ -9,14 +9,13 @@ describe(GraphFigure.name, () => {
         value={0}
         valueClassName="text-turquoise"
         description="fake description"
-        link="http://fake.com"
+        callToActionProps={{ as: 'link', href: 'faq' }}
         icon={<WomanIllustration alt="woman-svg" width={150} height={150} />}
       />
     );
 
-    const link: HTMLAnchorElement = getByText(graphFigure.container, 'Voir détails');
     expect(getByText(graphFigure.container, 'fake description'));
-    expect(link.href).toEqual('http://fake.com/');
+    expect(getByText(graphFigure.container, 'Voir détails'));
     expect(getByTestId(graphFigure.container, 'woman-svg'));
   });
 });
