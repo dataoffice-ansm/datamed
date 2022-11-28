@@ -1,8 +1,11 @@
 import {EntityPageLayout} from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
+import {HeroHeader} from '../../components/HeroHeader/HeroHeader';
 import type {EntityCis} from '../../contexts/EntityContext';
 import {EntityContextProvider, useEntityContext} from '../../contexts/EntityContext';
 import type {Speciality} from '../../api/graphql/__generated__/generated-types';
 import {EntityProvider, useEntityContext} from '../../contexts/EntityContext';
+
+import Page404 from '../../pages/[404]';
 
 const SectionOneGlobalInformation = () => {
     const {currentEntity} = useEntityContext<EntityCis>();
@@ -54,32 +57,37 @@ const SectionThree = () => {
         </div>
     );
 };
+export const SpecialityPage = ({cis}: { cis: Speciality }) => {
+    if (!cis) {
+        return <Page404/>;
+    }
 
-export const SpecialityPage = ({cis}: { cis: Speciality }) => (
-    <EntityContextProvider entity={{type: 'cis', ...cis}}>
-        <EntityPageLayout
-            offsetContent={80}
-            colorMenu="primary"
-            sections={[
-                {
-                    id: 'data-ansm-question',
-                    label: "DATA.ANSM c'est quoi ?",
-                    content: <SectionOneGlobalInformation/>,
-                },
-                {
-                    id: 'donnees-globales-plateforme',
-                    label: 'Données globales de la plateforme',
-                    content: <SectionTwo/>,
-                },
-                {
-                    id: 'lecture-des-donnees',
-                    label: 'Lecture des données',
-                    content: <SectionThree/>,
-                },
-            ]}
-            render={(content) => content}
-        >
-            <HeroHeader/>
-        </EntityPageLayout>
-    </EntityProvider>
-);
+    return (
+        <EntityContextProvider entity={{type: 'cis', ...cis}}>
+            <EntityPageLayout
+                offsetContent={80}
+                colorMenu="primary"
+                sections={[
+                    {
+                        id: 'data-ansm-question',
+                        label: "DATA.ANSM c'est quoi ?",
+                        content: <SectionOneGlobalInformation/>,
+                    },
+                    {
+                        id: 'donnees-globales-plateforme',
+                        label: 'Données globales de la plateforme',
+                        content: <SectionTwo/>,
+                    },
+                    {
+                        id: 'lecture-des-donnees',
+                        label: 'Lecture des données',
+                        content: <SectionThree/>,
+                    },
+                ]}
+                render={(content) => content}
+            >
+                <HeroHeader/>
+            </EntityPageLayout>
+        </EntityProvider>
+    );
+}

@@ -1,25 +1,61 @@
-import { useRouter } from 'next/router';
+import type { GetServerSidePropsContext } from 'next';
+import type { ParsedUrlQuery } from 'querystring';
+import type {
+  Speciality,
+  SpecialityQuery,
+  SpecialityQueryVariables,
+} from '../../graphql/__generated__/generated-documents';
+import { SpecialityDocument } from '../../graphql/__generated__/generated-documents';
 import { SpecialityPage } from '../../componentsPages/Speciality/SpecialityPage';
-import Page404 from '../[404]';
-import { useSpecialityQuery } from '../../graphql/__generated__/generated-documents';
+import { addApolloState, initializeApolloClient } from '../../config/apolloClient';
 
-const PageCisCSR = () => {
-  const { query } = useRouter();
-  const cisId = query.cisId as string;
-
-  const { data, error, loading } = useSpecialityQuery({
-    fetchPolicy: 'no-cache',
-    variables: { cisId },
-  });
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
-
-  if (data?.getSpeciality) {
-    return <SpecialityPage cis={data.getSpeciality} />;
-  }
-
-  return <Page404 />;
+type CisSSRPageProps = {
+  cis: Speciality;
 };
 
-export default PageCisCSR;
+type ContextParams = {
+  cisId: string;
+} & ParsedUrlQuery;
+
+const PageCisServerSideRendered = ({ cis }: CisSSRPageProps) => (
+  // TODO: rm comments
+  // query is cached on SSR and not fetched again !!
+
+  // const cached = client.readQuery<SpecialityQuery, SpecialityQueryVariables>({
+  //   query: SpecialityDocument,
+  //   variables: {
+  //     cisId: query.cisId as string,
+  //   },
+  // });
+
+  // const { data: clientSideData } = useSpecialityQuery({
+  //   fetchPolicy: 'cache-first',
+  //   variables: { cisId: query.cisId as string },
+  // });
+
+  // console.log(cached);
+  // console.log('--------');
+  // console.log(clientSideData?.getSpeciality);
+
+  <SpecialityPage cis={cis} />
+);
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const apolloClient = initializeApolloClient({ context });
+  const { cisId } = context.params as ContextParams;
+
+  const { data } = await apolloClient.query<SpecialityQuery, SpecialityQueryVariables>({
+    query: SpecialityDocument,
+    fetchPolicy: 'cache-first',
+    variables: {
+      cisId,
+    },
+  });
+
+  return addApolloState(apolloClient, {
+    props: {
+      cis: data.getSpeciality ?? null,
+    },
+  });
+};
+
+export default PageCisServerSideRendered;

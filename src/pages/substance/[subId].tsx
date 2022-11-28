@@ -1,25 +1,40 @@
-import { useRouter } from 'next/router';
-import { SubstancePage } from '../../componentsPages/Substance/SubstancePage';
-import Page404 from '../[404]';
-import { useSubstanceQuery } from '../../graphql/__generated__/generated-documents';
+import type { ParsedUrlQuery } from 'querystring';
+import { SubstancePage } from 'componentsPages/Substance/SubstancePage';
+import type {
+  Substance,
+  SubstanceQuery,
+  SubstanceQueryVariables,
+} from '../../graphql/__generated__/generated-documents';
+import { SubstanceDocument } from '../../graphql/__generated__/generated-documents';
+import type { GetServerSidePropsContext } from 'next';
+import { addApolloState, initializeApolloClient } from '../../config/apolloClient';
 
-const PageSubCSR = () => {
-  const { query } = useRouter();
-  const subCodeId = query.subId as string;
-
-  const { data, error, loading } = useSubstanceQuery({
-    fetchPolicy: 'no-cache',
-    variables: { subCodeId },
-  });
-
-  if (loading) return <p>Loading...</p>;
-  if (error) return <p>Error : {error.message}</p>;
-
-  if (data?.getSubstance) {
-    return <SubstancePage sub={data.getSubstance} />;
-  }
-
-  return <Page404 />;
+type SubSSRPageProps = {
+  sub: Substance;
 };
 
-export default PageSubCSR;
+type ContextParams = {
+  subId: string;
+} & ParsedUrlQuery;
+
+const PageSubServerSideRendered = ({ sub }: SubSSRPageProps) => <SubstancePage sub={sub} />;
+
+export const getServerSideProps = async (context: GetServerSidePropsContext) => {
+  const apolloClient = initializeApolloClient({ context });
+  const { subId } = context.params as ContextParams;
+
+  const { data } = await apolloClient.query<SubstanceQuery, SubstanceQueryVariables>({
+    query: SubstanceDocument,
+    variables: {
+      subCodeId: subId,
+    },
+  });
+
+  return addApolloState(apolloClient, {
+    props: {
+      sub: data.getSubstance ?? null,
+    },
+  });
+};
+
+export default PageSubServerSideRendered;
