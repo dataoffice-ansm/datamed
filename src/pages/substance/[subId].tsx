@@ -26,7 +26,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const { data } = await apolloClient.query<SubstanceQuery, SubstanceQueryVariables>({
     query: SubstanceDocument,
     variables: {
-      subCodeId: subId,
+      subCode: subId,
     },
   });
 

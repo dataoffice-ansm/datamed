@@ -2,7 +2,6 @@ import type { NormalizedCacheObject } from '@apollo/client';
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { useMemo } from 'react';
 import type { GetServerSidePropsContext } from 'next';
-import type { IncomingMessage } from 'http';
 // import cookie from 'cookie';
 
 export const APOLLO_STATE_PROPERTY_NAME = '__APOLLO_STATE__';

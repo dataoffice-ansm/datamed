@@ -42,7 +42,6 @@ type Substance {
     name: String!
     pharmaForm: String
     dosage: String
-    description: String
 }
 
 type Icon {
@@ -67,9 +66,9 @@ type SubstancesReturn {
 }
 
 type Query {
-    getSpeciality(cisId: String!): Speciality
+    getSpeciality(cisCode: String!): Speciality
     getSpecialities: SpecialitiesReturn
-    getSubstance(subCodeId: String!): Substance
+    getSubstance(subCode: String!): Substance
     getSubstances: SubstancesReturn
 }
 

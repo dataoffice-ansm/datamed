@@ -1,8 +1,8 @@
-import type { GraphQLResolveInfo } from 'graphql';
-import type { ContextValue } from '../server';
+import { GraphQLResolveInfo } from 'graphql';
+import { ContextValue } from '../../server';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends Record<string, unknown>> = { [K in keyof T]: T[K] };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 export type RequireFields<T, K extends keyof T> = Omit<T, K> & { [P in K]-?: NonNullable<T[P]> };
@@ -46,11 +46,11 @@ export type Query = {
 };
 
 export type QueryGetSpecialityArgs = {
-  cisId: Scalars['String'];
+  cisCode: Scalars['String'];
 };
 
 export type QueryGetSubstanceArgs = {
-  subCodeId: Scalars['String'];
+  subCode: Scalars['String'];
 };
 
 export type RepartitionTuple = {
@@ -79,7 +79,6 @@ export type Speciality = {
 export type Substance = {
   __typename?: 'Substance';
   code: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
   dosage?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   name: Scalars['String'];
@@ -125,15 +124,21 @@ export type SubscriptionResolveFn<TResult, TParent, TContext, TArgs> = (
   info: GraphQLResolveInfo
 ) => TResult | Promise<TResult>;
 
-export type SubscriptionSubscriberObject<TResult, TKey extends string, TParent, TContext, TArgs> = {
+export interface SubscriptionSubscriberObject<
+  TResult,
+  TKey extends string,
+  TParent,
+  TContext,
+  TArgs
+> {
   subscribe: SubscriptionSubscribeFn<{ [key in TKey]: TResult }, TParent, TContext, TArgs>;
   resolve?: SubscriptionResolveFn<TResult, { [key in TKey]: TResult }, TContext, TArgs>;
-};
+}
 
-export type SubscriptionResolverObject<TResult, TParent, TContext, TArgs> = {
+export interface SubscriptionResolverObject<TResult, TParent, TContext, TArgs> {
   subscribe: SubscriptionSubscribeFn<any, TParent, TContext, TArgs>;
   resolve: SubscriptionResolveFn<TResult, any, TContext, TArgs>;
-};
+}
 
 export type SubscriptionObject<TResult, TKey extends string, TParent, TContext, TArgs> =
   | SubscriptionSubscriberObject<TResult, TKey, TParent, TContext, TArgs>
@@ -248,13 +253,13 @@ export type QueryResolvers<
     Maybe<ResolversTypes['Speciality']>,
     ParentType,
     ContextType,
-    RequireFields<QueryGetSpecialityArgs, 'cisId'>
+    RequireFields<QueryGetSpecialityArgs, 'cisCode'>
   >;
   getSubstance?: Resolver<
     Maybe<ResolversTypes['Substance']>,
     ParentType,
     ContextType,
-    RequireFields<QueryGetSubstanceArgs, 'subCodeId'>
+    RequireFields<QueryGetSubstanceArgs, 'subCode'>
   >;
   getSubstances?: Resolver<Maybe<ResolversTypes['SubstancesReturn']>, ParentType, ContextType>;
 }>;
@@ -300,7 +305,6 @@ export type SubstanceResolvers<
   ParentType extends ResolversParentTypes['Substance'] = ResolversParentTypes['Substance']
 > = ResolversObject<{
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   dosage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;

@@ -2,7 +2,7 @@ import { gql } from '@apollo/client';
 import * as Apollo from '@apollo/client';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends Record<string, unknown>> = { [K in keyof T]: T[K] };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
 const defaultOptions = {} as const;
@@ -46,11 +46,11 @@ export type Query = {
 };
 
 export type QueryGetSpecialityArgs = {
-  cisId: Scalars['String'];
+  cisCode: Scalars['String'];
 };
 
 export type QueryGetSubstanceArgs = {
-  subCodeId: Scalars['String'];
+  subCode: Scalars['String'];
 };
 
 export type RepartitionTuple = {
@@ -79,7 +79,6 @@ export type Speciality = {
 export type Substance = {
   __typename?: 'Substance';
   code: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
   dosage?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   name: Scalars['String'];
@@ -93,7 +92,7 @@ export type SubstancesReturn = {
 };
 
 export type SpecialityQueryVariables = Exact<{
-  cisId: Scalars['String'];
+  cisCode: Scalars['String'];
 }>;
 
 export type SpecialityQuery = {
@@ -108,7 +107,7 @@ export type SpecialityQuery = {
   } | null;
 };
 
-export type SpecialitiesQueryVariables = Exact<Record<string, never>>;
+export type SpecialitiesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type SpecialitiesQuery = {
   __typename?: 'Query';
@@ -126,21 +125,15 @@ export type SpecialitiesQuery = {
 };
 
 export type SubstanceQueryVariables = Exact<{
-  subCodeId: Scalars['String'];
+  subCode: Scalars['String'];
 }>;
 
 export type SubstanceQuery = {
   __typename?: 'Query';
-  getSubstance?: {
-    __typename?: 'Substance';
-    id: number;
-    name: string;
-    code: string;
-    description?: string | null;
-  } | null;
+  getSubstance?: { __typename?: 'Substance'; id: number; name: string; code: string } | null;
 };
 
-export type SubstancesQueryVariables = Exact<Record<string, never>>;
+export type SubstancesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type SubstancesQuery = {
   __typename?: 'Query';
@@ -152,14 +145,13 @@ export type SubstancesQuery = {
       id: number;
       name: string;
       code: string;
-      description?: string | null;
     } | null> | null;
   } | null;
 };
 
 export const SpecialityDocument = gql`
-  query Speciality($cisId: String!) {
-    getSpeciality(cisId: $cisId) {
+  query Speciality($cisCode: String!) {
+    getSpeciality(cisCode: $cisCode) {
       id
       name
       cisId
@@ -184,7 +176,7 @@ export const SpecialityDocument = gql`
  * @example
  * const { data, loading, error } = useSpecialityQuery({
  *   variables: {
- *      cisId: // value for 'cisId'
+ *      cisCode: // value for 'cisCode'
  *   },
  * });
  */
@@ -194,7 +186,6 @@ export function useSpecialityQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<SpecialityQuery, SpecialityQueryVariables>(SpecialityDocument, options);
 }
-
 export function useSpecialityLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<SpecialityQuery, SpecialityQueryVariables>
 ) {
@@ -204,7 +195,6 @@ export function useSpecialityLazyQuery(
     options
   );
 }
-
 export type SpecialityQueryHookResult = ReturnType<typeof useSpecialityQuery>;
 export type SpecialityLazyQueryHookResult = ReturnType<typeof useSpecialityLazyQuery>;
 export type SpecialityQueryResult = Apollo.QueryResult<SpecialityQuery, SpecialityQueryVariables>;
@@ -248,7 +238,6 @@ export function useSpecialitiesQuery(
     options
   );
 }
-
 export function useSpecialitiesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<SpecialitiesQuery, SpecialitiesQueryVariables>
 ) {
@@ -258,7 +247,6 @@ export function useSpecialitiesLazyQuery(
     options
   );
 }
-
 export type SpecialitiesQueryHookResult = ReturnType<typeof useSpecialitiesQuery>;
 export type SpecialitiesLazyQueryHookResult = ReturnType<typeof useSpecialitiesLazyQuery>;
 export type SpecialitiesQueryResult = Apollo.QueryResult<
@@ -266,12 +254,11 @@ export type SpecialitiesQueryResult = Apollo.QueryResult<
   SpecialitiesQueryVariables
 >;
 export const SubstanceDocument = gql`
-  query Substance($subCodeId: String!) {
-    getSubstance(subCodeId: $subCodeId) {
+  query Substance($subCode: String!) {
+    getSubstance(subCode: $subCode) {
       id
       name
       code
-      description
     }
   }
 `;
@@ -288,7 +275,7 @@ export const SubstanceDocument = gql`
  * @example
  * const { data, loading, error } = useSubstanceQuery({
  *   variables: {
- *      subCodeId: // value for 'subCodeId'
+ *      subCode: // value for 'subCode'
  *   },
  * });
  */
@@ -298,14 +285,12 @@ export function useSubstanceQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<SubstanceQuery, SubstanceQueryVariables>(SubstanceDocument, options);
 }
-
 export function useSubstanceLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<SubstanceQuery, SubstanceQueryVariables>
 ) {
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useLazyQuery<SubstanceQuery, SubstanceQueryVariables>(SubstanceDocument, options);
 }
-
 export type SubstanceQueryHookResult = ReturnType<typeof useSubstanceQuery>;
 export type SubstanceLazyQueryHookResult = ReturnType<typeof useSubstanceLazyQuery>;
 export type SubstanceQueryResult = Apollo.QueryResult<SubstanceQuery, SubstanceQueryVariables>;
@@ -319,7 +304,6 @@ export const SubstancesDocument = gql`
         id
         name
         code
-        description
       }
     }
   }
@@ -346,7 +330,6 @@ export function useSubstancesQuery(
   const options = { ...defaultOptions, ...baseOptions };
   return Apollo.useQuery<SubstancesQuery, SubstancesQueryVariables>(SubstancesDocument, options);
 }
-
 export function useSubstancesLazyQuery(
   baseOptions?: Apollo.LazyQueryHookOptions<SubstancesQuery, SubstancesQueryVariables>
 ) {
@@ -356,7 +339,6 @@ export function useSubstancesLazyQuery(
     options
   );
 }
-
 export type SubstancesQueryHookResult = ReturnType<typeof useSubstancesQuery>;
 export type SubstancesLazyQueryHookResult = ReturnType<typeof useSubstancesLazyQuery>;
 export type SubstancesQueryResult = Apollo.QueryResult<SubstancesQuery, SubstancesQueryVariables>;

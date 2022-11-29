@@ -1,13 +1,14 @@
 import { ApolloServer } from '@apollo/server';
 import { resolvers } from './resolvers';
 import { readFileSync } from 'fs';
-import type { PostgresDb } from '../datasources/postgres/PostgresClass';
+import type { PostgresOperations } from './datasources/postgres/postgresOperations';
 import type { NextApiRequest } from 'next';
 
 export type ContextValue = {
   dataSources: {
-    postgresDB: PostgresDb;
+    postgresOperations: PostgresOperations;
   };
+  // for later usage maybe
   req: NextApiRequest;
   token?: string;
 };

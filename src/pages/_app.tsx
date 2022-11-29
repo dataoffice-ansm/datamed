@@ -8,10 +8,7 @@ import { BodyScrollProvider } from '../contexts/BodyScrollContext';
 import { LayoutProvider } from '../contexts/LayoutContext';
 import type { NormalizedCacheObject } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
-import useApollo, {
-  APOLLO_STATE_PROPERTY_NAME,
-  initializeApolloClient,
-} from '../config/apolloClient';
+import useApollo, { APOLLO_STATE_PROPERTY_NAME } from '../config/apolloClient';
 
 export type NextPageWithLayout<P = Record<string, unknown>, Ip = P> = NextPage<P, Ip>;
 
