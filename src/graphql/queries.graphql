@@ -1,5 +1,5 @@
-query Speciality($cisId: String!) {
-    getSpeciality(cisId: $cisId) {
+query Speciality($cisCode: String!) {
+    getSpeciality(cisCode: $cisCode) {
         id,
         name,
         cisId
@@ -26,12 +26,11 @@ query Specialities {
     }
 }
 
-query Substance($subCodeId: String!) {
-    getSubstance(subCodeId: $subCodeId) {
+query Substance($subCode: String!) {
+    getSubstance(subCode: $subCode) {
         id
         name
         code
-        description
     }
 }
 
@@ -44,7 +43,6 @@ query Substances {
             id
             name
             code
-            description
         }
     }
 }

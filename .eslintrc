@@ -35,7 +35,8 @@
     "*.config.js",
     "tailwind.debug.js",
     "jest.config.js",
-    "next-env.d.ts"
+    "next-env.d.ts",
+    "__generated__"
   ],
   "plugins": [
     "simple-import-sort",

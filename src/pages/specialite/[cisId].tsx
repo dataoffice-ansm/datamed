@@ -47,13 +47,15 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     query: SpecialityDocument,
     fetchPolicy: 'cache-first',
     variables: {
-      cisId,
+      cisCode: cisId,
     },
   });
 
+  console.log(data);
+
   return addApolloState(apolloClient, {
     props: {
-      cis: data.getSpeciality ?? null,
+      cis: data?.getSpeciality ?? null,
     },
   });
 };

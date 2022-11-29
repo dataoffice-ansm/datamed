@@ -14,7 +14,7 @@ export const ActiveLink = ({
   render,
   ...props
 }: LinkProps & {
-  render: (isActive: boolean) => ReactNode;
+  render: (_isActive: boolean) => ReactNode;
 }) => {
   const router = useRouter();
   const isActive = router.asPath === props.href || router.asPath === props.as;

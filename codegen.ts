@@ -7,7 +7,7 @@ const config: CodegenConfig = {
       plugins: ['typescript', 'typescript-resolvers'],
       config: {
         useIndexSignature: true,
-        contextType: '../server#ContextValue',
+        contextType: '../../server#ContextValue',
       },
       hooks: {
         afterOneFileWrite: ['eslint --fix', 'prettier --write'],
