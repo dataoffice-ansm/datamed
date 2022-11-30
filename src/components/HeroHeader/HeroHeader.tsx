@@ -44,7 +44,7 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
   const heightRef = useRefHeight(ref);
 
   const pageScrolled = heightRef && scrollY >= heightRef;
-  const { theme, icon, tooltip } = entitiesOptionsMapping[currentEntity.type];
+  const { theme, icon } = entitiesOptionsMapping[currentEntity.type];
 
   useEffect(() => {
     setStickyHeroHeight(pageScrolled ? stickyHeroHeightPx : 0);
@@ -77,10 +77,6 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
         <div className="w-24 h-24 md:w-36 md:h-36">{icon}</div>
         <div className="flex flex-col justify-center">
           <div className="text-3xl font-medium mb-4">{currentEntity.name}</div>
-          {currentEntity.description && (
-            <div className="text-xl mb-8">{currentEntity.description}</div>
-          )}
-          {tooltip}
         </div>
       </div>
     </FullWidthRow>
