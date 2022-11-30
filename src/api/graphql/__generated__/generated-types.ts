@@ -27,6 +27,13 @@ export type Icon = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type MedicalAtc = {
+  __typename?: 'MedicalATC';
+  code?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+};
+
 export type MedicalError = {
   __typename?: 'MedicalError';
   name?: Maybe<Scalars['String']>;
@@ -67,6 +74,7 @@ export type SpecialitiesReturn = {
 
 export type Speciality = {
   __typename?: 'Speciality';
+  atc?: Maybe<MedicalAtc>;
   cisId: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   icon?: Maybe<Icon>;
@@ -182,6 +190,7 @@ export type ResolversTypes = ResolversObject<{
   GenderRepartition: ResolverTypeWrapper<GenderRepartition>;
   Icon: ResolverTypeWrapper<Icon>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  MedicalATC: ResolverTypeWrapper<MedicalAtc>;
   MedicalError: ResolverTypeWrapper<MedicalError>;
   Meta: ResolverTypeWrapper<Meta>;
   Query: ResolverTypeWrapper<{}>;
@@ -199,6 +208,7 @@ export type ResolversParentTypes = ResolversObject<{
   GenderRepartition: GenderRepartition;
   Icon: Icon;
   Int: Scalars['Int'];
+  MedicalATC: MedicalAtc;
   MedicalError: MedicalError;
   Meta: Meta;
   Query: {};
@@ -223,6 +233,16 @@ export type IconResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Icon'] = ResolversParentTypes['Icon']
 > = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MedicalAtcResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['MedicalATC'] = ResolversParentTypes['MedicalATC']
+> = ResolversObject<{
+  code?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -290,6 +310,7 @@ export type SpecialityResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Speciality'] = ResolversParentTypes['Speciality']
 > = ResolversObject<{
+  atc?: Resolver<Maybe<ResolversTypes['MedicalATC']>, ParentType, ContextType>;
   cisId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   icon?: Resolver<Maybe<ResolversTypes['Icon']>, ParentType, ContextType>;
@@ -324,6 +345,7 @@ export type SubstancesReturnResolvers<
 export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   GenderRepartition?: GenderRepartitionResolvers<ContextType>;
   Icon?: IconResolvers<ContextType>;
+  MedicalATC?: MedicalAtcResolvers<ContextType>;
   MedicalError?: MedicalErrorResolvers<ContextType>;
   Meta?: MetaResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;

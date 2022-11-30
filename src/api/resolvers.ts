@@ -29,16 +29,8 @@ export const resolvers: Resolvers = {
     },
   },
   Speciality: {
-    async description(parent, args, context) {
-      return context.dataSources.postgresOperations.getSpecialityDescription(parent.id);
-    },
-
     async substances(parent, args, context) {
       return context.dataSources.postgresOperations.getSpecialitySubstances(parent.id);
-    },
-
-    async icon(parent, args, context) {
-      return parent.iconId ? context.dataSources.postgresOperations.getIcon(parent.iconId) : null;
     },
   },
 };
