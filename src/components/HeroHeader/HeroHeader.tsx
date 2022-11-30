@@ -71,16 +71,13 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
       </div>
       <div
         ref={ref}
-        className="HeroHeader flex flex-col md:flex-row min-h[20rem] max-w-4xl pt-24 md:pt-48 pb-16 md:pb-24 gap-16 text-white"
+        className="HeroHeader flex flex-col md:flex-row min-h[20rem] max-w-4xl pt-24 md:pt-48 pb-16 md:pb-24 lg:pb-32 gap-16 text-white"
       >
         <div className="w-24 h-24 md:w-36 md:h-36">{icon}</div>
         <div className="flex flex-col justify-center">
           <div className="text-3xl font-medium mb-4">{currentEntity.name}</div>
           {currentEntity.description && (
-            <div className="text-xl mb-8">
-              lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-              lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum
-            </div>
+            <div className="text-xl mb-8">{currentEntity.description}</div>
           )}
           {tooltip}
         </div>
