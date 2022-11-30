@@ -52,6 +52,12 @@ export const EntityPageLayout = ({
 
   const [selectedIndex, handleSelectedIndex] = useTabSelected(sectionsNav, defaultSelectedSection);
 
+  /**
+   *
+   * @param vertical
+   * @param itemClassName
+   * @constructor
+   */
   const RenderNavigation = ({
     vertical,
     itemClassName,

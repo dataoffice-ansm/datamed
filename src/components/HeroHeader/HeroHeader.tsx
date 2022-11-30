@@ -39,9 +39,10 @@ const entitiesOptionsMapping: Record<'sub' | 'cis', EntityOptions> = {
 export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
   const { navBarHeight, setStickyHeroHeight } = useLayoutContext();
   const { scrollY } = useScrollPosition();
+  const { currentEntity } = useEntityContext();
   const ref = useRef<HTMLDivElement>(null);
   const heightRef = useRefHeight(ref);
-  const { currentEntity } = useEntityContext();
+
   const pageScrolled = heightRef && scrollY >= heightRef;
   const { theme, icon, tooltip } = entitiesOptionsMapping[currentEntity.type];
 

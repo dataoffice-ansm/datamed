@@ -15,6 +15,9 @@ export class PostgresOperations {
 
       .leftJoin('mp_atc as mp_a', 'mp.id', 'mp_a.mp_id')
       .leftJoin('description as d', 'mp.id', 'd.mp_id')
+      .leftJoin('marketing_authorization_status as mka_s', 'mka_s.id', 'mp.ma_status_id')
+      .leftJoin('marketing_authorization_types as mka_t', 'mka_t.id', 'mp.ma_type_id')
+      .leftJoin('laboratories as lab', 'lab.id', 'mp.laboratory_id')
       .leftJoin('icons as i', 'mp.icon_id', 'i.id')
 
       .select([
@@ -24,6 +27,10 @@ export class PostgresOperations {
         'mp_a.id as atcId',
         'mp_a.atc as actCode',
         'mp_a.atc_name as atcName',
+        'mka_s.status as commercialisationState',
+        'mka_t.type as commercialisationType',
+        'lab.id as laboratoryId',
+        'lab.name as laboratoryName',
         'mp.icon_id as iconId',
         'i.name as iconName',
         'd.description',
@@ -31,7 +38,21 @@ export class PostgresOperations {
       .executeTakeFirst();
 
     if (row) {
-      const { id, cisId, name, atcId, actCode, atcName, iconId, iconName, description } = row;
+      const {
+        id,
+        cisId,
+        name,
+        atcId,
+        actCode,
+        atcName,
+        iconId,
+        iconName,
+        description,
+        commercialisationState,
+        commercialisationType,
+        laboratoryId,
+        laboratoryName,
+      } = row;
       return {
         id,
         cisId,
@@ -51,6 +72,14 @@ export class PostgresOperations {
           : null,
         iconId,
         description,
+        commercialisationState,
+        commercialisationType,
+        laboratory: laboratoryId
+          ? {
+              id: laboratoryId,
+              name: laboratoryName,
+            }
+          : null,
       };
     }
 

@@ -3,10 +3,28 @@ query Speciality($cisCode: String!) {
         id,
         name,
         cisId
+        atc {
+            id
+            name
+            code
+        }
+        commercialisationState
+        commercialisationType
         description
         icon {
             id,
             name
+        }
+        laboratory {
+            id
+            name
+        }
+        substances {
+            id
+            code
+            name
+            dosage
+            pharmaForm
         }
     }
 }
