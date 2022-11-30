@@ -159,7 +159,7 @@ export const EntityPageLayout = ({
             </div>
           </div>
           <div
-            style={{ marginTop: `${stickyHeroHeight > 0 ? 0 : -offsetContent}px` }}
+            style={{ marginTop: stickyHeroHeight > 0 ? 0 : -offsetContent }}
             className="flex-[3]"
           >
             {renderContent}
@@ -175,7 +175,7 @@ export const EntityPageLayout = ({
       <div className="mobileLayout flex flex-col gap-2 relative">
         <h6 className="m-0 text-primary">Navigation</h6>
         <div className="mobileNav border-b border-grey border-solid">
-          <RenderNavigation itemClassName="" />
+          <RenderNavigation />
         </div>
         {renderContent}
       </div>
