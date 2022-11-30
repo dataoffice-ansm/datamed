@@ -25,6 +25,7 @@ export type SectionItemProps = SectionNavProps & {
  * @param render
  * @param sections
  * @param children
+ * @param offsetContent
  * @constructor
  */
 export const EntityPageLayout = ({
@@ -34,11 +35,13 @@ export const EntityPageLayout = ({
   sections,
   id,
   children,
+  offsetContent = 0,
 }: React.HTMLAttributes<HTMLDivElement> & {
   defaultSelectedSection?: number;
   colorMenu?: 'primary' | 'secondary';
   sections: SectionItemProps[];
   render: (content: ReactNode) => ReactNode;
+  offsetContent?: number;
 }) => {
   const { navBarHeight, stickyHeroHeight } = useLayoutContext();
   const isDesktop = useBreakpoint('md');
@@ -155,7 +158,12 @@ export const EntityPageLayout = ({
               <RenderNavigation vertical itemClassName="h-16 py-4" />
             </div>
           </div>
-          <div className="flex-[3]">{renderContent}</div>
+          <div
+            style={{ marginTop: `${stickyHeroHeight > 0 ? 0 : -offsetContent}px` }}
+            className="flex-[3]"
+          >
+            {renderContent}
+          </div>
         </div>
       </div>
     );
