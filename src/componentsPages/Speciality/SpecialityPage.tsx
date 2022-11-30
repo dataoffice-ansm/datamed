@@ -14,7 +14,7 @@ const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
 
   return (
-    <div className="SectionOneGlobalInformation">
+    <div className="SectionOneGlobalInformation bg-white shadow rounded-lg p-4">
       <div className="substances">
         {currentEntity?.substances && currentEntity.substances.length > 1 ? (
           <h5>Substances actives</h5>
@@ -55,13 +55,13 @@ const SectionOneGlobalInformation = () => {
 
 const SectionTreatedPatients = () => (
   <div className="SectionTreatedPatients">
-    <h2>SectionTreatedPatients</h2>
+    <h5>SectionTreatedPatients</h5>
   </div>
 );
 
 const SectionMedicinalErrors = () => (
   <div className="SectionMedicinalErrors">
-    <h2>SectionMedicinalErrors</h2>
+    <h5>SectionMedicinalErrors</h5>
   </div>
 );
 
@@ -87,34 +87,33 @@ const SectionSideEffects = () => {
   );
 
   return (
-    <div className="SectionSideEffects">
-      <h2>SectionSideEffects</h2>
+    <div className="SectionSideEffects p-4 bg-secondary">
+      <h5>SectionSideEffects</h5>
       {substances.length ? (
-        <>
-          <h2>Substance sélectionnée: {selectedSubstance?.name}</h2>
+        <div className="flex">
+          <h5>Substance sélectionnée: {selectedSubstance?.name}</h5>
           <Select
             defaultOptionIndex={selectedIndex}
             options={substancesOptions}
             onSelectOption={onChange}
           />
-        </>
+        </div>
       ) : (
         <div>Aucune substance disponible</div>
       )}
-      ;
     </div>
   );
 };
 
 const SectionRisksShortageHistory = () => (
   <div className="SectionRisksShortageHistory">
-    <h2>SectionRisksShortageHistory</h2>
+    <h5>SectionRisksShortageHistory</h5>
   </div>
 );
 
 const SectionPublications = () => (
   <div className="SectionPublications">
-    <h2>SectionPublications</h2>
+    <h5>SectionPublications</h5>
   </div>
 );
 
