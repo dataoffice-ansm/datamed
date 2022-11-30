@@ -27,6 +27,13 @@ export type Icon = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type MedicalAtc = {
+  __typename?: 'MedicalATC';
+  code?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+};
+
 export type MedicalError = {
   __typename?: 'MedicalError';
   name?: Maybe<Scalars['String']>;
@@ -67,6 +74,7 @@ export type SpecialitiesReturn = {
 
 export type Speciality = {
   __typename?: 'Speciality';
+  atc?: Maybe<MedicalAtc>;
   cisId: Scalars['String'];
   description?: Maybe<Scalars['String']>;
   icon?: Maybe<Icon>;
@@ -103,7 +111,21 @@ export type SpecialityQuery = {
     name: string;
     cisId: string;
     description?: string | null;
+    atc?: {
+      __typename?: 'MedicalATC';
+      id: number;
+      name?: string | null;
+      code?: string | null;
+    } | null;
     icon?: { __typename?: 'Icon'; id: number; name?: string | null } | null;
+    substances?: Array<{
+      __typename?: 'Substance';
+      id: number;
+      code: string;
+      name: string;
+      dosage?: string | null;
+      pharmaForm?: string | null;
+    } | null> | null;
   } | null;
 };
 
@@ -155,10 +177,22 @@ export const SpecialityDocument = gql`
       id
       name
       cisId
+      atc {
+        id
+        name
+        code
+      }
       description
       icon {
         id
         name
+      }
+      substances {
+        id
+        code
+        name
+        dosage
+        pharmaForm
       }
     }
   }

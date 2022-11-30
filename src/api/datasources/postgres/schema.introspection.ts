@@ -26,6 +26,16 @@ export type Actions = {
   year: string | null;
 };
 
+export type AdminRoutes = {
+  id: Generated<number>;
+  route: string | null;
+};
+
+export type Ages = {
+  id: Generated<number>;
+  range: string | null;
+};
+
 export type AtcClasses = {
   code: string | null;
   id: Generated<number>;
@@ -51,57 +61,50 @@ export type Config = {
 };
 
 export type Description = {
-  cis: string | null;
   description: string | null;
   id: Generated<number>;
   mp_id: number | null;
 };
 
-export type ErrorMedCisDenomination = {
-  cis: string | null;
+export type ErrorMedDenomination = {
   denomination: string | null;
   id: Generated<number>;
   mp_id: number | null;
 };
 
 export type ErrorMedGravity = {
-  cis: string | null;
-  gravity: string | null;
+  gravity_error_id: number | null;
   id: Generated<number>;
   mp_id: number | null;
   percentage: number | null;
 };
 
 export type ErrorMedInitial = {
-  cis: string | null;
   id: Generated<number>;
-  initial_error: string | null;
+  initial_error_id: number | null;
   mp_id: number | null;
   percentage: number | null;
 };
 
 export type ErrorMedNature = {
-  cis: string | null;
   id: Generated<number>;
   mp_id: number | null;
-  nature_error: string | null;
+  nature_error_id: number | null;
   percentage: number | null;
 };
 
 export type ErrorMedPopulation = {
-  cis: string | null;
   id: Generated<number>;
   mp_id: number | null;
   percentage: number | null;
-  population_error: string | null;
+  population_error_id: number | null;
 };
 
 export type ErrorMedSideEffect = {
-  cis: string | null;
   id: Generated<number>;
   mp_id: number | null;
   percentage: number | null;
-  side_effect: string | null;
+  side_effect_id: number | null;
 };
 
 export type GlobalSeIndicators = {
@@ -112,38 +115,61 @@ export type GlobalSeIndicators = {
   pct: number | null;
 };
 
+export type GravityErrors = {
+  id: Generated<number>;
+  label: string | null;
+};
+
 export type Icons = {
   id: Generated<number>;
   name: string | null;
 };
 
+export type InitialErrors = {
+  id: Generated<number>;
+  label: string | null;
+};
+
+export type Laboratories = {
+  id: Generated<number>;
+  name: string | null;
+};
+
+export type MarketingAuthorizationStatus = {
+  id: Generated<number>;
+  status: string | null;
+};
+
+export type MarketingAuthorizationTypes = {
+  id: Generated<number>;
+  type: string | null;
+};
+
 export type MedicinalProduct = {
-  admin_route: string | null;
+  admin_route_id: number | null;
   authorization_number: string | null;
   bdpm_status: string | null;
   cis: string;
   enhanced_monitoring: string | null;
   icon_id: number | null;
   id: Generated<number>;
+  laboratory_id: number | null;
   ma_date: Timestamp | null;
-  ma_holder: string | null;
-  ma_status: string | null;
-  ma_type: string | null;
+  ma_status_id: number | null;
+  ma_type_id: number | null;
   marketing_status: string | null;
   name: string;
-  pharma_form: string | null;
+  pharma_form_id: number | null;
 };
 
 export type MpAtc = {
   atc: string | null;
   atc_name: string | null;
-  cis: string | null;
   id: Generated<number>;
   mp_id: number | null;
 };
 
 export type MpExposition = {
-  cis: string | null;
   consumption_year_trunc: number | null;
   exposition: number | null;
   id: Generated<number>;
@@ -151,15 +177,13 @@ export type MpExposition = {
 };
 
 export type MpPatientAge = {
-  age: string | null;
-  cis: string | null;
+  age_id: number | null;
   id: Generated<number>;
   mp_id: number | null;
   patients_percentage: number | null;
 };
 
 export type MpPatientSex = {
-  cis: string | null;
   id: Generated<number>;
   mp_id: number | null;
   patients_percentage: number | null;
@@ -167,14 +191,27 @@ export type MpPatientSex = {
 };
 
 export type MpSubstances = {
-  cis: string | null;
   dosage: string | null;
-  elem_pharma: string | null;
   id: Generated<number>;
-  mp_id: number;
-  ref_dosage: string | null;
-  substance_code: string | null;
-  substance_id: number;
+  mp_id: number | null;
+  pharma_form_id: number | null;
+  ref_dosage_id: number | null;
+  substance_id: number | null;
+};
+
+export type NatureErrors = {
+  id: Generated<number>;
+  label: string | null;
+};
+
+export type PharmaForms = {
+  form: string | null;
+  id: Generated<number>;
+};
+
+export type PopulationErrors = {
+  id: Generated<number>;
+  label: string | null;
 };
 
 export type Presentation = {
@@ -183,21 +220,30 @@ export type Presentation = {
   cis: string | null;
   collectivity_agrement: string | null;
   id: Generated<number>;
+  ma_presentation_status_id: number | null;
   marketing_declaration_date: Timestamp | null;
-  marketing_state: string | null;
+  marketing_state_id: number | null;
   mp_id: number | null;
-  presentation_administration_status: string | null;
   presentation_label: string | null;
   repayment_rate: string | null;
 };
 
 export type Publication = {
-  cis: string | null;
   id: Generated<number>;
   link: string | null;
   mp_id: number | null;
   title: string | null;
+  type_id: number | null;
+};
+
+export type PublicationTypes = {
+  id: Generated<number>;
   type: string | null;
+};
+
+export type RefDosage = {
+  id: Generated<number>;
+  label: string | null;
 };
 
 export type Reports = {
@@ -206,6 +252,11 @@ export type Reports = {
   nb_presentations: number | null;
   nb_reports: number | null;
   year: string | null;
+};
+
+export type SideEffects = {
+  id: Generated<number>;
+  label: string | null;
 };
 
 export type SoldOut = {
@@ -334,28 +385,41 @@ export type SubstancesSoclong = {
 
 export type DB = {
   actions: Actions;
+  admin_routes: AdminRoutes;
+  ages: Ages;
   atc_classes: AtcClasses;
   case_pv: CasePv;
   causes: Causes;
   config: Config;
   description: Description;
-  error_med_cis_denomination: ErrorMedCisDenomination;
+  error_med_denomination: ErrorMedDenomination;
   error_med_gravity: ErrorMedGravity;
   error_med_initial: ErrorMedInitial;
   error_med_nature: ErrorMedNature;
   error_med_population: ErrorMedPopulation;
   error_med_side_effect: ErrorMedSideEffect;
   global_se_indicators: GlobalSeIndicators;
+  gravity_errors: GravityErrors;
   icons: Icons;
+  initial_errors: InitialErrors;
+  laboratories: Laboratories;
+  marketing_authorization_status: MarketingAuthorizationStatus;
+  marketing_authorization_types: MarketingAuthorizationTypes;
   medicinal_product: MedicinalProduct;
   mp_atc: MpAtc;
   mp_exposition: MpExposition;
   mp_patient_age: MpPatientAge;
   mp_patient_sex: MpPatientSex;
   mp_substances: MpSubstances;
+  nature_errors: NatureErrors;
+  pharma_forms: PharmaForms;
+  population_errors: PopulationErrors;
   presentation: Presentation;
   publication: Publication;
+  publication_types: PublicationTypes;
+  ref_dosage: RefDosage;
   reports: Reports;
+  side_effects: SideEffects;
   sold_out: SoldOut;
   sold_out_all: SoldOutAll;
   substances: Substances;

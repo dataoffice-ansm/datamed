@@ -12,10 +12,18 @@ type MedicalError {
     name: String
 }
 
+type MedicalATC {
+    id: Int!
+    code: String
+    name: String
+
+}
+
 type Speciality {
     id: Int!
     cisId: String!
     name: String!
+    atc: MedicalATC
     iconId: Int
     icon: Icon
     substances: [Substance]
@@ -33,7 +41,6 @@ type Speciality {
     #surveillance_renforcee: String;
     #titulaires: String;
     #administeringMode: String;
-    #substances: [Substance];
 }
 
 type Substance {

@@ -1,45 +1,56 @@
-import { createDbInstance } from './postgreDb';
-import type { Icon, Speciality, Substance } from '../../graphql/__generated__/generated-types';
+import { dbInstance } from './postgreDb';
+import type { Speciality, Substance } from '../../graphql/__generated__/generated-types';
 
 export class PostgresOperations {
   dbInstance;
 
   constructor() {
-    this.dbInstance = createDbInstance(true);
+    this.dbInstance = dbInstance;
   }
 
   async getSingleSpeciality(cisId: string): Promise<Speciality | null> {
     const row = await this.dbInstance
-      .selectFrom('medicinal_product')
-      .where('cis', '=', cisId)
-      .selectAll()
+      .selectFrom('medicinal_product as mp')
+      .where('mp.cis', '=', cisId)
+
+      .leftJoin('mp_atc as mp_a', 'mp.id', 'mp_a.mp_id')
+      .leftJoin('description as d', 'mp.id', 'd.mp_id')
+      .leftJoin('icons as i', 'mp.icon_id', 'i.id')
+
+      .select([
+        'mp.id',
+        'mp.cis as cisId',
+        'mp.name',
+        'mp_a.id as atcId',
+        'mp_a.atc as actCode',
+        'mp_a.atc_name as atcName',
+        'mp.icon_id as iconId',
+        'i.name as iconName',
+        'd.description',
+      ])
       .executeTakeFirst();
 
     if (row) {
-      const { id, name, icon_id: iconId } = row;
+      const { id, cisId, name, atcId, actCode, atcName, iconId, iconName, description } = row;
       return {
         id,
         cisId,
         name,
+        atc: atcId
+          ? {
+              id: atcId,
+              code: actCode,
+              name: atcName,
+            }
+          : null,
+        icon: iconId
+          ? {
+              id: iconId,
+              name: iconName,
+            }
+          : null,
         iconId,
-        description: 'TODO (imported from scrapping ?)',
-      };
-    }
-
-    return null;
-  }
-
-  async getIcon(id: number): Promise<Icon | null> {
-    const row = await this.dbInstance
-      .selectFrom('icons')
-      .where('id', '=', id)
-      .selectAll()
-      .executeTakeFirst();
-    if (row) {
-      const { id, name } = row;
-      return {
-        id,
-        name,
+        description,
       };
     }
 
@@ -47,7 +58,12 @@ export class PostgresOperations {
   }
 
   async getSpecialities(): Promise<Speciality[]> {
-    const rows = await this.dbInstance.selectFrom('medicinal_product').selectAll().execute();
+    const rows = await this.dbInstance
+      .selectFrom('medicinal_product')
+      .selectAll()
+      .execute()
+      .finally(async () => this.dbInstance.destroy());
+
     return rows.map(({ id, name, cis: cisId, icon_id: iconId }) => ({
       id,
       cisId,
@@ -61,11 +77,12 @@ export class PostgresOperations {
       .selectFrom('mp_substances as mp')
       .where('mp.mp_id', '=', cisId)
       .leftJoin('substances as sub', 'sub.id', 'mp.substance_id')
-      .select(['sub.id', 'sub.name', 'sub.code', 'mp.elem_pharma', 'mp.dosage'])
+      .leftJoin('pharma_forms as ph', 'ph.id', 'mp.pharma_form_id')
+      .select(['sub.id', 'sub.name', 'sub.code', 'ph.form as pharmaForm', 'mp.dosage'])
       .execute();
 
     return rows.reduce<Substance[]>((carry, row) => {
-      const { id, name, code, elem_pharma: pharmaForm, dosage } = row;
+      const { id, name, code, pharmaForm, dosage } = row;
       return id && name && code
         ? [
             ...carry,
@@ -81,28 +98,13 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSpecialityDescription(cisId: number): Promise<string | null> {
-    const row = await this.dbInstance
-      .selectFrom('description as d')
-      .where('d.mp_id', '=', cisId)
-      .leftJoin('medicinal_product as mp', 'd.mp_id', 'mp.id')
-      .select(['d.description'])
-      .executeTakeFirst();
-
-    if (row) {
-      const { description } = row;
-      return description;
-    }
-
-    return null;
-  }
-
   async getSingleSubstance(subCodeId: string): Promise<Substance | null> {
     const row = await this.dbInstance
       .selectFrom('substances')
       .where('code', '=', subCodeId)
       .selectAll()
-      .executeTakeFirst();
+      .executeTakeFirst()
+      .finally(async () => this.dbInstance.destroy());
 
     if (row) {
       const { id, name, code } = row;
@@ -117,7 +119,12 @@ export class PostgresOperations {
   }
 
   async getSubstances(): Promise<Substance[]> {
-    const rows = await this.dbInstance.selectFrom('substances').selectAll().execute();
+    const rows = await this.dbInstance
+      .selectFrom('substances')
+      .selectAll()
+      .execute()
+      .finally(async () => this.dbInstance.destroy());
+
     return rows.map(({ id, name, code }) => ({
       id,
       code,
