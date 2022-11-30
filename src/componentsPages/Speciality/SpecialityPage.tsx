@@ -5,10 +5,9 @@ import { EntityContextProvider, useEntityContext } from '../../contexts/EntityCo
 import type { Speciality } from '../../api/graphql/__generated__/generated-types';
 
 import Page404 from '../../pages/[404]';
-import { useCallback, useMemo, useState } from 'react';
-import type { SelectOption } from '../../components/Select/Select';
-import { Select } from '../../components/Select/Select';
+import { useMemo } from 'react';
 import type { Substance } from '../../graphql/__generated__/generated-documents';
+import { SubstancesContainer } from '../../components/SubstancesContainer/SubstancesContainer';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -66,41 +65,15 @@ const SectionMedicinalErrors = () => (
 );
 
 const SectionSideEffects = () => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const { currentEntity } = useEntityContext<EntityCis>();
-  const substances = useMemo(() => currentEntity?.substances ?? [], [currentEntity?.substances]);
-  const selectedSubstance = substances[selectedIndex];
-
-  const onChange = useCallback((index: number) => {
-    setSelectedIndex(index);
-  }, []);
-
-  const substancesOptions: SelectOption[] = useMemo(
-    () =>
-      substances
-        .filter((substance): substance is Substance => substance !== null)
-        .map((substance) => ({
-          label: substance.name,
-          value: substance.id,
-        })),
-    [substances]
-  );
+  const substances = useMemo(
+    () => currentEntity?.substances ?? [],
+    [currentEntity?.substances]
+  ) as Substance[];
 
   return (
-    <div className="SectionSideEffects p-4 bg-secondary">
-      <h5>SectionSideEffects</h5>
-      {substances.length ? (
-        <div className="flex">
-          <h5>Substance sélectionnée: {selectedSubstance?.name}</h5>
-          <Select
-            defaultOptionIndex={selectedIndex}
-            options={substancesOptions}
-            onSelectOption={onChange}
-          />
-        </div>
-      ) : (
-        <div>Aucune substance disponible</div>
-      )}
+    <div className="SectionSideEffects">
+      <SubstancesContainer substances={substances} className="mt-4 mb-32" />
     </div>
   );
 };
