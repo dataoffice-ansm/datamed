@@ -1,3 +1,8 @@
+# Definition
+directive @uppercase on FIELD_DEFINITION
+directive @lowercase on FIELD_DEFINITION
+directive @capitalize on FIELD_DEFINITION
+
 type GenderRepartition {
     male: Int
     female: Int
@@ -16,7 +21,11 @@ type MedicalATC {
     id: Int!
     code: String
     name: String
+}
 
+type Laboratory {
+    id: Int!
+    name: String
 }
 
 type Speciality {
@@ -29,7 +38,9 @@ type Speciality {
     substances: [Substance]
     description: String
     #genderRepartition:GenderRepartition
-    #commercialisationState: String;
+    commercialisationState: String @capitalize
+    commercialisationType: String @capitalize
+    laboratory: Laboratory
     #ageRepartition: RepartitionTuple[];
     #medicalErrors: MedicalError[];
     #pharmacoForm: String;

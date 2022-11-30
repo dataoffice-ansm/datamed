@@ -27,6 +27,12 @@ export type Icon = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type Laboratory = {
+  __typename?: 'Laboratory';
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+};
+
 export type MedicalAtc = {
   __typename?: 'MedicalATC';
   code?: Maybe<Scalars['String']>;
@@ -76,10 +82,13 @@ export type Speciality = {
   __typename?: 'Speciality';
   atc?: Maybe<MedicalAtc>;
   cisId: Scalars['String'];
+  commercialisationState?: Maybe<Scalars['String']>;
+  commercialisationType?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   icon?: Maybe<Icon>;
   iconId?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
+  laboratory?: Maybe<Laboratory>;
   name: Scalars['String'];
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
@@ -110,6 +119,8 @@ export type SpecialityQuery = {
     id: number;
     name: string;
     cisId: string;
+    commercialisationState?: string | null;
+    commercialisationType?: string | null;
     description?: string | null;
     atc?: {
       __typename?: 'MedicalATC';
@@ -118,6 +129,7 @@ export type SpecialityQuery = {
       code?: string | null;
     } | null;
     icon?: { __typename?: 'Icon'; id: number; name?: string | null } | null;
+    laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
     substances?: Array<{
       __typename?: 'Substance';
       id: number;
@@ -182,8 +194,14 @@ export const SpecialityDocument = gql`
         name
         code
       }
+      commercialisationState
+      commercialisationType
       description
       icon {
+        id
+        name
+      }
+      laboratory {
         id
         name
       }

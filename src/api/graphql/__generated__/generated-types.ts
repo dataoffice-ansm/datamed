@@ -27,6 +27,12 @@ export type Icon = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type Laboratory = {
+  __typename?: 'Laboratory';
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+};
+
 export type MedicalAtc = {
   __typename?: 'MedicalATC';
   code?: Maybe<Scalars['String']>;
@@ -76,10 +82,13 @@ export type Speciality = {
   __typename?: 'Speciality';
   atc?: Maybe<MedicalAtc>;
   cisId: Scalars['String'];
+  commercialisationState?: Maybe<Scalars['String']>;
+  commercialisationType?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
   icon?: Maybe<Icon>;
   iconId?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
+  laboratory?: Maybe<Laboratory>;
   name: Scalars['String'];
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
@@ -190,6 +199,7 @@ export type ResolversTypes = ResolversObject<{
   GenderRepartition: ResolverTypeWrapper<GenderRepartition>;
   Icon: ResolverTypeWrapper<Icon>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
+  Laboratory: ResolverTypeWrapper<Laboratory>;
   MedicalATC: ResolverTypeWrapper<MedicalAtc>;
   MedicalError: ResolverTypeWrapper<MedicalError>;
   Meta: ResolverTypeWrapper<Meta>;
@@ -208,6 +218,7 @@ export type ResolversParentTypes = ResolversObject<{
   GenderRepartition: GenderRepartition;
   Icon: Icon;
   Int: Scalars['Int'];
+  Laboratory: Laboratory;
   MedicalATC: MedicalAtc;
   MedicalError: MedicalError;
   Meta: Meta;
@@ -219,6 +230,33 @@ export type ResolversParentTypes = ResolversObject<{
   Substance: Substance;
   SubstancesReturn: SubstancesReturn;
 }>;
+
+export type CapitalizeDirectiveArgs = {};
+
+export type CapitalizeDirectiveResolver<
+  Result,
+  Parent,
+  ContextType = ContextValue,
+  Args = CapitalizeDirectiveArgs
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type LowercaseDirectiveArgs = {};
+
+export type LowercaseDirectiveResolver<
+  Result,
+  Parent,
+  ContextType = ContextValue,
+  Args = LowercaseDirectiveArgs
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type UppercaseDirectiveArgs = {};
+
+export type UppercaseDirectiveResolver<
+  Result,
+  Parent,
+  ContextType = ContextValue,
+  Args = UppercaseDirectiveArgs
+> = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
 export type GenderRepartitionResolvers<
   ContextType = ContextValue,
@@ -232,6 +270,15 @@ export type GenderRepartitionResolvers<
 export type IconResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Icon'] = ResolversParentTypes['Icon']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type LaboratoryResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['Laboratory'] = ResolversParentTypes['Laboratory']
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -312,10 +359,13 @@ export type SpecialityResolvers<
 > = ResolversObject<{
   atc?: Resolver<Maybe<ResolversTypes['MedicalATC']>, ParentType, ContextType>;
   cisId?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  commercialisationState?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  commercialisationType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   icon?: Resolver<Maybe<ResolversTypes['Icon']>, ParentType, ContextType>;
   iconId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  laboratory?: Resolver<Maybe<ResolversTypes['Laboratory']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   substances?: Resolver<Maybe<Array<Maybe<ResolversTypes['Substance']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -345,6 +395,7 @@ export type SubstancesReturnResolvers<
 export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   GenderRepartition?: GenderRepartitionResolvers<ContextType>;
   Icon?: IconResolvers<ContextType>;
+  Laboratory?: LaboratoryResolvers<ContextType>;
   MedicalATC?: MedicalAtcResolvers<ContextType>;
   MedicalError?: MedicalErrorResolvers<ContextType>;
   Meta?: MetaResolvers<ContextType>;
@@ -354,4 +405,10 @@ export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   Speciality?: SpecialityResolvers<ContextType>;
   Substance?: SubstanceResolvers<ContextType>;
   SubstancesReturn?: SubstancesReturnResolvers<ContextType>;
+}>;
+
+export type DirectiveResolvers<ContextType = ContextValue> = ResolversObject<{
+  capitalize?: CapitalizeDirectiveResolver<any, any, ContextType>;
+  lowercase?: LowercaseDirectiveResolver<any, any, ContextType>;
+  uppercase?: UppercaseDirectiveResolver<any, any, ContextType>;
 }>;
