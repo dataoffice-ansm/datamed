@@ -2,14 +2,8 @@ import { dbInstance } from './postgreDb';
 import type { Speciality, Substance } from '../../graphql/__generated__/generated-types';
 
 export class PostgresOperations {
-  dbInstance;
-
-  constructor() {
-    this.dbInstance = dbInstance;
-  }
-
   async getSingleSpeciality(cisId: string): Promise<Speciality | null> {
-    const row = await this.dbInstance
+    const row = await dbInstance
       .selectFrom('medicinal_products as mp')
       .where('mp.cis', '=', cisId)
 
@@ -86,11 +80,8 @@ export class PostgresOperations {
   }
 
   async getSpecialities(): Promise<Speciality[]> {
-    const rows = await this.dbInstance
-      .selectFrom('medicinal_products')
-      .selectAll()
-      .execute()
-      .finally(async () => this.dbInstance.destroy());
+    const rows = await dbInstance.selectFrom('medicinal_products').selectAll().execute();
+    // .finally(async () => dbInstance.destroy());
 
     return rows.map(({ id, name, cis: cisId, icon_id: iconId }) => ({
       id,
@@ -101,7 +92,7 @@ export class PostgresOperations {
   }
 
   async getSpecialitySubstances(cisId: number): Promise<Substance[]> {
-    const rows = await this.dbInstance
+    const rows = await dbInstance
       .selectFrom('mp_substances as mp')
       .where('mp.mp_id', '=', cisId)
       .leftJoin('substances as sub', 'sub.id', 'mp.substance_id')
@@ -127,12 +118,12 @@ export class PostgresOperations {
   }
 
   async getSingleSubstance(subCodeId: string): Promise<Substance | null> {
-    const row = await this.dbInstance
+    const row = await dbInstance
       .selectFrom('substances')
       .where('code', '=', subCodeId)
       .selectAll()
-      .executeTakeFirst()
-      .finally(async () => this.dbInstance.destroy());
+      .executeTakeFirst();
+    // .finally(async () => dbInstance.destroy());
 
     if (row) {
       const { id, name, code } = row;
@@ -147,11 +138,8 @@ export class PostgresOperations {
   }
 
   async getSubstances(): Promise<Substance[]> {
-    const rows = await this.dbInstance
-      .selectFrom('substances')
-      .selectAll()
-      .execute()
-      .finally(async () => this.dbInstance.destroy());
+    const rows = await dbInstance.selectFrom('substances').selectAll().execute();
+    // .finally(async () => dbInstance.destroy());
 
     return rows.map(({ id, name, code }) => ({
       id,
