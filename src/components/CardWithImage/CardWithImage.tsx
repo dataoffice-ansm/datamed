@@ -24,7 +24,7 @@ export const CardWithImage = ({
   title: string;
   description: string;
   href: string;
-  source: string;
+  source?: string;
 }) => (
   <div className={classnames('CardWithImage', 'w-full lg:flex border border-grey-100', className)}>
     <div className="h-auto w-full lg:w-96 flex-none overflow-hidden">
@@ -35,9 +35,11 @@ export const CardWithImage = ({
         <div className="text-xl font-medium">{title}</div>
         <div className="mt-4 mb-8 flex flex-col xl:flex-row gap-8">
           <div>{description}</div>
-          <div>
-            <span className="font-medium">Source des données :</span> {source}
-          </div>
+          {source && (
+            <div>
+              <span className="font-me dium">Source des données :</span> {source}
+            </div>
+          )}
         </div>
       </div>
       <Link href={href}>
