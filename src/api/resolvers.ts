@@ -29,6 +29,11 @@ export const resolvers: Resolvers = {
     },
   },
   Speciality: {
+    async repartitionPerSex(parent, args, context) {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-call,@typescript-eslint/no-unsafe-return
+      return context.dataSources.postgresOperations.getSpecialityRepSex(parent.id);
+    },
+
     async substances(parent, args, context) {
       return context.dataSources.postgresOperations.getSpecialitySubstances(parent.id);
     },
