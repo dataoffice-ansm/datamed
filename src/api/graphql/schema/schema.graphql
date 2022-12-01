@@ -28,6 +28,11 @@ type Laboratory {
     name: String
 }
 
+type RepartitionPerSex {
+    male: Int
+    female: Int
+}
+
 type Speciality {
     id: Int!
     cisId: String!
@@ -40,7 +45,8 @@ type Speciality {
     #genderRepartition:GenderRepartition
     commercialisationState: String @capitalize
     commercialisationType: String @capitalize
-    laboratory: Laboratory
+    laboratory: Laboratory @capitalize
+    repartitionPerSex: RepartitionPerSex
     #ageRepartition: RepartitionTuple[];
     #medicalErrors: MedicalError[];
     #pharmacoForm: String;
@@ -57,7 +63,7 @@ type Speciality {
 type Substance {
     id: Int!
     code: String!
-    name: String!
+    name: String! @capitalize
     pharmaForm: String
     dosage: String
 }

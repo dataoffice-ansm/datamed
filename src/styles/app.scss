@@ -14,33 +14,28 @@ body {
   @apply text-black font-roboto;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
 h1 {
-  @apply my-10 text-4xl font-bold;
+  @apply my-10 text-2xl font-bold;
 }
 
 h2 {
-  @apply my-8 text-3xl font-semibold;
+  @apply my-8 text-xl font-semibold;
 }
 
 h3 {
-  @apply my-6 text-2xl font-semibold;
+  @apply my-6 text-lg font-semibold;
 }
 
 h4 {
-  @apply my-5 text-xl font-semibold;
+  @apply my-5 text-base font-semibold;
 }
 
 h5 {
-  @apply my-4 text-lg font-medium;
+  @apply my-4 text-sm font-medium;
 }
 
 h6 {
-  @apply my-3 text-base font-medium;
+  @apply my-3 text-xs font-medium;
 }
 
 // Paragraphs

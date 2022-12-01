@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import type { ChangeEvent, HTMLAttributes } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
-import { entityTypeLabel, entityTypeRoute } from '../../helpers/entitiesHelper';
+import { entityTypeLabel } from '../../helpers/entitiesHelper';
 import type { Entity, EntityCis, EntitySub } from '../../contexts/EntityContext';
 import type { Speciality, Substance } from '../../graphql/__generated__/generated-documents';
 import {
@@ -57,13 +57,9 @@ export const Autocomplete = ({
   }, [query, cisData?.getSpecialities, subData?.getSubstances]);
 
   const onSelected = async (e: Entity) => {
-    const prefix = entityTypeRoute(e.type);
-    if (prefix) {
-      const url = `/${prefix}/${e.id}`;
-
-      if (handleOnSelected) handleOnSelected();
-      await router.push(url);
-    }
+    const url = e.type === 'sub' ? `/substances/${e.code}` : `/specialite/${e.cisId}`;
+    if (handleOnSelected) handleOnSelected();
+    await router.push(url);
   };
 
   const optionsContainerClassname = classnames(
@@ -91,7 +87,8 @@ export const Autocomplete = ({
                 value={result}
                 className={({ active }) =>
                   classnames(
-                    'AutocompleteOption cursor-pointer list-none border-b last:border-none border-grey-400 py-2 px-4  flex justify-between gap-4',
+                    'AutocompleteOption cursor-pointer list-none border-b last:border-none border-grey-400',
+                    'py-2 px-4  flex justify-between gap-4',
                     {
                       'bg-grey-100': active,
                       'first:rounded-t-lg last:rounded-b-lg': !embedded,

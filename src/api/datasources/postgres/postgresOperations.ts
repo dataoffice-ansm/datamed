@@ -1,5 +1,9 @@
 import { dbInstance } from './postgreDb';
-import type { Speciality, Substance } from '../../graphql/__generated__/generated-types';
+import type {
+  RepartitionPerSex,
+  Speciality,
+  Substance,
+} from '../../graphql/__generated__/generated-types';
 
 export class PostgresOperations {
   async getSingleSpeciality(cisId: string): Promise<Speciality | null> {
@@ -89,6 +93,26 @@ export class PostgresOperations {
       name,
       iconId,
     }));
+  }
+
+  async getSpecialityRepSex(cisId: number): Promise<RepartitionPerSex | null> {
+    const rows = await dbInstance
+      .selectFrom('mp_patient_sex')
+      .where('mp_id', '=', cisId)
+      .select(['id', 'sex', 'patients_percentage'])
+      .execute();
+
+    if (rows) {
+      const male = rows.find((row) => row.sex === 1);
+      const female = rows.find((row) => row.sex === 2);
+
+      return {
+        male: male ? Math.round(male.patients_percentage ?? 0) : null,
+        female: female ? Math.round(female.patients_percentage ?? 0) : null,
+      };
+    }
+
+    return null;
   }
 
   async getSpecialitySubstances(cisId: number): Promise<Substance[]> {

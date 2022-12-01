@@ -66,6 +66,12 @@ export type QueryGetSubstanceArgs = {
   subCode: Scalars['String'];
 };
 
+export type RepartitionPerSex = {
+  __typename?: 'RepartitionPerSex';
+  female?: Maybe<Scalars['Int']>;
+  male?: Maybe<Scalars['Int']>;
+};
+
 export type RepartitionTuple = {
   __typename?: 'RepartitionTuple';
   codePart?: Maybe<Scalars['String']>;
@@ -90,6 +96,7 @@ export type Speciality = {
   id: Scalars['Int'];
   laboratory?: Maybe<Laboratory>;
   name: Scalars['String'];
+  repartitionPerSex?: Maybe<RepartitionPerSex>;
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
 
@@ -127,6 +134,11 @@ export type SpecialityQuery = {
       id: number;
       name?: string | null;
       code?: string | null;
+    } | null;
+    repartitionPerSex?: {
+      __typename?: 'RepartitionPerSex';
+      male?: number | null;
+      female?: number | null;
     } | null;
     icon?: { __typename?: 'Icon'; id: number; name?: string | null } | null;
     laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
@@ -196,6 +208,10 @@ export const SpecialityDocument = gql`
       }
       commercialisationState
       commercialisationType
+      repartitionPerSex {
+        male
+        female
+      }
       description
       icon {
         id
