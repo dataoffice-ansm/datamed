@@ -1,5 +1,4 @@
 import { SmallContainer } from '../components/SmallContainer';
-import Video from '../assets/images/video.svg';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
@@ -79,8 +78,16 @@ const PageAbout = () => (
   <FullWidthRow className="bg-grey-10" classNameInner="justify-center">
     <div className="flex flex-col items-center justify-center">
       <SmallContainer>
-        <div className="IllustrationContainer my-4">
-          <Video />
+        <div className="relative pb-[26rem] h-0 overflow-hidden">
+          {/* eslint-disable-next-line react/iframe-missing-sandbox */}
+          <iframe
+            allowFullScreen
+            className="w-full h-full absolute left-0 top-0 overflow-hidden"
+            sandbox="allow-scripts allow-same-origin"
+            allow="autoplay"
+            src="https://www.dailymotion.com/embed/video/x82dxy0?autoplay=1"
+            title="Dailymotion Video Player"
+          />
         </div>
         <h3 className="text-center">À propos de data.ansm</h3>
         <div className="flex flex-col justify-center bg-white rounded shadow p-6 mb-4">
