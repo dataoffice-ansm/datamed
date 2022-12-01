@@ -10,16 +10,15 @@ export class PostgresOperations {
 
   async getSingleSpeciality(cisId: string): Promise<Speciality | null> {
     const row = await this.dbInstance
-      .selectFrom('medicinal_product as mp')
+      .selectFrom('medicinal_products as mp')
       .where('mp.cis', '=', cisId)
 
       .leftJoin('mp_atc as mp_a', 'mp.id', 'mp_a.mp_id')
-      .leftJoin('description as d', 'mp.id', 'd.mp_id')
+      .leftJoin('descriptions as d', 'mp.id', 'd.mp_id')
       .leftJoin('marketing_authorization_status as mka_s', 'mka_s.id', 'mp.ma_status_id')
       .leftJoin('marketing_authorization_types as mka_t', 'mka_t.id', 'mp.ma_type_id')
       .leftJoin('laboratories as lab', 'lab.id', 'mp.laboratory_id')
       .leftJoin('icons as i', 'mp.icon_id', 'i.id')
-
       .select([
         'mp.id',
         'mp.cis as cisId',
@@ -88,7 +87,7 @@ export class PostgresOperations {
 
   async getSpecialities(): Promise<Speciality[]> {
     const rows = await this.dbInstance
-      .selectFrom('medicinal_product')
+      .selectFrom('medicinal_products')
       .selectAll()
       .execute()
       .finally(async () => this.dbInstance.destroy());

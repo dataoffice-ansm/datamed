@@ -5,7 +5,10 @@ import type {
   SpecialityQuery,
   SpecialityQueryVariables,
 } from '../../graphql/__generated__/generated-documents';
-import { SpecialityDocument } from '../../graphql/__generated__/generated-documents';
+import {
+  SpecialityDocument,
+  // useSpecialityQuery,
+} from '../../graphql/__generated__/generated-documents';
 import { SpecialityPage } from '../../componentsPages/Speciality/SpecialityPage';
 import { addApolloState, initializeApolloClient } from '../../config/apolloClient';
 
@@ -17,8 +20,15 @@ type ContextParams = {
   cisId: string;
 } & ParsedUrlQuery;
 
-const PageCisServerSideRendered = ({ cis }: CisSSRPageProps) => <SpecialityPage cis={cis} />;
+const PageCisServerSideRendered = ({ cis }: CisSSRPageProps) => (
+  // const { data } = useSpecialityQuery({
+  //   variables: {
+  //     cisCode: cis?.cisId,
+  //   },
+  // });
 
+  <SpecialityPage cis={cis} />
+);
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const apolloClient = initializeApolloClient({ context });
   const { cisId } = context.params as ContextParams;
