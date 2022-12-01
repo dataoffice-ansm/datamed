@@ -7,7 +7,7 @@ import type { Speciality } from '../../api/graphql/__generated__/generated-types
 import Page404 from '../../pages/[404]';
 import { useMemo } from 'react';
 import type { Substance } from '../../graphql/__generated__/generated-documents';
-import { SubstancesContainer } from '../../components/SubstancesContainer/SubstancesContainer';
+import { SpecialitySubstancesContainer } from '../../components/SubstancesContainer/SpecialitySubstancesContainer';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -73,7 +73,7 @@ const SectionSideEffects = () => {
 
   return (
     <div className="SectionSideEffects">
-      <SubstancesContainer substances={substances} className="mt-4 mb-32" />
+      <SpecialitySubstancesContainer substances={substances} className="mt-4 mb-32" />
     </div>
   );
 };
