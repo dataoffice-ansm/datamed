@@ -2,7 +2,14 @@ import Link from 'next/link';
 import type { ReactNode } from 'react';
 import { useLayoutContext } from '../../contexts/LayoutContext';
 
-const components = ['graph-box', 'graph-figure', 'accordion', 'select', 'call-to-action'];
+const components = [
+  'graph-box',
+  'graph-figure',
+  'accordion',
+  'select',
+  'call-to-action',
+  'box-info-title',
+];
 
 /**
  *
