@@ -1,4 +1,5 @@
 import type { Context, Dispatch, HTMLAttributes, SetStateAction } from 'react';
+import { useEffect } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
 import type { Speciality, Substance } from '../graphql/__generated__/generated-documents';
 
@@ -27,6 +28,10 @@ export const EntityContextProvider = ({
   children,
 }: HTMLAttributes<HTMLDivElement> & { entity: Entity }) => {
   const [currentEntity, setCurrentEntity] = useState<Entity>(entity);
+
+  useEffect(() => {
+    setCurrentEntity(entity);
+  }, [entity]);
 
   const value = useMemo(
     () => ({

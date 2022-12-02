@@ -1,7 +1,7 @@
 query Speciality($cisCode: String!) {
     getSpeciality(cisCode: $cisCode) {
-        id,
-        name,
+        id
+        name
         cisId
         atc {
             id
@@ -21,7 +21,7 @@ query Speciality($cisCode: String!) {
         }
         description
         icon {
-            id,
+            id
             name
         }
         laboratory {
@@ -38,38 +38,53 @@ query Speciality($cisCode: String!) {
     }
 }
 
-
 query Specialities {
-    getSpecialities {
-        meta {
-            count
-        }
-        specialities {
-            cisId
-            name
-            id
-            description
-        }
+  getSpecialities {
+    meta {
+      count
     }
+    specialities {
+      cisId
+      name
+      id
+      description
+    }
+  }
 }
 
 query Substance($subCode: String!) {
-    getSubstance(subCode: $subCode) {
-        id
-        name
-        code
-    }
+  getSubstance(subCode: $subCode) {
+      id
+      code
+      name
+      pharmaForm
+      dosage
+  }
 }
 
 query Substances {
-    getSubstances {
-        meta {
-            count
-        }
-        substances {
-            id
-            name
-            code
-        }
+  getSubstances {
+    meta {
+      count
     }
+    substances {
+      id
+      name
+      code
+    }
+  }
+}
+
+query SpecialitiesBySubstance($subCode: String!) {
+  getSpecialitiesBySubstance(subCode: $subCode) {
+    meta {
+      count
+    }
+    specialities {
+      cisId
+      name
+      id
+      description
+    }
+  }
 }

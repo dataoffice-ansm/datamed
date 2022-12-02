@@ -161,6 +161,39 @@ export class PostgresOperations {
     }, []);
   }
 
+  async getSpecialitiesBySubstance(subCode: string): Promise<Speciality[]> {
+    const rows = await dbInstance
+      .selectFrom('substances')
+      .where('substances.code', '=', subCode)
+      .leftJoin('mp_substances', 'substances.id', 'mp_substances.substance_id')
+      .leftJoin(
+        'medicinal_products',
+        'medicinal_products.pharma_form_id',
+        'mp_substances.pharma_form_id'
+      )
+      .select([
+        'medicinal_products.id',
+        'medicinal_products.cis as cisId',
+        'medicinal_products.name',
+      ])
+      .execute();
+
+    return rows.reduce<Speciality[]>((carry, row) => {
+      const { id, cisId, name } = row;
+      if (id && name && cisId) {
+        const speciality: Speciality = {
+          id,
+          name,
+          cisId,
+        };
+
+        return [...carry, speciality];
+      }
+
+      return carry;
+    }, []);
+  }
+
   async getSingleSubstance(subCodeId: string): Promise<Substance | null> {
     const row = await dbInstance
       .selectFrom('substances')

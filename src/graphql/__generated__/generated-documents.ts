@@ -53,9 +53,14 @@ export type Meta = {
 export type Query = {
   __typename?: 'Query';
   getSpecialities?: Maybe<SpecialitiesReturn>;
+  getSpecialitiesBySubstance?: Maybe<SpecialitiesReturn>;
   getSpeciality?: Maybe<Speciality>;
   getSubstance?: Maybe<Substance>;
   getSubstances?: Maybe<SubstancesReturn>;
+};
+
+export type QueryGetSpecialitiesBySubstanceArgs = {
+  subCode: Scalars['String'];
 };
 
 export type QueryGetSpecialityArgs = {
@@ -184,7 +189,14 @@ export type SubstanceQueryVariables = Exact<{
 
 export type SubstanceQuery = {
   __typename?: 'Query';
-  getSubstance?: { __typename?: 'Substance'; id: number; name: string; code: string } | null;
+  getSubstance?: {
+    __typename?: 'Substance';
+    id: number;
+    code: string;
+    name: string;
+    pharmaForm?: string | null;
+    dosage?: string | null;
+  } | null;
 };
 
 export type SubstancesQueryVariables = Exact<{ [key: string]: never }>;
@@ -199,6 +211,25 @@ export type SubstancesQuery = {
       id: number;
       name: string;
       code: string;
+    } | null> | null;
+  } | null;
+};
+
+export type SpecialitiesBySubstanceQueryVariables = Exact<{
+  subCode: Scalars['String'];
+}>;
+
+export type SpecialitiesBySubstanceQuery = {
+  __typename?: 'Query';
+  getSpecialitiesBySubstance?: {
+    __typename?: 'SpecialitiesReturn';
+    meta?: { __typename?: 'Meta'; count?: number | null } | null;
+    specialities?: Array<{
+      __typename?: 'Speciality';
+      cisId: string;
+      name: string;
+      id: number;
+      description?: string | null;
     } | null> | null;
   } | null;
 };
@@ -338,8 +369,10 @@ export const SubstanceDocument = gql`
   query Substance($subCode: String!) {
     getSubstance(subCode: $subCode) {
       id
-      name
       code
+      name
+      pharmaForm
+      dosage
     }
   }
 `;
@@ -423,3 +456,69 @@ export function useSubstancesLazyQuery(
 export type SubstancesQueryHookResult = ReturnType<typeof useSubstancesQuery>;
 export type SubstancesLazyQueryHookResult = ReturnType<typeof useSubstancesLazyQuery>;
 export type SubstancesQueryResult = Apollo.QueryResult<SubstancesQuery, SubstancesQueryVariables>;
+export const SpecialitiesBySubstanceDocument = gql`
+  query SpecialitiesBySubstance($subCode: String!) {
+    getSpecialitiesBySubstance(subCode: $subCode) {
+      meta {
+        count
+      }
+      specialities {
+        cisId
+        name
+        id
+        description
+      }
+    }
+  }
+`;
+
+/**
+ * __useSpecialitiesBySubstanceQuery__
+ *
+ * To run a query within a React component, call `useSpecialitiesBySubstanceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSpecialitiesBySubstanceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSpecialitiesBySubstanceQuery({
+ *   variables: {
+ *      subCode: // value for 'subCode'
+ *   },
+ * });
+ */
+export function useSpecialitiesBySubstanceQuery(
+  baseOptions: Apollo.QueryHookOptions<
+    SpecialitiesBySubstanceQuery,
+    SpecialitiesBySubstanceQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<SpecialitiesBySubstanceQuery, SpecialitiesBySubstanceQueryVariables>(
+    SpecialitiesBySubstanceDocument,
+    options
+  );
+}
+export function useSpecialitiesBySubstanceLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SpecialitiesBySubstanceQuery,
+    SpecialitiesBySubstanceQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<SpecialitiesBySubstanceQuery, SpecialitiesBySubstanceQueryVariables>(
+    SpecialitiesBySubstanceDocument,
+    options
+  );
+}
+export type SpecialitiesBySubstanceQueryHookResult = ReturnType<
+  typeof useSpecialitiesBySubstanceQuery
+>;
+export type SpecialitiesBySubstanceLazyQueryHookResult = ReturnType<
+  typeof useSpecialitiesBySubstanceLazyQuery
+>;
+export type SpecialitiesBySubstanceQueryResult = Apollo.QueryResult<
+  SpecialitiesBySubstanceQuery,
+  SpecialitiesBySubstanceQueryVariables
+>;

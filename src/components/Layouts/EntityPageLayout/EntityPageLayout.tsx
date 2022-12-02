@@ -164,10 +164,7 @@ export const EntityPageLayout = ({
               <RenderNavigation vertical itemClassName="h-16 py-4" />
             </div>
           </div>
-          <div
-            style={{ marginTop: stickyHeroHeight > 0 ? 0 : -offsetContent }}
-            className="flex-[3]"
-          >
+          <div style={{ marginTop: -offsetContent }} className="flex-[3]">
             {renderContent}
           </div>
         </div>

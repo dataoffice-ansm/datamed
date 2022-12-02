@@ -7,7 +7,7 @@ import { makeExecutableSchema } from '@graphql-tools/schema';
 import { applyUpperSchemaTransform } from './directives/upperCaseDirective';
 import { applyLowerSchemaTransform } from './directives/lowerCaseDirective';
 import { applyCapitalizeSchemaTransform } from './directives/capitalizeDirective';
-import { unwrapResolverError, ApolloServerErrorCode } from '@apollo/server/errors';
+import { ApolloServerErrorCode } from '@apollo/server/errors';
 
 export type ContextValue = {
   dataSources: {
