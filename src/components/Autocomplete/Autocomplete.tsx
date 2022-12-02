@@ -112,7 +112,9 @@ export const Autocomplete = ({
       <Combobox onChange={onSelected}>
         <Combobox.Input
           autoFocus
-          placeholder={cisLoading || subLoading ? '...' : 'Rechercher'}
+          placeholder={
+            cisLoading || subLoading ? '...' : 'Rechercher un médicament, une substance active'
+          }
           disabled={cisLoading || subLoading}
           className={classnames(
             'AutocompleteInput w-full',
