@@ -4,12 +4,12 @@ import type { EntitySub } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
 import type { Substance } from '../../api/graphql/__generated__/generated-types';
 import Page404 from '../../pages/[404]';
+import { useSpecialitiesBySubstanceQuery } from '../../graphql/__generated__/generated-documents';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
   return (
     <div className="min-h-screen text-center">
-      <h1>Section 1</h1>
       <h2>{currentEntity.name}</h2>
     </div>
   );
@@ -17,15 +17,35 @@ const SectionOneGlobalInformation = () => {
 
 const SectionTwo = () => (
   <div className="min-h-screen text-center">
-    <h1>Section 2</h1>
+    <h2>Section 2</h2>
   </div>
 );
 
-const SectionThree = () => (
-  <div className="min-h-screen text-center">
-    <h1>Section 3</h1>
-  </div>
-);
+const SectionThree = () => {
+  const { currentEntity } = useEntityContext<EntitySub>();
+
+  const { data } = useSpecialitiesBySubstanceQuery({
+    variables: {
+      subCode: currentEntity.code,
+    },
+  });
+
+  return (
+    <div className="min-h-screen">
+      <h2>Spécialités de médicaments contenant : {currentEntity.name}</h2>
+      <div>
+        <div>{data?.getSpecialitiesBySubstance?.meta?.count} médicaments identifiés</div>
+        <div>
+          {data?.getSpecialitiesBySubstance?.specialities?.map((speciality) => (
+            <div key={speciality?.id}>
+              {speciality?.cisId} {speciality?.description} {speciality?.name}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 export const SubstancePage = ({ sub }: { sub: Substance }) => {
   if (!sub) {
@@ -38,28 +58,22 @@ export const SubstancePage = ({ sub }: { sub: Substance }) => {
         colorMenu="primary"
         sections={[
           {
-            id: 'data-ansm-question',
-            label: "DATA.ANSM c'est quoi ?",
+            id: 'population-concernee',
+            label: 'POPULATION CONCERNÉÉ',
             content: <SectionOneGlobalInformation />,
           },
           {
-            id: 'donnees-globales-plateforme',
-            label: 'Données globales de la plateforme',
+            id: 'effets-indesirables',
+            label: 'EFFETS INDÉSIRABLES',
             content: <SectionTwo />,
           },
           {
-            id: 'lecture-des-donnees',
-            label: 'Lecture des données',
+            id: 'liste-des-specialites',
+            label: 'LISTE DES SPÉCIALITÉS',
             content: <SectionThree />,
           },
         ]}
-        render={(content) => (
-          <div>
-            <div className="py-10 my-2">before content</div>
-            {content}
-            <div className="py-10 my-2">after content</div>
-          </div>
-        )}
+        render={(content) => content}
       >
         <HeroHeader />
       </EntityPageLayout>

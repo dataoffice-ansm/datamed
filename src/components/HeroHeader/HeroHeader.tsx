@@ -11,23 +11,31 @@ import { FullWidthRow } from '../FullWidthRow/FullWidthRow';
 import { CisTooltip } from '../../componentsPages/Speciality/CisTooltip';
 import { SubTooltip } from '../../componentsPages/Substance/SubTooltip';
 import { useEntityContext } from '../../contexts/EntityContext';
+import BackArrowSVG from '../../assets/icons/back-arrow.svg';
+import Link from 'next/link';
 
 type EntityOptions = {
   tooltip: ReactNode;
   theme: string;
   icon: ReactNode;
+  type: 'Substance' | 'Spécialité';
+  description: string;
 };
 
 const entitiesOptionsMapping: Record<'sub' | 'cis', EntityOptions> = {
   sub: {
     tooltip: <SubTooltip />,
-    theme: 'bg-secondary',
+    theme: 'bg-secondary-900',
     icon: <SubSvg className="h-fit" />,
+    type: 'Substance',
+    description: 'Substance active',
   },
   cis: {
     tooltip: <CisTooltip />,
     theme: 'bg-primary',
     icon: <CisSvg className="h-fit" />,
+    type: 'Spécialité',
+    description: 'Spécialité de médicament',
   },
 };
 
@@ -44,7 +52,7 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
   const heightRef = useRefHeight(ref);
 
   const pageScrolled = heightRef && scrollY >= heightRef;
-  const { theme, icon } = entitiesOptionsMapping[currentEntity.type];
+  const { description, theme, icon, type } = entitiesOptionsMapping[currentEntity.type];
 
   useEffect(() => {
     setStickyHeroHeight(pageScrolled ? stickyHeroHeightPx : 0);
@@ -70,13 +78,21 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
           </div>
         </div>
       </div>
-      <div
-        ref={ref}
-        className="HeroHeader flex flex-col md:flex-row min-h[20rem] max-w-4xl pt-24 md:pt-48 pb-16 md:pb-24 lg:pb-32 gap-16 text-white"
-      >
-        <div className="w-24 h-24 md:w-36 md:h-36">{icon}</div>
-        <div className="flex flex-col justify-center">
-          <div className="text-3xl font-medium mb-4">{currentEntity.name}</div>
+      <div ref={ref} className="flex flex-col">
+        <Link href="/">
+          <a className="flex justify-center items-center text-white mx-8 my-12 gap-4">
+            <BackArrowSVG className="h-8 w-8" />
+            <div className="text-xl font-medium">
+              Accueil / {type} : {currentEntity.name}
+            </div>
+          </a>
+        </Link>
+        <div className="HeroHeader flex flex-col md:flex-row min-h[20rem] max-w-4xl pt-24 md:pt-48 pb-16 md:pb-24 lg:pb-32 gap-16 text-white">
+          <div className="w-24 h-24 md:w-36 md:h-36">{icon}</div>
+          <div className="flex flex-col justify-center">
+            <div className="text-3xl font-medium mb-4">{currentEntity.name}</div>
+            <div className="text-2xl mb-4">{description}</div>
+          </div>
         </div>
       </div>
     </FullWidthRow>

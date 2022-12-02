@@ -211,7 +211,7 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => {
   return (
     <EntityContextProvider entity={{ type: 'cis', ...cis }}>
       <EntityPageLayout
-        offsetContent={80}
+        offsetContent={100}
         colorMenu="primary"
         sections={[
           {

@@ -17,11 +17,21 @@ export const resolvers: Resolvers = {
     async getSubstance(parent, args, context) {
       return context.dataSources.postgresOperations.getSingleSubstance(args.subCode);
     },
-
     async getSubstances(parent, args, context) {
       const rows = await context.dataSources.postgresOperations.getSubstances();
       return {
         substances: rows,
+        meta: {
+          count: rows.length,
+        },
+      };
+    },
+    async getSpecialitiesBySubstance(_, args, context) {
+      const rows = await context.dataSources.postgresOperations.getSpecialitiesBySubstance(
+        args.subCode
+      );
+      return {
+        specialities: rows,
         meta: {
           count: rows.length,
         },

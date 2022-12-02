@@ -4,28 +4,33 @@ directive @lowercase on FIELD_DEFINITION
 directive @capitalize on FIELD_DEFINITION
 
 type GenderRepartition {
-    male: Int
-    female: Int
+  male: Int
+  female: Int
+}
+
+type RepartitionTuple {
+  codePart: String
+  value: Int
 }
 
 type MedicalError {
-    name: String
+  name: String
 }
 
 type MedicalATC {
-    id: Int!
-    code: String
-    name: String
+  id: Int!
+  code: String
+  name: String
 }
 
 type Laboratory {
-    id: Int!
-    name: String
+  id: Int!
+  name: String
 }
 
 type RepartitionPerSex {
-    male: Int
-    female: Int
+  male: Int
+  female: Int
 }
 
 type RepartitionPerAge {
@@ -61,39 +66,40 @@ type Speciality {
 }
 
 type Substance {
-    id: Int!
-    code: String!
-    name: String! @capitalize
-    pharmaForm: String
-    dosage: String
+  id: Int!
+  code: String!
+  name: String! @capitalize
+  pharmaForm: String
+  dosage: String
 }
 
 type Icon {
-    id: Int!
-    name: String
+  id: Int!
+  name: String
 }
 
 type Meta {
-    count: Int
+  count: Int
 }
 
 ##### QUERIES #####
 
 type SpecialitiesReturn {
-    specialities: [Speciality]
-    meta: Meta
+  specialities: [Speciality]
+  meta: Meta
 }
 
 type SubstancesReturn {
-    substances: [Substance]
-    meta: Meta
+  substances: [Substance]
+  meta: Meta
 }
 
 type Query {
-    getSpeciality(cisCode: String!): Speciality
-    getSpecialities: SpecialitiesReturn
-    getSubstance(subCode: String!): Substance
-    getSubstances: SubstancesReturn
+  getSpeciality(cisCode: String!): Speciality
+  getSpecialities: SpecialitiesReturn
+  getSubstance(subCode: String!): Substance
+  getSubstances: SubstancesReturn
+  getSpecialitiesBySubstance(subCode: String!): SpecialitiesReturn
 }
 
 #type Mutation {

@@ -53,9 +53,14 @@ export type Meta = {
 export type Query = {
   __typename?: 'Query';
   getSpecialities?: Maybe<SpecialitiesReturn>;
+  getSpecialitiesBySubstance?: Maybe<SpecialitiesReturn>;
   getSpeciality?: Maybe<Speciality>;
   getSubstance?: Maybe<Substance>;
   getSubstances?: Maybe<SubstancesReturn>;
+};
+
+export type QueryGetSpecialitiesBySubstanceArgs = {
+  subCode: Scalars['String'];
 };
 
 export type QueryGetSpecialityArgs = {
@@ -327,6 +332,12 @@ export type QueryResolvers<
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = ResolversObject<{
   getSpecialities?: Resolver<Maybe<ResolversTypes['SpecialitiesReturn']>, ParentType, ContextType>;
+  getSpecialitiesBySubstance?: Resolver<
+    Maybe<ResolversTypes['SpecialitiesReturn']>,
+    ParentType,
+    ContextType,
+    RequireFields<QueryGetSpecialitiesBySubstanceArgs, 'subCode'>
+  >;
   getSpeciality?: Resolver<
     Maybe<ResolversTypes['Speciality']>,
     ParentType,
