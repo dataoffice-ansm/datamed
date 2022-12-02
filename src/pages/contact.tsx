@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 
+import { BackgroundSquares } from 'components/BackgroundSquares/BackgroundSquares';
+
 const SectionContact = ({
   title,
   className,
@@ -18,14 +20,16 @@ const SectionContact = ({
 );
 
 const SectionAskFrequentlyQuestion = () => (
-  <SectionContact title="Questions fréquemment posés">
-    <p>
+  <SectionContact title="Questions fréquemment posées">
+    <p className="mb-8">
       Une question autour des données ? Autour du site ? data.ansm dispose d’une FAQ où les
       questions fréquemment posées y sont répertoriées.
     </p>
-    <button type="button" className="text-primary rounded border border-primary p-2">
-      <Link href="/faq">ACCÉDER À LA FAQ</Link>
-    </button>
+    <Link href="/faq">
+      <a className="text-primary rounded border border-primary py-2 px-4 no-underline">
+        ACCÉDER À LA FAQ
+      </a>
+    </Link>
   </SectionContact>
 );
 
@@ -52,16 +56,25 @@ const SectionGuichetUsager = () => (
       Il est important de ne pas transmettre des données médicales non nécessaires au traitement de
       votre demande.
     </p>
-    <p>Pour les autres demandes, merci de contacter directement les services concernés.</p>
-    <button type="button" className="text-primary rounded border border-primary p-2">
-      <Link href="#">ACCÉDER AU FORMULAIRE DE CONTACT</Link>
-    </button>
+    <p className="mb-8">
+      Pour les autres demandes, merci de contacter directement les services concernés.
+    </p>
+    <Link href="#">
+      <a className="text-primary rounded border border-primary py-2 px-4 no-underline">
+        ACCÉDER AU FORMULAIRE DE CONTACT
+      </a>
+    </Link>
   </SectionContact>
 );
 
 const PageContact = () => (
-  <FullWidthRow className="bg-grey-10" classNameInner="justify-center">
-    <div className="flex flex-col items-center justify-center">
+  <FullWidthRow
+    className="bg-grey-10"
+    classNameInner="justify-center"
+    background={<BackgroundSquares />}
+  >
+    <div className="flex flex-col items-center justify-center mb-16">
+      <h1 className="py-8">Contact</h1>
       <SmallContainer>
         <div className="IllustrationContainer my-4">
           <Contact />

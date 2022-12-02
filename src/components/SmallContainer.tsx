@@ -7,7 +7,7 @@ export const SmallContainer = ({
   ...props
 }: HTMLAttributes<HTMLDivElement> & { children: ReactNode }) => (
   <div
-    className={classnames('SmallContainer lg:w-[760px] md:w-[450px] max-w-max', className)}
+    className={classnames('SmallContainer lg:max-w-[760px] md:max-w-[640px] max-w-max', className)}
     {...props}
   >
     {children}

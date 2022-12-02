@@ -1,6 +1,6 @@
-import Link from 'next/link';
 import classnames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
+import { CallToAction } from '../../components/CallToAction/CallToAction';
 
 /**
  *
@@ -42,11 +42,7 @@ export const CardWithImage = ({
           )}
         </div>
       </div>
-      <Link href={href}>
-        <a className="text-primary  hover:text-primary-100  focus:text-primary-100">
-          Découvrir les données
-        </a>
-      </Link>
+      <CallToAction href={href}>Découvrir les données</CallToAction>
     </div>
   </div>
 );
