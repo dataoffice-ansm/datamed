@@ -41,12 +41,14 @@ const SectionServer = () => (
 const SectionAuthor = () => (
   <Section title="Conception & Développements">
     <p>
-      <CallToAction href="https://eig.etalab.gouv.fr/">
+      <CallToAction externalLink href="https://eig.etalab.gouv.fr/">
         Entrepreneurs d&apos;Intérêt Général
       </CallToAction>
     </p>
     <p>
-      <CallToAction href="https://www.health-data-hub.fr/">Health Data Hub</CallToAction>
+      <CallToAction externalLink href="https://www.health-data-hub.fr/">
+        Health Data Hub
+      </CallToAction>
     </p>
   </Section>
 );
@@ -76,16 +78,22 @@ const SectionEtablisment = () => (
   <Section title="Établissement de liens">
     Tout site public ou privé est autorisé à établir, sans autorisation préalable, un lien vers la
     page d’accueil ou directement vers les informations diffusées par le site
-    <CallToAction href="www.data.ansm.sante.fr">www.data.ansm.sante.fr</CallToAction>. Mais en aucun
-    cas les pages du site
-    <CallToAction href="www.data.ansm.sante.fr">www.data.ansm.sante.fr</CallToAction>. ne doivent se
-    retrouver imbriquées à l&apos;intérieur des pages d&apos;un autre site. Tout doit être fait pour
-    indiquer clairement à l’internaute qu’il se trouve sur le site
-    <CallToAction href="www.data.ansm.sante.fr">www.data.ansm.sante.fr</CallToAction>. et lui
-    permettre d’y naviguer librement. Pour sa part, l’ANSM établit des liens uniquement sur les
-    sites publics et n&apos;est en rien responsable de liens qui sont faits vers son site. Cependant
-    si vous créez un lien vers l’ANSM nous apprécierions d’en être informé par un simple mail à :
-    webmaster@ansm.sante.fr
+    <CallToAction externalLink href="www.data.ansm.sante.fr">
+      www.data.ansm.sante.fr
+    </CallToAction>
+    . Mais en aucun cas les pages du site
+    <CallToAction externalLink href="www.data.ansm.sante.fr">
+      www.data.ansm.sante.fr
+    </CallToAction>
+    . ne doivent se retrouver imbriquées à l&apos;intérieur des pages d&apos;un autre site. Tout
+    doit être fait pour indiquer clairement à l’internaute qu’il se trouve sur le site
+    <CallToAction externalLink href="www.data.ansm.sante.fr">
+      www.data.ansm.sante.fr
+    </CallToAction>
+    . et lui permettre d’y naviguer librement. Pour sa part, l’ANSM établit des liens uniquement sur
+    les sites publics et n&apos;est en rien responsable de liens qui sont faits vers son site.
+    Cependant si vous créez un lien vers l’ANSM nous apprécierions d’en être informé par un simple
+    mail à : webmaster@ansm.sante.fr
   </Section>
 );
 
