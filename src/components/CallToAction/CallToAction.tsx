@@ -1,4 +1,4 @@
-import type { ButtonHTMLAttributes, HTMLAttributes, ReactNode } from 'react';
+import type { ButtonHTMLAttributes, HTMLAttributes } from 'react';
 import Link from 'next/link';
 import classnames from 'classnames';
 
@@ -23,14 +23,14 @@ type CallToActionButtonProps = CallToActionBaseProps &
 type CallToActionProps = CallToActionButtonProps | CallToActionLinkProps;
 
 export const CallToAction = (props: CallToActionProps) => {
-  const { theme = 'primary' } = props;
+  const { id, children, className, theme = 'primary' } = props;
 
   if (props.as === 'button') {
-    const { variant = 'outlined', children, className, type = 'button', ...rest } = props;
+    const { variant = 'outlined', type = 'button' } = props;
 
     return (
       <button
-        {...rest}
+        id={id}
         type={type}
         className={classnames(
           {
@@ -55,22 +55,29 @@ export const CallToAction = (props: CallToActionProps) => {
     );
   }
 
-  const { href, children, className, ...rest } = props;
+  const { href, externalLink } = props;
+  const classAnchor = classnames(
+    {
+      'underline border-primary text-primary hover:decoration-primary focus:decoration-primary':
+        theme === 'primary',
+      'text-secondary hover:decoration-secondary focus:decoration-secondary': theme === 'secondary',
+      'text-grey hover:decoration-grey focus:decoration-grey': theme === 'grey',
+    },
+    'hover:font-medium focus:font-medium',
+    className
+  );
+
+  if (externalLink) {
+    return (
+      <a id={id} href={href} className={classAnchor}>
+        {children}
+      </a>
+    );
+  }
+
   return (
-    <Link {...rest} href={href}>
-      <a
-        className={classnames(
-          {
-            'underline border-primary text-primary hover:decoration-primary focus:decoration-primary':
-              theme === 'primary',
-            'text-secondary hover:decoration-secondary focus:decoration-secondary':
-              theme === 'secondary',
-            'text-grey hover:decoration-grey focus:decoration-grey': theme === 'grey',
-          },
-          'hover:font-medium focus:font-medium',
-          className
-        )}
-      >
+    <Link href={href}>
+      <a id={id} className={classAnchor}>
         {children}
       </a>
     </Link>
