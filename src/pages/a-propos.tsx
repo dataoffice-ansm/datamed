@@ -4,6 +4,14 @@ import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
 import { CallToAction } from '../components/CallToAction/CallToAction';
 
+/**
+ *
+ * @param title
+ * @param className
+ * @param id
+ * @param children
+ * @constructor
+ */
 const Section = ({
   title,
   className,
@@ -15,6 +23,7 @@ const Section = ({
     {children}
   </section>
 );
+
 const SectionToolForAll = () => (
   <Section title="Un outil accessible pour tous">
     <p>
@@ -61,7 +70,8 @@ const SectionOpenDataComplex = () => (
     </p>
   </Section>
 );
-const SectionExclusifData = () => (
+
+const SectionExclusiveData = () => (
   <Section title="Des données exclusives à l’ANSM">
     <p>
       L’ANSM ouvre pour la première fois une partie des données exploitéees par ses agents. Dans un
@@ -86,7 +96,7 @@ const PageAbout = () => (
             sandbox="allow-scripts allow-same-origin"
             allow="autoplay"
             src="https://www.dailymotion.com/embed/video/x82dxy0?autoplay=1"
-            title="Dailymotion Video Player"
+            title="Datamed EIG4"
           />
         </div>
         <h3 className="text-center">À propos de data.ansm</h3>
@@ -94,7 +104,7 @@ const PageAbout = () => (
           <SectionToolForAll />
           <SectionEIG />
           <SectionOpenDataComplex />
-          <SectionExclusifData />
+          <SectionExclusiveData />
         </div>
       </SmallContainer>
     </div>
