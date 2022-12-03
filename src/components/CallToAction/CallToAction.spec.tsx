@@ -32,22 +32,11 @@ describe(CallToAction.name, () => {
         </CallToAction>
       );
 
-      let classNameExpected = '';
-      if (theme === 'primary') {
-        classNameExpected =
-          'bg-primary text-white hover:bg-primary-500 focus:bg-primary-500 cursor:pointer py-2 px-4 rounded hover:text-white focus:text-white';
-      }
-
-      if (theme === 'secondary') {
-        classNameExpected =
-          'bg-secondary-800 text-white hover:bg-secondary focus:bg-secondary cursor:pointer py-2 px-4 rounded hover:text-white focus:text-white';
-      }
-
       expect(getByText(container, 'Button with theme primary and variant contained'));
-      expect(container.children[0].className).toContain(classNameExpected);
       expect(container).toMatchSnapshot();
     }
   );
+
   test.each<'contained' | 'outlined'>(['contained', 'outlined'])(
     'should render a button with %s variant',
     (variant) => {
@@ -58,16 +47,7 @@ describe(CallToAction.name, () => {
         </CallToAction>
       );
 
-      let classNameExpected = '';
-      if (variant === 'contained') {
-        classNameExpected =
-          'bg-primary text-white hover:bg-primary-500 focus:bg-primary-500 cursor:pointer py-2 px-4 rounded hover:text-white focus:text-white';
-      } else {
-        classNameExpected = 'border-primary text-primary hover:bg-primary';
-      }
-
       expect(getByText(container, `Button with theme primary and variant ${variant}`));
-      expect(container.children[0].className).toContain(classNameExpected);
       expect(container).toMatchSnapshot();
     }
   );

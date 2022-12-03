@@ -93,7 +93,7 @@ const PageAbout = () => (
           <iframe
             allowFullScreen
             className="w-full h-full absolute left-0 top-0 overflow-hidden"
-            sandbox="allow-scripts allow-same-origin"
+            sandbox="allow-scripts allow-same-origin allow-presentation"
             allow="autoplay"
             src="https://www.dailymotion.com/embed/video/x82dxy0?autoplay=1"
             title="Datamed EIG4"

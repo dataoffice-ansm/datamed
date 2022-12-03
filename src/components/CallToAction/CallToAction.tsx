@@ -16,7 +16,7 @@ export type CallToActionLinkProps = CallToActionBaseProps &
 export type CallToActionButtonProps = CallToActionBaseProps &
   ButtonHTMLAttributes<HTMLButtonElement> & {
     as: 'button';
-    variant?: 'outlined' | 'contained';
+    variant?: 'none' | 'outlined' | 'contained';
     type?: 'submit' | 'reset' | 'button';
   };
 
@@ -33,11 +33,20 @@ export const CallToAction = (props: CallToActionProps) => {
         id={id}
         type={type}
         className={classnames(
+          'cursor:pointer py-2 px-4 rounded',
           {
+            'text-primary underline': theme === 'primary' && variant === 'none',
+            'text-secondary hover:bg-secondary-500 focus:bg-secondary-500':
+              theme === 'secondary' && variant === 'none',
+            'text-grey hover:bg-grey-500 focus:bg-grey-500': theme === 'grey' && variant === 'none',
+
             'bg-primary text-white hover:bg-primary-500 focus:bg-primary-500':
               theme === 'primary' && variant === 'contained',
             'bg-secondary-800 text-white hover:bg-secondary focus:bg-secondary':
               theme === 'secondary' && variant === 'contained',
+            'bg-grey-800 text-white hover:bg-grey focus:bg-grey':
+              theme === 'secondary' && variant === 'contained',
+
             'bg-grey text-white hover:bg-grey-500': theme === 'grey' && variant === 'contained',
             'border border-primary text-primary hover:bg-primary focus:bg-primary':
               theme === 'primary' && variant === 'outlined',
@@ -46,7 +55,6 @@ export const CallToAction = (props: CallToActionProps) => {
             'border border-grey text-grey hover:bg-grey focus:bg-grey':
               theme === 'grey' && variant === 'outlined',
           },
-          'cursor:pointer py-2 px-4 rounded hover:text-white focus:text-white',
           className
         )}
       >
