@@ -3,6 +3,7 @@ import { Modal } from '../../components/Modal/Modal';
 import { useState } from 'react';
 import ManFigure from '../../assets/images/man_illustration.svg';
 import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
+import { CallToAction } from '../../components/CallToAction/CallToAction';
 
 export const ModalPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,13 +14,18 @@ export const ModalPage = () => {
         value={53}
         valueClassName="text-secondary"
         description="Hommes"
-        callToActionProps={{
-          as: 'button',
-          onClick() {
-            setIsOpen(true);
-          },
-        }}
         icon={<ManFigure width={150} height={150} />}
+        action={
+          <CallToAction
+            as="button"
+            variant="none"
+            onClick={() => {
+              setIsOpen(true);
+            }}
+          >
+            Button
+          </CallToAction>
+        }
       />
       <Modal
         title="Lorem Ipsum"

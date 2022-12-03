@@ -2,6 +2,7 @@ import ManFigure from '../../assets/images/man_illustration.svg';
 import WomanFigure from '../../assets/images/woman_illustration.svg';
 import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
+import { CallToAction } from '../../components/CallToAction/CallToAction';
 
 const GraphFigurePage = () => (
   <DevPageLayout title="graphFigure">
@@ -13,13 +14,12 @@ const GraphFigurePage = () => (
           value={53}
           valueClassName="text-secondary"
           description="Hommes"
-          callToActionProps={{
-            as: 'button',
-            onClick() {
-              console.log('GraphFigure Man clicked');
-            },
-          }}
           icon={<ManFigure width={150} height={150} />}
+          action={
+            <CallToAction externalLink as="link" href="http://fake.com">
+              action
+            </CallToAction>
+          }
         />
       </div>
       <div>
@@ -27,11 +27,12 @@ const GraphFigurePage = () => (
         <GraphFigure
           value={47}
           description="Femme"
-          callToActionProps={{
-            as: 'link',
-            href: 'http://fake.com',
-          }}
           icon={<WomanFigure width={150} height={150} />}
+          action={
+            <CallToAction externalLink as="link" href="http://fake.com">
+              action
+            </CallToAction>
+          }
         />
       </div>
     </div>
