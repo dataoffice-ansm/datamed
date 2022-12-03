@@ -8,11 +8,6 @@ type GenderRepartition {
     female: Int
 }
 
-type RepartitionTuple {
-    codePart: String
-    value: Int
-}
-
 type MedicalError {
     name: String
 }
@@ -33,6 +28,12 @@ type RepartitionPerSex {
     female: Int
 }
 
+type RepartitionPerAge {
+    id: Int
+    range: String
+    value: Int
+}
+
 type Speciality {
     id: Int!
     cisId: String!
@@ -42,12 +43,11 @@ type Speciality {
     icon: Icon
     substances: [Substance]
     description: String
-    #genderRepartition:GenderRepartition
     commercialisationState: String @capitalize
     commercialisationType: String @capitalize
     laboratory: Laboratory @capitalize
     repartitionPerSex: RepartitionPerSex
-    #ageRepartition: RepartitionTuple[];
+    repartitionPerAge: [RepartitionPerAge]
     #medicalErrors: MedicalError[];
     #pharmacoForm: String;
     #autorizationNumber: String;

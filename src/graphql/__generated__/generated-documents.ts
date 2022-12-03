@@ -66,16 +66,17 @@ export type QueryGetSubstanceArgs = {
   subCode: Scalars['String'];
 };
 
+export type RepartitionPerAge = {
+  __typename?: 'RepartitionPerAge';
+  id?: Maybe<Scalars['Int']>;
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
 export type RepartitionPerSex = {
   __typename?: 'RepartitionPerSex';
   female?: Maybe<Scalars['Int']>;
   male?: Maybe<Scalars['Int']>;
-};
-
-export type RepartitionTuple = {
-  __typename?: 'RepartitionTuple';
-  codePart?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
 };
 
 export type SpecialitiesReturn = {
@@ -96,6 +97,7 @@ export type Speciality = {
   id: Scalars['Int'];
   laboratory?: Maybe<Laboratory>;
   name: Scalars['String'];
+  repartitionPerAge?: Maybe<Array<Maybe<RepartitionPerAge>>>;
   repartitionPerSex?: Maybe<RepartitionPerSex>;
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
@@ -140,6 +142,12 @@ export type SpecialityQuery = {
       male?: number | null;
       female?: number | null;
     } | null;
+    repartitionPerAge?: Array<{
+      __typename?: 'RepartitionPerAge';
+      id?: number | null;
+      range?: string | null;
+      value?: number | null;
+    } | null> | null;
     icon?: { __typename?: 'Icon'; id: number; name?: string | null } | null;
     laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
     substances?: Array<{
@@ -211,6 +219,11 @@ export const SpecialityDocument = gql`
       repartitionPerSex {
         male
         female
+      }
+      repartitionPerAge {
+        id
+        range
+        value
       }
       description
       icon {

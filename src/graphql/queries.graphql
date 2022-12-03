@@ -14,6 +14,11 @@ query Speciality($cisCode: String!) {
             male
             female
         }
+        repartitionPerAge {
+            id
+            range
+            value
+        }
         description
         icon {
             id,
