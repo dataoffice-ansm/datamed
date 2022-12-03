@@ -16,7 +16,13 @@ export const ChartBox = ({
   children,
   className,
 }: HTMLAttributes<HTMLDivElement> & { title: string; children: ReactNode }) => (
-  <div id={id} className={classnames('ChartBox p-4 bg-white rounded-md', className)}>
+  <div
+    id={id}
+    className={classnames(
+      'ChartBox flex-1 p-4 bg-white rounded-md border border-solid border-grey text-center mx-auto',
+      className
+    )}
+  >
     <h3 className="mt-1">{title}</h3>
     <div className="m-2">{children}</div>
   </div>

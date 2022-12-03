@@ -1,5 +1,6 @@
 import { dbInstance } from './postgreDb';
 import type {
+  RepartitionPerAge,
   RepartitionPerSex,
   Speciality,
   Substance,
@@ -95,24 +96,43 @@ export class PostgresOperations {
     }));
   }
 
-  async getSpecialityRepSex(cisId: number): Promise<RepartitionPerSex | null> {
+  async getSpecialityRepSex(cisId: number): Promise<RepartitionPerSex> {
     const rows = await dbInstance
       .selectFrom('mp_patient_sex')
       .where('mp_id', '=', cisId)
       .select(['id', 'sex', 'patients_percentage'])
       .execute();
 
-    if (rows) {
-      const male = rows.find((row) => row.sex === 1);
-      const female = rows.find((row) => row.sex === 2);
+    const male = rows.find((row) => row.sex === 1);
+    const female = rows.find((row) => row.sex === 2);
 
-      return {
-        male: male ? Math.round(male.patients_percentage ?? 0) : null,
-        female: female ? Math.round(female.patients_percentage ?? 0) : null,
-      };
-    }
+    return {
+      male: male ? Math.round(male.patients_percentage ?? 0) : null,
+      female: female ? Math.round(female.patients_percentage ?? 0) : null,
+    };
+  }
 
-    return null;
+  async getSpecialityRepAge(cisId: number): Promise<RepartitionPerAge[]> {
+    const rows = await dbInstance
+      .selectFrom('mp_patient_ages as mp_a')
+      .where('mp_id', '=', cisId)
+      .leftJoin('ages', 'ages.id', 'mp_a.age_id')
+      .select(['mp_a.id', 'ages.range', 'mp_a.patients_percentage as value'])
+      .execute();
+
+    return rows.reduce<RepartitionPerAge[]>((carry, row) => {
+      const { id, range, value } = row;
+      return range
+        ? [
+            ...carry,
+            {
+              id,
+              range,
+              value: Math.round(value ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
   }
 
   async getSpecialitySubstances(cisId: number): Promise<Substance[]> {

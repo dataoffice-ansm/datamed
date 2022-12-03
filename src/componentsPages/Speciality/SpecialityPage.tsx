@@ -5,6 +5,7 @@ import { EntityContextProvider, useEntityContext } from '../../contexts/EntityCo
 import type { Speciality } from '../../api/graphql/__generated__/generated-types';
 import Link from 'next/link';
 import Page404 from '../../pages/[404]';
+import { Pie } from 'react-chartjs-2';
 import { useMemo } from 'react';
 import type { Substance } from '../../graphql/__generated__/generated-documents';
 import { SpecialitySubstancesContainer } from '../../components/SubstancesContainer/SpecialitySubstancesContainer';
@@ -13,6 +14,8 @@ import { Accordion } from '../../components/Accordion/Accordion';
 import WomanIllustration from '../../assets/images/woman_illustration.svg';
 import ManIllustration from '../../assets/images/man_illustration.svg';
 import { ChartBox } from '../../components/ChartBox/ChartBox';
+import classnames from 'classnames';
+import { PieChartSpecialityRepAge } from './Charts/PieChartSpecialityRepAge';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -22,7 +25,7 @@ const SectionOneGlobalInformation = () => {
   ) as Substance[];
 
   return (
-    <div className="SectionOneGlobalInformation bg-white shadow rounded-lg p-4">
+    <div className={classnames('SectionOneGlobalInformation bg-white shadow rounded-lg p-4')}>
       <div className="sectionPart mt-4 mb-8">
         {substances.length > 1 ? <h5>Substances actives</h5> : <h5>Substance active</h5>}
 
@@ -147,9 +150,7 @@ const SectionTreatedPatients = () => {
         </ChartBox>
 
         <ChartBox className="repAges" title="Répartition par âge des patients traités">
-          <div className="flex gap-2 w-full">
-            <div className="flex gap-2 w-full">pie chart</div>
-          </div>
+          <PieChartSpecialityRepAge speciality={currentEntity} />
         </ChartBox>
       </div>
     </div>
