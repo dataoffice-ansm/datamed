@@ -42,8 +42,8 @@ const SectionOneGlobalInformation = () => {
       <div className="sectionPart mt-4 mb-8">
         {substances.length > 1 ? <h5>Substances actives</h5> : <h5>Substance active</h5>}
 
-        {substances.map((sub) => (
-          <Link key={sub.code} href={`/substance/${sub.code}`}>
+        {substances.map((sub, index) => (
+          <Link key={`substance_${index.toString()}_${sub.code})`} href={`/substance/${sub.code}`}>
             <a className="text-primary">{sub.name}</a>
           </Link>
         ))}

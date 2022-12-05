@@ -21,7 +21,7 @@ export const Modal = ({
 
   useEffect(() => {
     setScrollEnabled(!isOpen);
-  }, [isOpen]);
+  }, [isOpen, setScrollEnabled]);
 
   return (
     <Transition appear show={isOpen} as={Fragment}>

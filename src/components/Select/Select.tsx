@@ -27,6 +27,7 @@ type SelectProps = {
   disabled?: boolean;
   label?: string;
   theme?: SelectThemeColor;
+  // eslint-disable-next-line no-unused-vars
   onSelectOption?: (index: number) => void;
 } & HTMLAttributes<HTMLSelectElement>;
 

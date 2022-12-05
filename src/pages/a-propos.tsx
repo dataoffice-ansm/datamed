@@ -1,3 +1,4 @@
+/* eslint-disable react/iframe-missing-sandbox */
 import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 import type { HTMLAttributes } from 'react';
@@ -69,7 +70,7 @@ const SectionOpenDataComplex = () => (
       <div>
         <Button externalLink href="https://ansm.sante.fr/">
           L&apos;Agence Nationale de Sécurité du Médicament et des produits de santé (ANSM)
-        </Button>
+        </Button>{' '}
         est chargée de faciliter l&apos;accès à l&apos;innovation thérapeutique, de garantir la
         sécurité des produits de santé et d&apos;informer et échanger avec les patients et
         professionnels de santé. Elle détient, pour assurer ses missions, de nombreuses données
@@ -120,18 +121,22 @@ const PageAbout = () => (
   >
     <div className="flex flex-col items-center justify-center mb-16">
       <SmallContainer>
-        <div className="relative pb-[26rem] h-0 overflow-hidden">
-          {/* eslint-disable-next-line react/iframe-missing-sandbox */}
-          <iframe
-            allowFullScreen
-            className="w-full h-full absolute left-0 top-0 overflow-hidden"
-            sandbox="allow-scripts allow-same-origin allow-presentation"
-            allow="autoplay"
-            src="https://www.dailymotion.com/embed/video/x82dxy0?autoplay=1"
-            title="Datamed EIG4"
-          />
-        </div>
-        <h1 className="text-center">À propos de data.ansm</h1>
+        <FullWidthRow
+          className="bg-black"
+          background={
+            <div className="relative overflow-hidden w-full h-full min-h-[50vh]">
+              <iframe
+                allowFullScreen
+                className="h-full w-full overflow-hidden"
+                sandbox="allow-scripts allow-same-origin allow-presentation"
+                allow="autoplay"
+                src="https://www.dailymotion.com/embed/video/x82dxy0?autoplay=1"
+                title="Datamed EIG4"
+              />
+            </div>
+          }
+        />
+        <h1 className="text-center mt-[60vh]">À propos de data.ansm</h1>
         <div className="flex flex-col justify-center bg-white rounded shadow p-6 mb-4">
           <SectionToolForAll />
           <SectionEIG />

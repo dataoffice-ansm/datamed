@@ -122,25 +122,23 @@ export const Autocomplete = ({
     : 'Rechercher';
 
   return (
-    <>
-      <div className="Autocomplete relative">
-        <Combobox onChange={onSelected}>
-          <Combobox.Input
-            autoFocus
-            placeholder={cisLoading || subLoading ? loadingPlaceholder : placeholder}
-            disabled={cisLoading || subLoading}
-            className={classnames(
-              'AutocompleteInput w-full',
-              embedded
-                ? 'border-grey-100 rounded-none sticky top-0 shadow-lg p-4'
-                : 'rounded-lg border border-grey-400 py-3 px-4'
-            )}
-            value={query}
-            onChange={debounceInputOnChange}
-          />
-          {query.length > 3 && renderOptions()}
-        </Combobox>
-      </div>
+    <div className="Autocomplete relative">
+      <Combobox onChange={onSelected}>
+        <Combobox.Input
+          autoFocus
+          placeholder={cisLoading || subLoading ? loadingPlaceholder : placeholder}
+          disabled={cisLoading || subLoading}
+          className={classnames(
+            'AutocompleteInput w-full',
+            embedded
+              ? 'border-grey-100 rounded-none sticky top-0 shadow-lg p-4'
+              : 'rounded-lg border border-grey-400 pl-3 py-3 px-4'
+          )}
+          value={query}
+          onChange={debounceInputOnChange}
+        />
+        {query.length > 3 && renderOptions()}
+      </Combobox>
       {isLoading ? (
         <div
           role="status"
@@ -149,10 +147,14 @@ export const Autocomplete = ({
           <LoaderSpinner />
         </div>
       ) : (
-        <div className="absolute right-4 bottom-2.5 inset-y-0 pointer-events-none h-full flex justify-center items-center">
-          <SearchIcon width={navIconSize} height={navIconSize} alt="search" />
+        <div>
+          {!embedded && (
+            <div className="absolute right-4 bottom-2.5 inset-y-0 pointer-events-none h-full flex justify-center items-center">
+              <SearchIcon width={navIconSize} height={navIconSize} alt="search" />
+            </div>
+          )}
         </div>
       )}
-    </>
+    </div>
   );
 };

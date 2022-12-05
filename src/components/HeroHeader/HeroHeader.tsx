@@ -80,8 +80,10 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
       </div>
       <div ref={ref} className="flex flex-col">
         <Link href="/">
-          <a className="flex justify-center items-center text-white mx-8 my-12 gap-4">
-            <BackArrowSVG className="h-8 w-8" />
+          <a className="flex justify-center items-center text-white my-12 gap-4">
+            <div className="h-8 w-8">
+              <BackArrowSVG className="h-8 w-8" />
+            </div>
             <div className="text-xl font-medium">
               Accueil / {type} : {currentEntity.name}
             </div>
