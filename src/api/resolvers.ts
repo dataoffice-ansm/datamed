@@ -56,6 +56,23 @@ export const resolvers: Resolvers = {
     async substances(parent, args, context) {
       return context.dataSources.postgresOperations.getSubstancesBySpeciality(parent.id);
     },
+
+    async medicalErrors(parent, args, context) {
+      const populationRepartition =
+        await context.dataSources.postgresOperations.getErrorsMedRepPopulation(parent.id);
+
+      const sideEffectsOriginRepartition =
+        await context.dataSources.postgresOperations.getErrorsMedicalSideEffectsOrigin(parent.id);
+
+      const natureRepartition =
+        await context.dataSources.postgresOperations.getErrorsMedicalNatureRepartition(parent.id);
+
+      return {
+        populationRepartition,
+        sideEffectsOriginRepartition,
+        natureRepartition,
+      };
+    },
   },
 
   Substance: {

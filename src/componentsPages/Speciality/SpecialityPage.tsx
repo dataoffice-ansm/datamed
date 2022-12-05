@@ -12,13 +12,19 @@ import { Accordion } from '../../components/Accordion/Accordion';
 
 import WomanIllustration from '../../assets/images/woman_illustration.svg';
 import ManIllustration from '../../assets/images/man_illustration.svg';
+import ManFaceNo from '../../assets/images/manFaceNo.svg';
+import ManFaceYes from '../../assets/images/manFaceYes.svg';
+
 import { ChartBox } from '../../components/ChartBox/ChartBox';
 import classnames from 'classnames';
-import { PieChartSpecialityRepAge } from './Charts/PieChartSpecialityRepAge';
+import { PieChartSpecialityAge } from './Charts/PieChartSpecialityAge';
 import { useLayoutContext } from '../../contexts/LayoutContext';
-import { cisExpositionLevelMapping } from '../../utils/mapping';
+import { cisExpositionLevelMapping, getCisErrorMedNatureIconMapping } from '../../utils/mapping';
 import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
+import { Button } from '../../components/Button/Button';
+import { PieChartMedicalErrorsPopulation } from './Charts/PieChartMedicalErrorsPopulation';
+import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -102,7 +108,10 @@ const SectionTreatedPatients = () => {
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
       <h2>Patients traités en ville</h2>
-      <Accordion title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?">
+      <Accordion
+        theme="primary"
+        title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
+      >
         <p>
           Estimations obtenues à partir des données Open-Medic portant sur le nombre de patients
           ayant bénéficié d’un remboursement du médicament délivré en pharmacie de ville. Pour plus
@@ -133,7 +142,7 @@ const SectionTreatedPatients = () => {
 
       {currentEntity?.exposition?.expositionLevel !== null && (
         <div className="expositionChart my-4 flex rounded-md border border-grey-200 border-solid overflow-hidden">
-          <div className="expositionChartLeft p-4 min:h-20 flex-1 flex flex-col bg-secondary">
+          <div className="expositionChartLeft p-4 min:h-20 flex-1 flex flex-col bg-primary">
             <span className="text-white">
               {
                 cisExpositionLevelMapping[
@@ -145,7 +154,7 @@ const SectionTreatedPatients = () => {
           </div>
           <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
             {currentEntity?.exposition?.consumption && (
-              <h3 className="text-secondary">
+              <h3 className="text-primary">
                 {numberWithThousand(currentEntity?.exposition?.consumption)} patients / an
               </h3>
             )}
@@ -157,7 +166,7 @@ const SectionTreatedPatients = () => {
         </div>
       )}
 
-      <div className="flex flex-wrap gap-2 my-8">
+      <div className="flex gap-2 my-8">
         {currentEntity.repartitionPerSex ? (
           <ChartBox className="repSexes" title="Répartition par sexe des patients traités">
             <div className="flex gap-2 w-full">
@@ -187,31 +196,124 @@ const SectionTreatedPatients = () => {
         )}
 
         <ChartBox className="repAges" title="Répartition par âge des patients traités">
-          <PieChartSpecialityRepAge ageData={currentEntity?.repartitionPerAge} />
+          <PieChartSpecialityAge ageData={currentEntity?.repartitionPerAge} />
         </ChartBox>
       </div>
     </div>
   );
 };
 
-const SectionMedicinalErrors = () => (
-  <div className="SectionMedicinalErrors sectionPart mt-4 mb-8">
-    <h2>Déclarations d’erreurs médicamenteuses</h2>
-    <Accordion title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?">
-      La pharmacovigilance est la surveillance, l’évaluation, la prévention et la gestion du risque
-      d’effet indésirable résultant de l’utilisation des médicaments. Elle s’exerce en permanence,
-      avant et après la commercialisation des médicaments, et constitue un élément essentiel du
-      contrôle de la sécurité des médicaments. Afin de respecter la confidentialité des données des
-      patients, si un critère (âge, sexe,...) représente moins de 11 cas, l&lsquo;information ne
-      sera pas affichée avec ce niveau de détail. Ces données sont issues de la Base Nationale de
-      Pharmacovigilance (BNPV), qui est la base de données de l&lsquo;ANSM alimentée par les Centres
-      Régionaux de Pharmacovigilance (CRPV). Elle inclut l&lsquo;ensemble des déclarations
-      suspectées comme étant en lien avec l&lsquo;usage d&lsquo;un ou plusieurs médicaments. Ces
-      dernières sont notifiées par les professionnels de santé ou par les patients et association
-      agréées via un portail dédié : https://signalement.social-sante.gouv.fr
-    </Accordion>
-  </div>
-);
+const SectionMedicinalErrors = () => {
+  const { currentEntity } = useEntityContext<EntityCis>();
+
+  return (
+    <div className="SectionMedicinalErrors sectionPart mt-4 mb-8">
+      <h2>Déclarations d’erreurs médicamenteuses</h2>
+
+      <Accordion title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?">
+        <p>
+          L’erreur médicamenteuse est l&lsquo;omission ou la réalisation non intentionnelle
+          d&lsquo;un acte au cours des soins impliquant un médicament, qui peut être à l’origine
+          d’un risque ou d’un événement indésirable pour le patient.
+        </p>
+        <p>
+          Les données sur les erreurs médicamenteuses présentées ici, gérées par l’ANSM proviennent
+          des déclarations soit de risque d’erreur soit d’erreurs médicamenteuses avec ou sans
+          évènements indésirables. Elles sont déclarées par les patients ou les professionnels de
+          santé, notamment via{' '}
+          <Button externalLink href="#">
+            le portail des signalements
+          </Button>
+        </p>
+        <p>
+          Les erreurs médicamenteuses se classent en fonction de l&lsquo;étape de survenue (erreur
+          de prescription, erreur de délivrance, erreur d’administration), de la cause de
+          l&lsquo;erreur (produit, humaine et technique) et de la nature de l&lsquo;erreur (de
+          médicament ou de patient).{' '}
+          <Button externalLink href="#">
+            En savoir plus sur le site de l&lsquo;ANSM
+          </Button>
+        </p>
+      </Accordion>
+
+      <div className="flex gap-2 my-8">
+        <ChartBox className="repAges" title="Répartition  de la population concernée">
+          <PieChartMedicalErrorsPopulation
+            errorsMedRepPopData={currentEntity?.medicalErrors?.populationRepartition}
+          />
+        </ChartBox>
+
+        {currentEntity?.medicalErrors?.sideEffectsOriginRepartition ? (
+          <ChartBox
+            className="sideEffectsOriginRepartition"
+            title="Existence d’effets indésirables suite aux erreurs médicamenteuses déclarées"
+          >
+            <div className="flex gap-2 w-full">
+              <div className="w-full flex flex-col justify-center items-center gap-1">
+                <ManFaceYes className="w-32" />
+                {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with?.value && (
+                  <span className="text-3xl text-dark-violet-800 mt-3">
+                    {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with?.value}%
+                  </span>
+                )}
+                <span className="text-base">Sans effets indésirables</span>
+              </div>
+
+              <div className="w-full flex flex-col justify-center items-center gap-1">
+                <ManFaceNo className="w-32" />
+                {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without?.value && (
+                  <span className="text-3xl text-dark-violet-800 mt-3">
+                    {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without?.value}%
+                  </span>
+                )}
+                <span className="text-base">Avec effets indésirables</span>
+              </div>
+            </div>
+          </ChartBox>
+        ) : (
+          <NotEnoughData />
+        )}
+      </div>
+
+      <ChartBox
+        className="stepApparitionFigures"
+        title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
+      >
+        <div className="graphFiguresContainer flex gap-3">
+          {currentEntity?.medicalErrors?.natureRepartition?.map((natureRep) => {
+            if (natureRep?.id && natureRep?.value && natureRep?.range) {
+              return (
+                <GraphFigure
+                  key={natureRep.id}
+                  value={natureRep?.value}
+                  valueClassName="text-secondary"
+                  description={natureRep?.range}
+                  icon={getCisErrorMedNatureIconMapping(natureRep.id)}
+                />
+              );
+            }
+
+            return null;
+          })}
+        </div>
+      </ChartBox>
+
+      {/*<Accordion title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?">*/}
+      {/*  La pharmacovigilance est la surveillance, l’évaluation, la prévention et la gestion du risque*/}
+      {/*  d’effet indésirable résultant de l’utilisation des médicaments. Elle s’exerce en permanence,*/}
+      {/*  avant et après la commercialisation des médicaments, et constitue un élément essentiel du*/}
+      {/*  contrôle de la sécurité des médicaments. Afin de respecter la confidentialité des données des*/}
+      {/*  patients, si un critère (âge, sexe,...) représente moins de 11 cas, l&lsquo;information ne*/}
+      {/*  sera pas affichée avec ce niveau de détail. Ces données sont issues de la Base Nationale de*/}
+      {/*  Pharmacovigilance (BNPV), qui est la base de données de l&lsquo;ANSM alimentée par les Centres*/}
+      {/*  Régionaux de Pharmacovigilance (CRPV). Elle inclut l&lsquo;ensemble des déclarations*/}
+      {/*  suspectées comme étant en lien avec l&lsquo;usage d&lsquo;un ou plusieurs médicaments. Ces*/}
+      {/*  dernières sont notifiées par les professionnels de santé ou par les patients et association*/}
+      {/*  agréées via un portail dédié : https://signalement.social-sante.gouv.fr*/}
+      {/*</Accordion>*/}
+    </div>
+  );
+};
 
 const SectionSideEffects = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -262,14 +364,14 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => {
             content: <SectionTreatedPatients />,
           },
           {
-            id: 'medicinal-errors',
-            label: 'Erreurs médicamenteuses',
-            content: <SectionMedicinalErrors />,
-          },
-          {
             id: 'side-effects',
             label: 'Effets indésirables',
             content: <SectionSideEffects />,
+          },
+          {
+            id: 'medicinal-errors',
+            label: 'Erreurs médicamenteuses',
+            content: <SectionMedicinalErrors />,
           },
           {
             id: 'shortage-risks-history',

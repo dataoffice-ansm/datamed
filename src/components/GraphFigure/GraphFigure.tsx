@@ -27,7 +27,7 @@ export const GraphFigure = ({
   value: number;
   description: string;
   icon: ReactNode;
-  action: ReactNode;
+  action?: ReactNode;
   unit?: string;
   valueClassName?: string;
 }) => (

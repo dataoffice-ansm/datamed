@@ -33,10 +33,21 @@ type RepartitionPerSex {
     female: Int
 }
 
-type RepartitionPerAge {
+type RepartitionTranche {
     id: Int
     range: String
     value: Int
+}
+
+type WithRepartition {
+    with: RepartitionTranche
+    without: RepartitionTranche
+}
+
+type MedicalErrors {
+    populationRepartition: [RepartitionTranche]
+    sideEffectsOriginRepartition: WithRepartition
+    natureRepartition: [RepartitionTranche]
 }
 
 type CisExposition {
@@ -58,8 +69,10 @@ type Speciality {
     commercialisationType: String @capitalize
     laboratory: Laboratory @capitalize
     repartitionPerSex: RepartitionPerSex
-    repartitionPerAge: [RepartitionPerAge]
+    repartitionPerAge: [RepartitionTranche]
     exposition: CisExposition
+    medicalErrors: MedicalErrors
+
     #medicalErrors: MedicalError[];
     #pharmacoForm: String;
     #autorizationNumber: String;

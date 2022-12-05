@@ -135,7 +135,11 @@ export const EntityPageLayout = ({
       <div className="content flex-1 my-4">
         {render(
           sections.map(({ id, content }) => (
-            <section key={id} id={id} className="ease-linear duration-300 transition-padding">
+            <section
+              key={id}
+              id={id}
+              className="sectionContent ease-linear duration-300 transition-padding mb-32"
+            >
               {content}
             </section>
           ))

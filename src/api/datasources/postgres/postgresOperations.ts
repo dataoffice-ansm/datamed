@@ -1,7 +1,8 @@
 import { dbInstance } from './postgreDb';
 import type {
-  RepartitionPerAge,
+  MedicalErrors,
   RepartitionPerSex,
+  RepartitionTranche,
   Speciality,
   Substance,
 } from '../../graphql/__generated__/generated-types';
@@ -139,7 +140,78 @@ export class PostgresOperations {
       : null;
   }
 
-  async getSpecialityRepAge(cisId: number): Promise<RepartitionPerAge[]> {
+  async getErrorsMedRepPopulation(cisId: number): Promise<RepartitionTranche[]> {
+    const rows = await dbInstance
+      .selectFrom('error_med_population as err')
+      .leftJoin('population_errors as pop', 'pop.id', 'err.population_error_id')
+      .where('mp_id', '=', cisId)
+      .select(['err.id', 'err.percentage as value', 'pop.label as range'])
+      .execute();
+
+    return rows.reduce<RepartitionTranche[]>((carry, row) => {
+      const { id, range, value } = row;
+      return [
+        ...carry,
+        {
+          id,
+          range,
+          value: Math.round(value ?? 0),
+        },
+      ];
+    }, []);
+  }
+
+  async getErrorsMedicalSideEffectsOrigin(
+    cisId: number
+  ): Promise<MedicalErrors['sideEffectsOriginRepartition'] | null> {
+    const rows = await dbInstance
+      .selectFrom('error_med_side_effect as err')
+      .leftJoin('side_effects as side', 'side.id', 'err.side_effect_id')
+      .where('mp_id', '=', cisId)
+      .select(['err.percentage as value', 'side.id as id', 'side.label as range'])
+      .execute();
+
+    console.log(rows);
+
+    const withSideEffect = rows.find((row) => row.id === 1);
+    const withoutSideEffect = rows.find((row) => row.id === 0);
+
+    return withSideEffect && withoutSideEffect
+      ? {
+          with: {
+            ...withSideEffect,
+            value: Math.round(withSideEffect.value ?? 0),
+          },
+          without: {
+            ...withoutSideEffect,
+            value: Math.round(withoutSideEffect.value ?? 0),
+          },
+        }
+      : null;
+  }
+
+  async getErrorsMedicalNatureRepartition(cisId: number): Promise<RepartitionTranche[]> {
+    const rows = await dbInstance
+      .selectFrom('error_med_nature as err')
+      .leftJoin('nature_errors as nat', 'nat.id', 'err.nature_error_id')
+      .where('mp_id', '=', cisId)
+      .select(['nat.id', 'err.percentage as value', 'nat.label as range'])
+      .execute();
+
+    return rows.reduce<RepartitionTranche[]>((carry, row) => {
+      const { id, range, value } = row;
+      return [
+        ...carry,
+        {
+          id,
+          range,
+          value: Math.round(value ?? 0),
+        },
+      ];
+    }, []);
+  }
+
+  async getSpecialityRepAge(cisId: number): Promise<RepartitionTranche[]> {
     const rows = await dbInstance
       .selectFrom('mp_patient_ages as mp_a')
       .where('mp_id', '=', cisId)
@@ -147,18 +219,16 @@ export class PostgresOperations {
       .select(['mp_a.id', 'ages.range', 'mp_a.patients_percentage as value'])
       .execute();
 
-    return rows.reduce<RepartitionPerAge[]>((carry, row) => {
+    return rows.reduce<RepartitionTranche[]>((carry, row) => {
       const { id, range, value } = row;
-      return range
-        ? [
-            ...carry,
-            {
-              id,
-              range,
-              value: Math.round(value ?? 0),
-            },
-          ]
-        : carry;
+      return [
+        ...carry,
+        {
+          id,
+          range,
+          value: Math.round(value ?? 0),
+        },
+      ];
     }, []);
   }
 

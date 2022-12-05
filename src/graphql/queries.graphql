@@ -44,6 +44,30 @@ query Speciality($cisId: Int!) {
             consumption
             expositionLevel
         }
+        medicalErrors {
+            populationRepartition {
+                id
+                value
+                range
+            }
+            sideEffectsOriginRepartition {
+               with {
+                   id
+                   value
+                   range
+               }
+                without {
+                    id
+                    value
+                    range
+                }
+            }
+            natureRepartition {
+                id
+                value
+                range
+            }
+        }
     }
 }
 

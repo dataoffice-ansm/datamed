@@ -52,6 +52,13 @@ export type MedicalError = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type MedicalErrors = {
+  __typename?: 'MedicalErrors';
+  natureRepartition?: Maybe<Array<Maybe<RepartitionTranche>>>;
+  populationRepartition?: Maybe<Array<Maybe<RepartitionTranche>>>;
+  sideEffectsOriginRepartition?: Maybe<WithRepartition>;
+};
+
 export type Meta = {
   __typename?: 'Meta';
   count?: Maybe<Scalars['Int']>;
@@ -78,17 +85,17 @@ export type QueryGetSubstanceArgs = {
   subCode: Scalars['String'];
 };
 
-export type RepartitionPerAge = {
-  __typename?: 'RepartitionPerAge';
-  id?: Maybe<Scalars['Int']>;
-  range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-};
-
 export type RepartitionPerSex = {
   __typename?: 'RepartitionPerSex';
   female?: Maybe<Scalars['Int']>;
   male?: Maybe<Scalars['Int']>;
+};
+
+export type RepartitionTranche = {
+  __typename?: 'RepartitionTranche';
+  id?: Maybe<Scalars['Int']>;
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
 };
 
 export type RepartitionTuple = {
@@ -115,8 +122,9 @@ export type Speciality = {
   iconId?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
   laboratory?: Maybe<Laboratory>;
+  medicalErrors?: Maybe<MedicalErrors>;
   name: Scalars['String'];
-  repartitionPerAge?: Maybe<Array<Maybe<RepartitionPerAge>>>;
+  repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
   repartitionPerSex?: Maybe<RepartitionPerSex>;
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
@@ -143,6 +151,12 @@ export type SubstancesReturn = {
   __typename?: 'SubstancesReturn';
   meta?: Maybe<Meta>;
   substances?: Maybe<Array<Maybe<Substance>>>;
+};
+
+export type WithRepartition = {
+  __typename?: 'WithRepartition';
+  with?: Maybe<RepartitionTranche>;
+  without?: Maybe<RepartitionTranche>;
 };
 
 export type SpecialityIdByCodeQueryVariables = Exact<{
@@ -180,7 +194,7 @@ export type SpecialityQuery = {
       female?: number | null;
     } | null;
     repartitionPerAge?: Array<{
-      __typename?: 'RepartitionPerAge';
+      __typename?: 'RepartitionTranche';
       id?: number | null;
       range?: string | null;
       value?: number | null;
@@ -200,6 +214,36 @@ export type SpecialityQuery = {
       id: number;
       consumption?: number | null;
       expositionLevel?: number | null;
+    } | null;
+    medicalErrors?: {
+      __typename?: 'MedicalErrors';
+      populationRepartition?: Array<{
+        __typename?: 'RepartitionTranche';
+        id?: number | null;
+        value?: number | null;
+        range?: string | null;
+      } | null> | null;
+      sideEffectsOriginRepartition?: {
+        __typename?: 'WithRepartition';
+        with?: {
+          __typename?: 'RepartitionTranche';
+          id?: number | null;
+          value?: number | null;
+          range?: string | null;
+        } | null;
+        without?: {
+          __typename?: 'RepartitionTranche';
+          id?: number | null;
+          value?: number | null;
+          range?: string | null;
+        } | null;
+      } | null;
+      natureRepartition?: Array<{
+        __typename?: 'RepartitionTranche';
+        id?: number | null;
+        value?: number | null;
+        range?: string | null;
+      } | null> | null;
     } | null;
   } | null;
 };
@@ -356,6 +400,30 @@ export const SpecialityDocument = gql`
         id
         consumption
         expositionLevel
+      }
+      medicalErrors {
+        populationRepartition {
+          id
+          value
+          range
+        }
+        sideEffectsOriginRepartition {
+          with {
+            id
+            value
+            range
+          }
+          without {
+            id
+            value
+            range
+          }
+        }
+        natureRepartition {
+          id
+          value
+          range
+        }
       }
     }
   }

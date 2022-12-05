@@ -11,7 +11,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
  * @param ageData
  * @constructor
  */
-export const PieChartSpecialityRepAge = ({
+export const PieChartSpecialityAge = ({
   ageData,
 }: {
   ageData: Speciality['repartitionPerAge'];
