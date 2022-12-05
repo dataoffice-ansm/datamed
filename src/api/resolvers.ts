@@ -2,21 +2,37 @@ import type { Resolvers } from './graphql/__generated__/generated-types';
 
 export const resolvers: Resolvers = {
   Query: {
-    async getSpeciality(parent, args, context) {
-      return context.dataSources.postgresOperations.getSingleSpeciality(args.cisCode);
+    async getSpecialityIdByCode(parent, args, context) {
+      return context.dataSources.postgresOperations.getSingleSpecialityCodeById(args.cisCode);
     },
+
+    async getSpeciality(parent, args, context) {
+      const rows = await context.dataSources.postgresOperations.getFullSpecialitiesByIds([
+        args.cisId,
+      ]);
+
+      return rows[0];
+    },
+
     async getSpecialities(parent, args, context) {
       const rows = await context.dataSources.postgresOperations.getSpecialities();
       return {
-        specialities: rows,
+        specialities: rows.map(({ id, name, code, description }) => ({
+          id,
+          name,
+          code,
+          description,
+        })),
         meta: {
           count: rows.length,
         },
       };
     },
+
     async getSubstance(parent, args, context) {
       return context.dataSources.postgresOperations.getSingleSubstance(args.subCode);
     },
+
     async getSubstances(parent, args, context) {
       const rows = await context.dataSources.postgresOperations.getSubstances();
       return {
@@ -26,18 +42,8 @@ export const resolvers: Resolvers = {
         },
       };
     },
-    async getSpecialitiesBySubstance(_, args, context) {
-      const rows = await context.dataSources.postgresOperations.getSpecialitiesBySubstance(
-        args.subCode
-      );
-      return {
-        specialities: rows,
-        meta: {
-          count: rows.length,
-        },
-      };
-    },
   },
+
   Speciality: {
     async repartitionPerSex(parent, args, context) {
       return context.dataSources.postgresOperations.getSpecialityRepSex(parent.id);
@@ -48,7 +54,31 @@ export const resolvers: Resolvers = {
     },
 
     async substances(parent, args, context) {
-      return context.dataSources.postgresOperations.getSpecialitySubstances(parent.id);
+      return context.dataSources.postgresOperations.getSubstancesBySpeciality(parent.id);
+    },
+  },
+
+  Substance: {
+    async retrieveSpecialities(substance, args, context) {
+      const cisIds = await context.dataSources.postgresOperations.getSpecialitiesBySubstance(
+        substance.id
+      );
+
+      const specialities = await context.dataSources.postgresOperations.getFullSpecialitiesByIds(
+        cisIds
+      );
+
+      return {
+        specialities: specialities.map(({ id, name, code, description }) => ({
+          id,
+          name,
+          code,
+          description,
+        })),
+        meta: {
+          count: specialities.length,
+        },
+      };
     },
   },
 };

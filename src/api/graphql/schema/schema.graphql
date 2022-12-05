@@ -4,33 +4,33 @@ directive @lowercase on FIELD_DEFINITION
 directive @capitalize on FIELD_DEFINITION
 
 type GenderRepartition {
-  male: Int
-  female: Int
+    male: Int
+    female: Int
 }
 
 type RepartitionTuple {
-  codePart: String
-  value: Int
+    codePart: String
+    value: Int
 }
 
 type MedicalError {
-  name: String
+    name: String
 }
 
 type MedicalATC {
-  id: Int!
-  code: String
-  name: String
+    id: Int!
+    code: String
+    name: String
 }
 
 type Laboratory {
-  id: Int!
-  name: String
+    id: Int!
+    name: String
 }
 
 type RepartitionPerSex {
-  male: Int
-  female: Int
+    male: Int
+    female: Int
 }
 
 type RepartitionPerAge {
@@ -41,7 +41,7 @@ type RepartitionPerAge {
 
 type Speciality {
     id: Int!
-    cisId: String!
+    code: String!
     name: String!
     atc: MedicalATC
     iconId: Int
@@ -65,41 +65,49 @@ type Speciality {
     #administeringMode: String;
 }
 
+type SpecialityLight {
+    id: Int!
+    code: String!
+    name: String!
+    description: String
+}
+
 type Substance {
-  id: Int!
-  code: String!
-  name: String! @capitalize
-  pharmaForm: String
-  dosage: String
+    id: Int!
+    code: String!
+    name: String! @capitalize
+    pharmaForm: String
+    dosage: String
+    retrieveSpecialities: SpecialitiesReturn
 }
 
 type Icon {
-  id: Int!
-  name: String
+    id: Int!
+    name: String
 }
 
 type Meta {
-  count: Int
+    count: Int
 }
 
 ##### QUERIES #####
 
 type SpecialitiesReturn {
-  specialities: [Speciality]
-  meta: Meta
+    specialities: [SpecialityLight]
+    meta: Meta
 }
 
 type SubstancesReturn {
-  substances: [Substance]
-  meta: Meta
+    substances: [Substance]
+    meta: Meta
 }
 
 type Query {
-  getSpeciality(cisCode: String!): Speciality
-  getSpecialities: SpecialitiesReturn
-  getSubstance(subCode: String!): Substance
-  getSubstances: SubstancesReturn
-  getSpecialitiesBySubstance(subCode: String!): SpecialitiesReturn
+    getSpecialityIdByCode(cisCode: String!): Int
+    getSpeciality(cisId: Int!): Speciality
+    getSpecialities: SpecialitiesReturn
+    getSubstance(subCode: String!): Substance
+    getSubstances: SubstancesReturn
 }
 
 #type Mutation {

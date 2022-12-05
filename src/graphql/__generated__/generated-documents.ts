@@ -53,17 +53,17 @@ export type Meta = {
 export type Query = {
   __typename?: 'Query';
   getSpecialities?: Maybe<SpecialitiesReturn>;
-  getSpecialitiesBySubstance?: Maybe<SpecialitiesReturn>;
   getSpeciality?: Maybe<Speciality>;
+  getSpecialityIdByCode?: Maybe<Scalars['Int']>;
   getSubstance?: Maybe<Substance>;
   getSubstances?: Maybe<SubstancesReturn>;
 };
 
-export type QueryGetSpecialitiesBySubstanceArgs = {
-  subCode: Scalars['String'];
+export type QueryGetSpecialityArgs = {
+  cisId: Scalars['Int'];
 };
 
-export type QueryGetSpecialityArgs = {
+export type QueryGetSpecialityIdByCodeArgs = {
   cisCode: Scalars['String'];
 };
 
@@ -84,16 +84,22 @@ export type RepartitionPerSex = {
   male?: Maybe<Scalars['Int']>;
 };
 
+export type RepartitionTuple = {
+  __typename?: 'RepartitionTuple';
+  codePart?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
 export type SpecialitiesReturn = {
   __typename?: 'SpecialitiesReturn';
   meta?: Maybe<Meta>;
-  specialities?: Maybe<Array<Maybe<Speciality>>>;
+  specialities?: Maybe<Array<Maybe<SpecialityLight>>>;
 };
 
 export type Speciality = {
   __typename?: 'Speciality';
   atc?: Maybe<MedicalAtc>;
-  cisId: Scalars['String'];
+  code: Scalars['String'];
   commercialisationState?: Maybe<Scalars['String']>;
   commercialisationType?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
@@ -107,6 +113,14 @@ export type Speciality = {
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
 
+export type SpecialityLight = {
+  __typename?: 'SpecialityLight';
+  code: Scalars['String'];
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name: Scalars['String'];
+};
+
 export type Substance = {
   __typename?: 'Substance';
   code: Scalars['String'];
@@ -114,6 +128,7 @@ export type Substance = {
   id: Scalars['Int'];
   name: Scalars['String'];
   pharmaForm?: Maybe<Scalars['String']>;
+  retrieveSpecialities?: Maybe<SpecialitiesReturn>;
 };
 
 export type SubstancesReturn = {
@@ -122,8 +137,17 @@ export type SubstancesReturn = {
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
 
-export type SpecialityQueryVariables = Exact<{
+export type SpecialityIdByCodeQueryVariables = Exact<{
   cisCode: Scalars['String'];
+}>;
+
+export type SpecialityIdByCodeQuery = {
+  __typename?: 'Query';
+  getSpecialityIdByCode?: number | null;
+};
+
+export type SpecialityQueryVariables = Exact<{
+  cisId: Scalars['Int'];
 }>;
 
 export type SpecialityQuery = {
@@ -132,7 +156,7 @@ export type SpecialityQuery = {
     __typename?: 'Speciality';
     id: number;
     name: string;
-    cisId: string;
+    code: string;
     commercialisationState?: string | null;
     commercialisationType?: string | null;
     description?: string | null;
@@ -174,11 +198,10 @@ export type SpecialitiesQuery = {
     __typename?: 'SpecialitiesReturn';
     meta?: { __typename?: 'Meta'; count?: number | null } | null;
     specialities?: Array<{
-      __typename?: 'Speciality';
-      cisId: string;
-      name: string;
+      __typename?: 'SpecialityLight';
       id: number;
-      description?: string | null;
+      code: string;
+      name: string;
     } | null> | null;
   } | null;
 };
@@ -196,6 +219,17 @@ export type SubstanceQuery = {
     name: string;
     pharmaForm?: string | null;
     dosage?: string | null;
+    retrieveSpecialities?: {
+      __typename?: 'SpecialitiesReturn';
+      meta?: { __typename?: 'Meta'; count?: number | null } | null;
+      specialities?: Array<{
+        __typename?: 'SpecialityLight';
+        id: number;
+        code: string;
+        name: string;
+        description?: string | null;
+      } | null> | null;
+    } | null;
   } | null;
 };
 
@@ -215,31 +249,63 @@ export type SubstancesQuery = {
   } | null;
 };
 
-export type SpecialitiesBySubstanceQueryVariables = Exact<{
-  subCode: Scalars['String'];
-}>;
+export const SpecialityIdByCodeDocument = gql`
+  query SpecialityIdByCode($cisCode: String!) {
+    getSpecialityIdByCode(cisCode: $cisCode)
+  }
+`;
 
-export type SpecialitiesBySubstanceQuery = {
-  __typename?: 'Query';
-  getSpecialitiesBySubstance?: {
-    __typename?: 'SpecialitiesReturn';
-    meta?: { __typename?: 'Meta'; count?: number | null } | null;
-    specialities?: Array<{
-      __typename?: 'Speciality';
-      cisId: string;
-      name: string;
-      id: number;
-      description?: string | null;
-    } | null> | null;
-  } | null;
-};
-
+/**
+ * __useSpecialityIdByCodeQuery__
+ *
+ * To run a query within a React component, call `useSpecialityIdByCodeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSpecialityIdByCodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSpecialityIdByCodeQuery({
+ *   variables: {
+ *      cisCode: // value for 'cisCode'
+ *   },
+ * });
+ */
+export function useSpecialityIdByCodeQuery(
+  baseOptions: Apollo.QueryHookOptions<SpecialityIdByCodeQuery, SpecialityIdByCodeQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<SpecialityIdByCodeQuery, SpecialityIdByCodeQueryVariables>(
+    SpecialityIdByCodeDocument,
+    options
+  );
+}
+export function useSpecialityIdByCodeLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<
+    SpecialityIdByCodeQuery,
+    SpecialityIdByCodeQueryVariables
+  >
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<SpecialityIdByCodeQuery, SpecialityIdByCodeQueryVariables>(
+    SpecialityIdByCodeDocument,
+    options
+  );
+}
+export type SpecialityIdByCodeQueryHookResult = ReturnType<typeof useSpecialityIdByCodeQuery>;
+export type SpecialityIdByCodeLazyQueryHookResult = ReturnType<
+  typeof useSpecialityIdByCodeLazyQuery
+>;
+export type SpecialityIdByCodeQueryResult = Apollo.QueryResult<
+  SpecialityIdByCodeQuery,
+  SpecialityIdByCodeQueryVariables
+>;
 export const SpecialityDocument = gql`
-  query Speciality($cisCode: String!) {
-    getSpeciality(cisCode: $cisCode) {
+  query Speciality($cisId: Int!) {
+    getSpeciality(cisId: $cisId) {
       id
       name
-      cisId
+      code
       atc {
         id
         name
@@ -288,7 +354,7 @@ export const SpecialityDocument = gql`
  * @example
  * const { data, loading, error } = useSpecialityQuery({
  *   variables: {
- *      cisCode: // value for 'cisCode'
+ *      cisId: // value for 'cisId'
  *   },
  * });
  */
@@ -317,10 +383,9 @@ export const SpecialitiesDocument = gql`
         count
       }
       specialities {
-        cisId
-        name
         id
-        description
+        code
+        name
       }
     }
   }
@@ -373,6 +438,17 @@ export const SubstanceDocument = gql`
       name
       pharmaForm
       dosage
+      retrieveSpecialities {
+        meta {
+          count
+        }
+        specialities {
+          id
+          code
+          name
+          description
+        }
+      }
     }
   }
 `;
@@ -456,69 +532,3 @@ export function useSubstancesLazyQuery(
 export type SubstancesQueryHookResult = ReturnType<typeof useSubstancesQuery>;
 export type SubstancesLazyQueryHookResult = ReturnType<typeof useSubstancesLazyQuery>;
 export type SubstancesQueryResult = Apollo.QueryResult<SubstancesQuery, SubstancesQueryVariables>;
-export const SpecialitiesBySubstanceDocument = gql`
-  query SpecialitiesBySubstance($subCode: String!) {
-    getSpecialitiesBySubstance(subCode: $subCode) {
-      meta {
-        count
-      }
-      specialities {
-        cisId
-        name
-        id
-        description
-      }
-    }
-  }
-`;
-
-/**
- * __useSpecialitiesBySubstanceQuery__
- *
- * To run a query within a React component, call `useSpecialitiesBySubstanceQuery` and pass it any options that fit your needs.
- * When your component renders, `useSpecialitiesBySubstanceQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSpecialitiesBySubstanceQuery({
- *   variables: {
- *      subCode: // value for 'subCode'
- *   },
- * });
- */
-export function useSpecialitiesBySubstanceQuery(
-  baseOptions: Apollo.QueryHookOptions<
-    SpecialitiesBySubstanceQuery,
-    SpecialitiesBySubstanceQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<SpecialitiesBySubstanceQuery, SpecialitiesBySubstanceQueryVariables>(
-    SpecialitiesBySubstanceDocument,
-    options
-  );
-}
-export function useSpecialitiesBySubstanceLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    SpecialitiesBySubstanceQuery,
-    SpecialitiesBySubstanceQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<SpecialitiesBySubstanceQuery, SpecialitiesBySubstanceQueryVariables>(
-    SpecialitiesBySubstanceDocument,
-    options
-  );
-}
-export type SpecialitiesBySubstanceQueryHookResult = ReturnType<
-  typeof useSpecialitiesBySubstanceQuery
->;
-export type SpecialitiesBySubstanceLazyQueryHookResult = ReturnType<
-  typeof useSpecialitiesBySubstanceLazyQuery
->;
-export type SpecialitiesBySubstanceQueryResult = Apollo.QueryResult<
-  SpecialitiesBySubstanceQuery,
-  SpecialitiesBySubstanceQueryVariables
->;

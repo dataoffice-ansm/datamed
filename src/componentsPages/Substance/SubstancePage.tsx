@@ -4,7 +4,7 @@ import type { EntitySub } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
 import type { Substance } from '../../api/graphql/__generated__/generated-types';
 import Page404 from '../../pages/[404]';
-import { useSpecialitiesBySubstanceQuery } from '../../graphql/__generated__/generated-documents';
+import { useSubstanceQuery } from '../../graphql/__generated__/generated-documents';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
@@ -24,21 +24,27 @@ const SectionTwo = () => (
 const SectionThree = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
 
-  const { data } = useSpecialitiesBySubstanceQuery({
+  const { data } = useSubstanceQuery({
     variables: {
       subCode: currentEntity.code,
     },
   });
 
+  if (!data) {
+    return <p>ergeg</p>;
+  }
+
   return (
     <div className="min-h-screen">
       <h2>Spécialités de médicaments contenant : {currentEntity.name}</h2>
       <div>
-        <div>{data?.getSpecialitiesBySubstance?.meta?.count} médicaments identifiés</div>
+        <div>{data?.getSubstance?.retrieveSpecialities?.meta?.count} médicaments identifiés</div>
         <div>
-          {data?.getSpecialitiesBySubstance?.specialities?.map((speciality) => (
+          {data?.getSubstance?.retrieveSpecialities?.specialities?.map((speciality) => (
             <div key={speciality?.id}>
-              {speciality?.cisId} {speciality?.description} {speciality?.name}
+              <p>
+                {speciality?.name} - {speciality?.code}
+              </p>
             </div>
           ))}
         </div>
