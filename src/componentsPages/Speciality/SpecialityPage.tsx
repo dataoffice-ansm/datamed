@@ -140,7 +140,7 @@ const SectionTreatedPatients = () => {
         </p>
       </Accordion>
 
-      {currentEntity?.exposition?.expositionLevel !== null && (
+      {currentEntity?.exposition?.consumption ? (
         <div className="expositionChart my-4 flex rounded-md border border-grey-200 border-solid overflow-hidden">
           <div className="expositionChartLeft p-4 min:h-20 flex-1 flex flex-col bg-primary">
             <span className="text-white">
@@ -152,23 +152,24 @@ const SectionTreatedPatients = () => {
               }
             </span>
           </div>
+
           <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
-            {currentEntity?.exposition?.consumption && (
-              <h3 className="text-primary">
-                {numberWithThousand(currentEntity?.exposition?.consumption)} patients / an
-              </h3>
-            )}
+            <h3 className="text-primary">
+              {numberWithThousand(currentEntity?.exposition?.consumption)} patients / an
+            </h3>
             <p>
               Approximation du nombre de patients ayant été remboursés sur la période 2014-2018 pour
               une substance active ou une spécialité de médicament.
             </p>
           </div>
         </div>
+      ) : (
+        <NotEnoughData />
       )}
 
       <div className="flex gap-2 my-8">
-        {currentEntity.repartitionPerSex ? (
-          <ChartBox className="repSexes" title="Répartition par sexe des patients traités">
+        <ChartBox className="repSexes" title="Répartition par sexe des patients traités">
+          {currentEntity.repartitionPerSex ? (
             <div className="flex gap-2 w-full">
               <div className="w-full flex flex-col justify-center items-center gap-1">
                 <ManIllustration />
@@ -190,10 +191,10 @@ const SectionTreatedPatients = () => {
                 <span className="text-base">Femmes</span>
               </div>
             </div>
-          </ChartBox>
-        ) : (
-          <NotEnoughData />
-        )}
+          ) : (
+            <NotEnoughData />
+          )}
+        </ChartBox>
 
         <ChartBox className="repAges" title="Répartition par âge des patients traités">
           <PieChartSpecialityAge ageData={currentEntity?.repartitionPerAge} />
@@ -237,17 +238,17 @@ const SectionMedicinalErrors = () => {
       </Accordion>
 
       <div className="flex gap-2 my-8">
-        <ChartBox className="repAges" title="Répartition  de la population concernée">
+        <ChartBox className="repAges" title="Répartition de la population concernée">
           <PieChartMedicalErrorsPopulation
             errorsMedRepPopData={currentEntity?.medicalErrors?.populationRepartition}
           />
         </ChartBox>
 
-        {currentEntity?.medicalErrors?.sideEffectsOriginRepartition ? (
-          <ChartBox
-            className="sideEffectsOriginRepartition"
-            title="Existence d’effets indésirables suite aux erreurs médicamenteuses déclarées"
-          >
+        <ChartBox
+          className="sideEffectsOriginRepartition"
+          title="Existence d’effets indésirables suite aux erreurs médicamenteuses déclarées"
+        >
+          {currentEntity?.medicalErrors?.sideEffectsOriginRepartition ? (
             <div className="flex gap-2 w-full">
               <div className="w-full flex flex-col justify-center items-center gap-1">
                 <ManFaceYes className="w-32" />
@@ -269,10 +270,10 @@ const SectionMedicinalErrors = () => {
                 <span className="text-base">Avec effets indésirables</span>
               </div>
             </div>
-          </ChartBox>
-        ) : (
-          <NotEnoughData />
-        )}
+          ) : (
+            <NotEnoughData />
+          )}
+        </ChartBox>
       </div>
 
       <ChartBox
@@ -280,21 +281,25 @@ const SectionMedicinalErrors = () => {
         title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
       >
         <div className="graphFiguresContainer flex gap-3">
-          {currentEntity?.medicalErrors?.natureRepartition?.map((natureRep) => {
-            if (natureRep?.id && natureRep?.value && natureRep?.range) {
-              return (
-                <GraphFigure
-                  key={natureRep.id}
-                  value={natureRep?.value}
-                  valueClassName="text-secondary"
-                  description={natureRep?.range}
-                  icon={getCisErrorMedNatureIconMapping(natureRep.id)}
-                />
-              );
-            }
+          {currentEntity?.medicalErrors?.natureRepartition?.length ? (
+            currentEntity?.medicalErrors?.natureRepartition?.map((natureRep) => {
+              if (natureRep?.id && natureRep?.value && natureRep?.range) {
+                return (
+                  <GraphFigure
+                    key={natureRep.id}
+                    value={natureRep?.value}
+                    valueClassName="text-secondary"
+                    description={natureRep?.range}
+                    icon={getCisErrorMedNatureIconMapping(natureRep.id)}
+                  />
+                );
+              }
 
-            return null;
-          })}
+              return null;
+            })
+          ) : (
+            <NotEnoughData />
+          )}
         </div>
       </ChartBox>
 
