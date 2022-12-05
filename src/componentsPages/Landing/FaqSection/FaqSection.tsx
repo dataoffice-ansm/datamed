@@ -1,6 +1,6 @@
 import FaqSvg from '../../../assets/images/landing_illustration_faq.svg';
 import { FullWidthRow } from '../../../components/FullWidthRow/FullWidthRow';
-import { CallToAction } from '../../../components/CallToAction/CallToAction';
+import { Button } from '../../../components/Button/Button';
 
 export const FaqSection = () => (
   <FullWidthRow className="bg-background shadow-inner">
@@ -20,9 +20,9 @@ export const FaqSection = () => (
           Pour mieux comprendre les données qui vous sont présentées sur ce site, consultez les
           réponses élaborées par nos spécialistes.
         </p>
-        <CallToAction className="w-auto" href="/faq">
+        <Button className="w-auto" href="/faq">
           Consulter la faq
-        </CallToAction>
+        </Button>
       </div>
     </div>
   </FullWidthRow>

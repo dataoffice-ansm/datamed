@@ -22,7 +22,7 @@ export type CallToActionButtonProps = CallToActionBaseProps &
 
 type CallToActionProps = CallToActionButtonProps | CallToActionLinkProps;
 
-export const CallToAction = (props: CallToActionProps) => {
+export const Button = (props: CallToActionProps) => {
   const { id, children, className, theme = 'primary' } = props;
 
   if (props.as === 'button') {
@@ -92,6 +92,6 @@ export const CallToAction = (props: CallToActionProps) => {
   );
 };
 
-CallToAction.defaultProps = {
+Button.defaultProps = {
   as: 'link',
 };

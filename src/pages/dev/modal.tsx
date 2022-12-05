@@ -3,7 +3,7 @@ import { Modal } from '../../components/Modal/Modal';
 import { useState } from 'react';
 import ManFigure from '../../assets/images/man_illustration.svg';
 import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
-import { CallToAction } from '../../components/CallToAction/CallToAction';
+import { Button } from '../../components/Button/Button';
 
 export const ModalPage = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -16,7 +16,7 @@ export const ModalPage = () => {
         description="Hommes"
         icon={<ManFigure width={150} height={150} />}
         action={
-          <CallToAction
+          <Button
             as="button"
             variant="none"
             onClick={() => {
@@ -24,7 +24,7 @@ export const ModalPage = () => {
             }}
           >
             Button
-          </CallToAction>
+          </Button>
         }
       />
       <Modal

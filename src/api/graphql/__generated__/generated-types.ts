@@ -15,6 +15,13 @@ export type Scalars = {
   Float: number;
 };
 
+export type CisExposition = {
+  __typename?: 'CisExposition';
+  consumption?: Maybe<Scalars['Int']>;
+  expositionLevel?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+};
+
 export type GenderRepartition = {
   __typename?: 'GenderRepartition';
   female?: Maybe<Scalars['Int']>;
@@ -103,6 +110,7 @@ export type Speciality = {
   commercialisationState?: Maybe<Scalars['String']>;
   commercialisationType?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  exposition?: Maybe<CisExposition>;
   icon?: Maybe<Icon>;
   iconId?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
@@ -225,6 +233,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
+  CisExposition: ResolverTypeWrapper<CisExposition>;
   GenderRepartition: ResolverTypeWrapper<GenderRepartition>;
   Icon: ResolverTypeWrapper<Icon>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
@@ -247,6 +256,7 @@ export type ResolversTypes = ResolversObject<{
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
+  CisExposition: CisExposition;
   GenderRepartition: GenderRepartition;
   Icon: Icon;
   Int: Scalars['Int'];
@@ -292,6 +302,16 @@ export type UppercaseDirectiveResolver<
   ContextType = ContextValue,
   Args = UppercaseDirectiveArgs
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>;
+
+export type CisExpositionResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['CisExposition'] = ResolversParentTypes['CisExposition']
+> = ResolversObject<{
+  consumption?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  expositionLevel?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
 
 export type GenderRepartitionResolvers<
   ContextType = ContextValue,
@@ -422,6 +442,7 @@ export type SpecialityResolvers<
   commercialisationState?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   commercialisationType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  exposition?: Resolver<Maybe<ResolversTypes['CisExposition']>, ParentType, ContextType>;
   icon?: Resolver<Maybe<ResolversTypes['Icon']>, ParentType, ContextType>;
   iconId?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -475,6 +496,7 @@ export type SubstancesReturnResolvers<
 }>;
 
 export type Resolvers<ContextType = ContextValue> = ResolversObject<{
+  CisExposition?: CisExpositionResolvers<ContextType>;
   GenderRepartition?: GenderRepartitionResolvers<ContextType>;
   Icon?: IconResolvers<ContextType>;
   Laboratory?: LaboratoryResolvers<ContextType>;

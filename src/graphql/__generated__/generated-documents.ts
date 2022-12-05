@@ -15,6 +15,13 @@ export type Scalars = {
   Float: number;
 };
 
+export type CisExposition = {
+  __typename?: 'CisExposition';
+  consumption?: Maybe<Scalars['Int']>;
+  expositionLevel?: Maybe<Scalars['Int']>;
+  id: Scalars['Int'];
+};
+
 export type GenderRepartition = {
   __typename?: 'GenderRepartition';
   female?: Maybe<Scalars['Int']>;
@@ -103,6 +110,7 @@ export type Speciality = {
   commercialisationState?: Maybe<Scalars['String']>;
   commercialisationType?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  exposition?: Maybe<CisExposition>;
   icon?: Maybe<Icon>;
   iconId?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
@@ -187,6 +195,12 @@ export type SpecialityQuery = {
       dosage?: string | null;
       pharmaForm?: string | null;
     } | null> | null;
+    exposition?: {
+      __typename?: 'CisExposition';
+      id: number;
+      consumption?: number | null;
+      expositionLevel?: number | null;
+    } | null;
   } | null;
 };
 
@@ -337,6 +351,11 @@ export const SpecialityDocument = gql`
         name
         dosage
         pharmaForm
+      }
+      exposition {
+        id
+        consumption
+        expositionLevel
       }
     }
   }

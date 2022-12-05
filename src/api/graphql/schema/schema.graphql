@@ -39,6 +39,12 @@ type RepartitionPerAge {
     value: Int
 }
 
+type CisExposition {
+    id: Int!
+    consumption: Int
+    expositionLevel: Int
+}
+
 type Speciality {
     id: Int!
     code: String!
@@ -53,6 +59,7 @@ type Speciality {
     laboratory: Laboratory @capitalize
     repartitionPerSex: RepartitionPerSex
     repartitionPerAge: [RepartitionPerAge]
+    exposition: CisExposition
     #medicalErrors: MedicalError[];
     #pharmacoForm: String;
     #autorizationNumber: String;
@@ -79,6 +86,7 @@ type Substance {
     pharmaForm: String
     dosage: String
     retrieveSpecialities: SpecialitiesReturn
+
 }
 
 type Icon {

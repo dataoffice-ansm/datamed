@@ -39,6 +39,11 @@ query Speciality($cisId: Int!) {
             dosage
             pharmaForm
         }
+        exposition {
+            id
+            consumption
+            expositionLevel
+        }
     }
 }
 

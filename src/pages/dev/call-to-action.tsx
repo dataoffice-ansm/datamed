@@ -1,21 +1,21 @@
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
-import { CallToAction } from '../../components/CallToAction/CallToAction';
+import { Button } from '../../components/Button/Button';
 
 export const CtaPage = () => (
   <DevPageLayout title="CTA">
     <p>Buttons</p>
     <div className="my-4">
-      <CallToAction
+      <Button
         as="button"
         onClick={() => {
           console.log('click on Button');
         }}
       >
         Button
-      </CallToAction>
+      </Button>
     </div>
     <div className="my-4">
-      <CallToAction
+      <Button
         as="button"
         type="reset"
         onClick={() => {
@@ -23,10 +23,10 @@ export const CtaPage = () => (
         }}
       >
         Reset Button
-      </CallToAction>
+      </Button>
     </div>
     <div className="my-4">
-      <CallToAction
+      <Button
         as="button"
         type="submit"
         onClick={() => {
@@ -34,10 +34,10 @@ export const CtaPage = () => (
         }}
       >
         Submit Button
-      </CallToAction>
+      </Button>
     </div>
     <div className="my-4">
-      <CallToAction
+      <Button
         as="button"
         theme="primary"
         variant="outlined"
@@ -46,10 +46,10 @@ export const CtaPage = () => (
         }}
       >
         Button with primary color and variant outlined
-      </CallToAction>
+      </Button>
     </div>
     <div className="my-4">
-      <CallToAction
+      <Button
         as="button"
         theme="primary"
         variant="contained"
@@ -58,10 +58,10 @@ export const CtaPage = () => (
         }}
       >
         Button with primary color and variant contained
-      </CallToAction>
+      </Button>
     </div>
     <div className="my-4">
-      <CallToAction
+      <Button
         as="button"
         theme="secondary"
         variant="outlined"
@@ -70,10 +70,10 @@ export const CtaPage = () => (
         }}
       >
         Button with primary color and variant outlined
-      </CallToAction>
+      </Button>
     </div>
     <div className="my-4">
-      <CallToAction
+      <Button
         as="button"
         theme="secondary"
         variant="contained"
@@ -82,24 +82,24 @@ export const CtaPage = () => (
         }}
       >
         Button with secondary color and variant contained
-      </CallToAction>
+      </Button>
     </div>
 
     <p>Links</p>
     <div className="my-4">
-      <CallToAction theme="secondary" href="#">
+      <Button theme="secondary" href="#">
         Link with theme secondary
-      </CallToAction>
+      </Button>
     </div>
     <div className="my-4">
-      <CallToAction theme="primary" href="#">
+      <Button theme="primary" href="#">
         Link with theme primary
-      </CallToAction>
+      </Button>
     </div>
     <div className="my-4">
-      <CallToAction theme="grey" href="#">
+      <Button theme="grey" href="#">
         Link with theme grey
-      </CallToAction>
+      </Button>
     </div>
   </DevPageLayout>
 );

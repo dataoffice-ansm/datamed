@@ -1,14 +1,14 @@
 import { getByText, render } from '@testing-library/react';
-import { CallToAction } from './CallToAction';
+import { Button } from './Button';
 
-describe(CallToAction.name, () => {
+describe(Button.name, () => {
   test.each<'primary' | 'secondary'>(['primary', 'secondary'])(
     'should render a link with %s theme',
     (theme) => {
       const { container } = render(
-        <CallToAction theme={theme} as="link" href="#">
+        <Button theme={theme} as="link" href="#">
           Link with theme {theme}
-        </CallToAction>
+        </Button>
       );
 
       const classNameExpected =
@@ -27,9 +27,9 @@ describe(CallToAction.name, () => {
     (theme) => {
       const mockClick = jest.fn();
       const { container } = render(
-        <CallToAction theme={theme} variant="contained" as="button" onClick={mockClick}>
+        <Button theme={theme} variant="contained" as="button" onClick={mockClick}>
           Button with theme primary and variant contained
-        </CallToAction>
+        </Button>
       );
 
       expect(getByText(container, 'Button with theme primary and variant contained'));
@@ -42,9 +42,9 @@ describe(CallToAction.name, () => {
     (variant) => {
       const mockClick = jest.fn();
       const { container } = render(
-        <CallToAction theme="primary" variant={variant} as="button" onClick={mockClick}>
+        <Button theme="primary" variant={variant} as="button" onClick={mockClick}>
           Button with theme primary and variant {variant}
-        </CallToAction>
+        </Button>
       );
 
       expect(getByText(container, `Button with theme primary and variant ${variant}`));

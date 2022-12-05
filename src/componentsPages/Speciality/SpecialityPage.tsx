@@ -5,7 +5,6 @@ import { EntityContextProvider, useEntityContext } from '../../contexts/EntityCo
 import type { Speciality } from '../../api/graphql/__generated__/generated-types';
 import Link from 'next/link';
 import Page404 from '../../pages/[404]';
-import { Pie } from 'react-chartjs-2';
 import { useMemo } from 'react';
 import type { Substance } from '../../graphql/__generated__/generated-documents';
 import { SpecialitySubstancesContainer } from '../../components/SubstancesContainer/SpecialitySubstancesContainer';
@@ -17,10 +16,12 @@ import { ChartBox } from '../../components/ChartBox/ChartBox';
 import classnames from 'classnames';
 import { PieChartSpecialityRepAge } from './Charts/PieChartSpecialityRepAge';
 import { useLayoutContext } from '../../contexts/LayoutContext';
+import { cisExpositionLevelMapping } from '../../utils/mapping';
+import { numberWithThousand } from '../../utils/format';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
-  const { navBarHeight, stickyHeroHeight } = useLayoutContext();
+  const { stickyHeroHeight } = useLayoutContext();
   const substances = useMemo(
     () => currentEntity?.substances ?? [],
     [currentEntity?.substances]
@@ -128,6 +129,32 @@ const SectionTreatedPatients = () => {
           civile.
         </p>
       </Accordion>
+
+      {currentEntity?.exposition?.expositionLevel !== null && (
+        <div className="expositionChart my-4 flex rounded-md border border-grey-200 border-solid overflow-hidden">
+          <div className="expositionChartLeft p-4 min:h-20 flex-1 flex flex-col bg-secondary">
+            <span className="text-white">
+              {
+                cisExpositionLevelMapping[
+                  currentEntity?.exposition
+                    ?.expositionLevel as keyof typeof cisExpositionLevelMapping
+                ]
+              }
+            </span>
+          </div>
+          <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
+            {currentEntity?.exposition?.consumption && (
+              <h3 className="text-secondary">
+                {numberWithThousand(currentEntity?.exposition?.consumption)} patients / an
+              </h3>
+            )}
+            <p>
+              Approximation du nombre de patients ayant été remboursés sur la période 2014-2018 pour
+              une substance active ou une spécialité de médicament.
+            </p>
+          </div>
+        </div>
+      )}
 
       <div className="flex flex-wrap gap-2 my-8">
         <ChartBox className="repSexes" title="Répartition par sexe des patients traités">

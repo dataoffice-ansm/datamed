@@ -2,7 +2,7 @@ import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
-import { CallToAction } from '../components/CallToAction/CallToAction';
+import { Button } from '../components/Button/Button';
 import { BackgroundSquares } from 'components/BackgroundSquares/BackgroundSquares';
 
 /**
@@ -46,9 +46,9 @@ const SectionEIG = () => (
       <div>
         Cet outil est né d’une collaboration entre trois Entrepreneurs d’Intérêt Général et l’ANSM,
         à travers le{' '}
-        <CallToAction externalLink href="https://eig.etalab.gouv.fr/defis/datamed/">
+        <Button externalLink href="https://eig.etalab.gouv.fr/defis/datamed/">
           défi DataMed
-        </CallToAction>
+        </Button>
         .
       </div>
       <div className="py-4">
@@ -67,9 +67,9 @@ const SectionOpenDataComplex = () => (
   <Section title="L'ouverture de données complexes et sensibles">
     <div className="py-4">
       <div>
-        <CallToAction externalLink href="https://ansm.sante.fr/">
+        <Button externalLink href="https://ansm.sante.fr/">
           L&apos;Agence Nationale de Sécurité du Médicament et des produits de santé (ANSM)
-        </CallToAction>
+        </Button>
         est chargée de faciliter l&apos;accès à l&apos;innovation thérapeutique, de garantir la
         sécurité des produits de santé et d&apos;informer et échanger avec les patients et
         professionnels de santé. Elle détient, pour assurer ses missions, de nombreuses données

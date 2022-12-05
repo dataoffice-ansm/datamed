@@ -30,6 +30,7 @@ export class PostgresOperations {
       .leftJoin('marketing_authorization_status as mka_s', 'mka_s.id', 'mp.ma_status_id')
       .leftJoin('marketing_authorization_types as mka_t', 'mka_t.id', 'mp.ma_type_id')
       .leftJoin('laboratories as lab', 'lab.id', 'mp.laboratory_id')
+      .leftJoin('mp_exposition as mp_exp', 'mp.id', 'mp_exp.mp_id')
       .leftJoin('icons as i', 'mp.icon_id', 'i.id')
       .select([
         'mp.id',
@@ -43,6 +44,9 @@ export class PostgresOperations {
         'lab.id as laboratoryId',
         'lab.name as laboratoryName',
         'mp.icon_id as iconId',
+        'mp_exp.exposition as expositionId',
+        'mp_exp.consumption_year_trunc as consumption',
+        'mp_exp.exposition as exposition',
         'i.name as iconName',
         'd.description',
       ])
@@ -63,6 +67,9 @@ export class PostgresOperations {
         commercialisationType,
         laboratoryId,
         laboratoryName,
+        expositionId,
+        consumption,
+        exposition,
       } = row;
 
       return {
@@ -90,6 +97,13 @@ export class PostgresOperations {
           ? {
               id: laboratoryId,
               name: laboratoryName,
+            }
+          : null,
+        exposition: expositionId
+          ? {
+              id: expositionId,
+              expositionLevel: exposition ?? 0,
+              consumption,
             }
           : null,
       };

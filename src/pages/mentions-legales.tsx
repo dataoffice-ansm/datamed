@@ -3,7 +3,7 @@ import IllustrationMentionLegal from '../assets/images/mention_legal.svg';
 import classnames from 'classnames';
 import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
-import { CallToAction } from '../components/CallToAction/CallToAction';
+import { Button } from '../components/Button/Button';
 import { BackgroundSquares } from 'components/BackgroundSquares/BackgroundSquares';
 
 const Section = ({
@@ -50,12 +50,14 @@ const SectionServer = () => (
 const SectionAuthor = () => (
   <Section title="Conception & Développements">
     <div className="py-4">
-      <CallToAction externalLink href="https://eig.etalab.gouv.fr/">
+      <Button externalLink href="https://eig.etalab.gouv.fr/">
         Entrepreneurs d&apos;Intérêt Général
-      </CallToAction>
+      </Button>
     </div>
     <div>
-      <CallToAction externalLink href="https://www.health-data-hub.fr/">Health Data Hub</CallToAction>
+      <Button externalLink href="https://www.health-data-hub.fr/">
+        Health Data Hub
+      </Button>
     </div>
   </Section>
 );
@@ -94,19 +96,25 @@ const SectionEtablisment = () => (
       <div>
         Tout site public ou privé est autorisé à établir, sans autorisation préalable, un lien vers
         la page d’accueil ou directement vers les informations diffusées par le site
-        <CallToAction externalLink href="www.data.ansm.sante.fr">www.data.ansm.sante.fr</CallToAction>. Mais en
-        aucun cas les pages du site
-        <CallToAction externalLink href="www.data.ansm.sante.fr">www.data.ansm.sante.fr</CallToAction>. ne
-        doivent se retrouver imbriquées à l&apos;intérieur des pages d&apos;un autre site. Tout doit
-        être fait pour indiquer clairement à l’internaute qu’il se trouve sur le site
-        <CallToAction href="www.data.ansm.sante.fr">www.data.ansm.sante.fr</CallToAction>. et lui
-        permettre d’y naviguer librement.
+        <Button externalLink href="www.data.ansm.sante.fr">
+          www.data.ansm.sante.fr
+        </Button>
+        . Mais en aucun cas les pages du site
+        <Button externalLink href="www.data.ansm.sante.fr">
+          www.data.ansm.sante.fr
+        </Button>
+        . ne doivent se retrouver imbriquées à l&apos;intérieur des pages d&apos;un autre site. Tout
+        doit être fait pour indiquer clairement à l’internaute qu’il se trouve sur le site
+        <Button href="www.data.ansm.sante.fr">www.data.ansm.sante.fr</Button>. et lui permettre d’y
+        naviguer librement.
       </div>
       <div className="py-4">
         Pour sa part, l’ANSM établit des liens uniquement sur les sites publics et n&apos;est en
         rien responsable de liens qui sont faits vers son site. Cependant si vous créez un lien vers
         l’ANSM nous apprécierions d’en être informé par un simple mail à :{' '}
-        <CallToAction externalLink href="mailto:webmaster@ansm.sante.fr">webmaster@ansm.sante.fr</CallToAction>
+        <Button externalLink href="mailto:webmaster@ansm.sante.fr">
+          webmaster@ansm.sante.fr
+        </Button>
       </div>
     </div>
   </Section>

@@ -1,6 +1,6 @@
 import classnames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
-import { CallToAction } from '../../components/CallToAction/CallToAction';
+import { Button } from '../Button/Button';
 
 /**
  *
@@ -42,7 +42,7 @@ export const CardWithImage = ({
           )}
         </div>
       </div>
-      <CallToAction href={href}>Découvrir les données</CallToAction>
+      <Button href={href}>Découvrir les données</Button>
     </div>
   </div>
 );

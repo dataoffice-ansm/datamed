@@ -89,7 +89,12 @@ module.exports = {
       info: colors.blue,
       tags: colors.darkGreen[200],
     },
-    extend: {},
+    extend: {
+      flex: {
+        2: '2 2 0%',
+        3: '3 3 0%',
+      },
+    },
   },
   plugins: [],
 };
