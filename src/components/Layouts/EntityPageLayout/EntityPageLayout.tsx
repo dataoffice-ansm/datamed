@@ -156,15 +156,15 @@ export const EntityPageLayout = ({
       <div>
         {children}
         <div className="desktopLayout flex gap-2 relative">
-          <div className="sideMenuNav flex flex-col flex-1">
-            <div
-              style={{ top: stickyHeroHeight + navBarHeight }}
-              className="sideMenuInner sticky ease-in-out duration-700 transition-top"
-            >
+          <div className="sideMenuNav flex flex-col flex-1" style={{ marginTop: navBarHeight }}>
+            <div className="sideMenuInner sticky ease-in-out duration-700 transition-top">
               <RenderNavigation vertical itemClassName="h-16 py-4" />
             </div>
           </div>
-          <div style={{ marginTop: -offsetContent }} className="flex-[3]">
+          <div
+            style={{ marginTop: stickyHeroHeight ? 0 : -offsetContent }}
+            className="contentInner flex-[3] ease-linear transition-margin duration-200"
+          >
             {renderContent}
           </div>
         </div>

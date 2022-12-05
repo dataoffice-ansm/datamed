@@ -16,16 +16,21 @@ import ManIllustration from '../../assets/images/man_illustration.svg';
 import { ChartBox } from '../../components/ChartBox/ChartBox';
 import classnames from 'classnames';
 import { PieChartSpecialityRepAge } from './Charts/PieChartSpecialityRepAge';
+import { useLayoutContext } from '../../contexts/LayoutContext';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
+  const { navBarHeight, stickyHeroHeight } = useLayoutContext();
   const substances = useMemo(
     () => currentEntity?.substances ?? [],
     [currentEntity?.substances]
   ) as Substance[];
 
   return (
-    <div className={classnames('SectionOneGlobalInformation bg-white shadow rounded-lg p-4')}>
+    <div
+      className={classnames('SectionOneGlobalInformation bg-white shadow rounded-lg p-4')}
+      style={{ marginTop: stickyHeroHeight }}
+    >
       <div className="sectionPart mt-4 mb-8">
         {substances.length > 1 ? <h5>Substances actives</h5> : <h5>Substance active</h5>}
 
@@ -211,7 +216,7 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => {
   return (
     <EntityContextProvider entity={{ type: 'cis', ...cis }}>
       <EntityPageLayout
-        offsetContent={100}
+        offsetContent={60}
         colorMenu="primary"
         sections={[
           {
