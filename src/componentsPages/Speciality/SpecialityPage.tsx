@@ -18,6 +18,7 @@ import { PieChartSpecialityRepAge } from './Charts/PieChartSpecialityRepAge';
 import { useLayoutContext } from '../../contexts/LayoutContext';
 import { cisExpositionLevelMapping } from '../../utils/mapping';
 import { numberWithThousand } from '../../utils/format';
+import { NotEnoughData } from '../../components/NotEnoughData';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -157,32 +158,36 @@ const SectionTreatedPatients = () => {
       )}
 
       <div className="flex flex-wrap gap-2 my-8">
-        <ChartBox className="repSexes" title="Répartition par sexe des patients traités">
-          <div className="flex gap-2 w-full">
-            <div className="w-full flex flex-col justify-center items-center gap-1">
-              <ManIllustration />
-              {currentEntity.repartitionPerSex?.male && (
-                <span className="text-3xl text-dark-violet-800 mt-3">
-                  {currentEntity.repartitionPerSex?.male}%
-                </span>
-              )}
-              <span className="text-base">Hommes</span>
-            </div>
+        {currentEntity.repartitionPerSex ? (
+          <ChartBox className="repSexes" title="Répartition par sexe des patients traités">
+            <div className="flex gap-2 w-full">
+              <div className="w-full flex flex-col justify-center items-center gap-1">
+                <ManIllustration />
+                {currentEntity.repartitionPerSex?.male && (
+                  <span className="text-3xl text-dark-violet-800 mt-3">
+                    {currentEntity.repartitionPerSex?.male}%
+                  </span>
+                )}
+                <span className="text-base">Hommes</span>
+              </div>
 
-            <div className="w-full flex flex-col justify-center items-center gap-1">
-              <WomanIllustration />
-              {currentEntity.repartitionPerSex?.female && (
-                <span className="text-3xl text-dark-violet-800 mt-3">
-                  {currentEntity.repartitionPerSex?.female}%
-                </span>
-              )}
-              <span className="text-base">Femmes</span>
+              <div className="w-full flex flex-col justify-center items-center gap-1">
+                <WomanIllustration />
+                {currentEntity.repartitionPerSex?.female && (
+                  <span className="text-3xl text-dark-violet-800 mt-3">
+                    {currentEntity.repartitionPerSex?.female}%
+                  </span>
+                )}
+                <span className="text-base">Femmes</span>
+              </div>
             </div>
-          </div>
-        </ChartBox>
+          </ChartBox>
+        ) : (
+          <NotEnoughData />
+        )}
 
         <ChartBox className="repAges" title="Répartition par âge des patients traités">
-          <PieChartSpecialityRepAge speciality={currentEntity} />
+          <PieChartSpecialityRepAge ageData={currentEntity?.repartitionPerAge} />
         </ChartBox>
       </div>
     </div>

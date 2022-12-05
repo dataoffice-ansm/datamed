@@ -121,7 +121,7 @@ export class PostgresOperations {
     }));
   }
 
-  async getSpecialityRepSex(cisId: number): Promise<RepartitionPerSex> {
+  async getSpecialityRepSex(cisId: number): Promise<RepartitionPerSex | null> {
     const rows = await dbInstance
       .selectFrom('mp_patient_sex')
       .where('mp_id', '=', cisId)
@@ -131,10 +131,12 @@ export class PostgresOperations {
     const male = rows.find((row) => row.sex === 1);
     const female = rows.find((row) => row.sex === 2);
 
-    return {
-      male: male ? Math.round(male.patients_percentage ?? 0) : null,
-      female: female ? Math.round(female.patients_percentage ?? 0) : null,
-    };
+    return male && female
+      ? {
+          male: Math.round(male.patients_percentage ?? 0),
+          female: Math.round(female.patients_percentage ?? 0),
+        }
+      : null;
   }
 
   async getSpecialityRepAge(cisId: number): Promise<RepartitionPerAge[]> {

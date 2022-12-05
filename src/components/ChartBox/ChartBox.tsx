@@ -19,11 +19,11 @@ export const ChartBox = ({
   <div
     id={id}
     className={classnames(
-      'ChartBox flex-1 p-4 bg-white rounded-md border border-solid border-grey text-center mx-auto',
+      'ChartBox flex flex-col p-4 bg-white rounded-md border border-solid border-grey text-center mx-auto',
       className
     )}
   >
     <h3 className="mt-1">{title}</h3>
-    <div className="m-2">{children}</div>
+    <div className="flex flex-3 items-center justify-center m-2">{children}</div>
   </div>
 );

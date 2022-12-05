@@ -2,15 +2,23 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 import type { Speciality } from '../../../graphql/__generated__/generated-documents';
-import { useMemo } from 'react';
+import { NotEnoughData } from '../../../components/NotEnoughData';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-export const PieChartSpecialityRepAge = ({ speciality }: { speciality: Speciality }) => {
-  const ageData = useMemo(
-    () => speciality?.repartitionPerAge ?? [],
-    [speciality?.repartitionPerAge]
-  );
+/**
+ *
+ * @param ageData
+ * @constructor
+ */
+export const PieChartSpecialityRepAge = ({
+  ageData,
+}: {
+  ageData: Speciality['repartitionPerAge'];
+}) => {
+  if (!ageData || !ageData.length) {
+    return <NotEnoughData />;
+  }
 
   const labels = ageData.map((row) => row?.range);
   const data = ageData?.map((row) => row?.value);
