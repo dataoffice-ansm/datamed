@@ -1,6 +1,6 @@
 /* eslint-disable react/no-danger */
 import type { HTMLAttributes, ReactNode } from 'react';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
 import { FullWidthRow } from 'components/FullWidthRow/FullWidthRow';
 import { Accordion } from '../../components/Accordion/Accordion';
@@ -8,6 +8,7 @@ import { faqData } from './mock/faq-data';
 
 import FaqSVG from '../../assets/images/faq.svg';
 import SparkSVG from '../../assets/icons/spark/spark.svg';
+import { useLayoutContext } from 'contexts/LayoutContext';
 
 type FaqEntry = {
   title: string;
@@ -51,6 +52,12 @@ export const FaqEntryQuestion = ({
 );
 
 export const FaqPage = () => {
+  const { setStickyHeroHeight } = useLayoutContext();
+
+  useEffect(() => {
+    setStickyHeroHeight(0);
+  }, [setStickyHeroHeight]);
+
   const sections = useMemo(
     () =>
       faqData.map((section) => ({
