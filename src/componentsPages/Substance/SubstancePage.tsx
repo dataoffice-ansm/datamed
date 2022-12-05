@@ -7,6 +7,7 @@ import Page404 from '../../pages/[404]';
 import { useSubstanceQuery } from '../../graphql/__generated__/generated-documents';
 import { PaginatedList } from 'components/PaginatedList/PaginatedList';
 import Link from 'next/link';
+import classnames from 'classnames';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
@@ -33,7 +34,7 @@ const SectionThree = () => {
   });
 
   if (!data) {
-    return <p>ergeg</p>;
+    return <p>TODO</p>;
   }
 
   return (
@@ -47,13 +48,20 @@ const SectionThree = () => {
           <PaginatedList
             theme="secondary"
             data={data?.getSubstance?.retrieveSpecialities?.specialities ?? []}
-            renderItem={(item) => (
-              <Link href={`/specialite/${item?.code ?? ''}`}>
-                <a className="w-full no-underline hover:underline p-4 hover:bg-grey-50 focus:bg-grey-50 hover:font-medium focus:font-medium">
-                  {item?.id} - {item?.name}
-                </a>
-              </Link>
-            )}
+            renderItem={(item) =>
+              item?.code ? (
+                <Link href={`/specialite/${item.code}`}>
+                  <a
+                    className={classnames(
+                      'w-full no-underline hover:underline p-4 hover:bg-grey-50 focus:bg-grey-50',
+                      'hover:font-medium focus:font-medium'
+                    )}
+                  >
+                    {item?.id} - {item?.name}
+                  </a>
+                </Link>
+              ) : null
+            }
           />
         </div>
       </div>
