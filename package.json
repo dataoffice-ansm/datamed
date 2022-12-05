@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "generate": "graphql-codegen --config codegen.ts",
-    "dev": "yarn generate && next dev",
+    "generate-types": "graphql-codegen --config codegen-api.ts",
+    "generate-queries": "graphql-codegen --config codegen-front.ts",
+    "dev": "yarn generate-types && yarn generate-queries && next dev",
     "build": "next build",
     "start": "next start",
     "tsc": "tsc --noEmit",

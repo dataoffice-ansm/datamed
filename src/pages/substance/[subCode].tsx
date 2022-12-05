@@ -14,19 +14,20 @@ type SubSSRPageProps = {
 };
 
 type ContextParams = {
-  subId: string;
+  subCode: string;
 } & ParsedUrlQuery;
 
 const PageSubServerSideRendered = ({ sub }: SubSSRPageProps) => <SubstancePage sub={sub} />;
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const apolloClient = initializeApolloClient({ context });
-  const { subId } = context.params as ContextParams;
+  const { subCode } = context.params as ContextParams;
 
   const { data } = await apolloClient.query<SubstanceQuery, SubstanceQueryVariables>({
     query: SubstanceDocument,
+    fetchPolicy: 'no-cache',
     variables: {
-      subCode: subId,
+      subCode,
     },
   });
 

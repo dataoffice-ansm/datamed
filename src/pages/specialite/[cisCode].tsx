@@ -1,13 +1,15 @@
 import type { GetServerSidePropsContext } from 'next';
 import type { ParsedUrlQuery } from 'querystring';
 import type {
-  Speciality,
   SpecialityQuery,
   SpecialityQueryVariables,
+  Speciality,
+  SpecialityIdByCodeQuery,
+  SpecialityIdByCodeQueryVariables,
 } from '../../graphql/__generated__/generated-documents';
 import {
   SpecialityDocument,
-  // useSpecialityQuery,
+  SpecialityIdByCodeDocument,
 } from '../../graphql/__generated__/generated-documents';
 import { SpecialityPage } from '../../componentsPages/Speciality/SpecialityPage';
 import { addApolloState, initializeApolloClient } from '../../config/apolloClient';
@@ -17,37 +19,44 @@ type CisSSRPageProps = {
 };
 
 type ContextParams = {
-  cisId: string;
+  cisCode: string;
 } & ParsedUrlQuery;
 
-const PageCisServerSideRendered = ({ cis }: CisSSRPageProps) => (
-  // const { data } = useSpecialityQuery({
-  //   variables: {
-  //     cisCode: cis?.cisId,
-  //   },
-  // });
+const PageCisServerSideRendered = ({ cis }: CisSSRPageProps) => <SpecialityPage cis={cis} />;
 
-  <SpecialityPage cis={cis} />
-);
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const apolloClient = initializeApolloClient({ context });
-  const { cisId } = context.params as ContextParams;
+  const { cisCode } = context.params as ContextParams;
 
   try {
-    const { data } = await apolloClient.query<SpecialityQuery, SpecialityQueryVariables>({
-      query: SpecialityDocument,
+    const { data: dataId } = await apolloClient.query<
+      SpecialityIdByCodeQuery,
+      SpecialityIdByCodeQueryVariables
+    >({
+      query: SpecialityIdByCodeDocument,
       // fetchPolicy: 'cache-first',
       fetchPolicy: 'no-cache',
       variables: {
-        cisCode: cisId,
+        cisCode,
       },
     });
 
-    return addApolloState(apolloClient, {
-      props: {
-        cis: data?.getSpeciality ?? null,
-      },
-    });
+    if (dataId?.getSpecialityIdByCode) {
+      const { data } = await apolloClient.query<SpecialityQuery, SpecialityQueryVariables>({
+        query: SpecialityDocument,
+        // fetchPolicy: 'cache-first',
+        fetchPolicy: 'no-cache',
+        variables: {
+          cisId: dataId.getSpecialityIdByCode,
+        },
+      });
+
+      return addApolloState(apolloClient, {
+        props: {
+          cis: data?.getSpeciality ?? null,
+        },
+      });
+    }
   } catch (err: unknown) {
     console.log('Failed to fetch blerp');
     console.log(err);

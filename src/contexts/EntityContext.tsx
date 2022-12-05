@@ -13,7 +13,7 @@ type EntityContextData<T extends Entity> = {
 };
 
 export const EntityContext = createContext<EntityContextData<EntityCis | EntitySub>>({
-  currentEntity: { type: 'cis', name: 'default', id: 44, cisId: '44444' },
+  currentEntity: { type: 'cis', name: 'default', id: 44, code: '44444' },
   setCurrentEntity: () => null,
 });
 
