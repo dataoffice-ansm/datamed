@@ -1,6 +1,5 @@
 import { FullScreenSection } from '../../../components/FullScreenSection/FullScreenSection';
 import Error404SVG from '../../../assets/icons/404/404.svg';
-import { Button } from 'components/Button/Button';
 import Link from 'next/link';
 
 export const ErrorPage404 = () => (
@@ -13,9 +12,6 @@ export const ErrorPage404 = () => (
         Il semblerait que la page que vous souhaitez atteindre n’existe pas !
       </h1>
       <div className="flex gap-8">
-        <Button href="#" className="flex justify-center items-center">
-          Signaler une erreur
-        </Button>
         <Link href="/">
           <a className="text-primary rounded border border-primary py-2 px-4 no-underline">
             Revenir à l&apos;accueil

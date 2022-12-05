@@ -5,6 +5,8 @@ import { EntityContextProvider, useEntityContext } from '../../contexts/EntityCo
 import type { Substance } from '../../api/graphql/__generated__/generated-types';
 import Page404 from '../../pages/[404]';
 import { useSubstanceQuery } from '../../graphql/__generated__/generated-documents';
+import { PaginatedList } from 'components/PaginatedList/PaginatedList';
+import Link from 'next/link';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
@@ -37,16 +39,22 @@ const SectionThree = () => {
   return (
     <div className="min-h-screen">
       <h2>Spécialités de médicaments contenant : {currentEntity.name}</h2>
-      <div>
-        <div>{data?.getSubstance?.retrieveSpecialities?.meta?.count} médicaments identifiés</div>
-        <div>
-          {data?.getSubstance?.retrieveSpecialities?.specialities?.map((speciality) => (
-            <div key={speciality?.id}>
-              <p>
-                {speciality?.name} - {speciality?.code}
-              </p>
-            </div>
-          ))}
+      <div className="p-4 border border-grey-200 rounded-lg bg-white">
+        <div className="text-secondary-900 font-medium">
+          {data?.getSubstance?.retrieveSpecialities?.meta?.count} médicaments identifiés
+        </div>
+        <div className="pt-6">
+          <PaginatedList
+            theme="secondary"
+            data={data?.getSubstance?.retrieveSpecialities?.specialities ?? []}
+            renderItem={(item) => (
+              <Link href={`/specialite/${item?.code ?? ''}`}>
+                <a className="w-full no-underline hover:underline p-4 hover:bg-grey-50 focus:bg-grey-50 hover:font-medium focus:font-medium">
+                  {item?.id} - {item?.name}
+                </a>
+              </Link>
+            )}
+          />
         </div>
       </div>
     </div>
