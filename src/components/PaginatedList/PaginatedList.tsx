@@ -11,8 +11,7 @@ export type PaginatedListThemeColor = 'primary' | 'secondary' | 'grey';
 
 export type PaginatedListProps<T> = {
   data: T[];
-  // eslint-disable-next-line no-unused-vars
-  renderItem: (item: T) => ReactNode | JSX.Element;
+  renderItem: (_item: T) => ReactNode | JSX.Element;
   theme?: PaginatedListThemeColor;
 };
 
@@ -38,6 +37,13 @@ const hoverAndFocusBackgroundColor = (theme: PaginatedListThemeColor) => {
   }
 };
 
+/**
+ *
+ * @param data
+ * @param renderItem
+ * @param theme
+ * @constructor
+ */
 export const PaginatedList = <T,>({
   data,
   renderItem,
@@ -118,7 +124,7 @@ export const PaginatedList = <T,>({
             setPageIndex(0);
           }}
         >
-          <FirstPageSVG className={classNames(' h-6 w-6', hoverAndFocusFillColor(theme))} />
+          <FirstPageSVG className={classNames('h-6 w-6', hoverAndFocusFillColor(theme))} />
         </NavigationButton>
 
         <NavigationButton
