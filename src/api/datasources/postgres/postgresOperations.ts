@@ -502,12 +502,13 @@ export class PostgresOperations {
       ])
       .executeTakeFirst();
 
-    if (rows) {
+    if (rows?.total && rows?.maxYear && rows?.minYear) {
       const { total, minYear, maxYear } = rows;
+
       return {
         total,
-        minYear,
-        maxYear,
+        minYear: minYear as number,
+        maxYear: maxYear as number,
       };
     }
 

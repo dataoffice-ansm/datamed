@@ -60,8 +60,9 @@ export const Accordion = ({
   defaultOpen = false,
   theme = 'secondary',
   disabled = false,
+  className,
 }: AccordionProps & HTMLAttributes<HTMLDivElement>) => (
-  <div id={id} className="Accordion bg-white border border-grey-200 rounded-lg">
+  <div id={id} className={classNames('Accordion bg-white rounded-lg', className)}>
     <Disclosure defaultOpen={defaultOpen}>
       {({ open }) => (
         <>
@@ -95,7 +96,7 @@ export const Accordion = ({
             leaveFrom="transform h-full opacity-100"
             leaveTo="transform h-0 opacity-0"
           >
-            <Disclosure.Panel className="AccordionContent px-8 py-4 border-t-[1px] border-grey-200">
+            <Disclosure.Panel className="AccordionContent px-8 py-4 border-t-[1px] border-grey-50">
               {children}
             </Disclosure.Panel>
           </Transition>

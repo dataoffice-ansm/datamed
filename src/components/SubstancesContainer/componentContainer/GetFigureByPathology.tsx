@@ -30,65 +30,64 @@ import CaracteristiqueSocioFigure from '../../../assets/images/pathology/26.svg'
 import NotFoundFigure from '../../../assets/images/notfound.svg';
 import type { Maybe } from '../../../graphql/__generated__/generated-documents';
 
+// eslint-disable-next-line complexity
 export const GetFigureByPathology = ({ id }: { id: Maybe<number> | undefined }) => {
-  const width = 150;
-  const height = 150;
   switch (id) {
     case 0:
-      return <AffectionsCardiaquesFigure width={width} height={height} />;
+      return <AffectionsCardiaquesFigure />;
     case 1:
-      return <AffectionPeauFigure width={width} height={height} />;
+      return <AffectionPeauFigure />;
     case 2:
-      return <AffectionsReinFigure width={width} height={height} />;
+      return <AffectionsReinFigure />;
     case 3:
-      return <AffectionsNerveuxFigure width={width} height={height} />;
+      return <AffectionsNerveuxFigure />;
     case 4:
-      return <AffectionGastroFigure width={width} height={height} />;
+      return <AffectionGastroFigure />;
     case 5:
-      return <AffectionHematologiqueFigure width={width} height={height} />;
+      return <AffectionHematologiqueFigure />;
     case 6:
-      return <AffectionHepatobilaireFigure width={width} height={height} />;
+      return <AffectionHepatobilaireFigure />;
     case 7:
-      return <AffectionMusculosquelettiquesFigure width={width} height={height} />;
+      return <AffectionMusculosquelettiquesFigure />;
     case 8:
-      return <AffectionPsychiatriquesFigure width={width} height={height} />;
+      return <AffectionPsychiatriquesFigure />;
     case 9:
-      return <AffectionRespiratoiresFigure width={width} height={height} />;
+      return <AffectionRespiratoiresFigure />;
     case 10:
-      return <AffectionVasculaireFigure width={width} height={height} />;
+      return <AffectionVasculaireFigure />;
     case 11:
-      return <InvestigationsFigure width={width} height={height} />;
+      return <InvestigationsFigure />;
     case 12:
-      return <LesionsFigure width={width} height={height} />;
+      return <LesionsFigure />;
     case 13:
-      return <TroublesMetabolismeFigure width={width} height={height} />;
+      return <TroublesMetabolismeFigure />;
     case 14:
-      return <TroublesGenerauxFigure width={width} height={height} />;
+      return <TroublesGenerauxFigure />;
     case 15:
-      return <AffectionOreilleFigure width={width} height={height} />;
+      return <AffectionOreilleFigure />;
     case 16:
-      return <AffectionOrganeFigure width={width} height={height} />;
+      return <AffectionOrganeFigure />;
     case 17:
-      return <AffectionSystemeImmuFigure width={width} height={height} />;
+      return <AffectionSystemeImmuFigure />;
     case 18:
-      return <AffectionEndocriFigure width={width} height={height} />;
+      return <AffectionEndocriFigure />;
     case 19:
-      return <AffectionsOculaireFigure width={width} height={height} />;
+      return <AffectionsOculaireFigure />;
     case 20:
-      return <InfectionFigure width={width} height={height} />;
+      return <InfectionFigure />;
     case 21:
-      return <ProblemeFigure width={width} height={height} />;
+      return <ProblemeFigure />;
     case 22:
-      return <AffectionCongenitalesFigure width={width} height={height} />;
+      return <AffectionCongenitalesFigure />;
     case 23:
-      return <TumeursBenignesFigure width={width} height={height} />;
+      return <TumeursBenignesFigure />;
     case 24:
-      return <ActeMedicauxFigure width={width} height={height} />;
+      return <ActeMedicauxFigure />;
     case 25:
-      return <AffectionGravidiquesFigure width={width} height={height} />;
+      return <AffectionGravidiquesFigure />;
     case 26:
-      return <CaracteristiqueSocioFigure width={width} height={height} />;
+      return <CaracteristiqueSocioFigure />;
     default:
-      return <NotFoundFigure width={width} height={height} />;
+      return <NotFoundFigure />;
   }
 };

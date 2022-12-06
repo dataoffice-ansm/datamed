@@ -15,7 +15,9 @@ ChartJS.register(ArcElement, Tooltip, Legend);
  */
 export const PieChartRepartitionAge = ({
   ageData,
+  className,
 }: {
+  className?: string;
   ageData: Speciality['repartitionPerAge'] | Substance['repartitionPerAge'];
 }) => {
   if (!ageData || !ageData.length) {
@@ -26,19 +28,21 @@ export const PieChartRepartitionAge = ({
   const data = ageData?.map((row) => row?.value);
 
   return (
-    <Pie
-      data={{
-        labels,
-        datasets: [
-          {
-            label: 'My First Dataset',
-            data,
-            backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
-            hoverOffset: 4,
-            borderWidth: 1,
-          },
-        ],
-      }}
-    />
+    <div className={className}>
+      <Pie
+        data={{
+          labels,
+          datasets: [
+            {
+              label: 'My First Dataset',
+              data,
+              backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
+              hoverOffset: 4,
+              borderWidth: 1,
+            },
+          ],
+        }}
+      />
+    </div>
   );
 };
