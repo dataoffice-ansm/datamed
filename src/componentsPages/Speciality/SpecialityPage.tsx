@@ -25,6 +25,7 @@ import { NotEnoughData } from '../../components/NotEnoughData';
 import { Button } from '../../components/Button/Button';
 import { PieChartMedicalErrorsPopulation } from './Charts/PieChartMedicalErrorsPopulation';
 import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
+import { PublicationItem } from 'components/Publication/Publication';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -341,11 +342,27 @@ const SectionRisksShortageHistory = () => (
   </div>
 );
 
-const SectionPublications = () => (
-  <div className="SectionPublications">
-    <h2>Publications de l’ANSM</h2>
-  </div>
-);
+const SectionPublications = () => {
+  const { currentEntity } = useEntityContext<EntityCis>();
+  const { publications } = currentEntity;
+
+  return (
+    <div className="SectionPublications">
+      <h2>Publications de l’ANSM</h2>
+      <div>
+        {(publications ?? []).length > 0 ? (
+          publications?.map((publication, index) => (
+            <div key={`publication_${index.toString()}}`} className="my-2">
+              {publication && <PublicationItem publication={publication} />}
+            </div>
+          ))
+        ) : (
+          <NotEnoughData />
+        )}
+      </div>
+    </div>
+  );
+};
 
 export const SpecialityPage = ({ cis }: { cis: Speciality }) => {
   if (!cis) {
