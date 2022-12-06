@@ -306,20 +306,22 @@ export class PostgresOperations {
       .where('mp.id', '=', cisId)
       .leftJoin('publications as p', 'p.mp_id', 'mp.id')
       .leftJoin('publication_types as pt', 'pt.id', 'p.type_id')
-      .select(['p.id', 'p.title as name', 'p.link', 'pt.type', 'pt.id as typeId'])
+      .select(['p.id', 'p.title as name', 'p.link', 'pt.type as typeName', 'pt.id as typeId'])
       .execute();
 
     return rows.reduce<Publication[]>((carry, row) => {
-      const { id, name, link, type, typeId } = row;
-      return id && name && link && type && typeId
+      const { id, name, link, typeName, typeId } = row;
+      return id && name && link && typeId
         ? [
             ...carry,
             {
               id,
               name,
               link,
-              type,
-              typeId,
+              type: {
+                id: typeId,
+                name: typeName,
+              },
             },
           ]
         : carry;

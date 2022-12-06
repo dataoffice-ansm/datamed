@@ -4,6 +4,9 @@ import ErrorOther from '../assets/images/errorOther.svg';
 import ErrorPreparation from '../assets/images/errorPreparation.svg';
 import ErrorPrescription from '../assets/images/errorPrescription.svg';
 import ErrorSuivitherapeutique from '../assets/images/errorSuivitherapeutique.svg';
+import PublicationOtherSVG from '../assets/icons/publications/other.svg';
+import PublicationSpeakSVG from '../assets/icons/publications/speak.svg';
+import PublicationInfoSVG from '../assets/icons/publications/info.svg';
 
 export const cisExpositionLevelMapping = {
   0: 'Utilisation inconnue',
@@ -39,5 +42,16 @@ export const getCisErrorMedNatureIconMapping = (value: number) => {
 
     default:
       return <ErrorOther className="w-32" />;
+  }
+};
+
+export const getPublicationIcon = (publicationTypeId: number) => {
+  switch (publicationTypeId) {
+    case 1:
+      return <PublicationOtherSVG />;
+    case 3:
+      return <PublicationSpeakSVG />;
+    default:
+      return <PublicationInfoSVG />;
   }
 };

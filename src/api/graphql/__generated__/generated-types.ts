@@ -67,10 +67,15 @@ export type Meta = {
 export type Publication = {
   __typename?: 'Publication';
   id: Scalars['Int'];
-  link: Scalars['String'];
+  link?: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  type: Scalars['String'];
-  typeId: Scalars['Int'];
+  type?: Maybe<PublicationType>;
+};
+
+export type PublicationType = {
+  __typename?: 'PublicationType';
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -267,6 +272,7 @@ export type ResolversTypes = ResolversObject<{
   MedicalErrors: ResolverTypeWrapper<MedicalErrors>;
   Meta: ResolverTypeWrapper<Meta>;
   Publication: ResolverTypeWrapper<Publication>;
+  PublicationType: ResolverTypeWrapper<PublicationType>;
   Query: ResolverTypeWrapper<{}>;
   RepartitionPerSex: ResolverTypeWrapper<RepartitionPerSex>;
   RepartitionTranche: ResolverTypeWrapper<RepartitionTranche>;
@@ -293,6 +299,7 @@ export type ResolversParentTypes = ResolversObject<{
   MedicalErrors: MedicalErrors;
   Meta: Meta;
   Publication: Publication;
+  PublicationType: PublicationType;
   Query: {};
   RepartitionPerSex: RepartitionPerSex;
   RepartitionTranche: RepartitionTranche;
@@ -423,10 +430,18 @@ export type PublicationResolvers<
   ParentType extends ResolversParentTypes['Publication'] = ResolversParentTypes['Publication']
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  link?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  link?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  typeId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['PublicationType']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type PublicationTypeResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['PublicationType'] = ResolversParentTypes['PublicationType']
+> = ResolversObject<{
+  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -584,6 +599,7 @@ export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   MedicalErrors?: MedicalErrorsResolvers<ContextType>;
   Meta?: MetaResolvers<ContextType>;
   Publication?: PublicationResolvers<ContextType>;
+  PublicationType?: PublicationTypeResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   RepartitionPerSex?: RepartitionPerSexResolvers<ContextType>;
   RepartitionTranche?: RepartitionTrancheResolvers<ContextType>;
