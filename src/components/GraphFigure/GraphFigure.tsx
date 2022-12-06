@@ -23,6 +23,7 @@ export const GraphFigure = ({
   unit = '%',
   className,
   valueClassName = 'text-primary',
+  descriptionClassName,
   ...props
 }: HTMLAttributes<HTMLDivElement> & {
   value: number | Maybe<number> | undefined;
@@ -31,19 +32,20 @@ export const GraphFigure = ({
   action?: ReactNode;
   unit?: string;
   valueClassName?: string;
+  descriptionClassName?: string;
 }) => (
   <div
     className={classnames(
-      'GraphFigure flex flex-col justify-center items-center max-w-max',
+      'GraphFigure flex flex-col justify-start items-center max-w-max',
       className
     )}
     {...props}
   >
-    <div>{icon}</div>
+    <div className="h-20 md:h-28 w-20 md:w-28">{icon}</div>
     <div className={classnames('GraphFigureCountUp text-3xl', valueClassName)}>
       <CountUp formattingFn={(n) => formatDecimalToUnit(n, unit)} end={value ?? 0} />
     </div>
-    <div className="GraphFigureDescription">{description}</div>
+    <div className={classnames('GraphFigureDescription', descriptionClassName)}>{description}</div>
     {action}
   </div>
 );

@@ -6,6 +6,8 @@ import type { HTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import SubSVG from '../../assets/icons/sub.svg';
 import { SubstanceContainer } from './SubstanceContainer';
+import Link from 'next/link';
+import SickPerson from '../../assets/images/sick_transparent_person.svg';
 
 export type SpecialitySubstancesContainerProps = {
   substances: Substance[];
@@ -57,7 +59,33 @@ export const SpecialitySubstancesContainer = ({
         {!substances.length || !selectedSubstance ? (
           <div>Aucune substances disponibles</div>
         ) : (
-          <SubstanceContainer substance={selectedSubstance} />
+          <div>
+            <span className="text-left text-xl">
+              Substance active sélectionnée :{' '}
+              <span className="text-secondary-900 font-medium">{selectedSubstance?.name}</span>
+            </span>
+            <SubstanceContainer substance={selectedSubstance}>
+              <div className="bg-white p-8 shadow rounded-lg mt-8 flex flex-col justify-center items-center lg:flex-row lg:justify-start gap-8">
+                <div className="h-48 w-48">
+                  <SickPerson />
+                </div>
+                <div className="">
+                  <div className="text-2xl md:text-3xl">
+                    Comment déclarer un effet indésirable ?
+                  </div>
+                  <div className="my-8">
+                    Découvrez comment l’ANSM centralise les signalements et alertes, et que faire
+                    selon votre situation.
+                  </div>
+                  <Link href="#">
+                    <a className="text-primary rounded border border-primary py-2 px-4 no-underline">
+                      VOIR LES RECOMMANDATIONS DE L&apos;ANSM
+                    </a>
+                  </Link>
+                </div>
+              </div>
+            </SubstanceContainer>
+          </div>
         )}
       </div>
     </div>

@@ -5,22 +5,28 @@ import { EntityContextProvider, useEntityContext } from '../../contexts/EntityCo
 import type { Substance } from '../../api/graphql/__generated__/generated-types';
 import Page404 from '../../pages/[404]';
 import { useSubstanceQuery } from '../../graphql/__generated__/generated-documents';
-import { PaginatedList } from 'components/PaginatedList/PaginatedList';
+import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 import Link from 'next/link';
 import classnames from 'classnames';
 import { SubstanceContainer } from '../../components/SubstancesContainer/SubstanceContainer';
+import { NotEnoughData } from 'components/NotEnoughData';
+
+const SectionTitle = ({ title }: { title: string }) => (
+  <h2 className="text-2xl lg:text-3xl text-left">{title}</h2>
+);
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
   return (
     <div className="min-h-screen text-center">
-      <h2>{currentEntity.name}</h2>
+      <SectionTitle title={currentEntity.name} />
     </div>
   );
 };
 
 const SectionTwo = ({ substance }: { substance: Substance }) => (
   <div className="min-h-screen text-center">
+    <SectionTitle title="Déclarations d’effets indésirables suspectés de la substance active" />
     <SubstanceContainer substance={substance} />
   </div>
 );
@@ -35,12 +41,16 @@ const SectionThree = () => {
   });
 
   if (!data) {
-    return <p>TODO</p>;
+    return (
+      <div className="w-full flex justify-center items-center">
+        <NotEnoughData />
+      </div>
+    );
   }
 
   return (
-    <div className="SectionThree">
-      <h2>Spécialités de médicaments contenant : {currentEntity.name}</h2>
+    <div className="min-h-screen">
+      <SectionTitle title={`Spécialités de médicaments contenant : ${currentEntity.name}`} />
       <div className="p-4 border border-grey-200 rounded-lg bg-white">
         <div className="text-secondary-900 font-medium">
           {data?.getSubstance?.retrieveSpecialities?.meta?.count} médicaments identifiés

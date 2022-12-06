@@ -8,24 +8,22 @@ import PatientFigure from '../../../assets/images/notifiers/5.svg';
 import PharmacistFigure from '../../../assets/images/notifiers/6.svg';
 
 export const GetFigureByJob = ({ id }: { id: Maybe<number> | undefined }) => {
-  const width = 150;
-  const height = 150;
   switch (id) {
     case 0:
-      return <OtherDoctorFigure width={width} height={height} />;
+      return <OtherDoctorFigure />;
     case 1:
-      return <NurseFigure width={width} height={height} />;
+      return <NurseFigure />;
     case 2:
-      return <JuristeFigure width={width} height={height} />;
+      return <JuristeFigure />;
     case 3:
-      return <DoctorFigure width={width} height={height} />;
+      return <DoctorFigure />;
     case 4:
-      return <SpecialistFigure width={width} height={height} />;
+      return <SpecialistFigure />;
     case 5:
-      return <PatientFigure width={width} height={height} />;
+      return <PatientFigure />;
     case 6:
-      return <PharmacistFigure width={width} height={height} />;
+      return <PharmacistFigure />;
     default:
-      return <OtherDoctorFigure width={width} height={height} />;
+      return <OtherDoctorFigure />;
   }
 };

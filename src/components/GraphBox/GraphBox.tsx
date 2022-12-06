@@ -17,7 +17,7 @@ export const GraphBox = ({
   title: string;
 }) => (
   <div className={classnames('bg-white rounded-lg shadow max-w-max p-3', className)}>
-    <div className="font-medium pb-4">{title}</div>
+    <div className="font-medium p-4">{title}</div>
     {children}
   </div>
 );
