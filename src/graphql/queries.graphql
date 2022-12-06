@@ -60,16 +60,8 @@ query Speciality($cisId: Int!) {
                 range
             }
             sideEffectsOriginRepartition {
-                with {
-                    id
-                    value
-                    range
-                }
-                without {
-                    id
-                    value
-                    range
-                }
+                with
+                without
             }
             natureRepartition {
                 id

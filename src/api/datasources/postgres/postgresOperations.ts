@@ -173,7 +173,7 @@ export class PostgresOperations {
       .selectFrom('error_med_side_effect as err')
       .leftJoin('side_effects as side', 'side.id', 'err.side_effect_id')
       .where('mp_id', '=', cisId)
-      .select(['err.percentage as value', 'side.id as id', 'side.label as range'])
+      .select(['err.percentage as value', 'side.id as id'])
       .execute();
 
     const withSideEffect = rows.find((row) => row.id === 1);
@@ -181,14 +181,8 @@ export class PostgresOperations {
 
     return withSideEffect && withoutSideEffect
       ? {
-          with: {
-            ...withSideEffect,
-            value: Math.round(withSideEffect.value ?? 0),
-          },
-          without: {
-            ...withoutSideEffect,
-            value: Math.round(withoutSideEffect.value ?? 0),
-          },
+          with: Math.round(withSideEffect.value ?? 0),
+          without: Math.round(withoutSideEffect.value ?? 0),
         }
       : null;
   }
@@ -474,6 +468,7 @@ export class PostgresOperations {
         's_s.case_percentage as nbPercent',
       ])
       .execute();
+
     return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
       const { id, name, nbCases, nbPercent } = row;
       return name

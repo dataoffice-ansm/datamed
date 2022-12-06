@@ -40,8 +40,8 @@ type RepartitionTranche {
 }
 
 type WithRepartition {
-    with: RepartitionTranche
-    without: RepartitionTranche
+    with: Int
+    without: Int
 }
 
 type MedicalErrors {
