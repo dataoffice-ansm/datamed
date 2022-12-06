@@ -227,8 +227,8 @@ export type TotalExposition = {
 
 export type WithRepartition = {
   __typename?: 'WithRepartition';
-  with?: Maybe<RepartitionTranche>;
-  without?: Maybe<RepartitionTranche>;
+  with?: Maybe<Scalars['Int']>;
+  without?: Maybe<Scalars['Int']>;
 };
 
 export type SpecialityIdByCodeQueryVariables = Exact<{
@@ -304,18 +304,8 @@ export type SpecialityQuery = {
       } | null> | null;
       sideEffectsOriginRepartition?: {
         __typename?: 'WithRepartition';
-        with?: {
-          __typename?: 'RepartitionTranche';
-          id?: number | null;
-          value?: number | null;
-          range?: string | null;
-        } | null;
-        without?: {
-          __typename?: 'RepartitionTranche';
-          id?: number | null;
-          value?: number | null;
-          range?: string | null;
-        } | null;
+        with?: number | null;
+        without?: number | null;
       } | null;
       natureRepartition?: Array<{
         __typename?: 'RepartitionTranche';
@@ -540,16 +530,8 @@ export const SpecialityDocument = gql`
           range
         }
         sideEffectsOriginRepartition {
-          with {
-            id
-            value
-            range
-          }
-          without {
-            id
-            value
-            range
-          }
+          with
+          without
         }
         natureRepartition {
           id

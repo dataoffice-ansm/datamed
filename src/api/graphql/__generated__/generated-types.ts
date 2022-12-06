@@ -227,8 +227,8 @@ export type TotalExposition = {
 
 export type WithRepartition = {
   __typename?: 'WithRepartition';
-  with?: Maybe<RepartitionTranche>;
-  without?: Maybe<RepartitionTranche>;
+  with?: Maybe<Scalars['Int']>;
+  without?: Maybe<Scalars['Int']>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -753,8 +753,8 @@ export type WithRepartitionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['WithRepartition'] = ResolversParentTypes['WithRepartition']
 > = ResolversObject<{
-  with?: Resolver<Maybe<ResolversTypes['RepartitionTranche']>, ParentType, ContextType>;
-  without?: Resolver<Maybe<ResolversTypes['RepartitionTranche']>, ParentType, ContextType>;
+  with?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  without?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

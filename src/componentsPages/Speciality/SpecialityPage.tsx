@@ -277,9 +277,9 @@ const SectionMedicinalErrors = () => {
             <div className="flex gap-2 w-full">
               <div className="w-full flex flex-col justify-center items-center gap-1">
                 <ManFaceYes className="w-32" />
-                {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with?.value && (
+                {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with && (
                   <span className="text-3xl text-dark-violet-800 mt-3">
-                    {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with?.value}%
+                    {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with}%
                   </span>
                 )}
                 <span className="text-base">Sans effets indésirables</span>
@@ -287,9 +287,9 @@ const SectionMedicinalErrors = () => {
 
               <div className="w-full flex flex-col justify-center items-center gap-1">
                 <ManFaceNo className="w-32" />
-                {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without?.value && (
+                {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without && (
                   <span className="text-3xl text-dark-violet-800 mt-3">
-                    {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without?.value}%
+                    {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without}%
                   </span>
                 )}
                 <span className="text-base">Avec effets indésirables</span>
