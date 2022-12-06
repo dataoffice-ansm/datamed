@@ -77,6 +77,26 @@ query Speciality($cisId: Int!) {
                 range
             }
         }
+        rupturesHistory {
+            ruptures {
+                id
+                num
+                name
+                active
+                date
+                cause {
+                    id
+                    name
+                }
+                classification {
+                    id
+                    name
+                }
+            }
+            meta {
+                count
+            }
+        }
     }
 }
 

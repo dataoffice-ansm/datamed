@@ -38,7 +38,7 @@ const SectionThree = () => {
   }
 
   return (
-    <div className="min-h-screen">
+    <div className="SectionThree">
       <h2>Spécialités de médicaments contenant : {currentEntity.name}</h2>
       <div className="p-4 border border-grey-200 rounded-lg bg-white">
         <div className="text-secondary-900 font-medium">

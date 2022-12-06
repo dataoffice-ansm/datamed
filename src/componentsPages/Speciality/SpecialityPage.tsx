@@ -6,7 +6,7 @@ import type { Speciality } from '../../api/graphql/__generated__/generated-types
 import Link from 'next/link';
 import Page404 from '../../pages/[404]';
 import { useMemo } from 'react';
-import type { Substance } from '../../graphql/__generated__/generated-documents';
+import type { SpecialityRupture, Substance } from '../../graphql/__generated__/generated-documents';
 import { SpecialitySubstancesContainer } from '../../components/SubstancesContainer/SpecialitySubstancesContainer';
 import { Accordion } from '../../components/Accordion/Accordion';
 
@@ -26,6 +26,8 @@ import { Button } from '../../components/Button/Button';
 import { PieChartMedicalErrorsPopulation } from './Charts/PieChartMedicalErrorsPopulation';
 import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
 import { PublicationItem } from 'components/Publication/Publication';
+import { RuptureHistoryItem } from '../../components/Ruptures/RuptureHistoryItem';
+import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -108,7 +110,9 @@ const SectionTreatedPatients = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
-      <h2>Patients traités en ville</h2>
+      <h2 className="mb-1 font-medium">Patients traités en ville</h2>
+      <h6 className="mt-0 mb-6">Données issues de la période 2009 - 2021</h6>
+
       <Accordion
         theme="primary"
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
@@ -141,32 +145,32 @@ const SectionTreatedPatients = () => {
         </p>
       </Accordion>
 
-      {currentEntity?.exposition?.consumption ? (
-        <div className="expositionChart my-4 flex rounded-md border border-grey-200 border-solid overflow-hidden">
-          <div className="expositionChartLeft p-4 min:h-20 flex-1 flex flex-col bg-primary">
-            <span className="text-white">
-              {
-                cisExpositionLevelMapping[
-                  currentEntity?.exposition
-                    ?.expositionLevel as keyof typeof cisExpositionLevelMapping
-                ]
-              }
-            </span>
-          </div>
+      <div className="expositionChart my-4 flex rounded-md border border-grey-200 border-solid overflow-hidden">
+        <div className="expositionChartLeft p-4 min:h-20 flex-1 flex flex-col bg-primary">
+          <span className="text-white">
+            {
+              cisExpositionLevelMapping[
+                currentEntity?.exposition?.expositionLevel as keyof typeof cisExpositionLevelMapping
+              ]
+            }
+          </span>
+        </div>
 
-          <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
+        <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
+          {currentEntity?.exposition?.consumption ? (
             <h3 className="text-primary">
               {numberWithThousand(currentEntity?.exposition?.consumption)} patients / an
             </h3>
-            <p>
-              Approximation du nombre de patients ayant été remboursés sur la période 2014-2018 pour
-              une substance active ou une spécialité de médicament.
-            </p>
-          </div>
+          ) : (
+            <NotEnoughData />
+          )}
+
+          <p>
+            Approximation du nombre de patients ayant été remboursés sur la période 2014-2018 pour
+            une substance active ou une spécialité de médicament.
+          </p>
         </div>
-      ) : (
-        <NotEnoughData />
-      )}
+      </div>
 
       <div className="flex gap-2 my-8">
         <ChartBox className="repSexes" title="Répartition par sexe des patients traités">
@@ -210,7 +214,8 @@ const SectionMedicinalErrors = () => {
 
   return (
     <div className="SectionMedicinalErrors sectionPart mt-4 mb-8">
-      <h2>Déclarations d’erreurs médicamenteuses</h2>
+      <h2 className="mb-1 font-medium">Déclarations d’erreurs médicamenteuses</h2>
+      <h6 className="mt-0 mb-6">Données issues de la période 2009 - 2021</h6>
 
       <Accordion title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?">
         <p>
@@ -239,14 +244,14 @@ const SectionMedicinalErrors = () => {
       </Accordion>
 
       <div className="flex gap-2 my-8">
-        <ChartBox className="repAges" title="Répartition de la population concernée">
+        <ChartBox className="repAges flex-1" title="Répartition de la population concernée">
           <PieChartMedicalErrorsPopulation
             errorsMedRepPopData={currentEntity?.medicalErrors?.populationRepartition}
           />
         </ChartBox>
 
         <ChartBox
-          className="sideEffectsOriginRepartition"
+          className="sideEffectsOriginRepartition flex-1"
           title="Existence d’effets indésirables suite aux erreurs médicamenteuses déclarées"
         >
           {currentEntity?.medicalErrors?.sideEffectsOriginRepartition ? (
@@ -281,42 +286,24 @@ const SectionMedicinalErrors = () => {
         className="stepApparitionFigures"
         title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
       >
-        <div className="graphFiguresContainer flex gap-3">
-          {currentEntity?.medicalErrors?.natureRepartition?.length ? (
-            currentEntity?.medicalErrors?.natureRepartition?.map((natureRep) => {
-              if (natureRep?.id && natureRep?.value && natureRep?.range) {
-                return (
-                  <GraphFigure
-                    key={natureRep.id}
-                    value={natureRep?.value}
-                    valueClassName="text-secondary"
-                    description={natureRep?.range}
-                    icon={getCisErrorMedNatureIconMapping(natureRep.id)}
-                  />
-                );
-              }
-
-              return null;
-            })
-          ) : (
-            <NotEnoughData />
-          )}
-        </div>
+        {currentEntity?.medicalErrors?.natureRepartition?.length ? (
+          <div className="graphFiguresContainer flex gap-3">
+            {currentEntity?.medicalErrors?.natureRepartition?.map((natureRep) =>
+              natureRep?.id && natureRep?.value && natureRep?.range ? (
+                <GraphFigure
+                  key={natureRep.id}
+                  value={natureRep?.value}
+                  valueClassName="text-secondary"
+                  description={natureRep?.range}
+                  icon={getCisErrorMedNatureIconMapping(natureRep.id)}
+                />
+              ) : null
+            )}
+          </div>
+        ) : (
+          <NotEnoughData />
+        )}
       </ChartBox>
-
-      {/*<Accordion title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?">*/}
-      {/*  La pharmacovigilance est la surveillance, l’évaluation, la prévention et la gestion du risque*/}
-      {/*  d’effet indésirable résultant de l’utilisation des médicaments. Elle s’exerce en permanence,*/}
-      {/*  avant et après la commercialisation des médicaments, et constitue un élément essentiel du*/}
-      {/*  contrôle de la sécurité des médicaments. Afin de respecter la confidentialité des données des*/}
-      {/*  patients, si un critère (âge, sexe,...) représente moins de 11 cas, l&lsquo;information ne*/}
-      {/*  sera pas affichée avec ce niveau de détail. Ces données sont issues de la Base Nationale de*/}
-      {/*  Pharmacovigilance (BNPV), qui est la base de données de l&lsquo;ANSM alimentée par les Centres*/}
-      {/*  Régionaux de Pharmacovigilance (CRPV). Elle inclut l&lsquo;ensemble des déclarations*/}
-      {/*  suspectées comme étant en lien avec l&lsquo;usage d&lsquo;un ou plusieurs médicaments. Ces*/}
-      {/*  dernières sont notifiées par les professionnels de santé ou par les patients et association*/}
-      {/*  agréées via un portail dédié : https://signalement.social-sante.gouv.fr*/}
-      {/*</Accordion>*/}
     </div>
   );
 };
@@ -330,36 +317,66 @@ const SectionSideEffects = () => {
 
   return (
     <div className="SectionSideEffects">
-      <h2>Déclarations d&lsquo;effets indésirables suspectés, par substance active</h2>
+      <h2 className="font-medium">
+        Déclarations d&lsquo;effets indésirables suspectés, par substance active
+      </h2>
       <SpecialitySubstancesContainer substances={substances} className="mt-4 mb-32" />
     </div>
   );
 };
 
-const SectionRisksShortageHistory = () => (
-  <div className="SectionRisksShortageHistory">
-    <h2>Historique des déclarations de ruptures et de risques de rupture de stock cloturées</h2>
-  </div>
-);
+const SectionRisksShortageHistory = () => {
+  const { currentEntity } = useEntityContext<EntityCis>();
+  const { rupturesHistory } = currentEntity;
+
+  const ruptures = useMemo(
+    () => (rupturesHistory?.ruptures ?? []) as SpecialityRupture[],
+    [rupturesHistory?.ruptures]
+  );
+
+  const count = useMemo(() => rupturesHistory?.meta?.count ?? 0, [rupturesHistory?.meta?.count]);
+
+  return (
+    <div className="SectionRisksShortageHistory">
+      <h2 className="font-medium">
+        Historique des déclarations de ruptures et de risques de rupture de stock cloturées
+      </h2>
+      {count ? (
+        <div className="p-4 border border-grey-200 rounded-lg bg-white">
+          <div className="text-secondary-900 font-medium">
+            <span>{`${count} ${count === 1 ? 'déclaration' : 'déclarations'}`}</span>
+          </div>
+          <div className="pt-6">
+            <PaginatedList
+              theme="secondary"
+              data={ruptures}
+              renderItem={(ruptureItem) => (
+                <RuptureHistoryItem cisName={currentEntity?.name} ruptureItem={ruptureItem} />
+              )}
+            />
+          </div>
+        </div>
+      ) : (
+        <ChartBox>
+          <NotEnoughData />
+        </ChartBox>
+      )}
+    </div>
+  );
+};
 
 const SectionPublications = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
   const { publications } = currentEntity;
 
   return (
-    <div className="SectionPublications">
-      <h2>Publications de l’ANSM</h2>
-      <div>
-        {(publications ?? []).length > 0 ? (
-          publications?.map((publication, index) => (
-            <div key={`publication_${index.toString()}}`} className="my-2">
-              {publication && <PublicationItem publication={publication} />}
-            </div>
-          ))
-        ) : (
-          <NotEnoughData />
-        )}
-      </div>
+    <div className="SectionPublications min-h-screen">
+      <h2 className="font-medium">Publications de l’ANSM</h2>
+      {publications?.map((publication, index) => (
+        <div key={`publication_${index.toString()}}`} className="my-2">
+          {publication && <PublicationItem publication={publication} />}
+        </div>
+      ))}
     </div>
   );
 };
@@ -391,14 +408,14 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => {
             content: <SectionSideEffects />,
           },
           {
-            id: 'medicinal-errors',
-            label: 'Erreurs médicamenteuses',
-            content: <SectionMedicinalErrors />,
-          },
-          {
             id: 'shortage-risks-history',
             label: 'Historique des risques et des ruptures de stocks',
             content: <SectionRisksShortageHistory />,
+          },
+          {
+            id: 'medicinal-errors',
+            label: 'Erreurs médicamenteuses',
+            content: <SectionMedicinalErrors />,
           },
           {
             id: 'publications',

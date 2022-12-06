@@ -118,6 +118,18 @@ export type RepartitionTuple = {
   value?: Maybe<Scalars['Int']>;
 };
 
+export type RuptureCause = {
+  __typename?: 'RuptureCause';
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+};
+
+export type RuptureClass = {
+  __typename?: 'RuptureClass';
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+};
+
 export type SpecialitiesReturn = {
   __typename?: 'SpecialitiesReturn';
   meta?: Maybe<Meta>;
@@ -141,6 +153,7 @@ export type Speciality = {
   publications?: Maybe<Array<Maybe<Publication>>>;
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
   repartitionPerSex?: Maybe<RepartitionPerSex>;
+  rupturesHistory?: Maybe<SpecialityRupturesHistory>;
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
 
@@ -150,6 +163,23 @@ export type SpecialityLight = {
   description?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   name: Scalars['String'];
+};
+
+export type SpecialityRupture = {
+  __typename?: 'SpecialityRupture';
+  active?: Maybe<Scalars['Boolean']>;
+  cause?: Maybe<RuptureCause>;
+  classification?: Maybe<RuptureClass>;
+  date?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+  num?: Maybe<Scalars['String']>;
+};
+
+export type SpecialityRupturesHistory = {
+  __typename?: 'SpecialityRupturesHistory';
+  meta?: Maybe<Meta>;
+  ruptures?: Maybe<Array<Maybe<SpecialityRupture>>>;
 };
 
 export type Substance = {
@@ -277,9 +307,13 @@ export type ResolversTypes = ResolversObject<{
   RepartitionPerSex: ResolverTypeWrapper<RepartitionPerSex>;
   RepartitionTranche: ResolverTypeWrapper<RepartitionTranche>;
   RepartitionTuple: ResolverTypeWrapper<RepartitionTuple>;
+  RuptureCause: ResolverTypeWrapper<RuptureCause>;
+  RuptureClass: ResolverTypeWrapper<RuptureClass>;
   SpecialitiesReturn: ResolverTypeWrapper<SpecialitiesReturn>;
   Speciality: ResolverTypeWrapper<Speciality>;
   SpecialityLight: ResolverTypeWrapper<SpecialityLight>;
+  SpecialityRupture: ResolverTypeWrapper<SpecialityRupture>;
+  SpecialityRupturesHistory: ResolverTypeWrapper<SpecialityRupturesHistory>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Substance: ResolverTypeWrapper<Substance>;
   SubstancesReturn: ResolverTypeWrapper<SubstancesReturn>;
@@ -304,9 +338,13 @@ export type ResolversParentTypes = ResolversObject<{
   RepartitionPerSex: RepartitionPerSex;
   RepartitionTranche: RepartitionTranche;
   RepartitionTuple: RepartitionTuple;
+  RuptureCause: RuptureCause;
+  RuptureClass: RuptureClass;
   SpecialitiesReturn: SpecialitiesReturn;
   Speciality: Speciality;
   SpecialityLight: SpecialityLight;
+  SpecialityRupture: SpecialityRupture;
+  SpecialityRupturesHistory: SpecialityRupturesHistory;
   String: Scalars['String'];
   Substance: Substance;
   SubstancesReturn: SubstancesReturn;
@@ -499,6 +537,24 @@ export type RepartitionTupleResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type RuptureCauseResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['RuptureCause'] = ResolversParentTypes['RuptureCause']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type RuptureClassResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['RuptureClass'] = ResolversParentTypes['RuptureClass']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type SpecialitiesReturnResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SpecialitiesReturn'] = ResolversParentTypes['SpecialitiesReturn']
@@ -539,6 +595,11 @@ export type SpecialityResolvers<
     ContextType
   >;
   repartitionPerSex?: Resolver<Maybe<ResolversTypes['RepartitionPerSex']>, ParentType, ContextType>;
+  rupturesHistory?: Resolver<
+    Maybe<ResolversTypes['SpecialityRupturesHistory']>,
+    ParentType,
+    ContextType
+  >;
   substances?: Resolver<Maybe<Array<Maybe<ResolversTypes['Substance']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
@@ -551,6 +612,33 @@ export type SpecialityLightResolvers<
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SpecialityRuptureResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['SpecialityRupture'] = ResolversParentTypes['SpecialityRupture']
+> = ResolversObject<{
+  active?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
+  cause?: Resolver<Maybe<ResolversTypes['RuptureCause']>, ParentType, ContextType>;
+  classification?: Resolver<Maybe<ResolversTypes['RuptureClass']>, ParentType, ContextType>;
+  date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  num?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type SpecialityRupturesHistoryResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['SpecialityRupturesHistory'] = ResolversParentTypes['SpecialityRupturesHistory']
+> = ResolversObject<{
+  meta?: Resolver<Maybe<ResolversTypes['Meta']>, ParentType, ContextType>;
+  ruptures?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['SpecialityRupture']>>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -604,9 +692,13 @@ export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   RepartitionPerSex?: RepartitionPerSexResolvers<ContextType>;
   RepartitionTranche?: RepartitionTrancheResolvers<ContextType>;
   RepartitionTuple?: RepartitionTupleResolvers<ContextType>;
+  RuptureCause?: RuptureCauseResolvers<ContextType>;
+  RuptureClass?: RuptureClassResolvers<ContextType>;
   SpecialitiesReturn?: SpecialitiesReturnResolvers<ContextType>;
   Speciality?: SpecialityResolvers<ContextType>;
   SpecialityLight?: SpecialityLightResolvers<ContextType>;
+  SpecialityRupture?: SpecialityRuptureResolvers<ContextType>;
+  SpecialityRupturesHistory?: SpecialityRupturesHistoryResolvers<ContextType>;
   Substance?: SubstanceResolvers<ContextType>;
   SubstancesReturn?: SubstancesReturnResolvers<ContextType>;
   WithRepartition?: WithRepartitionResolvers<ContextType>;

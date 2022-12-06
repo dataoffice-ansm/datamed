@@ -82,7 +82,7 @@ export const EntityPageLayout = ({
             className="no-underline"
             to={id}
             duration={200}
-            offset={-(navBarHeight + stickyHeroHeight)}
+            offset={-(navBarHeight + stickyHeroHeight + 10)}
             onSetActive={() => {
               handleSelectedIndex(index);
             }}
@@ -165,7 +165,7 @@ export const EntityPageLayout = ({
               className="sideMenuInner sticky ease-in-out duration-700 transition-top"
               style={{ top: navBarHeight + stickyHeroHeight }}
             >
-              <RenderNavigation vertical itemClassName="h-16 py-4" />
+              <RenderNavigation vertical itemClassName="min:h-16 py-4" />
             </div>
           </div>
           <div
