@@ -109,9 +109,9 @@ export type RepartitionPerNotifier = {
 export type RepartitionPerPathology = {
   __typename?: 'RepartitionPerPathology';
   id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  nbCases?: Maybe<Scalars['Int']>;
-  nbPercent?: Maybe<Scalars['Int']>;
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
 };
 
 export type RepartitionPerSex = {
@@ -557,9 +557,9 @@ export type RepartitionPerPathologyResolvers<
   ParentType extends ResolversParentTypes['RepartitionPerPathology'] = ResolversParentTypes['RepartitionPerPathology']
 > = ResolversObject<{
   id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  nbCases?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  nbPercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 

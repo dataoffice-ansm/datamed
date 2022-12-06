@@ -109,9 +109,9 @@ export type RepartitionPerNotifier = {
 export type RepartitionPerPathology = {
   __typename?: 'RepartitionPerPathology';
   id?: Maybe<Scalars['Int']>;
-  name?: Maybe<Scalars['String']>;
-  nbCases?: Maybe<Scalars['Int']>;
-  nbPercent?: Maybe<Scalars['Int']>;
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
 };
 
 export type RepartitionPerSex = {
@@ -391,9 +391,9 @@ export type SubstanceQuery = {
     repartitionPerPathology?: Array<{
       __typename?: 'RepartitionPerPathology';
       id?: number | null;
-      name?: string | null;
-      nbCases?: number | null;
-      nbPercent?: number | null;
+      range?: string | null;
+      value?: number | null;
+      valuePercent?: number | null;
     } | null> | null;
     totalExposition?: {
       __typename?: 'TotalExposition';
@@ -686,9 +686,9 @@ export const SubstanceDocument = gql`
       }
       repartitionPerPathology {
         id
-        name
-        nbCases
-        nbPercent
+        range
+        value
+        valuePercent
       }
       totalExposition {
         total

@@ -85,7 +85,7 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
               <BackArrowSVG className="h-8 w-8" />
             </div>
             <div className="text-xl font-medium">
-              Accueil / {type} : {currentEntity.name}
+              Accueil / {type}: {currentEntity.name}
             </div>
           </a>
         </Link>
