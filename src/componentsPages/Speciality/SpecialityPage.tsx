@@ -9,7 +9,7 @@ import { useMemo } from 'react';
 import type { SpecialityRupture, Substance } from '../../graphql/__generated__/generated-documents';
 import { SpecialitySubstancesContainer } from '../../components/SubstancesContainer/SpecialitySubstancesContainer';
 import { Accordion } from '../../components/Accordion/Accordion';
-
+import PilIcon from '../../assets/images/gellule.svg';
 import WomanIllustration from '../../assets/images/woman_illustration.svg';
 import ManIllustration from '../../assets/images/man_illustration.svg';
 import ManFaceNo from '../../assets/images/manFaceNo.svg';
@@ -108,6 +108,8 @@ const SectionOneGlobalInformation = () => {
 
 const SectionTreatedPatients = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
+  console.log(currentEntity);
+
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
       <h2 className="mb-1 font-medium">Patients traités en ville</h2>
@@ -145,32 +147,51 @@ const SectionTreatedPatients = () => {
         </p>
       </Accordion>
 
-      <div className="expositionChart my-4 flex rounded-md border border-grey-200 border-solid overflow-hidden">
-        <div className="expositionChartLeft p-4 min:h-20 flex-1 flex flex-col bg-primary">
-          <span className="text-white">
-            {
-              cisExpositionLevelMapping[
-                currentEntity?.exposition?.expositionLevel as keyof typeof cisExpositionLevelMapping
-              ]
-            }
-          </span>
-        </div>
+      {currentEntity?.exposition?.consumption ? (
+        <div className="expositionChart my-4 flex rounded-md border border-grey-200 border-solid overflow-hidden">
+          <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 flex flex-col bg-primary py-6">
+            <span className="text-white">
+              {
+                cisExpositionLevelMapping[
+                  currentEntity?.exposition
+                    ?.expositionLevel as keyof typeof cisExpositionLevelMapping
+                ]
+              }
+            </span>
 
-        <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
-          {currentEntity?.exposition?.consumption ? (
+            <div className="UsageBarContainer my-8 flex justify-center items-end gap-2">
+              {[...Array(5).keys()].map((pos) => (
+                <div
+                  key={pos}
+                  className={classnames(
+                    `UsageBarLevel${pos}`,
+                    'relative w-6 bg-white border border-solid border-gray-200'
+                  )}
+                  style={{ height: 20 + 10 * pos }}
+                >
+                  {currentEntity?.exposition?.expositionLevel === pos + 1 && (
+                    <div className="bouncingPil animate-bounce absolute -top-8">
+                      <PilIcon className="w-6 h-6" />
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
             <h3 className="text-primary">
               {numberWithThousand(currentEntity?.exposition?.consumption)} patients / an
             </h3>
-          ) : (
-            <NotEnoughData />
-          )}
-
-          <p>
-            Approximation du nombre de patients ayant été remboursés sur la période 2014-2018 pour
-            une substance active ou une spécialité de médicament.
-          </p>
+            <p>
+              Approximation du nombre de patients ayant été remboursés sur la période 2014-2018 pour
+              une substance active ou une spécialité de médicament.
+            </p>
+          </div>
         </div>
-      </div>
+      ) : (
+        <NotEnoughData />
+      )}
 
       <div className="flex gap-2 my-8">
         <ChartBox className="repSexes" title="Répartition par sexe des patients traités">
@@ -372,11 +393,17 @@ const SectionPublications = () => {
   return (
     <div className="SectionPublications min-h-screen">
       <h2 className="font-medium">Publications de l’ANSM</h2>
-      {publications?.map((publication, index) => (
-        <div key={`publication_${index.toString()}}`} className="my-2">
-          {publication && <PublicationItem publication={publication} />}
-        </div>
-      ))}
+      {publications?.length ? (
+        publications?.map((publication, index) => (
+          <div key={`publication_${index.toString()}}`} className="my-2">
+            {publication && <PublicationItem publication={publication} />}
+          </div>
+        ))
+      ) : (
+        <ChartBox>
+          <NotEnoughData />
+        </ChartBox>
+      )}
     </div>
   );
 };
