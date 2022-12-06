@@ -57,6 +57,10 @@ export const resolvers: Resolvers = {
       return context.dataSources.postgresOperations.getSubstancesBySpeciality(parent.id);
     },
 
+    async publications(parent, args, context) {
+      return context.dataSources.postgresOperations.getPublications(parent.id);
+    },
+
     async medicalErrors(parent, args, context) {
       const populationRepartition =
         await context.dataSources.postgresOperations.getErrorsMedRepPopulation(parent.id);

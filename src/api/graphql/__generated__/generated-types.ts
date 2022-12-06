@@ -64,6 +64,15 @@ export type Meta = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type Publication = {
+  __typename?: 'Publication';
+  id: Scalars['Int'];
+  link: Scalars['String'];
+  name: Scalars['String'];
+  type: Scalars['String'];
+  typeId: Scalars['Int'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getSpecialities?: Maybe<SpecialitiesReturn>;
@@ -124,6 +133,7 @@ export type Speciality = {
   laboratory?: Maybe<Laboratory>;
   medicalErrors?: Maybe<MedicalErrors>;
   name: Scalars['String'];
+  publications?: Maybe<Array<Maybe<Publication>>>;
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
   repartitionPerSex?: Maybe<RepartitionPerSex>;
   substances?: Maybe<Array<Maybe<Substance>>>;
@@ -256,6 +266,7 @@ export type ResolversTypes = ResolversObject<{
   MedicalError: ResolverTypeWrapper<MedicalError>;
   MedicalErrors: ResolverTypeWrapper<MedicalErrors>;
   Meta: ResolverTypeWrapper<Meta>;
+  Publication: ResolverTypeWrapper<Publication>;
   Query: ResolverTypeWrapper<{}>;
   RepartitionPerSex: ResolverTypeWrapper<RepartitionPerSex>;
   RepartitionTranche: ResolverTypeWrapper<RepartitionTranche>;
@@ -281,6 +292,7 @@ export type ResolversParentTypes = ResolversObject<{
   MedicalError: MedicalError;
   MedicalErrors: MedicalErrors;
   Meta: Meta;
+  Publication: Publication;
   Query: {};
   RepartitionPerSex: RepartitionPerSex;
   RepartitionTranche: RepartitionTranche;
@@ -406,6 +418,18 @@ export type MetaResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type PublicationResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['Publication'] = ResolversParentTypes['Publication']
+> = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  link?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  typeId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type QueryResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
@@ -489,6 +513,11 @@ export type SpecialityResolvers<
   laboratory?: Resolver<Maybe<ResolversTypes['Laboratory']>, ParentType, ContextType>;
   medicalErrors?: Resolver<Maybe<ResolversTypes['MedicalErrors']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  publications?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['Publication']>>>,
+    ParentType,
+    ContextType
+  >;
   repartitionPerAge?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['RepartitionTranche']>>>,
     ParentType,
@@ -554,6 +583,7 @@ export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   MedicalError?: MedicalErrorResolvers<ContextType>;
   MedicalErrors?: MedicalErrorsResolvers<ContextType>;
   Meta?: MetaResolvers<ContextType>;
+  Publication?: PublicationResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
   RepartitionPerSex?: RepartitionPerSexResolvers<ContextType>;
   RepartitionTranche?: RepartitionTrancheResolvers<ContextType>;

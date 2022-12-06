@@ -5,6 +5,7 @@ import type {
   RepartitionTranche,
   Speciality,
   Substance,
+  Publication,
 } from '../../graphql/__generated__/generated-types';
 
 export class PostgresOperations {
@@ -171,8 +172,6 @@ export class PostgresOperations {
       .select(['err.percentage as value', 'side.id as id', 'side.label as range'])
       .execute();
 
-    console.log(rows);
-
     const withSideEffect = rows.find((row) => row.id === 1);
     const withoutSideEffect = rows.find((row) => row.id === 0);
 
@@ -299,5 +298,31 @@ export class PostgresOperations {
       code,
       name,
     }));
+  }
+
+  async getPublications(cisId: number): Promise<Publication[]> {
+    const rows = await dbInstance
+      .selectFrom('medicinal_products as mp')
+      .where('mp.id', '=', cisId)
+      .leftJoin('publications as p', 'p.mp_id', 'mp.id')
+      .leftJoin('publication_types as pt', 'pt.id', 'p.type_id')
+      .select(['p.id', 'p.title as name', 'p.link', 'pt.type', 'pt.id as typeId'])
+      .execute();
+
+    return rows.reduce<Publication[]>((carry, row) => {
+      const { id, name, link, type, typeId } = row;
+      return id && name && link && type && typeId
+        ? [
+            ...carry,
+            {
+              id,
+              name,
+              link,
+              type,
+              typeId,
+            },
+          ]
+        : carry;
+    }, []);
   }
 }

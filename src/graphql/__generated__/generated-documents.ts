@@ -64,6 +64,15 @@ export type Meta = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type Publication = {
+  __typename?: 'Publication';
+  id: Scalars['Int'];
+  link: Scalars['String'];
+  name: Scalars['String'];
+  type: Scalars['String'];
+  typeId: Scalars['Int'];
+};
+
 export type Query = {
   __typename?: 'Query';
   getSpecialities?: Maybe<SpecialitiesReturn>;
@@ -124,6 +133,7 @@ export type Speciality = {
   laboratory?: Maybe<Laboratory>;
   medicalErrors?: Maybe<MedicalErrors>;
   name: Scalars['String'];
+  publications?: Maybe<Array<Maybe<Publication>>>;
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
   repartitionPerSex?: Maybe<RepartitionPerSex>;
   substances?: Maybe<Array<Maybe<Substance>>>;
@@ -198,6 +208,14 @@ export type SpecialityQuery = {
       id?: number | null;
       range?: string | null;
       value?: number | null;
+    } | null> | null;
+    publications?: Array<{
+      __typename?: 'Publication';
+      id: number;
+      name: string;
+      link: string;
+      type: string;
+      typeId: number;
     } | null> | null;
     icon?: { __typename?: 'Icon'; id: number; name?: string | null } | null;
     laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
@@ -379,6 +397,13 @@ export const SpecialityDocument = gql`
         id
         range
         value
+      }
+      publications {
+        id
+        name
+        link
+        type
+        typeId
       }
       description
       icon {
