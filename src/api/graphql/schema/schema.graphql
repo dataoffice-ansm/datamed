@@ -83,7 +83,6 @@ type SpecialityRupturesHistory {
 
 type RepartitionPerNotifier {
     id: Int
-    idNotifier: Int
     job: String
     value: Int
 }

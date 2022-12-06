@@ -30,63 +30,63 @@ import CaracteristiqueSocioFigure from '../../../assets/images/pathology/26.svg'
 import NotFoundFigure from '../../../assets/images/notfound.svg';
 import type { Maybe } from '../../../graphql/__generated__/generated-documents';
 
-export const GetFigureByPathology = ({ name }: { name: Maybe<string> | undefined }) => {
+export const GetFigureByPathology = ({ id }: { id: Maybe<number> | undefined }) => {
   const width = 150;
   const height = 150;
-  switch (name) {
-    case 'Affections cardiaques':
+  switch (id) {
+    case 0:
       return <AffectionsCardiaquesFigure width={width} height={height} />;
-    case 'Affections de la peau et du tissu sous-cutané':
+    case 1:
       return <AffectionPeauFigure width={width} height={height} />;
-    case 'Affections du rein et des voies urinaires':
+    case 2:
       return <AffectionsReinFigure width={width} height={height} />;
-    case 'Affections du système nerveux':
+    case 3:
       return <AffectionsNerveuxFigure width={width} height={height} />;
-    case 'Affections gastro-intestinales':
+    case 4:
       return <AffectionGastroFigure width={width} height={height} />;
-    case 'Affections hématologiques et du système lymphatique':
+    case 5:
       return <AffectionHematologiqueFigure width={width} height={height} />;
-    case 'Affections hépatobiliaires':
+    case 6:
       return <AffectionHepatobilaireFigure width={width} height={height} />;
-    case 'Affections musculosquelettiques et du tissu conjonctif':
+    case 7:
       return <AffectionMusculosquelettiquesFigure width={width} height={height} />;
-    case 'Affections psychiatriques':
+    case 8:
       return <AffectionPsychiatriquesFigure width={width} height={height} />;
-    case 'Affections respiratoires, thoraciques et médiastinales':
+    case 9:
       return <AffectionRespiratoiresFigure width={width} height={height} />;
-    case 'Affections vasculaires':
+    case 10:
       return <AffectionVasculaireFigure width={width} height={height} />;
-    case 'Investigations':
+    case 11:
       return <InvestigationsFigure width={width} height={height} />;
-    case "Lésions, intoxications et complications d'interventions":
+    case 12:
       return <LesionsFigure width={width} height={height} />;
-    case 'Troubles du métabolisme et de la nutrition':
+    case 13:
       return <TroublesMetabolismeFigure width={width} height={height} />;
-    case "Troubles généraux et anomalies au site d'administration":
+    case 14:
       return <TroublesGenerauxFigure width={width} height={height} />;
-    case "Affections de l'oreille et du labyrinthe":
+    case 15:
       return <AffectionOreilleFigure width={width} height={height} />;
-    case 'Affections des organes de reproduction et du sein':
+    case 16:
       return <AffectionOrganeFigure width={width} height={height} />;
-    case 'Affections du système immunitaire':
+    case 17:
       return <AffectionSystemeImmuFigure width={width} height={height} />;
-    case 'Affections endocriniennes':
+    case 18:
       return <AffectionEndocriFigure width={width} height={height} />;
-    case 'Affections oculaires':
+    case 19:
       return <AffectionsOculaireFigure width={width} height={height} />;
-    case 'Infections et infestations':
+    case 20:
       return <InfectionFigure width={width} height={height} />;
-    case 'Problèmes de produit':
+    case 21:
       return <ProblemeFigure width={width} height={height} />;
-    case 'Affections congénitales, familiales et génétiques':
+    case 22:
       return <AffectionCongenitalesFigure width={width} height={height} />;
-    case 'Tumeurs bénignes, malignes et non précisées (incl kystes et polypes)':
+    case 23:
       return <TumeursBenignesFigure width={width} height={height} />;
-    case 'Actes médicaux et chirurgicaux':
+    case 24:
       return <ActeMedicauxFigure width={width} height={height} />;
-    case 'Affections gravidiques, puerpérales et périnatales':
+    case 25:
       return <AffectionGravidiquesFigure width={width} height={height} />;
-    case 'Caractéristiques socio-environnementales':
+    case 26:
       return <CaracteristiqueSocioFigure width={width} height={height} />;
     default:
       return <NotFoundFigure width={width} height={height} />;

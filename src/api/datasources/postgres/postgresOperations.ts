@@ -444,23 +444,17 @@ export class PostgresOperations {
       .selectFrom('substances_notif as s_n')
       .where('s_n.substance_id', '=', subCode)
       .leftJoin('notifiers', 'notifiers.id', 's_n.notifier_id')
-      .select([
-        's_n.id',
-        'notifiers.id as idNotifier',
-        'notifiers.job',
-        's_n.notification_percentage as value',
-      ])
+      .select(['notifiers.id', 'notifiers.job', 's_n.notification_percentage as value'])
       .execute();
 
     return rows.reduce<RepartitionPerNotifier[]>((carry, row) => {
-      const { id, idNotifier, job, value } = row;
+      const { id, job, value } = row;
       return job
         ? [
             ...carry,
             {
               id,
               job,
-              idNotifier,
               value: Math.round(value ?? 0),
             },
           ]

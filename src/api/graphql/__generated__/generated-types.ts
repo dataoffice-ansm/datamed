@@ -102,7 +102,6 @@ export type QueryGetSubstanceArgs = {
 export type RepartitionPerNotifier = {
   __typename?: 'RepartitionPerNotifier';
   id?: Maybe<Scalars['Int']>;
-  idNotifier?: Maybe<Scalars['Int']>;
   job?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
 };
@@ -548,7 +547,6 @@ export type RepartitionPerNotifierResolvers<
   ParentType extends ResolversParentTypes['RepartitionPerNotifier'] = ResolversParentTypes['RepartitionPerNotifier']
 > = ResolversObject<{
   id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  idNotifier?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   job?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
