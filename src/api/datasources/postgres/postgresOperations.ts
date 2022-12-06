@@ -474,22 +474,20 @@ export class PostgresOperations {
       .where('s_s.substance_id', '=', subCode)
       .leftJoin('soc_longs as soc', 'soc.id', 's_s.soc_long_id')
       .select([
-        's_s.id',
-        'soc.id as idPathology',
+        'soc.id',
         'soc.soc as name',
         's_s.n_case_effect as nbCases',
         's_s.case_percentage as nbPercent',
       ])
       .execute();
     return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
-      const { id, idPathology, name, nbCases, nbPercent } = row;
+      const { id, name, nbCases, nbPercent } = row;
       return name
         ? [
             ...carry,
             {
               id,
               name,
-              idPathology,
               nbCases,
               nbPercent: Math.round(nbPercent ?? 0),
             },
@@ -499,17 +497,23 @@ export class PostgresOperations {
   }
 
   async getSubstanceTotalExposition(subCode: number): Promise<TotalExposition> {
-    const { sum } = dbInstance.fn;
+    const { sum, min, max } = dbInstance.fn;
     const rows = await dbInstance
       .selectFrom('substances_exposition')
       .where('substance_id', '=', subCode)
-      .select(sum<number>('year_cases').as('total'))
+      .select([
+        sum<number>('year_cases').as('total'),
+        min('year').as('minYear'),
+        max('year').as('maxYear'),
+      ])
       .executeTakeFirst();
 
     if (rows) {
-      const { total } = rows;
+      const { total, minYear, maxYear } = rows;
       return {
         total,
+        minYear,
+        maxYear,
       };
     }
 

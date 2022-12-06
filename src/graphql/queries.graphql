@@ -154,6 +154,8 @@ query Substance($subCode: String!) {
 
         totalExposition {
             total
+            minYear
+            maxYear
         }
     }
 }

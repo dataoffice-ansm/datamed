@@ -110,7 +110,6 @@ export type RepartitionPerNotifier = {
 export type RepartitionPerPathology = {
   __typename?: 'RepartitionPerPathology';
   id?: Maybe<Scalars['Int']>;
-  idPathology?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   nbCases?: Maybe<Scalars['Int']>;
   nbPercent?: Maybe<Scalars['Int']>;
@@ -222,6 +221,8 @@ export type SubstancesReturn = {
 
 export type TotalExposition = {
   __typename?: 'TotalExposition';
+  maxYear?: Maybe<Scalars['Int']>;
+  minYear?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -558,7 +559,6 @@ export type RepartitionPerPathologyResolvers<
   ParentType extends ResolversParentTypes['RepartitionPerPathology'] = ResolversParentTypes['RepartitionPerPathology']
 > = ResolversObject<{
   id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  idPathology?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   nbCases?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   nbPercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -745,6 +745,8 @@ export type TotalExpositionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['TotalExposition'] = ResolversParentTypes['TotalExposition']
 > = ResolversObject<{
+  maxYear?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  minYear?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
