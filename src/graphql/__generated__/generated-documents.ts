@@ -110,7 +110,6 @@ export type RepartitionPerNotifier = {
 export type RepartitionPerPathology = {
   __typename?: 'RepartitionPerPathology';
   id?: Maybe<Scalars['Int']>;
-  idPathology?: Maybe<Scalars['Int']>;
   name?: Maybe<Scalars['String']>;
   nbCases?: Maybe<Scalars['Int']>;
   nbPercent?: Maybe<Scalars['Int']>;
@@ -222,6 +221,8 @@ export type SubstancesReturn = {
 
 export type TotalExposition = {
   __typename?: 'TotalExposition';
+  maxYear?: Maybe<Scalars['Int']>;
+  minYear?: Maybe<Scalars['Int']>;
   total?: Maybe<Scalars['Int']>;
 };
 
@@ -405,7 +406,12 @@ export type SubstanceQuery = {
       nbCases?: number | null;
       nbPercent?: number | null;
     } | null> | null;
-    totalExposition?: { __typename?: 'TotalExposition'; total?: number | null } | null;
+    totalExposition?: {
+      __typename?: 'TotalExposition';
+      total?: number | null;
+      minYear?: number | null;
+      maxYear?: number | null;
+    } | null;
   } | null;
 };
 
@@ -705,6 +711,8 @@ export const SubstanceDocument = gql`
       }
       totalExposition {
         total
+        minYear
+        maxYear
       }
     }
   }

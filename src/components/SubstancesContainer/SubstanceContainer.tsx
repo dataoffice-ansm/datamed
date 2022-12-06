@@ -32,7 +32,9 @@ export const SubstanceContainer = ({ substance }: { substance: Substance }) => {
           theme="secondary"
           className="my-8"
         >
-          Nombre de déclarations d&lsquo;effets indésirables sur la période 2014-2018
+          Nombre de déclarations d&lsquo;effets indésirables sur la période
+          {/* eslint-disable-next-line @typescript-eslint/restrict-template-expressions */}
+          {` ${totalExposition?.minYear}`}-{totalExposition.maxYear}
         </BoxInfoTitle>
       )}
       <div className="flex flex-row my-8">

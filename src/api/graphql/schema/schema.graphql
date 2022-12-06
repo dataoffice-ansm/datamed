@@ -90,7 +90,6 @@ type RepartitionPerNotifier {
 
 type RepartitionPerPathology {
     id: Int
-    idPathology: Int
     name: String
     nbCases: Int
     nbPercent: Int
@@ -98,6 +97,8 @@ type RepartitionPerPathology {
 
 type TotalExposition {
     total: Int
+    minYear: Int
+    maxYear: Int
 }
 
 type Speciality {
