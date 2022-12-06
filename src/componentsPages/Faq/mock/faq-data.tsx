@@ -46,7 +46,7 @@ export const faqData = [
             content: (
               <div>
                 <p>Chaque fiche de spécialité de médicament comporte :</p>
-                <ul>
+                <ul className="list-outside">
                   <li>
                     <p>
                       Un lien vers la Base de données publique des médicaments mise en oeuvre par
@@ -179,7 +179,7 @@ export const faqData = [
             content: (
               <div>
                 <p>Data.ansm utilise actuellement des extraits de 4 bases de données :</p>
-                <ul>
+                <ul className="list-outside">
                   <li>
                     <p className="title">
                       La Base de données publique des médicaments (ANSM, HAS et Cnam)
@@ -294,7 +294,7 @@ export const faqData = [
                       d&apos;intérêt thérapeutique majeur MITM (i). Les données de ruptures et de
                       risques de rupture de stock présentes sur data.ansm sont issues de deux bases:
                     </p>
-                    <ul>
+                    <ul className="list-outside">
                       <li>
                         De 2014 à avril 2021: une base d&apos;enregistrement des déclarations ne
                         contenant que les informations initiales fournies par les laboratoires
@@ -335,6 +335,7 @@ export const faqData = [
           {
             title: 'Quelle est la fréquence de mise à jour des données ?',
             content: <p>Les données sont mises à jour toutes les TODO semaines</p>,
+            disabled: true,
           },
           {
             title: 'Qui met à jour les données ?',
@@ -350,6 +351,7 @@ export const faqData = [
           },
           {
             title: 'Sur quelle période les données sont traitées ?',
+            disabled: true,
             content: (
               <div>
                 <p className="mb-2">
@@ -377,6 +379,7 @@ export const faqData = [
           {
             title: 'À quand les données en temps réel ?',
             content: <p>TODO</p>,
+            disabled: true,
           },
         ],
       },
@@ -449,7 +452,7 @@ export const faqData = [
                   </a>
                 </p>
                 <p> Pour aller plus loin :</p>
-                <ul>
+                <ul className="list-outside">
                   <li>
                     <a
                       rel="external noreferrer"
@@ -1169,7 +1172,7 @@ export const faqData = [
                   conservation. <br /> Est considéré comme grave l&apos;effet indésirable selon le
                   code de la Santé publique (article R. 5121-152 du CSP):
                 </p>
-                <ul>
+                <ul className="list-outside">
                   <li>Pouvant entraîner la mort</li>
                   <li>Ou susceptible de mettre en jeu le pronostic vital du patient</li>
                   <li>Ou entrainant une invalidité ou une incapacité importantes ou durables</li>
@@ -1210,7 +1213,7 @@ export const faqData = [
                   place sur le site ansm.sante.fr afin de vous guider vers le portail ministériel de
                   déclarations :{' '}
                 </p>
-                <ul>
+                <ul className="list-outside">
                   <li>
                     Vous êtes patient ?{' '}
                     <a
@@ -1523,7 +1526,7 @@ export const faqData = [
                   Plusieurs mesures peuvent être mises en oeuvre pour pallier ou pour éviter la
                   rupture:
                 </p>
-                <ul>
+                <ul className="list-outside">
                   <li>
                     Contingentement quantitatif : mise en place d’une distribution limitée en
                     quantité pour permettre une répartition harmonieuse des stocks.
@@ -1569,7 +1572,7 @@ export const faqData = [
                   Les causes déclarées de rupture de stock ou de risque de rupture de stock peuvent
                   être en particulier :
                 </p>
-                <ul>
+                <ul className="list-outside">
                   <li>Un manque de matière première ou d&apos;article de conditionnement</li>
                   <li>Un probléme de production</li>
                   <li>
@@ -1604,7 +1607,7 @@ export const faqData = [
             content: (
               <div>
                 <p>Il y a plusieurs manières de contribuer à l&apos;amélioration du site:</p>
-                <ul>
+                <ul className="list-outside">
                   <li>
                     <strong>Devenir beta-testeur:</strong> Vous serez sollicité pour tester les
                     futurs produits/sites/applications en cours de réalisation par l&apos;ANSM. Vous

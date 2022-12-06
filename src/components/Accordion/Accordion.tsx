@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'react';
 import SparkSVG from '../../assets/icons/spark/spark.svg';
 import ChevronSVG from '../../assets/icons/chevron/chevron.svg';
 import { Disclosure, Transition } from '@headlessui/react';
-import classnames from 'classnames';
+import classNames from 'classnames';
 
 export type AccordionThemeColor =
   | 'primary'
@@ -16,6 +16,7 @@ export type AccordionProps = {
   title: string;
   defaultOpen?: boolean;
   theme?: AccordionThemeColor;
+  disabled?: boolean;
 };
 
 const strokeTheme = (theme: AccordionThemeColor) => {
@@ -58,18 +59,25 @@ export const Accordion = ({
   title,
   defaultOpen = false,
   theme = 'secondary',
+  disabled = false,
 }: AccordionProps & HTMLAttributes<HTMLDivElement>) => (
   <div id={id} className="Accordion bg-white border border-grey-200 rounded-lg">
     <Disclosure defaultOpen={defaultOpen}>
       {({ open }) => (
         <>
-          <Disclosure.Button className="AccordionTriggerButton py-4 w-full flex gap-4 px-4 items-center font-medium justify-between">
+          <Disclosure.Button
+            className={classNames(
+              'AccordionTriggerButton py-4 w-full flex gap-4 px-4 items-center font-medium justify-between',
+              { 'opacity-50': disabled }
+            )}
+            disabled={disabled}
+          >
             <div className="AccordionLeftIcon h-8 w-8">
               <SparkSVG className={strokeTheme(theme)} />
             </div>
             <span className="AccordionTitle text-left flex-1">{title}</span>
             <div
-              className={classnames(
+              className={classNames(
                 'AccordionChevronIcon h-8 w-8 transform duration-500 rotate-180',
                 {
                   '-rotate-0': open,

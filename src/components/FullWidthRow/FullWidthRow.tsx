@@ -1,4 +1,4 @@
-import classnames from 'classnames';
+import classNames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
 
 /**
@@ -7,6 +7,7 @@ import type { HTMLAttributes, ReactNode } from 'react';
  * @param classNameInner
  * @param children
  * @param background
+ * @param flexContent
  * @param props
  * @constructor
  */
@@ -15,17 +16,21 @@ export const FullWidthRow = ({
   classNameInner,
   children,
   background,
+  flexContent = true,
   ...props
 }: HTMLAttributes<HTMLDivElement> & {
   background?: JSX.Element | ReactNode;
   classNameInner?: string;
+  flexContent?: boolean;
 }) => (
   <div className="fullWidthRowContainer relative">
-    <div className={classnames('w-screen absolute h-full left-1/2 m-[0_auto_0_-50vw]', className)}>
+    <div className={classNames('w-screen absolute h-full left-1/2 m-[0_auto_0_-50vw]', className)}>
       {background}
     </div>
     <div
-      className={classnames('fullWidthRowInner flex items-center relative', classNameInner)}
+      className={classNames('fullWidthRowInner relative', classNameInner, {
+        'flex items-center': flexContent,
+      })}
       {...props}
     >
       {children}
