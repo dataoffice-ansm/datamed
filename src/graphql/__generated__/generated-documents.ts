@@ -99,6 +99,23 @@ export type QueryGetSubstanceArgs = {
   subCode: Scalars['String'];
 };
 
+export type RepartitionPerNotifier = {
+  __typename?: 'RepartitionPerNotifier';
+  id?: Maybe<Scalars['Int']>;
+  idNotifier?: Maybe<Scalars['Int']>;
+  job?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type RepartitionPerPathology = {
+  __typename?: 'RepartitionPerPathology';
+  id?: Maybe<Scalars['Int']>;
+  idPathology?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  nbCases?: Maybe<Scalars['Int']>;
+  nbPercent?: Maybe<Scalars['Int']>;
+};
+
 export type RepartitionPerSex = {
   __typename?: 'RepartitionPerSex';
   female?: Maybe<Scalars['Int']>;
@@ -189,13 +206,23 @@ export type Substance = {
   id: Scalars['Int'];
   name: Scalars['String'];
   pharmaForm?: Maybe<Scalars['String']>;
+  repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
+  repartitionPerNotifier?: Maybe<Array<Maybe<RepartitionPerNotifier>>>;
+  repartitionPerPathology?: Maybe<Array<Maybe<RepartitionPerPathology>>>;
+  repartitionPerSex?: Maybe<RepartitionPerSex>;
   retrieveSpecialities?: Maybe<SpecialitiesReturn>;
+  totalExposition?: Maybe<TotalExposition>;
 };
 
 export type SubstancesReturn = {
   __typename?: 'SubstancesReturn';
   meta?: Maybe<Meta>;
   substances?: Maybe<Array<Maybe<Substance>>>;
+};
+
+export type TotalExposition = {
+  __typename?: 'TotalExposition';
+  total?: Maybe<Scalars['Int']>;
 };
 
 export type WithRepartition = {
@@ -354,6 +381,31 @@ export type SubstanceQuery = {
         description?: string | null;
       } | null> | null;
     } | null;
+    repartitionPerSex?: {
+      __typename?: 'RepartitionPerSex';
+      male?: number | null;
+      female?: number | null;
+    } | null;
+    repartitionPerAge?: Array<{
+      __typename?: 'RepartitionTranche';
+      id?: number | null;
+      range?: string | null;
+      value?: number | null;
+    } | null> | null;
+    repartitionPerNotifier?: Array<{
+      __typename?: 'RepartitionPerNotifier';
+      id?: number | null;
+      job?: string | null;
+      value?: number | null;
+    } | null> | null;
+    repartitionPerPathology?: Array<{
+      __typename?: 'RepartitionPerPathology';
+      id?: number | null;
+      name?: string | null;
+      nbCases?: number | null;
+      nbPercent?: number | null;
+    } | null> | null;
+    totalExposition?: { __typename?: 'TotalExposition'; total?: number | null } | null;
   } | null;
 };
 
@@ -630,6 +682,29 @@ export const SubstanceDocument = gql`
           name
           description
         }
+      }
+      repartitionPerSex {
+        male
+        female
+      }
+      repartitionPerAge {
+        id
+        range
+        value
+      }
+      repartitionPerNotifier {
+        id
+        job
+        value
+      }
+      repartitionPerPathology {
+        id
+        name
+        nbCases
+        nbPercent
+      }
+      totalExposition {
+        total
       }
     }
   }

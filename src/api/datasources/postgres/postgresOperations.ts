@@ -1,12 +1,15 @@
 import { dbInstance } from './postgreDb';
 import type {
   MedicalErrors,
+  RepartitionPerNotifier,
+  RepartitionPerPathology,
   RepartitionPerSex,
   RepartitionTranche,
   Speciality,
   Substance,
   Publication,
   SpecialityRupture,
+  TotalExposition,
 } from '../../graphql/__generated__/generated-types';
 
 export class PostgresOperations {
@@ -395,5 +398,123 @@ export class PostgresOperations {
           ]
         : carry;
     }, []);
+  }
+
+  async getSubstanceRepSex(subCode: number): Promise<RepartitionPerSex> {
+    const rows = await dbInstance
+      .selectFrom('substances_case_sex')
+      .where('substance_id', '=', subCode)
+      .select(['id', 'sex', 'case_percentage'])
+      .execute();
+
+    const male = rows.find((row) => row.sex === 1);
+    const female = rows.find((row) => row.sex === 2);
+
+    return {
+      male: male ? Math.round(male.case_percentage ?? 0) : null,
+      female: female ? Math.round(female.case_percentage ?? 0) : null,
+    };
+  }
+
+  async getSubstanceRepAge(subCode: number): Promise<RepartitionTranche[]> {
+    const rows = await dbInstance
+      .selectFrom('substances_patient_age as s_p_a')
+      .where('s_p_a.substance_id', '=', subCode)
+      .leftJoin('ages', 'ages.id', 's_p_a.age_id')
+      .select(['s_p_a.id', 'ages.range', 's_p_a.patients_percentage as value'])
+      .execute();
+
+    return rows.reduce<RepartitionTranche[]>((carry, row) => {
+      const { id, range, value } = row;
+      return range
+        ? [
+            ...carry,
+            {
+              id,
+              range,
+              value: Math.round(value ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  async getSubstanceRepNotifier(subCode: number): Promise<RepartitionPerNotifier[]> {
+    const rows = await dbInstance
+      .selectFrom('substances_notif as s_n')
+      .where('s_n.substance_id', '=', subCode)
+      .leftJoin('notifiers', 'notifiers.id', 's_n.notifier_id')
+      .select([
+        's_n.id',
+        'notifiers.id as idNotifier',
+        'notifiers.job',
+        's_n.notification_percentage as value',
+      ])
+      .execute();
+
+    return rows.reduce<RepartitionPerNotifier[]>((carry, row) => {
+      const { id, idNotifier, job, value } = row;
+      return job
+        ? [
+            ...carry,
+            {
+              id,
+              job,
+              idNotifier,
+              value: Math.round(value ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  async getSubstanceRepPathology(subCode: number): Promise<RepartitionPerPathology[]> {
+    const rows = await dbInstance
+      .selectFrom('substances_soclong as s_s')
+      .where('s_s.substance_id', '=', subCode)
+      .leftJoin('soc_longs as soc', 'soc.id', 's_s.soc_long_id')
+      .select([
+        's_s.id',
+        'soc.id as idPathology',
+        'soc.soc as name',
+        's_s.n_case_effect as nbCases',
+        's_s.case_percentage as nbPercent',
+      ])
+      .execute();
+    return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
+      const { id, idPathology, name, nbCases, nbPercent } = row;
+      return name
+        ? [
+            ...carry,
+            {
+              id,
+              name,
+              idPathology,
+              nbCases,
+              nbPercent: Math.round(nbPercent ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  async getSubstanceTotalExposition(subCode: number): Promise<TotalExposition> {
+    const { sum } = dbInstance.fn;
+    const rows = await dbInstance
+      .selectFrom('substances_exposition')
+      .where('substance_id', '=', subCode)
+      .select(sum<number>('year_cases').as('total'))
+      .executeTakeFirst();
+
+    if (rows) {
+      const { total } = rows;
+      return {
+        total,
+      };
+    }
+
+    return {
+      total: 0,
+    };
   }
 }

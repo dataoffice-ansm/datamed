@@ -131,6 +131,30 @@ query Substance($subCode: String!) {
                 description
             }
         }
+        repartitionPerSex {
+            male
+            female
+        }
+        repartitionPerAge {
+            id
+            range
+            value
+        }
+        repartitionPerNotifier {
+            id
+            job
+            value
+        }
+        repartitionPerPathology {
+            id
+            name
+            nbCases
+            nbPercent
+        }
+
+        totalExposition {
+            total
+        }
     }
 }
 
@@ -144,5 +168,6 @@ query Substances {
             name
             code
         }
+
     }
 }

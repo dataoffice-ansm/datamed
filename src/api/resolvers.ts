@@ -114,5 +114,23 @@ export const resolvers: Resolvers = {
         },
       };
     },
+    async repartitionPerAge(parent, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceRepAge(parent.id);
+    },
+    async repartitionPerSex(parent, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceRepSex(parent.id);
+    },
+
+    async repartitionPerNotifier(parent, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceRepNotifier(parent.id);
+    },
+
+    async repartitionPerPathology(parent, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceRepPathology(parent.id);
+    },
+
+    async totalExposition(parent, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceTotalExposition(parent.id);
+    },
   },
 };
