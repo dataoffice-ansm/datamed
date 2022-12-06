@@ -72,7 +72,7 @@ export const SubstanceContainer = ({ substance }: { substance: Substance }) => {
                   key={notifier.id}
                   value={notifier.value}
                   description={notifier.job}
-                  icon={<GetFigureByJob job={notifier.job} />}
+                  icon={<GetFigureByJob id={notifier.id} />}
                 />
               )
           )}
@@ -105,7 +105,7 @@ export const SubstanceContainer = ({ substance }: { substance: Substance }) => {
                     valueClassName="text-secondary"
                     value={defaultNb === 'percent' ? pathology.nbPercent : pathology.nbCases}
                     description={pathology.name}
-                    icon={<GetFigureByPathology name={pathology.name} />}
+                    icon={<GetFigureByPathology id={pathology.id} />}
                   />
                 )
             )}

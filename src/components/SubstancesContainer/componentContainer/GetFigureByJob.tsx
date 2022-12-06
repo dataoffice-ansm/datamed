@@ -7,23 +7,23 @@ import SpecialistFigure from '../../../assets/images/notifiers/4.svg';
 import PatientFigure from '../../../assets/images/notifiers/5.svg';
 import PharmacistFigure from '../../../assets/images/notifiers/6.svg';
 
-export const GetFigureByJob = ({ job }: { job: Maybe<string> | undefined }) => {
+export const GetFigureByJob = ({ id }: { id: Maybe<number> | undefined }) => {
   const width = 150;
   const height = 150;
-  switch (job) {
-    case 'Autre professionnel de santé':
+  switch (id) {
+    case 0:
       return <OtherDoctorFigure width={width} height={height} />;
-    case 'Infirmière':
+    case 1:
       return <NurseFigure width={width} height={height} />;
-    case 'Juriste':
+    case 2:
       return <JuristeFigure width={width} height={height} />;
-    case 'Médecin généraliste':
+    case 3:
       return <DoctorFigure width={width} height={height} />;
-    case 'Médecin spécialiste':
+    case 4:
       return <SpecialistFigure width={width} height={height} />;
-    case 'Non professionnel de santé':
+    case 5:
       return <PatientFigure width={width} height={height} />;
-    case 'Pharmacien':
+    case 6:
       return <PharmacistFigure width={width} height={height} />;
     default:
       return <OtherDoctorFigure width={width} height={height} />;

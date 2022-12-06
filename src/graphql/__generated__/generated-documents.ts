@@ -102,7 +102,6 @@ export type QueryGetSubstanceArgs = {
 export type RepartitionPerNotifier = {
   __typename?: 'RepartitionPerNotifier';
   id?: Maybe<Scalars['Int']>;
-  idNotifier?: Maybe<Scalars['Int']>;
   job?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
 };
