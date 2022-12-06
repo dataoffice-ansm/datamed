@@ -9,6 +9,7 @@ import { faqData } from './mock/faq-data';
 import FaqSVG from '../../assets/images/faq.svg';
 import SparkSVG from '../../assets/icons/spark/spark.svg';
 import { useLayoutContext } from 'contexts/LayoutContext';
+import { toNormalForm } from '../../utils/format';
 
 export type FaqType = {
   index: number;
@@ -64,26 +65,39 @@ export const FaqEntryQuestion = ({
   </div>
 );
 
+/**
+ *
+ * @param search
+ * @constructor
+ */
 export const FaqContent = ({ search = '' }: { search?: string }) => {
   const formattedSearch = search.toLowerCase();
   const sections = useMemo(
     () =>
       faqData
         .reduce<FaqType[]>((faqTypes, faqType) => {
-          const filteredParts = (faqType.parts as FaqSectionPart[]).reduce<FaqSectionPart[]>(
-            (p2, n2) => {
-              const entries = n2.entries.reduce<FaqEntry[]>(
-                (p3, n3) => (n3.title.toLowerCase().includes(formattedSearch) ? [...p3, n3] : p3),
-                []
-              );
-              if (entries.length > 0) {
-                return [...p2, { ...n2, entries }];
+          const filteredParts = faqType.parts.reduce<FaqSectionPart[]>((p2, n2) => {
+            if (n2.disabled) {
+              return p2;
+            }
+
+            const entries = n2.entries.reduce<FaqEntry[]>((p3, n3) => {
+              if (n3.disabled) {
+                return p3;
               }
 
-              return p2;
-            },
-            []
-          );
+              const matchTitle = toNormalForm(n3.title.toLowerCase()).includes(
+                toNormalForm(formattedSearch)
+              );
+
+              return matchTitle ? [...p3, n3] : p3;
+            }, []);
+            if (entries.length > 0) {
+              return [...p2, { ...n2, entries }];
+            }
+
+            return p2;
+          }, []);
 
           if (filteredParts.length > 0) {
             return [...faqTypes, { ...faqType, parts: filteredParts }];
@@ -171,7 +185,7 @@ export const FaqPage = () => {
           <input
             className="w-full m-auto max-w-3xl my-16 px-4 py-3 rounded-lg border-grey-400"
             type="text"
-            placeholder="Rechercher une question ou réponse"
+            placeholder="Rechercher une question ou une réponse"
             onChange={({ target }) => {
               handleSearch(target.value);
             }}

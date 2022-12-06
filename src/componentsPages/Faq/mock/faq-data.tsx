@@ -1,7 +1,8 @@
 /* eslint-disable no-warning-comments */
 import Link from 'next/link';
+import type { FaqType } from '../FaqPage';
 
-export const faqData = [
+export const faqData: FaqType[] = [
   {
     index: 0,
     title: "DATA.ANSM c'est quoi ?",
