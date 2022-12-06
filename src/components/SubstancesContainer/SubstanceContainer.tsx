@@ -12,13 +12,13 @@ import WomanFigure from '../../assets/images/woman_illustration.svg';
 import ManFigure from '../../assets/images/man_illustration.svg';
 import { PieChartRepartitionAge } from '../Charts/PieChartRepartitionAge';
 import { Accordion } from '../Accordion/Accordion';
-import { GetFigureByJob } from './componentContainer/GetFigureByJob';
 import { GetFigureByPathology } from './componentContainer/GetFigureByPathology';
 import type { HTMLAttributes } from 'react';
 import { useCallback, useState } from 'react';
 import type { SelectOption } from '../Select/Select';
 import { Select } from '../Select/Select';
 import { NotEnoughData } from '../NotEnoughData';
+import { getNotifierFigureByJob } from '../../utils/mapping';
 
 export const PathologyContainer = ({
   repartitionPerPathology,
@@ -59,33 +59,34 @@ export const PathologyContainer = ({
           onSelectOption={onChange}
         />
       </div>
+
       {(repartitionPerPathology?.length ?? 0) > 0 ? (
         <div>
           <div className="px-4 text-2xl my-6">
             Parmi les <span className="text-secondary font-medium">{totalExposition}</span>{' '}
-            déclarations d’effets indésirables pour :{' '}
+            déclarations d’effets indésirables pour:{' '}
             <span className="text-secondary font-medium">{substanceName}</span>
           </div>
+
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8 m-auto mt-8 p-4">
             {repartitionPerPathology
               ?.filter((pathology) => pathology)
-              .map(
-                (pathology) =>
-                  pathology && (
-                    <div key={pathology.id} className="flex justify-center">
-                      <GraphFigure
-                        className=""
-                        unit={selectedOption === 'percent' ? ' % ' : ''}
-                        value={
-                          selectedOption === 'percent' ? pathology.nbPercent : pathology.nbCases
-                        }
-                        valueClassName="text-secondary"
-                        description={pathology.name}
-                        descriptionClassName="text-[16px] md:text-[18px] text-center"
-                        icon={<GetFigureByPathology id={pathology.id} />}
-                      />
-                    </div>
-                  )
+              .map((pathology) =>
+                pathology?.valuePercent && pathology.value && pathology.range ? (
+                  <div key={pathology.id} className="flex justify-center">
+                    <GraphFigure
+                      className="pathologyGraphFigure"
+                      unit={selectedOption === 'percent' ? ' % ' : ''}
+                      value={
+                        selectedOption === 'percent' ? pathology.valuePercent : pathology.value
+                      }
+                      valueClassName="text-secondary"
+                      description={pathology.range}
+                      descriptionClassName="text-[16px] md:text-[18px] text-center"
+                      icon={<GetFigureByPathology id={pathology.id} />}
+                    />
+                  </div>
+                ) : null
               )}
           </div>
         </div>
@@ -98,6 +99,12 @@ export const PathologyContainer = ({
   );
 };
 
+/**
+ *
+ * @param substance
+ * @param children
+ * @constructor
+ */
 export const SubstanceContainer = ({
   substance,
   children,
@@ -170,20 +177,19 @@ export const SubstanceContainer = ({
       </div>
 
       <GraphBox title="Répartition par type déclarant" className="max-w-full my-8">
-        {(repartitionPerNotifier?.length ?? 0) > 0 ? (
+        {repartitionPerNotifier?.length ? (
           <div className="flex gap-12 justify-center flex-wrap py-4">
-            {repartitionPerNotifier?.map(
-              (notifier) =>
-                notifier && (
-                  <GraphFigure
-                    key={notifier.id}
-                    value={notifier.value}
-                    valueClassName="text-secondary my-2"
-                    description={notifier.job}
-                    icon={<GetFigureByJob id={notifier.id} />}
-                    descriptionClassName="text-[16px] md:text-[18px] text-center"
-                  />
-                )
+            {repartitionPerNotifier.map((notifier) =>
+              notifier?.id && notifier?.value && notifier.job ? (
+                <GraphFigure
+                  key={notifier.id}
+                  value={notifier.value}
+                  valueClassName="text-secondary my-2"
+                  description={notifier.job}
+                  icon={getNotifierFigureByJob(notifier.id)}
+                  descriptionClassName="text-[16px] md:text-[18px] text-center"
+                />
+              ) : null
             )}
           </div>
         ) : (

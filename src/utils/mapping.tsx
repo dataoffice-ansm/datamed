@@ -3,10 +3,16 @@ import ErrorDelivrance from '../assets/images/errorDelivrance.svg';
 import ErrorOther from '../assets/images/errorOther.svg';
 import ErrorPreparation from '../assets/images/errorPreparation.svg';
 import ErrorPrescription from '../assets/images/errorPrescription.svg';
-import ErrorSuivitherapeutique from '../assets/images/errorSuivitherapeutique.svg';
 import PublicationOtherSVG from '../assets/icons/publications/other.svg';
 import PublicationSpeakSVG from '../assets/icons/publications/speak.svg';
 import PublicationInfoSVG from '../assets/icons/publications/info.svg';
+import OtherDoctorFigure from '../assets/images/notifiers/0.svg';
+import NurseFigure from '../assets/images/notifiers/2.svg';
+import JuristeFigure from '../assets/images/notifiers/8.svg';
+import DoctorFigure from '../assets/images/notifiers/3.svg';
+import SpecialistFigure from '../assets/images/notifiers/4.svg';
+import PatientFigure from '../assets/images/notifiers/5.svg';
+import PharmacistFigure from '../assets/images/notifiers/6.svg';
 
 export const cisExpositionLevelMapping = {
   0: 'Utilisation inconnue',
@@ -53,5 +59,26 @@ export const getPublicationIcon = (publicationTypeId: number) => {
       return <PublicationSpeakSVG />;
     default:
       return <PublicationInfoSVG />;
+  }
+};
+
+export const getNotifierFigureByJob = (id: number) => {
+  switch (id) {
+    case 0:
+      return <OtherDoctorFigure />;
+    case 1:
+      return <NurseFigure />;
+    case 2:
+      return <JuristeFigure />;
+    case 3:
+      return <DoctorFigure />;
+    case 4:
+      return <SpecialistFigure />;
+    case 5:
+      return <PatientFigure />;
+    case 6:
+      return <PharmacistFigure />;
+    default:
+      return <OtherDoctorFigure />;
   }
 };

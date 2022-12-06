@@ -139,9 +139,9 @@ query Substance($subCode: String!) {
         }
         repartitionPerPathology {
             id
-            name
-            nbCases
-            nbPercent
+            range
+            value
+            valuePercent
         }
 
         totalExposition {

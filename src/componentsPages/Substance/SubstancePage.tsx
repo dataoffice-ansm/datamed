@@ -50,7 +50,7 @@ const SectionThree = () => {
 
   return (
     <div className="min-h-screen">
-      <SectionTitle title={`Spécialités de médicaments contenant : ${currentEntity.name}`} />
+      <SectionTitle title={`Spécialités de médicaments contenant: ${currentEntity.name}`} />
       <div className="p-4 border border-grey-200 rounded-lg bg-white">
         <div className="text-secondary-900 font-medium">
           {data?.getSubstance?.retrieveSpecialities?.meta?.count} médicaments identifiés
@@ -64,11 +64,11 @@ const SectionThree = () => {
                 <Link href={`/specialite/${item.code}`}>
                   <a
                     className={classnames(
-                      'w-full no-underline hover:underline p-4 hover:bg-grey-50 focus:bg-grey-50',
+                      'w-full no-underline hover:underline p-4 focus:bg-grey-50',
                       'hover:font-medium focus:font-medium'
                     )}
                   >
-                    {item?.id} - {item?.name}
+                    {item?.name}
                   </a>
                 </Link>
               ) : null

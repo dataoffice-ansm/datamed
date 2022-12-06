@@ -16,7 +16,7 @@ import type { Maybe } from '../../graphql/__generated__/generated-documents';
  * @constructor
  */
 export const GraphFigure = ({
-  value,
+  value = 0,
   description,
   icon,
   action,
@@ -26,8 +26,8 @@ export const GraphFigure = ({
   descriptionClassName,
   ...props
 }: HTMLAttributes<HTMLDivElement> & {
-  value: number | Maybe<number> | undefined;
-  description: string | Maybe<string> | undefined;
+  value: number;
+  description: string;
   icon: ReactNode;
   action?: ReactNode;
   unit?: string;
@@ -43,7 +43,7 @@ export const GraphFigure = ({
   >
     <div className="h-20 md:h-28 w-20 md:w-28">{icon}</div>
     <div className={classnames('GraphFigureCountUp text-3xl', valueClassName)}>
-      <CountUp formattingFn={(n) => formatDecimalToUnit(n, unit)} end={value ?? 0} />
+      <CountUp formattingFn={(n) => formatDecimalToUnit(n, unit)} end={value} />
     </div>
     <div className={classnames('GraphFigureDescription', descriptionClassName)}>{description}</div>
     {action}

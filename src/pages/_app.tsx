@@ -8,6 +8,7 @@ import { LayoutProvider } from '../contexts/LayoutContext';
 import type { NormalizedCacheObject } from '@apollo/client';
 import { ApolloProvider } from '@apollo/client';
 import useApollo, { APOLLO_STATE_PROPERTY_NAME } from '../config/apolloClient';
+import { Router } from 'next/router';
 
 export type AppCustomProps<PP extends Record<string, unknown> = Record<string, unknown>> = {
   pageProps: PP;
@@ -16,13 +17,38 @@ export type AppCustomProps<PP extends Record<string, unknown> = Record<string, u
 const MyApp = ({ Component, pageProps }: AppCustomProps) => {
   const apolloClient = useApollo(pageProps[APOLLO_STATE_PROPERTY_NAME] as NormalizedCacheObject);
 
+  const [loading, setLoading] = React.useState(false);
+  React.useEffect(() => {
+    const start = () => {
+      console.log('start');
+      setLoading(true);
+    };
+
+    const end = () => {
+      console.log('findished');
+      setLoading(false);
+    };
+
+    Router.events.on('routeChangeStart', start);
+    Router.events.on('routeChangeComplete', end);
+    Router.events.on('routeChangeError', end);
+
+    return () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+      Router.events.off('routeChangeStart', start);
+      Router.events.off('routeChangeComplete', end);
+      Router.events.off('routeChangeError', end);
+    };
+  }, []);
+
   return (
     <ApolloProvider client={apolloClient}>
       <BodyScrollProvider>
         <LayoutProvider>
-          <AppLayout>
-            <Component {...pageProps} />
-          </AppLayout>
+          <AppLayout>{loading ? <h1>Loading...</h1> : <Component {...pageProps} />}</AppLayout>
         </LayoutProvider>
       </BodyScrollProvider>
     </ApolloProvider>

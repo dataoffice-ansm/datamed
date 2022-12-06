@@ -463,22 +463,22 @@ export class PostgresOperations {
       .leftJoin('soc_longs as soc', 'soc.id', 's_s.soc_long_id')
       .select([
         'soc.id',
-        'soc.soc as name',
-        's_s.n_case_effect as nbCases',
-        's_s.case_percentage as nbPercent',
+        'soc.soc as range',
+        's_s.n_case_effect as value',
+        's_s.case_percentage as valuePercent',
       ])
       .execute();
 
     return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
-      const { id, name, nbCases, nbPercent } = row;
-      return name
+      const { id, range, value, valuePercent } = row;
+      return range
         ? [
             ...carry,
             {
               id,
-              name,
-              nbCases,
-              nbPercent: Math.round(nbPercent ?? 0),
+              range,
+              value,
+              valuePercent: Math.round(valuePercent ?? 0),
             },
           ]
         : carry;
