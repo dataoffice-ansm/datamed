@@ -67,10 +67,15 @@ export type Meta = {
 export type Publication = {
   __typename?: 'Publication';
   id: Scalars['Int'];
-  link: Scalars['String'];
+  link?: Maybe<Scalars['String']>;
   name: Scalars['String'];
-  type: Scalars['String'];
-  typeId: Scalars['Int'];
+  type?: Maybe<PublicationType>;
+};
+
+export type PublicationType = {
+  __typename?: 'PublicationType';
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
 };
 
 export type Query = {
@@ -213,9 +218,8 @@ export type SpecialityQuery = {
       __typename?: 'Publication';
       id: number;
       name: string;
-      link: string;
-      type: string;
-      typeId: number;
+      link?: string | null;
+      type?: { __typename?: 'PublicationType'; id?: number | null; name?: string | null } | null;
     } | null> | null;
     icon?: { __typename?: 'Icon'; id: number; name?: string | null } | null;
     laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
@@ -402,8 +406,10 @@ export const SpecialityDocument = gql`
         id
         name
         link
-        type
-        typeId
+        type {
+          id
+          name
+        }
       }
       description
       icon {

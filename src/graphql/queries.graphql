@@ -1,126 +1,128 @@
 query SpecialityIdByCode($cisCode: String!) {
-  getSpecialityIdByCode(cisCode: $cisCode)
+    getSpecialityIdByCode(cisCode: $cisCode)
 }
 
 query Speciality($cisId: Int!) {
-  getSpeciality(cisId: $cisId) {
-    id
-    name
-    code
-    atc {
-      id
-      name
-      code
-    }
-    commercialisationState
-    commercialisationType
-    repartitionPerSex {
-      male
-      female
-    }
-    repartitionPerAge {
-      id
-      range
-      value
-    }
-    publications {
-      id
-      name
-      link
-      type
-      typeId
-    }
-    description
-    icon {
-      id
-      name
-    }
-    laboratory {
-      id
-      name
-    }
-    substances {
-      id
-      code
-      name
-      dosage
-      pharmaForm
-    }
-    exposition {
-      id
-      consumption
-      expositionLevel
-    }
-    medicalErrors {
-      populationRepartition {
+    getSpeciality(cisId: $cisId) {
         id
-        value
-        range
-      }
-      sideEffectsOriginRepartition {
-        with {
-          id
-          value
-          range
+        name
+        code
+        atc {
+            id
+            name
+            code
         }
-        without {
-          id
-          value
-          range
+        commercialisationState
+        commercialisationType
+        repartitionPerSex {
+            male
+            female
         }
-      }
-      natureRepartition {
-        id
-        value
-        range
-      }
+        repartitionPerAge {
+            id
+            range
+            value
+        }
+        publications {
+            id
+            name
+            link
+            type {
+                id
+                name
+            }
+        }
+        description
+        icon {
+            id
+            name
+        }
+        laboratory {
+            id
+            name
+        }
+        substances {
+            id
+            code
+            name
+            dosage
+            pharmaForm
+        }
+        exposition {
+            id
+            consumption
+            expositionLevel
+        }
+        medicalErrors {
+            populationRepartition {
+                id
+                value
+                range
+            }
+            sideEffectsOriginRepartition {
+                with {
+                    id
+                    value
+                    range
+                }
+                without {
+                    id
+                    value
+                    range
+                }
+            }
+            natureRepartition {
+                id
+                value
+                range
+            }
+        }
     }
-  }
 }
 
 query Specialities {
-  getSpecialities {
-    meta {
-      count
+    getSpecialities {
+        meta {
+            count
+        }
+        specialities {
+            id
+            code
+            name
+        }
     }
-    specialities {
-      id
-      code
-      name
-    }
-  }
 }
 
 query Substance($subCode: String!) {
-  getSubstance(subCode: $subCode) {
-    id
-    code
-    name
-    pharmaForm
-    dosage
-    retrieveSpecialities {
-      meta {
-        count
-      }
-      specialities {
+    getSubstance(subCode: $subCode) {
         id
         code
         name
-        description
-      }
+        pharmaForm
+        dosage
+        retrieveSpecialities {
+            meta {
+                count
+            }
+            specialities {
+                id
+                code
+                name
+                description
+            }
+        }
     }
-  }
 }
 
 query Substances {
-  getSubstances {
-    meta {
-      count
+    getSubstances {
+        meta {
+            count
+        }
+        substances {
+            id
+            name
+            code
+        }
     }
-    substances {
-      id
-      name
-      code
-    }
-  }
 }

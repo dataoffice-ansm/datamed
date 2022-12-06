@@ -111,12 +111,16 @@ type Meta {
   count: Int
 }
 
+type PublicationType {
+  id: Int
+  name:String
+}
+
 type Publication {
   id: Int!
   name: String!
-  type: String!
-  typeId: Int!
-  link: String!
+  type: PublicationType
+  link: String
 }
 
 ##### QUERIES #####
