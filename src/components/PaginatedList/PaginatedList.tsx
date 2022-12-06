@@ -11,7 +11,7 @@ export type PaginatedListThemeColor = 'primary' | 'secondary' | 'grey';
 
 export type PaginatedListProps<T> = {
   data: T[];
-  renderItem: (_item: T) => ReactNode | JSX.Element;
+  renderItem: (_item: T, _index: number) => ReactNode | JSX.Element;
   theme?: PaginatedListThemeColor;
 };
 
@@ -86,15 +86,15 @@ export const PaginatedList = <T,>({
 
   return (
     <div className="PaginatedListContainer">
-      <div className="PaginatedListItems border border-grey-50">
+      <div className="PaginatedListItems flex flex-col rounded-md border border-grey-100">
         {renderedItems.map((item, index) => (
           <div
             key={`rendered_item_page_${pageIndex}_index_${index.toString()}`}
-            className={classNames('PaginatedListItem flex border-b border-grey-50', {
+            className={classNames('PaginatedListItem border-b border-solid border-grey-100 p-3', {
               'border-none': index === renderedItems.length - 1,
             })}
           >
-            {renderItem(item)}
+            {renderItem(item, index)}
           </div>
         ))}
       </div>

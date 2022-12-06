@@ -118,6 +118,18 @@ export type RepartitionTuple = {
   value?: Maybe<Scalars['Int']>;
 };
 
+export type RuptureCause = {
+  __typename?: 'RuptureCause';
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+};
+
+export type RuptureClass = {
+  __typename?: 'RuptureClass';
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+};
+
 export type SpecialitiesReturn = {
   __typename?: 'SpecialitiesReturn';
   meta?: Maybe<Meta>;
@@ -141,6 +153,7 @@ export type Speciality = {
   publications?: Maybe<Array<Maybe<Publication>>>;
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
   repartitionPerSex?: Maybe<RepartitionPerSex>;
+  rupturesHistory?: Maybe<SpecialityRupturesHistory>;
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
 
@@ -150,6 +163,23 @@ export type SpecialityLight = {
   description?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   name: Scalars['String'];
+};
+
+export type SpecialityRupture = {
+  __typename?: 'SpecialityRupture';
+  active?: Maybe<Scalars['Boolean']>;
+  cause?: Maybe<RuptureCause>;
+  classification?: Maybe<RuptureClass>;
+  date?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+  num?: Maybe<Scalars['String']>;
+};
+
+export type SpecialityRupturesHistory = {
+  __typename?: 'SpecialityRupturesHistory';
+  meta?: Maybe<Meta>;
+  ruptures?: Maybe<Array<Maybe<SpecialityRupture>>>;
 };
 
 export type Substance = {
@@ -266,6 +296,20 @@ export type SpecialityQuery = {
         value?: number | null;
         range?: string | null;
       } | null> | null;
+    } | null;
+    rupturesHistory?: {
+      __typename?: 'SpecialityRupturesHistory';
+      ruptures?: Array<{
+        __typename?: 'SpecialityRupture';
+        id: number;
+        num?: string | null;
+        name?: string | null;
+        active?: boolean | null;
+        date?: string | null;
+        cause?: { __typename?: 'RuptureCause'; id: number; name?: string | null } | null;
+        classification?: { __typename?: 'RuptureClass'; id: number; name?: string | null } | null;
+      } | null> | null;
+      meta?: { __typename?: 'Meta'; count?: number | null } | null;
     } | null;
   } | null;
 };
@@ -454,6 +498,26 @@ export const SpecialityDocument = gql`
           id
           value
           range
+        }
+      }
+      rupturesHistory {
+        ruptures {
+          id
+          num
+          name
+          active
+          date
+          cause {
+            id
+            name
+          }
+          classification {
+            id
+            name
+          }
+        }
+        meta {
+          count
         }
       }
     }

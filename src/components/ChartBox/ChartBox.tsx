@@ -15,7 +15,7 @@ export const ChartBox = ({
   title,
   children,
   className,
-}: HTMLAttributes<HTMLDivElement> & { title: string; children: ReactNode }) => (
+}: HTMLAttributes<HTMLDivElement> & { title?: string; children: ReactNode }) => (
   <div
     id={id}
     className={classnames(
@@ -23,7 +23,7 @@ export const ChartBox = ({
       className
     )}
   >
-    <h3 className="mt-1">{title}</h3>
+    {title && <h3 className="mt-1">{title}</h3>}
     <div className="flex flex-3 items-center justify-center m-2">{children}</div>
   </div>
 );

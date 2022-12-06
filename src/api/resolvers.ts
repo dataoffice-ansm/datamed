@@ -77,6 +77,19 @@ export const resolvers: Resolvers = {
         natureRepartition,
       };
     },
+
+    async rupturesHistory(parent, args, context) {
+      const rows = await context.dataSources.postgresOperations.getSpecialityRupturesHistory(
+        parent.id
+      );
+
+      return {
+        ruptures: rows,
+        meta: {
+          count: rows.length,
+        },
+      };
+    },
   },
 
   Substance: {

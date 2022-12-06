@@ -6,6 +6,7 @@ import type {
   Speciality,
   Substance,
   Publication,
+  SpecialityRupture,
 } from '../../graphql/__generated__/generated-types';
 
 export class PostgresOperations {
@@ -231,6 +232,61 @@ export class PostgresOperations {
     }, []);
   }
 
+  async getSpecialityRupturesHistory(cisId: number): Promise<SpecialityRupture[]> {
+    const rows = await dbInstance
+      .selectFrom('sold_out as so')
+      .leftJoin('causes as c', 'c.sold_out_id', 'so.id')
+      .leftJoin('causes_types as ct', 'ct.id', 'c.cause_id')
+      .leftJoin('sold_out_classes as so_c', 'so.classification_id', 'so_c.id')
+      .where('so.mp_id', '=', cisId)
+      .select([
+        'so.id',
+        'so.num',
+        'so.state',
+        'so.date',
+        'so.name',
+        'so_c.id as classId',
+        'ct.id as causeId',
+        'ct.type as causeType',
+      ])
+      .execute();
+
+    const ruptureTypeLabelMapping = {
+      0: 'Rupture',
+      1: 'Risque de rupture de stock',
+      2: null,
+      3: 'Arrêt de commercialisation',
+      4: 'Autre',
+    };
+
+    return rows.reduce<SpecialityRupture[]>((carry, row) => {
+      const { id, num, name, state, date, classId, causeId, causeType } = row;
+
+      return id !== null && classId !== null && causeId !== null
+        ? [
+            ...carry,
+            {
+              id,
+              num,
+              name,
+              active: state === 'ouvert',
+              date: date ? date.toLocaleDateString() : null,
+              classification: {
+                id: classId,
+                name:
+                  ruptureTypeLabelMapping[causeId as keyof typeof ruptureTypeLabelMapping] ??
+                  ruptureTypeLabelMapping[4],
+              },
+              cause: {
+                id: causeId,
+                name: causeType,
+              },
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
   async getSubstancesBySpeciality(cisId: number): Promise<Substance[]> {
     const rows = await dbInstance
       .selectFrom('mp_substances as mp')
@@ -242,7 +298,7 @@ export class PostgresOperations {
 
     return rows.reduce<Substance[]>((carry, row) => {
       const { id, name, code, pharmaForm, dosage } = row;
-      return id && name && code
+      return id !== null && name !== null && code !== null
         ? [
             ...carry,
             {
@@ -306,12 +362,25 @@ export class PostgresOperations {
       .where('mp.id', '=', cisId)
       .leftJoin('publications as p', 'p.mp_id', 'mp.id')
       .leftJoin('publication_types as pt', 'pt.id', 'p.type_id')
-      .select(['p.id', 'p.title as name', 'p.link', 'pt.type as typeName', 'pt.id as typeId'])
+      .select(['p.id', 'p.title as name', 'p.link', 'pt.id as typeId'])
       .execute();
 
+    const publicationsTypeLabelMapping = (publishTypeId: number) => {
+      switch (publishTypeId) {
+        case 0:
+        case 2:
+        case 4:
+          return "Point d'information";
+        case 3:
+          return 'Communiqué';
+        default:
+          return 'Autre';
+      }
+    };
+
     return rows.reduce<Publication[]>((carry, row) => {
-      const { id, name, link, typeName, typeId } = row;
-      return id && name && link && typeId
+      const { id, name, link, typeId } = row;
+      return id !== null && name && link && typeId
         ? [
             ...carry,
             {
@@ -320,7 +389,7 @@ export class PostgresOperations {
               link,
               type: {
                 id: typeId,
-                name: typeName,
+                name: publicationsTypeLabelMapping(typeId),
               },
             },
           ]

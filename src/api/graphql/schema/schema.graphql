@@ -4,143 +4,166 @@ directive @lowercase on FIELD_DEFINITION
 directive @capitalize on FIELD_DEFINITION
 
 type GenderRepartition {
-  male: Int
-  female: Int
+    male: Int
+    female: Int
 }
 
 type RepartitionTuple {
-  codePart: String
-  value: Int
+    codePart: String
+    value: Int
 }
 
 type MedicalError {
-  name: String
+    name: String
 }
 
 type MedicalATC {
-  id: Int!
-  code: String
-  name: String
+    id: Int!
+    code: String
+    name: String
 }
 
 type Laboratory {
-  id: Int!
-  name: String
+    id: Int!
+    name: String
 }
 
 type RepartitionPerSex {
-  male: Int
-  female: Int
+    male: Int
+    female: Int
 }
 
 type RepartitionTranche {
-  id: Int
-  range: String
-  value: Int
+    id: Int
+    range: String
+    value: Int
 }
 
 type WithRepartition {
-  with: RepartitionTranche
-  without: RepartitionTranche
+    with: RepartitionTranche
+    without: RepartitionTranche
 }
 
 type MedicalErrors {
-  populationRepartition: [RepartitionTranche]
-  sideEffectsOriginRepartition: WithRepartition
-  natureRepartition: [RepartitionTranche]
+    populationRepartition: [RepartitionTranche]
+    sideEffectsOriginRepartition: WithRepartition
+    natureRepartition: [RepartitionTranche]
 }
 
 type CisExposition {
-  id: Int!
-  consumption: Int
-  expositionLevel: Int
+    id: Int!
+    consumption: Int
+    expositionLevel: Int
+}
+
+type RuptureClass {
+    id: Int!
+    name: String
+}
+
+type RuptureCause {
+    id: Int!
+    name: String
+}
+
+type SpecialityRupture {
+    id: Int!
+    num: String
+    name: String
+    active: Boolean
+    cause: RuptureCause
+    classification: RuptureClass
+    date: String
+}
+
+type SpecialityRupturesHistory {
+    ruptures: [SpecialityRupture]
+    meta: Meta
 }
 
 type Speciality {
-  id: Int!
-  code: String!
-  name: String!
-  atc: MedicalATC
-  iconId: Int
-  icon: Icon
-  substances: [Substance]
-  description: String
-  commercialisationState: String @capitalize
-  commercialisationType: String @capitalize
-  laboratory: Laboratory @capitalize
-  repartitionPerSex: RepartitionPerSex
-  repartitionPerAge: [RepartitionTranche]
-  exposition: CisExposition
-  medicalErrors: MedicalErrors
-  publications: [Publication]
-
-  #medicalErrors: MedicalError[];
-  #pharmacoForm: String;
-  #autorizationNumber: String;
-  #ammStatus: String;
-  #ammDate: Date;
-  #ammType: String;
-  #bdpmStatus: String;
-  #surveillance_renforcee: String;
-  #titulaires: String;
-  #administeringMode: String;
+    id: Int!
+    code: String!
+    name: String!
+    atc: MedicalATC
+    iconId: Int
+    icon: Icon
+    substances: [Substance]
+    description: String
+    commercialisationState: String @capitalize
+    commercialisationType: String @capitalize
+    laboratory: Laboratory @capitalize
+    repartitionPerSex: RepartitionPerSex
+    repartitionPerAge: [RepartitionTranche]
+    exposition: CisExposition
+    medicalErrors: MedicalErrors
+    publications: [Publication]
+    rupturesHistory: SpecialityRupturesHistory
+    #autorizationNumber: String;
+    #ammStatus: String;
+    #ammDate: Date;
+    #ammType: String;
+    #bdpmStatus: String;
+    #surveillance_renforcee: String;
+    #titulaires: String;
+    #administeringMode: String;
 }
 
 type SpecialityLight {
-  id: Int!
-  code: String!
-  name: String!
-  description: String
+    id: Int!
+    code: String!
+    name: String!
+    description: String
 }
 
 type Substance {
-  id: Int!
-  code: String!
-  name: String! @capitalize
-  pharmaForm: String
-  dosage: String
-  retrieveSpecialities: SpecialitiesReturn
+    id: Int!
+    code: String!
+    name: String! @capitalize
+    pharmaForm: String
+    dosage: String
+    retrieveSpecialities: SpecialitiesReturn
 }
 
 type Icon {
-  id: Int!
-  name: String
+    id: Int!
+    name: String
 }
 
 type Meta {
-  count: Int
+    count: Int
 }
 
 type PublicationType {
-  id: Int
-  name:String
+    id: Int
+    name:String
 }
 
 type Publication {
-  id: Int!
-  name: String!
-  type: PublicationType
-  link: String
+    id: Int!
+    name: String!
+    type: PublicationType
+    link: String
 }
 
 ##### QUERIES #####
 
 type SpecialitiesReturn {
-  specialities: [SpecialityLight]
-  meta: Meta
+    specialities: [SpecialityLight]
+    meta: Meta
 }
 
 type SubstancesReturn {
-  substances: [Substance]
-  meta: Meta
+    substances: [Substance]
+    meta: Meta
 }
 
 type Query {
-  getSpecialityIdByCode(cisCode: String!): Int
-  getSpeciality(cisId: Int!): Speciality
-  getSpecialities: SpecialitiesReturn
-  getSubstance(subCode: String!): Substance
-  getSubstances: SubstancesReturn
+    getSpecialityIdByCode(cisCode: String!): Int
+    getSpeciality(cisId: Int!): Speciality
+    getSpecialities: SpecialitiesReturn
+    getSubstance(subCode: String!): Substance
+    getSubstances: SubstancesReturn
 }
 
 #type Mutation {

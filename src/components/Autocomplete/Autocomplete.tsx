@@ -122,39 +122,38 @@ export const Autocomplete = ({
     : 'Rechercher';
 
   return (
-    <div className="Autocomplete relative">
+    <div
+      className={classnames(
+        'AutocompleteContainer flex',
+        embedded
+          ? 'border-grey-100 rounded-none sticky top-0 shadow-lg p-4'
+          : 'rounded-lg border border-grey-400 pl-3 py-1 px-2'
+      )}
+    >
       <Combobox onChange={onSelected}>
         <Combobox.Input
           autoFocus
           placeholder={cisLoading || subLoading ? loadingPlaceholder : placeholder}
           disabled={cisLoading || subLoading}
-          className={classnames(
-            'AutocompleteInput w-full',
-            embedded
-              ? 'border-grey-100 rounded-none sticky top-0 shadow-lg p-4'
-              : 'rounded-lg border border-grey-400 pl-3 py-3 px-4'
-          )}
+          className="AutocompleteInput flex-1 border-none"
           value={query}
           onChange={debounceInputOnChange}
         />
         {query.length > 3 && renderOptions()}
       </Combobox>
-      {isLoading ? (
-        <div
-          role="status"
-          className="absolute right-2 top-0 bottom-0 flex justify-center items-center pl-4 z-[1]"
-        >
+      <div className="afterElement flex justify-center items-center relative w-10 z-[1]">
+        {isLoading ? (
           <LoaderSpinner />
-        </div>
-      ) : (
-        <div>
-          {!embedded && (
-            <div className="absolute right-4 bottom-2.5 inset-y-0 pointer-events-none h-full flex justify-center items-center">
-              <SearchIcon width={navIconSize} height={navIconSize} alt="search" />
-            </div>
-          )}
-        </div>
-      )}
+        ) : (
+          <div className="afterElement">
+            {!embedded && (
+              <div className="pointer-events-none">
+                <SearchIcon width={navIconSize} height={navIconSize} alt="search" />
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
