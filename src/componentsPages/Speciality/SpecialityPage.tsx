@@ -17,17 +17,17 @@ import ManFaceYes from '../../assets/images/manFaceYes.svg';
 
 import { ChartBox } from '../../components/ChartBox/ChartBox';
 import classnames from 'classnames';
-import { PieChartSpecialityAge } from './Charts/PieChartSpecialityAge';
 import { useLayoutContext } from '../../contexts/LayoutContext';
 import { cisExpositionLevelMapping, getCisErrorMedNatureIconMapping } from '../../utils/mapping';
 import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { Button } from '../../components/Button/Button';
-import { PieChartMedicalErrorsPopulation } from './Charts/PieChartMedicalErrorsPopulation';
 import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
 import { PublicationItem } from 'components/Publication/Publication';
 import { RuptureHistoryItem } from '../../components/Ruptures/RuptureHistoryItem';
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
+import { PieChartMedicalErrorsPopulation } from '../../components/Charts/PieChartMedicalErrorsPopulation';
+import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -108,8 +108,6 @@ const SectionOneGlobalInformation = () => {
 
 const SectionTreatedPatients = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
-  console.log(currentEntity);
-
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
       <h2 className="mb-1 font-medium">Patients traités en ville</h2>
@@ -223,7 +221,7 @@ const SectionTreatedPatients = () => {
         </ChartBox>
 
         <ChartBox className="repAges" title="Répartition par âge des patients traités">
-          <PieChartSpecialityAge ageData={currentEntity?.repartitionPerAge} />
+          <PieChartRepartitionAge ageData={currentEntity?.repartitionPerAge} />
         </ChartBox>
       </div>
     </div>

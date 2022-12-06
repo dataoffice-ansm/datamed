@@ -57,28 +57,47 @@ type CisExposition {
 }
 
 type RuptureClass {
-    id: Int!
-    name: String
+  id: Int!
+  name: String
 }
 
 type RuptureCause {
-    id: Int!
-    name: String
+  id: Int!
+  name: String
 }
 
 type SpecialityRupture {
-    id: Int!
-    num: String
-    name: String
-    active: Boolean
-    cause: RuptureCause
-    classification: RuptureClass
-    date: String
+  id: Int!
+  num: String
+  name: String
+  active: Boolean
+  cause: RuptureCause
+  classification: RuptureClass
+  date: String
 }
 
 type SpecialityRupturesHistory {
-    ruptures: [SpecialityRupture]
-    meta: Meta
+  ruptures: [SpecialityRupture]
+  meta: Meta
+}
+
+type RepartitionPerNotifier {
+    id: Int
+    idNotifier: Int
+    job: String
+    value: Int
+}
+
+type RepartitionPerPathology {
+    id: Int
+    idPathology: Int
+    name: String
+    nbCases: Int
+    nbPercent: Int
+}
+
+type TotalExposition {
+    total: Int
 }
 
 type Speciality {
@@ -123,6 +142,11 @@ type Substance {
     pharmaForm: String
     dosage: String
     retrieveSpecialities: SpecialitiesReturn
+  repartitionPerSex: RepartitionPerSex
+  repartitionPerAge: [RepartitionTranche]
+  repartitionPerNotifier: [RepartitionPerNotifier]
+  repartitionPerPathology:[RepartitionPerPathology]
+  totalExposition: TotalExposition
 }
 
 type Icon {

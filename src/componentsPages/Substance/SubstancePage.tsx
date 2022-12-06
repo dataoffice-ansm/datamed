@@ -8,6 +8,7 @@ import { useSubstanceQuery } from '../../graphql/__generated__/generated-documen
 import { PaginatedList } from 'components/PaginatedList/PaginatedList';
 import Link from 'next/link';
 import classnames from 'classnames';
+import { SubstanceContainer } from '../../components/SubstancesContainer/SubstanceContainer';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
@@ -18,9 +19,9 @@ const SectionOneGlobalInformation = () => {
   );
 };
 
-const SectionTwo = () => (
+const SectionTwo = ({ substance }: { substance: Substance }) => (
   <div className="min-h-screen text-center">
-    <h2>Section 2</h2>
+    <SubstanceContainer substance={substance} />
   </div>
 );
 
@@ -87,7 +88,7 @@ export const SubstancePage = ({ sub }: { sub: Substance }) => {
           {
             id: 'effets-indesirables',
             label: 'EFFETS INDÉSIRABLES',
-            content: <SectionTwo />,
+            content: <SectionTwo substance={sub} />,
           },
           {
             id: 'liste-des-specialites',

@@ -3,8 +3,8 @@
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
-import type { Speciality } from '../../../graphql/__generated__/generated-documents';
-import { NotEnoughData } from '../../../components/NotEnoughData';
+import type { Speciality, Substance } from '../../graphql/__generated__/generated-documents';
+import { NotEnoughData } from '../../components/NotEnoughData';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -13,10 +13,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
  * @param ageData
  * @constructor
  */
-export const PieChartSpecialityAge = ({
+export const PieChartRepartitionAge = ({
   ageData,
 }: {
-  ageData: Speciality['repartitionPerAge'];
+  ageData: Speciality['repartitionPerAge'] | Substance['repartitionPerAge'];
 }) => {
   if (!ageData || !ageData.length) {
     return <NotEnoughData />;
@@ -35,6 +35,7 @@ export const PieChartSpecialityAge = ({
             data,
             backgroundColor: ['rgb(255, 99, 132)', 'rgb(54, 162, 235)', 'rgb(255, 205, 86)'],
             hoverOffset: 4,
+            borderWidth: 1,
           },
         ],
       }}

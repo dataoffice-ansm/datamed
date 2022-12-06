@@ -1,8 +1,8 @@
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
-import type { MedicalErrors } from '../../../graphql/__generated__/generated-documents';
-import { NotEnoughData } from '../../../components/NotEnoughData';
+import type { MedicalErrors } from '../../graphql/__generated__/generated-documents';
+import { NotEnoughData } from '../../components/NotEnoughData';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 

@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
 import CountUp from 'react-countup';
 import { formatDecimalToUnit } from '../../utils/format';
+import type { Maybe } from '../../graphql/__generated__/generated-documents';
 
 /**
  *
@@ -24,8 +25,8 @@ export const GraphFigure = ({
   valueClassName = 'text-primary',
   ...props
 }: HTMLAttributes<HTMLDivElement> & {
-  value: number;
-  description: string;
+  value: number | Maybe<number> | undefined;
+  description: string | Maybe<string> | undefined;
   icon: ReactNode;
   action?: ReactNode;
   unit?: string;
@@ -40,7 +41,7 @@ export const GraphFigure = ({
   >
     <div>{icon}</div>
     <div className={classnames('GraphFigureCountUp text-3xl', valueClassName)}>
-      <CountUp formattingFn={(n) => formatDecimalToUnit(n, unit)} end={value} />
+      <CountUp formattingFn={(n) => formatDecimalToUnit(n, unit)} end={value ?? 0} />
     </div>
     <div className="GraphFigureDescription">{description}</div>
     {action}
