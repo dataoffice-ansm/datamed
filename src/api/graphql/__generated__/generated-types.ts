@@ -184,6 +184,7 @@ export type SpecialityLight = {
   __typename?: 'SpecialityLight';
   code: Scalars['String'];
   description?: Maybe<Scalars['String']>;
+  exposition?: Maybe<CisExposition>;
   id: Scalars['Int'];
   name: Scalars['String'];
 };
@@ -216,6 +217,7 @@ export type SpecialitySubstance = {
 export type Substance = {
   __typename?: 'Substance';
   code: Scalars['String'];
+  exposition?: Maybe<CisExposition>;
   id: Scalars['Int'];
   name: Scalars['String'];
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
@@ -697,6 +699,7 @@ export type SpecialityLightResolvers<
 > = ResolversObject<{
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  exposition?: Resolver<Maybe<ResolversTypes['CisExposition']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -745,6 +748,7 @@ export type SubstanceResolvers<
   ParentType extends ResolversParentTypes['Substance'] = ResolversParentTypes['Substance']
 > = ResolversObject<{
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  exposition?: Resolver<Maybe<ResolversTypes['CisExposition']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   repartitionPerAge?: Resolver<

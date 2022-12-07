@@ -110,6 +110,7 @@ type Substance {
     repartitionPerNotifier: [RepartitionPerNotifier]
     repartitionPerPathology:[RepartitionPerPathology]
     totalExposition: TotalExposition
+    exposition: CisExposition
 }
 
 type SpecialitySubstance {
@@ -159,6 +160,7 @@ type SpecialityLight {
     code: String!
     name: String!
     description: String
+    exposition: CisExposition
 }
 
 type Icon {

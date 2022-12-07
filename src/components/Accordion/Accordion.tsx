@@ -17,6 +17,7 @@ export type AccordionProps = {
   defaultOpen?: boolean;
   theme?: AccordionThemeColor;
   disabled?: boolean;
+  classNameTitle?: string;
 };
 
 const strokeTheme = (theme: AccordionThemeColor) => {
@@ -60,6 +61,7 @@ export const Accordion = ({
   defaultOpen = false,
   theme = 'secondary',
   disabled = false,
+  classNameTitle = '',
   className,
 }: AccordionProps & HTMLAttributes<HTMLDivElement>) => (
   <div id={id} className={classNames('Accordion bg-white rounded-lg', className)}>
@@ -76,7 +78,9 @@ export const Accordion = ({
             <div className="AccordionLeftIcon h-8 w-8">
               <SparkSVG className={strokeTheme(theme)} />
             </div>
-            <span className="AccordionTitle text-left flex-1">{title}</span>
+            <span className={classNames('AccordionTitle text-left flex-1', classNameTitle)}>
+              {title}
+            </span>
             <div
               className={classNames(
                 'AccordionChevronIcon h-8 w-8 transform duration-500 rotate-180',

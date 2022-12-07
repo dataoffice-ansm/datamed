@@ -146,5 +146,9 @@ export const resolvers: Resolvers = {
     async totalExposition(substance, args, context) {
       return context.dataSources.postgresOperations.getSubstanceTotalExposition(substance.id);
     },
+
+    async exposition(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceCisExposition(substance.id);
+    },
   },
 };
