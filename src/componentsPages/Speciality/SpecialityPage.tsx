@@ -147,7 +147,7 @@ const SectionTreatedPatients = () => {
 
       {currentEntity?.exposition?.consumption ? (
         <div className="expositionChart my-4 flex rounded-md border border-grey-200 border-solid overflow-hidden">
-          <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 flex flex-col bg-primary py-6">
+          <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-primary py-6">
             <span className="text-white">
               {
                 cisExpositionLevelMapping[

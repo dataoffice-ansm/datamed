@@ -72,7 +72,9 @@ export const Autocomplete = ({
 
   const optionsContainerClassname = classnames(
     'AutocompleteContainer bg-white z-[1] w-full border-grey-400 px-0',
-    embedded ? 'm-0' : 'rounded-lg absolute max-h-80 overflow-auto border mt-1'
+    embedded
+      ? 'm-0'
+      : 'rounded-lg absolute max-h-80 overflow-auto border mt-1 top-[48px] left-0 right-0'
   );
 
   const debounceInputOnChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
@@ -124,35 +126,45 @@ export const Autocomplete = ({
   return (
     <div
       className={classnames(
-        'AutocompleteContainer flex',
+        'AutocompleteContainer',
         embedded
-          ? 'border-grey-100 rounded-none sticky top-0 shadow-lg p-4'
-          : 'rounded-lg border border-grey-400 pl-3 py-1 px-2'
+          ? 'border-grey-100 rounded-none sticky top-0 shadow-lg flex flex-col'
+          : 'rounded-lg border border-grey-400 pl-3 py-1 px-2 top-[48px] left-0 right-0'
       )}
     >
-      <Combobox onChange={onSelected}>
-        <Combobox.Input
-          autoFocus
-          placeholder={cisLoading || subLoading ? loadingPlaceholder : placeholder}
-          disabled={cisLoading || subLoading}
-          className="AutocompleteInput flex-1 border-none"
-          value={query}
-          onChange={debounceInputOnChange}
-        />
-        {query.length > 3 && renderOptions()}
-      </Combobox>
-      <div className="afterElement flex justify-center items-center relative w-10 z-[1]">
-        {isLoading ? (
-          <LoaderSpinner />
-        ) : (
-          <div className="afterElement">
-            {!embedded && (
-              <div className="pointer-events-none">
-                <SearchIcon width={navIconSize} height={navIconSize} alt="search" />
-              </div>
-            )}
-          </div>
-        )}
+      <div className={classnames({ 'relative flex': !embedded })}>
+        <Combobox onChange={onSelected}>
+          <Combobox.Input
+            autoFocus
+            placeholder={cisLoading || subLoading ? loadingPlaceholder : placeholder}
+            disabled={cisLoading || subLoading}
+            className={classnames('AutocompleteInput flex-1 border-none', {
+              'p-4': embedded,
+            })}
+            value={query}
+            onChange={debounceInputOnChange}
+          />
+          {query.length > 3 && renderOptions()}
+        </Combobox>
+        <div
+          className={classnames('afterElement flex justify-center items-center w-10 z-[1]', {
+            relative: !embedded,
+          })}
+        >
+          {isLoading ? (
+            <div className={classnames({ 'absolute right-[16px] top-[16px]': embedded })}>
+              <LoaderSpinner />
+            </div>
+          ) : (
+            <div className="afterElement">
+              {!embedded && (
+                <div className="pointer-events-none">
+                  <SearchIcon width={navIconSize} height={navIconSize} alt="search" />
+                </div>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
