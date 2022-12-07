@@ -1,95 +1,149 @@
+fragment SpecialityFragment on Speciality {
+    id
+    name
+    code
+    atc {
+        id
+        name
+        code
+    }
+    pharmaForm {
+        id
+        name
+    }
+    substances {
+        ...SubstanceFragment
+    }
+    dosageIndication
+    dosageSubstances {
+        id
+        code
+        name
+        dosage
+    }
+    commercialisationState
+    commercialisationType
+    repartitionPerSex {
+        male
+        female
+    }
+    repartitionPerAge {
+        id
+        range
+        value
+    }
+    publications {
+        id
+        name
+        link
+        type {
+            id
+            name
+        }
+    }
+    description
+    icon {
+        id
+        name
+    }
+    laboratory {
+        id
+        name
+    }
+    exposition {
+        id
+        consumption
+        expositionLevel
+    }
+    medicalErrors {
+        populationRepartition {
+            id
+            value
+            range
+        }
+        sideEffectsOriginRepartition {
+            with
+            without
+        }
+        natureRepartition {
+            id
+            value
+            range
+        }
+    }
+    rupturesHistory {
+        ruptures {
+            id
+            num
+            name
+            active
+            date
+            cause {
+                id
+                name
+            }
+            classification {
+                id
+                name
+            }
+        }
+        meta {
+            count
+        }
+    }
+}
+
+fragment SubstanceFragment on Substance {
+    id
+    code
+    name
+    retrieveSpecialities {
+        meta {
+            count
+        }
+        specialities {
+            id
+            code
+            name
+            description
+        }
+    }
+    repartitionPerSex {
+        male
+        female
+    }
+    repartitionPerAge {
+        id
+        range
+        value
+    }
+    repartitionPerNotifier {
+        id
+        job
+        value
+    }
+    repartitionPerPathology {
+        id
+        range
+        value
+        valuePercent
+    }
+    totalExposition {
+        total
+        minYear
+        maxYear
+    }
+}
+
 query SpecialityIdByCode($cisCode: String!) {
     getSpecialityIdByCode(cisCode: $cisCode)
 }
 
 query Speciality($cisId: Int!) {
     getSpeciality(cisId: $cisId) {
-        id
-        name
-        code
-        atc {
-            id
-            name
-            code
-        }
-        commercialisationState
-        commercialisationType
-        repartitionPerSex {
-            male
-            female
-        }
-        repartitionPerAge {
-            id
-            range
-            value
-        }
-        publications {
-            id
-            name
-            link
-            type {
-                id
-                name
-            }
-        }
-        description
-        icon {
-            id
-            name
-        }
-        laboratory {
-            id
-            name
-        }
-        substances {
-            id
-            code
-            name
-            dosage
-            pharmaForm
-        }
-        exposition {
-            id
-            consumption
-            expositionLevel
-        }
-        medicalErrors {
-            populationRepartition {
-                id
-                value
-                range
-            }
-            sideEffectsOriginRepartition {
-                with
-                without
-            }
-            natureRepartition {
-                id
-                value
-                range
-            }
-        }
-        rupturesHistory {
-            ruptures {
-                id
-                num
-                name
-                active
-                date
-                cause {
-                    id
-                    name
-                }
-                classification {
-                    id
-                    name
-                }
-            }
-            meta {
-                count
-            }
-        }
+        ...SpecialityFragment
     }
+
 }
 
 query Specialities {
@@ -107,48 +161,7 @@ query Specialities {
 
 query Substance($subCode: String!) {
     getSubstance(subCode: $subCode) {
-        id
-        code
-        name
-        pharmaForm
-        dosage
-        retrieveSpecialities {
-            meta {
-                count
-            }
-            specialities {
-                id
-                code
-                name
-                description
-            }
-        }
-        repartitionPerSex {
-            male
-            female
-        }
-        repartitionPerAge {
-            id
-            range
-            value
-        }
-        repartitionPerNotifier {
-            id
-            job
-            value
-        }
-        repartitionPerPathology {
-            id
-            range
-            value
-            valuePercent
-        }
-
-        totalExposition {
-            total
-            minYear
-            maxYear
-        }
+        ...SubstanceFragment
     }
 }
 

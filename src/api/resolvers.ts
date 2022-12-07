@@ -45,31 +45,43 @@ export const resolvers: Resolvers = {
   },
 
   Speciality: {
-    async repartitionPerSex(parent, args, context) {
-      return context.dataSources.postgresOperations.getSpecialityRepSex(parent.id);
+    async substances(speciality, args, context) {
+      return context.dataSources.postgresOperations.getSubstancesBySpeciality(speciality.id);
     },
 
-    async repartitionPerAge(parent, args, context) {
-      return context.dataSources.postgresOperations.getSpecialityRepAge(parent.id);
+    async dosageIndication(speciality, args, context) {
+      return context.dataSources.postgresOperations.getSpecialityDosageIndication(speciality.id);
     },
 
-    async substances(parent, args, context) {
-      return context.dataSources.postgresOperations.getSubstancesBySpeciality(parent.id);
+    async dosageSubstances(speciality, args, context) {
+      return context.dataSources.postgresOperations.getSpecialitySubstancesDosages(speciality.id);
     },
 
-    async publications(parent, args, context) {
-      return context.dataSources.postgresOperations.getPublications(parent.id);
+    async repartitionPerSex(speciality, args, context) {
+      return context.dataSources.postgresOperations.getSpecialityRepSex(speciality.id);
     },
 
-    async medicalErrors(parent, args, context) {
+    async repartitionPerAge(speciality, args, context) {
+      return context.dataSources.postgresOperations.getSpecialityRepAge(speciality.id);
+    },
+
+    async publications(speciality, args, context) {
+      return context.dataSources.postgresOperations.getSpecialityPublications(speciality.id);
+    },
+
+    async medicalErrors(speciality, args, context) {
       const populationRepartition =
-        await context.dataSources.postgresOperations.getErrorsMedRepPopulation(parent.id);
+        await context.dataSources.postgresOperations.getErrorsMedRepPopulation(speciality.id);
 
       const sideEffectsOriginRepartition =
-        await context.dataSources.postgresOperations.getErrorsMedicalSideEffectsOrigin(parent.id);
+        await context.dataSources.postgresOperations.getErrorsMedicalSideEffectsOrigin(
+          speciality.id
+        );
 
       const natureRepartition =
-        await context.dataSources.postgresOperations.getErrorsMedicalNatureRepartition(parent.id);
+        await context.dataSources.postgresOperations.getErrorsMedicalNatureRepartition(
+          speciality.id
+        );
 
       return {
         populationRepartition,
@@ -78,9 +90,9 @@ export const resolvers: Resolvers = {
       };
     },
 
-    async rupturesHistory(parent, args, context) {
+    async rupturesHistory(speciality, args, context) {
       const rows = await context.dataSources.postgresOperations.getSpecialityRupturesHistory(
-        parent.id
+        speciality.id
       );
 
       return {
@@ -114,23 +126,25 @@ export const resolvers: Resolvers = {
         },
       };
     },
-    async repartitionPerAge(parent, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceRepAge(parent.id);
-    },
-    async repartitionPerSex(parent, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceRepSex(parent.id);
+
+    async repartitionPerAge(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceRepAge(substance.id);
     },
 
-    async repartitionPerNotifier(parent, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceRepNotifier(parent.id);
+    async repartitionPerSex(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceRepSex(substance.id);
     },
 
-    async repartitionPerPathology(parent, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceRepPathology(parent.id);
+    async repartitionPerNotifier(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceRepNotifier(substance.id);
     },
 
-    async totalExposition(parent, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceTotalExposition(parent.id);
+    async repartitionPerPathology(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceRepPathology(substance.id);
+    },
+
+    async totalExposition(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceTotalExposition(substance.id);
     },
   },
 };

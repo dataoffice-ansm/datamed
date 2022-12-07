@@ -45,11 +45,16 @@ const SectionOneGlobalInformation = () => {
       <div className="sectionPart mt-4 mb-8">
         {substances.length > 1 ? <h5>Substances actives</h5> : <h5>Substance active</h5>}
 
-        {substances.map((sub, index) => (
-          <Link key={`substance_${index.toString()}_${sub.code})`} href={`/substance/${sub.code}`}>
-            <a className="text-primary">{sub.name}</a>
-          </Link>
-        ))}
+        <div className="activeSubstances flex flex-col gap-2">
+          {substances.map((sub, index) => (
+            <Link
+              key={`substance_${index.toString()}_${sub.code})`}
+              href={`/substance/${sub.code}`}
+            >
+              <a className="text-primary">{sub.name}</a>
+            </Link>
+          ))}
+        </div>
       </div>
 
       {currentEntity.atc && (
@@ -157,7 +162,7 @@ const SectionTreatedPatients = () => {
               }
             </span>
 
-            <div className="UsageBarContainer my-8 flex justify-center items-end gap-2">
+            <div className="UsageBarContainer mt-12 flex justify-center items-end gap-2">
               {[...Array(5).keys()].map((pos) => (
                 <div
                   key={pos}
@@ -179,7 +184,7 @@ const SectionTreatedPatients = () => {
 
           <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
             <h3 className="text-primary">
-              {numberWithThousand(currentEntity?.exposition?.consumption)} patients / an
+              {numberWithThousand(currentEntity?.exposition?.consumption)} / an
             </h3>
             <p>
               Approximation du nombre de patients ayant été remboursés sur la période 2014-2018 pour
