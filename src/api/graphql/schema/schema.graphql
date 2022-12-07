@@ -87,11 +87,19 @@ type RepartitionPerNotifier {
     value: Int
 }
 
+
+type HltEffect {
+    id: Int
+    range: String
+    value: Int
+}
+
 type RepartitionPerPathology {
     id: Int
     range: String
     value: Int
     valuePercent: Int
+    htlEffects: [HltEffect]
 }
 
 type TotalExposition {

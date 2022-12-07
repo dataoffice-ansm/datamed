@@ -127,6 +127,11 @@ fragment SubstanceFragment on Substance {
         range
         value
         valuePercent
+        htlEffects {
+            id
+            range
+            value
+        }
     }
     totalExposition {
         total

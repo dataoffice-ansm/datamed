@@ -28,6 +28,13 @@ export type GenderRepartition = {
   male?: Maybe<Scalars['Int']>;
 };
 
+export type HltEffect = {
+  __typename?: 'HltEffect';
+  id?: Maybe<Scalars['Int']>;
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
 export type Icon = {
   __typename?: 'Icon';
   id: Scalars['Int'];
@@ -114,6 +121,7 @@ export type RepartitionPerNotifier = {
 
 export type RepartitionPerPathology = {
   __typename?: 'RepartitionPerPathology';
+  htlEffects?: Maybe<Array<Maybe<HltEffect>>>;
   id?: Maybe<Scalars['Int']>;
   range?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
@@ -337,6 +345,7 @@ export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   CisExposition: ResolverTypeWrapper<CisExposition>;
   GenderRepartition: ResolverTypeWrapper<GenderRepartition>;
+  HltEffect: ResolverTypeWrapper<HltEffect>;
   Icon: ResolverTypeWrapper<Icon>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Laboratory: ResolverTypeWrapper<Laboratory>;
@@ -373,6 +382,7 @@ export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   CisExposition: CisExposition;
   GenderRepartition: GenderRepartition;
+  HltEffect: HltEffect;
   Icon: Icon;
   Int: Scalars['Int'];
   Laboratory: Laboratory;
@@ -447,6 +457,16 @@ export type GenderRepartitionResolvers<
 > = ResolversObject<{
   female?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   male?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type HltEffectResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['HltEffect'] = ResolversParentTypes['HltEffect']
+> = ResolversObject<{
+  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -585,6 +605,7 @@ export type RepartitionPerPathologyResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RepartitionPerPathology'] = ResolversParentTypes['RepartitionPerPathology']
 > = ResolversObject<{
+  htlEffects?: Resolver<Maybe<Array<Maybe<ResolversTypes['HltEffect']>>>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -807,6 +828,7 @@ export type WithRepartitionResolvers<
 export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   CisExposition?: CisExpositionResolvers<ContextType>;
   GenderRepartition?: GenderRepartitionResolvers<ContextType>;
+  HltEffect?: HltEffectResolvers<ContextType>;
   Icon?: IconResolvers<ContextType>;
   Laboratory?: LaboratoryResolvers<ContextType>;
   MedicalATC?: MedicalAtcResolvers<ContextType>;
