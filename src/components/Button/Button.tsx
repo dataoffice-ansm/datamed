@@ -26,7 +26,7 @@ export const Button = (props: CallToActionProps) => {
   const { id, children, className, theme = 'primary' } = props;
 
   if (props.as === 'button') {
-    const { variant = 'outlined', type = 'button' } = props;
+    const { variant = 'outlined', type = 'button', onClick = () => null } = props;
 
     return (
       <button
@@ -57,6 +57,7 @@ export const Button = (props: CallToActionProps) => {
           },
           className
         )}
+        onClick={onClick}
       >
         {children}
       </button>

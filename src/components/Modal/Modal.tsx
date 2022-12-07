@@ -21,6 +21,9 @@ export const Modal = ({
 
   useEffect(() => {
     setScrollEnabled(!isOpen);
+    return () => {
+      setScrollEnabled(true);
+    };
   }, [isOpen, setScrollEnabled]);
 
   return (

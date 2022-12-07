@@ -3,6 +3,7 @@ import type {
   Maybe,
   RepartitionPerPathology,
   Substance,
+  HltEffect,
 } from '../../graphql/__generated__/generated-documents';
 import { BoxInfoTitle } from '../BoxInfoTitle/BoxInfoTitle';
 import FolderSVG from '../../assets/icons/folder/folder.svg';
@@ -13,12 +14,59 @@ import ManFigure from '../../assets/images/man_illustration.svg';
 import { PieChartRepartitionAge } from '../Charts/PieChartRepartitionAge';
 import { Accordion } from '../Accordion/Accordion';
 import { GetFigureByPathology } from './componentContainer/GetFigureByPathology';
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { useCallback, useState } from 'react';
 import type { SelectOption } from '../Select/Select';
 import { Select } from '../Select/Select';
 import { NotEnoughData } from '../NotEnoughData';
 import { getNotifierFigureByJob } from '../../utils/mapping';
+import { Button } from '../Button/Button';
+import { Modal } from '../Modal/Modal';
+
+type EffectModal = {
+  title: string;
+  effects: HltEffect[];
+  icon: ReactNode;
+};
+
+const PathologyDetailModal = ({ pathology }: { pathology: RepartitionPerPathology }) => {
+  const [openModal, setOpenModal] = useState(false);
+  return (
+    <div>
+      {(pathology.htlEffects as HltEffect[]).length > 0 ? (
+        <Button
+          as="button"
+          variant="none"
+          onClick={() => {
+            setOpenModal(true);
+          }}
+        >
+          Voir détail
+        </Button>
+      ) : null}
+      {openModal && (
+        <Modal
+          title={`Sous-répartition des déclarations d’effets indésirables : ${pathology.range}`}
+          isOpen={openModal}
+          onClose={() => {
+            setOpenModal(false);
+          }}
+        >
+          <GetFigureByPathology id={pathology.id as number} />
+          {pathology?.htlEffects && (
+            <ul>
+              {(pathology?.htlEffects as HltEffect[]).map((e) => (
+                <li key={e.id as number}>
+                  {e.range} {e.value} %
+                </li>
+              ))}
+            </ul>
+          )}
+        </Modal>
+      )}
+    </div>
+  );
+};
 
 export const PathologyContainer = ({
   repartitionPerPathology,
@@ -30,6 +78,7 @@ export const PathologyContainer = ({
   substanceName?: string;
 }) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
+
   const options: SelectOption[] = [
     {
       label: 'Pourcentage',
@@ -72,7 +121,7 @@ export const PathologyContainer = ({
             {repartitionPerPathology
               ?.filter((pathology) => pathology)
               .map((pathology) =>
-                pathology?.valuePercent && pathology.value && pathology.range ? (
+                pathology?.id && pathology?.valuePercent && pathology.value && pathology.range ? (
                   <div key={pathology.id} className="flex justify-center">
                     <GraphFigure
                       className="pathologyGraphFigure"
@@ -84,6 +133,7 @@ export const PathologyContainer = ({
                       description={pathology.range}
                       descriptionClassName="text-[16px] md:text-[18px] text-center"
                       icon={<GetFigureByPathology id={pathology.id} />}
+                      action={<PathologyDetailModal pathology={pathology} />}
                     />
                   </div>
                 ) : null
