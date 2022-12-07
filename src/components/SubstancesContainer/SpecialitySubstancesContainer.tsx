@@ -77,7 +77,7 @@ export const SpecialitySubstancesContainer = ({
                     Découvrez comment l’ANSM centralise les signalements et alertes, et que faire
                     selon votre situation.
                   </div>
-                  <Link href="#">
+                  <Link href="https://ansm.sante.fr/documents/reference/declarer-un-effet-indesirable">
                     <a className="text-primary rounded border border-primary py-2 px-4 no-underline">
                       VOIR LES RECOMMANDATIONS DE L&apos;ANSM
                     </a>
