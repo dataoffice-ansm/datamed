@@ -1,16 +1,17 @@
 import { dbInstance } from './postgreDb';
 import type {
+  CisExposition,
   MedicalErrors,
+  Publication,
   RepartitionPerNotifier,
   RepartitionPerPathology,
   RepartitionPerSex,
   RepartitionTranche,
   Speciality,
-  Substance,
-  Publication,
   SpecialityRupture,
-  TotalExposition,
   SpecialitySubstance,
+  Substance,
+  TotalExposition,
 } from '../../graphql/__generated__/generated-types';
 
 export class PostgresOperations {
@@ -565,5 +566,30 @@ export class PostgresOperations {
     return {
       total: 0,
     };
+  }
+
+  async getSubstanceCisExposition(subCode: number): Promise<CisExposition | null> {
+    const rows = await dbInstance
+      .selectFrom('mp_substances')
+      .where('substance_id', '=', subCode)
+      .leftJoin('mp_exposition as mpe', 'mpe.mp_id', 'mp_substances.mp_id')
+      .select([
+        'mpe.exposition as expositionId',
+        'mpe.consumption_year_trunc as consumption',
+        'mpe.exposition as exposition',
+      ])
+      .executeTakeFirst();
+
+    if (rows?.expositionId && rows?.consumption && rows?.exposition) {
+      const { expositionId, exposition, consumption } = rows;
+
+      return {
+        id: expositionId,
+        expositionLevel: exposition ?? 0,
+        consumption,
+      };
+    }
+
+    return null;
   }
 }

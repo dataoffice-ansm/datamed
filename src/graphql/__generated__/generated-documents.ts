@@ -184,6 +184,7 @@ export type SpecialityLight = {
   __typename?: 'SpecialityLight';
   code: Scalars['String'];
   description?: Maybe<Scalars['String']>;
+  exposition?: Maybe<CisExposition>;
   id: Scalars['Int'];
   name: Scalars['String'];
 };
@@ -216,6 +217,7 @@ export type SpecialitySubstance = {
 export type Substance = {
   __typename?: 'Substance';
   code: Scalars['String'];
+  exposition?: Maybe<CisExposition>;
   id: Scalars['Int'];
   name: Scalars['String'];
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
@@ -306,6 +308,12 @@ export type SpecialityFragmentFragment = {
       total?: number | null;
       minYear?: number | null;
       maxYear?: number | null;
+    } | null;
+    exposition?: {
+      __typename?: 'CisExposition';
+      id: number;
+      consumption?: number | null;
+      expositionLevel?: number | null;
     } | null;
   } | null> | null;
   dosageSubstances?: Array<{
@@ -423,6 +431,12 @@ export type SubstanceFragmentFragment = {
     minYear?: number | null;
     maxYear?: number | null;
   } | null;
+  exposition?: {
+    __typename?: 'CisExposition';
+    id: number;
+    consumption?: number | null;
+    expositionLevel?: number | null;
+  } | null;
 };
 
 export type SpecialityIdByCodeQueryVariables = Exact<{
@@ -501,6 +515,12 @@ export type SpecialityQuery = {
         total?: number | null;
         minYear?: number | null;
         maxYear?: number | null;
+      } | null;
+      exposition?: {
+        __typename?: 'CisExposition';
+        id: number;
+        consumption?: number | null;
+        expositionLevel?: number | null;
       } | null;
     } | null> | null;
     dosageSubstances?: Array<{
@@ -641,6 +661,12 @@ export type SubstanceQuery = {
       minYear?: number | null;
       maxYear?: number | null;
     } | null;
+    exposition?: {
+      __typename?: 'CisExposition';
+      id: number;
+      consumption?: number | null;
+      expositionLevel?: number | null;
+    } | null;
   } | null;
 };
 
@@ -700,6 +726,11 @@ export const SubstanceFragmentFragmentDoc = gql`
       total
       minYear
       maxYear
+    }
+    exposition {
+      id
+      consumption
+      expositionLevel
     }
   }
 `;

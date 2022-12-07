@@ -133,6 +133,11 @@ fragment SubstanceFragment on Substance {
         minYear
         maxYear
     }
+    exposition {
+        id
+        consumption
+        expositionLevel
+    }
 }
 
 query SpecialityIdByCode($cisCode: String!) {
