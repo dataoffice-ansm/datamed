@@ -28,6 +28,13 @@ export type GenderRepartition = {
   male?: Maybe<Scalars['Int']>;
 };
 
+export type HltEffect = {
+  __typename?: 'HltEffect';
+  id?: Maybe<Scalars['Int']>;
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
 export type Icon = {
   __typename?: 'Icon';
   id: Scalars['Int'];
@@ -114,6 +121,7 @@ export type RepartitionPerNotifier = {
 
 export type RepartitionPerPathology = {
   __typename?: 'RepartitionPerPathology';
+  htlEffects?: Maybe<Array<Maybe<HltEffect>>>;
   id?: Maybe<Scalars['Int']>;
   range?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
@@ -302,6 +310,12 @@ export type SpecialityFragmentFragment = {
       range?: string | null;
       value?: number | null;
       valuePercent?: number | null;
+      htlEffects?: Array<{
+        __typename?: 'HltEffect';
+        id?: number | null;
+        range?: string | null;
+        value?: number | null;
+      } | null> | null;
     } | null> | null;
     totalExposition?: {
       __typename?: 'TotalExposition';
@@ -424,6 +438,12 @@ export type SubstanceFragmentFragment = {
     range?: string | null;
     value?: number | null;
     valuePercent?: number | null;
+    htlEffects?: Array<{
+      __typename?: 'HltEffect';
+      id?: number | null;
+      range?: string | null;
+      value?: number | null;
+    } | null> | null;
   } | null> | null;
   totalExposition?: {
     __typename?: 'TotalExposition';
@@ -509,6 +529,12 @@ export type SpecialityQuery = {
         range?: string | null;
         value?: number | null;
         valuePercent?: number | null;
+        htlEffects?: Array<{
+          __typename?: 'HltEffect';
+          id?: number | null;
+          range?: string | null;
+          value?: number | null;
+        } | null> | null;
       } | null> | null;
       totalExposition?: {
         __typename?: 'TotalExposition';
@@ -654,6 +680,12 @@ export type SubstanceQuery = {
       range?: string | null;
       value?: number | null;
       valuePercent?: number | null;
+      htlEffects?: Array<{
+        __typename?: 'HltEffect';
+        id?: number | null;
+        range?: string | null;
+        value?: number | null;
+      } | null> | null;
     } | null> | null;
     totalExposition?: {
       __typename?: 'TotalExposition';
@@ -721,6 +753,11 @@ export const SubstanceFragmentFragmentDoc = gql`
       range
       value
       valuePercent
+      htlEffects {
+        id
+        range
+        value
+      }
     }
     totalExposition {
       total

@@ -13,6 +13,7 @@ import type {
   Substance,
   TotalExposition,
 } from '../../graphql/__generated__/generated-types';
+import type { HltEffect } from '../../graphql/__generated__/generated-types';
 
 export class PostgresOperations {
   async getSingleSpecialityCodeById(cisCode: string): Promise<number | null> {
@@ -525,6 +526,31 @@ export class PostgresOperations {
       ])
       .execute();
 
+    const rowsHltEffects = await dbInstance
+      .selectFrom('substances_hlt as s_htl')
+      .where('s_htl.substance_id', '=', subCode)
+      .leftJoin('hlt_effects as hlt_e', 'hlt_e.id', 's_htl.hlt_effect_id')
+      .select([
+        's_htl.soc_long_id as id',
+        'hlt_e.effect as range',
+        's_htl.case_percentage as value',
+      ])
+      .execute();
+
+    const effects: HltEffect[] = rowsHltEffects.reduce<HltEffect>((carry, row) => {
+      const { id, range, value } = row;
+      return range
+        ? [
+            ...carry,
+            {
+              id,
+              range,
+              value: Math.round(value ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+
     return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
       return range
@@ -535,6 +561,7 @@ export class PostgresOperations {
               range,
               value,
               valuePercent: Math.round(valuePercent ?? 0),
+              htlEffects: effects.filter((e) => e.id === id),
             },
           ]
         : carry;
