@@ -57,28 +57,28 @@ type CisExposition {
 }
 
 type RuptureClass {
-  id: Int!
-  name: String
+    id: Int!
+    name: String
 }
 
 type RuptureCause {
-  id: Int!
-  name: String
+    id: Int!
+    name: String
 }
 
 type SpecialityRupture {
-  id: Int!
-  num: String
-  name: String
-  active: Boolean
-  cause: RuptureCause
-  classification: RuptureClass
-  date: String
+    id: Int!
+    num: String
+    name: String
+    active: Boolean
+    cause: RuptureCause
+    classification: RuptureClass
+    date: String
 }
 
 type SpecialityRupturesHistory {
-  ruptures: [SpecialityRupture]
-  meta: Meta
+    ruptures: [SpecialityRupture]
+    meta: Meta
 }
 
 type RepartitionPerNotifier {
@@ -100,14 +100,40 @@ type TotalExposition {
     maxYear: Int
 }
 
+type Substance {
+    id: Int!
+    code: String!
+    name: String! @capitalize
+    retrieveSpecialities: SpecialitiesReturn
+    repartitionPerSex: RepartitionPerSex
+    repartitionPerAge: [RepartitionTranche]
+    repartitionPerNotifier: [RepartitionPerNotifier]
+    repartitionPerPathology:[RepartitionPerPathology]
+    totalExposition: TotalExposition
+}
+
+type SpecialitySubstance {
+    id: Int!
+    code: String
+    name: String
+    dosage: String
+}
+
+type PharmaForm {
+    id:Int
+    name: String
+}
+
 type Speciality {
     id: Int!
     code: String!
     name: String!
     atc: MedicalATC
-    iconId: Int
     icon: Icon
+    dosageIndication: String
     substances: [Substance]
+    dosageSubstances: [SpecialitySubstance]
+    pharmaForm: PharmaForm
     description: String
     commercialisationState: String @capitalize
     commercialisationType: String @capitalize
@@ -133,20 +159,6 @@ type SpecialityLight {
     code: String!
     name: String!
     description: String
-}
-
-type Substance {
-    id: Int!
-    code: String!
-    name: String! @capitalize
-    pharmaForm: String
-    dosage: String
-    retrieveSpecialities: SpecialitiesReturn
-  repartitionPerSex: RepartitionPerSex
-  repartitionPerAge: [RepartitionTranche]
-  repartitionPerNotifier: [RepartitionPerNotifier]
-  repartitionPerPathology:[RepartitionPerPathology]
-  totalExposition: TotalExposition
 }
 
 type Icon {

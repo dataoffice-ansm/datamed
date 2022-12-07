@@ -64,6 +64,12 @@ export type Meta = {
   count?: Maybe<Scalars['Int']>;
 };
 
+export type PharmaForm = {
+  __typename?: 'PharmaForm';
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+};
+
 export type Publication = {
   __typename?: 'Publication';
   id: Scalars['Int'];
@@ -158,13 +164,15 @@ export type Speciality = {
   commercialisationState?: Maybe<Scalars['String']>;
   commercialisationType?: Maybe<Scalars['String']>;
   description?: Maybe<Scalars['String']>;
+  dosageIndication?: Maybe<Scalars['String']>;
+  dosageSubstances?: Maybe<Array<Maybe<SpecialitySubstance>>>;
   exposition?: Maybe<CisExposition>;
   icon?: Maybe<Icon>;
-  iconId?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
   laboratory?: Maybe<Laboratory>;
   medicalErrors?: Maybe<MedicalErrors>;
   name: Scalars['String'];
+  pharmaForm?: Maybe<PharmaForm>;
   publications?: Maybe<Array<Maybe<Publication>>>;
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
   repartitionPerSex?: Maybe<RepartitionPerSex>;
@@ -197,13 +205,19 @@ export type SpecialityRupturesHistory = {
   ruptures?: Maybe<Array<Maybe<SpecialityRupture>>>;
 };
 
+export type SpecialitySubstance = {
+  __typename?: 'SpecialitySubstance';
+  code?: Maybe<Scalars['String']>;
+  dosage?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
+};
+
 export type Substance = {
   __typename?: 'Substance';
   code: Scalars['String'];
-  dosage?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   name: Scalars['String'];
-  pharmaForm?: Maybe<Scalars['String']>;
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
   repartitionPerNotifier?: Maybe<Array<Maybe<RepartitionPerNotifier>>>;
   repartitionPerPathology?: Maybe<Array<Maybe<RepartitionPerPathology>>>;
@@ -231,6 +245,186 @@ export type WithRepartition = {
   without?: Maybe<Scalars['Int']>;
 };
 
+export type SpecialityFragmentFragment = {
+  __typename?: 'Speciality';
+  id: number;
+  name: string;
+  code: string;
+  dosageIndication?: string | null;
+  commercialisationState?: string | null;
+  commercialisationType?: string | null;
+  description?: string | null;
+  atc?: {
+    __typename?: 'MedicalATC';
+    id: number;
+    name?: string | null;
+    code?: string | null;
+  } | null;
+  pharmaForm?: { __typename?: 'PharmaForm'; id?: number | null; name?: string | null } | null;
+  substances?: Array<{
+    __typename?: 'Substance';
+    id: number;
+    code: string;
+    name: string;
+    retrieveSpecialities?: {
+      __typename?: 'SpecialitiesReturn';
+      meta?: { __typename?: 'Meta'; count?: number | null } | null;
+      specialities?: Array<{
+        __typename?: 'SpecialityLight';
+        id: number;
+        code: string;
+        name: string;
+        description?: string | null;
+      } | null> | null;
+    } | null;
+    repartitionPerSex?: {
+      __typename?: 'RepartitionPerSex';
+      male?: number | null;
+      female?: number | null;
+    } | null;
+    repartitionPerAge?: Array<{
+      __typename?: 'RepartitionTranche';
+      id?: number | null;
+      range?: string | null;
+      value?: number | null;
+    } | null> | null;
+    repartitionPerNotifier?: Array<{
+      __typename?: 'RepartitionPerNotifier';
+      id?: number | null;
+      job?: string | null;
+      value?: number | null;
+    } | null> | null;
+    repartitionPerPathology?: Array<{
+      __typename?: 'RepartitionPerPathology';
+      id?: number | null;
+      range?: string | null;
+      value?: number | null;
+      valuePercent?: number | null;
+    } | null> | null;
+    totalExposition?: {
+      __typename?: 'TotalExposition';
+      total?: number | null;
+      minYear?: number | null;
+      maxYear?: number | null;
+    } | null;
+  } | null> | null;
+  dosageSubstances?: Array<{
+    __typename?: 'SpecialitySubstance';
+    id: number;
+    code?: string | null;
+    name?: string | null;
+    dosage?: string | null;
+  } | null> | null;
+  repartitionPerSex?: {
+    __typename?: 'RepartitionPerSex';
+    male?: number | null;
+    female?: number | null;
+  } | null;
+  repartitionPerAge?: Array<{
+    __typename?: 'RepartitionTranche';
+    id?: number | null;
+    range?: string | null;
+    value?: number | null;
+  } | null> | null;
+  publications?: Array<{
+    __typename?: 'Publication';
+    id: number;
+    name: string;
+    link?: string | null;
+    type?: { __typename?: 'PublicationType'; id?: number | null; name?: string | null } | null;
+  } | null> | null;
+  icon?: { __typename?: 'Icon'; id: number; name?: string | null } | null;
+  laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
+  exposition?: {
+    __typename?: 'CisExposition';
+    id: number;
+    consumption?: number | null;
+    expositionLevel?: number | null;
+  } | null;
+  medicalErrors?: {
+    __typename?: 'MedicalErrors';
+    populationRepartition?: Array<{
+      __typename?: 'RepartitionTranche';
+      id?: number | null;
+      value?: number | null;
+      range?: string | null;
+    } | null> | null;
+    sideEffectsOriginRepartition?: {
+      __typename?: 'WithRepartition';
+      with?: number | null;
+      without?: number | null;
+    } | null;
+    natureRepartition?: Array<{
+      __typename?: 'RepartitionTranche';
+      id?: number | null;
+      value?: number | null;
+      range?: string | null;
+    } | null> | null;
+  } | null;
+  rupturesHistory?: {
+    __typename?: 'SpecialityRupturesHistory';
+    ruptures?: Array<{
+      __typename?: 'SpecialityRupture';
+      id: number;
+      num?: string | null;
+      name?: string | null;
+      active?: boolean | null;
+      date?: string | null;
+      cause?: { __typename?: 'RuptureCause'; id: number; name?: string | null } | null;
+      classification?: { __typename?: 'RuptureClass'; id: number; name?: string | null } | null;
+    } | null> | null;
+    meta?: { __typename?: 'Meta'; count?: number | null } | null;
+  } | null;
+};
+
+export type SubstanceFragmentFragment = {
+  __typename?: 'Substance';
+  id: number;
+  code: string;
+  name: string;
+  retrieveSpecialities?: {
+    __typename?: 'SpecialitiesReturn';
+    meta?: { __typename?: 'Meta'; count?: number | null } | null;
+    specialities?: Array<{
+      __typename?: 'SpecialityLight';
+      id: number;
+      code: string;
+      name: string;
+      description?: string | null;
+    } | null> | null;
+  } | null;
+  repartitionPerSex?: {
+    __typename?: 'RepartitionPerSex';
+    male?: number | null;
+    female?: number | null;
+  } | null;
+  repartitionPerAge?: Array<{
+    __typename?: 'RepartitionTranche';
+    id?: number | null;
+    range?: string | null;
+    value?: number | null;
+  } | null> | null;
+  repartitionPerNotifier?: Array<{
+    __typename?: 'RepartitionPerNotifier';
+    id?: number | null;
+    job?: string | null;
+    value?: number | null;
+  } | null> | null;
+  repartitionPerPathology?: Array<{
+    __typename?: 'RepartitionPerPathology';
+    id?: number | null;
+    range?: string | null;
+    value?: number | null;
+    valuePercent?: number | null;
+  } | null> | null;
+  totalExposition?: {
+    __typename?: 'TotalExposition';
+    total?: number | null;
+    minYear?: number | null;
+    maxYear?: number | null;
+  } | null;
+};
+
 export type SpecialityIdByCodeQueryVariables = Exact<{
   cisCode: Scalars['String'];
 }>;
@@ -251,6 +445,7 @@ export type SpecialityQuery = {
     id: number;
     name: string;
     code: string;
+    dosageIndication?: string | null;
     commercialisationState?: string | null;
     commercialisationType?: string | null;
     description?: string | null;
@@ -260,6 +455,61 @@ export type SpecialityQuery = {
       name?: string | null;
       code?: string | null;
     } | null;
+    pharmaForm?: { __typename?: 'PharmaForm'; id?: number | null; name?: string | null } | null;
+    substances?: Array<{
+      __typename?: 'Substance';
+      id: number;
+      code: string;
+      name: string;
+      retrieveSpecialities?: {
+        __typename?: 'SpecialitiesReturn';
+        meta?: { __typename?: 'Meta'; count?: number | null } | null;
+        specialities?: Array<{
+          __typename?: 'SpecialityLight';
+          id: number;
+          code: string;
+          name: string;
+          description?: string | null;
+        } | null> | null;
+      } | null;
+      repartitionPerSex?: {
+        __typename?: 'RepartitionPerSex';
+        male?: number | null;
+        female?: number | null;
+      } | null;
+      repartitionPerAge?: Array<{
+        __typename?: 'RepartitionTranche';
+        id?: number | null;
+        range?: string | null;
+        value?: number | null;
+      } | null> | null;
+      repartitionPerNotifier?: Array<{
+        __typename?: 'RepartitionPerNotifier';
+        id?: number | null;
+        job?: string | null;
+        value?: number | null;
+      } | null> | null;
+      repartitionPerPathology?: Array<{
+        __typename?: 'RepartitionPerPathology';
+        id?: number | null;
+        range?: string | null;
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null> | null;
+      totalExposition?: {
+        __typename?: 'TotalExposition';
+        total?: number | null;
+        minYear?: number | null;
+        maxYear?: number | null;
+      } | null;
+    } | null> | null;
+    dosageSubstances?: Array<{
+      __typename?: 'SpecialitySubstance';
+      id: number;
+      code?: string | null;
+      name?: string | null;
+      dosage?: string | null;
+    } | null> | null;
     repartitionPerSex?: {
       __typename?: 'RepartitionPerSex';
       male?: number | null;
@@ -280,14 +530,6 @@ export type SpecialityQuery = {
     } | null> | null;
     icon?: { __typename?: 'Icon'; id: number; name?: string | null } | null;
     laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
-    substances?: Array<{
-      __typename?: 'Substance';
-      id: number;
-      code: string;
-      name: string;
-      dosage?: string | null;
-      pharmaForm?: string | null;
-    } | null> | null;
     exposition?: {
       __typename?: 'CisExposition';
       id: number;
@@ -358,8 +600,6 @@ export type SubstanceQuery = {
     id: number;
     code: string;
     name: string;
-    pharmaForm?: string | null;
-    dosage?: string | null;
     retrieveSpecialities?: {
       __typename?: 'SpecialitiesReturn';
       meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -420,6 +660,146 @@ export type SubstancesQuery = {
   } | null;
 };
 
+export const SubstanceFragmentFragmentDoc = gql`
+  fragment SubstanceFragment on Substance {
+    id
+    code
+    name
+    retrieveSpecialities {
+      meta {
+        count
+      }
+      specialities {
+        id
+        code
+        name
+        description
+      }
+    }
+    repartitionPerSex {
+      male
+      female
+    }
+    repartitionPerAge {
+      id
+      range
+      value
+    }
+    repartitionPerNotifier {
+      id
+      job
+      value
+    }
+    repartitionPerPathology {
+      id
+      range
+      value
+      valuePercent
+    }
+    totalExposition {
+      total
+      minYear
+      maxYear
+    }
+  }
+`;
+export const SpecialityFragmentFragmentDoc = gql`
+  fragment SpecialityFragment on Speciality {
+    id
+    name
+    code
+    atc {
+      id
+      name
+      code
+    }
+    pharmaForm {
+      id
+      name
+    }
+    substances {
+      ...SubstanceFragment
+    }
+    dosageIndication
+    dosageSubstances {
+      id
+      code
+      name
+      dosage
+    }
+    commercialisationState
+    commercialisationType
+    repartitionPerSex {
+      male
+      female
+    }
+    repartitionPerAge {
+      id
+      range
+      value
+    }
+    publications {
+      id
+      name
+      link
+      type {
+        id
+        name
+      }
+    }
+    description
+    icon {
+      id
+      name
+    }
+    laboratory {
+      id
+      name
+    }
+    exposition {
+      id
+      consumption
+      expositionLevel
+    }
+    medicalErrors {
+      populationRepartition {
+        id
+        value
+        range
+      }
+      sideEffectsOriginRepartition {
+        with
+        without
+      }
+      natureRepartition {
+        id
+        value
+        range
+      }
+    }
+    rupturesHistory {
+      ruptures {
+        id
+        num
+        name
+        active
+        date
+        cause {
+          id
+          name
+        }
+        classification {
+          id
+          name
+        }
+      }
+      meta {
+        count
+      }
+    }
+  }
+  ${SubstanceFragmentFragmentDoc}
+`;
 export const SpecialityIdByCodeDocument = gql`
   query SpecialityIdByCode($cisCode: String!) {
     getSpecialityIdByCode(cisCode: $cisCode)
@@ -474,93 +854,10 @@ export type SpecialityIdByCodeQueryResult = Apollo.QueryResult<
 export const SpecialityDocument = gql`
   query Speciality($cisId: Int!) {
     getSpeciality(cisId: $cisId) {
-      id
-      name
-      code
-      atc {
-        id
-        name
-        code
-      }
-      commercialisationState
-      commercialisationType
-      repartitionPerSex {
-        male
-        female
-      }
-      repartitionPerAge {
-        id
-        range
-        value
-      }
-      publications {
-        id
-        name
-        link
-        type {
-          id
-          name
-        }
-      }
-      description
-      icon {
-        id
-        name
-      }
-      laboratory {
-        id
-        name
-      }
-      substances {
-        id
-        code
-        name
-        dosage
-        pharmaForm
-      }
-      exposition {
-        id
-        consumption
-        expositionLevel
-      }
-      medicalErrors {
-        populationRepartition {
-          id
-          value
-          range
-        }
-        sideEffectsOriginRepartition {
-          with
-          without
-        }
-        natureRepartition {
-          id
-          value
-          range
-        }
-      }
-      rupturesHistory {
-        ruptures {
-          id
-          num
-          name
-          active
-          date
-          cause {
-            id
-            name
-          }
-          classification {
-            id
-            name
-          }
-        }
-        meta {
-          count
-        }
-      }
+      ...SpecialityFragment
     }
   }
+  ${SpecialityFragmentFragmentDoc}
 `;
 
 /**
@@ -654,49 +951,10 @@ export type SpecialitiesQueryResult = Apollo.QueryResult<
 export const SubstanceDocument = gql`
   query Substance($subCode: String!) {
     getSubstance(subCode: $subCode) {
-      id
-      code
-      name
-      pharmaForm
-      dosage
-      retrieveSpecialities {
-        meta {
-          count
-        }
-        specialities {
-          id
-          code
-          name
-          description
-        }
-      }
-      repartitionPerSex {
-        male
-        female
-      }
-      repartitionPerAge {
-        id
-        range
-        value
-      }
-      repartitionPerNotifier {
-        id
-        job
-        value
-      }
-      repartitionPerPathology {
-        id
-        range
-        value
-        valuePercent
-      }
-      totalExposition {
-        total
-        minYear
-        maxYear
-      }
+      ...SubstanceFragment
     }
   }
+  ${SubstanceFragmentFragmentDoc}
 `;
 
 /**

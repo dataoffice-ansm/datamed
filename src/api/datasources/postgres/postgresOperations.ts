@@ -10,6 +10,7 @@ import type {
   Publication,
   SpecialityRupture,
   TotalExposition,
+  SpecialitySubstance,
 } from '../../graphql/__generated__/generated-types';
 
 export class PostgresOperations {
@@ -37,6 +38,7 @@ export class PostgresOperations {
       .leftJoin('marketing_authorization_types as mka_t', 'mka_t.id', 'mp.ma_type_id')
       .leftJoin('laboratories as lab', 'lab.id', 'mp.laboratory_id')
       .leftJoin('mp_exposition as mp_exp', 'mp.id', 'mp_exp.mp_id')
+      .leftJoin('pharma_forms as ph_f', 'ph_f.id', 'mp.pharma_form_id')
       .leftJoin('icons as i', 'mp.icon_id', 'i.id')
       .select([
         'mp.id',
@@ -53,6 +55,8 @@ export class PostgresOperations {
         'mp_exp.exposition as expositionId',
         'mp_exp.consumption_year_trunc as consumption',
         'mp_exp.exposition as exposition',
+        'ph_f.form as pharmaFormLabel',
+        'ph_f.id as pharmaFormId',
         'i.name as iconName',
         'd.description',
       ])
@@ -76,6 +80,8 @@ export class PostgresOperations {
         expositionId,
         consumption,
         exposition,
+        pharmaFormId,
+        pharmaFormLabel,
       } = row;
 
       return {
@@ -89,13 +95,16 @@ export class PostgresOperations {
               name: atcName,
             }
           : null,
+        pharmaForm: {
+          id: pharmaFormId,
+          name: pharmaFormLabel,
+        },
         icon: iconId
           ? {
               id: iconId,
               name: iconName,
             }
           : null,
-        iconId,
         description,
         commercialisationState,
         commercialisationType,
@@ -127,6 +136,52 @@ export class PostgresOperations {
     }));
   }
 
+  async getSpecialityDosageIndication(cisId: number): Promise<string | null> {
+    const row = await dbInstance
+      .selectFrom('mp_substances as mp')
+      .where('mp.mp_id', '=', cisId)
+      .leftJoin('ref_dosages as ref_d', 'ref_d.id', 'mp.ref_dosage_id')
+      .select(['ref_d.label'])
+      .executeTakeFirst();
+
+    if (row) {
+      const { label } = row;
+      return label;
+    }
+
+    return null;
+  }
+
+  async getSpecialitySubstancesDosages(cisId: number): Promise<SpecialitySubstance[]> {
+    const rows = await dbInstance
+      .selectFrom('mp_substances as mp')
+      .where('mp.mp_id', '=', cisId)
+      .leftJoin('substances as sub', 'sub.id', 'mp.substance_id')
+      .select([
+        'mp.substance_id as subId',
+        'mp.dosage',
+        'sub.code as subCode',
+        'sub.name as subName',
+      ])
+      .execute();
+
+    return rows.reduce<SpecialitySubstance[]>((carry, row) => {
+      const { subId, subCode, subName, dosage } = row;
+      // eslint-disable-next-line no-negated-condition
+      return subId !== null
+        ? [
+            ...carry,
+            {
+              id: subId,
+              code: subCode,
+              name: subName,
+              dosage,
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
   async getSpecialityRepSex(cisId: number): Promise<RepartitionPerSex | null> {
     const rows = await dbInstance
       .selectFrom('mp_patient_sex')
@@ -143,6 +198,27 @@ export class PostgresOperations {
           female: Math.round(female.patients_percentage ?? 0),
         }
       : null;
+  }
+
+  async getSpecialityRepAge(cisId: number): Promise<RepartitionTranche[]> {
+    const rows = await dbInstance
+      .selectFrom('mp_patient_ages as mp_a')
+      .where('mp_id', '=', cisId)
+      .leftJoin('ages', 'ages.id', 'mp_a.age_id')
+      .select(['mp_a.id', 'ages.range', 'mp_a.patients_percentage as value'])
+      .execute();
+
+    return rows.reduce<RepartitionTranche[]>((carry, row) => {
+      const { id, range, value } = row;
+      return [
+        ...carry,
+        {
+          id,
+          range,
+          value: Math.round(value ?? 0),
+        },
+      ];
+    }, []);
   }
 
   async getErrorsMedRepPopulation(cisId: number): Promise<RepartitionTranche[]> {
@@ -193,27 +269,6 @@ export class PostgresOperations {
       .leftJoin('nature_errors as nat', 'nat.id', 'err.nature_error_id')
       .where('mp_id', '=', cisId)
       .select(['nat.id', 'err.percentage as value', 'nat.label as range'])
-      .execute();
-
-    return rows.reduce<RepartitionTranche[]>((carry, row) => {
-      const { id, range, value } = row;
-      return [
-        ...carry,
-        {
-          id,
-          range,
-          value: Math.round(value ?? 0),
-        },
-      ];
-    }, []);
-  }
-
-  async getSpecialityRepAge(cisId: number): Promise<RepartitionTranche[]> {
-    const rows = await dbInstance
-      .selectFrom('mp_patient_ages as mp_a')
-      .where('mp_id', '=', cisId)
-      .leftJoin('ages', 'ages.id', 'mp_a.age_id')
-      .select(['mp_a.id', 'ages.range', 'mp_a.patients_percentage as value'])
       .execute();
 
     return rows.reduce<RepartitionTranche[]>((carry, row) => {
@@ -284,26 +339,67 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSubstancesBySpeciality(cisId: number): Promise<Substance[]> {
+  async getSpecialityPublications(cisId: number): Promise<Publication[]> {
     const rows = await dbInstance
-      .selectFrom('mp_substances as mp')
-      .where('mp.mp_id', '=', cisId)
-      .leftJoin('substances as sub', 'sub.id', 'mp.substance_id')
-      .leftJoin('pharma_forms as ph', 'ph.id', 'mp.pharma_form_id')
-      .select(['sub.id', 'sub.name', 'sub.code', 'ph.form as pharmaForm', 'mp.dosage'])
+      .selectFrom('medicinal_products as mp')
+      .where('mp.id', '=', cisId)
+      .leftJoin('publications as p', 'p.mp_id', 'mp.id')
+      .leftJoin('publication_types as pt', 'pt.id', 'p.type_id')
+      .select(['p.id', 'p.title as name', 'p.link', 'pt.id as typeId'])
       .execute();
 
-    return rows.reduce<Substance[]>((carry, row) => {
-      const { id, name, code, pharmaForm, dosage } = row;
-      return id !== null && name !== null && code !== null
+    const publicationsTypeLabelMapping = (publishTypeId: number) => {
+      switch (publishTypeId) {
+        case 0:
+        case 2:
+        case 4:
+          return "Point d'information";
+        case 3:
+          return 'Communiqué';
+        default:
+          return 'Autre';
+      }
+    };
+
+    return rows.reduce<Publication[]>((carry, row) => {
+      const { id, name, link, typeId } = row;
+      return id !== null && name && link && typeId
         ? [
             ...carry,
             {
               id,
               name,
+              link,
+              type: {
+                id: typeId,
+                name: publicationsTypeLabelMapping(typeId),
+              },
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  // SUBSTANCES //
+
+  async getSubstancesBySpeciality(cisId: number): Promise<Substance[]> {
+    const rows = await dbInstance
+      .selectFrom('mp_substances as mp')
+      .where('mp.mp_id', '=', cisId)
+      .leftJoin('substances as sub', 'sub.id', 'mp.substance_id')
+      .select(['sub.id', 'sub.name', 'sub.code'])
+      .distinct()
+      .execute();
+
+    return rows.reduce<Substance[]>((carry, row) => {
+      const { id, name, code } = row;
+      return id !== null && name !== null && code !== null
+        ? [
+            ...carry,
+            {
+              id,
               code,
-              pharmaForm,
-              dosage,
+              name,
             },
           ]
         : carry;
@@ -351,47 +447,6 @@ export class PostgresOperations {
       code,
       name,
     }));
-  }
-
-  async getPublications(cisId: number): Promise<Publication[]> {
-    const rows = await dbInstance
-      .selectFrom('medicinal_products as mp')
-      .where('mp.id', '=', cisId)
-      .leftJoin('publications as p', 'p.mp_id', 'mp.id')
-      .leftJoin('publication_types as pt', 'pt.id', 'p.type_id')
-      .select(['p.id', 'p.title as name', 'p.link', 'pt.id as typeId'])
-      .execute();
-
-    const publicationsTypeLabelMapping = (publishTypeId: number) => {
-      switch (publishTypeId) {
-        case 0:
-        case 2:
-        case 4:
-          return "Point d'information";
-        case 3:
-          return 'Communiqué';
-        default:
-          return 'Autre';
-      }
-    };
-
-    return rows.reduce<Publication[]>((carry, row) => {
-      const { id, name, link, typeId } = row;
-      return id !== null && name && link && typeId
-        ? [
-            ...carry,
-            {
-              id,
-              name,
-              link,
-              type: {
-                id: typeId,
-                name: publicationsTypeLabelMapping(typeId),
-              },
-            },
-          ]
-        : carry;
-    }, []);
   }
 
   async getSubstanceRepSex(subCode: number): Promise<RepartitionPerSex> {
