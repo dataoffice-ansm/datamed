@@ -20,6 +20,7 @@ export const ModalPage = () => {
             as="button"
             variant="none"
             onClick={() => {
+              console.log('click open modal');
               setIsOpen(true);
             }}
           >
