@@ -99,7 +99,7 @@ export const PaginatedList = <T,>({
         ))}
       </div>
 
-      <div className="PaginatedListPaginatorContainer flex gap-1 py-4">
+      <div className="PaginatedListPaginatorContainer flex gap-2 py-4 flex-col lg:flex-row items-center">
         <div className="PaginatedListPaginator flex justify-center items-center gap-1">
           <label htmlFor="selectSizePageOption" className="m-0 font-normal">
             Nombre de lignes par page :
@@ -118,45 +118,47 @@ export const PaginatedList = <T,>({
           </select>
         </div>
         <div className="flex-auto" />
-        <NavigationButton
-          disabled={pageIndex === 0}
-          onClick={() => {
-            setPageIndex(0);
-          }}
-        >
-          <FirstPageSVG className={classNames('h-6 w-6', hoverAndFocusFillColor(theme))} />
-        </NavigationButton>
+        <div className="flex justify-center items-center gap-1">
+          <NavigationButton
+            disabled={pageIndex === 0}
+            onClick={() => {
+              setPageIndex(0);
+            }}
+          >
+            <FirstPageSVG className={classNames('h-6 w-6', hoverAndFocusFillColor(theme))} />
+          </NavigationButton>
 
-        <NavigationButton
-          disabled={pageIndex === 0}
-          onClick={() => {
-            setPageIndex(pageIndex - 1);
-          }}
-        >
-          <PreviousPageSVG className="hover:fill-secondary h-6 w-6" />
-        </NavigationButton>
+          <NavigationButton
+            disabled={pageIndex === 0}
+            onClick={() => {
+              setPageIndex(pageIndex - 1);
+            }}
+          >
+            <PreviousPageSVG className="hover:fill-secondary h-6 w-6" />
+          </NavigationButton>
 
-        <span className="px-2">
-          {pageIndex + 1} sur {maxPages}
-        </span>
+          <span className="px-2">
+            {pageIndex + 1} sur {maxPages}
+          </span>
 
-        <NavigationButton
-          disabled={pageIndex + 1 === maxPages}
-          onClick={() => {
-            setPageIndex(pageIndex + 1);
-          }}
-        >
-          <NextPageSVG className="hover:fill-secondary h-6 w-6" />
-        </NavigationButton>
+          <NavigationButton
+            disabled={pageIndex + 1 === maxPages}
+            onClick={() => {
+              setPageIndex(pageIndex + 1);
+            }}
+          >
+            <NextPageSVG className="hover:fill-secondary h-6 w-6" />
+          </NavigationButton>
 
-        <NavigationButton
-          disabled={pageIndex + 1 === maxPages}
-          onClick={() => {
-            setPageIndex(maxPages);
-          }}
-        >
-          <LastPageSVG className="hover:fill-secondary h-6 w-6" />
-        </NavigationButton>
+          <NavigationButton
+            disabled={pageIndex + 1 === maxPages}
+            onClick={() => {
+              setPageIndex(maxPages);
+            }}
+          >
+            <LastPageSVG className="hover:fill-secondary h-6 w-6" />
+          </NavigationButton>
+        </div>
       </div>
     </div>
   );
