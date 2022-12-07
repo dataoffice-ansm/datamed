@@ -14,7 +14,7 @@ import ManFigure from '../../assets/images/man_illustration.svg';
 import { PieChartRepartitionAge } from '../Charts/PieChartRepartitionAge';
 import { Accordion } from '../Accordion/Accordion';
 import { GetFigureByPathology } from './componentContainer/GetFigureByPathology';
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes } from 'react';
 import { useCallback, useState } from 'react';
 import type { SelectOption } from '../Select/Select';
 import { Select } from '../Select/Select';
@@ -22,12 +22,6 @@ import { NotEnoughData } from '../NotEnoughData';
 import { getNotifierFigureByJob } from '../../utils/mapping';
 import { Button } from '../Button/Button';
 import { Modal } from '../Modal/Modal';
-
-type EffectModal = {
-  title: string;
-  effects: HltEffect[];
-  icon: ReactNode;
-};
 
 const PathologyDetailModal = ({ pathology }: { pathology: RepartitionPerPathology }) => {
   const [openModal, setOpenModal] = useState(false);
@@ -44,20 +38,28 @@ const PathologyDetailModal = ({ pathology }: { pathology: RepartitionPerPatholog
           Voir détail
         </Button>
       ) : null}
-      {openModal && (
+      {openModal && pathology && (
         <Modal
-          title={`Sous-répartition des déclarations d’effets indésirables : ${pathology.range}`}
           isOpen={openModal}
+          closeClassName="absolute top-0 right-0 m-4"
           onClose={() => {
             setOpenModal(false);
           }}
         >
-          <GetFigureByPathology id={pathology.id as number} />
+          <div className="flex justify-center items-center py-4">
+            <div className="h-24 w-24 md:h-32 md:w-32">
+              <GetFigureByPathology id={pathology.id} />
+            </div>
+          </div>
+          <div className="text-xl text-center font-medium">
+            Sous-répartition des déclarations d’effets indésirables : {pathology.range}
+          </div>
           {pathology?.htlEffects && (
-            <ul>
-              {(pathology?.htlEffects as HltEffect[]).map((e) => (
-                <li key={e.id as number}>
-                  {e.range} {e.value} %
+            <ul className="list-none border-t border-grey-100">
+              {(pathology?.htlEffects ?? []).map((e) => (
+                <li key={e?.id} className="flex justify-between border-b border-grey-100 py-4">
+                  <span>{e?.range} </span>
+                  <strong>{e?.value}%</strong>
                 </li>
               ))}
             </ul>
@@ -174,6 +176,15 @@ export const SubstanceContainer = ({
         icon={<FolderSVG />}
         theme="secondary"
         className="my-8"
+        tooltip={
+          <div>
+            <strong>Nombre de déclarations</strong>
+            <div>
+              Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise à jour
+              progressive des données.
+            </div>
+          </div>
+        }
       >
         Nombre de déclarations d&lsquo;effets indésirables
         {totalExposition?.minYear &&
@@ -213,7 +224,7 @@ export const SubstanceContainer = ({
             )}
           </GraphBox>
         </div>
-        <div className="flex-1 flex-shrink ">
+        <div className="flex-1 flex-shrink">
           <GraphBox
             title="Répartition par âge des patiens traités parmi les cas déclarés d'effets indésirables"
             className="h-full max-w-[100%]"

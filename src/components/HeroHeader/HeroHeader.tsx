@@ -26,14 +26,14 @@ const entitiesOptionsMapping: Record<'sub' | 'cis', EntityOptions> = {
   sub: {
     tooltip: <SubTooltip />,
     theme: 'bg-secondary-900',
-    icon: <SubSvg className="h-fit" />,
+    icon: <SubSvg />,
     type: 'Substance',
     description: 'Substance active',
   },
   cis: {
     tooltip: <CisTooltip />,
     theme: 'bg-primary',
-    icon: <CisSvg className="h-fit" />,
+    icon: <CisSvg />,
     type: 'Spécialité',
     description: 'Spécialité de médicament',
   },

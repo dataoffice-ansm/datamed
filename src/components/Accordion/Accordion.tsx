@@ -64,7 +64,7 @@ export const Accordion = ({
   classNameTitle = '',
   className,
 }: AccordionProps & HTMLAttributes<HTMLDivElement>) => (
-  <div id={id} className={classNames('Accordion bg-white rounded-lg', className)}>
+  <div id={id} className={classNames('Accordion bg-white rounded-lg shadow', className)}>
     <Disclosure defaultOpen={defaultOpen}>
       {({ open }) => (
         <>

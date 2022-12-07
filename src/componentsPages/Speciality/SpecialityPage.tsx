@@ -28,6 +28,7 @@ import { RuptureHistoryItem } from '../../components/Ruptures/RuptureHistoryItem
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 import { PieChartMedicalErrorsPopulation } from '../../components/Charts/PieChartMedicalErrorsPopulation';
 import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
+import { GraphBox } from 'components/GraphBox/GraphBox';
 
 const SectionTitle = ({ title }: { title: string }) => (
   <h2 className="text-2xl lg:text-3xl text-left">{title}</h2>
@@ -123,7 +124,9 @@ const SectionTreatedPatients = () => {
       <div className="mt-0 mb-6">Données issues de la période 2009 - 2021</div>
 
       <Accordion
+        defaultOpen
         className="shadow rounded-lg"
+        classNameTitle="text-primary"
         theme="primary"
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
       >
@@ -156,7 +159,7 @@ const SectionTreatedPatients = () => {
       </Accordion>
 
       {currentEntity?.exposition?.consumption ? (
-        <div className="expositionChart my-4 flex rounded-md border border-grey-200 border-solid overflow-hidden">
+        <div className="expositionChart my-4 flex rounded-lg shadow bg-white overflow-hidden">
           <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-primary py-6">
             <span className="text-white">
               {
@@ -198,41 +201,55 @@ const SectionTreatedPatients = () => {
           </div>
         </div>
       ) : (
-        <NotEnoughData />
+        <div className="w-full flex justify-center items-center rounded-lg shadow bg-white mt-8">
+          <NotEnoughData />
+        </div>
       )}
 
-      <div className="flex gap-2 my-8">
-        <ChartBox className="repSexes" title="Répartition par sexe des patients traités">
-          {currentEntity.repartitionPerSex ? (
-            <div className="flex gap-2 w-full">
-              <div className="w-full flex flex-col justify-center items-center gap-1">
-                <ManIllustration />
-                {currentEntity.repartitionPerSex?.male && (
-                  <span className="text-3xl text-dark-violet-800 mt-3">
-                    {currentEntity.repartitionPerSex?.male}%
-                  </span>
-                )}
-                <span className="text-base">Hommes</span>
-              </div>
-
-              <div className="w-full flex flex-col justify-center items-center gap-1">
-                <WomanIllustration />
+      <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto mt-8">
+        <div className="flex-1 flex-shrink">
+          <GraphBox
+            title="Répartition par sexe des patients traités"
+            className="h-full max-w-[100%]"
+          >
+            {currentEntity.repartitionPerSex?.female && currentEntity.repartitionPerSex?.male ? (
+              <div className="mt-8 flex gap-8 justify-center items-center">
                 {currentEntity.repartitionPerSex?.female && (
-                  <span className="text-3xl text-dark-violet-800 mt-3">
-                    {currentEntity.repartitionPerSex?.female}%
-                  </span>
+                  <GraphFigure
+                    value={currentEntity.repartitionPerSex?.female}
+                    description="Femmes"
+                    valueClassName="mt-2 text-secondary"
+                    icon={<WomanIllustration />}
+                  />
                 )}
-                <span className="text-base">Femmes</span>
+                {currentEntity.repartitionPerSex?.male && (
+                  <GraphFigure
+                    value={currentEntity.repartitionPerSex.male}
+                    valueClassName="mt-2 text-secondary"
+                    description="Hommes"
+                    icon={<ManIllustration />}
+                  />
+                )}
               </div>
-            </div>
-          ) : (
-            <NotEnoughData />
-          )}
-        </ChartBox>
-
-        <ChartBox className="repAges" title="Répartition par âge des patients traités">
-          <PieChartRepartitionAge ageData={currentEntity?.repartitionPerAge} />
-        </ChartBox>
+            ) : (
+              <div className="w-full flex justify-center items-center">
+                <NotEnoughData />
+              </div>
+            )}
+          </GraphBox>
+        </div>
+        <div className="flex-1 flex-shrink">
+          <GraphBox
+            title="Répartition par âge des patients traités"
+            className="h-full max-w-[100%]"
+          >
+            <PieChartRepartitionAge
+              theme="secondary"
+              className="h-64 w-full flex justify-center items-center"
+              ageData={currentEntity?.repartitionPerAge}
+            />
+          </GraphBox>
+        </div>
       </div>
     </div>
   );
@@ -275,43 +292,46 @@ const SectionMedicinalErrors = () => {
         </p>
       </Accordion>
 
-      <div className="flex gap-2 my-8">
-        <ChartBox className="repAges flex-1" title="Répartition de la population concernée">
-          <PieChartMedicalErrorsPopulation
-            errorsMedRepPopData={currentEntity?.medicalErrors?.populationRepartition}
-          />
-        </ChartBox>
+      <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto mt-8">
+        <div className="flex-1 flex-shrink">
+          <GraphBox title="Répartition de la population concernée" className="h-full max-w-[100%]">
+            <PieChartMedicalErrorsPopulation
+              errorsMedRepPopData={currentEntity?.medicalErrors?.populationRepartition}
+            />
+          </GraphBox>
+        </div>
+        <div className="flex-1 flex-shrink">
+          <GraphBox
+            title="Existence d’effets indésirables suite aux erreurs médicamenteuses déclarées"
+            className="h-full max-w-[100%]"
+          >
+            {currentEntity?.medicalErrors?.sideEffectsOriginRepartition ? (
+              <div className="flex gap-2 w-full">
+                <div className="w-full flex flex-col justify-center items-center gap-1">
+                  <ManFaceYes className="w-32" />
+                  {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with && (
+                    <span className="text-3xl text-dark-violet-800 mt-3">
+                      {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with}%
+                    </span>
+                  )}
+                  <span className="text-base">Sans effets indésirables</span>
+                </div>
 
-        <ChartBox
-          className="sideEffectsOriginRepartition flex-1"
-          title="Existence d’effets indésirables suite aux erreurs médicamenteuses déclarées"
-        >
-          {currentEntity?.medicalErrors?.sideEffectsOriginRepartition ? (
-            <div className="flex gap-2 w-full">
-              <div className="w-full flex flex-col justify-center items-center gap-1">
-                <ManFaceYes className="w-32" />
-                {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with && (
-                  <span className="text-3xl text-dark-violet-800 mt-3">
-                    {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with}%
-                  </span>
-                )}
-                <span className="text-base">Sans effets indésirables</span>
+                <div className="w-full flex flex-col justify-center items-center gap-1">
+                  <ManFaceNo className="w-32" />
+                  {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without && (
+                    <span className="text-3xl text-dark-violet-800 mt-3">
+                      {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without}%
+                    </span>
+                  )}
+                  <span className="text-base">Avec effets indésirables</span>
+                </div>
               </div>
-
-              <div className="w-full flex flex-col justify-center items-center gap-1">
-                <ManFaceNo className="w-32" />
-                {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without && (
-                  <span className="text-3xl text-dark-violet-800 mt-3">
-                    {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without}%
-                  </span>
-                )}
-                <span className="text-base">Avec effets indésirables</span>
-              </div>
-            </div>
-          ) : (
-            <NotEnoughData />
-          )}
-        </ChartBox>
+            ) : (
+              <NotEnoughData />
+            )}
+          </GraphBox>
+        </div>
       </div>
 
       <ChartBox

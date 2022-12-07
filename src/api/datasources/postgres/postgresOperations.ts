@@ -537,9 +537,9 @@ export class PostgresOperations {
       ])
       .execute();
 
-    const effects: HltEffect[] = rowsHltEffects.reduce<HltEffect>((carry, row) => {
+    const effects = rowsHltEffects.reduce<HltEffect[]>((carry, row) => {
       const { id, range, value } = row;
-      return range
+      return id && range && value
         ? [
             ...carry,
             {

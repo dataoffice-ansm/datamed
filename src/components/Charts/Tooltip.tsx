@@ -60,8 +60,6 @@ export const tooltipHandler =
       const bodyLines = tooltip.body.map((b) => b.lines);
       bodyLines.forEach((body: string, i: number) => {
         const colors = tooltip.labelColors[i];
-        console.log(body);
-
         const span = document.createElement('span');
         span.style.display = 'inline-block';
         span.style.background = colors.backgroundColor;

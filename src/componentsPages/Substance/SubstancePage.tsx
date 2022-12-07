@@ -14,10 +14,11 @@ import { Accordion } from '../../components/Accordion/Accordion';
 import { cisExpositionLevelMapping } from '../../utils/mapping';
 import PilIcon from '../../assets/images/gellule.svg';
 import { numberWithThousand } from '../../utils/format';
-import { ChartBox } from '../../components/ChartBox/ChartBox';
 import ManIllustration from '../../assets/images/man_illustration.svg';
 import WomanIllustration from '../../assets/images/woman_illustration.svg';
 import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
+import { GraphBox } from '../../components/GraphBox/GraphBox';
+import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
 
 const SectionTitle = ({ title }: { title: string }) => (
   <h2 className="text-2xl lg:text-3xl text-left">{title}</h2>
@@ -27,15 +28,16 @@ const SectionOneGlobalInformation = ({ substance }: { substance: Substance }) =>
   const { totalExposition, exposition, repartitionPerSex, repartitionPerAge } = substance;
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
-      <h2 className="mb-1 font-medium">Patients traités en ville</h2>
+      <SectionTitle title="Patients traités en ville" />
       {totalExposition && (
-        <h6 className="mt-0 mb-6">
+        <div className="mt-0 mb-6">
           Données issues de la période {totalExposition?.minYear} - {totalExposition?.maxYear}
-        </h6>
+        </div>
       )}
 
       <Accordion
         defaultOpen
+        className="shadow"
         theme="secondary"
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
         classNameTitle="text-secondary"
@@ -69,8 +71,8 @@ const SectionOneGlobalInformation = ({ substance }: { substance: Substance }) =>
       </Accordion>
 
       {exposition?.consumption ? (
-        <div className="expositionChart my-4 flex rounded-md border border-grey-200 border-solid overflow-hidden">
-          <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-primary py-6">
+        <div className="expositionChart my-4 flex rounded-lg shadow bg-white overflow-hidden">
+          <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-secondary-900 py-6">
             <span className="text-white">
               {
                 cisExpositionLevelMapping[
@@ -100,7 +102,9 @@ const SectionOneGlobalInformation = ({ substance }: { substance: Substance }) =>
           </div>
 
           <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
-            <h3 className="text-primary">{numberWithThousand(exposition?.consumption)} / an</h3>
+            <h3 className="text-secondary-900">
+              {numberWithThousand(exposition?.consumption)} / an
+            </h3>
             <p>
               Approximation du nombre de patients ayant été remboursés sur la période 2014-2018 pour
               une substance active ou une spécialité de médicament.
@@ -108,41 +112,55 @@ const SectionOneGlobalInformation = ({ substance }: { substance: Substance }) =>
           </div>
         </div>
       ) : (
-        <NotEnoughData />
+        <div className="bg-white p-4 shadow rounded-lg mt-8">
+          <NotEnoughData />
+        </div>
       )}
 
-      <div className="flex gap-2 my-8">
-        <ChartBox className="repSexes" title="Répartition par sexe des patients traités">
-          {repartitionPerSex ? (
-            <div className="flex gap-2 w-full">
-              <div className="w-full flex flex-col justify-center items-center gap-1">
-                <ManIllustration />
-                {repartitionPerSex?.male && (
-                  <span className="text-3xl text-dark-violet-800 mt-3">
-                    {repartitionPerSex?.male}%
-                  </span>
-                )}
-                <span className="text-base">Hommes</span>
-              </div>
-
-              <div className="w-full flex flex-col justify-center items-center gap-1">
-                <WomanIllustration />
+      <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto">
+        <div className="flex-1 flex-shrink">
+          <GraphBox
+            title="Répartition par sexe des patients traités"
+            className="h-full max-w-[100%]"
+          >
+            {repartitionPerSex?.female && repartitionPerSex?.male ? (
+              <div className="mt-8 flex gap-8 justify-center items-center">
                 {repartitionPerSex?.female && (
-                  <span className="text-3xl text-dark-violet-800 mt-3">
-                    {repartitionPerSex?.female}%
-                  </span>
+                  <GraphFigure
+                    value={repartitionPerSex?.female}
+                    description="Femmes"
+                    valueClassName="mt-2 text-secondary"
+                    icon={<WomanIllustration />}
+                  />
                 )}
-                <span className="text-base">Femmes</span>
+                {repartitionPerSex?.male && (
+                  <GraphFigure
+                    value={repartitionPerSex.male}
+                    valueClassName="mt-2 text-secondary"
+                    description="Hommes"
+                    icon={<ManIllustration />}
+                  />
+                )}
               </div>
-            </div>
-          ) : (
-            <NotEnoughData />
-          )}
-        </ChartBox>
-
-        <ChartBox className="repAges" title="Répartition par âge des patients traités">
-          <PieChartRepartitionAge ageData={repartitionPerAge} />
-        </ChartBox>
+            ) : (
+              <div className="w-full flex justify-center items-center">
+                <NotEnoughData />
+              </div>
+            )}
+          </GraphBox>
+        </div>
+        <div className="flex-1 flex-shrink">
+          <GraphBox
+            title="Répartition par âge des patients traités"
+            className="h-full max-w-[100%]"
+          >
+            <PieChartRepartitionAge
+              theme="secondary"
+              className="h-64 w-full flex justify-center items-center"
+              ageData={repartitionPerAge}
+            />
+          </GraphBox>
+        </div>
       </div>
     </div>
   );
@@ -188,7 +206,7 @@ const SectionThree = () => {
                 <Link href={`/specialite/${item.code}`}>
                   <a
                     className={classnames(
-                      'w-full no-underline hover:underline p-4 focus:bg-grey-50',
+                      'w-full no-underline hover:underline p-2 focus:bg-grey-50 block',
                       'hover:font-medium focus:font-medium'
                     )}
                   >

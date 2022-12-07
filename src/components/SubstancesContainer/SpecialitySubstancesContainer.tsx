@@ -65,7 +65,7 @@ export const SpecialitySubstancesContainer = ({
               <span className="text-secondary-900 font-medium">{selectedSubstance?.name}</span>
             </span>
             <SubstanceContainer substance={selectedSubstance}>
-              <div className="bg-white p-8 shadow rounded-lg mt-8 flex flex-col justify-center items-center lg:flex-row lg:justify-start gap-8">
+              <div className="bg-white p-8 shadow rounded-lg mt-8 flex flex-col justify-center items-center lg:flex-row gap-8">
                 <div className="h-48 w-48">
                   <SickPerson />
                 </div>
@@ -78,7 +78,7 @@ export const SpecialitySubstancesContainer = ({
                     selon votre situation.
                   </div>
                   <Link href="https://ansm.sante.fr/documents/reference/declarer-un-effet-indesirable">
-                    <a className="text-primary rounded border border-primary py-2 px-4 no-underline">
+                    <a className="text-primary rounded border border-primary py-2 px-4 no-underline block md:text-center">
                       VOIR LES RECOMMANDATIONS DE L&apos;ANSM
                     </a>
                   </Link>
