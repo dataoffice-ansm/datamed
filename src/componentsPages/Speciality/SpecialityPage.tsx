@@ -29,6 +29,10 @@ import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 import { PieChartMedicalErrorsPopulation } from '../../components/Charts/PieChartMedicalErrorsPopulation';
 import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
 
+const SectionTitle = ({ title }: { title: string }) => (
+  <h2 className="text-2xl lg:text-3xl text-left">{title}</h2>
+);
+
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
   const { stickyHeroHeight } = useLayoutContext();
@@ -115,10 +119,11 @@ const SectionTreatedPatients = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
-      <h2 className="mb-1 font-medium">Patients traités en ville</h2>
-      <h6 className="mt-0 mb-6">Données issues de la période 2009 - 2021</h6>
+      <SectionTitle title="Patients traités en ville" />
+      <div className="mt-0 mb-6">Données issues de la période 2009 - 2021</div>
 
       <Accordion
+        className="shadow rounded-lg"
         theme="primary"
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
       >
@@ -238,10 +243,13 @@ const SectionMedicinalErrors = () => {
 
   return (
     <div className="SectionMedicinalErrors sectionPart mt-4 mb-8">
-      <h2 className="mb-1 font-medium">Déclarations d’erreurs médicamenteuses</h2>
-      <h6 className="mt-0 mb-6">Données issues de la période 2009 - 2021</h6>
+      <SectionTitle title="Déclarations d’erreurs médicamenteuses" />
+      <div className="mt-0 mb-6">Données issues de la période 2009 - 2021</div>
 
-      <Accordion title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?">
+      <Accordion
+        title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
+        className="rounded-lg shadow"
+      >
         <p>
           L’erreur médicamenteuse est l&lsquo;omission ou la réalisation non intentionnelle
           d&lsquo;un acte au cours des soins impliquant un médicament, qui peut être à l’origine
@@ -341,10 +349,11 @@ const SectionSideEffects = () => {
 
   return (
     <div className="SectionSideEffects">
-      <h2 className="font-medium">
-        Déclarations d&lsquo;effets indésirables suspectés, par substance active
-      </h2>
-      <SpecialitySubstancesContainer substances={substances} className="mt-4 mb-32" />
+      <SectionTitle title="Déclarations d&lsquo;effets indésirables suspectés, par substance active" />
+      <SpecialitySubstancesContainer
+        substances={substances}
+        className="mt-4 mb-32 shadow rounded-lg"
+      />
     </div>
   );
 };
@@ -362,9 +371,7 @@ const SectionRisksShortageHistory = () => {
 
   return (
     <div className="SectionRisksShortageHistory">
-      <h2 className="font-medium">
-        Historique des déclarations de ruptures et de risques de rupture de stock cloturées
-      </h2>
+      <SectionTitle title="Historique des déclarations de ruptures et de risques de rupture de stock cloturées" />
       {count ? (
         <div className="p-4 border border-grey-200 rounded-lg bg-white">
           <div className="text-secondary-900 font-medium">
@@ -395,7 +402,7 @@ const SectionPublications = () => {
 
   return (
     <div className="SectionPublications min-h-screen">
-      <h2 className="font-medium">Publications de l’ANSM</h2>
+      <SectionTitle title="Publications de l’ANSM" />
       {publications?.length ? (
         publications?.map((publication, index) => (
           <div key={`publication_${index.toString()}}`} className="my-2">

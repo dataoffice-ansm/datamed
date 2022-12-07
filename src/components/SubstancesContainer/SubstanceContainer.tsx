@@ -68,7 +68,7 @@ export const PathologyContainer = ({
             <span className="text-secondary font-medium">{substanceName}</span>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-8 m-auto mt-8 p-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 m-auto mt-8 p-4">
             {repartitionPerPathology
               ?.filter((pathology) => pathology)
               .map((pathology) =>
@@ -169,6 +169,7 @@ export const SubstanceContainer = ({
             className="h-full max-w-[100%]"
           >
             <PieChartRepartitionAge
+              theme="secondary"
               className="h-64 w-full flex justify-center items-center"
               ageData={repartitionPerAge}
             />
