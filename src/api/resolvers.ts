@@ -78,6 +78,11 @@ export const resolvers: Resolvers = {
           speciality.id
         );
 
+      const apparitionStepRepartition =
+        await context.dataSources.postgresOperations.getErrorsMedicalApparitionStepRepartition(
+          speciality.id
+        );
+
       const natureRepartition =
         await context.dataSources.postgresOperations.getErrorsMedicalNatureRepartition(
           speciality.id
@@ -86,6 +91,7 @@ export const resolvers: Resolvers = {
       return {
         populationRepartition,
         sideEffectsOriginRepartition,
+        apparitionStepRepartition,
         natureRepartition,
       };
     },
@@ -149,6 +155,15 @@ export const resolvers: Resolvers = {
 
     async exposition(substance, args, context) {
       return context.dataSources.postgresOperations.getSubstanceCisExposition(substance.id);
+    },
+  },
+
+  RepartitionPerPathology: {
+    async htlEffects(pathologyRep, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceRepPathologyEffects(
+        pathologyRep.subId,
+        pathologyRep.id
+      );
     },
   },
 };

@@ -1,11 +1,11 @@
 import classNames from 'classnames';
-import type { SelectOption } from '../Select/Select';
-import { Select } from '../Select/Select';
+import type { SelectOption } from '../../components/Select/Select';
+import { Select } from '../../components/Select/Select';
 import type { Substance } from '../../graphql/__generated__/generated-documents';
 import type { HTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import SubSVG from '../../assets/icons/sub.svg';
-import { SubstanceContainer } from './SubstanceContainer';
+import { SubstanceContainer } from '../Substance/SubstanceContainer';
 import Link from 'next/link';
 import SickPerson from '../../assets/images/sick_transparent_person.svg';
 
@@ -61,7 +61,7 @@ export const SpecialitySubstancesContainer = ({
         ) : (
           <div>
             <span className="text-left text-xl">
-              Substance active sélectionnée :{' '}
+              Substance active sélectionnée:{' '}
               <span className="text-secondary-900 font-medium">{selectedSubstance?.name}</span>
             </span>
             <SubstanceContainer substance={selectedSubstance}>

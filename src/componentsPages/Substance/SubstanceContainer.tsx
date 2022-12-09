@@ -1,33 +1,40 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
 import type {
-  Maybe,
   RepartitionPerPathology,
   Substance,
   HltEffect,
 } from '../../graphql/__generated__/generated-documents';
-import { BoxInfoTitle } from '../BoxInfoTitle/BoxInfoTitle';
+import { BoxInfo } from '../../components/BoxInfo';
 import FolderSVG from '../../assets/icons/folder/folder.svg';
-import { GraphBox } from '../GraphBox/GraphBox';
-import { GraphFigure } from '../GraphFigure/GraphFigure';
+import { GraphBox } from '../../components/GraphBox/GraphBox';
+import { GraphFigure } from '../../components/GraphFigure';
 import WomanFigure from '../../assets/images/woman_illustration.svg';
 import ManFigure from '../../assets/images/man_illustration.svg';
-import { PieChartRepartitionAge } from '../Charts/PieChartRepartitionAge';
-import { Accordion } from '../Accordion/Accordion';
-import { GetFigureByPathology } from './componentContainer/GetFigureByPathology';
+import { PieChartRepartitionAge } from '../Speciality/PieChartRepartitionAge';
+import { Accordion } from '../../components/Accordion/Accordion';
 import type { HTMLAttributes } from 'react';
-import { useCallback, useState } from 'react';
-import type { SelectOption } from '../Select/Select';
-import { Select } from '../Select/Select';
-import { NotEnoughData } from '../NotEnoughData';
-import { getNotifierFigureByJob } from '../../utils/mapping';
-import { Button } from '../Button/Button';
-import { Modal } from '../Modal/Modal';
+import { useState } from 'react';
+import { NotEnoughData } from '../../components/NotEnoughData';
+import {
+  getCisErrorMedNatureIconMapping,
+  getFigureBySideEffectPathology,
+  getNotifierFigureByJob,
+} from '../../utils/mapping';
+import { Button } from '../../components/Button/Button';
+import { Modal } from '../../components/Modal/Modal';
+import { GraphBoxSelect } from '../../components/GraphBoxSelect';
+import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 
-const PathologyDetailModal = ({ pathology }: { pathology: RepartitionPerPathology }) => {
+/**
+ *
+ * @param pathology
+ * @constructor
+ */
+const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: RepartitionPerPathology }) => {
   const [openModal, setOpenModal] = useState(false);
+
   return (
-    <div>
-      {(pathology.htlEffects as HltEffect[]).length > 0 ? (
+    <div className="PathologyOrgansRepartitionModal">
+      {(pathology.htlEffects as HltEffect[]).length > 0 && (
         <Button
           as="button"
           variant="none"
@@ -35,9 +42,10 @@ const PathologyDetailModal = ({ pathology }: { pathology: RepartitionPerPatholog
             setOpenModal(true);
           }}
         >
-          Voir détail
+          Voir détails
         </Button>
-      ) : null}
+      )}
+
       {openModal && pathology && (
         <Modal
           isOpen={openModal}
@@ -48,7 +56,7 @@ const PathologyDetailModal = ({ pathology }: { pathology: RepartitionPerPatholog
         >
           <div className="flex justify-center items-center py-4">
             <div className="h-24 w-24 md:h-32 md:w-32">
-              <GetFigureByPathology id={pathology.id} />
+              {getFigureBySideEffectPathology(pathology.id)}
             </div>
           </div>
           <div className="text-xl text-center font-medium">
@@ -70,87 +78,6 @@ const PathologyDetailModal = ({ pathology }: { pathology: RepartitionPerPatholog
   );
 };
 
-export const PathologyContainer = ({
-  repartitionPerPathology,
-  totalExposition,
-  substanceName,
-}: {
-  repartitionPerPathology?: Array<Maybe<RepartitionPerPathology>>;
-  totalExposition?: number;
-  substanceName?: string;
-}) => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
-
-  const options: SelectOption[] = [
-    {
-      label: 'Pourcentage',
-      value: 'percent',
-    },
-    {
-      label: 'Nombre',
-      value: 'number',
-    },
-  ];
-  const selectedOption = options[selectedIndex].value;
-
-  const onChange = useCallback((index: number) => {
-    setSelectedIndex(index);
-  }, []);
-
-  return (
-    <div className="SubstancesContainerHeader flex gap-4 justify-start items-center p-4 flex-wrap shadow rounded-lg bg-white">
-      <span className="SubstancesContainerHeaderTitle text-xl px-4 flex-auto flex justify-start font-medium text-left">
-        Effets indésirables suspectés de la substance active
-      </span>
-      <div className="SubstancesContainerHeaderSelect w-full max-w-xs">
-        <Select
-          theme="secondary"
-          defaultOptionIndex={selectedIndex}
-          options={options}
-          onSelectOption={onChange}
-        />
-      </div>
-
-      {(repartitionPerPathology?.length ?? 0) > 0 ? (
-        <div>
-          <div className="px-4 text-2xl my-6">
-            Parmi les <span className="text-secondary font-medium">{totalExposition}</span>{' '}
-            déclarations d’effets indésirables pour:{' '}
-            <span className="text-secondary font-medium">{substanceName}</span>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 m-auto mt-8 p-4">
-            {repartitionPerPathology
-              ?.filter((pathology) => pathology)
-              .map((pathology) =>
-                pathology?.id && pathology?.valuePercent && pathology.value && pathology.range ? (
-                  <div key={pathology.id} className="flex justify-center">
-                    <GraphFigure
-                      className="pathologyGraphFigure"
-                      unit={selectedOption === 'percent' ? ' % ' : ''}
-                      value={
-                        selectedOption === 'percent' ? pathology.valuePercent : pathology.value
-                      }
-                      valueClassName="text-secondary"
-                      description={pathology.range}
-                      descriptionClassName="text-[16px] md:text-[18px] text-center"
-                      icon={<GetFigureByPathology id={pathology.id} />}
-                      action={<PathologyDetailModal pathology={pathology} />}
-                    />
-                  </div>
-                ) : null
-              )}
-          </div>
-        </div>
-      ) : (
-        <div className="w-full flex justify-center items-center">
-          <NotEnoughData />
-        </div>
-      )}
-    </div>
-  );
-};
-
 /**
  *
  * @param substance
@@ -159,7 +86,6 @@ export const PathologyContainer = ({
  */
 export const SubstanceContainer = ({
   substance,
-  children,
 }: { substance: Substance } & HTMLAttributes<HTMLElement>) => {
   const {
     repartitionPerAge,
@@ -171,7 +97,7 @@ export const SubstanceContainer = ({
 
   return (
     <div className="SubstancesContainerContentTitle text-left">
-      <BoxInfoTitle
+      <BoxInfo
         title={`${totalExposition?.total ?? 'Aucune'} déclaration(s) reçue(s)`}
         icon={<FolderSVG />}
         theme="secondary"
@@ -188,9 +114,9 @@ export const SubstanceContainer = ({
       >
         Nombre de déclarations d&lsquo;effets indésirables
         {totalExposition?.minYear &&
-          totalExposition?.maxYear !== null &&
+          totalExposition?.maxYear &&
           `sur la période ${totalExposition?.minYear} ${totalExposition?.maxYear}`}
-      </BoxInfoTitle>
+      </BoxInfo>
 
       <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto">
         <div className="flex-1 flex-shrink">
@@ -205,7 +131,7 @@ export const SubstanceContainer = ({
                     value={repartitionPerSex?.female}
                     description="Femmes"
                     valueClassName="mt-2 text-secondary"
-                    icon={<WomanFigure />}
+                    icon={<WomanFigure className="w-32" />}
                   />
                 )}
                 {repartitionPerSex?.male && (
@@ -213,7 +139,7 @@ export const SubstanceContainer = ({
                     value={repartitionPerSex.male}
                     valueClassName="mt-2 text-secondary"
                     description="Hommes"
-                    icon={<ManFigure />}
+                    icon={<ManFigure className="w-32" />}
                   />
                 )}
               </div>
@@ -224,6 +150,7 @@ export const SubstanceContainer = ({
             )}
           </GraphBox>
         </div>
+
         <div className="flex-1 flex-shrink">
           <GraphBox
             title="Répartition par âge des patiens traités parmi les cas déclarés d'effets indésirables"
@@ -238,9 +165,9 @@ export const SubstanceContainer = ({
         </div>
       </div>
 
-      <GraphBox title="Répartition par type déclarant" className="max-w-full my-8">
+      <GraphBox title="Répartition par type de déclarants" className="max-w-full my-8">
         {repartitionPerNotifier?.length ? (
-          <div className="flex gap-12 justify-center flex-wrap py-4">
+          <div className="GraphFigures flex gap-12 justify-center items-start flex-wrap py-4">
             {repartitionPerNotifier.map((notifier) =>
               notifier?.id && notifier?.value && notifier.job ? (
                 <GraphFigure
@@ -282,13 +209,41 @@ export const SubstanceContainer = ({
         </p>
       </Accordion>
 
-      <PathologyContainer
-        repartitionPerPathology={repartitionPerPathology ?? []}
-        totalExposition={totalExposition?.total ?? 0}
-        substanceName={substance.name}
-      />
+      <GraphBoxSelect
+        title="Effets indésirables suspectés de la substance active"
+        render={(selectedOption) => (
+          <div className="GraphBoxSelectContent">
+            <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
+              Parmi les <span className="text-secondary font-medium">{totalExposition?.total}</span>{' '}
+              déclarations d’effets indésirables pour:{' '}
+              <span className="text-secondary font-medium">{substance.name}</span>
+            </div>
 
-      {children}
+            <GraphFiguresGrid
+              data={repartitionPerPathology ?? []}
+              renderItem={(pathologyRepartition) =>
+                pathologyRepartition?.id &&
+                pathologyRepartition?.range &&
+                pathologyRepartition?.value &&
+                pathologyRepartition?.valuePercent ? (
+                  <GraphFigure
+                    className="pathologyGraphFigure"
+                    unit={selectedOption === 'percent' ? ' % ' : ''}
+                    description={pathologyRepartition.range}
+                    icon={getCisErrorMedNatureIconMapping(pathologyRepartition.id)}
+                    action={<PathologyOrgansRepartitionModal pathology={pathologyRepartition} />}
+                    value={
+                      selectedOption === 'percent'
+                        ? pathologyRepartition.valuePercent
+                        : pathologyRepartition.value
+                    }
+                  />
+                ) : null
+              }
+            />
+          </div>
+        )}
+      />
     </div>
   );
 };

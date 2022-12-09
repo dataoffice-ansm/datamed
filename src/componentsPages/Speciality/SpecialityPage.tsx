@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Page404 from '../../pages/[404]';
 import { useMemo } from 'react';
 import type { SpecialityRupture, Substance } from '../../graphql/__generated__/generated-documents';
-import { SpecialitySubstancesContainer } from '../../components/SubstancesContainer/SpecialitySubstancesContainer';
+import { SpecialitySubstancesContainer } from './SpecialitySubstancesContainer';
 import { Accordion } from '../../components/Accordion/Accordion';
 import PilIcon from '../../assets/images/gellule.svg';
 import WomanIllustration from '../../assets/images/woman_illustration.svg';
@@ -15,24 +15,24 @@ import ManIllustration from '../../assets/images/man_illustration.svg';
 import ManFaceNo from '../../assets/images/manFaceNo.svg';
 import ManFaceYes from '../../assets/images/manFaceYes.svg';
 
-import { ChartBox } from '../../components/ChartBox/ChartBox';
+import { ChartBox } from '../../components/ChartBox';
 import classnames from 'classnames';
 import { useLayoutContext } from '../../contexts/LayoutContext';
 import { cisExpositionLevelMapping, getCisErrorMedNatureIconMapping } from '../../utils/mapping';
 import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { Button } from '../../components/Button/Button';
-import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
-import { PublicationItem } from 'components/Publication/Publication';
-import { RuptureHistoryItem } from '../../components/Ruptures/RuptureHistoryItem';
+import { GraphFigure } from '../../components/GraphFigure';
+import { PublicationItem } from 'componentsPages/Speciality/PublicationItem';
+import { RuptureHistoryItem } from './RuptureHistoryItem';
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
-import { PieChartMedicalErrorsPopulation } from '../../components/Charts/PieChartMedicalErrorsPopulation';
-import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
+import { PieChartMedicalErrorsPopulation } from './PieChartMedicalErrorsPopulation';
+import { PieChartRepartitionAge } from './PieChartRepartitionAge';
 import { GraphBox } from 'components/GraphBox/GraphBox';
-
-const SectionTitle = ({ title }: { title: string }) => (
-  <h2 className="text-2xl lg:text-3xl text-left">{title}</h2>
-);
+import { SectionTitle } from '../../components/SectionTitle';
+import { GraphBoxSelect } from '../../components/GraphBoxSelect';
+import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
+import { PieChartNatureMedicalErrors } from './PieChartNatureMedicalErrors';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -44,8 +44,9 @@ const SectionOneGlobalInformation = () => {
 
   return (
     <div
-      className={classnames('SectionOneGlobalInformation bg-white shadow rounded-lg p-4')}
+      className="SectionOneGlobalInformation bg-white shadow rounded-lg p-4"
       style={{ marginTop: stickyHeroHeight }}
+      id="sectionOneGlobalInformation"
     >
       <div className="sectionPart mt-4 mb-8">
         {substances.length > 1 ? <h5>Substances actives</h5> : <h5>Substance active</h5>}
@@ -119,9 +120,11 @@ const SectionOneGlobalInformation = () => {
 const SectionTreatedPatients = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
   return (
-    <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
-      <SectionTitle title="Patients traités en ville" />
-      <div className="mt-0 mb-6">Données issues de la période 2009 - 2021</div>
+    <div className="SectionTreatedPatients sectionPart mt-4 mb-8" id="sectionTreatedPatients">
+      <SectionTitle
+        title="Patients traités en ville"
+        subTitle="Données issues de la période 2014 - 2021"
+      />
 
       <Accordion
         defaultOpen
@@ -218,16 +221,16 @@ const SectionTreatedPatients = () => {
                   <GraphFigure
                     value={currentEntity.repartitionPerSex?.female}
                     description="Femmes"
-                    valueClassName="mt-2 text-secondary"
-                    icon={<WomanIllustration />}
+                    valueClassName="mt-2 text-primary"
+                    icon={<WomanIllustration className="w-32" />}
                   />
                 )}
                 {currentEntity.repartitionPerSex?.male && (
                   <GraphFigure
                     value={currentEntity.repartitionPerSex.male}
-                    valueClassName="mt-2 text-secondary"
+                    valueClassName="mt-2 text-primary"
                     description="Hommes"
-                    icon={<ManIllustration />}
+                    icon={<ManIllustration className="w-32" />}
                   />
                 )}
               </div>
@@ -244,7 +247,7 @@ const SectionTreatedPatients = () => {
             className="h-full max-w-[100%]"
           >
             <PieChartRepartitionAge
-              theme="secondary"
+              theme="primary"
               className="h-64 w-full flex justify-center items-center"
               ageData={currentEntity?.repartitionPerAge}
             />
@@ -259,9 +262,11 @@ const SectionMedicinalErrors = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
 
   return (
-    <div className="SectionMedicinalErrors sectionPart mt-4 mb-8">
-      <SectionTitle title="Déclarations d’erreurs médicamenteuses" />
-      <div className="mt-0 mb-6">Données issues de la période 2009 - 2021</div>
+    <div className="SectionMedicinalErrors sectionPart mt-4 mb-8" id="sectionMedicinalErrors">
+      <SectionTitle
+        title="Déclarations d’erreurs médicamenteuses"
+        subTitle="Données issues de la période 2009 - 2021"
+      />
 
       <Accordion
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
@@ -300,13 +305,11 @@ const SectionMedicinalErrors = () => {
             />
           </GraphBox>
         </div>
+
         <div className="flex-1 flex-shrink">
-          <GraphBox
-            title="Existence d’effets indésirables suite aux erreurs médicamenteuses déclarées"
-            className="h-full max-w-[100%]"
-          >
+          <GraphBox title="Existence d’effets indésirables suite aux erreurs médicamenteuses déclarées">
             {currentEntity?.medicalErrors?.sideEffectsOriginRepartition ? (
-              <div className="flex gap-2 w-full">
+              <div className="flex justify-center text-center gap-2 w-full">
                 <div className="w-full flex flex-col justify-center items-center gap-1">
                   <ManFaceYes className="w-32" />
                   {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with && (
@@ -334,28 +337,37 @@ const SectionMedicinalErrors = () => {
         </div>
       </div>
 
-      <ChartBox
-        className="stepApparitionFigures"
+      <GraphBoxSelect
         title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
-      >
-        {currentEntity?.medicalErrors?.natureRepartition?.length ? (
-          <div className="graphFiguresContainer flex gap-3">
-            {currentEntity?.medicalErrors?.natureRepartition?.map((natureRep) =>
-              natureRep?.id && natureRep?.value && natureRep?.range ? (
+        render={(selectedOption) => (
+          <GraphFiguresGrid
+            data={currentEntity.medicalErrors?.apparitionStepRepartition ?? []}
+            renderItem={(apparitionStep) =>
+              apparitionStep?.id && apparitionStep?.range ? (
                 <GraphFigure
-                  key={natureRep.id}
-                  value={natureRep?.value}
-                  valueClassName="text-secondary"
-                  description={natureRep?.range}
-                  icon={getCisErrorMedNatureIconMapping(natureRep.id)}
+                  unit={selectedOption === 'percent' ? ' % ' : ''}
+                  value={apparitionStep.value ?? 0}
+                  description={apparitionStep.range}
+                  icon={getCisErrorMedNatureIconMapping(apparitionStep.id)}
                 />
               ) : null
+            }
+          />
+        )}
+      />
+
+      <GraphBoxSelect
+        title="Nature des erreurs médicamenteuses"
+        render={(selectedOption) => (
+          <div className="m-auto max-w-max">
+            {selectedOption === 'percent' && (
+              <PieChartNatureMedicalErrors
+                natureMedicalErrors={currentEntity?.medicalErrors?.natureRepartition}
+              />
             )}
           </div>
-        ) : (
-          <NotEnoughData />
         )}
-      </ChartBox>
+      />
     </div>
   );
 };
@@ -368,8 +380,12 @@ const SectionSideEffects = () => {
   ) as Substance[];
 
   return (
-    <div className="SectionSideEffects">
-      <SectionTitle title="Déclarations d&lsquo;effets indésirables suspectés, par substance active" />
+    <div className="SectionSideEffects" id="sectionSideEffects">
+      <SectionTitle
+        title="Déclarations d&lsquo;effets indésirables suspectés, par substance active"
+        subTitle="Données issues de la période 2009 - 2021"
+      />
+
       <SpecialitySubstancesContainer
         substances={substances}
         className="mt-4 mb-32 shadow rounded-lg"
@@ -390,8 +406,12 @@ const SectionRisksShortageHistory = () => {
   const count = useMemo(() => rupturesHistory?.meta?.count ?? 0, [rupturesHistory?.meta?.count]);
 
   return (
-    <div className="SectionRisksShortageHistory">
-      <SectionTitle title="Historique des déclarations de ruptures et de risques de rupture de stock cloturées" />
+    <div className="SectionRisksShortageHistory" id="sectionRisksShortageHistory">
+      <SectionTitle
+        title="Historique des déclarations de ruptures et de risques de rupture de stock cloturées"
+        subTitle="Données issues de la période 2021 - 2022"
+      />
+
       {count ? (
         <div className="p-4 border border-grey-200 rounded-lg bg-white">
           <div className="text-secondary-900 font-medium">
@@ -421,8 +441,9 @@ const SectionPublications = () => {
   const { publications } = currentEntity;
 
   return (
-    <div className="SectionPublications min-h-screen">
+    <div className="SectionPublications min-h-screen" id="sectionPublications">
       <SectionTitle title="Publications de l’ANSM" />
+
       {publications?.length ? (
         publications?.map((publication, index) => (
           <div key={`publication_${index.toString()}}`} className="my-2">

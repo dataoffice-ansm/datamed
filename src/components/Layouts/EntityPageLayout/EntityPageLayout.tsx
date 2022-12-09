@@ -93,8 +93,8 @@ export const EntityPageLayout = ({
                   tabIndex={1}
                   id={id}
                   className={classnames(
-                    'text-grey cursor-pointer md:text-right pr-6',
-                    selected ? 'selected font-bold' : 'notSelected',
+                    'text-grey-400 tracking-wider cursor-pointer md:text-right pr-6',
+                    selected ? 'selected font-medium' : 'font-light notSelected',
                     colorMenu === 'primary' && 'hover:text-primary',
                     colorMenu === 'secondary' && 'hover:text-secondary',
                     itemClassName

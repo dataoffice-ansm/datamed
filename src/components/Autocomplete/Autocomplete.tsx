@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import type { ChangeEvent, HTMLAttributes } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
-import { entityTypeLabel } from '../../helpers/entitiesHelper';
+import { entityTypeLabel } from '../../utils/entities';
 import type { Entity, EntityCis, EntitySub } from '../../contexts/EntityContext';
 import {
   useSpecialitiesQuery,

@@ -1,8 +1,8 @@
 import classnames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
 import CountUp from 'react-countup';
-import { formatDecimalToUnit } from '../../utils/format';
-import type { Maybe } from '../../graphql/__generated__/generated-documents';
+import { formatDecimalToUnit } from '../utils/format';
+import type { Maybe } from '../graphql/__generated__/generated-documents';
 
 /**
  *
@@ -36,12 +36,12 @@ export const GraphFigure = ({
 }) => (
   <div
     className={classnames(
-      'GraphFigure flex flex-col justify-start items-center max-w-max',
+      'GraphFigure flex flex-col justify-start items-center gap-1 max-w-max text-center',
       className
     )}
     {...props}
   >
-    <div className="h-20 md:h-28 w-20 md:w-28">{icon}</div>
+    {icon}
     <div className={classnames('GraphFigureCountUp text-3xl', valueClassName)}>
       <CountUp formattingFn={(n) => formatDecimalToUnit(n, unit)} end={value} />
     </div>

@@ -1,9 +1,10 @@
 import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { darkViolet, turquoise } from '../../../tailwind.palette.config';
-import type { Speciality, Substance } from '../../graphql/__generated__/generated-documents';
+
+import type { MedicalErrors } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../../components/NotEnoughData';
-import { tooltipHandler } from './Tooltip';
+import { darkViolet, turquoise } from '../../../tailwind.palette.config';
+import { tooltipHandler } from '../../utils/tooltips';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -18,21 +19,22 @@ const renderTooltip = (value: string): HTMLElement => {
  * @param ageData
  * @constructor
  */
-export const PieChartRepartitionAge = ({
-  ageData,
+export const PieChartNatureMedicalErrors = ({
+  natureMedicalErrors,
   className,
-  theme = 'primary',
+  theme,
 }: {
-  className?: string;
-  ageData: Speciality['repartitionPerAge'] | Substance['repartitionPerAge'];
+  natureMedicalErrors: MedicalErrors['natureRepartition'];
   theme?: 'primary' | 'secondary';
+  className?: string;
 }) => {
-  if (!ageData || !ageData.length) {
+  if (!natureMedicalErrors || !natureMedicalErrors.length) {
     return <NotEnoughData />;
   }
 
-  const labels = ageData.map((row) => row?.range);
-  const data = ageData?.map((row) => row?.value);
+  const labels = natureMedicalErrors.map((row) => row?.range);
+  const data = natureMedicalErrors?.map((row) => row?.value);
+
   const backgroundColor =
     theme === 'primary'
       ? [darkViolet[200], darkViolet[500], darkViolet[900]]

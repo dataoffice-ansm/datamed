@@ -2,7 +2,7 @@ import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
 import { Modal } from '../../components/Modal/Modal';
 import { useState } from 'react';
 import ManFigure from '../../assets/images/man_illustration.svg';
-import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
+import { GraphFigure } from '../../components/GraphFigure';
 import { Button } from '../../components/Button/Button';
 
 export const ModalPage = () => {
