@@ -2,6 +2,7 @@ import type {
   RepartitionPerPathology,
   Substance,
   HltEffect,
+  Maybe,
 } from '../../graphql/__generated__/generated-documents';
 import { BoxInfo } from '../../components/BoxInfo';
 import FolderSVG from '../../assets/icons/folder/folder.svg';
@@ -12,6 +13,7 @@ import ManFigure from '../../assets/images/man_illustration.svg';
 import { PieChartRepartitionAge } from '../Speciality/PieChartRepartitionAge';
 import { Accordion } from '../../components/Accordion/Accordion';
 import type { HTMLAttributes } from 'react';
+import { useMemo } from 'react';
 import { useState } from 'react';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import {
@@ -31,6 +33,14 @@ import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
  */
 const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: RepartitionPerPathology }) => {
   const [openModal, setOpenModal] = useState(false);
+
+  const htlEffects: Array<Maybe<HltEffect>> = useMemo(
+    () =>
+      (pathology.htlEffects ?? [])
+        .filter((htfEffect) => (htfEffect?.value ?? 0) >= 10)
+        .sort((a, b) => (b?.value ?? 0) - (a?.value ?? 0)),
+    [pathology.htlEffects]
+  );
 
   return (
     <div className="PathologyOrgansRepartitionModal">
@@ -62,9 +72,9 @@ const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: Repartition
           <div className="text-xl text-center font-medium">
             Sous-répartition des déclarations d’effets indésirables : {pathology.range}
           </div>
-          {pathology?.htlEffects && (
+          {htlEffects && (
             <ul className="list-none border-t border-grey-100">
-              {(pathology?.htlEffects ?? []).map((e) => (
+              {htlEffects.map((e) => (
                 <li key={e?.id} className="flex justify-between border-b border-grey-100 py-4">
                   <span>{e?.range} </span>
                   <strong>{e?.value}%</strong>
@@ -156,11 +166,13 @@ export const SubstanceContainer = ({
             title="Répartition par âge des patiens traités parmi les cas déclarés d'effets indésirables"
             className="h-full max-w-[100%]"
           >
-            <PieChartRepartitionAge
-              theme="secondary"
-              className="h-64 w-full flex justify-center items-center"
-              ageData={repartitionPerAge}
-            />
+            <div className="mt-8 flex gap-8 justify-center items-center">
+              <PieChartRepartitionAge
+                theme="secondary"
+                className="h-64 w-full flex justify-center items-center"
+                ageData={repartitionPerAge}
+              />
+            </div>
           </GraphBox>
         </div>
       </div>
@@ -210,6 +222,7 @@ export const SubstanceContainer = ({
       </Accordion>
 
       <GraphBoxSelect
+        initialIndex={1}
         title="Effets indésirables suspectés de la substance active"
         render={(selectedOption) => (
           <div className="GraphBoxSelectContent">
@@ -220,7 +233,15 @@ export const SubstanceContainer = ({
             </div>
 
             <GraphFiguresGrid
-              data={repartitionPerPathology ?? []}
+              data={
+                repartitionPerPathology?.filter(
+                  (pathologyRepartition) =>
+                    pathologyRepartition?.id &&
+                    pathologyRepartition?.range &&
+                    pathologyRepartition?.value &&
+                    pathologyRepartition?.valuePercent
+                ) ?? []
+              }
               renderItem={(pathologyRepartition) =>
                 pathologyRepartition?.id &&
                 pathologyRepartition?.range &&
@@ -232,6 +253,7 @@ export const SubstanceContainer = ({
                     description={pathologyRepartition.range}
                     icon={getCisErrorMedNatureIconMapping(pathologyRepartition.id)}
                     action={<PathologyOrgansRepartitionModal pathology={pathologyRepartition} />}
+                    valueClassName="text-secondary-900"
                     value={
                       selectedOption === 'percent'
                         ? pathologyRepartition.valuePercent

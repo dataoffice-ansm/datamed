@@ -22,6 +22,7 @@ type GraphFiguresContainerProps = HTMLAttributes<HTMLDivElement> & {
   tooltip?: JSX.Element | ReactNode;
   renderHeader?: ReactNode;
   render: (_selectedOption: SelectOptionValue) => ReactNode;
+  initialIndex?: number;
 };
 
 /**
@@ -38,8 +39,9 @@ export const GraphBoxSelect = ({
   renderHeader,
   tooltip,
   className,
+  initialIndex = 0,
 }: GraphFiguresContainerProps) => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(initialIndex);
   const selectedOption = options[selectedIndex].value;
 
   const onChange = useCallback((index: number) => {
@@ -50,7 +52,7 @@ export const GraphBoxSelect = ({
     <div
       className={classNames('GraphBoxSelect flex-1 shadow rounded-lg bg-white my-8 p-4', className)}
     >
-      <div className="flex flex-wrap gap-3 justify-between items-center gap-3 text-left px-4">
+      <div className="flex flex-wrap gap-3 justify-between items-center text-left px-4">
         <div className="GraphBoxTitle flex items-center font-medium">
           <span>{title}</span>
           {tooltip && (
