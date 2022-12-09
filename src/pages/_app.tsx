@@ -14,6 +14,12 @@ export type AppCustomProps<PP extends Record<string, unknown> = Record<string, u
   pageProps: PP;
 } & AppProps;
 
+const LoadingContainer = () => (
+  <div className="h-screen opacity-30 flex justify-center items-center">
+    <h1>Chargement des données en cours</h1>
+  </div>
+);
+
 const MyApp = ({ Component, pageProps }: AppCustomProps) => {
   const apolloClient = useApollo(pageProps[APOLLO_STATE_PROPERTY_NAME] as NormalizedCacheObject);
 
@@ -46,7 +52,7 @@ const MyApp = ({ Component, pageProps }: AppCustomProps) => {
     <ApolloProvider client={apolloClient}>
       <BodyScrollProvider>
         <LayoutProvider>
-          <AppLayout>{loading ? <h1>Loading...</h1> : <Component {...pageProps} />}</AppLayout>
+          <AppLayout>{loading ? <LoadingContainer /> : <Component {...pageProps} />} </AppLayout>
         </LayoutProvider>
       </BodyScrollProvider>
     </ApolloProvider>
