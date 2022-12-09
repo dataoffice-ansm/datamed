@@ -133,7 +133,7 @@ const SectionOneGlobalInformation = () => {
                     value={repartitionPerSex?.female}
                     description="Femmes"
                     valueClassName="mt-2 text-secondary"
-                    icon={<WomanIllustration />}
+                    icon={<WomanIllustration className="w-32" />}
                   />
                 )}
                 {repartitionPerSex?.male && (
@@ -141,7 +141,7 @@ const SectionOneGlobalInformation = () => {
                     value={repartitionPerSex.male}
                     valueClassName="mt-2 text-secondary"
                     description="Hommes"
-                    icon={<ManIllustration />}
+                    icon={<ManIllustration className="w-32" />}
                   />
                 )}
               </div>

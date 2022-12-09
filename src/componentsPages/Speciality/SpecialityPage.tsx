@@ -360,10 +360,12 @@ const SectionMedicinalErrors = () => {
         title="Nature des erreurs médicamenteuses"
         render={(selectedOption) => (
           <div className="m-auto max-w-max">
-            {selectedOption === 'percent' && (
+            {selectedOption === 'percent' ? (
               <PieChartNatureMedicalErrors
                 natureMedicalErrors={currentEntity?.medicalErrors?.natureRepartition}
               />
+            ) : (
+              <NotEnoughData />
             )}
           </div>
         )}

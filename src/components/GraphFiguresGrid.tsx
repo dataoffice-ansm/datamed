@@ -18,8 +18,7 @@ export const GraphFiguresGrid = <T,>({ data, renderItem }: GraphFiguresContainer
     {data.length ? (
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 m-auto mt-8 p-4">
         {data.map((item, index) => (
-          // eslint-disable-next-line react/no-array-index-key
-          <div key={index} className="flex justify-center">
+          <div key={`graphFigureIndex_${index.toString()}`} className="flex justify-center">
             {renderItem(item)}
           </div>
         ))}
