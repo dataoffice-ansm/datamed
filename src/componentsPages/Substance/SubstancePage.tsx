@@ -8,7 +8,7 @@ import { useSubstanceQuery } from '../../graphql/__generated__/generated-documen
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 import Link from 'next/link';
 import classnames from 'classnames';
-import { SubstanceContainer } from '../../components/SubstancesContainer/SubstanceContainer';
+import { SubstanceContainer } from './SubstanceContainer';
 import { NotEnoughData } from 'components/NotEnoughData';
 import { Accordion } from '../../components/Accordion/Accordion';
 import { cisExpositionLevelMapping } from '../../utils/mapping';
@@ -16,19 +16,22 @@ import PilIcon from '../../assets/images/gellule.svg';
 import { numberWithThousand } from '../../utils/format';
 import ManIllustration from '../../assets/images/man_illustration.svg';
 import WomanIllustration from '../../assets/images/woman_illustration.svg';
-import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
+import { PieChartRepartitionAge } from '../Speciality/PieChartRepartitionAge';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
-import { GraphFigure } from '../../components/GraphFigure/GraphFigure';
+import { GraphFigure } from '../../components/GraphFigure';
+import { SectionTitle } from '../../components/SectionTitle';
 
-const SectionTitle = ({ title }: { title: string }) => (
-  <h2 className="text-2xl lg:text-3xl text-left">{title}</h2>
-);
+const SectionOneGlobalInformation = () => {
+  const { currentEntity } = useEntityContext<EntitySub>();
+  const { totalExposition, exposition, repartitionPerSex, repartitionPerAge } = currentEntity;
 
-const SectionOneGlobalInformation = ({ substance }: { substance: Substance }) => {
-  const { totalExposition, exposition, repartitionPerSex, repartitionPerAge } = substance;
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
-      <SectionTitle title="Patients traités en ville" />
+      <SectionTitle
+        title="Patients traités en ville"
+        subTitle="Données issues de la période 2014 - 2021"
+      />
+
       {totalExposition && (
         <div className="mt-0 mb-6">
           Données issues de la période {totalExposition?.minYear} - {totalExposition?.maxYear}
@@ -166,14 +169,20 @@ const SectionOneGlobalInformation = ({ substance }: { substance: Substance }) =>
   );
 };
 
-const SectionTwo = ({ substance }: { substance: Substance }) => (
-  <div className="min-h-screen text-center">
-    <SectionTitle title="Déclarations d’effets indésirables suspectés de la substance active" />
-    <SubstanceContainer substance={substance} />
-  </div>
-);
+const SectionSideEffects = () => {
+  const { currentEntity } = useEntityContext<EntitySub>();
+  return (
+    <div className="min-h-screen text-center">
+      <SectionTitle
+        title="Déclarations d’effets indésirables suspectés de la substance active"
+        subTitle="Données issues de la période 2009 - 2021"
+      />
+      <SubstanceContainer substance={currentEntity} />
+    </div>
+  );
+};
 
-const SectionThree = () => {
+const SectionAssociatedSpecialities = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
 
   const { data } = useSubstanceQuery({
@@ -235,17 +244,17 @@ export const SubstancePage = ({ sub }: { sub: Substance }) => {
           {
             id: 'population-concernee',
             label: 'POPULATION CONCERNÉÉ',
-            content: <SectionOneGlobalInformation substance={sub} />,
+            content: <SectionOneGlobalInformation />,
           },
           {
             id: 'effets-indesirables',
             label: 'EFFETS INDÉSIRABLES',
-            content: <SectionTwo substance={sub} />,
+            content: <SectionSideEffects />,
           },
           {
             id: 'liste-des-specialites',
             label: 'LISTE DES SPÉCIALITÉS',
-            content: <SectionThree />,
+            content: <SectionAssociatedSpecialities />,
           },
         ]}
         render={(content) => content}

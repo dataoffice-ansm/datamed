@@ -65,6 +65,11 @@ fragment SpecialityFragment on Speciality {
             with
             without
         }
+        apparitionStepRepartition {
+            id
+            range
+            value
+        }
         natureRepartition {
             id
             value

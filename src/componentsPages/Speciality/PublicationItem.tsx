@@ -1,5 +1,5 @@
 import type { Publication } from 'graphql/__generated__/generated-documents';
-import { Button } from '../Button/Button';
+import { Button } from '../../components/Button/Button';
 import { getPublicationIcon } from '../../utils/mapping';
 
 /**

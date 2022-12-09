@@ -16,6 +16,10 @@ const getOrCreateTooltip = (chart: ChartJS) => {
   return tooltipEl;
 };
 
+/**
+ *
+ * @param callbackRenderTooltip
+ */
 export const tooltipHandler =
   (callbackRenderTooltip: (_: string) => HTMLElement) =>
   (context: {

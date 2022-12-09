@@ -34,7 +34,7 @@ type RepartitionPerSex {
 }
 
 type RepartitionTranche {
-    id: Int
+    id: Int!
     range: String
     value: Int
 }
@@ -47,6 +47,7 @@ type WithRepartition {
 type MedicalErrors {
     populationRepartition: [RepartitionTranche]
     sideEffectsOriginRepartition: WithRepartition
+    apparitionStepRepartition: [RepartitionTranche]
     natureRepartition: [RepartitionTranche]
 }
 
@@ -82,20 +83,20 @@ type SpecialityRupturesHistory {
 }
 
 type RepartitionPerNotifier {
-    id: Int
+    id: Int!
     job: String
     value: Int
 }
 
-
 type HltEffect {
-    id: Int
+    id: Int!
     range: String
     value: Int
 }
 
 type RepartitionPerPathology {
-    id: Int
+    id: Int!
+    subId: Int!
     range: String
     value: Int
     valuePercent: Int
@@ -103,7 +104,7 @@ type RepartitionPerPathology {
 }
 
 type TotalExposition {
-    total: Int
+    total: Int!
     minYear: Int
     maxYear: Int
 }
@@ -123,13 +124,13 @@ type Substance {
 
 type SpecialitySubstance {
     id: Int!
-    code: String
-    name: String
+    code: String!
+    name: String!
     dosage: String
 }
 
 type PharmaForm {
-    id:Int
+    id:Int!
     name: String
 }
 
@@ -153,14 +154,6 @@ type Speciality {
     medicalErrors: MedicalErrors
     publications: [Publication]
     rupturesHistory: SpecialityRupturesHistory
-    #autorizationNumber: String;
-    #ammStatus: String;
-    #ammDate: Date;
-    #ammType: String;
-    #bdpmStatus: String;
-    #surveillance_renforcee: String;
-    #titulaires: String;
-    #administeringMode: String;
 }
 
 type SpecialityLight {

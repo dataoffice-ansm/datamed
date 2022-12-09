@@ -97,10 +97,12 @@ export class PostgresOperations {
               name: atcName,
             }
           : null,
-        pharmaForm: {
-          id: pharmaFormId,
-          name: pharmaFormLabel,
-        },
+        pharmaForm: pharmaFormId
+          ? {
+              id: pharmaFormId,
+              name: pharmaFormLabel,
+            }
+          : null,
         icon: iconId
           ? {
               id: iconId,
@@ -169,8 +171,7 @@ export class PostgresOperations {
 
     return rows.reduce<SpecialitySubstance[]>((carry, row) => {
       const { subId, subCode, subName, dosage } = row;
-      // eslint-disable-next-line no-negated-condition
-      return subId !== null
+      return subId !== null && subCode && subName
         ? [
             ...carry,
             {
@@ -205,7 +206,7 @@ export class PostgresOperations {
   async getSpecialityRepAge(cisId: number): Promise<RepartitionTranche[]> {
     const rows = await dbInstance
       .selectFrom('mp_patient_ages as mp_a')
-      .where('mp_id', '=', cisId)
+      .where('mp_a.mp_id', '=', cisId)
       .leftJoin('ages', 'ages.id', 'mp_a.age_id')
       .select(['mp_a.id', 'ages.range', 'mp_a.patients_percentage as value'])
       .execute();
@@ -227,7 +228,7 @@ export class PostgresOperations {
     const rows = await dbInstance
       .selectFrom('error_med_population as err')
       .leftJoin('population_errors as pop', 'pop.id', 'err.population_error_id')
-      .where('mp_id', '=', cisId)
+      .where('err.mp_id', '=', cisId)
       .select(['err.id', 'err.percentage as value', 'pop.label as range'])
       .execute();
 
@@ -250,7 +251,7 @@ export class PostgresOperations {
     const rows = await dbInstance
       .selectFrom('error_med_side_effect as err')
       .leftJoin('side_effects as side', 'side.id', 'err.side_effect_id')
-      .where('mp_id', '=', cisId)
+      .where('err.mp_id', '=', cisId)
       .select(['err.percentage as value', 'side.id as id'])
       .execute();
 
@@ -265,24 +266,49 @@ export class PostgresOperations {
       : null;
   }
 
+  async getErrorsMedicalApparitionStepRepartition(cisId: number): Promise<RepartitionTranche[]> {
+    const rows = await dbInstance
+      .selectFrom('error_med_initial as err')
+      .leftJoin('initial_errors as ini', 'ini.id', 'err.initial_error_id')
+      .where('err.mp_id', '=', cisId)
+      .select(['err.id', 'err.percentage as value', 'ini.label as range'])
+      .execute();
+
+    return rows.reduce<RepartitionTranche[]>((carry, row) => {
+      const { id, range, value } = row;
+      return id !== null && range
+        ? [
+            ...carry,
+            {
+              id,
+              range,
+              value: Math.round(value ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
   async getErrorsMedicalNatureRepartition(cisId: number): Promise<RepartitionTranche[]> {
     const rows = await dbInstance
       .selectFrom('error_med_nature as err')
       .leftJoin('nature_errors as nat', 'nat.id', 'err.nature_error_id')
-      .where('mp_id', '=', cisId)
+      .where('err.mp_id', '=', cisId)
       .select(['nat.id', 'err.percentage as value', 'nat.label as range'])
       .execute();
 
     return rows.reduce<RepartitionTranche[]>((carry, row) => {
       const { id, range, value } = row;
-      return [
-        ...carry,
-        {
-          id,
-          range,
-          value: Math.round(value ?? 0),
-        },
-      ];
+      return id !== null && range
+        ? [
+            ...carry,
+            {
+              id,
+              range,
+              value: Math.round(value ?? 0),
+            },
+          ]
+        : carry;
     }, []);
   }
 
@@ -395,7 +421,7 @@ export class PostgresOperations {
 
     return rows.reduce<Substance[]>((carry, row) => {
       const { id, name, code } = row;
-      return id !== null && name !== null && code !== null
+      return id !== null && name && code
         ? [
             ...carry,
             {
@@ -418,7 +444,8 @@ export class PostgresOperations {
 
     return rows.reduce<number[]>((carry, row) => {
       const { id } = row;
-      return id ? [...carry, id] : carry;
+      // eslint-disable-next-line no-negated-condition
+      return id !== null ? [...carry, id] : carry;
     }, []);
   }
 
@@ -500,7 +527,7 @@ export class PostgresOperations {
 
     return rows.reduce<RepartitionPerNotifier[]>((carry, row) => {
       const { id, job, value } = row;
-      return job
+      return id !== null && job
         ? [
             ...carry,
             {
@@ -513,10 +540,10 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSubstanceRepPathology(subCode: number): Promise<RepartitionPerPathology[]> {
+  async getSubstanceRepPathology(subId: number): Promise<RepartitionPerPathology[]> {
     const rows = await dbInstance
       .selectFrom('substances_soclong as s_s')
-      .where('s_s.substance_id', '=', subCode)
+      .where('s_s.substance_id', '=', subId)
       .leftJoin('soc_longs as soc', 'soc.id', 's_s.soc_long_id')
       .select([
         'soc.id',
@@ -526,9 +553,30 @@ export class PostgresOperations {
       ])
       .execute();
 
+    return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
+      const { id, range, value, valuePercent } = row;
+      return id !== null && range
+        ? [
+            ...carry,
+            {
+              id,
+              subId,
+              range,
+              value,
+              valuePercent: Math.round(valuePercent ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  async getSubstanceRepPathologyEffects(
+    subId: number,
+    repartitionPerPathologyId: number
+  ): Promise<HltEffect[]> {
     const rowsHltEffects = await dbInstance
       .selectFrom('substances_hlt as s_htl')
-      .where('s_htl.substance_id', '=', subCode)
+      .where('s_htl.substance_id', '=', subId)
       .leftJoin('hlt_effects as hlt_e', 'hlt_e.id', 's_htl.hlt_effect_id')
       .select([
         's_htl.soc_long_id as id',
@@ -539,7 +587,7 @@ export class PostgresOperations {
 
     const effects = rowsHltEffects.reduce<HltEffect[]>((carry, row) => {
       const { id, range, value } = row;
-      return id && range && value
+      return id !== null && range
         ? [
             ...carry,
             {
@@ -551,21 +599,7 @@ export class PostgresOperations {
         : carry;
     }, []);
 
-    return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
-      const { id, range, value, valuePercent } = row;
-      return range
-        ? [
-            ...carry,
-            {
-              id,
-              range,
-              value,
-              valuePercent: Math.round(valuePercent ?? 0),
-              htlEffects: effects.filter((e) => e.id === id),
-            },
-          ]
-        : carry;
-    }, []);
+    return effects.filter((e) => e.id === repartitionPerPathologyId);
   }
 
   async getSubstanceTotalExposition(subCode: number): Promise<TotalExposition> {
