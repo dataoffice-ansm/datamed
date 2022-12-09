@@ -97,6 +97,7 @@ export type ErrorMedGravity = {
   id: Generated<number>;
   mp_id: number | null;
   percentage: number | null;
+  number: number | null;
 };
 
 export type ErrorMedInitial = {
@@ -104,6 +105,7 @@ export type ErrorMedInitial = {
   initial_error_id: number | null;
   mp_id: number | null;
   percentage: number | null;
+  number: number | null;
 };
 
 export type ErrorMedNature = {
@@ -111,6 +113,7 @@ export type ErrorMedNature = {
   mp_id: number | null;
   nature_error_id: number | null;
   percentage: number | null;
+  number: number | null;
 };
 
 export type ErrorMedPopulation = {
@@ -118,6 +121,7 @@ export type ErrorMedPopulation = {
   mp_id: number | null;
   percentage: number | null;
   population_error_id: number | null;
+  number: number | null;
 };
 
 export type ErrorMedSideEffect = {
@@ -125,6 +129,7 @@ export type ErrorMedSideEffect = {
   mp_id: number | null;
   percentage: number | null;
   side_effect_id: number | null;
+  number: number | null;
 };
 
 export type GlobalSeIndicators = {

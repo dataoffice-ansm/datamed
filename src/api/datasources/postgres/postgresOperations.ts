@@ -229,17 +229,23 @@ export class PostgresOperations {
       .selectFrom('error_med_population as err')
       .leftJoin('population_errors as pop', 'pop.id', 'err.population_error_id')
       .where('err.mp_id', '=', cisId)
-      .select(['err.id', 'err.percentage as value', 'pop.label as range'])
+      .select([
+        'err.id',
+        'pop.label as range',
+        'err.percentage as value',
+        'err.percentage as valuePercent',
+      ])
       .execute();
 
     return rows.reduce<RepartitionTranche[]>((carry, row) => {
-      const { id, range, value } = row;
+      const { id, range, value, valuePercent } = row;
       return [
         ...carry,
         {
           id,
           range,
           value: Math.round(value ?? 0),
+          valuePercent: Math.round(valuePercent ?? 0),
         },
       ];
     }, []);
@@ -271,18 +277,24 @@ export class PostgresOperations {
       .selectFrom('error_med_initial as err')
       .leftJoin('initial_errors as ini', 'ini.id', 'err.initial_error_id')
       .where('err.mp_id', '=', cisId)
-      .select(['err.id', 'err.percentage as value', 'ini.label as range'])
+      .select([
+        'err.id',
+        'ini.label as range',
+        'err.number as value',
+        'err.percentage as valuePercent',
+      ])
       .execute();
 
     return rows.reduce<RepartitionTranche[]>((carry, row) => {
-      const { id, range, value } = row;
-      return id !== null && range
+      const { id, range, value, valuePercent } = row;
+      return id && range && value && valuePercent
         ? [
             ...carry,
             {
               id,
               range,
               value: Math.round(value ?? 0),
+              valuePercent: Math.round(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -294,18 +306,24 @@ export class PostgresOperations {
       .selectFrom('error_med_nature as err')
       .leftJoin('nature_errors as nat', 'nat.id', 'err.nature_error_id')
       .where('err.mp_id', '=', cisId)
-      .select(['nat.id', 'err.percentage as value', 'nat.label as range'])
+      .select([
+        'nat.id',
+        'nat.label as range',
+        'err.number as value',
+        'err.percentage as valuePercent',
+      ])
       .execute();
 
     return rows.reduce<RepartitionTranche[]>((carry, row) => {
-      const { id, range, value } = row;
-      return id !== null && range
+      const { id, range, value, valuePercent } = row;
+      return id && range && value && valuePercent
         ? [
             ...carry,
             {
               id,
               range,
               value: Math.round(value ?? 0),
+              valuePercent: Math.round(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -482,7 +500,7 @@ export class PostgresOperations {
     const rows = await dbInstance
       .selectFrom('substances_case_sex')
       .where('substance_id', '=', subCode)
-      .select(['id', 'sex', 'case_percentage'])
+      .select(['id', 'sex', 'case_percentage', 'nb_cases'])
       .execute();
 
     const male = rows.find((row) => row.sex === 1);
@@ -499,18 +517,24 @@ export class PostgresOperations {
       .selectFrom('substances_patient_age as s_p_a')
       .where('s_p_a.substance_id', '=', subCode)
       .leftJoin('ages', 'ages.id', 's_p_a.age_id')
-      .select(['s_p_a.id', 'ages.range', 's_p_a.patients_percentage as value'])
+      .select([
+        's_p_a.id',
+        'ages.range',
+        's_p_a.patients_percentage as percentage',
+        's_p_a.patients_consumption as consumption',
+      ])
       .execute();
 
     return rows.reduce<RepartitionTranche[]>((carry, row) => {
-      const { id, range, value } = row;
-      return range
+      const { id, range, consumption, percentage } = row;
+      return id && range && consumption && percentage
         ? [
             ...carry,
             {
               id,
               range,
-              value: Math.round(value ?? 0),
+              value: Math.round(consumption ?? 0),
+              valuePercent: Math.round(percentage ?? 0),
             },
           ]
         : carry;
@@ -581,19 +605,21 @@ export class PostgresOperations {
       .select([
         's_htl.soc_long_id as id',
         'hlt_e.effect as range',
-        's_htl.case_percentage as value',
+        's_htl.case_percentage as valuePercent',
+        's_htl.n_decla_eff_hlt as value',
       ])
       .execute();
 
     const effects = rowsHltEffects.reduce<HltEffect[]>((carry, row) => {
-      const { id, range, value } = row;
-      return id !== null && range
+      const { id, range, value, valuePercent } = row;
+      return id && range && value
         ? [
             ...carry,
             {
               id,
               range,
               value: Math.round(value ?? 0),
+              valuePercent: Math.round(valuePercent ?? 0),
             },
           ]
         : carry;

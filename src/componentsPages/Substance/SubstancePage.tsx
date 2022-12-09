@@ -24,19 +24,16 @@ import { SectionTitle } from '../../components/SectionTitle';
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
   const { totalExposition, exposition, repartitionPerSex, repartitionPerAge } = currentEntity;
-
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
       <SectionTitle
         title="Patients traités en ville"
-        subTitle="Données issues de la période 2014 - 2021"
+        subTitle={
+          totalExposition?.maxYear && totalExposition?.minYear
+            ? `Données issues de la période ${totalExposition.minYear} - ${totalExposition.maxYear}`
+            : 'Période des données issues non renseignée'
+        }
       />
-
-      {totalExposition && (
-        <div className="mt-0 mb-6">
-          Données issues de la période {totalExposition?.minYear} - {totalExposition?.maxYear}
-        </div>
-      )}
 
       <Accordion
         defaultOpen
@@ -114,13 +111,9 @@ const SectionOneGlobalInformation = () => {
             </p>
           </div>
         </div>
-      ) : (
-        <div className="bg-white p-4 shadow rounded-lg mt-8">
-          <NotEnoughData />
-        </div>
-      )}
+      ) : null}
 
-      <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto">
+      <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto mt-8">
         <div className="flex-1 flex-shrink">
           <GraphBox
             title="Répartition par sexe des patients traités"

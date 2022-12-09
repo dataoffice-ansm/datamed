@@ -33,6 +33,7 @@ export type HltEffect = {
   id: Scalars['Int'];
   range?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
 };
 
 export type Icon = {
@@ -118,6 +119,7 @@ export type RepartitionPerNotifier = {
   id: Scalars['Int'];
   job?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
 };
 
 export type RepartitionPerPathology = {
@@ -141,6 +143,7 @@ export type RepartitionTranche = {
   id: Scalars['Int'];
   range?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
 };
 
 export type RepartitionTuple = {
@@ -299,12 +302,14 @@ export type SpecialityFragmentFragment = {
       id: number;
       range?: string | null;
       value?: number | null;
+      valuePercent?: number | null;
     } | null> | null;
     repartitionPerNotifier?: Array<{
       __typename?: 'RepartitionPerNotifier';
       id: number;
       job?: string | null;
       value?: number | null;
+      valuePercent?: number | null;
     } | null> | null;
     repartitionPerPathology?: Array<{
       __typename?: 'RepartitionPerPathology';
@@ -317,6 +322,7 @@ export type SpecialityFragmentFragment = {
         id: number;
         range?: string | null;
         value?: number | null;
+        valuePercent?: number | null;
       } | null> | null;
     } | null> | null;
     totalExposition?: {
@@ -433,12 +439,14 @@ export type SubstanceFragmentFragment = {
     id: number;
     range?: string | null;
     value?: number | null;
+    valuePercent?: number | null;
   } | null> | null;
   repartitionPerNotifier?: Array<{
     __typename?: 'RepartitionPerNotifier';
     id: number;
     job?: string | null;
     value?: number | null;
+    valuePercent?: number | null;
   } | null> | null;
   repartitionPerPathology?: Array<{
     __typename?: 'RepartitionPerPathology';
@@ -451,6 +459,7 @@ export type SubstanceFragmentFragment = {
       id: number;
       range?: string | null;
       value?: number | null;
+      valuePercent?: number | null;
     } | null> | null;
   } | null> | null;
   totalExposition?: {
@@ -524,12 +533,14 @@ export type SpecialityQuery = {
         id: number;
         range?: string | null;
         value?: number | null;
+        valuePercent?: number | null;
       } | null> | null;
       repartitionPerNotifier?: Array<{
         __typename?: 'RepartitionPerNotifier';
         id: number;
         job?: string | null;
         value?: number | null;
+        valuePercent?: number | null;
       } | null> | null;
       repartitionPerPathology?: Array<{
         __typename?: 'RepartitionPerPathology';
@@ -542,6 +553,7 @@ export type SpecialityQuery = {
           id: number;
           range?: string | null;
           value?: number | null;
+          valuePercent?: number | null;
         } | null> | null;
       } | null> | null;
       totalExposition?: {
@@ -681,12 +693,14 @@ export type SubstanceQuery = {
       id: number;
       range?: string | null;
       value?: number | null;
+      valuePercent?: number | null;
     } | null> | null;
     repartitionPerNotifier?: Array<{
       __typename?: 'RepartitionPerNotifier';
       id: number;
       job?: string | null;
       value?: number | null;
+      valuePercent?: number | null;
     } | null> | null;
     repartitionPerPathology?: Array<{
       __typename?: 'RepartitionPerPathology';
@@ -699,6 +713,7 @@ export type SubstanceQuery = {
         id: number;
         range?: string | null;
         value?: number | null;
+        valuePercent?: number | null;
       } | null> | null;
     } | null> | null;
     totalExposition?: {
@@ -756,11 +771,13 @@ export const SubstanceFragmentFragmentDoc = gql`
       id
       range
       value
+      valuePercent
     }
     repartitionPerNotifier {
       id
       job
       value
+      valuePercent
     }
     repartitionPerPathology {
       id
@@ -771,6 +788,7 @@ export const SubstanceFragmentFragmentDoc = gql`
         id
         range
         value
+        valuePercent
       }
     }
     totalExposition {

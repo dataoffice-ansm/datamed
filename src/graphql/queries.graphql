@@ -1,195 +1,196 @@
 fragment SpecialityFragment on Speciality {
+  id
+  name
+  code
+  atc {
     id
     name
     code
-    atc {
+  }
+  pharmaForm {
+    id
+    name
+  }
+  substances {
+    ...SubstanceFragment
+  }
+  dosageIndication
+  dosageSubstances {
+    id
+    code
+    name
+    dosage
+  }
+  commercialisationState
+  commercialisationType
+  repartitionPerSex {
+    male
+    female
+  }
+  repartitionPerAge {
+    id
+    range
+    value
+  }
+  publications {
+    id
+    name
+    link
+    type {
+      id
+      name
+    }
+  }
+  description
+  icon {
+    id
+    name
+  }
+  laboratory {
+    id
+    name
+  }
+  exposition {
+    id
+    consumption
+    expositionLevel
+  }
+  medicalErrors {
+    populationRepartition {
+      id
+      value
+      range
+    }
+    sideEffectsOriginRepartition {
+      with
+      without
+    }
+    apparitionStepRepartition {
+      id
+      range
+      value
+    }
+    natureRepartition {
+      id
+      value
+      range
+    }
+  }
+  rupturesHistory {
+    ruptures {
+      id
+      num
+      name
+      active
+      date
+      cause {
         id
         name
-        code
-    }
-    pharmaForm {
+      }
+      classification {
         id
         name
+      }
     }
-    substances {
-        ...SubstanceFragment
+    meta {
+      count
     }
-    dosageIndication
-    dosageSubstances {
-        id
-        code
-        name
-        dosage
-    }
-    commercialisationState
-    commercialisationType
-    repartitionPerSex {
-        male
-        female
-    }
-    repartitionPerAge {
-        id
-        range
-        value
-    }
-    publications {
-        id
-        name
-        link
-        type {
-            id
-            name
-        }
-    }
-    description
-    icon {
-        id
-        name
-    }
-    laboratory {
-        id
-        name
-    }
-    exposition {
-        id
-        consumption
-        expositionLevel
-    }
-    medicalErrors {
-        populationRepartition {
-            id
-            value
-            range
-        }
-        sideEffectsOriginRepartition {
-            with
-            without
-        }
-        apparitionStepRepartition {
-            id
-            range
-            value
-        }
-        natureRepartition {
-            id
-            value
-            range
-        }
-    }
-    rupturesHistory {
-        ruptures {
-            id
-            num
-            name
-            active
-            date
-            cause {
-                id
-                name
-            }
-            classification {
-                id
-                name
-            }
-        }
-        meta {
-            count
-        }
-    }
+  }
 }
 
 fragment SubstanceFragment on Substance {
+  id
+  code
+  name
+  retrieveSpecialities {
+    meta {
+      count
+    }
+    specialities {
+      id
+      code
+      name
+      description
+    }
+  }
+  repartitionPerSex {
+    male
+    female
+  }
+  repartitionPerAge {
     id
-    code
-    name
-    retrieveSpecialities {
-        meta {
-            count
-        }
-        specialities {
-            id
-            code
-            name
-            description
-        }
+    range
+    value
+    valuePercent
+  }
+  repartitionPerNotifier {
+    id
+    job
+    value
+    valuePercent
+  }
+  repartitionPerPathology {
+    id
+    range
+    value
+    valuePercent
+    htlEffects {
+      id
+      range
+      value
+      valuePercent
     }
-    repartitionPerSex {
-        male
-        female
-    }
-    repartitionPerAge {
-        id
-        range
-        value
-    }
-    repartitionPerNotifier {
-        id
-        job
-        value
-    }
-    repartitionPerPathology {
-        id
-        range
-        value
-        valuePercent
-        htlEffects {
-            id
-            range
-            value
-        }
-    }
-    totalExposition {
-        total
-        minYear
-        maxYear
-    }
-    exposition {
-        id
-        consumption
-        expositionLevel
-    }
+  }
+  totalExposition {
+    total
+    minYear
+    maxYear
+  }
+  exposition {
+    id
+    consumption
+    expositionLevel
+  }
 }
 
 query SpecialityIdByCode($cisCode: String!) {
-    getSpecialityIdByCode(cisCode: $cisCode)
+  getSpecialityIdByCode(cisCode: $cisCode)
 }
 
 query Speciality($cisId: Int!) {
-    getSpeciality(cisId: $cisId) {
-        ...SpecialityFragment
-    }
-
+  getSpeciality(cisId: $cisId) {
+    ...SpecialityFragment
+  }
 }
 
 query Specialities {
-    getSpecialities {
-        meta {
-            count
-        }
-        specialities {
-            id
-            code
-            name
-        }
+  getSpecialities {
+    meta {
+      count
     }
+    specialities {
+      id
+      code
+      name
+    }
+  }
 }
 
 query Substance($subCode: String!) {
-    getSubstance(subCode: $subCode) {
-        ...SubstanceFragment
-    }
+  getSubstance(subCode: $subCode) {
+    ...SubstanceFragment
+  }
 }
 
 query Substances {
-    getSubstances {
-        meta {
-            count
-        }
-        substances {
-            id
-            name
-            code
-        }
-
+  getSubstances {
+    meta {
+      count
     }
+    substances {
+      id
+      name
+      code
+    }
+  }
 }
