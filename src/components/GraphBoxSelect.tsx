@@ -1,4 +1,4 @@
-import type { SelectOption, SelectOptionValue } from './Select/Select';
+import type { SelectOption } from './Select/Select';
 import { Select } from './Select/Select';
 import type { ReactNode, HTMLAttributes } from 'react';
 import React, { useCallback, useState } from 'react';
@@ -6,31 +6,37 @@ import classNames from 'classnames';
 import { Tooltip } from './Tooltip/Tooltip';
 import InfoSVG from '../assets/icons/info/info.svg';
 
-const options: SelectOption[] = [
-  {
-    label: 'Pourcentage',
-    value: 'percent',
-  },
-  {
-    label: 'Nombre',
-    value: 'number',
-  },
-];
+const options = {
+  percent: { label: 'Pourcentage' },
+  number: { label: 'Nombre' },
+} as const;
+
+type OptionsValue = keyof typeof options;
+
+const selectOptions: Array<SelectOption<OptionsValue>> = Object.entries(options).map(([k, v]) => ({
+  value: k as OptionsValue,
+  ...v,
+}));
 
 type GraphFiguresContainerProps = HTMLAttributes<HTMLDivElement> & {
   title: string;
   tooltip?: JSX.Element | ReactNode;
   renderHeader?: ReactNode;
-  render: (_selectedOption: SelectOptionValue) => ReactNode;
-  initialIndex?: number;
+  render: (_selectedOption: OptionsValue) => ReactNode;
+  defaultOption?: OptionsValue;
 };
+
+const findOptionIndex = (selectedOption: OptionsValue) =>
+  (Object.keys(options) as OptionsValue[]).findIndex((option) => option === selectedOption);
 
 /**
  *
  * @param title
+ * @param render
  * @param renderHeader
  * @param tooltip
  * @param className
+ * @param initialIndex
  * @constructor
  */
 export const GraphBoxSelect = ({
@@ -39,13 +45,12 @@ export const GraphBoxSelect = ({
   renderHeader,
   tooltip,
   className,
-  initialIndex = 0,
+  defaultOption = 'number',
 }: GraphFiguresContainerProps) => {
-  const [selectedIndex, setSelectedIndex] = useState<number>(initialIndex);
-  const selectedOption = options[selectedIndex].value;
+  const [selectedOption, setSelectedOption] = useState<OptionsValue>(defaultOption);
 
-  const onChange = useCallback((index: number) => {
-    setSelectedIndex(index);
+  const onChange = useCallback((optionKey: OptionsValue) => {
+    setSelectedOption(optionKey);
   }, []);
 
   return (
@@ -73,9 +78,11 @@ export const GraphBoxSelect = ({
         <div className="GraphFiguresContainerSelect max-w-xs">
           <Select
             theme="secondary"
-            defaultOptionIndex={selectedIndex}
-            options={options}
-            onSelectOption={onChange}
+            defaultOptionIndex={findOptionIndex(defaultOption)}
+            options={selectOptions}
+            onSelectOption={(index, option) => {
+              onChange(option.value as OptionsValue);
+            }}
           />
         </div>
       </div>

@@ -10,9 +10,9 @@ export type SelectThemeColor = 'primary' | 'secondary' | 'gray';
 
 export type SelectOptionValue = string | number;
 
-export type SelectOption = {
+export type SelectOption<T = SelectOptionValue> = {
   label: string;
-  value: SelectOptionValue;
+  value: T;
   disabled?: boolean;
 };
 
@@ -28,7 +28,7 @@ type SelectProps = {
   label?: string;
   theme?: SelectThemeColor;
   // eslint-disable-next-line no-unused-vars
-  onSelectOption?: (index: number) => void;
+  onSelectOption?: (index: number, option: SelectOption) => void;
 } & HTMLAttributes<HTMLSelectElement>;
 
 const backgroundTheme = (theme: SelectThemeColor) => {
@@ -114,7 +114,7 @@ export const Select = ({
     (selectedOption: SelectOption) => {
       const index = options.findIndex((v) => v === selectedOption);
       if (onSelectOption) {
-        onSelectOption(index);
+        onSelectOption(index, selectedOption);
       }
 
       setSelectedIndex(index);
