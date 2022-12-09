@@ -2,7 +2,6 @@ import type {
   RepartitionPerPathology,
   Substance,
   HltEffect,
-  Maybe,
 } from '../../graphql/__generated__/generated-documents';
 import { BoxInfo } from '../../components/BoxInfo';
 import FolderSVG from '../../assets/icons/folder/folder.svg';
@@ -16,11 +15,7 @@ import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
 import { useState } from 'react';
 import { NotEnoughData } from '../../components/NotEnoughData';
-import {
-  getCisErrorMedNatureIconMapping,
-  getFigureBySideEffectPathology,
-  getNotifierFigureByJob,
-} from '../../utils/mapping';
+import { getFigureBySideEffectPathology, getNotifierFigureByJob } from '../../utils/mapping';
 import { Button } from '../../components/Button/Button';
 import { Modal } from '../../components/Modal/Modal';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
@@ -34,7 +29,7 @@ import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: RepartitionPerPathology }) => {
   const [openModal, setOpenModal] = useState(false);
 
-  const htlEffects: Array<Maybe<HltEffect>> = useMemo(
+  const htlEffects: RepartitionPerPathology['htlEffects'] = useMemo(
     () =>
       (pathology.htlEffects ?? [])
         .filter((htfEffect) => (htfEffect?.value ?? 0) >= 10)
@@ -104,6 +99,8 @@ export const SubstanceContainer = ({
     repartitionPerPathology,
     totalExposition,
   } = substance;
+
+  console.log(repartitionPerPathology);
 
   return (
     <div className="SubstancesContainerContentTitle text-left">
@@ -222,7 +219,6 @@ export const SubstanceContainer = ({
       </Accordion>
 
       <GraphBoxSelect
-        initialIndex={1}
         title="Effets indésirables suspectés de la substance active"
         render={(selectedOption) => (
           <div className="GraphBoxSelectContent">
@@ -251,7 +247,7 @@ export const SubstanceContainer = ({
                     className="pathologyGraphFigure"
                     unit={selectedOption === 'percent' ? ' % ' : ''}
                     description={pathologyRepartition.range}
-                    icon={getCisErrorMedNatureIconMapping(pathologyRepartition.id)}
+                    icon={getFigureBySideEffectPathology(pathologyRepartition.id)}
                     action={<PathologyOrgansRepartitionModal pathology={pathologyRepartition} />}
                     valueClassName="text-secondary-900"
                     value={

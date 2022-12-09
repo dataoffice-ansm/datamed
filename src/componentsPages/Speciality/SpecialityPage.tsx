@@ -301,6 +301,7 @@ const SectionMedicinalErrors = () => {
         <div className="flex-1 flex-shrink">
           <GraphBox title="Répartition de la population concernée" className="h-full max-w-[100%]">
             <PieChartMedicalErrorsPopulation
+              theme="primary"
               errorsMedRepPopData={currentEntity?.medicalErrors?.populationRepartition}
             />
           </GraphBox>
@@ -362,6 +363,7 @@ const SectionMedicinalErrors = () => {
           <div className="m-auto max-w-max">
             {selectedOption === 'percent' ? (
               <PieChartNatureMedicalErrors
+                theme="primary"
                 natureMedicalErrors={currentEntity?.medicalErrors?.natureRepartition}
               />
             ) : (
