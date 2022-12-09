@@ -7,12 +7,6 @@ import { tooltipHandler } from '../../utils/tooltips';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const renderTooltip = (value: string): HTMLElement => {
-  const content = document.createElement('span');
-  content.innerHTML = `Proportion <strong>${value}</strong>%`;
-  return content;
-};
-
 /**
  *
  * @param ageData
@@ -29,12 +23,26 @@ export const PieChartRepartitionAge = ({
   theme?: 'primary' | 'secondary';
   className?: string;
 }) => {
-  if (!ageData || !ageData.length || ageData.some((e) => e?.value === 0)) {
+  if (!ageData || !ageData.length) {
     return <NotEnoughData />;
   }
 
+  const renderTooltip =
+    (range: string) =>
+    (value: string): HTMLElement => {
+      const total = ageData.find((e) => range === e?.range);
+      const content = document.createElement('span');
+      content.innerHTML = `
+    <div>
+      <div>Pourcentage: <strong>${value}</strong>%</div>
+      <div>Nombre: <strong>${total?.value ?? '-'}</strong></div>
+    </div>
+    `;
+      return content;
+    };
+
   const labels = ageData.map((row) => row?.range);
-  const data = ageData?.map((row) => row?.value);
+  const data = ageData?.map((row) => row?.valuePercent);
 
   const backgroundColor =
     theme === 'primary'

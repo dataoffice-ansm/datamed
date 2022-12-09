@@ -8,9 +8,9 @@ import { getPublicationIcon } from '../../utils/mapping';
  * @constructor
  */
 export const PublicationItem = ({ publication }: { publication: Publication }) => (
-  <div className="flex border border-grey-100 bg-white items-stretch">
-    <div className="flex items-center w-48 bg-primary-500">
-      <div className="h-32 w-32 md:h-48 md:w-48">
+  <div className="flex shadow rounded-lg bg-white items-stretch">
+    <div className="flex justify-center items-center w-48 bg-primary-500 rounded-l-lg ">
+      <div className="h-32 w-32 md:h-48 md:w-48 flex justify-center items-center">
         {getPublicationIcon(publication?.type?.id ?? 0)}
       </div>
     </div>

@@ -69,10 +69,16 @@ const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: Repartition
           </div>
           {htlEffects && (
             <ul className="list-none border-t border-grey-100">
-              {htlEffects.map((e) => (
-                <li key={e?.id} className="flex justify-between border-b border-grey-100 py-4">
-                  <span>{e?.range} </span>
-                  <strong>{e?.value}%</strong>
+              {htlEffects.map((e, index) => (
+                <li
+                  key={`htlEffects_${index.toString()}`}
+                  className="flex justify-between border-b border-grey-100 py-4 gap-4"
+                >
+                  <div>{e?.range} </div>
+                  <div className="flex gap-8 justify-center items-center">
+                    <strong>{e?.value}</strong>
+                    <strong>{e?.valuePercent}%</strong>
+                  </div>
                 </li>
               ))}
             </ul>
@@ -99,8 +105,6 @@ export const SubstanceContainer = ({
     repartitionPerPathology,
     totalExposition,
   } = substance;
-
-  console.log(repartitionPerPathology);
 
   return (
     <div className="SubstancesContainerContentTitle text-left">

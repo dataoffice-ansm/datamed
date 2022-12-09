@@ -8,12 +8,6 @@ import { tooltipHandler } from '../../utils/tooltips';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
-const renderTooltip = (value: string): HTMLElement => {
-  const content = document.createElement('span');
-  content.innerHTML = `Proportion <strong>${value}</strong>%`;
-  return content;
-};
-
 /**
  *
  * @param ageData
@@ -32,8 +26,22 @@ export const PieChartNatureMedicalErrors = ({
     return <NotEnoughData />;
   }
 
+  const renderTooltip =
+    (range: string) =>
+    (value: string): HTMLElement => {
+      const total = natureMedicalErrors.find((e) => range === e?.range);
+      const content = document.createElement('span');
+      content.innerHTML = `
+    <div>
+      <div>Pourcentage: <strong>${value}</strong>%</div>
+      <div>Nombre: <strong>${total?.value ?? '-'}</strong></div>
+    </div>
+    `;
+      return content;
+    };
+
   const labels = natureMedicalErrors.map((row) => row?.range);
-  const data = natureMedicalErrors?.map((row) => row?.value);
+  const data = natureMedicalErrors?.map((row) => row?.valuePercent);
 
   const backgroundColor =
     theme === 'primary'

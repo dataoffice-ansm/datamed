@@ -21,7 +21,7 @@ const getOrCreateTooltip = (chart: ChartJS) => {
  * @param callbackRenderTooltip
  */
 export const tooltipHandler =
-  (callbackRenderTooltip: (_: string) => HTMLElement) =>
+  (callbackRenderTooltip: (_: string) => (_: string) => HTMLElement) =>
   (context: {
     tooltip: {
       caretX: number;
@@ -76,7 +76,8 @@ export const tooltipHandler =
         td.appendChild(span);
 
         const spanText = document.createElement('span');
-        spanText.appendChild(callbackRenderTooltip(body));
+        console.log(tooltip);
+        spanText.appendChild(callbackRenderTooltip(tooltip.title[0])(body));
         td.appendChild(spanText);
 
         const tr = document.createElement('tr');
