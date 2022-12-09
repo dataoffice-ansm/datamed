@@ -64,6 +64,13 @@ export type Causes = {
   year: Int8 | null;
 };
 
+export type CausesAll = {
+  cause_id: number | null;
+  id: Generated<number>;
+  sold_out_id: number | null;
+  year: Int8 | null;
+};
+
 export type CausesTypes = {
   id: Generated<number>;
   type: string | null;
@@ -240,7 +247,6 @@ export type PopulationErrors = {
 export type Presentations = {
   cip13: string | null;
   cip7: Int8 | null;
-  cis: string | null;
   collectivity_agrement: string | null;
   id: Generated<number>;
   ma_presentation_status_id: number | null;
@@ -340,6 +346,7 @@ export type SubstancesCaseAge = {
   age_id: number | null;
   case_percentage: number | null;
   id: Generated<number>;
+  nb_cases: number | null;
   substance_id: number | null;
 };
 
@@ -353,6 +360,7 @@ export type SubstancesCaseSevere = {
 export type SubstancesCaseSex = {
   case_percentage: number | null;
   id: Generated<number>;
+  nb_cases: number | null;
   sex: number | null;
   substance_id: number | null;
 };
@@ -373,6 +381,8 @@ export type SubstancesHlt = {
   case_percentage: number | null;
   hlt_effect_id: number | null;
   id: Generated<number>;
+  n_decla_eff_hlt: number | null;
+  n_decla_eff_soclong: number | null;
   soc_long_id: number | null;
   substance_id: number | null;
 };
@@ -387,12 +397,14 @@ export type SubstancesNotif = {
 export type SubstancesPatientAge = {
   age_id: number | null;
   id: Generated<number>;
+  patients_consumption: number | null;
   patients_percentage: number | null;
   substance_id: number | null;
 };
 
 export type SubstancesPatientSex = {
   id: Generated<number>;
+  patients_consumption: number | null;
   patients_percentage: number | null;
   sex: number | null;
   substance_id: number | null;
@@ -415,6 +427,7 @@ export type DB = {
   atc_classes: AtcClasses;
   case_pv: CasePv;
   causes: Causes;
+  causes_all: CausesAll;
   causes_types: CausesTypes;
   config: Config;
   descriptions: Descriptions;
