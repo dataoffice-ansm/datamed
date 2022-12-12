@@ -1,0 +1,29 @@
+version: '3.3'
+
+services:
+  web:
+    restart: on-failure
+    build:
+      context: ./web
+      target: prod
+    ports:
+      - 80:80
+    image: gdr-web:latest-prod
+  postgres:
+    # Official Postgres image from DockerHub
+    image: 'postgres:14'
+    volumes: # volume
+      - ${POPULATE_HOST_DATA_PATH:?err}:/data
+    ports:
+      - 5432:5432
+    networks:
+      - app_net
+
+    environment:
+      POSTGRES_USER: postgres # The PostgreSQL user (useful to connect to the database)
+      POSTGRES_PASSWORD: postgres # The PostgreSQL password (useful to connect to the database)
+      POSTGRES_DB: datamed-local # The PostgreSQL default database (automatically created at first launch)
+
+networks:
+  app_net:
+    driver: bridge
