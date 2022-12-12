@@ -2,7 +2,6 @@ import classnames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
 import CountUp from 'react-countup';
 import { formatDecimalToUnit } from '../utils/format';
-import type { Maybe } from '../graphql/__generated__/generated-documents';
 
 /**
  *

@@ -9,7 +9,7 @@ import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
 import WomanFigure from '../../assets/images/woman_illustration.svg';
 import ManFigure from '../../assets/images/man_illustration.svg';
-import { PieChartRepartitionAge } from '../Speciality/PieChartRepartitionAge';
+import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
 import { Accordion } from '../../components/Accordion/Accordion';
 import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
@@ -100,7 +100,7 @@ export const SubstanceContainer = ({
 }: { substance: Substance } & HTMLAttributes<HTMLElement>) => {
   const {
     repartitionPerAge,
-    repartitionPerSex,
+    repartitionPerGender,
     repartitionPerNotifier,
     repartitionPerPathology,
     totalExposition,
@@ -135,19 +135,19 @@ export const SubstanceContainer = ({
             title="Répartition par sexe des patients traités parmi les cas déclarés d'effets indésirables"
             className="h-full max-w-[100%]"
           >
-            {repartitionPerSex?.female && repartitionPerSex?.male ? (
+            {repartitionPerGender?.female && repartitionPerGender?.male ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
-                {repartitionPerSex?.female && (
+                {repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
-                    value={repartitionPerSex?.female}
+                    value={repartitionPerGender.female.valuePercent}
                     description="Femmes"
                     valueClassName="mt-2 text-secondary"
                     icon={<WomanFigure className="w-32" />}
                   />
                 )}
-                {repartitionPerSex?.male && (
+                {repartitionPerGender?.male?.valuePercent && (
                   <GraphFigure
-                    value={repartitionPerSex.male}
+                    value={repartitionPerGender.male.valuePercent}
                     valueClassName="mt-2 text-secondary"
                     description="Hommes"
                     icon={<ManFigure className="w-32" />}
@@ -167,13 +167,11 @@ export const SubstanceContainer = ({
             title="Répartition par âge des patiens traités parmi les cas déclarés d'effets indésirables"
             className="h-full max-w-[100%]"
           >
-            <div className="mt-8 flex gap-8 justify-center items-center">
-              <PieChartRepartitionAge
-                theme="secondary"
-                className="h-64 w-full flex justify-center items-center"
-                ageData={repartitionPerAge}
-              />
-            </div>
+            <PieChartRepartitionAge
+              theme="secondary"
+              className="h-64 w-full flex justify-center items-center"
+              ageData={repartitionPerAge}
+            />
           </GraphBox>
         </div>
       </div>

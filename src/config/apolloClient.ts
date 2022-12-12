@@ -49,7 +49,7 @@ const createApolloClient = (context?: GetServerSidePropsContext) =>
     cache: new InMemoryCache({
       typePolicies: {
         Speciality: {
-          keyFields: ['cisId'],
+          keyFields: ['code'],
         },
         Substance: {
           keyFields: ['code'],

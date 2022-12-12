@@ -5,8 +5,8 @@ import type {
   Publication,
   RepartitionPerNotifier,
   RepartitionPerPathology,
-  RepartitionPerSex,
-  RepartitionTranche,
+  RepartitionPerGender,
+  RepartitionRange,
   Speciality,
   SpecialityRupture,
   SpecialitySubstance,
@@ -30,10 +30,10 @@ export class PostgresOperations {
     return null;
   }
 
-  async getFullSpecialitiesByIds(cisIds: number[]): Promise<Speciality[]> {
+  async getFullSpecialitiesByCode(cisCodes: string[]): Promise<Speciality[]> {
     const rows = await dbInstance
       .selectFrom('medicinal_products as mp')
-      .where('mp.id', 'in', cisIds)
+      .where('mp.cis', 'in', cisCodes)
       .leftJoin('mp_atc as mp_a', 'mp.id', 'mp_a.mp_id')
       .leftJoin('descriptions as d', 'mp.id', 'd.mp_id')
       .leftJoin('marketing_authorization_status as mka_s', 'mka_s.id', 'mp.ma_status_id')
@@ -185,67 +185,71 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSpecialityRepSex(cisId: number): Promise<RepartitionPerSex | null> {
+  async getSpecialityRepGender(cisId: number): Promise<RepartitionPerGender | null> {
     const rows = await dbInstance
       .selectFrom('mp_patient_sex')
       .where('mp_id', '=', cisId)
-      .select(['id', 'sex', 'patients_percentage'])
+      .select(['id', 'sex', 'patients_consumption', 'patients_percentage'])
       .execute();
 
     const male = rows.find((row) => row.sex === 1);
     const female = rows.find((row) => row.sex === 2);
 
-    return male && female
-      ? {
-          male: Math.round(male.patients_percentage ?? 0),
-          female: Math.round(female.patients_percentage ?? 0),
-        }
-      : null;
+    return {
+      male: male
+        ? {
+            value: Math.round(male.patients_consumption ?? 0),
+            valuePercent: Math.round(male.patients_percentage ?? 0),
+          }
+        : null,
+      female: female
+        ? {
+            value: Math.round(female.patients_consumption ?? 0),
+            valuePercent: Math.round(female.patients_percentage ?? 0),
+          }
+        : null,
+    };
   }
 
-  async getSpecialityRepAge(cisId: number): Promise<RepartitionTranche[]> {
+  async getSpecialityRepAge(cisId: number): Promise<RepartitionRange[]> {
     const rows = await dbInstance
       .selectFrom('mp_patient_ages as mp_a')
       .where('mp_a.mp_id', '=', cisId)
       .leftJoin('ages', 'ages.id', 'mp_a.age_id')
-      .select(['mp_a.id', 'ages.range', 'mp_a.patients_percentage as value'])
+      .select(['mp_a.id', 'ages.range', 'mp_a.patients_consumption', 'mp_a.patients_percentage'])
       .execute();
 
-    return rows.reduce<RepartitionTranche[]>((carry, row) => {
-      const { id, range, value } = row;
+    return rows.reduce<RepartitionRange[]>((carry, row) => {
+      const { id, range, patients_consumption, patients_percentage } = row;
       return [
         ...carry,
         {
           id,
           range,
-          value: Math.round(value ?? 0),
+          value: Math.round(patients_consumption ?? 0),
+          valuePercent: Math.round(patients_percentage ?? 0),
         },
       ];
     }, []);
   }
 
-  async getErrorsMedRepPopulation(cisId: number): Promise<RepartitionTranche[]> {
+  async getErrorsMedRepPopulation(cisId: number): Promise<RepartitionRange[]> {
     const rows = await dbInstance
       .selectFrom('error_med_population as err')
       .leftJoin('population_errors as pop', 'pop.id', 'err.population_error_id')
       .where('err.mp_id', '=', cisId)
-      .select([
-        'err.id',
-        'pop.label as range',
-        'err.percentage as value',
-        'err.percentage as valuePercent',
-      ])
+      .select(['err.id', 'pop.label as range', 'err.number', 'err.percentage'])
       .execute();
 
-    return rows.reduce<RepartitionTranche[]>((carry, row) => {
-      const { id, range, value, valuePercent } = row;
+    return rows.reduce<RepartitionRange[]>((carry, row) => {
+      const { id, range, number, percentage } = row;
       return [
         ...carry,
         {
           id,
           range,
-          value: Math.round(value ?? 0),
-          valuePercent: Math.round(valuePercent ?? 0),
+          value: Math.round(number ?? 0),
+          valuePercent: Math.round(percentage ?? 0),
         },
       ];
     }, []);
@@ -258,7 +262,7 @@ export class PostgresOperations {
       .selectFrom('error_med_side_effect as err')
       .leftJoin('side_effects as side', 'side.id', 'err.side_effect_id')
       .where('err.mp_id', '=', cisId)
-      .select(['err.percentage as value', 'side.id as id'])
+      .select(['err.number', 'err.percentage', 'side.id'])
       .execute();
 
     const withSideEffect = rows.find((row) => row.id === 1);
@@ -266,13 +270,19 @@ export class PostgresOperations {
 
     return withSideEffect && withoutSideEffect
       ? {
-          with: Math.round(withSideEffect.value ?? 0),
-          without: Math.round(withoutSideEffect.value ?? 0),
+          with: {
+            value: Math.round(withSideEffect.number ?? 0),
+            valuePercent: Math.round(withSideEffect.percentage ?? 0),
+          },
+          without: {
+            value: Math.round(withSideEffect.number ?? 0),
+            valuePercent: Math.round(withoutSideEffect.percentage ?? 0),
+          },
         }
       : null;
   }
 
-  async getErrorsMedicalApparitionStepRepartition(cisId: number): Promise<RepartitionTranche[]> {
+  async getErrorsMedicalApparitionStepRepartition(cisId: number): Promise<RepartitionRange[]> {
     const rows = await dbInstance
       .selectFrom('error_med_initial as err')
       .leftJoin('initial_errors as ini', 'ini.id', 'err.initial_error_id')
@@ -285,9 +295,10 @@ export class PostgresOperations {
       ])
       .execute();
 
-    return rows.reduce<RepartitionTranche[]>((carry, row) => {
+    return rows.reduce<RepartitionRange[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id && range && value && valuePercent
+      // eslint-disable-next-line no-negated-condition
+      return id !== null
         ? [
             ...carry,
             {
@@ -301,7 +312,7 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getErrorsMedicalNatureRepartition(cisId: number): Promise<RepartitionTranche[]> {
+  async getErrorsMedicalNatureRepartition(cisId: number): Promise<RepartitionRange[]> {
     const rows = await dbInstance
       .selectFrom('error_med_nature as err')
       .leftJoin('nature_errors as nat', 'nat.id', 'err.nature_error_id')
@@ -314,9 +325,10 @@ export class PostgresOperations {
       ])
       .execute();
 
-    return rows.reduce<RepartitionTranche[]>((carry, row) => {
+    return rows.reduce<RepartitionRange[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id && range && value && valuePercent
+      // eslint-disable-next-line no-negated-condition
+      return id !== null
         ? [
             ...carry,
             {
@@ -452,18 +464,17 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSpecialitiesBySubstance(subId: number): Promise<number[]> {
+  async getSpecialitiesCodeBySubstance(subId: number): Promise<string[]> {
     const rows = await dbInstance
       .selectFrom('mp_substances as mp_s')
       .where('mp_s.substance_id', '=', subId)
       .leftJoin('medicinal_products as mp', 'mp.id', 'mp_s.mp_id')
-      .select(['mp.id'])
+      .select(['mp.cis'])
       .execute();
 
-    return rows.reduce<number[]>((carry, row) => {
-      const { id } = row;
-      // eslint-disable-next-line no-negated-condition
-      return id !== null ? [...carry, id] : carry;
+    return rows.reduce<string[]>((carry, row) => {
+      const { cis } = row;
+      return cis ? [...carry, cis] : carry;
     }, []);
   }
 
@@ -496,7 +507,7 @@ export class PostgresOperations {
     }));
   }
 
-  async getSubstanceRepSex(subCode: number): Promise<RepartitionPerSex> {
+  async getSubstanceRepGender(subCode: number): Promise<RepartitionPerGender> {
     const rows = await dbInstance
       .selectFrom('substances_case_sex')
       .where('substance_id', '=', subCode)
@@ -507,12 +518,22 @@ export class PostgresOperations {
     const female = rows.find((row) => row.sex === 2);
 
     return {
-      male: male ? Math.round(male.case_percentage ?? 0) : null,
-      female: female ? Math.round(female.case_percentage ?? 0) : null,
+      male: male
+        ? {
+            value: Math.round(male.nb_cases ?? 0),
+            valuePercent: Math.round(male.case_percentage ?? 0),
+          }
+        : null,
+      female: female
+        ? {
+            value: Math.round(female.nb_cases ?? 0),
+            valuePercent: Math.round(female.case_percentage ?? 0),
+          }
+        : null,
     };
   }
 
-  async getSubstanceRepAge(subCode: number): Promise<RepartitionTranche[]> {
+  async getSubstanceRepAge(subCode: number): Promise<RepartitionRange[]> {
     const rows = await dbInstance
       .selectFrom('substances_patient_age as s_p_a')
       .where('s_p_a.substance_id', '=', subCode)
@@ -525,7 +546,7 @@ export class PostgresOperations {
       ])
       .execute();
 
-    return rows.reduce<RepartitionTranche[]>((carry, row) => {
+    return rows.reduce<RepartitionRange[]>((carry, row) => {
       const { id, range, consumption, percentage } = row;
       return id && range && consumption && percentage
         ? [

@@ -2,7 +2,7 @@ import { Pie } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
 import type { MedicalErrors } from '../../graphql/__generated__/generated-documents';
-import { NotEnoughData } from '../../components/NotEnoughData';
+import { NotEnoughData } from '../NotEnoughData';
 import { darkViolet, turquoise } from '../../../tailwind.palette.config';
 import { tooltipHandler } from '../../utils/tooltips';
 
@@ -32,12 +32,12 @@ export const PieChartMedicalErrorsPopulation = ({
   const renderTooltip =
     (range: string) =>
     (value: string): HTMLElement => {
-      const total = errorsMedRepPopData.find((e) => range === e?.range);
+      const repartition = errorsMedRepPopData.find((e) => range === e?.range);
       const content = document.createElement('span');
       content.innerHTML = `
     <div>
       <div>Pourcentage: <strong>${value}</strong>%</div>
-      <div>Nombre: <strong>${total?.value ?? '-'}</strong></div>
+      <div>Nombre: <strong>${repartition?.value ?? '-'}</strong></div>
     </div>
     `;
       return content;

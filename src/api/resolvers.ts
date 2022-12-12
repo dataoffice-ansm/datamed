@@ -7,8 +7,8 @@ export const resolvers: Resolvers = {
     },
 
     async getSpeciality(parent, args, context) {
-      const rows = await context.dataSources.postgresOperations.getFullSpecialitiesByIds([
-        args.cisId,
+      const rows = await context.dataSources.postgresOperations.getFullSpecialitiesByCode([
+        args.cisCode,
       ]);
 
       return rows[0];
@@ -57,8 +57,8 @@ export const resolvers: Resolvers = {
       return context.dataSources.postgresOperations.getSpecialitySubstancesDosages(speciality.id);
     },
 
-    async repartitionPerSex(speciality, args, context) {
-      return context.dataSources.postgresOperations.getSpecialityRepSex(speciality.id);
+    async repartitionPerGender(speciality, args, context) {
+      return context.dataSources.postgresOperations.getSpecialityRepGender(speciality.id);
     },
 
     async repartitionPerAge(speciality, args, context) {
@@ -112,12 +112,12 @@ export const resolvers: Resolvers = {
 
   Substance: {
     async retrieveSpecialities(substance, args, context) {
-      const cisIds = await context.dataSources.postgresOperations.getSpecialitiesBySubstance(
+      const cisCodes = await context.dataSources.postgresOperations.getSpecialitiesCodeBySubstance(
         substance.id
       );
 
-      const specialities = await context.dataSources.postgresOperations.getFullSpecialitiesByIds(
-        cisIds
+      const specialities = await context.dataSources.postgresOperations.getFullSpecialitiesByCode(
+        cisCodes
       );
 
       return {
@@ -137,8 +137,8 @@ export const resolvers: Resolvers = {
       return context.dataSources.postgresOperations.getSubstanceRepAge(substance.id);
     },
 
-    async repartitionPerSex(substance, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceRepSex(substance.id);
+    async repartitionPerGender(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceRepGender(substance.id);
     },
 
     async repartitionPerNotifier(substance, args, context) {

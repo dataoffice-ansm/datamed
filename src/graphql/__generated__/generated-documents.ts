@@ -22,12 +22,6 @@ export type CisExposition = {
   id: Scalars['Int'];
 };
 
-export type GenderRepartition = {
-  __typename?: 'GenderRepartition';
-  female?: Maybe<Scalars['Int']>;
-  male?: Maybe<Scalars['Int']>;
-};
-
 export type HltEffect = {
   __typename?: 'HltEffect';
   id: Scalars['Int'];
@@ -40,6 +34,12 @@ export type Icon = {
   __typename?: 'Icon';
   id: Scalars['Int'];
   name?: Maybe<Scalars['String']>;
+};
+
+export type IndicatorValues = {
+  __typename?: 'IndicatorValues';
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
 };
 
 export type Laboratory = {
@@ -62,9 +62,9 @@ export type MedicalError = {
 
 export type MedicalErrors = {
   __typename?: 'MedicalErrors';
-  apparitionStepRepartition?: Maybe<Array<Maybe<RepartitionTranche>>>;
-  natureRepartition?: Maybe<Array<Maybe<RepartitionTranche>>>;
-  populationRepartition?: Maybe<Array<Maybe<RepartitionTranche>>>;
+  apparitionStepRepartition?: Maybe<Array<Maybe<RepartitionRange>>>;
+  natureRepartition?: Maybe<Array<Maybe<RepartitionRange>>>;
+  populationRepartition?: Maybe<Array<Maybe<RepartitionRange>>>;
   sideEffectsOriginRepartition?: Maybe<WithRepartition>;
 };
 
@@ -103,7 +103,7 @@ export type Query = {
 };
 
 export type QueryGetSpecialityArgs = {
-  cisId: Scalars['Int'];
+  cisCode: Scalars['String'];
 };
 
 export type QueryGetSpecialityIdByCodeArgs = {
@@ -112,6 +112,12 @@ export type QueryGetSpecialityIdByCodeArgs = {
 
 export type QueryGetSubstanceArgs = {
   subCode: Scalars['String'];
+};
+
+export type RepartitionPerGender = {
+  __typename?: 'RepartitionPerGender';
+  female?: Maybe<IndicatorValues>;
+  male?: Maybe<IndicatorValues>;
 };
 
 export type RepartitionPerNotifier = {
@@ -132,24 +138,12 @@ export type RepartitionPerPathology = {
   valuePercent?: Maybe<Scalars['Int']>;
 };
 
-export type RepartitionPerSex = {
-  __typename?: 'RepartitionPerSex';
-  female?: Maybe<Scalars['Int']>;
-  male?: Maybe<Scalars['Int']>;
-};
-
-export type RepartitionTranche = {
-  __typename?: 'RepartitionTranche';
+export type RepartitionRange = {
+  __typename?: 'RepartitionRange';
   id: Scalars['Int'];
   range?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
   valuePercent?: Maybe<Scalars['Int']>;
-};
-
-export type RepartitionTuple = {
-  __typename?: 'RepartitionTuple';
-  codePart?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
 };
 
 export type RuptureCause = {
@@ -187,8 +181,8 @@ export type Speciality = {
   name: Scalars['String'];
   pharmaForm?: Maybe<PharmaForm>;
   publications?: Maybe<Array<Maybe<Publication>>>;
-  repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
-  repartitionPerSex?: Maybe<RepartitionPerSex>;
+  repartitionPerAge?: Maybe<Array<Maybe<RepartitionRange>>>;
+  repartitionPerGender?: Maybe<RepartitionPerGender>;
   rupturesHistory?: Maybe<SpecialityRupturesHistory>;
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
@@ -233,10 +227,10 @@ export type Substance = {
   exposition?: Maybe<CisExposition>;
   id: Scalars['Int'];
   name: Scalars['String'];
-  repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
+  repartitionPerAge?: Maybe<Array<Maybe<RepartitionRange>>>;
+  repartitionPerGender?: Maybe<RepartitionPerGender>;
   repartitionPerNotifier?: Maybe<Array<Maybe<RepartitionPerNotifier>>>;
   repartitionPerPathology?: Maybe<Array<Maybe<RepartitionPerPathology>>>;
-  repartitionPerSex?: Maybe<RepartitionPerSex>;
   retrieveSpecialities?: Maybe<SpecialitiesReturn>;
   totalExposition?: Maybe<TotalExposition>;
 };
@@ -256,8 +250,8 @@ export type TotalExposition = {
 
 export type WithRepartition = {
   __typename?: 'WithRepartition';
-  with?: Maybe<Scalars['Int']>;
-  without?: Maybe<Scalars['Int']>;
+  with?: Maybe<IndicatorValues>;
+  without?: Maybe<IndicatorValues>;
 };
 
 export type SpecialityFragmentFragment = {
@@ -265,10 +259,10 @@ export type SpecialityFragmentFragment = {
   id: number;
   name: string;
   code: string;
+  description?: string | null;
   dosageIndication?: string | null;
   commercialisationState?: string | null;
   commercialisationType?: string | null;
-  description?: string | null;
   atc?: {
     __typename?: 'MedicalATC';
     id: number;
@@ -292,13 +286,21 @@ export type SpecialityFragmentFragment = {
         description?: string | null;
       } | null> | null;
     } | null;
-    repartitionPerSex?: {
-      __typename?: 'RepartitionPerSex';
-      male?: number | null;
-      female?: number | null;
+    repartitionPerGender?: {
+      __typename?: 'RepartitionPerGender';
+      male?: {
+        __typename?: 'IndicatorValues';
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null;
+      female?: {
+        __typename?: 'IndicatorValues';
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null;
     } | null;
     repartitionPerAge?: Array<{
-      __typename?: 'RepartitionTranche';
+      __typename?: 'RepartitionRange';
       id: number;
       range?: string | null;
       value?: number | null;
@@ -345,16 +347,25 @@ export type SpecialityFragmentFragment = {
     name: string;
     dosage?: string | null;
   } | null> | null;
-  repartitionPerSex?: {
-    __typename?: 'RepartitionPerSex';
-    male?: number | null;
-    female?: number | null;
+  repartitionPerGender?: {
+    __typename?: 'RepartitionPerGender';
+    male?: {
+      __typename?: 'IndicatorValues';
+      value?: number | null;
+      valuePercent?: number | null;
+    } | null;
+    female?: {
+      __typename?: 'IndicatorValues';
+      value?: number | null;
+      valuePercent?: number | null;
+    } | null;
   } | null;
   repartitionPerAge?: Array<{
-    __typename?: 'RepartitionTranche';
+    __typename?: 'RepartitionRange';
     id: number;
     range?: string | null;
     value?: number | null;
+    valuePercent?: number | null;
   } | null> | null;
   publications?: Array<{
     __typename?: 'Publication';
@@ -374,27 +385,38 @@ export type SpecialityFragmentFragment = {
   medicalErrors?: {
     __typename?: 'MedicalErrors';
     populationRepartition?: Array<{
-      __typename?: 'RepartitionTranche';
+      __typename?: 'RepartitionRange';
       id: number;
-      value?: number | null;
       range?: string | null;
+      value?: number | null;
+      valuePercent?: number | null;
     } | null> | null;
     sideEffectsOriginRepartition?: {
       __typename?: 'WithRepartition';
-      with?: number | null;
-      without?: number | null;
+      with?: {
+        __typename?: 'IndicatorValues';
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null;
+      without?: {
+        __typename?: 'IndicatorValues';
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null;
     } | null;
     apparitionStepRepartition?: Array<{
-      __typename?: 'RepartitionTranche';
+      __typename?: 'RepartitionRange';
       id: number;
       range?: string | null;
       value?: number | null;
+      valuePercent?: number | null;
     } | null> | null;
     natureRepartition?: Array<{
-      __typename?: 'RepartitionTranche';
+      __typename?: 'RepartitionRange';
       id: number;
-      value?: number | null;
       range?: string | null;
+      value?: number | null;
+      valuePercent?: number | null;
     } | null> | null;
   } | null;
   rupturesHistory?: {
@@ -429,13 +451,21 @@ export type SubstanceFragmentFragment = {
       description?: string | null;
     } | null> | null;
   } | null;
-  repartitionPerSex?: {
-    __typename?: 'RepartitionPerSex';
-    male?: number | null;
-    female?: number | null;
+  repartitionPerGender?: {
+    __typename?: 'RepartitionPerGender';
+    male?: {
+      __typename?: 'IndicatorValues';
+      value?: number | null;
+      valuePercent?: number | null;
+    } | null;
+    female?: {
+      __typename?: 'IndicatorValues';
+      value?: number | null;
+      valuePercent?: number | null;
+    } | null;
   } | null;
   repartitionPerAge?: Array<{
-    __typename?: 'RepartitionTranche';
+    __typename?: 'RepartitionRange';
     id: number;
     range?: string | null;
     value?: number | null;
@@ -486,7 +516,7 @@ export type SpecialityIdByCodeQuery = {
 };
 
 export type SpecialityQueryVariables = Exact<{
-  cisId: Scalars['Int'];
+  cisCode: Scalars['String'];
 }>;
 
 export type SpecialityQuery = {
@@ -496,10 +526,10 @@ export type SpecialityQuery = {
     id: number;
     name: string;
     code: string;
+    description?: string | null;
     dosageIndication?: string | null;
     commercialisationState?: string | null;
     commercialisationType?: string | null;
-    description?: string | null;
     atc?: {
       __typename?: 'MedicalATC';
       id: number;
@@ -523,13 +553,21 @@ export type SpecialityQuery = {
           description?: string | null;
         } | null> | null;
       } | null;
-      repartitionPerSex?: {
-        __typename?: 'RepartitionPerSex';
-        male?: number | null;
-        female?: number | null;
+      repartitionPerGender?: {
+        __typename?: 'RepartitionPerGender';
+        male?: {
+          __typename?: 'IndicatorValues';
+          value?: number | null;
+          valuePercent?: number | null;
+        } | null;
+        female?: {
+          __typename?: 'IndicatorValues';
+          value?: number | null;
+          valuePercent?: number | null;
+        } | null;
       } | null;
       repartitionPerAge?: Array<{
-        __typename?: 'RepartitionTranche';
+        __typename?: 'RepartitionRange';
         id: number;
         range?: string | null;
         value?: number | null;
@@ -576,16 +614,25 @@ export type SpecialityQuery = {
       name: string;
       dosage?: string | null;
     } | null> | null;
-    repartitionPerSex?: {
-      __typename?: 'RepartitionPerSex';
-      male?: number | null;
-      female?: number | null;
+    repartitionPerGender?: {
+      __typename?: 'RepartitionPerGender';
+      male?: {
+        __typename?: 'IndicatorValues';
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null;
+      female?: {
+        __typename?: 'IndicatorValues';
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null;
     } | null;
     repartitionPerAge?: Array<{
-      __typename?: 'RepartitionTranche';
+      __typename?: 'RepartitionRange';
       id: number;
       range?: string | null;
       value?: number | null;
+      valuePercent?: number | null;
     } | null> | null;
     publications?: Array<{
       __typename?: 'Publication';
@@ -605,27 +652,38 @@ export type SpecialityQuery = {
     medicalErrors?: {
       __typename?: 'MedicalErrors';
       populationRepartition?: Array<{
-        __typename?: 'RepartitionTranche';
+        __typename?: 'RepartitionRange';
         id: number;
-        value?: number | null;
         range?: string | null;
+        value?: number | null;
+        valuePercent?: number | null;
       } | null> | null;
       sideEffectsOriginRepartition?: {
         __typename?: 'WithRepartition';
-        with?: number | null;
-        without?: number | null;
+        with?: {
+          __typename?: 'IndicatorValues';
+          value?: number | null;
+          valuePercent?: number | null;
+        } | null;
+        without?: {
+          __typename?: 'IndicatorValues';
+          value?: number | null;
+          valuePercent?: number | null;
+        } | null;
       } | null;
       apparitionStepRepartition?: Array<{
-        __typename?: 'RepartitionTranche';
+        __typename?: 'RepartitionRange';
         id: number;
         range?: string | null;
         value?: number | null;
+        valuePercent?: number | null;
       } | null> | null;
       natureRepartition?: Array<{
-        __typename?: 'RepartitionTranche';
+        __typename?: 'RepartitionRange';
         id: number;
-        value?: number | null;
         range?: string | null;
+        value?: number | null;
+        valuePercent?: number | null;
       } | null> | null;
     } | null;
     rupturesHistory?: {
@@ -683,13 +741,21 @@ export type SubstanceQuery = {
         description?: string | null;
       } | null> | null;
     } | null;
-    repartitionPerSex?: {
-      __typename?: 'RepartitionPerSex';
-      male?: number | null;
-      female?: number | null;
+    repartitionPerGender?: {
+      __typename?: 'RepartitionPerGender';
+      male?: {
+        __typename?: 'IndicatorValues';
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null;
+      female?: {
+        __typename?: 'IndicatorValues';
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null;
     } | null;
     repartitionPerAge?: Array<{
-      __typename?: 'RepartitionTranche';
+      __typename?: 'RepartitionRange';
       id: number;
       range?: string | null;
       value?: number | null;
@@ -763,9 +829,15 @@ export const SubstanceFragmentFragmentDoc = gql`
         description
       }
     }
-    repartitionPerSex {
-      male
-      female
+    repartitionPerGender {
+      male {
+        value
+        valuePercent
+      }
+      female {
+        value
+        valuePercent
+      }
     }
     repartitionPerAge {
       id
@@ -808,6 +880,7 @@ export const SpecialityFragmentFragmentDoc = gql`
     id
     name
     code
+    description
     atc {
       id
       name
@@ -829,14 +902,21 @@ export const SpecialityFragmentFragmentDoc = gql`
     }
     commercialisationState
     commercialisationType
-    repartitionPerSex {
-      male
-      female
+    repartitionPerGender {
+      male {
+        value
+        valuePercent
+      }
+      female {
+        value
+        valuePercent
+      }
     }
     repartitionPerAge {
       id
       range
       value
+      valuePercent
     }
     publications {
       id
@@ -847,7 +927,6 @@ export const SpecialityFragmentFragmentDoc = gql`
         name
       }
     }
-    description
     icon {
       id
       name
@@ -864,22 +943,31 @@ export const SpecialityFragmentFragmentDoc = gql`
     medicalErrors {
       populationRepartition {
         id
-        value
         range
+        value
+        valuePercent
       }
       sideEffectsOriginRepartition {
-        with
-        without
+        with {
+          value
+          valuePercent
+        }
+        without {
+          value
+          valuePercent
+        }
       }
       apparitionStepRepartition {
         id
         range
         value
+        valuePercent
       }
       natureRepartition {
         id
-        value
         range
+        value
+        valuePercent
       }
     }
     rupturesHistory {
@@ -957,8 +1045,8 @@ export type SpecialityIdByCodeQueryResult = Apollo.QueryResult<
   SpecialityIdByCodeQueryVariables
 >;
 export const SpecialityDocument = gql`
-  query Speciality($cisId: Int!) {
-    getSpeciality(cisId: $cisId) {
+  query Speciality($cisCode: String!) {
+    getSpeciality(cisCode: $cisCode) {
       ...SpecialityFragment
     }
   }
@@ -977,7 +1065,7 @@ export const SpecialityDocument = gql`
  * @example
  * const { data, loading, error } = useSpecialityQuery({
  *   variables: {
- *      cisId: // value for 'cisId'
+ *      cisCode: // value for 'cisCode'
  *   },
  * });
  */

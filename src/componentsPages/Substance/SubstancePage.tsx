@@ -16,14 +16,14 @@ import PilIcon from '../../assets/images/gellule.svg';
 import { numberWithThousand } from '../../utils/format';
 import ManIllustration from '../../assets/images/man_illustration.svg';
 import WomanIllustration from '../../assets/images/woman_illustration.svg';
-import { PieChartRepartitionAge } from '../Speciality/PieChartRepartitionAge';
+import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
 import { SectionTitle } from '../../components/SectionTitle';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
-  const { totalExposition, exposition, repartitionPerSex, repartitionPerAge } = currentEntity;
+  const { totalExposition, exposition, repartitionPerGender, repartitionPerAge } = currentEntity;
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
       <SectionTitle
@@ -119,19 +119,19 @@ const SectionOneGlobalInformation = () => {
             title="Répartition par sexe des patients traités"
             className="h-full max-w-[100%]"
           >
-            {repartitionPerSex?.female && repartitionPerSex?.male ? (
+            {repartitionPerGender?.female && repartitionPerGender?.male ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
-                {repartitionPerSex?.female && (
+                {repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
-                    value={repartitionPerSex?.female}
+                    value={repartitionPerGender.female.valuePercent}
                     description="Femmes"
                     valueClassName="mt-2 text-secondary"
                     icon={<WomanIllustration className="w-32" />}
                   />
                 )}
-                {repartitionPerSex?.male && (
+                {repartitionPerGender?.male?.valuePercent && (
                   <GraphFigure
-                    value={repartitionPerSex.male}
+                    value={repartitionPerGender.male.valuePercent}
                     valueClassName="mt-2 text-secondary"
                     description="Hommes"
                     icon={<ManIllustration className="w-32" />}

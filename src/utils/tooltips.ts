@@ -76,7 +76,6 @@ export const tooltipHandler =
         td.appendChild(span);
 
         const spanText = document.createElement('span');
-        console.log(tooltip);
         spanText.appendChild(callbackRenderTooltip(tooltip.title[0])(body));
         td.appendChild(spanText);
 
