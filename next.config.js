@@ -2,7 +2,6 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
-  distDir: 'dist',
   webpack(config) {
     config.module.rules.push(
       {

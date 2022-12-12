@@ -5,15 +5,19 @@ FROM node:alpine AS deps
 RUN apk update && apk add --no-cache libc6-compat && apk add git
 WORKDIR /app
 COPY package.json yarn.lock ./
-RUN yarn install --immutable
+RUN yarn install --immutable --immutable-cache --check-cache
 
 # Rebuild the source code only when needed
 FROM node:alpine AS builder
+
 # add environment variables to client code
-ARG NEXT_PUBLIC_BACKEND_URL
-ARG NEXT_PUBLIC_META_API_KEY
-ENV NEXT_PUBLIC_BACKEND_URL=$NEXT_PUBLIC_BACKEND_URL
-ENV NEXT_PUBLIC_META_API_KEY=$NEXT_PUBLIC_META_API_KEY
+ARG USE_LOCAL_DB
+ARG DATABASE_URL_PROD
+ARG NEXT_PUBLIC_WEB_PROD
+
+ENV USE_LOCAL_DB=$USE_LOCAL_DB
+ENV DATABASE_URL_PROD=$DATABASE_URL_PROD
+ENV NEXT_PUBLIC_WEB_PROD=$NEXT_PUBLIC_WEB_PROD
 
 WORKDIR /app
 COPY . .
@@ -32,7 +36,7 @@ RUN adduser -S nextjs -u 1001
 # Copy all necessary files used by nex.config as well otherwise the build will fail.
 COPY --from=builder /app/next.config.js ./next.config.js
 COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/dist ./dist
+COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
 

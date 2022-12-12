@@ -4,56 +4,75 @@ name: Build and Deploy
 # events but only for the main branch
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "develop" ]
     # Publish semver tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
-    branches: [ "master" ]
+    branches: [ "develop" ]
 
-workflow_dispatch:
-  inputs:
-    logLevel:
-      description: 'Log level'
-      required: true
-      default: 'warning'
+env:
+  REGISTRY: ghcr.io
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
 
   # This workflow contains a single job called "build"
-  build:
+  build-web:
 
     env:
       # github.repository as <account>/<repo>
       IMAGE_NAME: ${{ github.repository }}/datamed-web
+
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
-      # This is used to complete the identity challenge
-      # with sigstore/fulcio when running outside of PRs.
-      id-token: write
 
-      # Steps represent a sequence of tasks that will be executed as part of the job
+    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - run: echo "Github secret db prod ${{ secrets.DATABASE_URL_PROD }}"
+      - run: echo "Github secret url prod ${{ secrets.NEXT_PUBLIC_WEB_PROD }}"
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Build and Publish to Github Packages Registry
-        uses: elgohr/Publish-Docker-Github-Action@master
-        env:
-          NEXT_PUBLIC_BACKEND_URL: ${{ secrets.APP_NEXT_PUBLIC_BACKEND_URL }}
-          NEXT_PUBLIC_META_API_KEY: ${{ secrets.APP_NEXT_PUBLIC_META_API_KEY }}
-          with:
-            name: my_github_username/my_repository_name/my_image_name
-            registry: ghcr.io
-            username: ${{ secrets.USERNAME }}
-            password: ${{ secrets. GITHUB_TOKEN }}
-            dockerfile: Dockerfile
-            buildargs: NEXT_PUBLIC_BACKEND_URL,NEXT_PUBLIC_META_API_KEY
-            tags: latest
+     # - uses: actions/setup-node@v3
+     #   with:
+     #     node-version: '16.x'
+
+     # - run: yarn install --immutable --immutable-cache --check-cache
+
+      # Extract metadata (tags, labels) for Docker
+      # https://github.com/docker/metadata-action
+      - name: Extract Docker metadata
+        id: meta
+        uses: docker/metadata-action@v4
+        with:
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+
+      - name: Log in to the Container registry
+        if: github.event_name != 'pull_request'
+        uses: docker/login-action@v2
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v3
+        with:
+          context: .
+          push: ${{ github.event_name != 'pull_request' }}
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          secrets: |
+            "DATABASE_URL_PROD=${{ secrets.DATABASE_URL_PROD }}"
+            "NEXT_PUBLIC_WEB_PROD=${{ secrets.NEXT_PUBLIC_WEB_PROD }}"
+            "USE_LOCAL_DB=${{ secrets.USE_LOCAL_DB }}"
+
+
+      - name: Log in to GitHub Container Repository
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
