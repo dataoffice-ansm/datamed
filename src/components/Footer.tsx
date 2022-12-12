@@ -1,5 +1,5 @@
 import LogoWhite from '../assets/images/logo-ansm-white.svg';
-import { footerLinks } from '../config/config';
+import { footerLinks } from '../config/layoutConfig';
 
 export const Footer = () => (
   <footer className="text-center lg:text-left bg-black text-gray-600">

@@ -2,7 +2,7 @@ import type { GraphQLSchema } from 'graphql';
 import { defaultFieldResolver } from 'graphql';
 import { mapSchema, getDirective, MapperKind } from '@graphql-tools/utils';
 
-function upperDirective(directiveName: string): (schema: GraphQLSchema) => GraphQLSchema {
+function upperDirective(directiveName: string): (_schema: GraphQLSchema) => GraphQLSchema {
   return (schema) =>
     mapSchema(schema, {
       [MapperKind.OBJECT_FIELD](fieldConfig) {

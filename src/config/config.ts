@@ -1,57 +1,50 @@
-export type NavLink = {
-  name: string;
-  url: string;
+type AppConfig = {
+  dev: boolean;
+  useLocalDb: boolean;
+  dbUrl: string;
+  appRoute: string;
+  serverApiRoute: string;
+  serverApiGraphRoute: string;
 };
 
-export type NavLinkGroup = {
-  title: string;
-  links: NavLink[];
+const dev = process.env.NODE_ENV !== 'production';
+
+const buildConfig = (): AppConfig => {
+  const port = process.env.PORT ?? 3000;
+  const useLocalDb = Boolean(process.env.USE_LOCAL_DB ?? false);
+
+  if (dev) {
+    const appRoute = `http://localhost:${port}`;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    const dbUrl = useLocalDb ? process.env.DATABASE_URL_LOCAL! : process.env.DATABASE_URL_DEV!;
+
+    return {
+      dev,
+      useLocalDb,
+      dbUrl,
+      appRoute,
+      serverApiRoute: `${appRoute}/api`,
+      serverApiGraphRoute: `${appRoute}/api/graphql`,
+    };
+  }
+
+  const useLocalDeploy = Boolean(process.env.USE_LOCAL_DEPLOY ?? false);
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const appRoute = useLocalDeploy ? `http://localhost:${port}` : process.env.NEXT_PUBLIC_WEB_PROD!;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const dbUrl = process.env.DATABASE_URL_PROD!;
+
+  return {
+    dev,
+    useLocalDb,
+    dbUrl,
+    appRoute,
+    serverApiRoute: `${appRoute}/api`,
+    serverApiGraphRoute: `${appRoute}/api/graphql`,
+  };
 };
 
-export type NavLinkItem = {
-  href: string;
-  text: string;
-};
+const config = buildConfig();
+console.log(config);
 
-export const navIconSize = 24;
-
-export const footerLinks: NavLinkGroup[] = [
-  {
-    title: 'Partenaires',
-    links: [
-      {
-        name: 'Base de données publique du médicament',
-        url: 'https://base-donnees-publique.medicaments.gouv.fr/',
-      },
-      {
-        name: 'Etalab',
-        url: 'https://www.etalab.gouv.fr/',
-      },
-      {
-        name: 'DINUM',
-        url: 'https://www.numerique.gouv.fr/dinum/',
-      },
-      {
-        name: 'HDH',
-        url: 'https://www.health-data-hub.fr/',
-      },
-    ],
-  },
-  {
-    title: 'Le site',
-    links: [
-      {
-        name: 'A propos',
-        url: '/a-propos',
-      },
-      {
-        name: 'Mentions légales',
-        url: '/mentions-legales',
-      },
-      {
-        name: 'Contact',
-        url: '/contact',
-      },
-    ],
-  },
-];
+export { config };

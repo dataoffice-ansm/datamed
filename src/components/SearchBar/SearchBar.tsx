@@ -1,6 +1,6 @@
 import SearchIcon from '../../icons/search.svg';
-import { navIconSize } from '../../config/config';
 import { Autocomplete } from '../Autocomplete/Autocomplete';
+import { navIconSize } from '../../config/layoutConfig';
 
 /**
  *

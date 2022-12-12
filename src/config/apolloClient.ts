@@ -2,6 +2,7 @@ import type { NormalizedCacheObject } from '@apollo/client';
 import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
 import { useMemo } from 'react';
 import type { GetServerSidePropsContext } from 'next';
+import { config } from './config';
 // import cookie from 'cookie';
 
 export const APOLLO_STATE_PROPERTY_NAME = '__APOLLO_STATE__';
@@ -27,7 +28,7 @@ const createApolloLink = (context?: GetServerSidePropsContext) => {
   if (context) {
     // const token = getToken(context?.req);
     return createHttpLink({
-      uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
+      uri: config.serverApiGraphRoute,
       credentials: 'same-origin',
       headers: {
         ...context?.req.headers,

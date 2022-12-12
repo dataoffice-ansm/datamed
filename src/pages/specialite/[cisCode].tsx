@@ -8,7 +8,6 @@ import type {
 import { SpecialityDocument } from '../../graphql/__generated__/generated-documents';
 import { SpecialityPage } from '../../componentsPages/Speciality/SpecialityPage';
 import { addApolloState, initializeApolloClient } from '../../config/apolloClient';
-import { ci } from 'chart.js/dist/chunks/helpers.core';
 
 type CisSSRPageProps = {
   cis: Speciality;

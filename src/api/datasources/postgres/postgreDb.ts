@@ -1,13 +1,14 @@
 import { Pool } from 'pg';
 import { Kysely, PostgresDialect } from 'kysely';
 import type { DB } from './schema.introspection';
+import { config } from '../../../config/config';
 
 export const dbInstance = new Kysely<DB>({
   dialect: new PostgresDialect({
     pool: async () =>
       new Pool({
-        connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false },
+        connectionString: config.dbUrl,
+        ssl: config.useLocalDb ? false : { rejectUnauthorized: false },
       }),
   }),
   log: [

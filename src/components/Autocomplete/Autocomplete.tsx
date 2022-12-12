@@ -13,7 +13,7 @@ import {
 import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import { LoaderSpinner } from '../LoadingSpinner';
 import SearchIcon from '../../icons/search.svg';
-import { navIconSize } from '../../config/config';
+import { navIconSize } from '../../config/layoutConfig';
 
 /**
  *

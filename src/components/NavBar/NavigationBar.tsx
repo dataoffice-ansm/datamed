@@ -7,14 +7,14 @@ import LogoBrand from '../../icons/logo.svg';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { useRefHeight } from '../../hooks/useRefHeight';
 import { useLayoutContext } from '../../contexts/LayoutContext';
-import type { NavLinkItem } from '../../config/config';
 import { SearchBar } from '../SearchBar/SearchBar';
 import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import MenuIcon from '../../icons/menu.svg';
 import CloseIcon from '../../icons/close.svg';
-import { navIconSize } from '../../config/config';
 import { useBodyScrollContext } from '../../contexts/BodyScrollContext';
 import { Autocomplete } from '../Autocomplete/Autocomplete';
+import type { NavLinkItem } from '../../config/layoutConfig';
+import { navIconSize } from '../../config/layoutConfig';
 
 const links: NavLinkItem[] = [
   {
