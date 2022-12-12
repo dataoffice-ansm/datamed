@@ -3,209 +3,204 @@ directive @uppercase on FIELD_DEFINITION
 directive @lowercase on FIELD_DEFINITION
 directive @capitalize on FIELD_DEFINITION
 
-type GenderRepartition {
-  male: Int
-  female: Int
-}
-
-type RepartitionTuple {
-  codePart: String
-  value: Int
-}
-
-type MedicalError {
-  name: String
-}
-
-type MedicalATC {
-  id: Int!
-  code: String
-  name: String
-}
-
-type Laboratory {
-  id: Int!
-  name: String
-}
-
-type RepartitionPerSex {
-  male: Int
-  female: Int
-}
-
-type RepartitionTranche {
-  id: Int!
-  range: String
-  value: Int
-  valuePercent: Int
+type IndicatorValues {
+    value: Int
+    valuePercent: Int
 }
 
 type WithRepartition {
-  with: Int
-  without: Int
+    with: IndicatorValues
+    without: IndicatorValues
 }
 
-type MedicalErrors {
-  populationRepartition: [RepartitionTranche]
-  sideEffectsOriginRepartition: WithRepartition
-  apparitionStepRepartition: [RepartitionTranche]
-  natureRepartition: [RepartitionTranche]
-}
-
-type CisExposition {
-  id: Int!
-  consumption: Int
-  expositionLevel: Int
-}
-
-type RuptureClass {
-  id: Int!
-  name: String
-}
-
-type RuptureCause {
-  id: Int!
-  name: String
-}
-
-type SpecialityRupture {
-  id: Int!
-  num: String
-  name: String
-  active: Boolean
-  cause: RuptureCause
-  classification: RuptureClass
-  date: String
-}
-
-type SpecialityRupturesHistory {
-  ruptures: [SpecialityRupture]
-  meta: Meta
-}
-
-type RepartitionPerNotifier {
-  id: Int!
-  job: String
-  value: Int
-  valuePercent: Int
-}
-
-type HltEffect {
-  id: Int!
-  range: String
-  value: Int
-  valuePercent: Int
-}
-
-type RepartitionPerPathology {
-  id: Int!
-  subId: Int!
-  range: String
-  value: Int
-  valuePercent: Int
-  htlEffects: [HltEffect]
-}
-
-type TotalExposition {
-  total: Int!
-  minYear: Int
-  maxYear: Int
-}
-
-type Substance {
-  id: Int!
-  code: String!
-  name: String! @capitalize
-  retrieveSpecialities: SpecialitiesReturn
-  repartitionPerSex: RepartitionPerSex
-  repartitionPerAge: [RepartitionTranche]
-  repartitionPerNotifier: [RepartitionPerNotifier]
-  repartitionPerPathology: [RepartitionPerPathology]
-  totalExposition: TotalExposition
-  exposition: CisExposition
-}
-
-type SpecialitySubstance {
-  id: Int!
-  code: String!
-  name: String!
-  dosage: String
-}
-
-type PharmaForm {
-  id: Int!
-  name: String
-}
-
-type Speciality {
-  id: Int!
-  code: String!
-  name: String!
-  atc: MedicalATC
-  icon: Icon
-  dosageIndication: String
-  substances: [Substance]
-  dosageSubstances: [SpecialitySubstance]
-  pharmaForm: PharmaForm
-  description: String
-  commercialisationState: String @capitalize
-  commercialisationType: String @capitalize
-  laboratory: Laboratory @capitalize
-  repartitionPerSex: RepartitionPerSex
-  repartitionPerAge: [RepartitionTranche]
-  exposition: CisExposition
-  medicalErrors: MedicalErrors
-  publications: [Publication]
-  rupturesHistory: SpecialityRupturesHistory
-}
-
-type SpecialityLight {
-  id: Int!
-  code: String!
-  name: String!
-  description: String
-  exposition: CisExposition
-}
-
-type Icon {
-  id: Int!
-  name: String
+type RepartitionRange {
+    id: Int!
+    range: String
+    value: Int
+    valuePercent: Int
 }
 
 type Meta {
-  count: Int
+    count: Int
+}
+
+type Icon {
+    id: Int!
+    name: String
 }
 
 type PublicationType {
-  id: Int
-  name: String
+    id: Int
+    name: String
 }
 
 type Publication {
-  id: Int!
-  name: String!
-  type: PublicationType
-  link: String
+    id: Int!
+    name: String!
+    type: PublicationType
+    link: String
+}
+
+type PharmaForm {
+    id: Int!
+    name: String
+}
+
+type Laboratory {
+    id: Int!
+    name: String
+}
+
+type MedicalError {
+    name: String
+}
+
+type MedicalATC {
+    id: Int!
+    code: String
+    name: String
+}
+
+type MedicalErrors {
+    populationRepartition: [RepartitionRange]
+    sideEffectsOriginRepartition: WithRepartition
+    apparitionStepRepartition: [RepartitionRange]
+    natureRepartition: [RepartitionRange]
+}
+
+type CisExposition {
+    id: Int!
+    consumption: Int
+    expositionLevel: Int
+}
+
+type RuptureClass {
+    id: Int!
+    name: String
+}
+
+type RuptureCause {
+    id: Int!
+    name: String
+}
+
+type SpecialityRupture {
+    id: Int!
+    num: String
+    name: String
+    active: Boolean
+    cause: RuptureCause
+    classification: RuptureClass
+    date: String
+}
+
+type SpecialityRupturesHistory {
+    ruptures: [SpecialityRupture]
+    meta: Meta
+}
+
+type HltEffect {
+    id: Int!
+    range: String
+    value: Int
+    valuePercent: Int
+}
+
+type RepartitionPerGender {
+    male: IndicatorValues
+    female: IndicatorValues
+}
+
+type RepartitionPerNotifier {
+    id: Int!
+    job: String
+    value: Int
+    valuePercent: Int
+}
+
+type RepartitionPerPathology {
+    id: Int!
+    subId: Int!
+    range: String
+    value: Int
+    valuePercent: Int
+    htlEffects: [HltEffect]
+}
+
+type TotalExposition {
+    total: Int!
+    minYear: Int
+    maxYear: Int
+}
+
+type Substance {
+    id: Int!
+    code: String!
+    name: String! @capitalize
+    retrieveSpecialities: SpecialitiesReturn
+    repartitionPerGender: RepartitionPerGender
+    repartitionPerAge: [RepartitionRange]
+    repartitionPerNotifier: [RepartitionPerNotifier]
+    repartitionPerPathology: [RepartitionPerPathology]
+    totalExposition: TotalExposition
+    exposition: CisExposition
+}
+
+type SpecialitySubstance {
+    id: Int!
+    code: String!
+    name: String!
+    dosage: String
+}
+
+type Speciality {
+    id: Int!
+    code: String!
+    name: String!
+    atc: MedicalATC
+    icon: Icon
+    dosageIndication: String
+    substances: [Substance]
+    dosageSubstances: [SpecialitySubstance]
+    pharmaForm: PharmaForm
+    description: String
+    commercialisationState: String @capitalize
+    commercialisationType: String @capitalize
+    laboratory: Laboratory @capitalize
+    repartitionPerGender: RepartitionPerGender
+    repartitionPerAge: [RepartitionRange]
+    exposition: CisExposition
+    medicalErrors: MedicalErrors
+    publications: [Publication]
+    rupturesHistory: SpecialityRupturesHistory
+}
+
+type SpecialityLight {
+    id: Int!
+    code: String!
+    name: String!
+    description: String
+    exposition: CisExposition
 }
 
 ##### QUERIES #####
 
 type SpecialitiesReturn {
-  specialities: [SpecialityLight]
-  meta: Meta
+    specialities: [SpecialityLight]
+    meta: Meta
 }
 
 type SubstancesReturn {
-  substances: [Substance]
-  meta: Meta
+    substances: [Substance]
+    meta: Meta
 }
 
 type Query {
-  getSpecialityIdByCode(cisCode: String!): Int
-  getSpeciality(cisId: Int!): Speciality
-  getSpecialities: SpecialitiesReturn
-  getSubstance(subCode: String!): Substance
-  getSubstances: SubstancesReturn
+    getSpecialityIdByCode(cisCode: String!): Int
+    getSpeciality(cisCode: String!): Speciality
+    getSpecialities: SpecialitiesReturn
+    getSubstance(subCode: String!): Substance
+    getSubstances: SubstancesReturn
 }
 
 #type Mutation {

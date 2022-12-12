@@ -22,12 +22,6 @@ export type CisExposition = {
   id: Scalars['Int'];
 };
 
-export type GenderRepartition = {
-  __typename?: 'GenderRepartition';
-  female?: Maybe<Scalars['Int']>;
-  male?: Maybe<Scalars['Int']>;
-};
-
 export type HltEffect = {
   __typename?: 'HltEffect';
   id: Scalars['Int'];
@@ -40,6 +34,12 @@ export type Icon = {
   __typename?: 'Icon';
   id: Scalars['Int'];
   name?: Maybe<Scalars['String']>;
+};
+
+export type IndicatorValues = {
+  __typename?: 'IndicatorValues';
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
 };
 
 export type Laboratory = {
@@ -62,9 +62,9 @@ export type MedicalError = {
 
 export type MedicalErrors = {
   __typename?: 'MedicalErrors';
-  apparitionStepRepartition?: Maybe<Array<Maybe<RepartitionTranche>>>;
-  natureRepartition?: Maybe<Array<Maybe<RepartitionTranche>>>;
-  populationRepartition?: Maybe<Array<Maybe<RepartitionTranche>>>;
+  apparitionStepRepartition?: Maybe<Array<Maybe<RepartitionRange>>>;
+  natureRepartition?: Maybe<Array<Maybe<RepartitionRange>>>;
+  populationRepartition?: Maybe<Array<Maybe<RepartitionRange>>>;
   sideEffectsOriginRepartition?: Maybe<WithRepartition>;
 };
 
@@ -103,7 +103,7 @@ export type Query = {
 };
 
 export type QueryGetSpecialityArgs = {
-  cisId: Scalars['Int'];
+  cisCode: Scalars['String'];
 };
 
 export type QueryGetSpecialityIdByCodeArgs = {
@@ -112,6 +112,12 @@ export type QueryGetSpecialityIdByCodeArgs = {
 
 export type QueryGetSubstanceArgs = {
   subCode: Scalars['String'];
+};
+
+export type RepartitionPerGender = {
+  __typename?: 'RepartitionPerGender';
+  female?: Maybe<IndicatorValues>;
+  male?: Maybe<IndicatorValues>;
 };
 
 export type RepartitionPerNotifier = {
@@ -132,24 +138,12 @@ export type RepartitionPerPathology = {
   valuePercent?: Maybe<Scalars['Int']>;
 };
 
-export type RepartitionPerSex = {
-  __typename?: 'RepartitionPerSex';
-  female?: Maybe<Scalars['Int']>;
-  male?: Maybe<Scalars['Int']>;
-};
-
-export type RepartitionTranche = {
-  __typename?: 'RepartitionTranche';
+export type RepartitionRange = {
+  __typename?: 'RepartitionRange';
   id: Scalars['Int'];
   range?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
   valuePercent?: Maybe<Scalars['Int']>;
-};
-
-export type RepartitionTuple = {
-  __typename?: 'RepartitionTuple';
-  codePart?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
 };
 
 export type RuptureCause = {
@@ -187,8 +181,8 @@ export type Speciality = {
   name: Scalars['String'];
   pharmaForm?: Maybe<PharmaForm>;
   publications?: Maybe<Array<Maybe<Publication>>>;
-  repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
-  repartitionPerSex?: Maybe<RepartitionPerSex>;
+  repartitionPerAge?: Maybe<Array<Maybe<RepartitionRange>>>;
+  repartitionPerGender?: Maybe<RepartitionPerGender>;
   rupturesHistory?: Maybe<SpecialityRupturesHistory>;
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
@@ -233,10 +227,10 @@ export type Substance = {
   exposition?: Maybe<CisExposition>;
   id: Scalars['Int'];
   name: Scalars['String'];
-  repartitionPerAge?: Maybe<Array<Maybe<RepartitionTranche>>>;
+  repartitionPerAge?: Maybe<Array<Maybe<RepartitionRange>>>;
+  repartitionPerGender?: Maybe<RepartitionPerGender>;
   repartitionPerNotifier?: Maybe<Array<Maybe<RepartitionPerNotifier>>>;
   repartitionPerPathology?: Maybe<Array<Maybe<RepartitionPerPathology>>>;
-  repartitionPerSex?: Maybe<RepartitionPerSex>;
   retrieveSpecialities?: Maybe<SpecialitiesReturn>;
   totalExposition?: Maybe<TotalExposition>;
 };
@@ -256,8 +250,8 @@ export type TotalExposition = {
 
 export type WithRepartition = {
   __typename?: 'WithRepartition';
-  with?: Maybe<Scalars['Int']>;
-  without?: Maybe<Scalars['Int']>;
+  with?: Maybe<IndicatorValues>;
+  without?: Maybe<IndicatorValues>;
 };
 
 export type WithIndex<TObject> = TObject & Record<string, any>;
@@ -349,9 +343,9 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = ResolversObject<{
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   CisExposition: ResolverTypeWrapper<CisExposition>;
-  GenderRepartition: ResolverTypeWrapper<GenderRepartition>;
   HltEffect: ResolverTypeWrapper<HltEffect>;
   Icon: ResolverTypeWrapper<Icon>;
+  IndicatorValues: ResolverTypeWrapper<IndicatorValues>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Laboratory: ResolverTypeWrapper<Laboratory>;
   MedicalATC: ResolverTypeWrapper<MedicalAtc>;
@@ -362,11 +356,10 @@ export type ResolversTypes = ResolversObject<{
   Publication: ResolverTypeWrapper<Publication>;
   PublicationType: ResolverTypeWrapper<PublicationType>;
   Query: ResolverTypeWrapper<{}>;
+  RepartitionPerGender: ResolverTypeWrapper<RepartitionPerGender>;
   RepartitionPerNotifier: ResolverTypeWrapper<RepartitionPerNotifier>;
   RepartitionPerPathology: ResolverTypeWrapper<RepartitionPerPathology>;
-  RepartitionPerSex: ResolverTypeWrapper<RepartitionPerSex>;
-  RepartitionTranche: ResolverTypeWrapper<RepartitionTranche>;
-  RepartitionTuple: ResolverTypeWrapper<RepartitionTuple>;
+  RepartitionRange: ResolverTypeWrapper<RepartitionRange>;
   RuptureCause: ResolverTypeWrapper<RuptureCause>;
   RuptureClass: ResolverTypeWrapper<RuptureClass>;
   SpecialitiesReturn: ResolverTypeWrapper<SpecialitiesReturn>;
@@ -386,9 +379,9 @@ export type ResolversTypes = ResolversObject<{
 export type ResolversParentTypes = ResolversObject<{
   Boolean: Scalars['Boolean'];
   CisExposition: CisExposition;
-  GenderRepartition: GenderRepartition;
   HltEffect: HltEffect;
   Icon: Icon;
+  IndicatorValues: IndicatorValues;
   Int: Scalars['Int'];
   Laboratory: Laboratory;
   MedicalATC: MedicalAtc;
@@ -399,11 +392,10 @@ export type ResolversParentTypes = ResolversObject<{
   Publication: Publication;
   PublicationType: PublicationType;
   Query: {};
+  RepartitionPerGender: RepartitionPerGender;
   RepartitionPerNotifier: RepartitionPerNotifier;
   RepartitionPerPathology: RepartitionPerPathology;
-  RepartitionPerSex: RepartitionPerSex;
-  RepartitionTranche: RepartitionTranche;
-  RepartitionTuple: RepartitionTuple;
+  RepartitionRange: RepartitionRange;
   RuptureCause: RuptureCause;
   RuptureClass: RuptureClass;
   SpecialitiesReturn: SpecialitiesReturn;
@@ -456,15 +448,6 @@ export type CisExpositionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type GenderRepartitionResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['GenderRepartition'] = ResolversParentTypes['GenderRepartition']
-> = ResolversObject<{
-  female?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  male?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
 export type HltEffectResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['HltEffect'] = ResolversParentTypes['HltEffect']
@@ -482,6 +465,15 @@ export type IconResolvers<
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type IndicatorValuesResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['IndicatorValues'] = ResolversParentTypes['IndicatorValues']
+> = ResolversObject<{
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -517,17 +509,17 @@ export type MedicalErrorsResolvers<
   ParentType extends ResolversParentTypes['MedicalErrors'] = ResolversParentTypes['MedicalErrors']
 > = ResolversObject<{
   apparitionStepRepartition?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RepartitionTranche']>>>,
+    Maybe<Array<Maybe<ResolversTypes['RepartitionRange']>>>,
     ParentType,
     ContextType
   >;
   natureRepartition?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RepartitionTranche']>>>,
+    Maybe<Array<Maybe<ResolversTypes['RepartitionRange']>>>,
     ParentType,
     ContextType
   >;
   populationRepartition?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RepartitionTranche']>>>,
+    Maybe<Array<Maybe<ResolversTypes['RepartitionRange']>>>,
     ParentType,
     ContextType
   >;
@@ -585,7 +577,7 @@ export type QueryResolvers<
     Maybe<ResolversTypes['Speciality']>,
     ParentType,
     ContextType,
-    RequireFields<QueryGetSpecialityArgs, 'cisId'>
+    RequireFields<QueryGetSpecialityArgs, 'cisCode'>
   >;
   getSpecialityIdByCode?: Resolver<
     Maybe<ResolversTypes['Int']>,
@@ -600,6 +592,15 @@ export type QueryResolvers<
     RequireFields<QueryGetSubstanceArgs, 'subCode'>
   >;
   getSubstances?: Resolver<Maybe<ResolversTypes['SubstancesReturn']>, ParentType, ContextType>;
+}>;
+
+export type RepartitionPerGenderResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['RepartitionPerGender'] = ResolversParentTypes['RepartitionPerGender']
+> = ResolversObject<{
+  female?: Resolver<Maybe<ResolversTypes['IndicatorValues']>, ParentType, ContextType>;
+  male?: Resolver<Maybe<ResolversTypes['IndicatorValues']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type RepartitionPerNotifierResolvers<
@@ -626,32 +627,14 @@ export type RepartitionPerPathologyResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
-export type RepartitionPerSexResolvers<
+export type RepartitionRangeResolvers<
   ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['RepartitionPerSex'] = ResolversParentTypes['RepartitionPerSex']
-> = ResolversObject<{
-  female?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  male?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type RepartitionTrancheResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['RepartitionTranche'] = ResolversParentTypes['RepartitionTranche']
+  ParentType extends ResolversParentTypes['RepartitionRange'] = ResolversParentTypes['RepartitionRange']
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
-
-export type RepartitionTupleResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['RepartitionTuple'] = ResolversParentTypes['RepartitionTuple']
-> = ResolversObject<{
-  codePart?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -714,11 +697,15 @@ export type SpecialityResolvers<
     ContextType
   >;
   repartitionPerAge?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RepartitionTranche']>>>,
+    Maybe<Array<Maybe<ResolversTypes['RepartitionRange']>>>,
     ParentType,
     ContextType
   >;
-  repartitionPerSex?: Resolver<Maybe<ResolversTypes['RepartitionPerSex']>, ParentType, ContextType>;
+  repartitionPerGender?: Resolver<
+    Maybe<ResolversTypes['RepartitionPerGender']>,
+    ParentType,
+    ContextType
+  >;
   rupturesHistory?: Resolver<
     Maybe<ResolversTypes['SpecialityRupturesHistory']>,
     ParentType,
@@ -787,7 +774,12 @@ export type SubstanceResolvers<
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   repartitionPerAge?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RepartitionTranche']>>>,
+    Maybe<Array<Maybe<ResolversTypes['RepartitionRange']>>>,
+    ParentType,
+    ContextType
+  >;
+  repartitionPerGender?: Resolver<
+    Maybe<ResolversTypes['RepartitionPerGender']>,
     ParentType,
     ContextType
   >;
@@ -801,7 +793,6 @@ export type SubstanceResolvers<
     ParentType,
     ContextType
   >;
-  repartitionPerSex?: Resolver<Maybe<ResolversTypes['RepartitionPerSex']>, ParentType, ContextType>;
   retrieveSpecialities?: Resolver<
     Maybe<ResolversTypes['SpecialitiesReturn']>,
     ParentType,
@@ -834,16 +825,16 @@ export type WithRepartitionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['WithRepartition'] = ResolversParentTypes['WithRepartition']
 > = ResolversObject<{
-  with?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  without?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  with?: Resolver<Maybe<ResolversTypes['IndicatorValues']>, ParentType, ContextType>;
+  without?: Resolver<Maybe<ResolversTypes['IndicatorValues']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
 export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   CisExposition?: CisExpositionResolvers<ContextType>;
-  GenderRepartition?: GenderRepartitionResolvers<ContextType>;
   HltEffect?: HltEffectResolvers<ContextType>;
   Icon?: IconResolvers<ContextType>;
+  IndicatorValues?: IndicatorValuesResolvers<ContextType>;
   Laboratory?: LaboratoryResolvers<ContextType>;
   MedicalATC?: MedicalAtcResolvers<ContextType>;
   MedicalError?: MedicalErrorResolvers<ContextType>;
@@ -853,11 +844,10 @@ export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   Publication?: PublicationResolvers<ContextType>;
   PublicationType?: PublicationTypeResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  RepartitionPerGender?: RepartitionPerGenderResolvers<ContextType>;
   RepartitionPerNotifier?: RepartitionPerNotifierResolvers<ContextType>;
   RepartitionPerPathology?: RepartitionPerPathologyResolvers<ContextType>;
-  RepartitionPerSex?: RepartitionPerSexResolvers<ContextType>;
-  RepartitionTranche?: RepartitionTrancheResolvers<ContextType>;
-  RepartitionTuple?: RepartitionTupleResolvers<ContextType>;
+  RepartitionRange?: RepartitionRangeResolvers<ContextType>;
   RuptureCause?: RuptureCauseResolvers<ContextType>;
   RuptureClass?: RuptureClassResolvers<ContextType>;
   SpecialitiesReturn?: SpecialitiesReturnResolvers<ContextType>;

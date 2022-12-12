@@ -4,15 +4,11 @@ import type {
   SpecialityQuery,
   SpecialityQueryVariables,
   Speciality,
-  SpecialityIdByCodeQuery,
-  SpecialityIdByCodeQueryVariables,
 } from '../../graphql/__generated__/generated-documents';
-import {
-  SpecialityDocument,
-  SpecialityIdByCodeDocument,
-} from '../../graphql/__generated__/generated-documents';
+import { SpecialityDocument } from '../../graphql/__generated__/generated-documents';
 import { SpecialityPage } from '../../componentsPages/Speciality/SpecialityPage';
 import { addApolloState, initializeApolloClient } from '../../config/apolloClient';
+import { ci } from 'chart.js/dist/chunks/helpers.core';
 
 type CisSSRPageProps = {
   cis: Speciality;
@@ -29,36 +25,20 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const { cisCode } = context.params as ContextParams;
 
   try {
-    const { data: dataId } = await apolloClient.query<
-      SpecialityIdByCodeQuery,
-      SpecialityIdByCodeQueryVariables
-    >({
-      query: SpecialityIdByCodeDocument,
-      // fetchPolicy: 'cache-first',
-      fetchPolicy: 'no-cache',
+    const { data } = await apolloClient.query<SpecialityQuery, SpecialityQueryVariables>({
+      query: SpecialityDocument,
       variables: {
         cisCode,
       },
     });
 
-    if (dataId?.getSpecialityIdByCode) {
-      const { data } = await apolloClient.query<SpecialityQuery, SpecialityQueryVariables>({
-        query: SpecialityDocument,
-        // fetchPolicy: 'cache-first',
-        fetchPolicy: 'no-cache',
-        variables: {
-          cisId: dataId.getSpecialityIdByCode,
-        },
-      });
-
-      return addApolloState(apolloClient, {
-        props: {
-          cis: data?.getSpeciality ?? null,
-        },
-      });
-    }
+    return addApolloState(apolloClient, {
+      props: {
+        cis: data?.getSpeciality ?? null,
+      },
+    });
   } catch (err: unknown) {
-    console.log('Failed to fetch blerp');
+    console.log('Failed to fetch Speciality for given code', cisCode);
     console.log(err);
 
     return addApolloState(apolloClient, {

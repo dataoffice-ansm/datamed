@@ -96,40 +96,40 @@ export type ErrorMedGravity = {
   gravity_error_id: number | null;
   id: Generated<number>;
   mp_id: number | null;
-  percentage: number | null;
   number: number | null;
+  percentage: number | null;
 };
 
 export type ErrorMedInitial = {
   id: Generated<number>;
   initial_error_id: number | null;
   mp_id: number | null;
-  percentage: number | null;
   number: number | null;
+  percentage: number | null;
 };
 
 export type ErrorMedNature = {
   id: Generated<number>;
   mp_id: number | null;
   nature_error_id: number | null;
-  percentage: number | null;
   number: number | null;
+  percentage: number | null;
 };
 
 export type ErrorMedPopulation = {
   id: Generated<number>;
   mp_id: number | null;
+  number: number | null;
   percentage: number | null;
   population_error_id: number | null;
-  number: number | null;
 };
 
 export type ErrorMedSideEffect = {
   id: Generated<number>;
   mp_id: number | null;
+  number: number | null;
   percentage: number | null;
   side_effect_id: number | null;
-  number: number | null;
 };
 
 export type GlobalSeIndicators = {
@@ -210,12 +210,14 @@ export type MpPatientAges = {
   age_id: number | null;
   id: Generated<number>;
   mp_id: number | null;
+  patients_consumption: number | null;
   patients_percentage: number | null;
 };
 
 export type MpPatientSex = {
   id: Generated<number>;
   mp_id: number | null;
+  patients_consumption: number | null;
   patients_percentage: number | null;
   sex: number | null;
 };

@@ -26,13 +26,13 @@ import { GraphFigure } from '../../components/GraphFigure';
 import { PublicationItem } from 'componentsPages/Speciality/PublicationItem';
 import { RuptureHistoryItem } from './RuptureHistoryItem';
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
-import { PieChartMedicalErrorsPopulation } from './PieChartMedicalErrorsPopulation';
-import { PieChartRepartitionAge } from './PieChartRepartitionAge';
+import { PieChartMedicalErrorsPopulation } from '../../components/Charts/PieChartMedicalErrorsPopulation';
+import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
 import { GraphBox } from 'components/GraphBox/GraphBox';
 import { SectionTitle } from '../../components/SectionTitle';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
-import { PieChartNatureMedicalErrors } from './PieChartNatureMedicalErrors';
+import { PieChartNatureMedicalErrors } from '../../components/Charts/PieChartNatureMedicalErrors';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -215,19 +215,20 @@ const SectionTreatedPatients = () => {
             title="Répartition par sexe des patients traités"
             className="h-full max-w-[100%]"
           >
-            {currentEntity.repartitionPerSex?.female && currentEntity.repartitionPerSex?.male ? (
+            {currentEntity.repartitionPerGender?.female &&
+            currentEntity.repartitionPerGender?.male ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
-                {currentEntity.repartitionPerSex?.female && (
+                {currentEntity.repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
-                    value={currentEntity.repartitionPerSex?.female}
+                    value={currentEntity.repartitionPerGender?.female?.valuePercent}
                     description="Femmes"
                     valueClassName="mt-2 text-primary"
                     icon={<WomanIllustration className="w-32" />}
                   />
                 )}
-                {currentEntity.repartitionPerSex?.male && (
+                {currentEntity.repartitionPerGender?.male?.valuePercent && (
                   <GraphFigure
-                    value={currentEntity.repartitionPerSex.male}
+                    value={currentEntity.repartitionPerGender.male?.valuePercent}
                     valueClassName="mt-2 text-primary"
                     description="Hommes"
                     icon={<ManIllustration className="w-32" />}
@@ -313,9 +314,14 @@ const SectionMedicinalErrors = () => {
               <div className="flex justify-center text-center gap-2 w-full">
                 <div className="w-full flex flex-col justify-center items-center gap-1">
                   <ManFaceYes className="w-32" />
-                  {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with && (
+                  {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with
+                    ?.valuePercent && (
                     <span className="text-3xl text-dark-violet-800 mt-3">
-                      {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with}%
+                      {
+                        currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with
+                          ?.valuePercent
+                      }
+                      %
                     </span>
                   )}
                   <span className="text-base">Sans effets indésirables</span>
@@ -323,9 +329,14 @@ const SectionMedicinalErrors = () => {
 
                 <div className="w-full flex flex-col justify-center items-center gap-1">
                   <ManFaceNo className="w-32" />
-                  {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without && (
+                  {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without
+                    ?.valuePercent && (
                     <span className="text-3xl text-dark-violet-800 mt-3">
-                      {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without}%
+                      {
+                        currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without
+                          ?.valuePercent
+                      }
+                      %
                     </span>
                   )}
                   <span className="text-base">Avec effets indésirables</span>
@@ -357,21 +368,14 @@ const SectionMedicinalErrors = () => {
         )}
       />
 
-      <GraphBoxSelect
-        title="Nature des erreurs médicamenteuses"
-        render={(selectedOption) => (
-          <div className="m-auto max-w-max">
-            {selectedOption === 'percent' ? (
-              <PieChartNatureMedicalErrors
-                theme="primary"
-                natureMedicalErrors={currentEntity?.medicalErrors?.natureRepartition}
-              />
-            ) : (
-              <NotEnoughData />
-            )}
-          </div>
-        )}
-      />
+      <GraphBox title="Nature des erreurs médicamenteuses" className="h-full max-w-[100%]">
+        <div className="m-auto max-w-max">
+          <PieChartNatureMedicalErrors
+            theme="primary"
+            natureMedicalErrors={currentEntity?.medicalErrors?.natureRepartition}
+          />
+        </div>
+      </GraphBox>
     </div>
   );
 };
@@ -464,6 +468,8 @@ const SectionPublications = () => {
 };
 
 export const SpecialityPage = ({ cis }: { cis: Speciality }) => {
+  console.log(cis);
+
   if (!cis) {
     return <Page404 />;
   }

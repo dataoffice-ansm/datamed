@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "kyselygen": "yarn kysely-codegen",
     "generate-types": "graphql-codegen --config codegen-api.ts",
     "generate-queries": "graphql-codegen --config codegen-front.ts",
     "dev": "yarn generate-types && yarn generate-queries && next dev",

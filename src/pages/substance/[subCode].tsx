@@ -23,19 +23,27 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
   const apolloClient = initializeApolloClient({ context });
   const { subCode } = context.params as ContextParams;
 
-  const { data } = await apolloClient.query<SubstanceQuery, SubstanceQueryVariables>({
-    query: SubstanceDocument,
-    fetchPolicy: 'no-cache',
-    variables: {
-      subCode,
-    },
-  });
+  try {
+    const { data } = await apolloClient.query<SubstanceQuery, SubstanceQueryVariables>({
+      query: SubstanceDocument,
+      variables: {
+        subCode,
+      },
+    });
 
-  return addApolloState(apolloClient, {
-    props: {
-      sub: data.getSubstance ?? null,
-    },
-  });
+    return addApolloState(apolloClient, {
+      props: {
+        sub: data.getSubstance ?? null,
+      },
+    });
+  } catch (err: unknown) {
+    console.log('Failed to fetch Substance for given code', subCode);
+    console.log(err);
+
+    return addApolloState(apolloClient, {
+      props: {},
+    });
+  }
 };
 
 export default PageSubServerSideRendered;
