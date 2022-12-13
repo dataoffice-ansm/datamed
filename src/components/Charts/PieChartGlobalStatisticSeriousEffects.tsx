@@ -1,8 +1,9 @@
 import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import { darkGreen, darkViolet, turquoise } from '../../../tailwind.palette.config';
-import type { Speciality, Substance } from '../../graphql/__generated__/generated-documents';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+
+import type { GlobalStatistic } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
+import { darkGreen } from '../../../tailwind.palette.config';
 import { tooltipHandler } from '../../utils/tooltips';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
@@ -10,30 +11,30 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 /**
  *
  * @param ageData
- * @param className
- * @param theme
  * @constructor
  */
-export const PieChartRepartitionAge = ({
-  ageData,
+export const PieChartGlobalStatisticSeriousEffects = ({
+  seriousEffectData,
   className,
-  theme = 'primary',
 }: {
-  ageData: Speciality['repartitionPerAge'] | Substance['repartitionPerAge'];
-  theme?: 'primary' | 'secondary' | 'secondary-variant';
+  seriousEffectData:
+    | GlobalStatistic['repartitionPerSeriousEffect']
+    | GlobalStatistic['repartitionPerGravity'];
   className?: string;
+  onlyGravity?: boolean;
 }) => {
-  if (!ageData || !ageData.length) {
+  if (!seriousEffectData || !seriousEffectData.length) {
     return <NotEnoughData />;
   }
 
-  const labels = ageData.map((row) => row?.range);
-  const data = ageData?.map((row) => row?.valuePercent);
+  const labels = seriousEffectData.map((row) => row?.range);
+
+  const data = seriousEffectData.map((row) => row?.valuePercent);
 
   const renderTooltip =
     (range: string) =>
     (value: string): HTMLElement => {
-      const repartition = ageData.find((e) => range === e?.range);
+      const repartition = seriousEffectData?.find((e) => range === e?.range);
       const content = document.createElement('span');
       content.innerHTML = `
     <div>
@@ -44,12 +45,18 @@ export const PieChartRepartitionAge = ({
       return content;
     };
 
-  const backgroundColor =
-    theme === 'primary'
-      ? [darkViolet[200], darkViolet[500], darkViolet[900]]
-      : theme === 'secondary'
-      ? [turquoise[200], turquoise[500], turquoise[900]]
-      : [darkGreen[200], darkGreen[500], darkGreen[900]];
+  const backgroundColor = [
+    darkGreen[200],
+    darkGreen[50],
+    darkGreen[100],
+    darkGreen[300],
+    darkGreen[400],
+    darkGreen[500],
+    darkGreen[600],
+    darkGreen[700],
+    darkGreen[800],
+    darkGreen[900],
+  ];
 
   return (
     <div className={className}>

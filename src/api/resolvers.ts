@@ -65,6 +65,10 @@ export const resolvers: Resolvers = {
         },
       };
     },
+
+    async getGlobalStatistic(parent, args, context) {
+      return context.dataSources.postgresOperations.getGlobalStatistic();
+    },
   },
 
   Speciality: {

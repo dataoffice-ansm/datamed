@@ -20,6 +20,7 @@ const selectOptions: Array<SelectOption<OptionsValue>> = Object.entries(options)
 
 type GraphFiguresContainerProps = HTMLAttributes<HTMLDivElement> & {
   title: string;
+  selectTheme?: 'primary' | 'secondary' | 'gray' | 'secondary-variant';
   tooltip?: JSX.Element | ReactNode;
   renderHeader?: ReactNode;
   render: (_selectedOption: OptionsValue) => ReactNode;
@@ -45,6 +46,7 @@ export const GraphBoxSelect = ({
   renderHeader,
   tooltip,
   className,
+  selectTheme = 'secondary',
   defaultOption = 'number',
 }: GraphFiguresContainerProps) => {
   const [selectedOption, setSelectedOption] = useState<OptionsValue>(defaultOption);
@@ -77,7 +79,7 @@ export const GraphBoxSelect = ({
 
         <div className="GraphFiguresContainerSelect max-w-xs">
           <Select
-            theme="secondary"
+            theme={selectTheme}
             defaultOptionIndex={findOptionIndex(defaultOption)}
             options={selectOptions}
             onSelectOption={(index, option) => {

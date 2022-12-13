@@ -12,8 +12,14 @@ import type {
   SpecialitySubstance,
   Substance,
   TotalExposition,
+  HltEffect,
+  GlobalStatistic,
+  RepartitionPerSeriousEffect,
+  GlobStaticRepartitionPerPathology,
+  GlobStaticRepartitionPerNotifier,
+  RepartitionPerGravity,
 } from '../../graphql/__generated__/generated-types';
-import type { HltEffect } from '../../graphql/__generated__/generated-types';
+import { not } from 'rxjs/internal/util/not';
 
 export class PostgresOperations {
   async getSingleSpecialityCodeById(cisCode: string): Promise<number | null> {
@@ -699,5 +705,190 @@ export class PostgresOperations {
     }
 
     return null;
+  }
+
+  async getGlobalStatisticExposition(): Promise<TotalExposition> {
+    const rowTotal = await dbInstance
+      .selectFrom('global_se')
+      .where('label', '=', 'cas_total')
+      .select(['n as total'])
+      .executeTakeFirst();
+
+    const rowMinPeriod = await dbInstance
+      .selectFrom('global_se')
+      .where('label', '=', 'min_annee')
+      .select(['n as minYear'])
+      .executeTakeFirst();
+
+    const rowMaxPeriod = await dbInstance
+      .selectFrom('global_se')
+      .where('label', '=', 'max_annee')
+      .select(['n as maxYear'])
+      .executeTakeFirst();
+
+    if (rowTotal && rowMaxPeriod && rowMinPeriod) {
+      const { total } = rowTotal;
+      const { minYear } = rowMinPeriod;
+      const { maxYear } = rowMaxPeriod;
+
+      return {
+        total: total!,
+        minYear,
+        maxYear,
+      };
+    }
+
+    return {
+      total: 0,
+    };
+  }
+
+  async getGlobalStatisticRepGender(): Promise<RepartitionPerGender> {
+    const male = await dbInstance
+      .selectFrom('global_se_sex')
+      .where('label', '=', 'M')
+      .select(['n as value', 'pct as valuePercent'])
+      .executeTakeFirst();
+
+    const female = await dbInstance
+      .selectFrom('global_se_sex')
+      .where('label', '=', 'F')
+      .select(['n as value', 'pct as valuePercent'])
+      .executeTakeFirst();
+
+    return {
+      male: male
+        ? {
+            value: Math.round(Number(male.value)),
+            valuePercent: Math.round(Number(male.valuePercent)),
+          }
+        : null,
+      female: female
+        ? {
+            value: Math.round(Number(female.value)),
+            valuePercent: Math.round(Number(female.valuePercent)),
+          }
+        : null,
+    };
+  }
+
+  async getGlobalStatisticRepAge(): Promise<RepartitionRange[]> {
+    const rows = await dbInstance
+      .selectFrom('global_se_ages as gsa')
+      .leftJoin('ages', 'gsa.age_id', 'ages.id')
+      .select(['ages.range as range', 'gsa.pct as percentage', 'gsa.n as consumption'])
+      .execute();
+
+    return rows.reduce<RepartitionRange[]>((carry, row) => {
+      const { range, consumption, percentage } = row;
+      return range && consumption && percentage
+        ? [
+            ...carry,
+            {
+              range: range.replace('âge:', ''),
+              value: Math.round(Number(consumption)),
+              valuePercent: Math.round(percentage ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  async getGlobalStatisticSeriousEffects(): Promise<RepartitionPerSeriousEffect[]> {
+    const rows = await dbInstance
+      .selectFrom('global_se_gravity_types as gsg')
+      .select(['label as range', 'pct as valuePercent', 'n as value'])
+      .execute();
+
+    return rows.reduce<RepartitionPerSeriousEffect[]>((carry, row) => {
+      const { range, value, valuePercent } = row;
+      return range && value && valuePercent
+        ? [
+            ...carry,
+            {
+              range,
+              value: Math.round(Number(value)),
+              valuePercent: Math.round(valuePercent ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  async getGlobalStatisticGravity(): Promise<RepartitionPerGravity[]> {
+    const rows = await dbInstance
+      .selectFrom('global_se_grave')
+      .select(['label as range', 'n as value', 'pct as valuePercent'])
+      .execute();
+
+    return rows.reduce<RepartitionPerGravity[]>((carry, row) => {
+      const { range, value, valuePercent } = row;
+      return range && value && valuePercent
+        ? [
+            ...carry,
+            {
+              range: range === 'OUI' ? 'Grave' : 'Non grave',
+              value: Math.round(Number(value)),
+              valuePercent: Math.round(valuePercent ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  async getGlobalStatisticRepPerPathology(): Promise<GlobStaticRepartitionPerPathology[]> {
+    const rows = await dbInstance
+      .selectFrom('global_se_soc')
+      .select(['id', 'label as range', 'pct as valuePercent', 'n as value'])
+      .execute();
+
+    return rows.reduce<GlobStaticRepartitionPerPathology[]>((carry, row) => {
+      const { id, range, value, valuePercent } = row;
+      return id && range && value && valuePercent
+        ? [
+            ...carry,
+            {
+              id,
+              range,
+              value: Math.round(Number(value)),
+              valuePercent: Math.round(valuePercent ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  async getGlobalStatisticRepPerNotifier(): Promise<GlobStaticRepartitionPerNotifier[]> {
+    const rows = await dbInstance
+      .selectFrom('global_se_notifiers')
+      .select(['id', 'label as job', 'pct as valuePercent', 'n as value'])
+      .execute();
+
+    return rows.reduce<GlobStaticRepartitionPerNotifier[]>((carry, row) => {
+      const { id, job, value, valuePercent } = row;
+      return id && job && value && valuePercent
+        ? [
+            ...carry,
+            {
+              id,
+              job,
+              value: Math.round(Number(value)),
+              valuePercent: Math.round(valuePercent ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  async getGlobalStatistic(): Promise<GlobalStatistic> {
+    return {
+      repartitionPerGender: await this.getGlobalStatisticRepGender(),
+      repartitionPerAge: await this.getGlobalStatisticRepAge(),
+      totalExposition: await this.getGlobalStatisticExposition(),
+      repartitionPerSeriousEffect: await this.getGlobalStatisticSeriousEffects(),
+      repartitionPerPathology: await this.getGlobalStatisticRepPerPathology(),
+      repartitionPerNotifier: await this.getGlobalStatisticRepPerNotifier(),
+      repartitionPerGravity: await this.getGlobalStatisticGravity(),
+    };
   }
 }
