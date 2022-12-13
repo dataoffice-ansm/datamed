@@ -2,6 +2,7 @@ import classnames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
 import CountUp from 'react-countup';
 import { formatDecimalToUnit } from '../utils/format';
+import { Tooltip } from './Tooltip/Tooltip';
 
 /**
  *
@@ -23,6 +24,7 @@ export const GraphFigure = ({
   className,
   valueClassName = 'text-primary',
   descriptionClassName,
+  contentTooltip,
   ...props
 }: HTMLAttributes<HTMLDivElement> & {
   value: number;
@@ -32,6 +34,7 @@ export const GraphFigure = ({
   unit?: string;
   valueClassName?: string;
   descriptionClassName?: string;
+  contentTooltip?: string;
 }) => (
   <div
     className={classnames(
@@ -44,7 +47,26 @@ export const GraphFigure = ({
     <div className={classnames('GraphFigureCountUp text-3xl', valueClassName)}>
       <CountUp formattingFn={(n) => formatDecimalToUnit(n, unit)} end={value} />
     </div>
-    <div className={classnames('GraphFigureDescription', descriptionClassName)}>{description}</div>
-    {action}
+    {contentTooltip ? (
+      <div>
+        <Tooltip
+          placement="bottom"
+          render={(refCb) => (
+            <span ref={refCb} className="underline cursor-help">
+              {description}
+            </span>
+          )}
+          content={<div className="p-4">{contentTooltip}</div>}
+        />
+        {action}
+      </div>
+    ) : (
+      <section>
+        <div className={classnames('GraphFigureDescription', descriptionClassName)}>
+          {description}
+        </div>
+        {action}
+      </section>
+    )}
   </div>
 );

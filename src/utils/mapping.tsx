@@ -93,6 +93,23 @@ export const getCisErrorMedNatureIconMapping = (errorInitialId: number) => {
   }
 };
 
+export const getCisErrorContentTooltipMapping = (errorInitialId: number): string => {
+  switch (errorInitialId) {
+    case 0:
+      return 'Erreur médicamenteuse survenue à la 2ème étape du circuit du médicament sous la responsabilité du pharmacien, qui comprend l’analyse pharmaceutique de l’ordonnance si elle existe, la préparation éventuelle des doses à administrer, la mise à disposition d’informations et conseils nécessaires au bon usage du médicament ainsi que la délivrance en elle-même.';
+    case 1:
+      return 'Erreur médicamenteuse survenue à la 2ème étape du circuit du médicament sous la responsabilité du pharmacien, qui comprend l’analyse pharmaceutique de l’ordonnance si elle existe, la préparation éventuelle des doses à administrer, la mise à disposition d’informations et conseils nécessaires au bon usage du médicament ainsi que la délivrance en elle-même.';
+    case 2:
+      return 'Erreur médicamenteuse survenant à la 1ère étape du circuit du médicament, c’est-à-dire de l’ensemble des activités assurées par un prescripteur habilité et aboutissant à la rédaction d’une prescription.';
+    case 3:
+      return 'Erreur médicamenteuse survenant à l’étape de l’administration du médicament à un patient, quel qu’en soit l’auteur, y compris le patient lui-même, appréciée par toute déviation par rapport à la prescription, ou par rapport aux termes de l’Autorisation de Mise sur le Marché (RCP, notice).';
+    case 5:
+      return 'Erreur médicamenteuse survenant après (à la suite ou à distance de l’étape d’administration) la mise en œuvre d’un traitement médicamenteux et concernant tout acte de soin relatif à la surveillance du médicament.';
+    default:
+      return 'Autre erreur médicamenteuse.';
+  }
+};
+
 export const getPublicationIcon = (publicationTypeId: number) => {
   switch (publicationTypeId) {
     case 1:
