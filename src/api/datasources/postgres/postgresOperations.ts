@@ -302,7 +302,7 @@ export class PostgresOperations {
       .leftJoin('initial_errors as ini', 'ini.id', 'err.initial_error_id')
       .where('err.mp_id', '=', cisId)
       .select([
-        'err.id',
+        'ini.id',
         'ini.label as range',
         'err.number as value',
         'err.percentage as valuePercent',

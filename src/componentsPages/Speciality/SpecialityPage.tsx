@@ -18,7 +18,11 @@ import ManFaceYes from '../../assets/images/manFaceYes.svg';
 import { ChartBox } from '../../components/ChartBox';
 import classnames from 'classnames';
 import { useLayoutContext } from '../../contexts/LayoutContext';
-import { cisExpositionLevelMapping, getCisErrorMedNatureIconMapping } from '../../utils/mapping';
+import {
+  cisExpositionLevelMapping,
+  getCisErrorContentTooltipMapping,
+  getCisErrorMedNatureIconMapping,
+} from '../../utils/mapping';
 import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { Button } from '../../components/Button/Button';
@@ -360,6 +364,7 @@ const SectionMedicinalErrors = () => {
                   unit={selectedOption === 'percent' ? ' % ' : ''}
                   value={apparitionStep.value ?? 0}
                   description={apparitionStep.range}
+                  contentTooltip={getCisErrorContentTooltipMapping(apparitionStep.id)}
                   icon={getCisErrorMedNatureIconMapping(apparitionStep.id)}
                 />
               ) : null
