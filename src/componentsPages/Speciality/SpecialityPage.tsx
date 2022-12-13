@@ -468,8 +468,6 @@ const SectionPublications = () => {
 };
 
 export const SpecialityPage = ({ cis }: { cis: Speciality }) => {
-  console.log(cis);
-
   if (!cis) {
     return <Page404 />;
   }

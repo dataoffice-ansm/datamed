@@ -1,6 +1,7 @@
 import { ApolloServer } from '@apollo/server';
 import { resolvers } from './resolvers';
 import { readFileSync } from 'fs';
+import path from 'path';
 import type { PostgresOperations } from './datasources/postgres/postgresOperations';
 import type { NextApiRequest } from 'next';
 import { makeExecutableSchema } from '@graphql-tools/schema';
@@ -18,10 +19,9 @@ export type ContextValue = {
   token?: string;
 };
 
-// Note: this uses a path relative to the project's
-// root directory, which is the current working directory
-// if the server is executed using `npm run`.
-const typeDefs = readFileSync('./src/api/graphql/schema/schema.graphql', { encoding: 'utf-8' });
+const typeDefs = readFileSync('./schema.graphql', {
+  encoding: 'utf-8',
+});
 
 let schema = makeExecutableSchema({
   typeDefs,

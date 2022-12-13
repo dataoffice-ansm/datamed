@@ -1,27 +1,16 @@
 version: '3.7'
 
 services:
-  web:
-    restart: on-failure
+  nginx:
+    build: ./nginx
     ports:
-      - "3000:3000"
-    image: datamed-web:latest-prod
+      - "80:80"
 
-  postgres:
-    # Official Postgres image from DockerHub
-    image: 'postgres:14'
-    volumes: # volume
-      - ${POPULATE_HOST_DATA_PATH:?err}:/data
-    ports:
-      - "5432:5432"
-    networks:
-      - app_net
-
+  nextjs:
+    build: ./
+#    image: datamed-web:latest-prod
     environment:
-      POSTGRES_USER: postgres # The PostgreSQL user (useful to connect to the database)
-      POSTGRES_PASSWORD: postgres # The PostgreSQL password (useful to connect to the database)
-      POSTGRES_DB: datamed-local # The PostgreSQL default database (automatically created at first launch)
-
-networks:
-  app_net:
-    driver: bridge
+      DEPLOY_ROOT_STRATEGY: LOCAL
+      #DATABASE_URL_PROD: postgres://postgres:postgres@localhost:5432/datamed-local
+      DATABASE_URL_DEV: postgres://ocddlxdxbfbegp:bc2f9130a2e68bf6184adebcfa38f6403ea6f6b745096bde36061bd2f7b8f181@ec2-63-34-180-86:eu-west-1:compute:amazonaws:com:5432/da31onm4ulch53
+      NEXT_PUBLIC_WEB_PROD: https://data.ansm.sante.fr

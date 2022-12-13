@@ -11,7 +11,7 @@ const dev = process.env.NODE_ENV !== 'production';
 
 const buildConfig = (): AppConfig => {
   const port = process.env.PORT ?? 3000;
-  const useLocalDb = Boolean(process.env.USE_LOCAL_DB ?? false);
+  const useLocalDb = process.env.DB_STRATEGY ? process.env.DB_STRATEGY === 'LOCAL' : false;
 
   if (dev) {
     const appRoute = `http://localhost:${port}`;
@@ -28,7 +28,9 @@ const buildConfig = (): AppConfig => {
     };
   }
 
-  const useLocalDeploy = Boolean(process.env.USE_LOCAL_DEPLOY ?? false);
+  const useLocalDeploy = process.env.DEPLOY_ROOT_STRATEGY
+    ? process.env.DEPLOY_ROOT_STRATEGY === 'LOCAL'
+    : false;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const appRoute = useLocalDeploy ? `http://localhost:${port}` : process.env.NEXT_PUBLIC_WEB_PROD!;
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion

@@ -8,7 +8,7 @@ export const dbInstance = new Kysely<DB>({
     pool: async () =>
       new Pool({
         connectionString: config.dbUrl,
-        ssl: config.useLocalDb ? false : { rejectUnauthorized: false },
+        ssl: { rejectUnauthorized: false },
       }),
   }),
   log: [
