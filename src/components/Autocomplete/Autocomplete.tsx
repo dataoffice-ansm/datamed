@@ -26,13 +26,10 @@ export const Autocomplete = ({
   handleOnSelected,
 }: HTMLAttributes<HTMLDivElement> & { embedded?: boolean; handleOnSelected?: () => void }) => {
   const isLargeDesktop = useBreakpoint('lg');
-  const { data: cisData, loading: cisLoading } = useSpecialitiesQuery({
-    fetchPolicy: 'no-cache',
-  });
+  const { data: cisData, loading: cisLoading } = useSpecialitiesQuery();
+  const { data: subData, loading: subLoading } = useSubstancesQuery();
 
-  const { data: subData, loading: subLoading } = useSubstancesQuery({
-    fetchPolicy: 'no-cache',
-  });
+  console.log(cisData);
 
   const router = useRouter();
   const [query, setQuery] = useState<string>('');

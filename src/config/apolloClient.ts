@@ -38,7 +38,7 @@ const createApolloLink = (context?: GetServerSidePropsContext) => {
   }
 
   return createHttpLink({
-    uri: process.env.NEXT_PUBLIC_GRAPHQL_URI,
+    uri: config.serverApiGraphRoute,
     credentials: 'same-origin',
   });
 };
