@@ -3,7 +3,7 @@ import { Tooltip } from './Tooltip/Tooltip';
 import type { HTMLAttributes, ReactNode } from 'react';
 import InfoSVG from '../assets/icons/info/info.svg';
 
-export type BoxInfoTitleThemeColor = 'primary' | 'secondary' | 'success';
+export type BoxInfoTitleThemeColor = 'primary' | 'secondary' | 'success' | 'dark-green';
 
 export type BoxInfoTitleProps = {
   icon: JSX.Element | ReactNode;
@@ -45,6 +45,7 @@ export const BoxInfo = ({
         className={classNames('BoxInfoTitleContainer flex justify-start items-center gap-3', {
           'text-primary': theme === 'primary',
           'text-secondary': theme === 'secondary',
+          'text-dark-green': theme === 'dark-green',
           'text-success': theme === 'success',
         })}
       >

@@ -38,7 +38,7 @@ export const EntityPageLayout = ({
   offsetContent = 0,
 }: React.HTMLAttributes<HTMLDivElement> & {
   defaultSelectedSection?: number;
-  colorMenu?: 'primary' | 'secondary';
+  colorMenu?: 'primary' | 'secondary' | 'green';
   sections: SectionItemProps[];
   render: (_content: ReactNode) => ReactNode;
   offsetContent?: number;
@@ -97,6 +97,7 @@ export const EntityPageLayout = ({
                     selected ? 'selected font-medium' : 'font-light notSelected',
                     colorMenu === 'primary' && 'hover:text-primary',
                     colorMenu === 'secondary' && 'hover:text-secondary',
+                    colorMenu === 'green' && 'hover:text-dark-green-900',
                     itemClassName
                   )}
                 >

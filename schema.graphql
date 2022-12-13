@@ -14,7 +14,13 @@ type WithRepartition {
 }
 
 type RepartitionRange {
-    id: Int!
+    id: Int
+    range: String
+    value: Int
+    valuePercent: Int
+}
+
+type RepartitionPerSeriousEffect {
     range: String
     value: Int
     valuePercent: Int
@@ -118,6 +124,13 @@ type RepartitionPerNotifier {
     valuePercent: Int
 }
 
+type GlobStaticRepartitionPerNotifier {
+    job: String
+    value: Int
+    valuePercent: Int
+}
+
+
 type RepartitionPerPathology {
     id: Int!
     subId: Int!
@@ -125,6 +138,19 @@ type RepartitionPerPathology {
     value: Int
     valuePercent: Int
     htlEffects: [HltEffect]
+}
+
+type GlobStaticRepartitionPerPathology {
+    id: Int!
+    range: String
+    value: Int
+    valuePercent: Int
+}
+
+type RepartitionPerGravity {
+    range: String
+    value: Int
+    valuePercent: Int
 }
 
 type TotalExposition {
@@ -183,6 +209,16 @@ type SpecialityLight {
     exposition: CisExposition
 }
 
+type GlobalStatistic {
+    totalExposition: TotalExposition
+    repartitionPerGender: RepartitionPerGender
+    repartitionPerAge: [RepartitionRange]
+    repartitionPerSeriousEffect: [RepartitionPerSeriousEffect]
+    repartitionPerPathology:[GlobStaticRepartitionPerPathology]
+    repartitionPerNotifier:[GlobStaticRepartitionPerNotifier]
+    repartitionPerGravity: [RepartitionPerGravity]
+}
+
 ##### QUERIES #####
 
 type SpecialitiesReturn {
@@ -201,6 +237,7 @@ type Query {
     getSpecialities: SpecialitiesReturn
     getSubstance(subCode: String!): Substance
     getSubstances: SubstancesReturn
+    getGlobalStatistic: GlobalStatistic
 }
 
 type LoginResult {

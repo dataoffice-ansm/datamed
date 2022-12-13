@@ -5,14 +5,17 @@ import type { Speciality, Substance } from '../graphql/__generated__/generated-d
 
 export type EntityCis = Speciality & { type: 'cis' };
 export type EntitySub = Substance & { type: 'sub' };
-export type Entity = EntityCis | EntitySub;
+export type EntityGlobalStat = { type: 'globStat' };
+export type Entity = EntityCis | EntitySub | EntityGlobalStat;
 
 type EntityContextData<T extends Entity> = {
   currentEntity: T;
   setCurrentEntity: Dispatch<SetStateAction<T>>;
 };
 
-export const EntityContext = createContext<EntityContextData<EntityCis | EntitySub>>({
+export const EntityContext = createContext<
+  EntityContextData<EntityCis | EntitySub | EntityGlobalStat>
+>({
   currentEntity: { type: 'cis', name: 'default', id: 44, code: '44444' },
   setCurrentEntity: () => null,
 });

@@ -7,6 +7,7 @@ import classNames from 'classnames';
 export type AccordionThemeColor =
   | 'primary'
   | 'secondary'
+  | 'secondary-variant'
   | 'grey'
   | 'success'
   | 'warning'
@@ -26,6 +27,8 @@ const strokeTheme = (theme: AccordionThemeColor) => {
       return 'stroke-primary';
     case 'secondary':
       return 'stroke-secondary';
+    case 'secondary-variant':
+      return 'stroke-secondary-variant';
     case 'success':
       return 'stroke-success';
     case 'warning':
@@ -43,6 +46,8 @@ const fillTheme = (theme: AccordionThemeColor) => {
       return 'fill-primary';
     case 'secondary':
       return 'fill-secondary';
+    case 'secondary-variant':
+      return 'fill-secondary-variant';
     case 'success':
       return 'fill-success';
     case 'warning':

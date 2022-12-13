@@ -15,7 +15,7 @@ import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
 import { useState } from 'react';
 import { NotEnoughData } from '../../components/NotEnoughData';
-import { getFigureBySideEffectPathology, getNotifierFigureByJob } from '../../utils/mapping';
+import { getFigureBySideIdEffectPathology, getNotifierFigureByIdJob } from '../../utils/mapping';
 import { Button } from '../../components/Button/Button';
 import { Modal } from '../../components/Modal/Modal';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
@@ -61,7 +61,7 @@ const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: Repartition
         >
           <div className="flex justify-center items-center py-4">
             <div className="h-24 w-24 md:h-32 md:w-32">
-              {getFigureBySideEffectPathology(pathology.id)}
+              {getFigureBySideIdEffectPathology(pathology.id)}
             </div>
           </div>
           <div className="text-xl text-center font-medium">
@@ -186,7 +186,7 @@ export const SubstanceContainer = ({
                   value={notifier.value}
                   valueClassName="text-secondary my-2"
                   description={notifier.job}
-                  icon={getNotifierFigureByJob(notifier.id)}
+                  icon={getNotifierFigureByIdJob(notifier.id)}
                   descriptionClassName="text-[16px] md:text-[18px] text-center"
                 />
               ) : null
@@ -249,7 +249,7 @@ export const SubstanceContainer = ({
                     className="pathologyGraphFigure"
                     unit={selectedOption === 'percent' ? ' % ' : ''}
                     description={pathologyRepartition.range}
-                    icon={getFigureBySideEffectPathology(pathologyRepartition.id)}
+                    icon={getFigureBySideIdEffectPathology(pathologyRepartition.id)}
                     action={<PathologyOrgansRepartitionModal pathology={pathologyRepartition} />}
                     valueClassName="text-secondary-900"
                     value={

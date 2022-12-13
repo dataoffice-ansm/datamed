@@ -217,6 +217,59 @@ query Substances {
     }
 }
 
+
+query GlobalStatistic {
+    getGlobalStatistic {
+       repartitionPerGender {
+            male {
+                value
+                valuePercent
+            }
+            female {
+                value
+                valuePercent
+            }
+        }
+        repartitionPerAge {
+            id
+            range
+            value
+            valuePercent
+        }
+
+        totalExposition {
+            total
+            minYear
+            maxYear
+        }
+
+        repartitionPerSeriousEffect {
+            value
+            range
+            valuePercent
+        }
+
+        repartitionPerPathology {
+            valuePercent
+            value
+            range
+        }
+
+        repartitionPerNotifier {
+            value
+            valuePercent
+            job
+        }
+
+        repartitionPerGravity {
+            range
+            value
+            valuePercent
+        }
+    }
+
+}
+
 mutation Login($username:String,$password:String) {
     login(username: $username, password:$password){
         token

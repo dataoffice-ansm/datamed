@@ -132,11 +132,59 @@ export type ErrorMedSideEffect = {
   side_effect_id: number | null;
 };
 
+export type GlobalSe = {
+  id: Generated<number>;
+  label: string | null;
+  n: number | null;
+};
+
+export type GlobalSeAges = {
+  age_id: number | null;
+  id: Generated<number>;
+  n: number | null;
+  pct: number | null;
+};
+
+export type GlobalSeGrave = {
+  id: Generated<number>;
+  label: string | null;
+  n: number | null;
+  pct: number | null;
+};
+
+export type GlobalSeGravityTypes = {
+  id: Generated<number>;
+  label: string | null;
+  n: number | null;
+  pct: number | null;
+};
+
 export type GlobalSeIndicators = {
   comment: string | null;
   id: Generated<number>;
   label: string | null;
   n: string | null;
+  pct: number | null;
+};
+
+export type GlobalSeNotifiers = {
+  id: Generated<number>;
+  label: string | null;
+  n: number | null;
+  pct: number | null;
+};
+
+export type GlobalSeSex = {
+  id: Generated<number>;
+  label: string | null;
+  n: number | null;
+  pct: number | null;
+};
+
+export type GlobalSeSoc = {
+  id: Generated<number>;
+  label: string | null;
+  n: number | null;
   pct: number | null;
 };
 
@@ -444,7 +492,14 @@ export type DB = {
   error_med_nature: ErrorMedNature;
   error_med_population: ErrorMedPopulation;
   error_med_side_effect: ErrorMedSideEffect;
+  global_se: GlobalSe;
+  global_se_ages: GlobalSeAges;
+  global_se_grave: GlobalSeGrave;
+  global_se_gravity_types: GlobalSeGravityTypes;
   global_se_indicators: GlobalSeIndicators;
+  global_se_notifiers: GlobalSeNotifiers;
+  global_se_sex: GlobalSeSex;
+  global_se_soc: GlobalSeSoc;
   gravity_errors: GravityErrors;
   hlt_effects: HltEffects;
   icons: Icons;
