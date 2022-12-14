@@ -29,8 +29,6 @@ export const Autocomplete = ({
   const { data: cisData, loading: cisLoading } = useSpecialitiesQuery();
   const { data: subData, loading: subLoading } = useSubstancesQuery();
 
-  console.log(cisData);
-
   const router = useRouter();
   const [query, setQuery] = useState<string>('');
   const [results, setResults] = useState<Entity[]>([]);

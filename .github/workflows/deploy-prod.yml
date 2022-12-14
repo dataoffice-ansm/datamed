@@ -17,7 +17,7 @@ jobs:
 
   # This workflow contains a single job called "build"
   build-web:
-
+    environment: production
     env:
       # github.repository as <account>/<repo>
       IMAGE_NAME: ${{ github.repository }}/datamed-web
@@ -32,18 +32,11 @@ jobs:
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
       - run: echo "🐧 This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "🔎 The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
-      - run: echo "Github secret db prod ${{ secrets.DATABASE_URL_PROD }}"
       - run: echo "Github secret url prod ${{ secrets.NEXT_PUBLIC_WEB_PROD }}"
 
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout repository
         uses: actions/checkout@v3
-
-     # - uses: actions/setup-node@v3
-     #   with:
-     #     node-version: '16.x'
-
-     # - run: yarn install --immutable --immutable-cache --check-cache
 
       # Extract metadata (tags, labels) for Docker
       # https://github.com/docker/metadata-action
@@ -68,11 +61,10 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+          target: prod
           secrets: |
-            "DATABASE_URL_PROD=${{ secrets.DATABASE_URL_PROD }}"
-            "NEXT_PUBLIC_WEB_PROD=${{ secrets.NEXT_PUBLIC_WEB_PROD }}"
-            "USE_LOCAL_DB=${{ secrets.USE_LOCAL_DB }}"
-
+            "DATABASE_URL=${{ secrets.DATABASE_URL }}"
+            "NEXT_PUBLIC_PROD_WEB_ROOT=${{ secrets.NEXT_PUBLIC_PROD_WEB_ROOT }}"
 
       - name: Log in to GitHub Container Repository
         run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin

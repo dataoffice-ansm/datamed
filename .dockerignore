@@ -1,11 +1,9 @@
 .git/
 .gitignore
-**/.gitkeep
-**/.DS_Store
 .next/
 .dockerignore
 Dockerfile
 docker-compose.yml
+docker-compose-prod.yml
 node_modules/
-nginx/
 README.md

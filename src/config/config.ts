@@ -1,7 +1,9 @@
 type AppConfig = {
+  ssr?: {
+    dbUrl?: string;
+    dbEnableSsl: boolean;
+  };
   dev: boolean;
-  useLocalDb: boolean;
-  dbUrl: string;
   appRoute: string;
   serverApiRoute: string;
   serverApiGraphRoute: string;
@@ -10,36 +12,31 @@ type AppConfig = {
 const dev = process.env.NODE_ENV !== 'production';
 
 const buildConfig = (): AppConfig => {
-  const port = process.env.PORT ?? 3000;
-  const useLocalDb = process.env.DB_STRATEGY ? process.env.DB_STRATEGY === 'LOCAL' : false;
+  const dbUrl = process.env.DATABASE_URL;
+  const dbEnableSsl = Boolean(process.env.DB_SSL ?? true);
 
   if (dev) {
+    const port = process.env.PORT ?? 3000;
     const appRoute = `http://localhost:${port}`;
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    const dbUrl = useLocalDb ? process.env.DATABASE_URL_LOCAL! : process.env.DATABASE_URL_DEV!;
 
     return {
       dev,
-      useLocalDb,
-      dbUrl,
+      ssr: { dbUrl, dbEnableSsl },
       appRoute,
       serverApiRoute: `${appRoute}/api`,
       serverApiGraphRoute: `${appRoute}/api/graphql`,
     };
   }
 
-  const useLocalDeploy = process.env.DEPLOY_ROOT_STRATEGY
-    ? process.env.DEPLOY_ROOT_STRATEGY === 'LOCAL'
-    : false;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const appRoute = useLocalDeploy ? `http://localhost:${port}` : process.env.NEXT_PUBLIC_WEB_PROD!;
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const dbUrl = process.env.DATABASE_URL_PROD!;
+  const appRoute = process.env.NEXT_PUBLIC_PROD_WEB_ROOT ?? null;
+
+  if (!appRoute) {
+    throw new Error('missing production app url in env');
+  }
 
   return {
     dev,
-    useLocalDb,
-    dbUrl,
+    ssr: { dbUrl, dbEnableSsl },
     appRoute,
     serverApiRoute: `${appRoute}/api`,
     serverApiGraphRoute: `${appRoute}/api/graphql`,
@@ -47,6 +44,7 @@ const buildConfig = (): AppConfig => {
 };
 
 const config = buildConfig();
+
 console.log(config);
 
 export { config };

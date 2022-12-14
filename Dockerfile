@@ -12,7 +12,7 @@ COPY package.json yarn.lock ./
 RUN yarn install --immutable --immutable-cache --check-cache
 
 # Install PM2 globally
-RUN yarn install --global pm2
+RUN yarn global add pm2
 
 # Rebuild the source code only when needed
 FROM node:alpine AS builder
@@ -23,8 +23,16 @@ COPY . .
 COPY --from=deps /app/node_modules ./node_modules
 
 ARG NODE_ENV=production
+
+# add environment variables to client code
+ARG DATABASE_URL
+ARG NEXT_PUBLIC_WEB_PROD
+
+ENV DATABASE_URL=$DATABASE_URL
+ENV NEXT_PUBLIC_PROD_WEB_ROOT=$NEXT_PUBLIC_PROD_WEB_ROOT
+
 RUN echo ${NODE_ENV}
-RUN NODE_ENV=${NODE_ENV} yarn build
+RUN yarn build
 
 # Production image, copy all the files and run next
 FROM node:alpine AS runner
@@ -44,7 +52,7 @@ COPY --from=builder /app/package.json ./package.json
 USER nextjs
 
 # Expose the listening port
-EXPOSE 3000
+EXPOSE 80
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry

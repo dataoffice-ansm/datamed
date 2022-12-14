@@ -41,7 +41,9 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     console.log(err);
 
     return addApolloState(apolloClient, {
-      props: {},
+      props: {
+        err: err instanceof Error ? err.message : err,
+      },
     });
   }
 };

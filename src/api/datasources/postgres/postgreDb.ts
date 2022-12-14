@@ -7,8 +7,8 @@ export const dbInstance = new Kysely<DB>({
   dialect: new PostgresDialect({
     pool: async () =>
       new Pool({
-        connectionString: config.dbUrl,
-        ssl: { rejectUnauthorized: false },
+        connectionString: config.ssr?.dbUrl,
+        ssl: config.ssr?.dbEnableSsl ? { rejectUnauthorized: false } : false,
       }),
   }),
   log: [
