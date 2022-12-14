@@ -12,27 +12,14 @@ type AppConfig = {
 const dev = process.env.NODE_ENV !== 'production';
 
 const buildConfig = (): AppConfig => {
+  const port = process.env.NEXT_PUBLIC_PORT ?? process.env.PORT ?? 3000;
+
+  const appRoute = process.env.NEXT_PUBLIC_PROD_WEB_ROOT
+    ? process.env.NEXT_PUBLIC_PROD_WEB_ROOT
+    : `http://localhost:${port}`;
+
   const dbUrl = process.env.DATABASE_URL;
-  const dbEnableSsl = Boolean(process.env.DB_SSL ?? true);
-
-  if (dev) {
-    const port = process.env.PORT ?? 3000;
-    const appRoute = `http://localhost:${port}`;
-
-    return {
-      dev,
-      ssr: { dbUrl, dbEnableSsl },
-      appRoute,
-      serverApiRoute: `${appRoute}/api`,
-      serverApiGraphRoute: `${appRoute}/api/graphql`,
-    };
-  }
-
-  const appRoute = process.env.NEXT_PUBLIC_PROD_WEB_ROOT ?? null;
-
-  if (!appRoute) {
-    throw new Error('missing production app url in env');
-  }
+  const dbEnableSsl = process.env.DB_SSL ? process.env.DB_SSL === 'ENABLED' : false;
 
   return {
     dev,
@@ -44,7 +31,5 @@ const buildConfig = (): AppConfig => {
 };
 
 const config = buildConfig();
-
-console.log(config);
 
 export { config };

@@ -27,13 +27,16 @@ let apolloClient: ApolloClient<NormalizedCacheObject>;
 const createApolloLink = (context?: GetServerSidePropsContext) => {
   if (context) {
     // const token = getToken(context?.req);
+
+    const headers = {
+      ...context?.req.headers,
+      // authorization: token ? `Bearer ${token}` : '',
+    };
+
     return createHttpLink({
       uri: config.serverApiGraphRoute,
       credentials: 'same-origin',
-      headers: {
-        ...context?.req.headers,
-        // authorization: token ? `Bearer ${token}` : '',
-      },
+      // headers,
     });
   }
 
