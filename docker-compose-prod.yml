@@ -3,7 +3,18 @@ version: '3.8'
 services:
   nginx:
     build: ./nginx
-  web:
-    image: datamed-web:latest-prod
+    restart: unless-stopped
+    container_name: datamed-nginx
     ports:
       - "80:80"
+
+  nextjs:
+    container_name: datamed-nextjs
+    build:
+      context: .
+    image: "datamed-nextjs"
+    env_file:
+      - .env.production
+    ports:
+      - "3000:3000"
+    network_mode: "host"

@@ -1,3 +1,5 @@
+# syntax = docker/dockerfile:1.2
+
 # Install dependencies only when needed
 FROM node:alpine AS deps
 
@@ -12,33 +14,36 @@ COPY package.json yarn.lock ./
 RUN yarn install --immutable --immutable-cache --check-cache
 
 # Install PM2 globally
-RUN yarn global add pm2
+#RUN yarn global add pm2
 
 # Rebuild the source code only when needed
 FROM node:alpine AS builder
-
 WORKDIR /app
 
-COPY . .
+#RUN --mount=type=secret,id=DATABASE_URL \
+#  --mount=type=secret,id=NEXT_PUBLIC_PROD_WEB_ROOT \
+#  --mount=type=secret,id=NEXT_PUBLIC_TEST \
+#   export DATABASE_URL=$(cat /run/secrets/DATABASE_URL) && \
+#   export NEXT_PUBLIC_PROD_WEB_ROOT=$(cat /run/secrets/NEXT_PUBLIC_PROD_WEB_ROOT) \
+#   export NEXT_PUBLIC_TEST=$(cat /run/secrets/NEXT_PUBLIC_TEST)
+
 COPY --from=deps /app/node_modules ./node_modules
+COPY . .
 
-ARG NODE_ENV=production
-
-# add environment variables to client code
-ARG DATABASE_URL
-ARG NEXT_PUBLIC_WEB_PROD
-
+ENV NEXT_PUBLIC_TEST=$NEXT_PUBLIC_TEST
 ENV DATABASE_URL=$DATABASE_URL
 ENV NEXT_PUBLIC_PROD_WEB_ROOT=$NEXT_PUBLIC_PROD_WEB_ROOT
 
-RUN echo ${NODE_ENV}
 RUN yarn build
 
 # Production image, copy all the files and run next
 FROM node:alpine AS runner
 WORKDIR /app
+
+ENV NODE_ENV production
+
 RUN addgroup -g 1001 -S nodejs
-RUN adduser -S nextjs -u 1001
+RUN adduser --system --uid 1001 nextjs
 
 # You only need to copy next.config.js if you are NOT using the default configuration.
 # Copy all necessary files used by nex.config as well otherwise the build will fail.
@@ -47,16 +52,23 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
 COPY --from=builder /app/package.json ./package.json
+COPY --from=builder /app/schema.graphql ./schema.graphql
+
+# Automatically leverage output traces to reduce image size
+# https://nextjs.org/docs/advanced-features/output-file-tracing
+#COPY --from=builder --chown=bloguser:nextjs /app/.next/standalone ./
+#COPY --from=builder --chown=bloguser:nextjs /app/.next/static ./.next/static
 
 # Run container as non-root (unprivileged) user
 USER nextjs
 
 # Expose the listening port
-EXPOSE 80
+EXPOSE 3000
+ENV PORT 3000
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry.
 ENV NEXT_TELEMETRY_DISABLED 1
-# Launch app with PM2
-CMD [ "pm2-runtime", "start", "yarn", "--", "start" ]
+CMD [ "yarn", "start" ]
+

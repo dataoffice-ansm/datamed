@@ -1,7 +1,6 @@
 import { ApolloServer } from '@apollo/server';
 import { resolvers } from './resolvers';
 import { readFileSync } from 'fs';
-import path from 'path';
 import type { PostgresOperations } from './datasources/postgres/postgresOperations';
 import type { NextApiRequest } from 'next';
 import { makeExecutableSchema } from '@graphql-tools/schema';
