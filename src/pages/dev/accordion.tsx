@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
-import type { AccordionProps } from 'components/Accordion/Accordion';
-import { Accordion } from 'components/Accordion/Accordion';
+import type { AccordionProps } from '../../components/Accordion/Accordion';
+import { Accordion } from '../../components/Accordion/Accordion';
 import type { ReactNode } from 'react';
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
 

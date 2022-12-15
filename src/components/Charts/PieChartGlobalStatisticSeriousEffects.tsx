@@ -1,7 +1,12 @@
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
 
-import type { GlobalStatistic } from '../../graphql/__generated__/generated-documents';
+import type {
+  GlobalStatistic,
+  Maybe,
+  RepartitionPerGravity,
+  RepartitionPerSeriousEffect,
+} from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
 import { darkGreen } from '../../../tailwind.palette.config';
 import { tooltipHandler } from '../../utils/tooltips';
@@ -14,27 +19,29 @@ ChartJS.register(ArcElement, Tooltip, Legend);
  * @constructor
  */
 export const PieChartGlobalStatisticSeriousEffects = ({
-  seriousEffectData,
+  seriousEffectData = [],
   className,
 }: {
   seriousEffectData:
     | GlobalStatistic['repartitionPerSeriousEffect']
     | GlobalStatistic['repartitionPerGravity'];
   className?: string;
-  onlyGravity?: boolean;
 }) => {
   if (!seriousEffectData || !seriousEffectData.length) {
     return <NotEnoughData />;
   }
 
   const labels = seriousEffectData.map((row) => row?.range);
-
   const data = seriousEffectData.map((row) => row?.valuePercent);
 
   const renderTooltip =
     (range: string) =>
     (value: string): HTMLElement => {
-      const repartition = seriousEffectData?.find((e) => range === e?.range);
+      const repartition = (
+        seriousEffectData as Array<
+          Maybe<RepartitionPerSeriousEffect> | Maybe<RepartitionPerGravity>
+        >
+      )?.find((e) => range === e?.range);
       const content = document.createElement('span');
       content.innerHTML = `
     <div>

@@ -1,9 +1,8 @@
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
-import { HeroHeader } from '../../components/HeroHeader/HeroHeader';
-import { EntityContextProvider } from '../../contexts/EntityContext';
+import { HeadlessHeroHeader } from '../../components/HeroHeader/HeadlessHeroHeader';
 import Page404 from '../../pages/[404]';
 import type { GlobalStatistic } from '../../graphql/__generated__/generated-documents';
-import { NotEnoughData } from 'components/NotEnoughData';
+import { NotEnoughData } from '../../components/NotEnoughData';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
 import WomanIllustration from '../../assets/images/woman_illustration.svg';
@@ -14,20 +13,17 @@ import { BoxInfo } from '../../components/BoxInfo';
 import { SectionTitle } from '../../components/SectionTitle';
 import { PieChartGlobalStatisticSeriousEffects } from '../../components/Charts/PieChartGlobalStatisticSeriousEffects';
 import {
-  getFigureBySideIdEffectPathology,
   getFigureBySideNameEffectPathology,
-  getNotifierFigureByIdJob,
   getNotifierFigureByNameJob,
 } from '../../utils/mapping';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { Accordion } from '../../components/Accordion/Accordion';
-import { BackgroundSquares } from '../../components/BackgroundSquares/BackgroundSquares';
-import { FullWidthRow } from '../../components/FullWidthRow/FullWidthRow';
 import { SmallContainer } from '../../components/SmallContainer';
 import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
 import { Button } from '../../components/Button/Button';
+import GlobStatSvg from '../../assets/images/sick_transparent_person.svg';
 
 const SectionDemography = ({ stat }: { stat: GlobalStatistic }) => {
   const { repartitionPerAge, repartitionPerGender, totalExposition } = stat;
@@ -48,7 +44,7 @@ const SectionDemography = ({ stat }: { stat: GlobalStatistic }) => {
           </div>
         }
       >
-        Cumul de toutes les déclarations d’effets indésirables suspectés, tous médicaments
+        Cumul de toutes les déclarations d&apos;effets indésirables suspectés, tous médicaments
         confondus, reçues par les centres régionaux de pharmacovigilance sur la période considérée
       </BoxInfo>
       <SectionTitle
@@ -151,7 +147,7 @@ const SectionFilers = ({ stat }: { stat: GlobalStatistic }) => {
   return (
     <GraphBoxSelect
       title="Répartition par type de déclarants"
-      selectTheme="secondary-variant"
+      theme="secondary-variant"
       render={(selectedOption) => (
         <div className="GraphBoxSelectContentFilers">
           <GraphFiguresGrid
@@ -199,7 +195,7 @@ const SectionTypesOfSideEffects = ({ stat }: { stat: GlobalStatistic }) => {
       />
       <Accordion
         defaultOpen
-        title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
+        title="Comment sont calculés ces indicateurs ? D'où viennent ces données ?"
         theme="secondary-variant"
         classNameTitle="text-dark-green-900"
         className="my-8 shadow"
@@ -214,19 +210,19 @@ const SectionTypesOfSideEffects = ({ stat }: { stat: GlobalStatistic }) => {
           appartiennent au même SOC, ils ne seront comptabilisés qu&apos;une fois.
         </p>
         <p>
-          Sont affichés ici tous les SOC, ainsi que le détail du type d’effet si les effectifs sont
-          supérieurs ou égaux à 11.
+          Sont affichés ici tous les SOC, ainsi que le détail du type d&apos;effet si les effectifs
+          sont supérieurs ou égaux à 11.
         </p>
       </Accordion>
       <GraphBoxSelect
+        theme="secondary-variant"
         title="Répartition des déclarations d'effets indésirables par système d'organe"
-        selectTheme="secondary-variant"
         render={(selectedOption) => (
           <div className="GraphBoxSelectContent">
             <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
               Parmi les{' '}
               <span className="text-dark-green-900 font-medium">{totalExposition?.total}</span>{' '}
-              déclarations d’effets indésirables pour
+              déclarations d&apos;effets indésirables pour
               <span className="text-dark-green-900 font-medium"> au global</span>:
             </div>
 
@@ -283,16 +279,16 @@ const SectionDataOrigin = () => {
       <div className="flex flex-col justify-center bg-white rounded shadow p-6 mb-4">
         <Section title="Bases de données exploitées">
           <strong>Base Nationale de PharmacoVigilance</strong> : Base de données des déclarations de
-          pharmacovigilance gérée par l’Agence Nationale de Sécurité du Médicament et des produits
-          de santé. Open Medic : Base de données ouvertes par la Caisse Nationale d’Assurance
-          Maladie.
+          pharmacovigilance gérée par l&apos;Agence Nationale de Sécurité du Médicament et des
+          produits de santé. Open Medic : Base de données ouvertes par la Caisse Nationale
+          d&apos;Assurance Maladie.
         </Section>
-        <Section title="D’où viennent les données ? Quelle est leur nature ?">
+        <Section title="D'où viennent les données ? Quelle est leur nature ?">
           <p>
-            La pharmacovigilance est la surveillance, l’évaluation, la prévention et la gestion du
-            risque d’effet indésirable résultant de l’utilisation des médicaments. Elle s’exerce en
-            permanence, avant et après la commercialisation des médicaments, et constitue un élément
-            essentiel du contrôle de la sécurité des médicaments.
+            La pharmacovigilance est la surveillance, l&apos;évaluation, la prévention et la gestion
+            du risque d&apos;effet indésirable résultant de l&apos;utilisation des médicaments. Elle
+            s&apos;exerce en permanence, avant et après la commercialisation des médicaments, et
+            constitue un élément essentiel du contrôle de la sécurité des médicaments.
           </p>
           <p>
             Afin de respecter la confidentialité des données des patients, si un critère (âge,
@@ -312,8 +308,8 @@ const SectionDataOrigin = () => {
           </p>
           <p>
             Estimations obtenues à partir des données Open-Medic portant sur le nombre de patients
-            ayant bénéficié d’un remboursement du médicament délivré en pharmacie de ville. Pour
-            plus d’informations, consultez :
+            ayant bénéficié d&apos;un remboursement du médicament délivré en pharmacie de ville.
+            Pour plus d&apos;informations, consultez :
             <Button
               externalLink
               href="http://open-data-assurance-maladie.ameli.fr/medicaments/index.php"
@@ -326,8 +322,8 @@ const SectionDataOrigin = () => {
           <p>
             Les données affichées sur les effets indésirables sont basées sur des déclarations
             spontanées que font les patients ou les professionnels de santé. Elles concernent les
-            effets suspectés d’être liés à l’utilisation d’un ou plusieurs médicaments et les
-            mésusages, abus ou erreurs médicamenteuses.
+            effets suspectés d&apos;être liés à l&apos;utilisation d&apos;un ou plusieurs
+            médicaments et les mésusages, abus ou erreurs médicamenteuses.
           </p>
           <p>
             Ces déclarations sont analysées par des experts afin de détecter des signaux en
@@ -336,7 +332,7 @@ const SectionDataOrigin = () => {
             d&apos;un médicament.
           </p>
           <p>
-            Pour plus d’informations, consultez :
+            Pour plus d&apos;informations, consultez :
             <Button
               externalLink
               href="https://ansm.sante.fr/page/la-surveillance-renforcee-des-medicaments"
@@ -363,40 +359,46 @@ export const GlobalStatisticPage = ({ globalStatistic }: { globalStatistic: Glob
   }
 
   return (
-    <EntityContextProvider entity={{ type: 'globStat', ...globalStatistic }}>
-      <EntityPageLayout
-        colorMenu="green"
-        sections={[
-          {
-            id: 'demographie',
-            label: 'DÉMOGRAPHIE',
-            content: <SectionDemography stat={globalStatistic} />,
-          },
-          {
-            id: 'effets-grave-et-non-graves',
-            label: 'effets graves et non graves',
-            content: <SectionSeriousEffect stat={globalStatistic} />,
-          },
-          {
-            id: 'declarants',
-            label: 'Déclarants',
-            content: <SectionFilers stat={globalStatistic} />,
-          },
-          {
-            id: 'types-effets-indesirables',
-            label: "TYPES D'EFFETS INDÉSIRABLES",
-            content: <SectionTypesOfSideEffects stat={globalStatistic} />,
-          },
-          {
-            id: 'originine-des-donnees',
-            label: 'ORIGINE DES DONNÉES',
-            content: <SectionDataOrigin />,
-          },
-        ]}
-        render={(content) => content}
-      >
-        <HeroHeader />
-      </EntityPageLayout>
-    </EntityContextProvider>
+    <EntityPageLayout
+      colorMenu="green"
+      sections={[
+        {
+          id: 'demographie',
+          label: 'DÉMOGRAPHIE',
+          content: <SectionDemography stat={globalStatistic} />,
+        },
+        {
+          id: 'effets-grave-et-non-graves',
+          label: 'effets graves et non graves',
+          content: <SectionSeriousEffect stat={globalStatistic} />,
+        },
+        {
+          id: 'declarants',
+          label: 'Déclarants',
+          content: <SectionFilers stat={globalStatistic} />,
+        },
+        {
+          id: 'types-effets-indesirables',
+          label: "TYPES D'EFFETS INDÉSIRABLES",
+          content: <SectionTypesOfSideEffects stat={globalStatistic} />,
+        },
+        {
+          id: 'originine-des-donnees',
+          label: 'ORIGINE DES DONNÉES',
+          content: <SectionDataOrigin />,
+        },
+      ]}
+      render={(content) => content}
+    >
+      <HeadlessHeroHeader
+        theme="bg-secondary-variant"
+        icon={<GlobStatSvg className="h-full" />}
+        backNavigationLabel="Données globales"
+        title="Déclarations d'effets indésirables suspectés"
+        description="Statistiques globales"
+        textColor="text-black"
+        backNavigationIconColor="fill-black"
+      />
+    </EntityPageLayout>
   );
 };

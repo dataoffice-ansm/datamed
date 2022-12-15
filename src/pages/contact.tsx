@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 
-import { BackgroundSquares } from 'components/BackgroundSquares/BackgroundSquares';
+import { BackgroundSquares } from '../components/BackgroundSquares/BackgroundSquares';
 
 const SectionContact = ({
   title,

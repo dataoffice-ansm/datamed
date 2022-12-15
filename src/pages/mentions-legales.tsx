@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 import { Button } from '../components/Button/Button';
-import { BackgroundSquares } from 'components/BackgroundSquares/BackgroundSquares';
+import { BackgroundSquares } from '../components/BackgroundSquares/BackgroundSquares';
 
 const Section = ({
   title,

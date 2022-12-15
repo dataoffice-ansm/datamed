@@ -2,7 +2,7 @@
 import type { HTMLAttributes } from 'react';
 import { useCallback, useState, useEffect, useMemo } from 'react';
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
-import { FullWidthRow } from 'components/FullWidthRow/FullWidthRow';
+import { FullWidthRow } from '../../components/FullWidthRow/FullWidthRow';
 import { Accordion } from '../../components/Accordion/Accordion';
 import { faqData } from './mock/faq-data';
 

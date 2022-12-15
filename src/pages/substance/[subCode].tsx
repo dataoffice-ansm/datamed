@@ -1,5 +1,5 @@
 import type { ParsedUrlQuery } from 'querystring';
-import { SubstancePage } from 'componentsPages/Substance/SubstancePage';
+import { SubstancePage } from '../../componentsPages/Substance/SubstancePage';
 import type {
   Substance,
   SubstanceQuery,
