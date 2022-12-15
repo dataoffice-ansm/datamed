@@ -19,7 +19,6 @@ import type {
   GlobStaticRepartitionPerNotifier,
   RepartitionPerGravity,
 } from '../../graphql/__generated__/generated-types';
-import { not } from 'rxjs/internal/util/not';
 
 export class PostgresOperations {
   async getSingleSpecialityCodeById(cisCode: string): Promise<number | null> {
@@ -732,7 +731,7 @@ export class PostgresOperations {
       const { maxYear } = rowMaxPeriod;
 
       return {
-        total: total!,
+        total: total ?? 0,
         minYear,
         maxYear,
       };

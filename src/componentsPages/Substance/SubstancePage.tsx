@@ -9,7 +9,7 @@ import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 import Link from 'next/link';
 import classnames from 'classnames';
 import { SubstanceContainer } from './SubstanceContainer';
-import { NotEnoughData } from 'components/NotEnoughData';
+import { NotEnoughData } from '../../components/NotEnoughData';
 import { Accordion } from '../../components/Accordion/Accordion';
 import { cisExpositionLevelMapping } from '../../utils/mapping';
 import PilIcon from '../../assets/images/gellule.svg';

@@ -6,8 +6,8 @@ const tooltipTriggerText = "Qu'est-ce qu'une substance active ?";
 
 export const SubTooltip = () => (
   <Tooltip
-    content={<div className="p-4">{tooltipContent}</div>}
-    placement="auto-start"
+    content={<div className="p-4 max-w-lg">{tooltipContent}</div>}
+    placement="bottom"
     render={(refCb) => (
       <span ref={refCb} className="underline cursor-help">
         {tooltipTriggerText}

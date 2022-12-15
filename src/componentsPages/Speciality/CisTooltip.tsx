@@ -5,7 +5,7 @@ const tooltipTriggerText = "Qu'est-ce qu'une spécialité de médicament ?";
 export const CisTooltip = () => (
   <Tooltip
     content={
-      <div className="p-4">
+      <div className="p-4 max-w-lg">
         <div className="mb-3">
           Les médicaments peuvent être regroupés selon différents niveaux, allant de la simple
           substance active au niveau le plus précis de la présentation :
@@ -22,7 +22,7 @@ export const CisTooltip = () => (
         </b>
       </div>
     }
-    placement="auto-start"
+    placement="bottom"
     render={(refCb) => (
       <span ref={refCb} className="underline cursor-help">
         {tooltipTriggerText}

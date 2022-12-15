@@ -6,7 +6,7 @@ import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 import ChevronSVG from '../../assets/icons/chevron/chevron.svg';
 
-export type SelectThemeColor = 'primary' | 'secondary' | 'gray' | 'secondary-variant';
+export type SelectThemeColor = 'primary' | 'secondary' | 'secondary-variant' | 'gray';
 
 export type SelectOptionValue = string | number;
 

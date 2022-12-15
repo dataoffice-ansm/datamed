@@ -4,7 +4,7 @@ import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
 import { Button } from '../components/Button/Button';
-import { BackgroundSquares } from 'components/BackgroundSquares/BackgroundSquares';
+import { BackgroundSquares } from '../components/BackgroundSquares/BackgroundSquares';
 
 /**
  *
