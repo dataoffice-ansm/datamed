@@ -5,12 +5,8 @@ const nextConfig = {
   // rewrites: () => {
   //   return [
   //     {
-  //       source: '/api',
-  //       destination: 'http://localhost:8080/api',
-  //     },
-  //     {
-  //       source: '/api/graphql',
-  //       destination: 'http://localhost:8080/api/graphql',
+  //       source: '/api/:path*",',
+  //       destination: 'http://data.ansm.sante.fr/api/:path*',
   //     },
   //   ];
   // },

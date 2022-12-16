@@ -14,7 +14,6 @@ services:
     build:
       context: .
     env_file:
-      - .env.production
+      - ./.env.production
     ports:
       - "80:80"
-    #network_mode: "host"

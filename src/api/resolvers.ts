@@ -2,7 +2,7 @@ import type { Resolvers } from './graphql/__generated__/generated-types';
 import jwt from 'jsonwebtoken';
 import { config } from '../config/config';
 
-const users = [{ id: 1, username: 'beta', password: 'demo' }];
+const users = [{ id: 1, username: 'beta', password: 'dem0_123' }];
 
 export const resolvers: Resolvers = {
   Mutation: {

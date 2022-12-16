@@ -30,10 +30,6 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-ENV NEXT_PUBLIC_TEST=$NEXT_PUBLIC_TEST
-ENV DATABASE_URL=$DATABASE_URL
-ENV NEXT_PUBLIC_PROD_WEB_ROOT=$NEXT_PUBLIC_PROD_WEB_ROOT
-
 RUN yarn build
 
 # Production image, copy all the files and run next
@@ -48,6 +44,7 @@ ENV NODE_ENV production
 # You only need to copy next.config.js if you are NOT using the default configuration.
 # Copy all necessary files used by nex.config as well otherwise the build will fail.
 COPY --from=builder /app/next.config.js ./next.config.js
+COPY --from=builder /app/.env.production ./.env.production
 COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
 COPY --from=builder /app/node_modules ./node_modules
