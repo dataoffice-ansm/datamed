@@ -6,15 +6,15 @@ services:
     restart: unless-stopped
     container_name: datamed-nginx
     ports:
-      - "80:80"
+      - "8080:80"
 
   nextjs:
     container_name: datamed-nextjs
+    image: "datamed-nextjs"
     build:
       context: .
-    image: "datamed-nextjs"
     env_file:
       - .env.production
     ports:
-      - "3000:3000"
-    network_mode: "host"
+      - "80:80"
+    #network_mode: "host"
