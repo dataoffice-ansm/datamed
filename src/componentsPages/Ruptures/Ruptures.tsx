@@ -25,6 +25,19 @@ const SectionGestion = ({ rupture }: { rupture: GlobalRupture }) => {
       <GraphBox
         title="Répartition des mesures prises pour pallier ou prévenir les ruptures de stock"
         className="max-w-full"
+        tooltip={
+            <div className="p-4 max-w-md">
+                <div className="font-medium mb-4 text-lg">
+                    Mesures prises pour palier ou prévenir les ruptures de stock
+                </div>
+                <div>
+                    Lorsqu’un signalement arrive à l’ANSM, est mise en place une évaluation afin de
+                    déterminer les mesures les plus adaptées pour pallier l’insuffisance de stock.
+                    Plusieurs mesures peuvent être mobilisées pour une même situation de risque ou de
+                    rupture de stock, aussi le total peut dépasser 100%.
+                </div>
+            </div>
+        }
       >
         <div className="GraphBoxSelectContent">
           <GraphFiguresGrid

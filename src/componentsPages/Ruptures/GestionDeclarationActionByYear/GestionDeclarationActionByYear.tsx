@@ -1,7 +1,3 @@
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { HTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
@@ -107,6 +103,18 @@ export const GestionDeclarationByYear = ({
               icon={<DeclarationWithOneActionSvg />}
               theme="dark-green"
               className="flex-1"
+              tooltip={
+                <div className="p-4 max-w-md">
+                  <div className="font-medium mb-4 text-lg">Dossiers donnant lieu à une mesure</div>
+                  <div>
+                    La pharmacovigilance est la surveillance, l’évaluation, la prévention et la
+                    gestion du risque d’effet indésirable résultant de l’utilisation des
+                    médicaments. Elle s’exerce en permanence, avant et après la commercialisation
+                    des médicaments, et constitue un élément essentiel du contrôle de la sécurité
+                    des médicaments.
+                  </div>
+                </div>
+              }
             >
               des dossiers ont donné lieu à au moins une mesure
             </BoxInfo>
