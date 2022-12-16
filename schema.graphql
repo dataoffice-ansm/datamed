@@ -261,11 +261,32 @@ type RuptureStockRepartionPerClassTherapeutique {
 }
 
 
+type RuptureRepartitionPerClause {
+    name: String
+    value: Int
+}
+
+type RuptureTotalAction {
+    year: Int
+    total: Int
+    totalWithOneAction: Int
+}
+
+
+type RuptureRepartitionPerAction {
+    name: String
+    value: Int
+}
+
+
 type GlobalRupture {
     ruptureStocks : [RuptureStock]
     repartitionPerClassication: [RuptureStockRepartitionPerClassication]
     ruptureYears: [RuptureYear]
     repartitionPerClassTherapeutique: [RuptureStockRepartionPerClassTherapeutique]
+    repartitionPerCause: [RuptureRepartitionPerClause]
+    totalAction: [RuptureTotalAction]
+    repartitionPerAction: [RuptureRepartitionPerAction]
 }
 
 ##### QUERIES #####

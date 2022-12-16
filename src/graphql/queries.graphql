@@ -289,6 +289,25 @@ query GlobalRupture {
         ruptureYears {
             value
         }
+        repartitionPerCause {
+            name
+            value
+        }
+        repartitionPerAction {
+            value
+            name
+        }
+
+        repartitionPerClassTherapeutique {
+            name
+            value
+            year
+        }
+        totalAction {
+            year
+            total
+            totalWithOneAction
+        }
     }
 }
 
