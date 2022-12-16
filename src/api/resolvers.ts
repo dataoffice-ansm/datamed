@@ -1,6 +1,29 @@
 import type { Resolvers } from './graphql/__generated__/generated-types';
+import jwt from 'jsonwebtoken';
+import { config } from '../config/config';
+
+const users = [{ id: 1, username: 'beta', password: 'demo' }];
 
 export const resolvers: Resolvers = {
+  Mutation: {
+    login(parent, args) {
+      const matchUser = users.find(
+        (u) => u.username === args.username && u.password === args.password
+      );
+
+      if (matchUser && config?.ssr?.jwtToken) {
+        const token = jwt.sign({ username: matchUser.username }, config?.ssr?.jwtToken, {
+          expiresIn: '1d',
+        });
+
+        return {
+          token,
+        };
+      }
+
+      return null;
+    },
+  },
   Query: {
     async getSpecialityIdByCode(parent, args, context) {
       return context.dataSources.postgresOperations.getSingleSpecialityCodeById(args.cisCode);
