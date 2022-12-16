@@ -7,12 +7,7 @@ import { Tooltip } from '../../components/Tooltip/Tooltip';
 import RupturesSVG from '../../assets/icons/ruptures.svg';
 import { BoxInfo } from '../../components/BoxInfo';
 import FolderSVG from '../../assets/icons/folder/folder.svg';
-import { GraphBox } from '../../components/GraphBox/GraphBox';
-import { GraphFigure } from '../../components/GraphFigure';
-import WomanIllustration from '../../assets/images/woman_illustration.svg';
-import ManIllustration from '../../assets/images/man_illustration.svg';
-import { NotEnoughData } from '../../components/NotEnoughData';
-import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
+import { useGlobalRuptureQuery } from 'graphql/__generated__/generated-documents';
 
 const sections = [
   {
@@ -21,42 +16,39 @@ const sections = [
     content: (
       <div>
         <SectionTitle
-          title="
-              Déclarations de ruptures et risques de rupture de stock depuis le début de
-              l'année civile en cours"
+          title="Déclarations de ruptures et risques de rupture de stock depuis le début de l'année civile en cours"
           subTitle="Données mises à jour mensuellement, issues de la période 01/01/2022 - 01/06/2022"
         />
         <ChartBox>
-          <div className="flex flex-col justify-start items-start flex-auto text-left" />,
+          <div className="flex flex-col justify-start items-start flex-auto text-left" />
         </ChartBox>
+
+        <SectionTitle
+          title="Nombre et nature des déclarations de ruptures et risques de rupture de stock"
+          subTitle="Données issues de la période 2014-2022"
+        />
+        <BoxInfo
+          title="Déclaration(s) reçues(s)"
+          icon={<FolderSVG />}
+          theme="dark-green"
+          className="my-8"
+          tooltip={
+            <div>
+              <strong>Déclarations cumulées</strong>
+              <div>
+                Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise à jour
+                progressive des données.
+              </div>
+            </div>
+          }
+        >
+          Nombre de déclarations de ruptures et risques de rupture de stock et de décret sans risque
+          depuis le début de l’année civile en cours
+        </BoxInfo>
         <ChartBox className="mt-8">
           <div className="flex flex-col justify-start items-start flex-auto text-left">
-            <div className="GlobalStatisticDemographySection text-left">
-              <SectionTitle
-                title="Déclarations de ruptures et risques de rupture de stock depuis le début de l'année civile en cours"
-                subTitle="Données issues de la période - "
-              />
-              <BoxInfo
-                title="Déclaration(s) reçues(s)"
-                icon={<FolderSVG />}
-                theme="dark-green"
-                className="my-8"
-                tooltip={
-                  <div>
-                    <strong>Déclarations cumulées</strong>
-                    <div>
-                      Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise
-                      à jour progressive des données.
-                    </div>
-                  </div>
-                }
-              >
-                Nombre de déclarations de ruptures et risques de rupture de stock et de décret sans
-                risque depuis le début de l’année civile en cours
-              </BoxInfo>
-            </div>
+            <div className="GlobalStatisticDemographySection text-left" />
           </div>
-          ,
         </ChartBox>
       </div>
     ),
@@ -146,45 +138,53 @@ const sections = [
   },
 ];
 
-export const Ruptures = () => (
-  <div>
-    <HeadlessHeroHeader
-      theme="bg-secondary-variant"
-      icon={<RupturesSVG className="h-full" />}
-      backNavigationLabel="Ruptures"
-      title="Risques et ruptures de stock des médicaments d'intérêt thérapeutique majeur"
-      description="Statistiques globales"
-      textColor="text-black"
-      backNavigationIconColor="fill-black"
-      tooltip={
-        <Tooltip
-          placement="bottom"
-          content={
-            <div className="p-4 max-w-md">
-              <div className="font-medium mb-4 text-lg">
-                Qu&apos;est-ce qu&apos;un Médicament d&apos;Intérêt Thérapeutique Majeur ?
+export const Ruptures = () => {
+  const { data, loading, error } = useGlobalRuptureQuery({
+    variables: {},
+  });
+
+  console.log(data, loading, error);
+
+  return (
+    <div>
+      <HeadlessHeroHeader
+        theme="bg-secondary-variant"
+        icon={<RupturesSVG className="h-full" />}
+        backNavigationLabel="Ruptures"
+        title="Risques et ruptures de stock des médicaments d'intérêt thérapeutique majeur"
+        description="Statistiques globales"
+        textColor="text-black"
+        backNavigationIconColor="fill-black"
+        tooltip={
+          <Tooltip
+            placement="bottom"
+            content={
+              <div className="p-4 max-w-md">
+                <div className="font-medium mb-4 text-lg">
+                  Qu&apos;est-ce qu&apos;un Médicament d&apos;Intérêt Thérapeutique Majeur ?
+                </div>
+                <div>
+                  Les MITM sont des médicaments pour lesquelles une interruption de traitement est
+                  susceptible de mettre en jeu le pronostic vital des patients à court ou moyen
+                  terme, ou représente une perte de chance importante pour les patients au regard de
+                  la gravité ou du potentiel évolutif de la maladie.
+                </div>
               </div>
-              <div>
-                Les MITM sont des médicaments pour lesquelles une interruption de traitement est
-                susceptible de mettre en jeu le pronostic vital des patients à court ou moyen terme,
-                ou représente une perte de chance importante pour les patients au regard de la
-                gravité ou du potentiel évolutif de la maladie.
-              </div>
-            </div>
-          }
-          render={(refCb) => (
-            <span ref={refCb} className="underline cursor-help">
-              Qu&apos;est ce qu&apos;un médicament d&apos;intérêt thérapeutique majeur ?
-            </span>
-          )}
-        />
-      }
-    />
-    <EntityPageLayout
-      className="pb-64"
-      colorMenu="primary"
-      sections={sections}
-      render={(content) => content}
-    />
-  </div>
-);
+            }
+            render={(refCb) => (
+              <span ref={refCb} className="underline cursor-help">
+                Qu&apos;est ce qu&apos;un médicament d&apos;intérêt thérapeutique majeur ?
+              </span>
+            )}
+          />
+        }
+      />
+      <EntityPageLayout
+        className="pb-64"
+        colorMenu="primary"
+        sections={sections}
+        render={(content) => content}
+      />
+    </div>
+  );
+};
