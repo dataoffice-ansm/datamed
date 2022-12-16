@@ -5,6 +5,7 @@ import { setCookie } from 'cookies-next';
 import { useLoginMutation } from '../graphql/__generated__/generated-documents';
 import { useLayoutContext } from '../contexts/LayoutContext';
 import { Button } from '../components/Button/Button';
+import { config } from '../config/config';
 
 type LoginFormElements = {
   username: HTMLInputElement;
@@ -22,6 +23,8 @@ export const AuthModal = () => {
   const [loginMutation] = useLoginMutation();
 
   const handleSubmit = async (e: FormEvent<LoginForm>) => {
+    e.preventDefault();
+
     const { data } = await loginMutation({
       variables: {
         username: e.currentTarget?.username?.value as string,
@@ -29,25 +32,20 @@ export const AuthModal = () => {
       },
     });
 
-    console.log(data);
-
     if (data?.login?.token) {
       setOpenModal(false);
       setError(null);
       setAuthed(true);
-      setCookie('datamed_token', data?.login?.token, {
+      setCookie(config.tokenName, data?.login?.token, {
         path: '/',
         maxAge: 3600, // Expires after 1hr
         sameSite: true,
       });
-
       return;
     }
 
     setError('login failed');
   };
-
-  console.log('render modal');
 
   if (openModal) {
     return (
@@ -58,12 +56,12 @@ export const AuthModal = () => {
           setOpenModal(false);
         }}
       >
-        <h2>Datamed Demo </h2>
+        <h2>Datamed Restricted Access </h2>
         <form className="flex flex-col gap-3 my-4" onSubmit={handleSubmit}>
           <input required type="text" name="username" placeholder="username" />
           <input required type="password" name="password" placeholder="password" />
           <Button as="button" type="submit">
-            Envoyer
+            Se connecter
           </Button>
         </form>
 

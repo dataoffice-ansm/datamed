@@ -33,14 +33,14 @@ const createApolloLink = (context?: GetServerSidePropsContext) => {
     // };
 
     return createHttpLink({
-      uri: config.serverApiGraphRoute,
+      uri: `${config.appRoute}/api/graphql`,
       credentials: 'same-origin',
       // headers,
     });
   }
 
   return createHttpLink({
-    uri: config.serverApiGraphRoute,
+    uri: '/api/graphql',
     credentials: 'same-origin',
   });
 };

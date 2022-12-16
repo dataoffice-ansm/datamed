@@ -1,32 +1,27 @@
 type AppConfig = {
+  dev: boolean;
+  ssrMode: boolean;
+  tokenName: string;
+  appRoute: string;
   ssr?: {
     jwtToken: string;
     dbUrl: string;
     dbEnableSsl: boolean;
   };
-  dev: boolean;
-  appRoute: string;
-  serverApiRoute: string;
-  serverApiGraphRoute: string;
 };
 
 const dev = process.env.NODE_ENV !== 'production';
-
 const ssrMode = typeof window === 'undefined';
-
-const port = process.env.NEXT_PUBLIC_PORT ?? process.env.PORT ?? 3000;
-
 const jwtToken = process.env.JWT_TOKEN_KEY ?? 'super duper secret key';
-
-const appRoute = process.env.NEXT_PUBLIC_PROD_WEB_ROOT
-  ? process.env.NEXT_PUBLIC_PROD_WEB_ROOT
-  : `http://localhost:${port}`;
+const port = process.env.NEXT_PUBLIC_PORT ?? process.env.PORT ?? 3000;
+// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+const appRoute = `${process.env.NEXT_PUBLIC_PROD_WEB_ROOT!}:${port}`;
 
 let config: AppConfig = {
-  dev,
+  tokenName: 'datamed_token',
   appRoute,
-  serverApiRoute: `${appRoute}/api`,
-  serverApiGraphRoute: `${appRoute}/api/graphql`,
+  dev,
+  ssrMode,
 };
 
 if (ssrMode) {
@@ -36,6 +31,7 @@ if (ssrMode) {
 
   config = {
     ...config,
+    dev,
     ssr: { dbUrl, dbEnableSsl, jwtToken },
   };
 }

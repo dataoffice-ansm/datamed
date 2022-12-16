@@ -68,8 +68,7 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
 MyApp.getInitialProps = async (appContext: any) => {
   // calls page's `getInitialProps` and fills `appProps.pageProps`
   const ctx = await App.getInitialProps(appContext);
-
-  const token = appContext.ctx.req.cookies?.datamed_token as string;
+  const token = appContext.ctx.req.cookies?.[config.tokenName] as string;
 
   if (!token || !config?.ssr?.jwtToken) {
     return {
