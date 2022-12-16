@@ -41,6 +41,12 @@ import TumeursBenignesFigure from '../assets/images/pathology/23.svg';
 import ActeMedicauxFigure from '../assets/images/pathology/24.svg';
 import AffectionGravidiquesFigure from '../assets/images/pathology/25.svg';
 import CaracteristiqueSocioFigure from '../assets/images/pathology/26.svg';
+import ContigentementQualitatif from '../assets/images/actions/contigetement-qualitatif.svg';
+import ContigentementQuantitatif from '../assets/images/actions/contigetement-quantitatif.svg';
+import FlexibiliteReglementaire from '../assets/images/actions/flexibilite-reglementaire.svg';
+import Importation from '../assets/images/actions/importation.svg';
+import MiseEnPlaceStock from '../assets/images/actions/mise-en-place-stock-depannage.svg';
+import RestrictionCircuitDistribution from '../assets/images/actions/restriction-circuit-distribution.svg';
 import NotFoundFigure from '../assets/images/notfound.svg';
 import React from 'react';
 
@@ -241,6 +247,25 @@ export const getFigureBySideNameEffectPathology = (name: string) => {
       return <AffectionGravidiquesFigure className="w-32" />;
     case 'Caractéristiques socio-environnementales':
       return <CaracteristiqueSocioFigure className="w-32" />;
+    default:
+      return <NotFoundFigure className="w-32" />;
+  }
+};
+
+export const getFigureByActionName = (name: string) => {
+  switch (name) {
+    case 'Contingentement quantitatif':
+      return <ContigentementQuantitatif className="w-32" />;
+    case 'Contingentement qualitatif':
+      return <ContigentementQualitatif className="w-32" />;
+    case 'Restriction du circuit de distribution':
+      return <RestrictionCircuitDistribution className="w-32" />;
+    case "Mise en place d'un stock de dépannage":
+      return <MiseEnPlaceStock className="w-32" />;
+    case 'Flexibilité réglementaire':
+      return <FlexibiliteReglementaire className="w-32" />;
+    case 'Importation':
+      return <Importation className="w-32" />;
     default:
       return <NotFoundFigure className="w-32" />;
   }

@@ -9,6 +9,51 @@ import RupturesSVG from '../../assets/icons/ruptures.svg';
 import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
 import { DeclarationByYear } from './DeclarationByYear.tsx/DeclarationByYear';
 import { DeclarationNatureCount } from './DeclarationNatureCount/DeclarationNatureCount';
+import { GlobalStatistic } from 'graphql/__generated__/generated-documents';
+import { Accordion } from '../../components/Accordion/Accordion';
+import { GraphBoxSelect } from '../../components/GraphBoxSelect';
+import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
+import { GraphFigure } from '../../components/GraphFigure';
+import { getFigureByActionName, getFigureBySideNameEffectPathology } from '../../utils/mapping';
+import { BoxInfo } from '../../components/BoxInfo';
+import FolderSVG from '../../assets/icons/folder/folder.svg';
+
+const SectionGestion = ({ rupture }: { rupture: GlobalRupture }) => {
+  const { repartitionPerAction, totalAction } = rupture;
+
+  return (
+    <div className="RuptureSectionAction text-left">
+      <SectionTitle
+        title="Gestion des déclarations de ruptures et risques de rupture de stock"
+        subTitle="Données issues de la période"
+      />
+
+      <GraphBoxSelect
+        theme="secondary-variant"
+        title="Répartition des mesures prises pour pallier ou prévenir les ruptures de stock"
+        render={(selectedOption) => (
+          <div className="GraphBoxSelectContent">
+            <GraphFiguresGrid
+              data={repartitionPerAction?.filter((action) => action?.name && action?.value) ?? []}
+              renderItem={(action) =>
+                action?.name && action?.value ? (
+                  <GraphFigure
+                    className="pathologyGraphFigure"
+                    unit=""
+                    description={action.name}
+                    icon={getFigureByActionName(action.name)}
+                    valueClassName="text-dark-green-900"
+                    value={action.value}
+                  />
+                ) : null
+              }
+            />
+          </div>
+        )}
+      />
+    </div>
+  );
+};
 
 const sections = (ruptures: GlobalRupture) => [
   {
@@ -28,7 +73,9 @@ const sections = (ruptures: GlobalRupture) => [
       <div>
         <SectionTitle title="Gestion des déclarations de ruptures et risques de rupture de stock" />
         <ChartBox>
-          <div className="flex flex-col justify-start items-start flex-auto text-left" />
+          <div className="flex flex-col justify-start items-start flex-auto text-left">
+            <SectionGestion rupture={ruptures} />
+          </div>
         </ChartBox>
       </div>
     ),

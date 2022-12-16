@@ -1052,6 +1052,7 @@ export class PostgresOperations {
       .select([count('actions.id').as('value'), 'at.type as name'])
       .distinct()
       .groupBy('at.type')
+      .orderBy('at.type')
       .execute();
 
     return rows.map((r) => ({
