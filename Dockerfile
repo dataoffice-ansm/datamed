@@ -42,8 +42,8 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-RUN addgroup -g 1001 -S nodejs
-RUN adduser --system --uid 1001 nextjs
+#RUN addgroup -g 1001 -S nodejs
+#RUN adduser --system --uid 1001 nextjs
 
 # You only need to copy next.config.js if you are NOT using the default configuration.
 # Copy all necessary files used by nex.config as well otherwise the build will fail.
@@ -59,13 +59,12 @@ COPY --from=builder /app/schema.graphql ./schema.graphql
 #COPY --from=builder --chown=bloguser:nextjs /app/.next/standalone ./
 #COPY --from=builder --chown=bloguser:nextjs /app/.next/static ./.next/static
 
+# TODO temporally run with root privileges (default)
 # Run container as non-root (unprivileged) user
-USER nextjs
+#USER nextjs
 
 ENV PORT 80
-
-# Expose the listening port
-EXPOSE $PORT
+EXPOSE 80
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry

@@ -48,6 +48,11 @@ export type Laboratory = {
   name?: Maybe<Scalars['String']>;
 };
 
+export type LoginResult = {
+  __typename?: 'LoginResult';
+  token?: Maybe<Scalars['String']>;
+};
+
 export type MedicalAtc = {
   __typename?: 'MedicalATC';
   code?: Maybe<Scalars['String']>;
@@ -71,6 +76,16 @@ export type MedicalErrors = {
 export type Meta = {
   __typename?: 'Meta';
   count?: Maybe<Scalars['Int']>;
+};
+
+export type Mutation = {
+  __typename?: 'Mutation';
+  login?: Maybe<LoginResult>;
+};
+
+export type MutationLoginArgs = {
+  password?: InputMaybe<Scalars['String']>;
+  username?: InputMaybe<Scalars['String']>;
 };
 
 export type PharmaForm = {
@@ -348,10 +363,12 @@ export type ResolversTypes = ResolversObject<{
   IndicatorValues: ResolverTypeWrapper<IndicatorValues>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Laboratory: ResolverTypeWrapper<Laboratory>;
+  LoginResult: ResolverTypeWrapper<LoginResult>;
   MedicalATC: ResolverTypeWrapper<MedicalAtc>;
   MedicalError: ResolverTypeWrapper<MedicalError>;
   MedicalErrors: ResolverTypeWrapper<MedicalErrors>;
   Meta: ResolverTypeWrapper<Meta>;
+  Mutation: ResolverTypeWrapper<{}>;
   PharmaForm: ResolverTypeWrapper<PharmaForm>;
   Publication: ResolverTypeWrapper<Publication>;
   PublicationType: ResolverTypeWrapper<PublicationType>;
@@ -384,10 +401,12 @@ export type ResolversParentTypes = ResolversObject<{
   IndicatorValues: IndicatorValues;
   Int: Scalars['Int'];
   Laboratory: Laboratory;
+  LoginResult: LoginResult;
   MedicalATC: MedicalAtc;
   MedicalError: MedicalError;
   MedicalErrors: MedicalErrors;
   Meta: Meta;
+  Mutation: {};
   PharmaForm: PharmaForm;
   Publication: Publication;
   PublicationType: PublicationType;
@@ -486,6 +505,14 @@ export type LaboratoryResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
+export type LoginResultResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['LoginResult'] = ResolversParentTypes['LoginResult']
+> = ResolversObject<{
+  token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
 export type MedicalAtcResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['MedicalATC'] = ResolversParentTypes['MedicalATC']
@@ -537,6 +564,18 @@ export type MetaResolvers<
 > = ResolversObject<{
   count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type MutationResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
+> = ResolversObject<{
+  login?: Resolver<
+    Maybe<ResolversTypes['LoginResult']>,
+    ParentType,
+    ContextType,
+    Partial<MutationLoginArgs>
+  >;
 }>;
 
 export type PharmaFormResolvers<
@@ -836,10 +875,12 @@ export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   Icon?: IconResolvers<ContextType>;
   IndicatorValues?: IndicatorValuesResolvers<ContextType>;
   Laboratory?: LaboratoryResolvers<ContextType>;
+  LoginResult?: LoginResultResolvers<ContextType>;
   MedicalATC?: MedicalAtcResolvers<ContextType>;
   MedicalError?: MedicalErrorResolvers<ContextType>;
   MedicalErrors?: MedicalErrorsResolvers<ContextType>;
   Meta?: MetaResolvers<ContextType>;
+  Mutation?: MutationResolvers<ContextType>;
   PharmaForm?: PharmaFormResolvers<ContextType>;
   Publication?: PublicationResolvers<ContextType>;
   PublicationType?: PublicationTypeResolvers<ContextType>;

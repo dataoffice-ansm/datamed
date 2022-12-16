@@ -23,18 +23,23 @@ const Overlay = () => {
  * @constructor
  */
 export const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  const { navBarHeight, stickyHeroHeight } = useLayoutContext();
-  return (
-    <>
-      <NavigationBar />
-      <main
-        className="ease-linear transition-padding duration-200"
-        style={{ paddingTop: navBarHeight + stickyHeroHeight }}
-      >
-        <div className="max-md:px-3 md:container max-w-full md:mx-auto">{children}</div>
-      </main>
-      <Footer />
-      <Overlay />
-    </>
-  );
+  const { authed, navBarHeight, stickyHeroHeight } = useLayoutContext();
+
+  if (authed) {
+    return (
+      <>
+        <NavigationBar />
+        <main
+          className="ease-linear transition-padding duration-200"
+          style={{ paddingTop: navBarHeight + stickyHeroHeight }}
+        >
+          <div className="max-md:px-3 md:container max-w-full md:mx-auto">{children}</div>
+        </main>
+        <Footer />
+        <Overlay />
+      </>
+    );
+  }
+
+  return null;
 };

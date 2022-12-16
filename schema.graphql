@@ -203,6 +203,10 @@ type Query {
     getSubstances: SubstancesReturn
 }
 
-#type Mutation {
-#    addBook(title: String, author: String): AddBookMutationResponse
-#}
+type LoginResult {
+    token: String
+}
+
+type Mutation {
+    login(username: String, password: String): LoginResult
+}

@@ -48,7 +48,7 @@ export const Button = (props: CallToActionProps) => {
               theme === 'secondary' && variant === 'contained',
 
             'bg-grey text-white hover:bg-grey-500': theme === 'grey' && variant === 'contained',
-            'border border-primary text-primary hover:bg-primary focus:bg-primary':
+            'border border-primary text-primary hover:text-white hover:bg-primary focus:bg-primary':
               theme === 'primary' && variant === 'outlined',
             'border border-secondary text-secondary hover:bg-secondary focus:bg-secondary':
               theme === 'secondary' && variant === 'outlined',
