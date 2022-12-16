@@ -14,9 +14,12 @@ import type {
   RepartitionPerPathology,
   RepartitionPerSeriousEffect,
   RepartitionRange,
+  RuptureRepartitionPerAction,
+  RuptureRepartitionPerClause,
   RuptureStock,
   RuptureStockRepartionPerClassTherapeutique,
   RuptureStockRepartitionPerClassication,
+  RuptureTotalAction,
   RuptureYear,
   Speciality,
   SpecialityRupture,
@@ -999,22 +1002,92 @@ export class PostgresOperations {
     return result;
   }
 
+  async getRuptureStockRepartitionPerClassTherapeutique(): Promise<
+    RuptureStockRepartionPerClassTherapeutique[]
+  > {
+    const { count } = dbInstance.fn;
+    const rows = await dbInstance
+      .selectFrom('sold_out_all as soa')
+      .leftJoin('causes_all as ca', 'soa.id', 'ca.sold_out_id')
+      .leftJoin('causes_types as cat', 'ca.id', 'cat.id')
+      .select([count('sold_out_all.num').as('value'), 'soa.year as year', 'cat.type as name'])
+      .groupBy('year')
+      .groupBy('cat.type')
+      .execute();
+
+    return rows.map((r) => ({
+      name: r.name!,
+      value: Number(r.value),
+      year: Number(r.year),
+    }));
+  }
+
+  async getRuptureStockRepartitionPerCause(): Promise<RuptureRepartitionPerClause[]> {
+    const { count } = dbInstance.fn;
+    const rows = await dbInstance
+      .selectFrom('sold_out_all as soa')
+      .leftJoin('causes_all as ca', 'soa.id', 'ca.sold_out_id')
+      .leftJoin('causes_types as cat', 'ca.cause_id', 'cat.id')
+      .select([count('sold_out_all.num').as('value'), 'cat.type'])
+      .distinct()
+      .groupBy('cat.type')
+      .execute();
+
+    return rows.map((r) => ({
+      name: r.type!,
+      value: Number(r.value),
+    }));
+  }
+
+  async getRuptureStockRepartitionPerAction(): Promise<RuptureRepartitionPerAction[]> {
+    const { count } = dbInstance.fn;
+    const rows = await dbInstance
+      .selectFrom('actions as a')
+      .leftJoin('actions_types as at', 'a.type_id', 'at.id')
+      .select([count('actions.id').as('value'), 'at.type as name'])
+      .distinct()
+      .groupBy('at.type')
+      .execute();
+
+    return rows.map((r) => ({
+      name: r.name!,
+      value: Number(r.value),
+    }));
+  }
+
+  async getRuptureStockTotalAction(): Promise<RuptureTotalAction[]> {
+    const { count } = dbInstance.fn;
+    const rows = await dbInstance
+      .selectFrom('actions as a')
+      .leftJoin('actions_types as at', 'a.type_id', 'at.id')
+      .select([count('actions.id').as('value'), 'at.type as name', 'a.year', 'a.with_action'])
+      .distinct()
+      .groupBy('at.type')
+      .execute();
+
+    const totalWithOneAction = rows.filter((r) => r.with_action === 'Avec Mesure').length;
+
+    return rows.map((r) => ({
+      total: Number(r.value),
+      totalWithOneAction,
+      year: Number(r.year),
+    }));
+  }
+
   async getGlobalRupture(): Promise<GlobalRupture> {
     const years = await this.getRuptureYears();
 
-    const globalRupture: GlobalRupture = {
-      ruptureStocks: [],
+    return {
+      ruptureStocks: await Promise.all(
+        years.map(async (year) => this.getRuptureStockTotalExposition(Number(year)))
+      ),
       ruptureYears: years,
-      repartitionPerClassication: [],
+      repartitionPerClassication: await this.getRuptureStockRepartitionPerClassification(),
+      repartitionPerClassTherapeutique:
+        await this.getRuptureStockRepartitionPerClassTherapeutique(),
+      repartitionPerCause: await this.getRuptureStockRepartitionPerCause(),
+      repartitionPerAction: await this.getRuptureStockRepartitionPerAction(),
+      totalAction: await this.getRuptureStockTotalAction(),
     };
-
-    globalRupture.ruptureStocks = await Promise.all(
-      years.map(async (year) => this.getRuptureStockTotalExposition(Number(year)))
-    );
-
-    globalRupture.repartitionPerClassication =
-      await this.getRuptureStockRepartitionPerClassification();
-
-    return globalRupture;
   }
 }
