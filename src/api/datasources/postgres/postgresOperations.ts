@@ -969,6 +969,7 @@ export class PostgresOperations {
       .where('classification', '=', 'risque')
       .groupBy('year')
       .groupBy('classification')
+      .orderBy('year')
       .execute();
 
     const rowsRupture = await dbInstance
@@ -977,6 +978,7 @@ export class PostgresOperations {
       .where('classification', '=', 'rupture')
       .groupBy('year')
       .groupBy('classification')
+      .orderBy('year')
       .execute();
 
     const result: RuptureStockRepartitionPerClassication[] = [];

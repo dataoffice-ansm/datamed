@@ -8,23 +8,16 @@ import RupturesSVG from '../../assets/icons/ruptures.svg';
 
 import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
 import { DeclarationByYear } from './DeclarationByYear.tsx/DeclarationByYear';
+import { DeclarationNatureCount } from './DeclarationNatureCount/DeclarationNatureCount';
 
 const sections = (ruptures: GlobalRupture) => [
   {
     id: 'declarations',
     label: 'DÉCLARATIONS',
     content: (
-      <div>
+      <div className="flex flex-col gap-8">
         <DeclarationByYear ruptures={ruptures} />
-        <SectionTitle
-          title="Nombre et nature des déclarations de ruptures et risques de rupture de stock"
-          subTitle="Données issues de la période 2014-2022"
-        />
-        <ChartBox className="mt-8">
-          <div className="flex flex-col justify-start items-start flex-auto text-left">
-            <div className="GlobalStatisticDemographySection text-left" />
-          </div>
-        </ChartBox>
+        <DeclarationNatureCount ruptures={ruptures} />
       </div>
     ),
   },
