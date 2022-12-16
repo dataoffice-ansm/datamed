@@ -1,11 +1,11 @@
 import type { HTMLAttributes } from 'react';
 import { useEffect, useRef } from 'react';
-import { Line } from 'react-chartjs-2';
+import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
 
 ChartJS.register(...registerables);
 
-export type LineChartProps = {
+export type BarChartProps = {
   labels: string[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   datasets: any[];
@@ -13,14 +13,14 @@ export type LineChartProps = {
   bottomLegend?: string;
 } & HTMLAttributes<HTMLElement>;
 
-export const LineChart = ({
+export const BarChart = ({
   className,
   labels,
   datasets,
   leftLegend = '',
   bottomLegend = '',
-}: LineChartProps) => {
-  const ref = useRef<ChartJS<'line'>>(null);
+}: BarChartProps) => {
+  const ref = useRef<ChartJS<'bar'>>(null);
 
   useEffect(() => {
     const resize = () => {
@@ -35,7 +35,7 @@ export const LineChart = ({
 
   return (
     <div className={className}>
-      <Line
+      <Bar
         ref={ref}
         redraw
         updateMode="resize"

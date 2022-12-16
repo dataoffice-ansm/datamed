@@ -60,7 +60,7 @@ export const HeadlessHeroHeader = ({
           top: heightRef && pageScrolled ? `${navBarHeight}px` : `-${navBarHeight}px`,
         }}
       >
-        <div className="max-md:px-3 md:container max-w-full md:mx-auto flex gap-8 h-full items-center text-xl">
+        <div className="max-md:px-3 md:container max-w-[1920px] md:mx-auto flex gap-8 h-full items-center text-xl">
           <div className="w-11 h-11">{icon}</div>
           <div className="text-2xl font-medium text-ellipsis overflow-hidden whitespace-nowrap">
             {title}
@@ -69,7 +69,7 @@ export const HeadlessHeroHeader = ({
       </div>
       <div ref={ref} className="flex flex-col">
         <Link href="/">
-          <a className={classNames('flex justify-center items-center my-12 gap-4', textColor)}>
+          <a className={classNames('flex justify-start items-center my-12 gap-4', textColor)}>
             <div className="h-8 w-8">
               <BackArrowSVG className={classNames('h-8 w-8', backNavigationColor)} />
             </div>
@@ -78,7 +78,7 @@ export const HeadlessHeroHeader = ({
         </Link>
         <div
           className={classNames(
-            'HeroHeader flex flex-col md:flex-row min-h[20rem] max-w-4xl pt-24 md:pt-48 pb-16 md:pb-24 lg:pb-32 gap-16',
+            'HeroHeader flex flex-col md:flex-row min-h[20rem] pt-24 md:pt-48 pb-16 md:pb-24 lg:pb-32 gap-16',
             textColor
           )}
         >

@@ -48,6 +48,23 @@ import Importation from '../assets/images/actions/importation.svg';
 import MiseEnPlaceStock from '../assets/images/actions/mise-en-place-stock-depannage.svg';
 import RestrictionCircuitDistribution from '../assets/images/actions/restriction-circuit-distribution.svg';
 import NotFoundFigure from '../assets/images/notfound.svg';
+import ArretCommerceSvg from '../assets/images/causes/arret-commercialisation.svg';
+import AnalyseLiberationNonConformesSvg from '../assets/images/causes/analyses-de-liberation-non-conformes.svg';
+import AnalyseNonConformeSvg from '../assets/images/causes/analyse-non-conforme.svg';
+import AugmentationVolumesVenteSvg from '../assets/images/causes/augmentation-volumes-vente.svg';
+import AutreSvg from '../assets/images/causes/autre.svg';
+import CapaciteProductionInsuffisante from '../assets/images/causes/capacite-production-insuffisante.svg';
+import Coronavirus from '../assets/images/causes/coronavirus.svg';
+import DefautApprovisionnementSvg from '../assets/images/causes/defaut-approvisionnement.svg';
+import DefautApprovisionnementMpSvg from '../assets/images/causes/defaut-approvisionnement-mp.svg';
+import DefautQualiteSvg from '../assets/images/causes/defaut-qualite-produit-fini.svg';
+import IncidentProductionSvg from '../assets/images/causes/incident-production.svg';
+import MiseADispositionSvg from '../assets/images/causes/mise-a-disposition.svg';
+import NonConformeSvg from '../assets/images/causes/non-conformite-bpf.svg';
+import ProblemeTransportSvg from '../assets/images/causes/probleme-transport-logistique.svg';
+import TransfertSiteSvg from '../assets/images/causes/transfert-site.svg';
+import DifficulteReglementSvg from '../assets/images/causes/difficulte-reglementaire.svg';
+
 import React from 'react';
 
 export const cisExpositionLevelMapping = {
@@ -268,5 +285,45 @@ export const getFigureByActionName = (name: string) => {
       return <Importation className="w-32" />;
     default:
       return <NotFoundFigure className="w-32" />;
+  }
+};
+
+export const getFigureByCauseName = (name: string) => {
+  switch (name) {
+    case 'Incident de production':
+      return <IncidentProductionSvg className="w-32" />;
+    case 'Augmentation du volume de vente':
+      return <AugmentationVolumesVenteSvg className="w-32" />;
+    case 'Autre':
+      return <AutreSvg className="w-32" />;
+    case 'Transfert de site':
+      return <TransfertSiteSvg className="w-32" />;
+    case 'Capacité de production insuffisante':
+      return <CapaciteProductionInsuffisante className="w-32" />;
+    case 'Défaut qualité produit fini':
+      return <DefautQualiteSvg className="w-32" />;
+    case 'Difficulté réglementaire':
+      return <DifficulteReglementSvg className="w-32" />;
+    case "Défaut d'approvisionnement MP/AC":
+      return <DefautApprovisionnementMpSvg className="w-32" />;
+    case 'Analyses de libération non conformes':
+      return <AnalyseLiberationNonConformesSvg className="w-32" />;
+    case 'Problème de transport/logistique':
+      return <ProblemeTransportSvg className="w-32" />;
+    case 'Arrêt de commercialisation':
+      return <ArretCommerceSvg className="w-32" />;
+    case 'Coronavirus':
+      return <Coronavirus className="w-32" />;
+    case "Défaut d'approvisionnement en Matière Première":
+      return <AutreSvg className="w-32" />;
+    case 'Problème qualité : Analyse non conforme':
+      return <AnalyseNonConformeSvg className="w-32" />;
+    case "Défaut d'approvisionnement en Article de Conditionnement":
+      return <DefautApprovisionnementSvg className="w-32" />;
+
+    case 'Problème qualité : Non conformité aux BPF':
+      return <NonConformeSvg className="w-32" />;
+    default:
+      return <MiseADispositionSvg className="w-32" />;
   }
 };
