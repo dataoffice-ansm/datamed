@@ -1,6 +1,9 @@
+/* eslint-disable @typescript-eslint/restrict-template-expressions */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-return */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { HTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import { ChartBox } from '../../../components/ChartBox';
 import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
 import type { SelectOption } from '../../../components/Select/Select';
 import { Select } from '../../../components/Select/Select';
@@ -77,20 +80,22 @@ export const GestionDeclarationByYear = ({
               selectedData?.year ?? '- année non disponible'
             }`}
           >
-            <Select
-              theme="secondary-variant"
-              defaultOptionIndex={findOptionIndex(defaultOption)}
-              options={selectUnitOptions}
-              className="my-2"
-              onSelectOption={(index, option) => {
-                onUnitOptionChange(option.value as OptionsValue);
-              }}
-            />
-            <Select
-              options={options as unknown as SelectOption[]}
-              theme="secondary-variant"
-              onSelectOption={onSelectedYear}
-            />
+            <div className="flex gap-2">
+              <Select
+                theme="secondary-variant"
+                defaultOptionIndex={findOptionIndex(defaultOption)}
+                options={selectUnitOptions}
+                className=""
+                onSelectOption={(index, option) => {
+                  onUnitOptionChange(option.value as OptionsValue);
+                }}
+              />
+              <Select
+                options={options as unknown as SelectOption[]}
+                theme="secondary-variant"
+                onSelectOption={onSelectedYear}
+              />
+            </div>
           </SectionTitle>
           <div className="flex gap-8 flex-col md:flex-row">
             <BoxInfo
@@ -101,7 +106,7 @@ export const GestionDeclarationByYear = ({
               }`}
               icon={<DeclarationWithOneActionSvg />}
               theme="dark-green"
-              className="my-8"
+              className="flex-1"
             >
               des dossiers ont donné lieu à au moins une mesure
             </BoxInfo>
@@ -109,7 +114,7 @@ export const GestionDeclarationByYear = ({
               title={selectedData?.total?.toString() ?? ''}
               icon={<FolderSVG />}
               theme="dark-green"
-              className="my-8"
+              className="flex-1"
             >
               Nombre de mesures par année
             </BoxInfo>
