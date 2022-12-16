@@ -17,7 +17,12 @@ export const SectionTitle = ({
   children?: ReactNode | JSX.Element;
 }) => (
   <div className="SectionTitle">
-    <div className={classnames('flex items-start justify-between gap-4 mt-8', subTitle && 'mb-1')}>
+    <div
+      className={classnames(
+        'flex flex-col md:flex-row items-start justify-between gap-4 mt-8 mb-8 md:mb-0',
+        subTitle && 'mb-1'
+      )}
+    >
       <h2 className="text-2xl lg:text-3xl font-medium text-left mt-0 mb-2">{title}</h2>
       {children}
     </div>

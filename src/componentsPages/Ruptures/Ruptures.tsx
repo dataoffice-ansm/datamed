@@ -19,10 +19,13 @@ const SectionGestion = ({ rupture }: { rupture: GlobalRupture }) => {
   const { repartitionPerAction } = rupture;
 
   return (
-    <div className="RuptureSectionAction text-left">
+    <div className="RuptureSectionAction text-left flex flex-col gap-8 w-full">
       <GestionDeclarationByYear ruptures={rupture} />
 
-      <GraphBox title="Répartition des mesures prises pour pallier ou prévenir les ruptures de stock">
+      <GraphBox
+        title="Répartition des mesures prises pour pallier ou prévenir les ruptures de stock"
+        className="max-w-full"
+      >
         <div className="GraphBoxSelectContent">
           <GraphFiguresGrid
             data={repartitionPerAction?.filter((action) => action?.name && action?.value) ?? []}
