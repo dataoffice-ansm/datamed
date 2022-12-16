@@ -903,20 +903,28 @@ export class PostgresOperations {
       .distinct()
       .execute();
 
-    return rowTotal.map((r) => ({
-      value: Number(r.year),
-    }));
+    const years = rowTotal.reduce<RuptureYear[]>((carry, { year }) => {
+      if (year) {
+        const ruptureYear: RuptureYear = { value: parseInt(year, 10) };
+        carry.push(ruptureYear);
+      }
+
+      return carry;
+    }, []);
+
+    return years;
   }
 
   async getRuptureStockTotalExposition(year: number): Promise<RuptureStock> {
     const rows = await dbInstance
       .selectFrom('sold_out_all')
-      .where('year', '=', 'year')
+      .where('year', '=', year.toString())
       .select(['num', 'year', 'classification', 'state'])
       .execute();
 
-    return rows?.reduce<RuptureStock>(
+    return (rows ?? []).reduce<RuptureStock>(
       (carry, row) => {
+        carry.year = year;
         if (carry.nbRisque && carry.nbRupture && carry.nbRuptureClosed && carry.nbRisqueClosed) {
           const { classification, state } = row;
           if (classification === 'risque') {
@@ -935,8 +943,8 @@ export class PostgresOperations {
         return carry;
       },
       {
-        year,
-        total: rows.length,
+        year: 0,
+        total: (rows ?? []).length,
         nbRisque: 0,
         nbRupture: 0,
         nbRuptureClosed: 0,
@@ -954,6 +962,7 @@ export class PostgresOperations {
       .select([count('num').as('value'), 'year', 'classification'])
       .where('classification', '=', 'risque')
       .groupBy('year')
+      .groupBy('classification')
       .execute();
 
     const rowsRupture = await dbInstance
@@ -961,26 +970,27 @@ export class PostgresOperations {
       .select([count('num').as('value'), 'year', 'classification'])
       .where('classification', '=', 'rupture')
       .groupBy('year')
+      .groupBy('classification')
       .execute();
 
     const result: RuptureStockRepartitionPerClassication[] = [];
-    rowsRisque.forEach((r) => {
-      const { classification, value, year } = r;
+    rowsRisque.forEach((row) => {
+      const { classification, value, year } = row;
       if (classification && value && year) {
         result.push({
-          year: Number(year),
-          value: Number(value),
+          year: parseInt(year, 10),
+          value: parseInt(value as string, 10),
           classification,
         });
       }
     });
 
-    rowsRupture.forEach((r) => {
-      const { classification, value, year } = r;
+    rowsRupture.forEach((row) => {
+      const { classification, value, year } = row;
       if (classification && value && year) {
         result.push({
-          year: Number(year),
-          value: Number(value),
+          year: parseInt(year, 10),
+          value: parseInt(value as string, 10),
           classification,
         });
       }
