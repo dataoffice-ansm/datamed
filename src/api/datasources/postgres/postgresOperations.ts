@@ -1078,7 +1078,7 @@ export class PostgresOperations {
       .groupBy('at.type')
       .execute();
 
-    const totalWithOneAction = rows.filter((r) => r.with_action === 'Avec Mesure').length;
+    const totalWithOneAction = rows.filter((r) => r.with_action === 'Avec mesure').length;
 
     return rows.map((r) => ({
       total: Number(r.value),

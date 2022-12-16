@@ -1,8 +1,6 @@
 import type { HTMLAttributes } from 'react';
-import { useCallback, useState } from 'react';
-import { useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { ChartBox } from '../../../components/ChartBox';
-import { SectionTitle } from '../../../components/SectionTitle';
 import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
 import type { SelectOption } from '../../../components/Select/Select';
 import { Select } from '../../../components/Select/Select';
@@ -10,6 +8,7 @@ import { NotEnoughData } from 'components/NotEnoughData';
 import { BoxInfo } from '../../../components/BoxInfo';
 import FolderSVG from '../../../assets/icons/folder/folder.svg';
 import DeclarationWithOneActionSvg from '../../../assets/images/actions/declaration-avec-au-moin-une-mesure.svg';
+import { SectionTitle } from '../../../components/SectionTitle';
 
 export type GestionDeclarationActionByYearProps = {
   ruptures: GlobalRupture;
@@ -65,19 +64,24 @@ export const GestionDeclarationByYear = ({
     [options, ruptures?.totalAction, selectedIndex]
   );
 
-  const percentWithOneAction = (
-    (Math.round(selectedData?.totalWithOneAction ?? 0) / (selectedData?.total ?? 1)) *
-    100
-  ).toFixed(2);
+  const percentWithOneAction = `${
+    Math.round(Math.round(selectedData?.totalWithOneAction ?? 0) / (selectedData?.total ?? 1)) * 100
+  } %`;
   return (
     <div>
       {(ruptures?.ruptureYears ?? []).length > 0 ? (
         <>
-          <ChartBox>
+          <SectionTitle
+            title="Gestion des déclarations de ruptures et risques de rupture de stocks"
+            subTitle={`Données mises à jour mensuellement, issues de la période ${
+              selectedData?.year ?? '- année non disponible'
+            }`}
+          >
             <Select
               theme="secondary-variant"
               defaultOptionIndex={findOptionIndex(defaultOption)}
               options={selectUnitOptions}
+              className="my-2"
               onSelectOption={(index, option) => {
                 onUnitOptionChange(option.value as OptionsValue);
               }}
@@ -87,20 +91,29 @@ export const GestionDeclarationByYear = ({
               theme="secondary-variant"
               onSelectOption={onSelectedYear}
             />
-          </ChartBox>
-
-          <BoxInfo
-            title={`${
-              selectedUnitOption === 'number'
-                ? selectedData?.totalWithOneAction
-                : percentWithOneAction
-            }`}
-            icon={<DeclarationWithOneActionSvg />}
-            theme="dark-green"
-            className="my-8"
-          >
-            des dossiers ont donné lieu à au moins une mesure
-          </BoxInfo>
+          </SectionTitle>
+          <div className="flex gap-8 flex-col md:flex-row">
+            <BoxInfo
+              title={`${
+                selectedUnitOption === 'number'
+                  ? selectedData?.totalWithOneAction
+                  : percentWithOneAction
+              }`}
+              icon={<DeclarationWithOneActionSvg />}
+              theme="dark-green"
+              className="my-8"
+            >
+              des dossiers ont donné lieu à au moins une mesure
+            </BoxInfo>
+            <BoxInfo
+              title={selectedData?.total?.toString() ?? ''}
+              icon={<FolderSVG />}
+              theme="dark-green"
+              className="my-8"
+            >
+              Nombre de mesures par année
+            </BoxInfo>
+          </div>
         </>
       ) : (
         <div className="w-full flex justify-center items-center">
