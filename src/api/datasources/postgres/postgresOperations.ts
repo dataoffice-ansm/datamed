@@ -1,23 +1,28 @@
 import { dbInstance } from './postgreDb';
 import type {
   CisExposition,
+  GlobalRupture,
+  GlobalStatistic,
+  GlobStaticRepartitionPerNotifier,
+  GlobStaticRepartitionPerPathology,
+  HltEffect,
   MedicalErrors,
   Publication,
+  RepartitionPerGender,
+  RepartitionPerGravity,
   RepartitionPerNotifier,
   RepartitionPerPathology,
-  RepartitionPerGender,
+  RepartitionPerSeriousEffect,
   RepartitionRange,
+  RuptureStock,
+  RuptureStockRepartionPerClassTherapeutique,
+  RuptureStockRepartitionPerClassication,
+  RuptureYear,
   Speciality,
   SpecialityRupture,
   SpecialitySubstance,
   Substance,
   TotalExposition,
-  HltEffect,
-  GlobalStatistic,
-  RepartitionPerSeriousEffect,
-  GlobStaticRepartitionPerPathology,
-  GlobStaticRepartitionPerNotifier,
-  RepartitionPerGravity,
 } from '../../graphql/__generated__/generated-types';
 
 export class PostgresOperations {
@@ -889,5 +894,117 @@ export class PostgresOperations {
       repartitionPerNotifier: await this.getGlobalStatisticRepPerNotifier(),
       repartitionPerGravity: await this.getGlobalStatisticGravity(),
     };
+  }
+
+  async getRuptureYears(): Promise<RuptureYear[]> {
+    const rowTotal = await dbInstance
+      .selectFrom('sold_out_all')
+      .select('year')
+      .distinct()
+      .execute();
+
+    return rowTotal.map((r) => ({
+      value: Number(r.year),
+    }));
+  }
+
+  async getRuptureStockTotalExposition(year: number): Promise<RuptureStock> {
+    const rows = await dbInstance
+      .selectFrom('sold_out_all')
+      .where('year', '=', 'year')
+      .select(['num', 'year', 'classification', 'state'])
+      .execute();
+
+    return rows?.reduce<RuptureStock>(
+      (carry, row) => {
+        if (carry.nbRisque && carry.nbRupture && carry.nbRuptureClosed && carry.nbRisqueClosed) {
+          const { classification, state } = row;
+          if (classification === 'risque') {
+            carry.nbRisque += 1;
+            if (state !== 'ouvert') {
+              carry.nbRisqueClosed += 1;
+            }
+          } else {
+            carry.nbRupture += 1;
+            if (state === 'ouvert') {
+              carry.nbRuptureClosed += 1;
+            }
+          }
+        }
+
+        return carry;
+      },
+      {
+        year,
+        total: rows.length,
+        nbRisque: 0,
+        nbRupture: 0,
+        nbRuptureClosed: 0,
+        nbRisqueClosed: 0,
+      }
+    );
+  }
+
+  async getRuptureStockRepartitionPerClassification(): Promise<
+    RuptureStockRepartitionPerClassication[]
+  > {
+    const { count } = dbInstance.fn;
+    const rowsRisque = await dbInstance
+      .selectFrom('sold_out_all')
+      .select([count('num').as('value'), 'year', 'classification'])
+      .where('classification', '=', 'risque')
+      .groupBy('year')
+      .execute();
+
+    const rowsRupture = await dbInstance
+      .selectFrom('sold_out_all')
+      .select([count('num').as('value'), 'year', 'classification'])
+      .where('classification', '=', 'rupture')
+      .groupBy('year')
+      .execute();
+
+    const result: RuptureStockRepartitionPerClassication[] = [];
+    rowsRisque.forEach((r) => {
+      const { classification, value, year } = r;
+      if (classification && value && year) {
+        result.push({
+          year: Number(year),
+          value: Number(value),
+          classification,
+        });
+      }
+    });
+
+    rowsRupture.forEach((r) => {
+      const { classification, value, year } = r;
+      if (classification && value && year) {
+        result.push({
+          year: Number(year),
+          value: Number(value),
+          classification,
+        });
+      }
+    });
+
+    return result;
+  }
+
+  async getGlobalRupture(): Promise<GlobalRupture> {
+    const years = await this.getRuptureYears();
+
+    const globalRupture: GlobalRupture = {
+      ruptureStocks: [],
+      ruptureYears: years,
+      repartitionPerClassication: [],
+    };
+
+    globalRupture.ruptureStocks = await Promise.all(
+      years.map(async (year) => this.getRuptureStockTotalExposition(Number(year)))
+    );
+
+    globalRupture.repartitionPerClassication =
+      await this.getRuptureStockRepartitionPerClassification();
+
+    return globalRupture;
   }
 }

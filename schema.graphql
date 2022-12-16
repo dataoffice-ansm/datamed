@@ -159,6 +159,19 @@ type TotalExposition {
     maxYear: Int
 }
 
+type RuptureTotalExposition {
+    total: Int!
+    year: Int
+    ruptureExpositions : [RuptureExposition]
+
+}
+
+type RuptureExposition {
+    range: String
+    value: Int
+    valuePercent: Int
+}
+
 type Substance {
     id: Int!
     code: String!
@@ -219,6 +232,42 @@ type GlobalStatistic {
     repartitionPerGravity: [RepartitionPerGravity]
 }
 
+type RuptureYear {
+    value: Int
+}
+
+type RuptureStock {
+    year: Int
+    total: Int 
+    nbRisque: Int, 
+    nbRupture: Int, 
+    nbRisqueClosed: Int, 
+    nbRuptureClosed: Int
+}
+
+
+type RuptureStockRepartitionPerClassication {
+    year: Int
+    classification: String
+    value: Int
+}
+
+
+type RuptureStockRepartionPerClassTherapeutique {
+    year: Int
+    name: String
+    value: Int
+
+}
+
+
+type GlobalRupture {
+    ruptureStocks : [RuptureStock]
+    repartitionPerClassication: [RuptureStockRepartitionPerClassication]
+    ruptureYears: [RuptureYear]
+    repartitionPerClassTherapeutique: [RuptureStockRepartionPerClassTherapeutique]
+}
+
 ##### QUERIES #####
 
 type SpecialitiesReturn {
@@ -238,6 +287,7 @@ type Query {
     getSubstance(subCode: String!): Substance
     getSubstances: SubstancesReturn
     getGlobalStatistic: GlobalStatistic
+    getGlobalRupture: GlobalRupture
 }
 
 type LoginResult {
