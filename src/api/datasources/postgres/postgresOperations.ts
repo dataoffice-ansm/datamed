@@ -1010,16 +1010,16 @@ export class PostgresOperations {
   > {
     const { count } = dbInstance.fn;
     const rows = await dbInstance
-      .selectFrom('sold_out_all as soa')
-      .leftJoin('causes_all as ca', 'soa.id', 'ca.sold_out_id')
+      .selectFrom('sold_out_all')
+      .leftJoin('causes_all as ca', 'sold_out_all.id', 'ca.sold_out_id')
       .leftJoin('causes_types as cat', 'ca.id', 'cat.id')
-      .select([count('sold_out_all.num').as('value'), 'soa.year as year', 'cat.type as name'])
-      .groupBy('year')
+      .select([count('sold_out_all.num').as('value'), 'sold_out_all.year', 'cat.type as name'])
+      .groupBy('sold_out_all.year')
       .groupBy('cat.type')
       .execute();
 
     return rows.map((r) => ({
-      name: r.name!,
+      name: r.name,
       value: Number(r.value),
       year: Number(r.year),
     }));
@@ -1028,8 +1028,8 @@ export class PostgresOperations {
   async getRuptureStockRepartitionPerCause(): Promise<RuptureRepartitionPerClause[]> {
     const { count } = dbInstance.fn;
     const rows = await dbInstance
-      .selectFrom('sold_out_all as soa')
-      .leftJoin('causes_all as ca', 'soa.id', 'ca.sold_out_id')
+      .selectFrom('sold_out_all')
+      .leftJoin('causes_all as ca', 'sold_out_all.id', 'ca.sold_out_id')
       .leftJoin('causes_types as cat', 'ca.cause_id', 'cat.id')
       .select([count('sold_out_all.num').as('value'), 'cat.type'])
       .distinct()
@@ -1037,7 +1037,7 @@ export class PostgresOperations {
       .execute();
 
     return rows.map((r) => ({
-      name: r.type!,
+      name: r.type,
       value: Number(r.value),
     }));
   }
@@ -1045,15 +1045,15 @@ export class PostgresOperations {
   async getRuptureStockRepartitionPerAction(): Promise<RuptureRepartitionPerAction[]> {
     const { count } = dbInstance.fn;
     const rows = await dbInstance
-      .selectFrom('actions as a')
-      .leftJoin('actions_types as at', 'a.type_id', 'at.id')
+      .selectFrom('actions')
+      .leftJoin('actions_types as at', 'actions.type_id', 'at.id')
       .select([count('actions.id').as('value'), 'at.type as name'])
       .distinct()
       .groupBy('at.type')
       .execute();
 
     return rows.map((r) => ({
-      name: r.name!,
+      name: r.name,
       value: Number(r.value),
     }));
   }
@@ -1061,10 +1061,17 @@ export class PostgresOperations {
   async getRuptureStockTotalAction(): Promise<RuptureTotalAction[]> {
     const { count } = dbInstance.fn;
     const rows = await dbInstance
-      .selectFrom('actions as a')
-      .leftJoin('actions_types as at', 'a.type_id', 'at.id')
-      .select([count('actions.id').as('value'), 'at.type as name', 'a.year', 'a.with_action'])
+      .selectFrom('actions')
+      .leftJoin('actions_types as at', 'actions.type_id', 'at.id')
+      .select([
+        count('actions.id').as('value'),
+        'at.type as name',
+        'actions.year',
+        'actions.with_action',
+      ])
       .distinct()
+      .groupBy('actions.with_action')
+      .groupBy('actions.year')
       .groupBy('at.type')
       .execute();
 
