@@ -20,14 +20,14 @@ const sections = [
     label: 'DÉCLARATIONS',
     content: (
       <div>
-        <ChartBox>
-          <div className="flex flex-col justify-start items-start flex-auto text-left">
-            <div>
+        <SectionTitle
+          title="
               Déclarations de ruptures et risques de rupture de stock depuis le début de
-              l&apos;année civile en cours
-            </div>
-          </div>
-          ,
+              l'année civile en cours"
+          subTitle="Données mises à jour mensuellement, issues de la période 01/01/2022 - 01/06/2022"
+        />
+        <ChartBox>
+          <div className="flex flex-col justify-start items-start flex-auto text-left" />,
         </ChartBox>
         <ChartBox className="mt-8">
           <div className="flex flex-col justify-start items-start flex-auto text-left">
@@ -65,12 +65,12 @@ const sections = [
     id: 'gestion',
     label: 'GESTION',
     content: (
-      <ChartBox>
-        <div className="flex flex-col justify-start items-start flex-auto text-left">
-          Gestion des déclarations de ruptures et risques de rupture de stock
-        </div>
-        ,
-      </ChartBox>
+      <div>
+        <SectionTitle title="Gestion des déclarations de ruptures et risques de rupture de stock" />
+        <ChartBox>
+          <div className="flex flex-col justify-start items-start flex-auto text-left" />
+        </ChartBox>
+      </div>
     ),
   },
   {
@@ -141,7 +141,6 @@ const sections = [
             </p>
           </div>
         </ChartBox>
-        ,
       </div>
     ),
   },
@@ -185,7 +184,6 @@ export const Ruptures = () => (
       className="pb-64"
       colorMenu="primary"
       sections={sections}
-      offsetContent={60}
       render={(content) => content}
     />
   </div>
