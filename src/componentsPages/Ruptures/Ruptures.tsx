@@ -9,57 +9,13 @@ import RupturesSVG from '../../assets/icons/ruptures.svg';
 import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
 import { DeclarationByYear } from './DeclarationByYear.tsx/DeclarationByYear';
 import { DeclarationNatureCount } from './DeclarationNatureCount/DeclarationNatureCount';
-import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
-import { GraphFigure } from '../../components/GraphFigure';
-import { getFigureByActionName } from '../../utils/mapping';
 import { GestionDeclarationByYear } from './GestionDeclarationActionByYear/GestionDeclarationActionByYear';
-import { GraphBox } from '../../components/GraphBox/GraphBox';
 
-const SectionGestion = ({ rupture }: { rupture: GlobalRupture }) => {
-  const { repartitionPerAction } = rupture;
-
-  return (
-    <div className="RuptureSectionAction text-left flex flex-col gap-8 w-full">
-      <GestionDeclarationByYear ruptures={rupture} />
-
-      <GraphBox
-        title="Répartition des mesures prises pour pallier ou prévenir les ruptures de stock"
-        className="max-w-full"
-        tooltip={
-            <div className="p-4 max-w-md">
-                <div className="font-medium mb-4 text-lg">
-                    Mesures prises pour palier ou prévenir les ruptures de stock
-                </div>
-                <div>
-                    Lorsqu’un signalement arrive à l’ANSM, est mise en place une évaluation afin de
-                    déterminer les mesures les plus adaptées pour pallier l’insuffisance de stock.
-                    Plusieurs mesures peuvent être mobilisées pour une même situation de risque ou de
-                    rupture de stock, aussi le total peut dépasser 100%.
-                </div>
-            </div>
-        }
-      >
-        <div className="GraphBoxSelectContent">
-          <GraphFiguresGrid
-            data={repartitionPerAction?.filter((action) => action?.name && action?.value) ?? []}
-            renderItem={(action) =>
-              action?.name && action?.value ? (
-                <GraphFigure
-                  className="pathologyGraphFigure"
-                  unit=""
-                  description={action.name}
-                  icon={getFigureByActionName(action.name)}
-                  valueClassName="text-dark-green-900"
-                  value={action.value}
-                />
-              ) : null
-            }
-          />
-        </div>
-      </GraphBox>
-    </div>
-  );
-};
+const SectionGestion = ({ rupture }: { rupture: GlobalRupture }) => (
+  <div className="RuptureSectionAction text-left flex flex-col gap-8 w-full">
+    <GestionDeclarationByYear ruptures={rupture} />
+  </div>
+);
 
 const sections = (ruptures: GlobalRupture) => [
   {

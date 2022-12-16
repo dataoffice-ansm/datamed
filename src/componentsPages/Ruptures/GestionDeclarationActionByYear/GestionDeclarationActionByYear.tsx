@@ -8,6 +8,10 @@ import { BoxInfo } from '../../../components/BoxInfo';
 import FolderSVG from '../../../assets/icons/folder/folder.svg';
 import DeclarationWithOneActionSvg from '../../../assets/images/actions/declaration-avec-au-moin-une-mesure.svg';
 import { SectionTitle } from '../../../components/SectionTitle';
+import { GraphFiguresGrid } from '../../../components/GraphFiguresGrid';
+import { GraphFigure } from '../../../components/GraphFigure';
+import { getFigureByActionName } from '../../../utils/mapping';
+import { GraphBox } from '../../../components/GraphBox/GraphBox';
 
 export type GestionDeclarationActionByYearProps = {
   ruptures: GlobalRupture;
@@ -37,6 +41,9 @@ export const GestionDeclarationByYear = ({
 }: GestionDeclarationActionByYearProps) => {
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [selectedUnitOption, setSelectedUnitOption] = useState<OptionsValue>(defaultOption);
+  const { repartitionPerAction, ruptureYears } = ruptures;
+
+  console.log(repartitionPerAction);
 
   const onUnitOptionChange = useCallback((optionKey: OptionsValue) => {
     setSelectedUnitOption(optionKey);
@@ -44,11 +51,11 @@ export const GestionDeclarationByYear = ({
 
   const options = useMemo(
     () =>
-      (ruptures?.ruptureYears ?? []).map((ruptureYear) => ({
+      (ruptureYears ?? []).map((ruptureYear) => ({
         value: ruptureYear?.value,
         label: ruptureYear?.value,
       })),
-    [ruptures?.ruptureYears]
+    [ruptureYears]
   );
 
   const onSelectedYear = useCallback((index: number) => {
@@ -63,12 +70,18 @@ export const GestionDeclarationByYear = ({
     [options, ruptures?.totalAction, selectedIndex]
   );
 
+  const selectedActionData = useMemo(
+    () =>
+      (repartitionPerAction ?? []).find((action) => action?.year === options[selectedIndex].value),
+    [options, repartitionPerAction, selectedIndex]
+  );
+
   const percentWithOneAction = `${
     Math.round(Math.round(selectedData?.totalWithOneAction ?? 0) / (selectedData?.total ?? 1)) * 100
   } %`;
   return (
     <div>
-      {(ruptures?.ruptureYears ?? []).length > 0 ? (
+      {(ruptureYears ?? []).length > 0 ? (
         <>
           <SectionTitle
             title="Gestion des déclarations de ruptures et risques de rupture de stocks"
@@ -127,6 +140,49 @@ export const GestionDeclarationByYear = ({
               Nombre de mesures par année
             </BoxInfo>
           </div>
+
+          <GraphBox
+            title="Répartition des mesures prises pour pallier ou prévenir les ruptures de stock"
+            className="max-w-full"
+            tooltip={
+              <div className="p-4 max-w-md">
+                <div className="font-medium mb-4 text-lg">
+                  Mesures prises pour palier ou prévenir les ruptures de stock
+                </div>
+                <div>
+                  Lorsqu’un signalement arrive à l’ANSM, est mise en place une évaluation afin de
+                  déterminer les mesures les plus adaptées pour pallier l’insuffisance de stock.
+                  Plusieurs mesures peuvent être mobilisées pour une même situation de risque ou de
+                  rupture de stock, aussi le total peut dépasser 100%.
+                </div>
+              </div>
+            }
+          >
+            <div className="GraphBoxSelectContent">
+              <GraphFiguresGrid
+                data={
+                  selectedActionData?.actions?.filter((action) => action?.range && action?.value) ??
+                  []
+                }
+                renderItem={(action) =>
+                  action?.range && action?.value ? (
+                    <GraphFigure
+                      className="pathologyGraphFigure"
+                      unit={selectedUnitOption === 'number' ? '' : '%'}
+                      description={action.range}
+                      icon={getFigureByActionName(action.range)}
+                      valueClassName="text-dark-green-900"
+                      value={
+                        Math.round(
+                          Math.round(action.value ?? 0) / (selectedActionData?.total ?? 1)
+                        ) * 100
+                      }
+                    />
+                  ) : null
+                }
+              />
+            </div>
+          </GraphBox>
         </>
       ) : (
         <div className="w-full flex justify-center items-center">

@@ -273,9 +273,15 @@ type RuptureTotalAction {
 }
 
 
-type RuptureRepartitionPerAction {
-    name: String
+type RuptureAction {
+    range: String
     value: Int
+}
+
+type RuptureRepartitionPerAction {
+    year: Int
+    actions : [RuptureAction]
+    total: Int
 }
 
 

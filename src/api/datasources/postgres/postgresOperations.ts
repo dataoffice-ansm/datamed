@@ -14,6 +14,7 @@ import type {
   RepartitionPerPathology,
   RepartitionPerSeriousEffect,
   RepartitionRange,
+  RuptureAction,
   RuptureRepartitionPerAction,
   RuptureRepartitionPerClause,
   RuptureStock,
@@ -1044,21 +1045,52 @@ export class PostgresOperations {
     }));
   }
 
-  async getRuptureStockRepartitionPerAction(): Promise<RuptureRepartitionPerAction[]> {
+  async getRuptureTotalActionByYear(year: string): Promise<number> {
+    const { count } = dbInstance.fn;
+    const rowTotal = await dbInstance
+      .selectFrom('actions')
+      .select([count('actions.id').as('value')])
+      .where('actions.year', '=', year)
+      .distinct()
+      .executeTakeFirst();
+
+    return Number(rowTotal?.value);
+  }
+
+  async getRuptureActionsByYear(year: string): Promise<RuptureAction[]> {
     const { count } = dbInstance.fn;
     const rows = await dbInstance
       .selectFrom('actions')
       .leftJoin('actions_types as at', 'actions.type_id', 'at.id')
       .select([count('actions.id').as('value'), 'at.type as name'])
+      .where('actions.year', '=', year)
       .distinct()
       .groupBy('at.type')
       .orderBy('at.type')
       .execute();
 
     return rows.map((r) => ({
-      name: r.name,
+      range: r.name,
       value: Number(r.value),
     }));
+  }
+
+  async getRuptureStockRepartitionPerAction(): Promise<RuptureRepartitionPerAction[]> {
+    const years = await this.getRuptureYears();
+    const result: RuptureRepartitionPerAction[] = [];
+    await Promise.all(
+      years.map(async ({ value }) => {
+        const year = String(value);
+        const total = await this.getRuptureTotalActionByYear(year);
+        const actions = await this.getRuptureActionsByYear(year);
+        result.push({
+          year: value,
+          actions,
+          total,
+        });
+      })
+    );
+    return result;
   }
 
   async getRuptureStockTotalAction(): Promise<RuptureTotalAction[]> {
