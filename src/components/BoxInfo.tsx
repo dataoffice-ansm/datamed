@@ -49,7 +49,7 @@ export const BoxInfo = ({
           'text-success': theme === 'success',
         })}
       >
-        <span className="BoxInfoTitle text-3xl">{title}</span>
+        <span className="BoxInfoTitle text-3xl font-medium">{title}</span>
         {tooltip && (
           <div className="BoxInfoTooltip flex justify-center items-center">
             <Tooltip
