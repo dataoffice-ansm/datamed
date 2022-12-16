@@ -19,11 +19,11 @@ export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
 
   const options = useMemo(
     () =>
-      (ruptures.ruptureYears ?? []).map((ruptureYear) => ({
+      (ruptures?.ruptureYears ?? []).map((ruptureYear) => ({
         value: ruptureYear?.value,
         label: ruptureYear?.value,
       })),
-    [ruptures.ruptureYears]
+    [ruptures?.ruptureYears]
   );
 
   const onSelectedYear = useCallback((index: number) => {
@@ -32,10 +32,10 @@ export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
 
   const selectedData = useMemo(
     () =>
-      (ruptures.ruptureStocks ?? []).find(
+      (ruptures?.ruptureStocks ?? []).find(
         (element) => element?.year === options[selectedIndex].value
       ),
-    [options, ruptures.ruptureStocks, selectedIndex]
+    [options, ruptures?.ruptureStocks, selectedIndex]
   );
 
   const percentRisque = (
@@ -47,64 +47,65 @@ export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
     100
   ).toFixed(2);
 
-  if ((ruptures.ruptureYears ?? []).length > 0) {
-    return (
-      <>
-        <SectionTitle
-          title="Déclarations de ruptures et risques de rupture de stock depuis le début de l'année civile en cours"
-          subTitle="Données mises à jour mensuellement, issues de la période 01/01/2022 - 01/06/2022"
-        />
-        {selectedData?.total}
-        <ChartBox>
-          <Select
-            options={options as unknown as SelectOption[]}
-            theme="secondary-variant"
-            onSelectOption={onSelectedYear}
-          />
-        </ChartBox>
-
-        <BoxInfo
-          title={`${selectedData?.total ?? 0} déclaration(s) reçues(s)`}
-          icon={<FolderSVG />}
-          theme="dark-green"
-          className="my-8"
-          tooltip={
-            <div>
-              <strong>Déclarations cumulées</strong>
-              <div>
-                Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise à jour
-                progressive des données.
-              </div>
-            </div>
-          }
-        >
-          Nombre de déclarations de ruptures et risques de rupture de stock et de décret sans risque
-          depuis le début de l’année civile en cours
-        </BoxInfo>
-
-        <div>
-          <div>
-            <div>
-              {selectedData?.nbRupture} déclarations de ruptures depuis le début de l’année civile
-              en cours
-            </div>
-            <div>{percentRupture}% ont été clôturées à ce jour</div>
-          </div>
-          <div>
-            <div>
-              {selectedData?.nbRisque} déclarations de risques de rupture depuis le début de l’année
-              civile en cours
-            </div>
-            <div>{percentRisque}% ont été clôturées à ce jour</div>
-          </div>
-        </div>
-      </>
-    );
-  }
-
   return (
-    <div className="w-full flex justify-center items-center">
-      <NotEnoughData />
+    <div>
+      <SectionTitle
+        title="Déclarations de ruptures et risques de rupture de stock depuis le début de l'année civile en cours"
+        subTitle={`Données mises à jour mensuellement, issues de la période ${
+          selectedData?.year ?? '- année non disponible'
+        }`}
+      />
+      {(ruptures?.ruptureYears ?? []).length > 0 ? (
+        <>
+          <ChartBox>
+            <Select
+              options={options as unknown as SelectOption[]}
+              theme="secondary-variant"
+              onSelectOption={onSelectedYear}
+            />
+          </ChartBox>
+
+          <BoxInfo
+            title={`${selectedData?.total ?? 0} déclaration(s) reçues(s)`}
+            icon={<FolderSVG />}
+            theme="dark-green"
+            className="my-8"
+            tooltip={
+              <div>
+                <strong>Déclarations cumulées</strong>
+                <div>
+                  Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise à
+                  jour progressive des données.
+                </div>
+              </div>
+            }
+          >
+            Nombre de déclarations de ruptures et risques de rupture de stock et de décret sans
+            risque depuis le début de l’année civile en cours
+          </BoxInfo>
+
+          <div>
+            <div>
+              <div>
+                {selectedData?.nbRupture} déclarations de ruptures depuis le début de l’année civile
+                en cours
+              </div>
+              <div>{percentRupture}% ont été clôturées à ce jour</div>
+            </div>
+            <div>
+              <div>
+                {selectedData?.nbRisque} déclarations de risques de rupture depuis le début de
+                l’année civile en cours
+              </div>
+              <div>{percentRisque}% ont été clôturées à ce jour</div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <div className="w-full flex justify-center items-center">
+          <NotEnoughData />
+        </div>
+      )}
     </div>
   );
 };
