@@ -24,6 +24,7 @@ import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
 import { Button } from '../../components/Button/Button';
 import GlobStatSvg from '../../assets/images/sick_transparent_person.svg';
+import { Tooltip } from '../../components/Tooltip/Tooltip';
 
 const SectionDemography = ({ stat }: { stat: GlobalStatistic }) => {
   const { repartitionPerAge, repartitionPerGender, totalExposition } = stat;
@@ -398,6 +399,27 @@ export const GlobalStatisticPage = ({ globalStatistic }: { globalStatistic: Glob
         description="Statistiques globales"
         textColor="text-black"
         backNavigationIconColor="fill-black"
+        tooltip={
+          <Tooltip
+            placement="bottom"
+            content={
+              <div className="p-4 max-w-md">
+                <div className="font-medium mb-4 text-lg">Qu’est-ce que la pharmacovigilance ?</div>
+                <div>
+                  La pharmacovigilance est la surveillance, l’évaluation, la prévention et la
+                  gestion du risque d’effet indésirable résultant de l’utilisation des médicaments.
+                  Elle s’exerce en permanence, avant et après la commercialisation des médicaments,
+                  et constitue un élément essentiel du contrôle de la sécurité des médicaments.
+                </div>
+              </div>
+            }
+            render={(refCb) => (
+              <span ref={refCb} className="underline cursor-help">
+                Qu’est-ce que la pharmacovigilance ?
+              </span>
+            )}
+          />
+        }
       />
     </EntityPageLayout>
   );
