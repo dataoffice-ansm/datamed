@@ -21,14 +21,14 @@ export const GraphBox = ({
   tooltip?: JSX.Element | ReactNode;
   title: string;
 }) => (
-  <div className={classnames('GraphBox rounded-lg shadow bg-white max-w-max p-4', className)}>
-    <div className="GraphBoxTitle font-medium mb-4">
-      <span>{title}</span>
+  <div className={classnames('GraphBox rounded-lg shadow bg-white p-4', className)}>
+    <div className="GraphBoxTitle flex items-center gap-4 w-full p-4">
+      <div className="flex-1 text-xl">{title}</div>
       {tooltip && (
-        <div className="GraphBoxTooltip flex justify-center items-center">
+        <div className="GraphBoxTooltip flex gap-4 items-center">
           <Tooltip
-            content={<div className="p-2">{tooltip}</div>}
-            placement="auto-start"
+            content={<div className="p-4 max-w-md">{tooltip}</div>}
+            placement="bottom"
             render={(refCb) => (
               <div ref={refCb} className="h-5 w-5">
                 <InfoSVG />

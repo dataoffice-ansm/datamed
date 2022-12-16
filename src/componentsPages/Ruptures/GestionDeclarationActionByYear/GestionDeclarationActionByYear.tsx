@@ -12,6 +12,7 @@ import { GraphFiguresGrid } from '../../../components/GraphFiguresGrid';
 import { GraphFigure } from '../../../components/GraphFigure';
 import { getFigureByActionName } from '../../../utils/mapping';
 import { GraphBox } from '../../../components/GraphBox/GraphBox';
+import { BaseTooltipContent } from '../Tooltip';
 
 export type GestionDeclarationActionByYearProps = {
   ruptures: GlobalRupture;
@@ -42,8 +43,6 @@ export const GestionDeclarationByYear = ({
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [selectedUnitOption, setSelectedUnitOption] = useState<OptionsValue>(defaultOption);
   const { repartitionPerAction, ruptureYears } = ruptures;
-
-  console.log(repartitionPerAction);
 
   const onUnitOptionChange = useCallback((optionKey: OptionsValue) => {
     setSelectedUnitOption(optionKey);
@@ -82,7 +81,7 @@ export const GestionDeclarationByYear = ({
   return (
     <div>
       {(ruptureYears ?? []).length > 0 ? (
-        <>
+        <div className="flex flex-col gap-8">
           <SectionTitle
             title="Gestion des déclarations de ruptures et risques de rupture de stocks"
             subTitle={`Données mises à jour mensuellement, issues de la période ${
@@ -95,7 +94,7 @@ export const GestionDeclarationByYear = ({
                 defaultOptionIndex={findOptionIndex(defaultOption)}
                 options={selectUnitOptions}
                 className=""
-                onSelectOption={(index, option) => {
+                onSelectOption={(_, option) => {
                   onUnitOptionChange(option.value as OptionsValue);
                 }}
               />
@@ -110,14 +109,14 @@ export const GestionDeclarationByYear = ({
             <BoxInfo
               title={`${
                 selectedUnitOption === 'number'
-                  ? selectedData?.totalWithOneAction
+                  ? selectedData?.totalWithOneAction ?? 0
                   : percentWithOneAction
               }`}
               icon={<DeclarationWithOneActionSvg />}
               theme="dark-green"
               className="flex-1"
               tooltip={
-                <div className="p-4 max-w-md">
+                <BaseTooltipContent>
                   <div className="font-medium mb-4 text-lg">Dossiers donnant lieu à une mesure</div>
                   <div>
                     La pharmacovigilance est la surveillance, l’évaluation, la prévention et la
@@ -126,7 +125,7 @@ export const GestionDeclarationByYear = ({
                     des médicaments, et constitue un élément essentiel du contrôle de la sécurité
                     des médicaments.
                   </div>
-                </div>
+                </BaseTooltipContent>
               }
             >
               des dossiers ont donné lieu à au moins une mesure
@@ -143,9 +142,8 @@ export const GestionDeclarationByYear = ({
 
           <GraphBox
             title="Répartition des mesures prises pour pallier ou prévenir les ruptures de stock"
-            className="max-w-full"
             tooltip={
-              <div className="p-4 max-w-md">
+              <>
                 <div className="font-medium mb-4 text-lg">
                   Mesures prises pour palier ou prévenir les ruptures de stock
                 </div>
@@ -155,15 +153,14 @@ export const GestionDeclarationByYear = ({
                   Plusieurs mesures peuvent être mobilisées pour une même situation de risque ou de
                   rupture de stock, aussi le total peut dépasser 100%.
                 </div>
-              </div>
+              </>
             }
           >
             <div className="GraphBoxSelectContent">
               <GraphFiguresGrid
-                data={
-                  selectedActionData?.actions?.filter((action) => action?.range && action?.value) ??
-                  []
-                }
+                data={(selectedActionData?.actions ?? [])?.filter(
+                  (action) => action?.range && action?.value
+                )}
                 renderItem={(action) =>
                   action?.range && action?.value ? (
                     <GraphFigure
@@ -173,9 +170,12 @@ export const GestionDeclarationByYear = ({
                       icon={getFigureByActionName(action.range)}
                       valueClassName="text-dark-green-900"
                       value={
-                        Math.round(
-                          Math.round(action.value ?? 0) / (selectedActionData?.total ?? 1)
-                        ) * 100
+                        selectedUnitOption === 'number'
+                          ? action.value
+                          : Math.trunc(
+                              (Math.round(action.value ?? 0) / (selectedActionData?.total ?? 1)) *
+                                100
+                            )
                       }
                     />
                   ) : null
@@ -183,7 +183,7 @@ export const GestionDeclarationByYear = ({
               />
             </div>
           </GraphBox>
-        </>
+        </div>
       ) : (
         <div className="w-full flex justify-center items-center">
           <NotEnoughData />

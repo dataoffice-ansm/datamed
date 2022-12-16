@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from 'react';
+import type { HTMLAttributes, ReactNode } from 'react';
 import { useCallback, useState } from 'react';
 import { useMemo } from 'react';
 import { SectionTitle } from '../../../components/SectionTitle';
@@ -9,6 +9,56 @@ import { NotEnoughData } from 'components/NotEnoughData';
 import { BoxInfo } from '../../../components/BoxInfo';
 import FolderSVG from '../../../assets/icons/folder/folder.svg';
 import classNames from 'classnames';
+import { BaseTooltipContent, ContainerWithTooltip } from '../Tooltip';
+
+type PercentageBoxProps = {
+  percent: number;
+  total: number;
+  numberColor: string;
+  percentBackgroundColor: string;
+  percentForegroundColor: string;
+  title: string;
+  subtitle: string;
+  tooltip: JSX.Element | ReactNode;
+} & HTMLAttributes<HTMLElement>;
+
+const PercentageBox = ({
+  percent,
+  numberColor,
+  percentBackgroundColor,
+  percentForegroundColor,
+  subtitle,
+  title,
+  tooltip,
+  total,
+}: PercentageBoxProps) => (
+  <div className="flex-1 shadow rounded-lg bg-white p-4 flex flex-col gap-4">
+    <ContainerWithTooltip tooltip={tooltip}>
+      <div className={classNames('font-medium text-2xl md:text-3xl', numberColor)}>
+        {total?.toLocaleString()}
+      </div>
+      <div>{title}</div>
+    </ContainerWithTooltip>
+    <div>
+      <div className={classNames('font-medium text-2xl md:text-3xl', numberColor)}>
+        {percent.toLocaleString()} %
+      </div>
+      <div>{subtitle}</div>
+    </div>
+    <div>
+      <div className={classNames('h-8 w-full relative border', percentBackgroundColor)}>
+        <div
+          className={classNames('absolute top-0 left-0 bottom-0', percentForegroundColor, {
+            'border-r': percent < 100,
+          })}
+          style={{
+            width: `${percent}%`,
+          }}
+        />
+      </div>
+    </div>
+  </div>
+);
 
 export type DeclarationByYearProps = {
   ruptures: GlobalRupture;
@@ -38,10 +88,12 @@ export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
     [options, ruptures?.ruptureStocks, selectedIndex]
   );
 
-  const percentRisque =
-    (Math.round(selectedData?.nbRisqueClosed ?? 0) / (selectedData?.nbRisque ?? 1)) * 100;
-  const percentRupture =
-    (Math.round(selectedData?.nbRuptureClosed ?? 0) / (selectedData?.nbRupture ?? 1)) * 100;
+  const percentRisque = Math.trunc(
+    (Math.round(selectedData?.nbRisqueClosed ?? 0) / (selectedData?.nbRisque ?? 1)) * 100
+  );
+  const percentRupture = Math.trunc(
+    (Math.round(selectedData?.nbRuptureClosed ?? 0) / (selectedData?.nbRupture ?? 1)) * 100
+  );
 
   return (
     <div>
@@ -60,18 +112,16 @@ export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
       {(ruptures?.ruptureYears ?? []).length > 0 ? (
         <>
           <BoxInfo
-            title={`${selectedData?.total ?? 0} déclaration(s) reçues(s)`}
+            title={`${(selectedData?.total ?? 0).toLocaleString()} déclaration(s) reçues(s)`}
             icon={<FolderSVG />}
             theme="dark-green"
             className="my-8"
             tooltip={
-              <div>
-                <div className="font-medium">Déclarations cumulées</div>
-                <div>
-                  Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise à
-                  jour progressive des données.
-                </div>
-              </div>
+              <BaseTooltipContent>
+                Les ruptures, les risques de rupture de stock ainsi que les stocks de sécurité
+                inférieurs au seuil défini par décret sont déclarés à l’ANSM par les entreprises
+                pharmaceutiques.
+              </BaseTooltipContent>
             }
           >
             Nombre de déclarations de ruptures et risques de rupture de stock et de décret sans
@@ -79,60 +129,38 @@ export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
           </BoxInfo>
 
           <div className="flex gap-8 flex-col md:flex-row">
-            <div className="flex-1 shadow rounded-lg bg-white p-4 flex flex-col gap-4">
-              <div>
-                <div className="text-teal-900 font-medium text-2xl md:text-3xl">
-                  {selectedData?.nbRupture}
-                </div>
-                <div>Déclarations de ruptures depuis le début de l’année civile en cours</div>
-              </div>
-              <div>
-                <div className="text-teal-900 font-medium text-2xl md:text-3xl">
-                  {percentRupture.toFixed(2)}%
-                </div>
-                <div>ont été clôturées à ce jour</div>
-              </div>
-              <div>
-                <div className="h-8 w-full relative bg-teal-300 border">
-                  <div
-                    className={classNames('absolute top-0 left-0 bottom-0 bg-teal-900', {
-                      'border-r': percentRupture < 100,
-                    })}
-                    style={{
-                      width: `${percentRupture}%`,
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
-            <div className="flex-1 shadow rounded-lg bg-white p-4 flex flex-col gap-4">
-              <div>
-                <div className="text-green-900 font-medium text-2xl md:text-3xl">
-                  {selectedData?.nbRisque}
-                </div>
-                <div>
-                  Déclarations de risques de rupture depuis le début de l’année civile en cours
-                </div>
-              </div>
-              <div>
-                <div className="text-green-900 font-medium text-2xl md:text-3xl">
-                  {percentRisque.toFixed(2)}%
-                </div>
-                <div>ont été clôturées à ce jour</div>
-              </div>
-              <div>
-                <div className="h-8 w-full relative bg-green-300 border">
-                  <div
-                    className={classNames('absolute top-0 left-0 bottom-0 bg-green-900', {
-                      'border-r': percentRisque < 100,
-                    })}
-                    style={{
-                      width: `${percentRisque}%`,
-                    }}
-                  />
-                </div>
-              </div>
-            </div>
+            <PercentageBox
+              title="Déclarations de ruptures depuis le début de l’année civile en cours"
+              subtitle="ont été clôturées à ce jour"
+              percent={percentRupture}
+              total={selectedData?.nbRupture ?? 0}
+              numberColor="text-teal-900"
+              percentBackgroundColor="bg-teal-300"
+              percentForegroundColor="bg-teal-900"
+              tooltip={
+                <BaseTooltipContent>
+                  Une déclaration de rupture de stock est faite par l&apos;exploitant lorsque le
+                  laboratoire ne dispose plus de stock ou d’un stock très limité réservé à une
+                  distribution d’urgence.
+                </BaseTooltipContent>
+              }
+            />
+            <PercentageBox
+              title="Déclarations de risques de rupture depuis le début de l’année civile en cours"
+              subtitle="ont été clôturées à ce jour"
+              percent={percentRisque}
+              total={selectedData?.nbRisque ?? 0}
+              numberColor="text-green-900"
+              percentBackgroundColor="bg-green-300"
+              percentForegroundColor="bg-green-900"
+              tooltip={
+                <BaseTooltipContent>
+                  Une déclaration de risque de rupture de stock est faite par l&apos;exploitant
+                  lorsqu&apos;il est anticipé que le niveau de stock ne pourra pas répondre
+                  complètement aux besoins.
+                </BaseTooltipContent>
+              }
+            />
           </div>
         </>
       ) : (

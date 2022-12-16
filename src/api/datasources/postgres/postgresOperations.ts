@@ -16,9 +16,10 @@ import type {
   RepartitionRange,
   RuptureAction,
   RuptureRepartitionPerAction,
-  RuptureRepartitionPerClause,
+  RuptureRepartitionPerCause,
   RuptureStock,
   RuptureStockRepartionPerClassTherapeutique,
+  RuptureStockRepartionPerClassTherapeutiques,
   RuptureStockRepartitionPerClassication,
   RuptureTotalAction,
   RuptureYear,
@@ -1008,49 +1009,87 @@ export class PostgresOperations {
     return result;
   }
 
-  async getRuptureStockRepartitionPerClassTherapeutique(): Promise<
-    RuptureStockRepartionPerClassTherapeutique[]
-  > {
+  async getRuptureStockRepartitionPerClassTherapeutique(
+    year: string
+  ): Promise<RuptureStockRepartionPerClassTherapeutique[]> {
     const { count } = dbInstance.fn;
+
+    const rowsCis = await dbInstance
+      .selectFrom('sold_out_all')
+      .where('sold_out_all.year', '=', year)
+      .where('sold_out_all.classification', 'in', ['risque', 'rupture'])
+      .leftJoin('atc_classes', 'atc_classes.code', 'sold_out_all.atc1')
+      .where('atc_classes.label', 'is not', null)
+      .select([count('sold_out_all.cis').as('value')])
+      .distinctOn('sold_out_all.cis')
+      .groupBy('sold_out_all.cis')
+      .groupBy('atc_classes.label')
+      .executeTakeFirst();
+
     const rows = await dbInstance
       .selectFrom('sold_out_all')
-      .leftJoin('causes_all as ca', 'sold_out_all.id', 'ca.sold_out_id')
-      .leftJoin('causes_types as cat', 'ca.id', 'cat.id')
-      .select([count('sold_out_all.num').as('value'), 'sold_out_all.year', 'cat.type as name'])
+      .where('sold_out_all.year', '=', year)
+      .where('sold_out_all.classification', 'in', ['risque', 'rupture'])
+      .leftJoin('atc_classes', 'atc_classes.code', 'sold_out_all.atc1')
+      .where('atc_classes.label', 'is not', null)
+      .select([
+        count('sold_out_all.id').as('value'),
+        'sold_out_all.year',
+        'atc_classes.label as name',
+      ])
       .groupBy('sold_out_all.year')
-      .groupBy('cat.type')
+      .groupBy('atc_classes.label')
       .execute();
 
     return rows.map((r) => ({
       name: r.name,
       value: Number(r.value),
       year: Number(r.year),
+      totalCis: Number(rowsCis?.value),
     }));
   }
 
-  async getRuptureStockRepartitionPerCause(): Promise<RuptureRepartitionPerClause[]> {
+  async getRuptureStockRepartitionPerCause(
+    years: RuptureYear[]
+  ): Promise<RuptureRepartitionPerCause[]> {
     const { count } = dbInstance.fn;
-    const rows = await dbInstance
-      .selectFrom('sold_out_all')
-      .leftJoin('causes_all as ca', 'sold_out_all.id', 'ca.sold_out_id')
-      .leftJoin('causes_types as cat', 'ca.cause_id', 'cat.id')
-      .select([count('sold_out_all.num').as('value'), 'cat.type'])
-      .distinct()
-      .groupBy('cat.type')
-      .execute();
 
-    return rows.map((r) => ({
-      name: r.type,
-      value: Number(r.value),
-    }));
+    return Promise.all(
+      years.map(async ({ value }) => {
+        const year = String(value);
+        const rowsTotal = await dbInstance
+          .selectFrom('sold_out_all')
+          .leftJoin('causes_all as ca', 'sold_out_all.id', 'ca.sold_out_id')
+          .leftJoin('causes_types as cat', 'ca.cause_id', 'cat.id')
+          .where('sold_out_all.year', '=', year)
+          .select([count('sold_out_all.num').as('value')])
+          .executeTakeFirst();
+        const rows = await dbInstance
+          .selectFrom('sold_out_all')
+          .leftJoin('causes_all as ca', 'sold_out_all.id', 'ca.sold_out_id')
+          .leftJoin('causes_types as cat', 'ca.cause_id', 'cat.id')
+          .where('sold_out_all.year', '=', year)
+          .select([count('sold_out_all.num').as('value'), 'cat.type'])
+          .groupBy('cat.type')
+          .execute();
+        return {
+          year: Number(value),
+          causes: rows.map((r) => ({
+            range: r.type,
+            value: Number(r.value),
+          })),
+          total: Number(rowsTotal?.value),
+        };
+      })
+    );
   }
 
   async getRuptureTotalActionByYear(year: string): Promise<number> {
     const { count } = dbInstance.fn;
     const rowTotal = await dbInstance
       .selectFrom('actions')
-      .select([count('actions.id').as('value')])
-      .where('actions.year', '=', year)
+      .select([count('id').as('value')])
+      .where('year', '=', year)
       .distinct()
       .executeTakeFirst();
 
@@ -1064,7 +1103,6 @@ export class PostgresOperations {
       .leftJoin('actions_types as at', 'actions.type_id', 'at.id')
       .select([count('actions.id').as('value'), 'at.type as name'])
       .where('actions.year', '=', year)
-      .distinct()
       .groupBy('at.type')
       .orderBy('at.type')
       .execute();
@@ -1077,20 +1115,39 @@ export class PostgresOperations {
 
   async getRuptureStockRepartitionPerAction(): Promise<RuptureRepartitionPerAction[]> {
     const years = await this.getRuptureYears();
-    const result: RuptureRepartitionPerAction[] = [];
-    await Promise.all(
+    const results = await Promise.all(
       years.map(async ({ value }) => {
         const year = String(value);
         const total = await this.getRuptureTotalActionByYear(year);
         const actions = await this.getRuptureActionsByYear(year);
-        result.push({
+        return {
           year: value,
           actions,
           total,
-        });
+        };
       })
     );
-    return result;
+
+    return results;
+  }
+
+  async getRuptureStockRepartitionPerClassTherapeutiques(
+    years: RuptureYear[]
+  ): Promise<RuptureStockRepartionPerClassTherapeutiques[]> {
+    const results = await Promise.all(
+      years.map(async ({ value }) => {
+        const year = String(value);
+        const total = await this.getRuptureTotalActionByYear(year);
+        const repartitions = await this.getRuptureStockRepartitionPerClassTherapeutique(year);
+        return {
+          year: value,
+          repartitions,
+          total,
+        };
+      })
+    );
+
+    return results;
   }
 
   async getRuptureStockTotalAction(): Promise<RuptureTotalAction[]> {
@@ -1104,7 +1161,6 @@ export class PostgresOperations {
         'actions.year',
         'actions.with_action',
       ])
-      .distinct()
       .groupBy('actions.with_action')
       .groupBy('actions.year')
       .groupBy('at.type')
@@ -1128,9 +1184,10 @@ export class PostgresOperations {
       ),
       ruptureYears: years,
       repartitionPerClassication: await this.getRuptureStockRepartitionPerClassification(),
-      repartitionPerClassTherapeutique:
-        await this.getRuptureStockRepartitionPerClassTherapeutique(),
-      repartitionPerCause: await this.getRuptureStockRepartitionPerCause(),
+      repartitionPerClassTherapeutique: await this.getRuptureStockRepartitionPerClassTherapeutiques(
+        years
+      ),
+      repartitionPerCause: await this.getRuptureStockRepartitionPerCause(years),
       repartitionPerAction: await this.getRuptureStockRepartitionPerAction(),
       totalAction: await this.getRuptureStockTotalAction(),
     };

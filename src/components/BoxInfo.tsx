@@ -54,7 +54,7 @@ export const BoxInfo = ({
           <div className="BoxInfoTooltip flex justify-center items-center">
             <Tooltip
               content={<div className="p-2">{tooltip}</div>}
-              placement="auto-start"
+              placement="bottom"
               render={(refCb) => (
                 <div ref={refCb} className="h-5 w-5">
                   <InfoSVG />

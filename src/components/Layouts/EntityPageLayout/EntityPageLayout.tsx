@@ -183,13 +183,7 @@ export const EntityPageLayout = ({
   return renderLayout(
     <div>
       {children}
-      <div className="mobileLayout flex flex-col gap-2 relative">
-        <h6 className="m-0 text-primary">Navigation</h6>
-        <div className="mobileNav border-b border-grey border-solid">
-          <RenderNavigation />
-        </div>
-        {renderContent}
-      </div>
+      <div className="mobileLayout flex flex-col gap-2 relative">{renderContent}</div>
     </div>
   );
 };
