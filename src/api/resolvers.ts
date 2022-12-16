@@ -69,6 +69,10 @@ export const resolvers: Resolvers = {
     async getGlobalStatistic(parent, args, context) {
       return context.dataSources.postgresOperations.getGlobalStatistic();
     },
+
+    async getGlobalRupture(parent, args, context) {
+      return context.dataSources.postgresOperations.getGlobalRupture();
+    },
   },
 
   Speciality: {

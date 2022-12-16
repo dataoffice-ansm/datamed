@@ -37,6 +37,16 @@ export type GlobStaticRepartitionPerPathology = {
   valuePercent?: Maybe<Scalars['Int']>;
 };
 
+export type GlobalRupture = {
+  __typename?: 'GlobalRupture';
+  repartitionPerClassTherapeutique?: Maybe<
+    Array<Maybe<RuptureStockRepartionPerClassTherapeutique>>
+  >;
+  repartitionPerClassication?: Maybe<Array<Maybe<RuptureStockRepartitionPerClassication>>>;
+  ruptureStocks?: Maybe<Array<Maybe<RuptureStock>>>;
+  ruptureYears?: Maybe<Array<Maybe<RuptureYear>>>;
+};
+
 export type GlobalStatistic = {
   __typename?: 'GlobalStatistic';
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionRange>>>;
@@ -136,6 +146,7 @@ export type PublicationType = {
 
 export type Query = {
   __typename?: 'Query';
+  getGlobalRupture?: Maybe<GlobalRupture>;
   getGlobalStatistic?: Maybe<GlobalStatistic>;
   getSpecialities?: Maybe<SpecialitiesReturn>;
   getSpeciality?: Maybe<Speciality>;
@@ -212,6 +223,49 @@ export type RuptureClass = {
   __typename?: 'RuptureClass';
   id: Scalars['Int'];
   name?: Maybe<Scalars['String']>;
+};
+
+export type RuptureExposition = {
+  __typename?: 'RuptureExposition';
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureStock = {
+  __typename?: 'RuptureStock';
+  nbRisque?: Maybe<Scalars['Int']>;
+  nbRisqueClosed?: Maybe<Scalars['Int']>;
+  nbRupture?: Maybe<Scalars['Int']>;
+  nbRuptureClosed?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureStockRepartionPerClassTherapeutique = {
+  __typename?: 'RuptureStockRepartionPerClassTherapeutique';
+  name?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureStockRepartitionPerClassication = {
+  __typename?: 'RuptureStockRepartitionPerClassication';
+  classification?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureTotalExposition = {
+  __typename?: 'RuptureTotalExposition';
+  ruptureExpositions?: Maybe<Array<Maybe<RuptureExposition>>>;
+  total: Scalars['Int'];
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureYear = {
+  __typename?: 'RuptureYear';
+  value?: Maybe<Scalars['Int']>;
 };
 
 export type SpecialitiesReturn = {
@@ -401,6 +455,7 @@ export type ResolversTypes = ResolversObject<{
   CisExposition: ResolverTypeWrapper<CisExposition>;
   GlobStaticRepartitionPerNotifier: ResolverTypeWrapper<GlobStaticRepartitionPerNotifier>;
   GlobStaticRepartitionPerPathology: ResolverTypeWrapper<GlobStaticRepartitionPerPathology>;
+  GlobalRupture: ResolverTypeWrapper<GlobalRupture>;
   GlobalStatistic: ResolverTypeWrapper<GlobalStatistic>;
   HltEffect: ResolverTypeWrapper<HltEffect>;
   Icon: ResolverTypeWrapper<Icon>;
@@ -425,6 +480,12 @@ export type ResolversTypes = ResolversObject<{
   RepartitionRange: ResolverTypeWrapper<RepartitionRange>;
   RuptureCause: ResolverTypeWrapper<RuptureCause>;
   RuptureClass: ResolverTypeWrapper<RuptureClass>;
+  RuptureExposition: ResolverTypeWrapper<RuptureExposition>;
+  RuptureStock: ResolverTypeWrapper<RuptureStock>;
+  RuptureStockRepartionPerClassTherapeutique: ResolverTypeWrapper<RuptureStockRepartionPerClassTherapeutique>;
+  RuptureStockRepartitionPerClassication: ResolverTypeWrapper<RuptureStockRepartitionPerClassication>;
+  RuptureTotalExposition: ResolverTypeWrapper<RuptureTotalExposition>;
+  RuptureYear: ResolverTypeWrapper<RuptureYear>;
   SpecialitiesReturn: ResolverTypeWrapper<SpecialitiesReturn>;
   Speciality: ResolverTypeWrapper<Speciality>;
   SpecialityLight: ResolverTypeWrapper<SpecialityLight>;
@@ -444,6 +505,7 @@ export type ResolversParentTypes = ResolversObject<{
   CisExposition: CisExposition;
   GlobStaticRepartitionPerNotifier: GlobStaticRepartitionPerNotifier;
   GlobStaticRepartitionPerPathology: GlobStaticRepartitionPerPathology;
+  GlobalRupture: GlobalRupture;
   GlobalStatistic: GlobalStatistic;
   HltEffect: HltEffect;
   Icon: Icon;
@@ -468,6 +530,12 @@ export type ResolversParentTypes = ResolversObject<{
   RepartitionRange: RepartitionRange;
   RuptureCause: RuptureCause;
   RuptureClass: RuptureClass;
+  RuptureExposition: RuptureExposition;
+  RuptureStock: RuptureStock;
+  RuptureStockRepartionPerClassTherapeutique: RuptureStockRepartionPerClassTherapeutique;
+  RuptureStockRepartitionPerClassication: RuptureStockRepartitionPerClassication;
+  RuptureTotalExposition: RuptureTotalExposition;
+  RuptureYear: RuptureYear;
   SpecialitiesReturn: SpecialitiesReturn;
   Speciality: Speciality;
   SpecialityLight: SpecialityLight;
@@ -536,6 +604,33 @@ export type GlobStaticRepartitionPerPathologyResolvers<
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type GlobalRuptureResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['GlobalRupture'] = ResolversParentTypes['GlobalRupture']
+> = ResolversObject<{
+  repartitionPerClassTherapeutique?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['RuptureStockRepartionPerClassTherapeutique']>>>,
+    ParentType,
+    ContextType
+  >;
+  repartitionPerClassication?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['RuptureStockRepartitionPerClassication']>>>,
+    ParentType,
+    ContextType
+  >;
+  ruptureStocks?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['RuptureStock']>>>,
+    ParentType,
+    ContextType
+  >;
+  ruptureYears?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['RuptureYear']>>>,
+    ParentType,
+    ContextType
+  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -721,6 +816,7 @@ export type QueryResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = ResolversObject<{
+  getGlobalRupture?: Resolver<Maybe<ResolversTypes['GlobalRupture']>, ParentType, ContextType>;
   getGlobalStatistic?: Resolver<Maybe<ResolversTypes['GlobalStatistic']>, ParentType, ContextType>;
   getSpecialities?: Resolver<Maybe<ResolversTypes['SpecialitiesReturn']>, ParentType, ContextType>;
   getSpeciality?: Resolver<
@@ -823,6 +919,71 @@ export type RuptureClassResolvers<
 > = ResolversObject<{
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type RuptureExpositionResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['RuptureExposition'] = ResolversParentTypes['RuptureExposition']
+> = ResolversObject<{
+  range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type RuptureStockResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['RuptureStock'] = ResolversParentTypes['RuptureStock']
+> = ResolversObject<{
+  nbRisque?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  nbRisqueClosed?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  nbRupture?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  nbRuptureClosed?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type RuptureStockRepartionPerClassTherapeutiqueResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['RuptureStockRepartionPerClassTherapeutique'] = ResolversParentTypes['RuptureStockRepartionPerClassTherapeutique']
+> = ResolversObject<{
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type RuptureStockRepartitionPerClassicationResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['RuptureStockRepartitionPerClassication'] = ResolversParentTypes['RuptureStockRepartitionPerClassication']
+> = ResolversObject<{
+  classification?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type RuptureTotalExpositionResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['RuptureTotalExposition'] = ResolversParentTypes['RuptureTotalExposition']
+> = ResolversObject<{
+  ruptureExpositions?: Resolver<
+    Maybe<Array<Maybe<ResolversTypes['RuptureExposition']>>>,
+    ParentType,
+    ContextType
+  >;
+  total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+}>;
+
+export type RuptureYearResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['RuptureYear'] = ResolversParentTypes['RuptureYear']
+> = ResolversObject<{
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 }>;
 
@@ -1004,6 +1165,7 @@ export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   CisExposition?: CisExpositionResolvers<ContextType>;
   GlobStaticRepartitionPerNotifier?: GlobStaticRepartitionPerNotifierResolvers<ContextType>;
   GlobStaticRepartitionPerPathology?: GlobStaticRepartitionPerPathologyResolvers<ContextType>;
+  GlobalRupture?: GlobalRuptureResolvers<ContextType>;
   GlobalStatistic?: GlobalStatisticResolvers<ContextType>;
   HltEffect?: HltEffectResolvers<ContextType>;
   Icon?: IconResolvers<ContextType>;
@@ -1027,6 +1189,12 @@ export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   RepartitionRange?: RepartitionRangeResolvers<ContextType>;
   RuptureCause?: RuptureCauseResolvers<ContextType>;
   RuptureClass?: RuptureClassResolvers<ContextType>;
+  RuptureExposition?: RuptureExpositionResolvers<ContextType>;
+  RuptureStock?: RuptureStockResolvers<ContextType>;
+  RuptureStockRepartionPerClassTherapeutique?: RuptureStockRepartionPerClassTherapeutiqueResolvers<ContextType>;
+  RuptureStockRepartitionPerClassication?: RuptureStockRepartitionPerClassicationResolvers<ContextType>;
+  RuptureTotalExposition?: RuptureTotalExpositionResolvers<ContextType>;
+  RuptureYear?: RuptureYearResolvers<ContextType>;
   SpecialitiesReturn?: SpecialitiesReturnResolvers<ContextType>;
   Speciality?: SpecialityResolvers<ContextType>;
   SpecialityLight?: SpecialityLightResolvers<ContextType>;

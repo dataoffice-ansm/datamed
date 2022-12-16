@@ -5,6 +5,14 @@ import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/Enti
 import { SectionTitle } from '../../components/SectionTitle';
 import { Tooltip } from '../../components/Tooltip/Tooltip';
 import RupturesSVG from '../../assets/icons/ruptures.svg';
+import { BoxInfo } from '../../components/BoxInfo';
+import FolderSVG from '../../assets/icons/folder/folder.svg';
+import { GraphBox } from '../../components/GraphBox/GraphBox';
+import { GraphFigure } from '../../components/GraphFigure';
+import WomanIllustration from '../../assets/images/woman_illustration.svg';
+import ManIllustration from '../../assets/images/man_illustration.svg';
+import { NotEnoughData } from '../../components/NotEnoughData';
+import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
 
 const sections = [
   {
@@ -23,7 +31,30 @@ const sections = [
         </ChartBox>
         <ChartBox className="mt-8">
           <div className="flex flex-col justify-start items-start flex-auto text-left">
-            <div>Nombre et nature des déclarations de ruptures et risques de rupture de stock</div>
+            <div className="GlobalStatisticDemographySection text-left">
+              <SectionTitle
+                title="Déclarations de ruptures et risques de rupture de stock depuis le début de l'année civile en cours"
+                subTitle="Données issues de la période - "
+              />
+              <BoxInfo
+                title="Déclaration(s) reçues(s)"
+                icon={<FolderSVG />}
+                theme="dark-green"
+                className="my-8"
+                tooltip={
+                  <div>
+                    <strong>Déclarations cumulées</strong>
+                    <div>
+                      Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise
+                      à jour progressive des données.
+                    </div>
+                  </div>
+                }
+              >
+                Nombre de déclarations de ruptures et risques de rupture de stock et de décret sans
+                risque depuis le début de l’année civile en cours
+              </BoxInfo>
+            </div>
           </div>
           ,
         </ChartBox>
