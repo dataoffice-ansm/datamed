@@ -903,6 +903,7 @@ export class PostgresOperations {
     const rowTotal = await dbInstance
       .selectFrom('sold_out_all')
       .select('year')
+      .orderBy('year', 'desc')
       .distinct()
       .execute();
 
@@ -925,28 +926,28 @@ export class PostgresOperations {
       .select(['num', 'year', 'classification', 'state'])
       .execute();
 
-    return (rows ?? []).reduce<RuptureStock>(
+    const result = (rows ?? []).reduce(
       (carry, row) => {
-        carry.year = year;
-        if (carry.nbRisque && carry.nbRupture && carry.nbRuptureClosed && carry.nbRisqueClosed) {
-          const { classification, state } = row;
-          if (classification === 'risque') {
-            carry.nbRisque += 1;
-            if (state !== 'ouvert') {
-              carry.nbRisqueClosed += 1;
-            }
-          } else {
-            carry.nbRupture += 1;
-            if (state === 'ouvert') {
-              carry.nbRuptureClosed += 1;
-            }
+        const { classification, state } = row;
+
+        if (classification === 'rupture') {
+          carry.nbRupture += 1;
+          if (state === 'fermé') {
+            carry.nbRuptureClosed += 1;
           }
         }
 
-        return carry;
+        if (classification === 'risque') {
+          carry.nbRisque += 1;
+          if (state === 'fermé') {
+            carry.nbRisqueClosed += 1;
+          }
+        }
+
+        return { ...carry };
       },
       {
-        year: 0,
+        year,
         total: (rows ?? []).length,
         nbRisque: 0,
         nbRupture: 0,
@@ -954,6 +955,8 @@ export class PostgresOperations {
         nbRisqueClosed: 0,
       }
     );
+
+    return result;
   }
 
   async getRuptureStockRepartitionPerClassification(): Promise<
@@ -1079,7 +1082,7 @@ export class PostgresOperations {
 
     return {
       ruptureStocks: await Promise.all(
-        years.map(async (year) => this.getRuptureStockTotalExposition(Number(year)))
+        years.map(async ({ value }) => this.getRuptureStockTotalExposition(value ?? 0))
       ),
       ruptureYears: years,
       repartitionPerClassication: await this.getRuptureStockRepartitionPerClassification(),
