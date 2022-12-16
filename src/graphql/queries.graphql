@@ -294,8 +294,12 @@ query GlobalRupture {
             value
         }
         repartitionPerAction {
-            value
-            name
+            year
+            total
+            actions {
+                value
+                range
+            }
         }
 
         repartitionPerClassTherapeutique {
