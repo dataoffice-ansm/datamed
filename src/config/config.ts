@@ -11,25 +11,30 @@ type AppConfig = {
 
 const dev = process.env.NODE_ENV !== 'production';
 
-const buildConfig = (): AppConfig => {
-  const port = process.env.NEXT_PUBLIC_PORT ?? process.env.PORT ?? 3000;
+const ssrMode = typeof window === 'undefined';
 
-  const appRoute = process.env.NEXT_PUBLIC_PROD_WEB_ROOT
-    ? process.env.NEXT_PUBLIC_PROD_WEB_ROOT
-    : `http://localhost:${port}`;
+const port = process.env.NEXT_PUBLIC_PORT ?? process.env.PORT ?? 3000;
 
-  const dbUrl = process.env.DATABASE_URL;
-  const dbEnableSsl = process.env.DB_SSL ? process.env.DB_SSL === 'ENABLED' : false;
+const appRoute = process.env.NEXT_PUBLIC_PROD_WEB_ROOT
+  ? process.env.NEXT_PUBLIC_PROD_WEB_ROOT
+  : `http://localhost:${port}`;
 
-  return {
-    dev,
-    ssr: { dbUrl, dbEnableSsl },
-    appRoute,
-    serverApiRoute: `${appRoute}/api`,
-    serverApiGraphRoute: `${appRoute}/api/graphql`,
-  };
+let config: AppConfig = {
+  dev,
+  appRoute,
+  serverApiRoute: `${appRoute}/api`,
+  serverApiGraphRoute: `${appRoute}/api/graphql`,
 };
 
-const config = buildConfig();
+if (ssrMode) {
+  const dbUrl = process.env.DATABASE_URL;
+  const dbEnableSsl = process.env.DATABASE_SSL ? process.env.DATABASE_SSL === 'ENABLED' : false;
+
+  config = {
+    ...config,
+    ssr: { dbUrl, dbEnableSsl },
+  };
+}
+
 
 export { config };

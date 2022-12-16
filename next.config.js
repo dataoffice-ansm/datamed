@@ -2,6 +2,18 @@
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
+  // rewrites: () => {
+  //   return [
+  //     {
+  //       source: '/api',
+  //       destination: 'http://localhost:8080/api',
+  //     },
+  //     {
+  //       source: '/api/graphql',
+  //       destination: 'http://localhost:8080/api/graphql',
+  //     },
+  //   ];
+  // },
   webpack(config) {
     config.module.rules.push(
       {

@@ -62,13 +62,15 @@ COPY --from=builder /app/schema.graphql ./schema.graphql
 # Run container as non-root (unprivileged) user
 USER nextjs
 
+ENV PORT 80
+
 # Expose the listening port
-EXPOSE 3000
-ENV PORT 3000
+EXPOSE $PORT
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry.
 ENV NEXT_TELEMETRY_DISABLED 1
-CMD [ "yarn", "start" ]
+
+CMD [ "yarn", "start", "-p", "80" ]
 
