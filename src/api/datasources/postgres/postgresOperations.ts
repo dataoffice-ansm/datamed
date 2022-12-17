@@ -1143,7 +1143,7 @@ export class PostgresOperations {
     const { count } = dbInstance.fn;
     const rows = await dbInstance
       .selectFrom('actions')
-      .leftJoin('actions_types as at', 'actions.type_id', 'at.id')
+      .leftJoin('actions_types as at', 'at.id', 'actions.type_id')
       .select([
         count('actions.id').as('value'),
         'actions.year',
@@ -1153,6 +1153,7 @@ export class PostgresOperations {
       .groupBy('actions.with_action')
       .groupBy('actions.year')
       .groupBy('at.type')
+      .groupBy('at.id')
       .execute();
 
     // 0 = "Pas de mesure"

@@ -38,15 +38,16 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
       setLoading(false);
     };
 
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+
     Router.events.on('routeChangeStart', start);
     Router.events.on('routeChangeComplete', end);
     Router.events.on('routeChangeError', end);
 
     return () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
-      });
       Router.events.off('routeChangeStart', start);
       Router.events.off('routeChangeComplete', end);
       Router.events.off('routeChangeError', end);

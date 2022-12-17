@@ -8,7 +8,14 @@ type RupturesContextData = {
 
 export const RupturesContext = createContext<RupturesContextData>({
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  ruptures: {} as GlobalRuptures,
+  ruptures: {
+    ruptureYears: {},
+    ruptureStocks: {},
+    repartitionPerAction: {},
+    repartitionPerCause: {},
+    repartitionPerClassification: {},
+    repartitionPerTherapeuticClass: {},
+  } as GlobalRuptures,
 });
 
 /**

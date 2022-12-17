@@ -25,6 +25,14 @@ const links: NavLinkItem[] = [
     text: 'A propos',
     href: '/a-propos',
   },
+  {
+    text: 'Ruptures',
+    href: '/ruptures',
+  },
+  {
+    text: 'Statistiques globales',
+    href: '/globaldec',
+  },
 ];
 
 export const NavigationBar = () => {

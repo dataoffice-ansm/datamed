@@ -46,15 +46,15 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
   }, [options, ruptures?.repartitionPerTherapeuticClass, selectedIndex]);
 
   const repartitionDataForSelectedYear = useMemo(() => {
-    if (therapeuticDataForSelectedYear?.repartition) {
-      return therapeuticDataForSelectedYear?.repartition
-        .sort((a, b) => (a?.value && b?.value ? a.value - b.value : 0))
-        .reverse();
-    }
+    const rows = therapeuticDataForSelectedYear?.repartition ?? [];
+    return [...rows].sort((a, b) => (a?.value && b?.value ? a.value - b.value : 0)).reverse();
   }, [therapeuticDataForSelectedYear?.repartition]);
 
   const labels = useMemo(
-    () => repartitionDataForSelectedYear?.map((element) => element?.name),
+    () =>
+      repartitionDataForSelectedYear
+        ? repartitionDataForSelectedYear?.map((element) => element?.name)
+        : [],
     [repartitionDataForSelectedYear]
   );
 
