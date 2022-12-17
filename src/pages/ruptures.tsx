@@ -1,28 +1,31 @@
 import type { GetServerSidePropsContext } from 'next';
 import { addApolloState, initializeApolloClient } from '../config/apolloClient';
-import { GlobalRuptureDocument } from '../graphql/__generated__/generated-documents';
+import { GlobalRupturesDocument } from '../graphql/__generated__/generated-documents';
 import type {
-  GlobalRupture,
-  GlobalRuptureQuery,
-  GlobalRuptureQueryVariables,
+  GlobalRuptures,
+  GlobalRupturesQuery,
+  GlobalRupturesQueryVariables,
 } from '../graphql/__generated__/generated-documents';
 import { Ruptures } from '../componentsPages/Ruptures/Ruptures';
+import { RupturesPageContextProvider } from '../contexts/RupturesPageContext';
 
-const PageGlobalRupturesServerSideRendered = ({ ruptures }: { ruptures: GlobalRupture }) => (
-  <Ruptures ruptures={ruptures} />
+const PageGlobalRupturesServerSideRendered = ({ ruptures }: { ruptures: GlobalRuptures }) => (
+  <RupturesPageContextProvider ruptures={ruptures}>
+    <Ruptures />
+  </RupturesPageContextProvider>
 );
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const apolloClient = initializeApolloClient({ context });
 
   try {
-    const { data } = await apolloClient.query<GlobalRuptureQuery, GlobalRuptureQueryVariables>({
-      query: GlobalRuptureDocument,
+    const { data } = await apolloClient.query<GlobalRupturesQuery, GlobalRupturesQueryVariables>({
+      query: GlobalRupturesDocument,
     });
 
     return addApolloState(apolloClient, {
       props: {
-        ruptures: data.getGlobalRupture ?? null,
+        ruptures: data.getGlobalRuptures ?? null,
       },
     });
   } catch (err: unknown) {

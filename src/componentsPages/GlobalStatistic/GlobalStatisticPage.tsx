@@ -1,7 +1,6 @@
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
 import { HeadlessHeroHeader } from '../../components/HeroHeader/HeadlessHeroHeader';
 import Page404 from '../../pages/[404]';
-import type { GlobalStatistic } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
@@ -19,15 +18,17 @@ import {
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { Accordion } from '../../components/Accordion/Accordion';
-import { SmallContainer } from '../../components/SmallContainer';
 import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
 import { Button } from '../../components/Button/Button';
 import GlobStatSvg from '../../assets/images/sick_transparent_person.svg';
 import { Tooltip } from '../../components/Tooltip/Tooltip';
+import { useGlobalDecPageContext } from '../../contexts/GlobaleDecPageContext';
 
-const SectionDemography = ({ stat }: { stat: GlobalStatistic }) => {
-  const { repartitionPerAge, repartitionPerGender, totalExposition } = stat;
+const SectionDemography = () => {
+  const { globalDec } = useGlobalDecPageContext();
+  const { repartitionPerAge, repartitionPerGender, totalExposition } = globalDec;
+
   return (
     <div className="GlobalStatisticDemographySection text-left">
       <BoxInfo
@@ -105,8 +106,9 @@ const SectionDemography = ({ stat }: { stat: GlobalStatistic }) => {
   );
 };
 
-const SectionSeriousEffect = ({ stat }: { stat: GlobalStatistic }) => {
-  const { totalExposition, repartitionPerSeriousEffect, repartitionPerGravity } = stat;
+const SectionSeriousEffect = () => {
+  const { globalDec } = useGlobalDecPageContext();
+  const { totalExposition, repartitionPerSeriousEffect, repartitionPerGravity } = globalDec;
 
   return (
     <div className="GlobalStatisticSeriousEffectSection text-left">
@@ -143,8 +145,10 @@ const SectionSeriousEffect = ({ stat }: { stat: GlobalStatistic }) => {
   );
 };
 
-const SectionFilers = ({ stat }: { stat: GlobalStatistic }) => {
-  const { repartitionPerNotifier } = stat;
+const SectionRepartitionNotifiers = () => {
+  const { globalDec } = useGlobalDecPageContext();
+  const { repartitionPerNotifier } = globalDec;
+
   return (
     <GraphBoxSelect
       title="Répartition par type de déclarants"
@@ -182,8 +186,10 @@ const SectionFilers = ({ stat }: { stat: GlobalStatistic }) => {
   );
 };
 
-const SectionTypesOfSideEffects = ({ stat }: { stat: GlobalStatistic }) => {
-  const { repartitionPerPathology, totalExposition } = stat;
+const SectionTypesOfSideEffects = () => {
+  const { globalDec } = useGlobalDecPageContext();
+  const { repartitionPerPathology, totalExposition } = globalDec;
+
   return (
     <div className="GlobalStatTypesOfSideEffects text-left">
       <SectionTitle
@@ -270,10 +276,11 @@ const SectionDataOrigin = () => {
     children,
   }: HTMLAttributes<HTMLDivElement> & { title: string }) => (
     <section id={id} className={classnames('mb-14', className)}>
-      <div className="font-medium text-xl text-left">{title}</div>
+      <div className="font-medium text-sm text-left mb-4">{title}</div>
       {children}
     </section>
   );
+
   return (
     <div className="GlobalStatDataOrigin text-left">
       <SectionTitle title="Origine des données" />
@@ -301,8 +308,7 @@ const SectionDataOrigin = () => {
             base de données de l&apos;ANSM alimentée par les Centres Régionaux de Pharmacovigilance
             (CRPV). Elle inclut l&apos;ensemble des déclarations suspectées comme étant en lien avec
             l&apos;usage d&apos;un ou plusieurs médicaments. Ces dernières sont notifiées par les
-            professionnels de santé ou par les patients et association agréées via un portail dédié
-            :{' '}
+            professionnels de santé ou par les patients et association agréées via un portail dédié:{' '}
             <Button externalLink href="https://signalement.social-sante.gouv.fr">
               https://signalement.social-sante.gouv.fr
             </Button>
@@ -310,7 +316,7 @@ const SectionDataOrigin = () => {
           <p>
             Estimations obtenues à partir des données Open-Medic portant sur le nombre de patients
             ayant bénéficié d&apos;un remboursement du médicament délivré en pharmacie de ville.
-            Pour plus d&apos;informations, consultez :
+            Pour plus d&apos;informations, consultez:{' '}
             <Button
               externalLink
               href="http://open-data-assurance-maladie.ameli.fr/medicaments/index.php"
@@ -333,14 +339,15 @@ const SectionDataOrigin = () => {
             d&apos;un médicament.
           </p>
           <p>
-            Pour plus d&apos;informations, consultez :
+            Pour plus d&apos;informations, consultez:{' '}
             <Button
               externalLink
               href="https://ansm.sante.fr/page/la-surveillance-renforcee-des-medicaments"
             >
+              {' '}
               https://ansm.sante.fr/page/la-surveillance-renforcee-des-medicaments
             </Button>
-            et les bonnes pratiques de pharmacovigilance
+            et les bonnes pratiques de pharmacovigilance{' '}
             <Button
               externalLink
               href="https://ansm.sante.fr/actualites/nouvelle-edition-des-bonnes-pratiques-de-pharmacovigilance"
@@ -354,8 +361,10 @@ const SectionDataOrigin = () => {
   );
 };
 
-export const GlobalStatisticPage = ({ globalStatistic }: { globalStatistic: GlobalStatistic }) => {
-  if (!globalStatistic) {
+export const GlobalStatisticPage = () => {
+  const { globalDec } = useGlobalDecPageContext();
+
+  if (!globalDec) {
     return <Page404 />;
   }
 
@@ -366,22 +375,22 @@ export const GlobalStatisticPage = ({ globalStatistic }: { globalStatistic: Glob
         {
           id: 'demographie',
           label: 'DÉMOGRAPHIE',
-          content: <SectionDemography stat={globalStatistic} />,
+          content: <SectionDemography />,
         },
         {
           id: 'effets-grave-et-non-graves',
           label: 'effets graves et non graves',
-          content: <SectionSeriousEffect stat={globalStatistic} />,
+          content: <SectionSeriousEffect />,
         },
         {
           id: 'declarants',
           label: 'Déclarants',
-          content: <SectionFilers stat={globalStatistic} />,
+          content: <SectionRepartitionNotifiers />,
         },
         {
           id: 'types-effets-indesirables',
           label: "TYPES D'EFFETS INDÉSIRABLES",
-          content: <SectionTypesOfSideEffects stat={globalStatistic} />,
+          content: <SectionTypesOfSideEffects />,
         },
         {
           id: 'originine-des-donnees',

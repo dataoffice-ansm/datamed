@@ -1,6 +1,5 @@
 import type { HTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
 import type { SelectOption } from '../../../components/Select/Select';
 import { Select } from '../../../components/Select/Select';
 import { NotEnoughData } from 'components/NotEnoughData';
@@ -13,9 +12,9 @@ import { GraphFigure } from '../../../components/GraphFigure';
 import { getFigureByActionName } from '../../../utils/mapping';
 import { GraphBox } from '../../../components/GraphBox/GraphBox';
 import { BaseTooltipContent } from '../Tooltip';
+import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 
-export type GestionDeclarationActionByYearProps = {
-  ruptures: GlobalRupture;
+export type DeclarationActionByYearProps = {
   defaultOption?: OptionsValue;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -36,10 +35,10 @@ const selectUnitOptions: Array<SelectOption<OptionsValue>> = Object.entries(unit
 const findOptionIndex = (selectedOption: OptionsValue) =>
   (Object.keys(unitOptions) as OptionsValue[]).findIndex((option) => option === selectedOption);
 
-export const GestionDeclarationByYear = ({
-  ruptures,
+export const RupturesDeclarationActionByYear = ({
   defaultOption = 'number',
-}: GestionDeclarationActionByYearProps) => {
+}: DeclarationActionByYearProps) => {
+  const { ruptures } = useRupturesPageContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [selectedUnitOption, setSelectedUnitOption] = useState<OptionsValue>(defaultOption);
   const { repartitionPerAction, ruptureYears } = ruptures;
@@ -76,8 +75,11 @@ export const GestionDeclarationByYear = ({
   );
 
   const percentWithOneAction = `${
-    Math.round(Math.round(selectedData?.totalWithOneAction ?? 0) / (selectedData?.total ?? 1)) * 100
+    Math.round(
+      Math.round(selectedData?.totalWithAtLeastOneAction ?? 0) / (selectedData?.total ?? 1)
+    ) * 100
   } %`;
+
   return (
     <div>
       {(ruptureYears ?? []).length > 0 ? (
@@ -109,7 +111,7 @@ export const GestionDeclarationByYear = ({
             <BoxInfo
               title={`${
                 selectedUnitOption === 'number'
-                  ? selectedData?.totalWithOneAction ?? 0
+                  ? selectedData?.totalWithAtLeastOneAction ?? 0
                   : percentWithOneAction
               }`}
               icon={<DeclarationWithOneActionSvg />}

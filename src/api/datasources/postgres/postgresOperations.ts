@@ -1,7 +1,6 @@
 import { dbInstance } from './postgreDb';
 import type {
   CisExposition,
-  GlobalRupture,
   GlobalStatistic,
   GlobStaticRepartitionPerNotifier,
   GlobStaticRepartitionPerPathology,
@@ -15,18 +14,18 @@ import type {
   RepartitionPerSeriousEffect,
   RepartitionRange,
   RuptureAction,
-  RuptureRepartitionPerAction,
-  RuptureRepartitionPerCause,
+  RuptureActionRepartition,
+  RuptureCauseRepartition,
+  RuptureClassificationRepartition,
   RuptureStock,
-  RuptureStockRepartionPerClassTherapeutique,
-  RuptureStockRepartionPerClassTherapeutiques,
-  RuptureStockRepartitionPerClassication,
   RuptureTotalAction,
   RuptureYear,
   Speciality,
   SpecialityRupture,
   SpecialitySubstance,
   Substance,
+  TherapeuticClassesRupturesPerYear,
+  TherapeuticClassRupture,
   TotalExposition,
 } from '../../graphql/__generated__/generated-types';
 
@@ -909,7 +908,7 @@ export class PostgresOperations {
       .distinct()
       .execute();
 
-    const years = rowTotal.reduce<RuptureYear[]>((carry, { year }) => {
+    return rowTotal.reduce<RuptureYear[]>((carry, { year }) => {
       if (year) {
         const ruptureYear: RuptureYear = { value: parseInt(year, 10) };
         carry.push(ruptureYear);
@@ -917,8 +916,6 @@ export class PostgresOperations {
 
       return carry;
     }, []);
-
-    return years;
   }
 
   async getRuptureStockTotalExposition(year: number): Promise<RuptureStock> {
@@ -928,7 +925,7 @@ export class PostgresOperations {
       .select(['num', 'year', 'classification', 'state'])
       .execute();
 
-    const result = (rows ?? []).reduce(
+    return (rows ?? []).reduce(
       (carry, row) => {
         const { classification, state } = row;
 
@@ -957,14 +954,11 @@ export class PostgresOperations {
         nbRisqueClosed: 0,
       }
     );
-
-    return result;
   }
 
-  async getRuptureStockRepartitionPerClassification(): Promise<
-    RuptureStockRepartitionPerClassication[]
-  > {
+  async getRuptureStockRepartitionPerClassification(): Promise<RuptureClassificationRepartition[]> {
     const { count } = dbInstance.fn;
+
     const rowsRisque = await dbInstance
       .selectFrom('sold_out_all')
       .select([count('num').as('value'), 'year', 'classification'])
@@ -983,7 +977,8 @@ export class PostgresOperations {
       .orderBy('year')
       .execute();
 
-    const result: RuptureStockRepartitionPerClassication[] = [];
+    const result: RuptureClassificationRepartition[] = [];
+
     rowsRisque.forEach((row) => {
       const { classification, value, year } = row;
       if (classification && value && year) {
@@ -1009,49 +1004,9 @@ export class PostgresOperations {
     return result;
   }
 
-  async getRuptureStockRepartitionPerClassTherapeutique(
-    year: string
-  ): Promise<RuptureStockRepartionPerClassTherapeutique[]> {
-    const { count } = dbInstance.fn;
-
-    const rowsCis = await dbInstance
-      .selectFrom('sold_out_all')
-      .where('sold_out_all.year', '=', year)
-      .where('sold_out_all.classification', 'in', ['risque', 'rupture'])
-      .leftJoin('atc_classes', 'atc_classes.code', 'sold_out_all.atc1')
-      .where('atc_classes.label', 'is not', null)
-      .select([count('sold_out_all.cis').as('value')])
-      .distinctOn('sold_out_all.cis')
-      .groupBy('sold_out_all.cis')
-      .groupBy('atc_classes.label')
-      .executeTakeFirst();
-
-    const rows = await dbInstance
-      .selectFrom('sold_out_all')
-      .where('sold_out_all.year', '=', year)
-      .where('sold_out_all.classification', 'in', ['risque', 'rupture'])
-      .leftJoin('atc_classes', 'atc_classes.code', 'sold_out_all.atc1')
-      .where('atc_classes.label', 'is not', null)
-      .select([
-        count('sold_out_all.id').as('value'),
-        'sold_out_all.year',
-        'atc_classes.label as name',
-      ])
-      .groupBy('sold_out_all.year')
-      .groupBy('atc_classes.label')
-      .execute();
-
-    return rows.map((r) => ({
-      name: r.name,
-      value: Number(r.value),
-      year: Number(r.year),
-      totalCis: Number(rowsCis?.value),
-    }));
-  }
-
   async getRuptureStockRepartitionPerCause(
     years: RuptureYear[]
-  ): Promise<RuptureRepartitionPerCause[]> {
+  ): Promise<RuptureCauseRepartition[]> {
     const { count } = dbInstance.fn;
 
     return Promise.all(
@@ -1084,7 +1039,7 @@ export class PostgresOperations {
     );
   }
 
-  async getRuptureTotalActionByYear(year: string): Promise<number> {
+  async getRupturesTotalActionByYear(year: string): Promise<number> {
     const { count } = dbInstance.fn;
     const rowTotal = await dbInstance
       .selectFrom('actions')
@@ -1113,12 +1068,12 @@ export class PostgresOperations {
     }));
   }
 
-  async getRuptureStockRepartitionPerAction(): Promise<RuptureRepartitionPerAction[]> {
+  async getRuptureStockRepartitionPerAction(): Promise<RuptureActionRepartition[]> {
     const years = await this.getRuptureYears();
-    const results = await Promise.all(
+    return Promise.all(
       years.map(async ({ value }) => {
         const year = String(value);
-        const total = await this.getRuptureTotalActionByYear(year);
+        const total = await this.getRupturesTotalActionByYear(year);
         const actions = await this.getRuptureActionsByYear(year);
         return {
           year: value,
@@ -1127,69 +1082,86 @@ export class PostgresOperations {
         };
       })
     );
-
-    return results;
   }
 
-  async getRuptureStockRepartitionPerClassTherapeutiques(
+  async getRuptureStockByTherapeuticClass(year: string): Promise<TherapeuticClassRupture[]> {
+    const { count } = dbInstance.fn;
+
+    const rowsCis = await dbInstance
+      .selectFrom('sold_out_all')
+      .where('sold_out_all.year', '=', year)
+      .where('sold_out_all.classification', 'in', ['risque', 'rupture'])
+      .leftJoin('atc_classes', 'atc_classes.code', 'sold_out_all.atc1')
+      .where('atc_classes.label', 'is not', null)
+      .select([count('sold_out_all.cis').as('value')])
+      .distinctOn('sold_out_all.cis')
+      .groupBy('sold_out_all.cis')
+      .groupBy('atc_classes.label')
+      .executeTakeFirst();
+
+    const rows = await dbInstance
+      .selectFrom('sold_out_all')
+      .where('sold_out_all.year', '=', year)
+      .where('sold_out_all.classification', 'in', ['risque', 'rupture'])
+      .leftJoin('atc_classes', 'atc_classes.code', 'sold_out_all.atc1')
+      .where('atc_classes.label', 'is not', null)
+      .select([
+        count('sold_out_all.id').as('value'),
+        'sold_out_all.year',
+        'atc_classes.label as name',
+      ])
+      .groupBy('sold_out_all.year')
+      .groupBy('atc_classes.label')
+      .execute();
+
+    return rows.map((r) => ({
+      name: r.name,
+      value: Number(r.value ?? 0),
+      year: Number(r.year ?? 0),
+      totalCis: Number(rowsCis?.value ?? 0),
+    }));
+  }
+
+  async getRupturesPerTherapeuticClassesPerYearRepartition(
     years: RuptureYear[]
-  ): Promise<RuptureStockRepartionPerClassTherapeutiques[]> {
-    const results = await Promise.all(
+  ): Promise<TherapeuticClassesRupturesPerYear[]> {
+    return Promise.all(
       years.map(async ({ value }) => {
         const year = String(value);
-        const total = await this.getRuptureTotalActionByYear(year);
-        const repartitions = await this.getRuptureStockRepartitionPerClassTherapeutique(year);
+        const total = await this.getRupturesTotalActionByYear(year);
+        const repartition = await this.getRuptureStockByTherapeuticClass(year);
         return {
           year: value,
-          repartitions,
+          repartition,
           total,
         };
       })
     );
-
-    return results;
   }
 
-  async getRuptureStockTotalAction(): Promise<RuptureTotalAction[]> {
+  async getRupturesTotalAction(): Promise<RuptureTotalAction[]> {
     const { count } = dbInstance.fn;
     const rows = await dbInstance
       .selectFrom('actions')
       .leftJoin('actions_types as at', 'actions.type_id', 'at.id')
       .select([
         count('actions.id').as('value'),
-        'at.type as name',
         'actions.year',
-        'actions.with_action',
+        'at.id as actionTypeId',
+        'at.type as name',
       ])
       .groupBy('actions.with_action')
       .groupBy('actions.year')
       .groupBy('at.type')
       .execute();
 
-    const totalWithOneAction = rows.filter((r) => r.with_action === 'Avec mesure').length;
+    // 0 = "Pas de mesure"
+    const totalWithAtLeastOneAction = rows.filter((r) => r.actionTypeId !== 0).length ?? 0;
 
     return rows.map((r) => ({
-      total: Number(r.value),
-      totalWithOneAction,
-      year: Number(r.year),
+      total: Number(r.value ?? 0),
+      totalWithAtLeastOneAction,
+      year: Number(r.year ?? 0),
     }));
-  }
-
-  async getGlobalRupture(): Promise<GlobalRupture> {
-    const years = await this.getRuptureYears();
-
-    return {
-      ruptureStocks: await Promise.all(
-        years.map(async ({ value }) => this.getRuptureStockTotalExposition(value ?? 0))
-      ),
-      ruptureYears: years,
-      repartitionPerClassication: await this.getRuptureStockRepartitionPerClassification(),
-      repartitionPerClassTherapeutique: await this.getRuptureStockRepartitionPerClassTherapeutiques(
-        years
-      ),
-      repartitionPerCause: await this.getRuptureStockRepartitionPerCause(years),
-      repartitionPerAction: await this.getRuptureStockRepartitionPerAction(),
-      totalAction: await this.getRuptureStockTotalAction(),
-    };
   }
 }

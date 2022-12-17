@@ -1,32 +1,35 @@
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import type { HTMLAttributes } from 'react';
 import { useCallback, useState } from 'react';
 import { useMemo } from 'react';
-import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
 import { ChartBox } from 'components/ChartBox';
 import { BaseTooltipContent, ContainerWithTooltip } from '../Tooltip';
 import tailwindPaletteConfig from '../../../../tailwind.palette.config';
 import type { SelectOption } from 'components/Select/Select';
 import { Select } from 'components/Select/Select';
 import { BarChart } from '../../../components/Charts/BarChart/BarChart';
+import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 
-export type RepartitionPerClassTherapeutiqueProps = {
-  ruptures: GlobalRupture;
-} & HTMLAttributes<HTMLDivElement>;
-
-export const RepartitionPerClassTherapeutique = ({
-  ruptures,
-}: RepartitionPerClassTherapeutiqueProps) => {
+export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivElement>) => {
+  const { ruptures } = useRupturesPageContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  const options = useMemo(
+  const options: SelectOption[] = useMemo(
     () =>
-      (ruptures?.ruptureYears ?? []).map((ruptureYear) => ({
-        value: ruptureYear?.value,
-        label: ruptureYear?.value,
-      })),
+      ruptures?.ruptureYears
+        ? ruptures.ruptureYears.reduce<SelectOption[]>(
+            (carry, ruptureYear) =>
+              ruptureYear?.value
+                ? [
+                    ...carry,
+                    {
+                      value: ruptureYear.value,
+                      label: (ruptureYear.value ?? '').toString(),
+                    },
+                  ]
+                : carry,
+            []
+          )
+        : [],
     [ruptures?.ruptureYears]
   );
 
@@ -34,17 +37,25 @@ export const RepartitionPerClassTherapeutique = ({
     setSelectedIndex(index);
   }, []);
 
-  const selectedData = useMemo(
-    () =>
-      (ruptures?.repartitionPerClassTherapeutique ?? []).find(
+  const therapeuticDataForSelectedYear = useMemo(() => {
+    if (ruptures?.repartitionPerTherapeuticClass) {
+      return ruptures.repartitionPerTherapeuticClass.find(
         (element) => element?.year === options[selectedIndex].value
-      ),
-    [options, ruptures?.repartitionPerClassTherapeutique, selectedIndex]
-  );
+      );
+    }
+  }, [options, ruptures?.repartitionPerTherapeuticClass, selectedIndex]);
+
+  const repartitionDataForSelectedYear = useMemo(() => {
+    if (therapeuticDataForSelectedYear?.repartition) {
+      return therapeuticDataForSelectedYear?.repartition
+        .sort((a, b) => (a?.value && b?.value ? a.value - b.value : 0))
+        .reverse();
+    }
+  }, [therapeuticDataForSelectedYear?.repartition]);
 
   const labels = useMemo(
-    () => (selectedData?.repartitions ?? []).map((element) => element?.name),
-    [selectedData?.repartitions]
+    () => repartitionDataForSelectedYear?.map((element) => element?.name),
+    [repartitionDataForSelectedYear]
   );
 
   const datasets = useMemo(
@@ -54,10 +65,10 @@ export const RepartitionPerClassTherapeutique = ({
         label: 'Nombre de signalements',
         backgroundColor: tailwindPaletteConfig.darkGreen[300],
         borderColor: tailwindPaletteConfig.darkGreen[300],
-        data: (selectedData?.repartitions ?? []).map((element) => element?.value),
+        data: repartitionDataForSelectedYear?.map((element) => element?.value),
       },
     ],
-    [selectedData?.repartitions]
+    [repartitionDataForSelectedYear]
   );
 
   return (
@@ -65,11 +76,7 @@ export const RepartitionPerClassTherapeutique = ({
       <div className="w-full flex flex-col justify-start items-start">
         <ContainerWithTooltip
           suffix={
-            <Select
-              options={options as unknown as SelectOption[]}
-              theme="secondary-variant"
-              onSelectOption={onSelectedYear}
-            />
+            <Select options={options} theme="secondary-variant" onSelectOption={onSelectedYear} />
           }
           tooltip={
             <BaseTooltipContent>

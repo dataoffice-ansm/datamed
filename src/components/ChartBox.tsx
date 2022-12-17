@@ -19,7 +19,7 @@ export const ChartBox = ({
   <div
     id={id}
     className={classnames(
-      'ChartBox flex flex-col p-4 bg-white rounded-lg shadow text-center mx-auto',
+      'ChartBox flex flex-col p-4 bg-white rounded-lg shadow mx-auto',
       className
     )}
   >

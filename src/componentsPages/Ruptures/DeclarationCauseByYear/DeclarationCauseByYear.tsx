@@ -1,6 +1,5 @@
 import type { HTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
 import type { SelectOption } from '../../../components/Select/Select';
 import { Select } from '../../../components/Select/Select';
 import { NotEnoughData } from 'components/NotEnoughData';
@@ -9,9 +8,9 @@ import { GraphFiguresGrid } from '../../../components/GraphFiguresGrid';
 import { GraphFigure } from '../../../components/GraphFigure';
 import { getFigureByCauseName } from '../../../utils/mapping';
 import { GraphBox } from '../../../components/GraphBox/GraphBox';
+import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 
 type DeclarationCauseByYearProps = {
-  ruptures: GlobalRupture;
   defaultOption?: OptionsValue;
 } & HTMLAttributes<HTMLDivElement>;
 
@@ -33,9 +32,9 @@ const findOptionIndex = (selectedOption: OptionsValue) =>
   (Object.keys(unitOptions) as OptionsValue[]).findIndex((option) => option === selectedOption);
 
 export const DeclarationCauseByYear = ({
-  ruptures,
   defaultOption = 'number',
 }: DeclarationCauseByYearProps) => {
+  const { ruptures } = useRupturesPageContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [selectedUnitOption, setSelectedUnitOption] = useState<OptionsValue>(defaultOption);
   const { repartitionPerCause, ruptureYears } = ruptures;

@@ -7,9 +7,12 @@ import type {
   GlobalStatisticQueryVariables,
 } from '../graphql/__generated__/generated-documents';
 import { GlobalStatisticDocument } from '../graphql/__generated__/generated-documents';
+import { GlobalDecPageContextProvider } from '../contexts/GlobaleDecPageContext';
 
 const PageGlobalStatisticServerSideRendered = ({ globalStat }: { globalStat: GlobalStatistic }) => (
-  <GlobalStatisticPage globalStatistic={globalStat} />
+  <GlobalDecPageContextProvider globalDec={globalStat}>
+    <GlobalStatisticPage />
+  </GlobalDecPageContextProvider>
 );
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {

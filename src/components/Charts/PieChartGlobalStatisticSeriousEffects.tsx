@@ -69,6 +69,7 @@ export const PieChartGlobalStatisticSeriousEffects = ({
     <div className={className}>
       <Pie
         options={{
+          responsive: true,
           plugins: {
             tooltip: {
               enabled: false,

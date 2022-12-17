@@ -268,13 +268,8 @@ query GlobalStatistic {
   }
 }
 
-query GlobalRupture {
-  getGlobalRupture {
-    repartitionPerClassication {
-      value
-      classification
-      year
-    }
+query GlobalRuptures {
+  getGlobalRuptures {
     ruptureStocks {
       year
       total
@@ -285,6 +280,20 @@ query GlobalRupture {
     }
     ruptureYears {
       value
+    }
+    repartitionPerClassification {
+      value
+      classification
+      year
+    }
+    repartitionPerTherapeuticClass {
+      year
+      total
+      repartition {
+        name
+        value
+        totalCis
+      }
     }
     repartitionPerCause {
       year
@@ -302,21 +311,10 @@ query GlobalRupture {
         range
       }
     }
-
-    repartitionPerClassTherapeutique {
-      year
-      total
-      repartitions {
-        name
-        value
-        totalCis
-      }
-    }
-
     totalAction {
       year
       total
-      totalWithOneAction
+      totalWithAtLeastOneAction
     }
   }
 }
