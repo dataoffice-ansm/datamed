@@ -106,6 +106,21 @@ export const SubstanceContainer = ({
     totalExposition,
   } = substance;
 
+  const repPerPathologyFiltered = useMemo(
+    () =>
+      repartitionPerPathology?.filter(
+        (pathologyRepartition) =>
+          pathologyRepartition?.id !== undefined &&
+          pathologyRepartition?.id !== null &&
+          pathologyRepartition?.range &&
+          pathologyRepartition?.value !== undefined &&
+          pathologyRepartition?.value !== null &&
+          pathologyRepartition?.valuePercent !== undefined &&
+          pathologyRepartition?.valuePercent !== null
+      ) ?? [],
+    [repartitionPerPathology]
+  );
+
   return (
     <div className="SubstancesContainerContentTitle text-left">
       <BoxInfo
@@ -135,7 +150,8 @@ export const SubstanceContainer = ({
             title="Répartition par sexe des patients traités parmi les cas déclarés d'effets indésirables"
             className="h-full max-w-[100%]"
           >
-            {repartitionPerGender?.female && repartitionPerGender?.male ? (
+            {repartitionPerGender?.female?.valuePercent &&
+            repartitionPerGender?.male?.valuePercent ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
                 {repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
@@ -224,27 +240,24 @@ export const SubstanceContainer = ({
         title="Effets indésirables suspectés de la substance active"
         render={(selectedOption) => (
           <div className="GraphBoxSelectContent">
-            <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
-              Parmi les <span className="text-secondary font-medium">{totalExposition?.total}</span>{' '}
-              déclarations d’effets indésirables pour:{' '}
-              <span className="text-secondary font-medium">{substance.name}</span>
-            </div>
+            {repPerPathologyFiltered.length !== 0 && (
+              <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
+                Parmi les{' '}
+                <span className="text-secondary font-medium">{totalExposition?.total}</span>{' '}
+                déclarations d’effets indésirables pour:{' '}
+                <span className="text-secondary font-medium">{substance.name}</span>
+              </div>
+            )}
 
             <GraphFiguresGrid
-              data={
-                repartitionPerPathology?.filter(
-                  (pathologyRepartition) =>
-                    pathologyRepartition?.id &&
-                    pathologyRepartition?.range &&
-                    pathologyRepartition?.value &&
-                    pathologyRepartition?.valuePercent
-                ) ?? []
-              }
+              data={repPerPathologyFiltered}
               renderItem={(pathologyRepartition) =>
-                pathologyRepartition?.id &&
+                pathologyRepartition?.id !== undefined &&
+                pathologyRepartition?.id !== null &&
                 pathologyRepartition?.range &&
                 pathologyRepartition?.value &&
-                pathologyRepartition?.valuePercent ? (
+                pathologyRepartition?.valuePercent !== undefined &&
+                pathologyRepartition?.valuePercent !== null ? (
                   <GraphFigure
                     className="pathologyGraphFigure"
                     unit={selectedOption === 'percent' ? ' % ' : ''}

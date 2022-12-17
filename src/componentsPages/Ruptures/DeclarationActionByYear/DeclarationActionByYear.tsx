@@ -161,7 +161,7 @@ export const RupturesDeclarationActionByYear = ({
             <div className="GraphBoxSelectContent">
               <GraphFiguresGrid
                 data={(selectedActionData?.actions ?? [])?.filter(
-                  (action) => action?.range && action?.value
+                  (action) => action?.range && action?.value !== undefined && action?.value !== null
                 )}
                 renderItem={(action) =>
                   action?.range && action?.value ? (

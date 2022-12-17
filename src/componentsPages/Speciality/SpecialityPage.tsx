@@ -27,7 +27,7 @@ import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { Button } from '../../components/Button/Button';
 import { GraphFigure } from '../../components/GraphFigure';
-import { PublicationItem } from '../../componentsPages/Speciality/PublicationItem';
+import { PublicationItem } from './PublicationItem';
 import { RuptureHistoryItem } from './RuptureHistoryItem';
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 import { PieChartMedicalErrorsPopulation } from '../../components/Charts/PieChartMedicalErrorsPopulation';
@@ -266,6 +266,11 @@ const SectionTreatedPatients = () => {
 const SectionMedicinalErrors = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
 
+  const apparitionStepsRepartition = useMemo(
+    () => currentEntity.medicalErrors?.apparitionStepRepartition ?? [],
+    [currentEntity.medicalErrors?.apparitionStepRepartition]
+  );
+
   return (
     <div className="SectionMedicinalErrors sectionPart mt-4 mb-8" id="sectionMedicinalErrors">
       <SectionTitle
@@ -357,9 +362,11 @@ const SectionMedicinalErrors = () => {
         title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
         render={(selectedOption) => (
           <GraphFiguresGrid
-            data={currentEntity.medicalErrors?.apparitionStepRepartition ?? []}
+            data={apparitionStepsRepartition}
             renderItem={(apparitionStep) =>
-              apparitionStep?.id && apparitionStep?.range ? (
+              apparitionStep?.id !== undefined &&
+              apparitionStep?.id !== null &&
+              apparitionStep?.range ? (
                 <GraphFigure
                   unit={selectedOption === 'percent' ? ' % ' : ''}
                   value={apparitionStep.value ?? 0}

@@ -158,13 +158,19 @@ const SectionRepartitionNotifiers = () => {
           <GraphFiguresGrid
             data={
               repartitionPerNotifier?.filter(
-                (notifier) => notifier?.job && notifier?.value && notifier?.valuePercent
+                (notifier) =>
+                  notifier?.job &&
+                  notifier?.value !== undefined &&
+                  notifier?.value !== null &&
+                  notifier?.valuePercent !== undefined &&
+                  notifier?.valuePercent !== null
               ) ?? []
             }
             renderItem={(notifierRepartition) =>
               notifierRepartition?.job &&
               notifierRepartition?.value &&
-              notifierRepartition?.valuePercent ? (
+              notifierRepartition?.valuePercent !== undefined &&
+              notifierRepartition?.valuePercent !== null ? (
                 <GraphFigure
                   className="pathologyGraphFigure"
                   unit={selectedOption === 'percent' ? ' % ' : ''}
@@ -238,8 +244,10 @@ const SectionTypesOfSideEffects = () => {
                 repartitionPerPathology?.filter(
                   (pathologyRepartition) =>
                     pathologyRepartition?.range &&
-                    pathologyRepartition?.value &&
-                    pathologyRepartition?.valuePercent
+                    pathologyRepartition?.value !== undefined &&
+                    pathologyRepartition?.value !== null &&
+                    pathologyRepartition?.valuePercent !== undefined &&
+                    pathologyRepartition?.valuePercent !== null
                 ) ?? []
               }
               renderItem={(pathologyRepartition) =>
