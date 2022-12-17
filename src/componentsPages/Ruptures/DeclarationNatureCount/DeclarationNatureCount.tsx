@@ -1,17 +1,15 @@
 import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
-import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
 import { ChartBox } from 'components/ChartBox';
 import { NotEnoughData } from 'components/NotEnoughData';
 import { LineChart } from 'components/Charts/LineChart/LineChart';
 import tailwindPaletteConfig from '../../../../tailwind.palette.config';
 import { BaseTooltipContent, ContainerWithTooltip } from '../Tooltip';
+import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 
-export type DeclarationNatureCountProps = {
-  ruptures: GlobalRupture;
-} & HTMLAttributes<HTMLDivElement>;
+export const DeclarationNatureCount = (_props: HTMLAttributes<HTMLDivElement>) => {
+  const { ruptures } = useRupturesPageContext();
 
-export const DeclarationNatureCount = ({ ruptures }: DeclarationNatureCountProps) => {
   const years = useMemo(
     () =>
       (ruptures?.ruptureYears ?? [])
@@ -24,29 +22,29 @@ export const DeclarationNatureCount = ({ ruptures }: DeclarationNatureCountProps
     () => [
       {
         id: 1,
-        label: 'de rupture',
+        label: 'Ruptures',
         backgroundColor: tailwindPaletteConfig.teal[900],
         borderColor: tailwindPaletteConfig.teal[900],
-        data: (ruptures?.repartitionPerClassication ?? [])
+        data: (ruptures?.repartitionPerClassification ?? [])
           .filter((element) => element?.classification === 'rupture')
           .map((element) => element?.value),
       },
       {
         id: 2,
-        label: 'de risque de rupture ',
+        label: 'Risques de ruptures',
         backgroundColor: tailwindPaletteConfig.green[900],
         borderColor: tailwindPaletteConfig.green[900],
-        data: (ruptures?.repartitionPerClassication ?? [])
+        data: (ruptures?.repartitionPerClassification ?? [])
           .filter((element) => element?.classification === 'risque')
           .map((element) => element?.value),
       },
     ],
-    [ruptures?.repartitionPerClassication]
+    [ruptures?.repartitionPerClassification]
   );
 
   return (
     <div>
-      {ruptures?.repartitionPerClassication ? (
+      {ruptures?.repartitionPerClassification ? (
         <div className="flex flex-col gap-8 pt-8">
           <ChartBox className="w-full">
             <div className="w-full flex flex-col justify-start items-start gap-4">

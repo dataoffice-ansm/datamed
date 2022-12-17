@@ -24,6 +24,14 @@ export type HeadlessHeroHeaderProps = {
 /**
  *
  * @param id
+ * @param icon
+ * @param theme
+ * @param title
+ * @param backNavigationLabel
+ * @param description
+ * @param textColor
+ * @param backNavigationColor
+ * @param tooltip
  * @constructor
  */
 export const HeadlessHeroHeader = ({
@@ -51,7 +59,7 @@ export const HeadlessHeroHeader = ({
     <FullWidthRow id={id} className={theme}>
       <div
         className={classnames(
-          'HeroHeader HeroHeaderSticky h-16 fixed left-0 right-0 z-[1]',
+          'HeadlessHeroHeaderSticky h-16 fixed left-0 right-0 z-[1]',
           'ease-in-out duration-500 transition-all',
           textColor,
           theme
@@ -67,18 +75,18 @@ export const HeadlessHeroHeader = ({
           </div>
         </div>
       </div>
-      <div ref={ref} className="flex flex-col">
+      <div ref={ref} className="HeadlessHeroHeader flex flex-col w-full">
         <Link href="/">
           <a className={classNames('flex justify-start items-center my-12 gap-4', textColor)}>
             <div className="h-8 w-8">
               <BackArrowSVG className={classNames('h-8 w-8', backNavigationColor)} />
             </div>
-            <div className="text-xl font-medium">Accueil / {backNavigationLabel}</div>
+            <div className="text-md font-medium">Accueil / {backNavigationLabel}</div>
           </a>
         </Link>
         <div
           className={classNames(
-            'HeroHeader flex flex-col md:flex-row min-h[20rem] pt-24 md:pt-48 pb-16 md:pb-24 lg:pb-32 gap-16',
+            'HeroHeader flex flex-col md:flex-row justify-center min-h[20rem] pt-24 md:pt-48 pb-16 md:pb-24 lg:pb-32 gap-16',
             textColor
           )}
         >

@@ -1,78 +1,37 @@
-import type { HTMLAttributes, ReactNode } from 'react';
+import type { HTMLAttributes } from 'react';
 import { useCallback, useState } from 'react';
 import { useMemo } from 'react';
 import { SectionTitle } from '../../../components/SectionTitle';
-import type { GlobalRupture } from 'graphql/__generated__/generated-documents';
 import type { SelectOption } from '../../../components/Select/Select';
 import { Select } from '../../../components/Select/Select';
 import { NotEnoughData } from 'components/NotEnoughData';
 import { BoxInfo } from '../../../components/BoxInfo';
 import FolderSVG from '../../../assets/icons/folder/folder.svg';
-import classNames from 'classnames';
-import { BaseTooltipContent, ContainerWithTooltip } from '../Tooltip';
+import { BaseTooltipContent } from '../Tooltip';
+import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
+import { KPIBoxProgression } from '../../../components/KPIBoxProgression';
 
-type PercentageBoxProps = {
-  percent: number;
-  total: number;
-  numberColor: string;
-  percentBackgroundColor: string;
-  percentForegroundColor: string;
-  title: string;
-  subtitle: string;
-  tooltip: JSX.Element | ReactNode;
-} & HTMLAttributes<HTMLElement>;
-
-const PercentageBox = ({
-  percent,
-  numberColor,
-  percentBackgroundColor,
-  percentForegroundColor,
-  subtitle,
-  title,
-  tooltip,
-  total,
-}: PercentageBoxProps) => (
-  <div className="flex-1 shadow rounded-lg bg-white p-4 flex flex-col gap-4">
-    <ContainerWithTooltip tooltip={tooltip}>
-      <div className={classNames('font-medium text-2xl md:text-3xl', numberColor)}>
-        {total?.toLocaleString()}
-      </div>
-      <div>{title}</div>
-    </ContainerWithTooltip>
-    <div>
-      <div className={classNames('font-medium text-2xl md:text-3xl', numberColor)}>
-        {percent.toLocaleString()} %
-      </div>
-      <div>{subtitle}</div>
-    </div>
-    <div>
-      <div className={classNames('h-8 w-full relative border', percentBackgroundColor)}>
-        <div
-          className={classNames('absolute top-0 left-0 bottom-0', percentForegroundColor, {
-            'border-r': percent < 100,
-          })}
-          style={{
-            width: `${percent}%`,
-          }}
-        />
-      </div>
-    </div>
-  </div>
-);
-
-export type DeclarationByYearProps = {
-  ruptures: GlobalRupture;
-} & HTMLAttributes<HTMLDivElement>;
-
-export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
+export const DeclarationByYear = (_props: HTMLAttributes<HTMLDivElement>) => {
+  const { ruptures } = useRupturesPageContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  const options = useMemo(
+  const options: SelectOption[] = useMemo(
     () =>
-      (ruptures?.ruptureYears ?? []).map((ruptureYear) => ({
-        value: ruptureYear?.value,
-        label: ruptureYear?.value,
-      })),
+      ruptures?.ruptureYears
+        ? ruptures?.ruptureYears.reduce<SelectOption[]>(
+            (carry, ruptureYear) =>
+              ruptureYear?.value
+                ? [
+                    ...carry,
+                    {
+                      value: ruptureYear?.value,
+                      label: (ruptureYear?.value ?? '').toString(),
+                    },
+                  ]
+                : carry,
+            []
+          )
+        : [],
     [ruptures?.ruptureYears]
   );
 
@@ -88,9 +47,10 @@ export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
     [options, ruptures?.ruptureStocks, selectedIndex]
   );
 
-  const percentRisque = Math.trunc(
+  const percentRisk = Math.trunc(
     (Math.round(selectedData?.nbRisqueClosed ?? 0) / (selectedData?.nbRisque ?? 1)) * 100
   );
+
   const percentRupture = Math.trunc(
     (Math.round(selectedData?.nbRuptureClosed ?? 0) / (selectedData?.nbRupture ?? 1)) * 100
   );
@@ -103,16 +63,13 @@ export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
           selectedData?.year ?? '- année non disponible'
         }`}
       >
-        <Select
-          options={options as unknown as SelectOption[]}
-          theme="secondary-variant"
-          onSelectOption={onSelectedYear}
-        />
+        <Select options={options} theme="secondary-variant" onSelectOption={onSelectedYear} />
       </SectionTitle>
+
       {(ruptures?.ruptureYears ?? []).length > 0 ? (
         <>
           <BoxInfo
-            title={`${(selectedData?.total ?? 0).toLocaleString()} déclaration(s) reçues(s)`}
+            title={`${selectedData?.total ?? 0} déclaration(s) reçues(s)`}
             icon={<FolderSVG />}
             theme="dark-green"
             className="my-8"
@@ -129,11 +86,11 @@ export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
           </BoxInfo>
 
           <div className="flex gap-8 flex-col md:flex-row">
-            <PercentageBox
+            <KPIBoxProgression
               title="Déclarations de ruptures depuis le début de l’année civile en cours"
-              subtitle="ont été clôturées à ce jour"
-              percent={percentRupture}
               total={selectedData?.nbRupture ?? 0}
+              percentageTitle="ont été clôturées à ce jour"
+              percent={percentRupture}
               numberColor="text-teal-900"
               percentBackgroundColor="bg-teal-300"
               percentForegroundColor="bg-teal-900"
@@ -145,10 +102,10 @@ export const DeclarationByYear = ({ ruptures }: DeclarationByYearProps) => {
                 </BaseTooltipContent>
               }
             />
-            <PercentageBox
+            <KPIBoxProgression
               title="Déclarations de risques de rupture depuis le début de l’année civile en cours"
-              subtitle="ont été clôturées à ce jour"
-              percent={percentRisque}
+              percentageTitle="ont été clôturées à ce jour"
+              percent={percentRisk}
               total={selectedData?.nbRisque ?? 0}
               numberColor="text-green-900"
               percentBackgroundColor="bg-green-300"

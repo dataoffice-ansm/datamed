@@ -70,8 +70,33 @@ export const resolvers: Resolvers = {
       return context.dataSources.postgresOperations.getGlobalStatistic();
     },
 
-    async getGlobalRupture(parent, args, context) {
-      return context.dataSources.postgresOperations.getGlobalRupture();
+    async getGlobalRuptures(parent, args, context) {
+      const years = await context.dataSources.postgresOperations.getRuptureYears();
+
+      return {
+        ruptureYears: years,
+        ruptureStocks: await Promise.all(
+          years.map(async ({ value }) =>
+            context.dataSources.postgresOperations.getRuptureStockTotalExposition(value ?? 0)
+          )
+        ),
+
+        repartitionPerClassification:
+          await context.dataSources.postgresOperations.getRuptureStockRepartitionPerClassification(),
+
+        repartitionPerTherapeuticClass:
+          await context.dataSources.postgresOperations.getRupturesPerTherapeuticClassesPerYearRepartition(
+            years
+          ),
+
+        repartitionPerCause:
+          await context.dataSources.postgresOperations.getRuptureStockRepartitionPerCause(years),
+
+        repartitionPerAction:
+          await context.dataSources.postgresOperations.getRuptureStockRepartitionPerAction(),
+
+        totalAction: await context.dataSources.postgresOperations.getRupturesTotalAction(),
+      };
     },
   },
 
