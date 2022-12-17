@@ -15,11 +15,56 @@ export type Scalars = {
   Float: number;
 };
 
+export type Cause = {
+  __typename?: 'Cause';
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
 export type CisExposition = {
   __typename?: 'CisExposition';
   consumption?: Maybe<Scalars['Int']>;
   expositionLevel?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
+};
+
+export type GlobStaticRepartitionPerNotifier = {
+  __typename?: 'GlobStaticRepartitionPerNotifier';
+  job?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
+};
+
+export type GlobStaticRepartitionPerPathology = {
+  __typename?: 'GlobStaticRepartitionPerPathology';
+  id: Scalars['Int'];
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
+};
+
+export type GlobalRupture = {
+  __typename?: 'GlobalRupture';
+  repartitionPerAction?: Maybe<Array<Maybe<RuptureRepartitionPerAction>>>;
+  repartitionPerCause?: Maybe<Array<Maybe<RuptureRepartitionPerCause>>>;
+  repartitionPerClassTherapeutique?: Maybe<
+    Array<Maybe<RuptureStockRepartionPerClassTherapeutiques>>
+  >;
+  repartitionPerClassication?: Maybe<Array<Maybe<RuptureStockRepartitionPerClassication>>>;
+  ruptureStocks?: Maybe<Array<Maybe<RuptureStock>>>;
+  ruptureYears?: Maybe<Array<Maybe<RuptureYear>>>;
+  totalAction?: Maybe<Array<Maybe<RuptureTotalAction>>>;
+};
+
+export type GlobalStatistic = {
+  __typename?: 'GlobalStatistic';
+  repartitionPerAge?: Maybe<Array<Maybe<RepartitionRange>>>;
+  repartitionPerGender?: Maybe<RepartitionPerGender>;
+  repartitionPerGravity?: Maybe<Array<Maybe<RepartitionPerGravity>>>;
+  repartitionPerNotifier?: Maybe<Array<Maybe<GlobStaticRepartitionPerNotifier>>>;
+  repartitionPerPathology?: Maybe<Array<Maybe<GlobStaticRepartitionPerPathology>>>;
+  repartitionPerSeriousEffect?: Maybe<Array<Maybe<RepartitionPerSeriousEffect>>>;
+  totalExposition?: Maybe<TotalExposition>;
 };
 
 export type HltEffect = {
@@ -110,6 +155,8 @@ export type PublicationType = {
 
 export type Query = {
   __typename?: 'Query';
+  getGlobalRupture?: Maybe<GlobalRupture>;
+  getGlobalStatistic?: Maybe<GlobalStatistic>;
   getSpecialities?: Maybe<SpecialitiesReturn>;
   getSpeciality?: Maybe<Speciality>;
   getSpecialityIdByCode?: Maybe<Scalars['Int']>;
@@ -135,6 +182,13 @@ export type RepartitionPerGender = {
   male?: Maybe<IndicatorValues>;
 };
 
+export type RepartitionPerGravity = {
+  __typename?: 'RepartitionPerGravity';
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
+};
+
 export type RepartitionPerNotifier = {
   __typename?: 'RepartitionPerNotifier';
   id: Scalars['Int'];
@@ -153,12 +207,25 @@ export type RepartitionPerPathology = {
   valuePercent?: Maybe<Scalars['Int']>;
 };
 
-export type RepartitionRange = {
-  __typename?: 'RepartitionRange';
-  id: Scalars['Int'];
+export type RepartitionPerSeriousEffect = {
+  __typename?: 'RepartitionPerSeriousEffect';
   range?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
   valuePercent?: Maybe<Scalars['Int']>;
+};
+
+export type RepartitionRange = {
+  __typename?: 'RepartitionRange';
+  id?: Maybe<Scalars['Int']>;
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureAction = {
+  __typename?: 'RuptureAction';
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
 };
 
 export type RuptureCause = {
@@ -171,6 +238,77 @@ export type RuptureClass = {
   __typename?: 'RuptureClass';
   id: Scalars['Int'];
   name?: Maybe<Scalars['String']>;
+};
+
+export type RuptureExposition = {
+  __typename?: 'RuptureExposition';
+  range?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureRepartitionPerAction = {
+  __typename?: 'RuptureRepartitionPerAction';
+  actions?: Maybe<Array<Maybe<RuptureAction>>>;
+  total?: Maybe<Scalars['Int']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureRepartitionPerCause = {
+  __typename?: 'RuptureRepartitionPerCause';
+  causes?: Maybe<Array<Maybe<Cause>>>;
+  total?: Maybe<Scalars['Int']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureStock = {
+  __typename?: 'RuptureStock';
+  nbRisque?: Maybe<Scalars['Int']>;
+  nbRisqueClosed?: Maybe<Scalars['Int']>;
+  nbRupture?: Maybe<Scalars['Int']>;
+  nbRuptureClosed?: Maybe<Scalars['Int']>;
+  total?: Maybe<Scalars['Int']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureStockRepartionPerClassTherapeutique = {
+  __typename?: 'RuptureStockRepartionPerClassTherapeutique';
+  name?: Maybe<Scalars['String']>;
+  totalCis?: Maybe<Scalars['Int']>;
+  value?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureStockRepartionPerClassTherapeutiques = {
+  __typename?: 'RuptureStockRepartionPerClassTherapeutiques';
+  repartitions?: Maybe<Array<Maybe<RuptureStockRepartionPerClassTherapeutique>>>;
+  total?: Maybe<Scalars['Int']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureStockRepartitionPerClassication = {
+  __typename?: 'RuptureStockRepartitionPerClassication';
+  classification?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureTotalAction = {
+  __typename?: 'RuptureTotalAction';
+  total?: Maybe<Scalars['Int']>;
+  totalWithOneAction?: Maybe<Scalars['Int']>;
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureTotalExposition = {
+  __typename?: 'RuptureTotalExposition';
+  ruptureExpositions?: Maybe<Array<Maybe<RuptureExposition>>>;
+  total: Scalars['Int'];
+  year?: Maybe<Scalars['Int']>;
+};
+
+export type RuptureYear = {
+  __typename?: 'RuptureYear';
+  value?: Maybe<Scalars['Int']>;
 };
 
 export type SpecialitiesReturn = {
@@ -316,7 +454,7 @@ export type SpecialityFragmentFragment = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
+      id?: number | null;
       range?: string | null;
       value?: number | null;
       valuePercent?: number | null;
@@ -377,7 +515,7 @@ export type SpecialityFragmentFragment = {
   } | null;
   repartitionPerAge?: Array<{
     __typename?: 'RepartitionRange';
-    id: number;
+    id?: number | null;
     range?: string | null;
     value?: number | null;
     valuePercent?: number | null;
@@ -401,7 +539,7 @@ export type SpecialityFragmentFragment = {
     __typename?: 'MedicalErrors';
     populationRepartition?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
+      id?: number | null;
       range?: string | null;
       value?: number | null;
       valuePercent?: number | null;
@@ -421,14 +559,14 @@ export type SpecialityFragmentFragment = {
     } | null;
     apparitionStepRepartition?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
+      id?: number | null;
       range?: string | null;
       value?: number | null;
       valuePercent?: number | null;
     } | null> | null;
     natureRepartition?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
+      id?: number | null;
       range?: string | null;
       value?: number | null;
       valuePercent?: number | null;
@@ -481,7 +619,7 @@ export type SubstanceFragmentFragment = {
   } | null;
   repartitionPerAge?: Array<{
     __typename?: 'RepartitionRange';
-    id: number;
+    id?: number | null;
     range?: string | null;
     value?: number | null;
     valuePercent?: number | null;
@@ -583,7 +721,7 @@ export type SpecialityQuery = {
       } | null;
       repartitionPerAge?: Array<{
         __typename?: 'RepartitionRange';
-        id: number;
+        id?: number | null;
         range?: string | null;
         value?: number | null;
         valuePercent?: number | null;
@@ -644,7 +782,7 @@ export type SpecialityQuery = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
+      id?: number | null;
       range?: string | null;
       value?: number | null;
       valuePercent?: number | null;
@@ -668,7 +806,7 @@ export type SpecialityQuery = {
       __typename?: 'MedicalErrors';
       populationRepartition?: Array<{
         __typename?: 'RepartitionRange';
-        id: number;
+        id?: number | null;
         range?: string | null;
         value?: number | null;
         valuePercent?: number | null;
@@ -688,14 +826,14 @@ export type SpecialityQuery = {
       } | null;
       apparitionStepRepartition?: Array<{
         __typename?: 'RepartitionRange';
-        id: number;
+        id?: number | null;
         range?: string | null;
         value?: number | null;
         valuePercent?: number | null;
       } | null> | null;
       natureRepartition?: Array<{
         __typename?: 'RepartitionRange';
-        id: number;
+        id?: number | null;
         range?: string | null;
         value?: number | null;
         valuePercent?: number | null;
@@ -771,7 +909,7 @@ export type SubstanceQuery = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
+      id?: number | null;
       range?: string | null;
       value?: number | null;
       valuePercent?: number | null;
@@ -824,6 +962,127 @@ export type SubstancesQuery = {
       id: number;
       name: string;
       code: string;
+    } | null> | null;
+  } | null;
+};
+
+export type GlobalStatisticQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GlobalStatisticQuery = {
+  __typename?: 'Query';
+  getGlobalStatistic?: {
+    __typename?: 'GlobalStatistic';
+    repartitionPerGender?: {
+      __typename?: 'RepartitionPerGender';
+      male?: {
+        __typename?: 'IndicatorValues';
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null;
+      female?: {
+        __typename?: 'IndicatorValues';
+        value?: number | null;
+        valuePercent?: number | null;
+      } | null;
+    } | null;
+    repartitionPerAge?: Array<{
+      __typename?: 'RepartitionRange';
+      id?: number | null;
+      range?: string | null;
+      value?: number | null;
+      valuePercent?: number | null;
+    } | null> | null;
+    totalExposition?: {
+      __typename?: 'TotalExposition';
+      total: number;
+      minYear?: number | null;
+      maxYear?: number | null;
+    } | null;
+    repartitionPerSeriousEffect?: Array<{
+      __typename?: 'RepartitionPerSeriousEffect';
+      value?: number | null;
+      range?: string | null;
+      valuePercent?: number | null;
+    } | null> | null;
+    repartitionPerPathology?: Array<{
+      __typename?: 'GlobStaticRepartitionPerPathology';
+      valuePercent?: number | null;
+      value?: number | null;
+      range?: string | null;
+    } | null> | null;
+    repartitionPerNotifier?: Array<{
+      __typename?: 'GlobStaticRepartitionPerNotifier';
+      value?: number | null;
+      valuePercent?: number | null;
+      job?: string | null;
+    } | null> | null;
+    repartitionPerGravity?: Array<{
+      __typename?: 'RepartitionPerGravity';
+      range?: string | null;
+      value?: number | null;
+      valuePercent?: number | null;
+    } | null> | null;
+  } | null;
+};
+
+export type GlobalRuptureQueryVariables = Exact<{ [key: string]: never }>;
+
+export type GlobalRuptureQuery = {
+  __typename?: 'Query';
+  getGlobalRupture?: {
+    __typename?: 'GlobalRupture';
+    repartitionPerClassication?: Array<{
+      __typename?: 'RuptureStockRepartitionPerClassication';
+      value?: number | null;
+      classification?: string | null;
+      year?: number | null;
+    } | null> | null;
+    ruptureStocks?: Array<{
+      __typename?: 'RuptureStock';
+      year?: number | null;
+      total?: number | null;
+      nbRisque?: number | null;
+      nbRisqueClosed?: number | null;
+      nbRuptureClosed?: number | null;
+      nbRupture?: number | null;
+    } | null> | null;
+    ruptureYears?: Array<{ __typename?: 'RuptureYear'; value?: number | null } | null> | null;
+    repartitionPerCause?: Array<{
+      __typename?: 'RuptureRepartitionPerCause';
+      year?: number | null;
+      total?: number | null;
+      causes?: Array<{
+        __typename?: 'Cause';
+        value?: number | null;
+        range?: string | null;
+      } | null> | null;
+    } | null> | null;
+    repartitionPerAction?: Array<{
+      __typename?: 'RuptureRepartitionPerAction';
+      year?: number | null;
+      total?: number | null;
+      actions?: Array<{
+        __typename?: 'RuptureAction';
+        value?: number | null;
+        range?: string | null;
+      } | null> | null;
+    } | null> | null;
+    repartitionPerClassTherapeutique?: Array<{
+      __typename?: 'RuptureStockRepartionPerClassTherapeutiques';
+      year?: number | null;
+      total?: number | null;
+      repartitions?: Array<{
+        __typename?: 'RuptureStockRepartionPerClassTherapeutique';
+        name?: string | null;
+        value?: number | null;
+        totalCis?: number | null;
+      } | null> | null;
+    } | null> | null;
+    totalAction?: Array<{
+      __typename?: 'RuptureTotalAction';
+      year?: number | null;
+      total?: number | null;
+      totalWithOneAction?: number | null;
     } | null> | null;
   } | null;
 };
@@ -1254,6 +1513,185 @@ export function useSubstancesLazyQuery(
 export type SubstancesQueryHookResult = ReturnType<typeof useSubstancesQuery>;
 export type SubstancesLazyQueryHookResult = ReturnType<typeof useSubstancesLazyQuery>;
 export type SubstancesQueryResult = Apollo.QueryResult<SubstancesQuery, SubstancesQueryVariables>;
+export const GlobalStatisticDocument = gql`
+  query GlobalStatistic {
+    getGlobalStatistic {
+      repartitionPerGender {
+        male {
+          value
+          valuePercent
+        }
+        female {
+          value
+          valuePercent
+        }
+      }
+      repartitionPerAge {
+        id
+        range
+        value
+        valuePercent
+      }
+      totalExposition {
+        total
+        minYear
+        maxYear
+      }
+      repartitionPerSeriousEffect {
+        value
+        range
+        valuePercent
+      }
+      repartitionPerPathology {
+        valuePercent
+        value
+        range
+      }
+      repartitionPerNotifier {
+        value
+        valuePercent
+        job
+      }
+      repartitionPerGravity {
+        range
+        value
+        valuePercent
+      }
+    }
+  }
+`;
+
+/**
+ * __useGlobalStatisticQuery__
+ *
+ * To run a query within a React component, call `useGlobalStatisticQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGlobalStatisticQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGlobalStatisticQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGlobalStatisticQuery(
+  baseOptions?: Apollo.QueryHookOptions<GlobalStatisticQuery, GlobalStatisticQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GlobalStatisticQuery, GlobalStatisticQueryVariables>(
+    GlobalStatisticDocument,
+    options
+  );
+}
+export function useGlobalStatisticLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GlobalStatisticQuery, GlobalStatisticQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GlobalStatisticQuery, GlobalStatisticQueryVariables>(
+    GlobalStatisticDocument,
+    options
+  );
+}
+export type GlobalStatisticQueryHookResult = ReturnType<typeof useGlobalStatisticQuery>;
+export type GlobalStatisticLazyQueryHookResult = ReturnType<typeof useGlobalStatisticLazyQuery>;
+export type GlobalStatisticQueryResult = Apollo.QueryResult<
+  GlobalStatisticQuery,
+  GlobalStatisticQueryVariables
+>;
+export const GlobalRuptureDocument = gql`
+  query GlobalRupture {
+    getGlobalRupture {
+      repartitionPerClassication {
+        value
+        classification
+        year
+      }
+      ruptureStocks {
+        year
+        total
+        nbRisque
+        nbRisqueClosed
+        nbRuptureClosed
+        nbRupture
+      }
+      ruptureYears {
+        value
+      }
+      repartitionPerCause {
+        year
+        causes {
+          value
+          range
+        }
+        total
+      }
+      repartitionPerAction {
+        year
+        total
+        actions {
+          value
+          range
+        }
+      }
+      repartitionPerClassTherapeutique {
+        year
+        total
+        repartitions {
+          name
+          value
+          totalCis
+        }
+      }
+      totalAction {
+        year
+        total
+        totalWithOneAction
+      }
+    }
+  }
+`;
+
+/**
+ * __useGlobalRuptureQuery__
+ *
+ * To run a query within a React component, call `useGlobalRuptureQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGlobalRuptureQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGlobalRuptureQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGlobalRuptureQuery(
+  baseOptions?: Apollo.QueryHookOptions<GlobalRuptureQuery, GlobalRuptureQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useQuery<GlobalRuptureQuery, GlobalRuptureQueryVariables>(
+    GlobalRuptureDocument,
+    options
+  );
+}
+export function useGlobalRuptureLazyQuery(
+  baseOptions?: Apollo.LazyQueryHookOptions<GlobalRuptureQuery, GlobalRuptureQueryVariables>
+) {
+  const options = { ...defaultOptions, ...baseOptions };
+  return Apollo.useLazyQuery<GlobalRuptureQuery, GlobalRuptureQueryVariables>(
+    GlobalRuptureDocument,
+    options
+  );
+}
+export type GlobalRuptureQueryHookResult = ReturnType<typeof useGlobalRuptureQuery>;
+export type GlobalRuptureLazyQueryHookResult = ReturnType<typeof useGlobalRuptureLazyQuery>;
+export type GlobalRuptureQueryResult = Apollo.QueryResult<
+  GlobalRuptureQuery,
+  GlobalRuptureQueryVariables
+>;
 export const LoginDocument = gql`
   mutation Login($username: String, $password: String) {
     login(username: $username, password: $password) {

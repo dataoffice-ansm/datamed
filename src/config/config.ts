@@ -13,9 +13,8 @@ type AppConfig = {
 const dev = process.env.NODE_ENV !== 'production';
 const ssrMode = typeof window === 'undefined';
 const jwtToken = process.env.JWT_TOKEN_KEY ?? 'super duper secret key';
-const port = process.env.NEXT_PUBLIC_PORT ?? process.env.PORT ?? 3000;
 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-const appRoute = `${process.env.NEXT_PUBLIC_PROD_WEB_ROOT!}:${port}`;
+const appRoute = process.env.NEXT_PUBLIC_PROD_WEB_ROOT!;
 
 let config: AppConfig = {
   tokenName: 'datamed_token',
