@@ -27,7 +27,7 @@ export const PieChartGlobalStatisticSeriousEffects = ({
     | GlobalStatistic['repartitionPerGravity'];
   className?: string;
 }) => {
-  if (!seriousEffectData || !seriousEffectData.length) {
+  if (!seriousEffectData?.length) {
     return <NotEnoughData />;
   }
 

@@ -8,7 +8,15 @@ type GlobalDecPageContextData = {
 
 export const RupturesContext = createContext<GlobalDecPageContextData>({
   // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  globalDec: {} as GlobalStatistic,
+  globalDec: {
+    totalExposition: {},
+    repartitionPerSeriousEffect: {},
+    repartitionPerGravity: {},
+    repartitionPerGender: {},
+    repartitionPerNotifier: {},
+    repartitionPerPathology: {},
+    repartitionPerAge: {},
+  } as GlobalStatistic,
 });
 
 /**

@@ -22,7 +22,7 @@ export const PieChartMedicalErrorsPopulation = ({
   theme?: 'primary' | 'secondary';
   className?: string;
 }) => {
-  if (!errorsMedRepPopData || !errorsMedRepPopData.length) {
+  if (!errorsMedRepPopData?.length) {
     return <NotEnoughData />;
   }
 

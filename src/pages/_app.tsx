@@ -38,16 +38,16 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
       setLoading(false);
     };
 
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth',
-    });
-
     Router.events.on('routeChangeStart', start);
     Router.events.on('routeChangeComplete', end);
     Router.events.on('routeChangeError', end);
 
     return () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+
       Router.events.off('routeChangeStart', start);
       Router.events.off('routeChangeComplete', end);
       Router.events.off('routeChangeError', end);
@@ -69,7 +69,7 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
 MyApp.getInitialProps = async (appContext: any) => {
   // calls page's `getInitialProps` and fills `appProps.pageProps`
   const ctx = await App.getInitialProps(appContext);
-  const token = appContext.ctx.req.cookies?.[config.tokenName] as string;
+  const token = appContext?.ctx?.req?.cookies?.[config.tokenName] as string;
 
   if (!token || !config?.ssr?.jwtToken) {
     return {

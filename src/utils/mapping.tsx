@@ -225,6 +225,7 @@ export const getFigureBySideIdEffectPathology = (id: number) => {
   }
 };
 
+// eslint-disable-next-line complexity
 export const getFigureBySideNameEffectPathology = (name: string) => {
   switch (name) {
     case 'Affections cardiaques':

@@ -23,7 +23,7 @@ export const PieChartRepartitionAge = ({
   theme?: 'primary' | 'secondary' | 'secondary-variant';
   className?: string;
 }) => {
-  if (!ageData || !ageData.length) {
+  if (!ageData?.length) {
     return <NotEnoughData />;
   }
 
