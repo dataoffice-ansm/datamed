@@ -18,7 +18,6 @@ import ManFaceYes from '../../assets/images/manFaceYes.svg';
 import { ChartBox } from '../../components/ChartBox';
 import classnames from 'classnames';
 import { useLayoutContext } from '../../contexts/LayoutContext';
-import { getCisErrorMedNatureIconMapping } from '../../utils/iconsMapping';
 import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { Button } from '../../components/Button/Button';
@@ -33,7 +32,6 @@ import { SectionTitle } from '../../components/SectionTitle';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { PieChartNatureMedicalErrors } from '../../components/Charts/PieChartNatureMedicalErrors';
-import { ExpositionLevel } from '../../graphql/__generated__/generated-documents';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -168,16 +166,16 @@ const SectionTreatedPatients = () => {
             <span className="text-white">{currentEntity?.exposition?.description}</span>
 
             <div className="UsageBarContainer mt-12 flex justify-center items-end gap-2">
-              {Object.keys(ExpositionLevel).map((levelKey, index) => (
+              {[...Array(5).keys()].map((pos) => (
                 <div
-                  key={levelKey}
+                  key={pos}
                   className={classnames(
-                    `UsageBarLevel${index}`,
+                    `UsageBarLevel${pos}`,
                     'relative w-6 bg-white border border-solid border-gray-200'
                   )}
-                  style={{ height: 20 + 10 * index }}
+                  style={{ height: 20 + 10 * pos }}
                 >
-                  {currentEntity?.exposition?.expositionLevel === levelKey && (
+                  {currentEntity?.exposition?.expositionLevel === pos + 1 && (
                     <div className="bouncingPil animate-bounce absolute -top-8">
                       <PilIcon className="w-6 h-6" />
                     </div>
@@ -354,13 +352,15 @@ const SectionMedicinalErrors = () => {
           <GraphFiguresGrid
             data={apparitionStepsRepartition}
             renderItem={(apparitionStep) =>
-              apparitionStep?.id && apparitionStep?.range ? (
+              apparitionStep?.id !== undefined &&
+              apparitionStep?.id !== null &&
+              apparitionStep?.range ? (
                 <GraphFigure
                   unit={selectedOption === 'percent' ? ' % ' : ''}
                   value={apparitionStep.value ?? 0}
                   description={apparitionStep.range}
                   contentTooltip={apparitionStep.description ?? ''}
-                  icon={getCisErrorMedNatureIconMapping(apparitionStep.id)}
+                  // TODO: icon={getMedErrorNatureIcon(apparitionStep.id)}
                 />
               ) : null
             }

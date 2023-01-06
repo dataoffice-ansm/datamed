@@ -12,8 +12,8 @@ import { BoxInfo } from '../../components/BoxInfo';
 import { SectionTitle } from '../../components/SectionTitle';
 import { PieChartGlobalStatisticSeriousEffects } from '../../components/Charts/PieChartGlobalStatisticSeriousEffects';
 import {
-  getFigureBySideNameEffectPathology,
-  getNotifierFigureByNameJob,
+  getSideEffectPathologyIconByName,
+  getNotifierIconByJobName,
 } from '../../utils/iconsMapping';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
@@ -172,7 +172,7 @@ const SectionRepartitionNotifiers = () => {
                 className="NotifierRepartitionFigure"
                 unit={selectedOption === 'percent' ? ' % ' : ''}
                 description={notifier.job}
-                icon={getNotifierFigureByNameJob(notifier.job)}
+                icon={getNotifierIconByJobName(notifier.job)}
                 valueClassName="text-dark-green-900"
                 value={(selectedOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0}
               />
@@ -250,7 +250,7 @@ const SectionTypesOfSideEffects = () => {
                     className="pathologyGraphFigure"
                     unit={selectedOption === 'percent' ? ' % ' : ''}
                     description={pathologyRepartition.range}
-                    icon={getFigureBySideNameEffectPathology(pathologyRepartition.range)}
+                    icon={getSideEffectPathologyIconByName(pathologyRepartition.range)}
                     valueClassName="text-dark-green-900"
                     value={
                       selectedOption === 'percent'

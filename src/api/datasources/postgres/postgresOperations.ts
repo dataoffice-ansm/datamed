@@ -28,22 +28,12 @@ import type {
   TherapeuticClassRupture,
   TotalExposition,
 } from '../../graphql/__generated__/generated-types';
+import {
+  getMedicalErrorApparitionStep,
+  getMedicalErrorNatureByNatureId,
+} from '../../utils/mapping';
 
 export class PostgresOperations {
-  async getSingleSpecialityCodeById(cisCode: string): Promise<number | null> {
-    const row = await dbInstance
-      .selectFrom('medicinal_products as mp')
-      .where('mp.cis', '=', cisCode)
-      .select(['mp.id'])
-      .executeTakeFirst();
-
-    if (row) {
-      return row.id;
-    }
-
-    return null;
-  }
-
   async getFullSpecialitiesByCode(cisCodes: string[]): Promise<Speciality[]> {
     const rows = await dbInstance
       .selectFrom('medicinal_products as mp')
@@ -100,6 +90,8 @@ export class PostgresOperations {
         pharmaFormLabel,
       } = row;
 
+      // const expositionLevel = getCisExpositionLevelMapping(exposition ?? 0);
+
       return {
         id,
         code,
@@ -135,8 +127,11 @@ export class PostgresOperations {
         exposition: expositionId
           ? {
               id: expositionId,
-              expositionLevel: exposition ?? 0,
               consumption,
+              expositionLevel: exposition ?? 0,
+              description: '',
+              // expositionLevel,
+              // description: getCisExpositionLevelLabelMapping(expositionLevel),
             }
           : null,
       };
@@ -210,18 +205,14 @@ export class PostgresOperations {
     const female = rows.find((row) => row.sex === 2);
 
     return {
-      male: male
-        ? {
-            value: Math.round(male.patients_consumption ?? 0),
-            valuePercent: Math.round(male.patients_percentage ?? 0),
-          }
-        : null,
-      female: female
-        ? {
-            value: Math.round(female.patients_consumption ?? 0),
-            valuePercent: Math.round(female.patients_percentage ?? 0),
-          }
-        : null,
+      male: {
+        value: male ? Math.round(male.patients_consumption ?? 0) : null,
+        valuePercent: male ? Math.round(male.patients_percentage ?? 0) : null,
+      },
+      female: {
+        value: female ? Math.round(female.patients_consumption ?? 0) : null,
+        valuePercent: female ? Math.round(female.patients_percentage ?? 0) : null,
+      },
     };
   }
 
@@ -230,20 +221,23 @@ export class PostgresOperations {
       .selectFrom('mp_patient_ages as mp_a')
       .where('mp_a.mp_id', '=', cisId)
       .leftJoin('ages', 'ages.id', 'mp_a.age_id')
-      .select(['mp_a.id', 'ages.range', 'mp_a.patients_consumption', 'mp_a.patients_percentage'])
+      .select(['mp_a.patients_consumption', 'mp_a.patients_percentage', 'ages.id', 'ages.range'])
       .execute();
 
     return rows.reduce<RepartitionRange[]>((carry, row) => {
       const { id, range, patients_consumption, patients_percentage } = row;
-      return [
-        ...carry,
-        {
-          id,
-          range,
-          value: Math.round(patients_consumption ?? 0),
-          valuePercent: Math.round(patients_percentage ?? 0),
-        },
-      ];
+      // eslint-disable-next-line no-negated-condition
+      return id !== null
+        ? [
+            ...carry,
+            {
+              id,
+              range,
+              value: Math.round(patients_consumption ?? 0),
+              valuePercent: Math.round(patients_percentage ?? 0),
+            },
+          ]
+        : carry;
     }, []);
   }
 
@@ -252,20 +246,23 @@ export class PostgresOperations {
       .selectFrom('error_med_population as err')
       .leftJoin('population_errors as pop', 'pop.id', 'err.population_error_id')
       .where('err.mp_id', '=', cisId)
-      .select(['err.id', 'pop.label as range', 'err.number', 'err.percentage'])
+      .select(['err.number', 'err.percentage', 'pop.id', 'pop.label as range'])
       .execute();
 
     return rows.reduce<RepartitionRange[]>((carry, row) => {
       const { id, range, number, percentage } = row;
-      return [
-        ...carry,
-        {
-          id,
-          range,
-          value: Math.round(number ?? 0),
-          valuePercent: Math.round(percentage ?? 0),
-        },
-      ];
+      // eslint-disable-next-line no-negated-condition
+      return id !== null
+        ? [
+            ...carry,
+            {
+              id,
+              range,
+              value: Math.round(number ?? 0),
+              valuePercent: Math.round(percentage ?? 0),
+            },
+          ]
+        : carry;
     }, []);
   }
 
@@ -279,21 +276,19 @@ export class PostgresOperations {
       .select(['err.number', 'err.percentage', 'side.id'])
       .execute();
 
-    const withSideEffect = rows.find((row) => row.id === 1);
-    const withoutSideEffect = rows.find((row) => row.id === 0);
+    const withSideEffect = rows.find((row) => row.id === 2);
+    const withoutSideEffect = rows.find((row) => row.id === 1);
 
-    return withSideEffect && withoutSideEffect
-      ? {
-          with: {
-            value: Math.round(withSideEffect.number ?? 0),
-            valuePercent: Math.round(withSideEffect.percentage ?? 0),
-          },
-          without: {
-            value: Math.round(withSideEffect.number ?? 0),
-            valuePercent: Math.round(withoutSideEffect.percentage ?? 0),
-          },
-        }
-      : null;
+    return {
+      with: {
+        value: withSideEffect ? Math.round(withSideEffect.number ?? 0) : null,
+        valuePercent: withSideEffect ? Math.round(withSideEffect.percentage ?? 0) : null,
+      },
+      without: {
+        value: withoutSideEffect ? Math.round(withoutSideEffect.number ?? 0) : null,
+        valuePercent: withoutSideEffect ? Math.round(withoutSideEffect.percentage ?? 0) : null,
+      },
+    };
   }
 
   async getErrorsMedicalApparitionStepRepartition(cisId: number): Promise<RepartitionRange[]> {
@@ -301,23 +296,22 @@ export class PostgresOperations {
       .selectFrom('error_med_initial as err')
       .leftJoin('initial_errors as ini', 'ini.id', 'err.initial_error_id')
       .where('err.mp_id', '=', cisId)
-      .select([
-        'ini.id',
-        'ini.label as range',
-        'err.number as value',
-        'err.percentage as valuePercent',
-      ])
+      .select(['ini.id as apparitionId', 'err.number as value', 'err.percentage as valuePercent'])
       .execute();
 
     return rows.reduce<RepartitionRange[]>((carry, row) => {
-      const { id, range, value, valuePercent } = row;
+      const { apparitionId, value, valuePercent } = row;
+
+      const { step, description } = getMedicalErrorApparitionStep(apparitionId ?? 0);
+
       // eslint-disable-next-line no-negated-condition
-      return id !== null
+      return apparitionId !== null
         ? [
             ...carry,
             {
-              id,
-              range,
+              id: apparitionId,
+              range: step,
+              description,
               value: Math.round(value ?? 0),
               valuePercent: Math.round(valuePercent ?? 0),
             },
@@ -332,22 +326,23 @@ export class PostgresOperations {
       .leftJoin('nature_errors as nat', 'nat.id', 'err.nature_error_id')
       .where('err.mp_id', '=', cisId)
       .select([
-        'nat.id',
-        'nat.label as range',
+        'nat.id as natureId',
+        'nat.label as description',
         'err.number as value',
         'err.percentage as valuePercent',
       ])
       .execute();
 
     return rows.reduce<RepartitionRange[]>((carry, row) => {
-      const { id, range, value, valuePercent } = row;
+      const { natureId, description, value, valuePercent } = row;
       // eslint-disable-next-line no-negated-condition
-      return id !== null
+      return natureId !== null
         ? [
             ...carry,
             {
-              id,
-              range,
+              id: natureId,
+              range: getMedicalErrorNatureByNatureId(natureId),
+              description,
               value: Math.round(value ?? 0),
               valuePercent: Math.round(valuePercent ?? 0),
             },
@@ -576,16 +571,21 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSubstanceRepNotifier(subCode: number): Promise<RepartitionPerNotifier[]> {
+  async getSubstanceRepNotifier(subId: number): Promise<RepartitionPerNotifier[]> {
     const rows = await dbInstance
-      .selectFrom('substances_notif as s_n')
-      .where('s_n.substance_id', '=', subCode)
-      .leftJoin('notifiers', 'notifiers.id', 's_n.notifier_id')
-      .select(['notifiers.id', 'notifiers.job', 's_n.notification_percentage as value'])
+      .selectFrom('substances_notif as sn')
+      .where('sn.substance_id', '=', subId)
+      .leftJoin('notifiers', 'notifiers.id', 'sn.notifier_id')
+      .select([
+        'notifiers.id',
+        'notifiers.job',
+        'sn.notification_number as value',
+        'sn.notification_percentage as valuePercent',
+      ])
       .execute();
 
     return rows.reduce<RepartitionPerNotifier[]>((carry, row) => {
-      const { id, job, value } = row;
+      const { id, job, value, valuePercent } = row;
       return id !== null && job
         ? [
             ...carry,
@@ -593,6 +593,7 @@ export class PostgresOperations {
               id,
               job,
               value: Math.round(value ?? 0),
+              valuePercent: Math.round(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -704,11 +705,15 @@ export class PostgresOperations {
 
     if (rows?.expositionId && rows?.consumption && rows?.exposition) {
       const { expositionId, exposition, consumption } = rows;
+      // const expositionLevel = getCisExpositionLevelMapping(exposition ?? 0);
 
       return {
         id: expositionId,
-        expositionLevel: exposition ?? 0,
         consumption,
+        expositionLevel: exposition ?? 0,
+        // expositionLevel,
+        description: '',
+        // description: getCisExpositionLevelLabelMapping(expositionLevel),
       };
     }
 
@@ -784,16 +789,18 @@ export class PostgresOperations {
     const rows = await dbInstance
       .selectFrom('global_se_ages as gsa')
       .leftJoin('ages', 'gsa.age_id', 'ages.id')
-      .select(['ages.range as range', 'gsa.pct as percentage', 'gsa.n as consumption'])
+      .select(['ages.id', 'ages.range as range', 'gsa.pct as percentage', 'gsa.n as consumption'])
       .execute();
 
     return rows.reduce<RepartitionRange[]>((carry, row) => {
-      const { range, consumption, percentage } = row;
-      return range && consumption && percentage
+      const { id, range, consumption, percentage } = row;
+      // eslint-disable-next-line no-negated-condition
+      return id !== null
         ? [
             ...carry,
             {
-              range: range.replace('âge:', ''),
+              id,
+              range,
               value: Math.round(Number(consumption)),
               valuePercent: Math.round(percentage ?? 0),
             },
