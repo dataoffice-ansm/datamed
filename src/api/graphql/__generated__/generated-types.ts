@@ -28,6 +28,15 @@ export type CisExposition = {
   id: Scalars['Int'];
 };
 
+export enum ExpositionLevel {
+  High = 'HIGH',
+  Low = 'LOW',
+  Modered = 'MODERED',
+  Uknown = 'UKNOWN',
+  Veryhigh = 'VERYHIGH',
+  Verylow = 'VERYLOW',
+}
+
 export type GlobStaticRepartitionPerNotifier = {
   __typename?: 'GlobStaticRepartitionPerNotifier';
   job?: Maybe<Scalars['String']>;
@@ -108,6 +117,23 @@ export type MedicalError = {
   name?: Maybe<Scalars['String']>;
 };
 
+export enum MedicalErrorApparitionStep {
+  AdministrationStep = 'ADMINISTRATION_STEP',
+  AfterSurveillanceStep = 'AFTER_SURVEILLANCE_STEP',
+  FirstPrescriptionStep = 'FIRST_PRESCRIPTION_STEP',
+  OtherStep = 'OTHER_STEP',
+  SecondPrescriptionStep = 'SECOND_PRESCRIPTION_STEP',
+}
+
+export enum MedicalErrorNature {
+  AdministrationError = 'ADMINISTRATION_ERROR',
+  DeliveranceError = 'DELIVERANCE_ERROR',
+  OtherError = 'OTHER_ERROR',
+  PreparationError = 'PREPARATION_ERROR',
+  PrescriptionError = 'PRESCRIPTION_ERROR',
+  TherapeuticCareError = 'THERAPEUTIC_CARE_ERROR',
+}
+
 export type MedicalErrors = {
   __typename?: 'MedicalErrors';
   apparitionStepRepartition?: Maybe<Array<Maybe<RepartitionRange>>>;
@@ -163,10 +189,6 @@ export type Query = {
 };
 
 export type QueryGetSpecialityArgs = {
-  cisCode: Scalars['String'];
-};
-
-export type QueryGetSpecialityIdByCodeArgs = {
   cisCode: Scalars['String'];
 };
 
@@ -652,6 +674,7 @@ export type GlobStaticRepartitionPerNotifierResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['GlobStaticRepartitionPerNotifier'] = ResolversParentTypes['GlobStaticRepartitionPerNotifier']
 > = ResolversObject<{
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   job?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -902,12 +925,6 @@ export type QueryResolvers<
     ContextType,
     RequireFields<QueryGetSpecialityArgs, 'cisCode'>
   >;
-  getSpecialityIdByCode?: Resolver<
-    Maybe<ResolversTypes['Int']>,
-    ParentType,
-    ContextType,
-    RequireFields<QueryGetSpecialityIdByCodeArgs, 'cisCode'>
-  >;
   getSubstance?: Resolver<
     Maybe<ResolversTypes['Substance']>,
     ParentType,
@@ -974,6 +991,7 @@ export type RepartitionRangeResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RepartitionRange'] = ResolversParentTypes['RepartitionRange']
 > = ResolversObject<{
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;

@@ -18,11 +18,7 @@ import ManFaceYes from '../../assets/images/manFaceYes.svg';
 import { ChartBox } from '../../components/ChartBox';
 import classnames from 'classnames';
 import { useLayoutContext } from '../../contexts/LayoutContext';
-import {
-  cisExpositionLevelMapping,
-  getCisErrorContentTooltipMapping,
-  getCisErrorMedNatureIconMapping,
-} from '../../utils/mapping';
+import { getCisErrorMedNatureIconMapping } from '../../utils/iconsMapping';
 import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { Button } from '../../components/Button/Button';
@@ -37,6 +33,7 @@ import { SectionTitle } from '../../components/SectionTitle';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { PieChartNatureMedicalErrors } from '../../components/Charts/PieChartNatureMedicalErrors';
+import { ExpositionLevel } from '../../graphql/__generated__/generated-documents';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -168,26 +165,19 @@ const SectionTreatedPatients = () => {
       {currentEntity?.exposition?.consumption ? (
         <div className="expositionChart my-4 flex rounded-lg shadow bg-white overflow-hidden">
           <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-primary py-6">
-            <span className="text-white">
-              {
-                cisExpositionLevelMapping[
-                  currentEntity?.exposition
-                    ?.expositionLevel as keyof typeof cisExpositionLevelMapping
-                ]
-              }
-            </span>
+            <span className="text-white">{currentEntity?.exposition?.description}</span>
 
             <div className="UsageBarContainer mt-12 flex justify-center items-end gap-2">
-              {[...Array(5).keys()].map((pos) => (
+              {Object.keys(ExpositionLevel).map((levelKey, index) => (
                 <div
-                  key={pos}
+                  key={levelKey}
                   className={classnames(
-                    `UsageBarLevel${pos}`,
+                    `UsageBarLevel${index}`,
                     'relative w-6 bg-white border border-solid border-gray-200'
                   )}
-                  style={{ height: 20 + 10 * pos }}
+                  style={{ height: 20 + 10 * index }}
                 >
-                  {currentEntity?.exposition?.expositionLevel === pos + 1 && (
+                  {currentEntity?.exposition?.expositionLevel === levelKey && (
                     <div className="bouncingPil animate-bounce absolute -top-8">
                       <PilIcon className="w-6 h-6" />
                     </div>
@@ -364,14 +354,12 @@ const SectionMedicinalErrors = () => {
           <GraphFiguresGrid
             data={apparitionStepsRepartition}
             renderItem={(apparitionStep) =>
-              apparitionStep?.id !== undefined &&
-              apparitionStep?.id !== null &&
-              apparitionStep?.range ? (
+              apparitionStep?.id && apparitionStep?.range ? (
                 <GraphFigure
                   unit={selectedOption === 'percent' ? ' % ' : ''}
                   value={apparitionStep.value ?? 0}
                   description={apparitionStep.range}
-                  contentTooltip={getCisErrorContentTooltipMapping(apparitionStep.id)}
+                  contentTooltip={apparitionStep.description ?? ''}
                   icon={getCisErrorMedNatureIconMapping(apparitionStep.id)}
                 />
               ) : null

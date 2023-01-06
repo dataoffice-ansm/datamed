@@ -11,7 +11,6 @@ import classnames from 'classnames';
 import { SubstanceContainer } from './SubstanceContainer';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { Accordion } from '../../components/Accordion/Accordion';
-import { cisExpositionLevelMapping } from '../../utils/mapping';
 import PilIcon from '../../assets/images/gellule.svg';
 import { numberWithThousand } from '../../utils/format';
 import ManIllustration from '../../assets/images/man_illustration.svg';
@@ -24,6 +23,7 @@ import { SectionTitle } from '../../components/SectionTitle';
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
   const { totalExposition, exposition, repartitionPerGender, repartitionPerAge } = currentEntity;
+
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
       <SectionTitle
