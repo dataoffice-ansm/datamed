@@ -14,7 +14,7 @@ import { PieChartGlobalStatisticSeriousEffects } from '../../components/Charts/P
 import {
   getFigureBySideNameEffectPathology,
   getNotifierFigureByNameJob,
-} from '../../utils/mapping';
+} from '../../utils/iconsMapping';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { Accordion } from '../../components/Accordion/Accordion';
@@ -154,39 +154,31 @@ const SectionRepartitionNotifiers = () => {
       title="Répartition par type de déclarants"
       theme="secondary-variant"
       render={(selectedOption) => (
-        <div className="GraphBoxSelectContentFilers">
-          <GraphFiguresGrid
-            data={
-              repartitionPerNotifier?.filter(
-                (notifier) =>
-                  notifier?.job &&
-                  notifier?.value !== undefined &&
-                  notifier?.value !== null &&
-                  notifier?.valuePercent !== undefined &&
-                  notifier?.valuePercent !== null
-              ) ?? []
-            }
-            renderItem={(notifierRepartition) =>
-              notifierRepartition?.job &&
-              notifierRepartition?.value &&
-              notifierRepartition?.valuePercent !== undefined &&
-              notifierRepartition?.valuePercent !== null ? (
-                <GraphFigure
-                  className="pathologyGraphFigure"
-                  unit={selectedOption === 'percent' ? ' % ' : ''}
-                  description={notifierRepartition.job}
-                  icon={getNotifierFigureByNameJob(notifierRepartition.job)}
-                  valueClassName="text-dark-green-900"
-                  value={
-                    selectedOption === 'percent'
-                      ? notifierRepartition.valuePercent
-                      : notifierRepartition.value
-                  }
-                />
-              ) : null
-            }
-          />
-        </div>
+        <GraphFiguresGrid
+          data={
+            repartitionPerNotifier?.filter(
+              (notifier) =>
+                notifier?.job &&
+                notifier?.value !== undefined &&
+                notifier?.value !== null &&
+                notifier?.valuePercent !== undefined &&
+                notifier?.valuePercent !== null
+            ) ?? []
+          }
+          renderItem={(notifier) =>
+            notifier?.id && notifier.job ? (
+              <GraphFigure
+                key={notifier.id}
+                className="NotifierRepartitionFigure"
+                unit={selectedOption === 'percent' ? ' % ' : ''}
+                description={notifier.job}
+                icon={getNotifierFigureByNameJob(notifier.job)}
+                valueClassName="text-dark-green-900"
+                value={(selectedOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0}
+              />
+            ) : null
+          }
+        />
       )}
     />
   );

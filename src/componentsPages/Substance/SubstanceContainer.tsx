@@ -212,7 +212,7 @@ export const SubstanceContainer = ({
               ) ?? []
             }
             renderItem={(notifier) =>
-              notifier?.id && notifier?.value && notifier.job ? (
+              notifier?.id && notifier.job ? (
                 <GraphFigure
                   key={notifier.id}
                   className="NotifierRepartitionFigure"
@@ -220,7 +220,9 @@ export const SubstanceContainer = ({
                   description={notifier.job}
                   valueClassName="text-secondary my-2"
                   icon={getNotifierFigureByIdJob(notifier.id)}
-                  value={selectedOption === 'percent' ? notifier.valuePercent : notifier.value}
+                  value={
+                    (selectedOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0
+                  }
                 />
               ) : null
             }
