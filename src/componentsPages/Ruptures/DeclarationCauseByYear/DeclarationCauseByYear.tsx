@@ -6,7 +6,7 @@ import { NotEnoughData } from 'components/NotEnoughData';
 import { SectionTitle } from '../../../components/SectionTitle';
 import { GraphFiguresGrid } from '../../../components/GraphFiguresGrid';
 import { GraphFigure } from '../../../components/GraphFigure';
-import { getFigureByCauseName } from '../../../utils/mapping';
+import { getFigureByCauseName } from '../../../utils/iconsMapping';
 import { GraphBox } from '../../../components/GraphBox/GraphBox';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 

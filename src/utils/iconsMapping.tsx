@@ -66,47 +66,23 @@ import TransfertSiteSvg from '../assets/images/causes/transfert-site.svg';
 import DifficulteReglementSvg from '../assets/images/causes/difficulte-reglementaire.svg';
 
 import React from 'react';
+import { type Maybe, MedicalErrorNature } from '../graphql/__generated__/generated-documents';
 
-export const cisExpositionLevelMapping = {
-  0: 'Utilisation inconnue',
-  1: 'Utilisation très faible',
-  2: 'Utilisation faible',
-  3: 'Utilisation modérée',
-  4: 'Utilisation élevée',
-  5: 'Utilisation très élevée',
-};
-
-export const getCisErrorMedNatureIconMapping = (errorInitialId: number) => {
-  switch (errorInitialId) {
-    case 0:
+export const getCisErrorMedNatureIconMapping = (errorInitial?: Maybe<MedicalErrorNature>) => {
+  switch (errorInitial) {
+    case MedicalErrorNature.PreparationError:
       return <ErrorPreparation className="w-32" />;
-    case 1:
+    case MedicalErrorNature.DeliveranceError:
       return <ErrorDelivrance className="w-32" />;
-    case 2:
+    case MedicalErrorNature.PrescriptionError:
       return <ErrorPrescription className="w-32" />;
-    case 3:
+    case MedicalErrorNature.AdministrationError:
       return <ErrorAdministration className="w-32" />;
-    case 5:
+    case MedicalErrorNature.TherapeuticCareError:
       return <ErrorSuiviTherapeutique className="w-32" />;
+    case MedicalErrorNature.OtherError:
     default:
       return <ErrorOther className="w-32" />;
-  }
-};
-
-export const getCisErrorContentTooltipMapping = (errorInitialId: number): string => {
-  switch (errorInitialId) {
-    case 0:
-      return 'Erreur médicamenteuse survenue à la 2ème étape du circuit du médicament sous la responsabilité du pharmacien, qui comprend l’analyse pharmaceutique de l’ordonnance si elle existe, la préparation éventuelle des doses à administrer, la mise à disposition d’informations et conseils nécessaires au bon usage du médicament ainsi que la délivrance en elle-même.';
-    case 1:
-      return 'Erreur médicamenteuse survenue à la 2ème étape du circuit du médicament sous la responsabilité du pharmacien, qui comprend l’analyse pharmaceutique de l’ordonnance si elle existe, la préparation éventuelle des doses à administrer, la mise à disposition d’informations et conseils nécessaires au bon usage du médicament ainsi que la délivrance en elle-même.';
-    case 2:
-      return 'Erreur médicamenteuse survenant à la 1ère étape du circuit du médicament, c’est-à-dire de l’ensemble des activités assurées par un prescripteur habilité et aboutissant à la rédaction d’une prescription.';
-    case 3:
-      return 'Erreur médicamenteuse survenant à l’étape de l’administration du médicament à un patient, quel qu’en soit l’auteur, y compris le patient lui-même, appréciée par toute déviation par rapport à la prescription, ou par rapport aux termes de l’Autorisation de Mise sur le Marché (RCP, notice).';
-    case 5:
-      return 'Erreur médicamenteuse survenant après (à la suite ou à distance de l’étape d’administration) la mise en œuvre d’un traitement médicamenteux et concernant tout acte de soin relatif à la surveillance du médicament.';
-    default:
-      return 'Autre erreur médicamenteuse.';
   }
 };
 
