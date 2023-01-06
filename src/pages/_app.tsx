@@ -13,6 +13,7 @@ import { AuthModal } from '../auth/AuthModal';
 import jwt from 'jsonwebtoken';
 import App from 'next/app';
 import { config } from '../config/config';
+import Head from 'next/head';
 
 export type AppCustomProps<PP extends Record<string, unknown> = Record<string, unknown>> = {
   pageProps: PP;
@@ -55,14 +56,20 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
   }, []);
 
   return (
-    <ApolloProvider client={apolloClient}>
-      <BodyScrollProvider>
-        <LayoutProvider authSSR={authed}>
-          <AuthModal />
-          <AppLayout>{loading ? <LoadingContainer /> : <Component {...pageProps} />} </AppLayout>
-        </LayoutProvider>
-      </BodyScrollProvider>
-    </ApolloProvider>
+    <>
+      <Head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+      </Head>
+
+      <ApolloProvider client={apolloClient}>
+        <BodyScrollProvider>
+          <LayoutProvider authSSR={authed}>
+            <AuthModal />
+            <AppLayout>{loading ? <LoadingContainer /> : <Component {...pageProps} />} </AppLayout>
+          </LayoutProvider>
+        </BodyScrollProvider>
+      </ApolloProvider>
+    </>
   );
 };
 
