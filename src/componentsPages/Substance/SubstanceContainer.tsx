@@ -15,7 +15,10 @@ import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
 import { useState } from 'react';
 import { NotEnoughData } from '../../components/NotEnoughData';
-import { getFigureBySideIdEffectPathology, getNotifierFigureByIdJob } from '../../utils/mapping';
+import {
+  getFigureBySideIdEffectPathology,
+  getNotifierFigureByIdJob,
+} from '../../utils/iconsMapping';
 import { Button } from '../../components/Button/Button';
 import { Modal } from '../../components/Modal/Modal';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
@@ -192,28 +195,38 @@ export const SubstanceContainer = ({
         </div>
       </div>
 
-      <GraphBox title="Répartition par type de déclarants" className="max-w-full my-8">
-        {repartitionPerNotifier?.length ? (
-          <div className="GraphFigures flex gap-12 justify-center items-start flex-wrap py-4">
-            {repartitionPerNotifier.map((notifier) =>
+      <GraphBoxSelect
+        title="Répartition par type de déclarants"
+        theme="secondary"
+        className="max-w-full my-8"
+        render={(selectedOption) => (
+          <GraphFiguresGrid
+            data={
+              repartitionPerNotifier?.filter(
+                (notifier) =>
+                  notifier?.job &&
+                  notifier?.value !== undefined &&
+                  notifier?.value !== null &&
+                  notifier?.valuePercent !== undefined &&
+                  notifier?.valuePercent !== null
+              ) ?? []
+            }
+            renderItem={(notifier) =>
               notifier?.id && notifier?.value && notifier.job ? (
                 <GraphFigure
                   key={notifier.id}
-                  value={notifier.value}
-                  valueClassName="text-secondary my-2"
+                  className="NotifierRepartitionFigure"
+                  unit={selectedOption === 'percent' ? ' % ' : ''}
                   description={notifier.job}
+                  valueClassName="text-secondary my-2"
                   icon={getNotifierFigureByIdJob(notifier.id)}
-                  descriptionClassName="text-[16px] md:text-[18px] text-center"
+                  value={selectedOption === 'percent' ? notifier.valuePercent : notifier.value}
                 />
               ) : null
-            )}
-          </div>
-        ) : (
-          <div className="w-full flex justify-center items-center">
-            <NotEnoughData />
-          </div>
+            }
+          />
         )}
-      </GraphBox>
+      />
 
       <Accordion
         defaultOpen
