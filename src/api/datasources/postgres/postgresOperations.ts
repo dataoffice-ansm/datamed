@@ -528,8 +528,8 @@ export class PostgresOperations {
       .select(['id', 'sex', 'case_percentage', 'nb_cases'])
       .execute();
 
-    const male = rows.find((row) => row.sex === 1);
-    const female = rows.find((row) => row.sex === 2);
+    const male = rows.find((row) => row.sex === 'Homme');
+    const female = rows.find((row) => row.sex === 'Femme');
 
     return {
       male: male
