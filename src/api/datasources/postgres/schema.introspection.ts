@@ -416,7 +416,7 @@ export type SubstancesCaseSex = {
   case_percentage: number | null;
   id: Generated<number>;
   nb_cases: number | null;
-  sex: number | null;
+  sex: string | null;
   substance_id: number | null;
 };
 
