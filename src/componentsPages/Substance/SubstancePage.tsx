@@ -73,13 +73,7 @@ const SectionOneGlobalInformation = () => {
       {exposition?.consumption ? (
         <div className="expositionChart my-4 flex rounded-lg shadow bg-white overflow-hidden">
           <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-secondary-900 py-6">
-            <span className="text-white">
-              {
-                cisExpositionLevelMapping[
-                  exposition?.expositionLevel as keyof typeof cisExpositionLevelMapping
-                ]
-              }
-            </span>
+            <span className="text-white">{exposition?.description}</span>
 
             <div className="UsageBarContainer mt-12 flex justify-center items-end gap-2">
               {[...Array(5).keys()].map((pos) => (

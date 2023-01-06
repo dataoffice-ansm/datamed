@@ -24,12 +24,14 @@ export type Cause = {
 export type CisExposition = {
   __typename?: 'CisExposition';
   consumption?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
   expositionLevel?: Maybe<Scalars['Int']>;
   id: Scalars['Int'];
 };
 
 export type GlobStaticRepartitionPerNotifier = {
   __typename?: 'GlobStaticRepartitionPerNotifier';
+  id: Scalars['Int'];
   job?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
   valuePercent?: Maybe<Scalars['Int']>;
@@ -108,6 +110,23 @@ export type MedicalError = {
   name?: Maybe<Scalars['String']>;
 };
 
+export enum MedicalErrorApparitionStep {
+  AdministrationStep = 'ADMINISTRATION_STEP',
+  AfterSurveillanceStep = 'AFTER_SURVEILLANCE_STEP',
+  FirstPrescriptionStep = 'FIRST_PRESCRIPTION_STEP',
+  OtherStep = 'OTHER_STEP',
+  SecondPrescriptionStep = 'SECOND_PRESCRIPTION_STEP',
+}
+
+export enum MedicalErrorNature {
+  AdministrationError = 'ADMINISTRATION_ERROR',
+  DeliveranceError = 'DELIVERANCE_ERROR',
+  OtherError = 'OTHER_ERROR',
+  PreparationError = 'PREPARATION_ERROR',
+  PrescriptionError = 'PRESCRIPTION_ERROR',
+  TherapeuticCareError = 'THERAPEUTIC_CARE_ERROR',
+}
+
 export type MedicalErrors = {
   __typename?: 'MedicalErrors';
   apparitionStepRepartition?: Maybe<Array<Maybe<RepartitionRange>>>;
@@ -157,16 +176,11 @@ export type Query = {
   getGlobalStatistic?: Maybe<GlobalStatistic>;
   getSpecialities?: Maybe<SpecialitiesReturn>;
   getSpeciality?: Maybe<Speciality>;
-  getSpecialityIdByCode?: Maybe<Scalars['Int']>;
   getSubstance?: Maybe<Substance>;
   getSubstances?: Maybe<SubstancesReturn>;
 };
 
 export type QueryGetSpecialityArgs = {
-  cisCode: Scalars['String'];
-};
-
-export type QueryGetSpecialityIdByCodeArgs = {
   cisCode: Scalars['String'];
 };
 
@@ -214,7 +228,8 @@ export type RepartitionPerSeriousEffect = {
 
 export type RepartitionRange = {
   __typename?: 'RepartitionRange';
-  id?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
   range?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
   valuePercent?: Maybe<Scalars['Int']>;
@@ -452,8 +467,9 @@ export type SpecialityFragmentFragment = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id?: number | null;
+      id: number;
       range?: string | null;
+      description?: string | null;
       value?: number | null;
       valuePercent?: number | null;
     } | null> | null;
@@ -489,6 +505,7 @@ export type SpecialityFragmentFragment = {
       id: number;
       consumption?: number | null;
       expositionLevel?: number | null;
+      description?: string | null;
     } | null;
   } | null> | null;
   dosageSubstances?: Array<{
@@ -513,9 +530,10 @@ export type SpecialityFragmentFragment = {
   } | null;
   repartitionPerAge?: Array<{
     __typename?: 'RepartitionRange';
-    id?: number | null;
+    id: number;
     range?: string | null;
     value?: number | null;
+    description?: string | null;
     valuePercent?: number | null;
   } | null> | null;
   publications?: Array<{
@@ -532,13 +550,15 @@ export type SpecialityFragmentFragment = {
     id: number;
     consumption?: number | null;
     expositionLevel?: number | null;
+    description?: string | null;
   } | null;
   medicalErrors?: {
     __typename?: 'MedicalErrors';
     populationRepartition?: Array<{
       __typename?: 'RepartitionRange';
-      id?: number | null;
+      id: number;
       range?: string | null;
+      description?: string | null;
       value?: number | null;
       valuePercent?: number | null;
     } | null> | null;
@@ -557,15 +577,17 @@ export type SpecialityFragmentFragment = {
     } | null;
     apparitionStepRepartition?: Array<{
       __typename?: 'RepartitionRange';
-      id?: number | null;
+      id: number;
       range?: string | null;
+      description?: string | null;
       value?: number | null;
       valuePercent?: number | null;
     } | null> | null;
     natureRepartition?: Array<{
       __typename?: 'RepartitionRange';
-      id?: number | null;
+      id: number;
       range?: string | null;
+      description?: string | null;
       value?: number | null;
       valuePercent?: number | null;
     } | null> | null;
@@ -617,8 +639,9 @@ export type SubstanceFragmentFragment = {
   } | null;
   repartitionPerAge?: Array<{
     __typename?: 'RepartitionRange';
-    id?: number | null;
+    id: number;
     range?: string | null;
+    description?: string | null;
     value?: number | null;
     valuePercent?: number | null;
   } | null> | null;
@@ -654,16 +677,8 @@ export type SubstanceFragmentFragment = {
     id: number;
     consumption?: number | null;
     expositionLevel?: number | null;
+    description?: string | null;
   } | null;
-};
-
-export type SpecialityIdByCodeQueryVariables = Exact<{
-  cisCode: Scalars['String'];
-}>;
-
-export type SpecialityIdByCodeQuery = {
-  __typename?: 'Query';
-  getSpecialityIdByCode?: number | null;
 };
 
 export type SpecialityQueryVariables = Exact<{
@@ -719,8 +734,9 @@ export type SpecialityQuery = {
       } | null;
       repartitionPerAge?: Array<{
         __typename?: 'RepartitionRange';
-        id?: number | null;
+        id: number;
         range?: string | null;
+        description?: string | null;
         value?: number | null;
         valuePercent?: number | null;
       } | null> | null;
@@ -756,6 +772,7 @@ export type SpecialityQuery = {
         id: number;
         consumption?: number | null;
         expositionLevel?: number | null;
+        description?: string | null;
       } | null;
     } | null> | null;
     dosageSubstances?: Array<{
@@ -780,9 +797,10 @@ export type SpecialityQuery = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id?: number | null;
+      id: number;
       range?: string | null;
       value?: number | null;
+      description?: string | null;
       valuePercent?: number | null;
     } | null> | null;
     publications?: Array<{
@@ -799,13 +817,15 @@ export type SpecialityQuery = {
       id: number;
       consumption?: number | null;
       expositionLevel?: number | null;
+      description?: string | null;
     } | null;
     medicalErrors?: {
       __typename?: 'MedicalErrors';
       populationRepartition?: Array<{
         __typename?: 'RepartitionRange';
-        id?: number | null;
+        id: number;
         range?: string | null;
+        description?: string | null;
         value?: number | null;
         valuePercent?: number | null;
       } | null> | null;
@@ -824,15 +844,17 @@ export type SpecialityQuery = {
       } | null;
       apparitionStepRepartition?: Array<{
         __typename?: 'RepartitionRange';
-        id?: number | null;
+        id: number;
         range?: string | null;
+        description?: string | null;
         value?: number | null;
         valuePercent?: number | null;
       } | null> | null;
       natureRepartition?: Array<{
         __typename?: 'RepartitionRange';
-        id?: number | null;
+        id: number;
         range?: string | null;
+        description?: string | null;
         value?: number | null;
         valuePercent?: number | null;
       } | null> | null;
@@ -907,8 +929,9 @@ export type SubstanceQuery = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id?: number | null;
+      id: number;
       range?: string | null;
+      description?: string | null;
       value?: number | null;
       valuePercent?: number | null;
     } | null> | null;
@@ -944,6 +967,7 @@ export type SubstanceQuery = {
       id: number;
       consumption?: number | null;
       expositionLevel?: number | null;
+      description?: string | null;
     } | null;
   } | null;
 };
@@ -985,8 +1009,9 @@ export type GlobalStatisticQuery = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id?: number | null;
+      id: number;
       range?: string | null;
+      description?: string | null;
       value?: number | null;
       valuePercent?: number | null;
     } | null> | null;
@@ -1010,9 +1035,10 @@ export type GlobalStatisticQuery = {
     } | null> | null;
     repartitionPerNotifier?: Array<{
       __typename?: 'GlobStaticRepartitionPerNotifier';
+      id: number;
+      job?: string | null;
       value?: number | null;
       valuePercent?: number | null;
-      job?: string | null;
     } | null> | null;
     repartitionPerGravity?: Array<{
       __typename?: 'RepartitionPerGravity';
@@ -1124,6 +1150,7 @@ export const SubstanceFragmentFragmentDoc = gql`
     repartitionPerAge {
       id
       range
+      description
       value
       valuePercent
     }
@@ -1154,6 +1181,7 @@ export const SubstanceFragmentFragmentDoc = gql`
       id
       consumption
       expositionLevel
+      description
     }
   }
 `;
@@ -1198,6 +1226,7 @@ export const SpecialityFragmentFragmentDoc = gql`
       id
       range
       value
+      description
       valuePercent
     }
     publications {
@@ -1221,11 +1250,13 @@ export const SpecialityFragmentFragmentDoc = gql`
       id
       consumption
       expositionLevel
+      description
     }
     medicalErrors {
       populationRepartition {
         id
         range
+        description
         value
         valuePercent
       }
@@ -1242,12 +1273,14 @@ export const SpecialityFragmentFragmentDoc = gql`
       apparitionStepRepartition {
         id
         range
+        description
         value
         valuePercent
       }
       natureRepartition {
         id
         range
+        description
         value
         valuePercent
       }
@@ -1275,57 +1308,6 @@ export const SpecialityFragmentFragmentDoc = gql`
   }
   ${SubstanceFragmentFragmentDoc}
 `;
-export const SpecialityIdByCodeDocument = gql`
-  query SpecialityIdByCode($cisCode: String!) {
-    getSpecialityIdByCode(cisCode: $cisCode)
-  }
-`;
-
-/**
- * __useSpecialityIdByCodeQuery__
- *
- * To run a query within a React component, call `useSpecialityIdByCodeQuery` and pass it any options that fit your needs.
- * When your component renders, `useSpecialityIdByCodeQuery` returns an object from Apollo Client that contains loading, error, and data properties
- * you can use to render your UI.
- *
- * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
- *
- * @example
- * const { data, loading, error } = useSpecialityIdByCodeQuery({
- *   variables: {
- *      cisCode: // value for 'cisCode'
- *   },
- * });
- */
-export function useSpecialityIdByCodeQuery(
-  baseOptions: Apollo.QueryHookOptions<SpecialityIdByCodeQuery, SpecialityIdByCodeQueryVariables>
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useQuery<SpecialityIdByCodeQuery, SpecialityIdByCodeQueryVariables>(
-    SpecialityIdByCodeDocument,
-    options
-  );
-}
-export function useSpecialityIdByCodeLazyQuery(
-  baseOptions?: Apollo.LazyQueryHookOptions<
-    SpecialityIdByCodeQuery,
-    SpecialityIdByCodeQueryVariables
-  >
-) {
-  const options = { ...defaultOptions, ...baseOptions };
-  return Apollo.useLazyQuery<SpecialityIdByCodeQuery, SpecialityIdByCodeQueryVariables>(
-    SpecialityIdByCodeDocument,
-    options
-  );
-}
-export type SpecialityIdByCodeQueryHookResult = ReturnType<typeof useSpecialityIdByCodeQuery>;
-export type SpecialityIdByCodeLazyQueryHookResult = ReturnType<
-  typeof useSpecialityIdByCodeLazyQuery
->;
-export type SpecialityIdByCodeQueryResult = Apollo.QueryResult<
-  SpecialityIdByCodeQuery,
-  SpecialityIdByCodeQueryVariables
->;
 export const SpecialityDocument = gql`
   query Speciality($cisCode: String!) {
     getSpeciality(cisCode: $cisCode) {
@@ -1527,6 +1509,7 @@ export const GlobalStatisticDocument = gql`
       repartitionPerAge {
         id
         range
+        description
         value
         valuePercent
       }
@@ -1546,9 +1529,10 @@ export const GlobalStatisticDocument = gql`
         range
       }
       repartitionPerNotifier {
+        id
+        job
         value
         valuePercent
-        job
       }
       repartitionPerGravity {
         range

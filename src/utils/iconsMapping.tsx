@@ -1,3 +1,6 @@
+import React from 'react';
+import { type Maybe, MedicalErrorNature } from '../graphql/__generated__/generated-documents';
+
 import ErrorAdministration from '../assets/images/errorAdministration.svg';
 import ErrorDelivrance from '../assets/images/errorDelivrance.svg';
 import ErrorSuiviTherapeutique from '../assets/images/errorSuivitherapeutique.svg';
@@ -65,10 +68,7 @@ import ProblemeTransportSvg from '../assets/images/causes/probleme-transport-log
 import TransfertSiteSvg from '../assets/images/causes/transfert-site.svg';
 import DifficulteReglementSvg from '../assets/images/causes/difficulte-reglementaire.svg';
 
-import React from 'react';
-import { type Maybe, MedicalErrorNature } from '../graphql/__generated__/generated-documents';
-
-export const getCisErrorMedNatureIconMapping = (errorInitial?: Maybe<MedicalErrorNature>) => {
+export const getMedicinalErrorNatureIcon = (errorInitial?: Maybe<MedicalErrorNature>) => {
   switch (errorInitial) {
     case MedicalErrorNature.PreparationError:
       return <ErrorPreparation className="w-32" />;
@@ -97,7 +97,7 @@ export const getPublicationIcon = (publicationTypeId: number) => {
   }
 };
 
-export const getNotifierFigureByIdJob = (id: number) => {
+export const getNotifierIcon = (id: number) => {
   switch (id) {
     case 0:
       return <OtherDoctorFigure className="w-32" />;
@@ -118,7 +118,7 @@ export const getNotifierFigureByIdJob = (id: number) => {
   }
 };
 
-export const getNotifierFigureByNameJob = (name: string) => {
+export const getNotifierIconByJobName = (name: string) => {
   switch (name) {
     case 'Autre professionnel de santé':
       return <OtherDoctorFigure className="w-32" />;
@@ -140,7 +140,7 @@ export const getNotifierFigureByNameJob = (name: string) => {
 };
 
 // eslint-disable-next-line complexity
-export const getFigureBySideIdEffectPathology = (id: number) => {
+export const getSideEffectPathologyIcon = (id: number) => {
   switch (id) {
     case 0:
       return <AffectionsCardiaquesFigure className="w-32" />;
@@ -202,7 +202,7 @@ export const getFigureBySideIdEffectPathology = (id: number) => {
 };
 
 // eslint-disable-next-line complexity
-export const getFigureBySideNameEffectPathology = (name: string) => {
+export const getSideEffectPathologyIconByName = (name: string) => {
   switch (name) {
     case 'Affections cardiaques':
       return <AffectionsCardiaquesFigure className="w-32" />;

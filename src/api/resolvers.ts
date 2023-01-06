@@ -25,10 +25,6 @@ export const resolvers: Resolvers = {
     },
   },
   Query: {
-    async getSpecialityIdByCode(parent, args, context) {
-      return context.dataSources.postgresOperations.getSingleSpecialityCodeById(args.cisCode);
-    },
-
     async getSpeciality(parent, args, context) {
       const rows = await context.dataSources.postgresOperations.getFullSpecialitiesByCode([
         args.cisCode,

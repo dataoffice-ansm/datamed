@@ -15,10 +15,7 @@ import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
 import { useState } from 'react';
 import { NotEnoughData } from '../../components/NotEnoughData';
-import {
-  getFigureBySideIdEffectPathology,
-  getNotifierFigureByIdJob,
-} from '../../utils/iconsMapping';
+import { getSideEffectPathologyIcon, getNotifierIcon } from '../../utils/iconsMapping';
 import { Button } from '../../components/Button/Button';
 import { Modal } from '../../components/Modal/Modal';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
@@ -64,7 +61,7 @@ const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: Repartition
         >
           <div className="flex justify-center items-center py-4">
             <div className="h-24 w-24 md:h-32 md:w-32">
-              {getFigureBySideIdEffectPathology(pathology.id)}
+              {getSideEffectPathologyIcon(pathology.id)}
             </div>
           </div>
           <div className="text-xl text-center font-medium">
@@ -219,7 +216,7 @@ export const SubstanceContainer = ({
                   unit={selectedOption === 'percent' ? ' % ' : ''}
                   description={notifier.job}
                   valueClassName="text-secondary my-2"
-                  icon={getNotifierFigureByIdJob(notifier.id)}
+                  icon={getNotifierIcon(notifier.id)}
                   value={
                     (selectedOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0
                   }
@@ -277,7 +274,7 @@ export const SubstanceContainer = ({
                     className="pathologyGraphFigure"
                     unit={selectedOption === 'percent' ? ' % ' : ''}
                     description={pathologyRepartition.range}
-                    icon={getFigureBySideIdEffectPathology(pathologyRepartition.id)}
+                    icon={getSideEffectPathologyIcon(pathologyRepartition.id)}
                     action={<PathologyOrgansRepartitionModal pathology={pathologyRepartition} />}
                     valueClassName="text-secondary-900"
                     value={

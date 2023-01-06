@@ -38,6 +38,7 @@ fragment SpecialityFragment on Speciality {
     id
     range
     value
+    description
     valuePercent
   }
   publications {
@@ -61,11 +62,13 @@ fragment SpecialityFragment on Speciality {
     id
     consumption
     expositionLevel
+    description
   }
   medicalErrors {
     populationRepartition {
       id
       range
+      description
       value
       valuePercent
     }
@@ -82,12 +85,14 @@ fragment SpecialityFragment on Speciality {
     apparitionStepRepartition {
       id
       range
+      description
       value
       valuePercent
     }
     natureRepartition {
       id
       range
+      description
       value
       valuePercent
     }
@@ -142,6 +147,7 @@ fragment SubstanceFragment on Substance {
   repartitionPerAge {
     id
     range
+    description
     value
     valuePercent
   }
@@ -172,11 +178,8 @@ fragment SubstanceFragment on Substance {
     id
     consumption
     expositionLevel
+    description
   }
-}
-
-query SpecialityIdByCode($cisCode: String!) {
-  getSpecialityIdByCode(cisCode: $cisCode)
 }
 
 query Speciality($cisCode: String!) {
@@ -232,6 +235,7 @@ query GlobalStatistic {
     repartitionPerAge {
       id
       range
+      description
       value
       valuePercent
     }
@@ -253,11 +257,11 @@ query GlobalStatistic {
       value
       range
     }
-
     repartitionPerNotifier {
+      id
+      job
       value
       valuePercent
-      job
     }
 
     repartitionPerGravity {

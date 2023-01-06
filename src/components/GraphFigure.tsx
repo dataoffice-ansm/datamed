@@ -29,7 +29,7 @@ export const GraphFigure = ({
 }: HTMLAttributes<HTMLDivElement> & {
   value: number;
   description: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   action?: ReactNode;
   unit?: string;
   valueClassName?: string;

@@ -1,4 +1,4 @@
-import type { ColumnType, RawBuilder } from 'kysely';
+import { type ColumnType, type RawBuilder } from 'kysely';
 
 export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
@@ -77,7 +77,9 @@ export type CausesTypes = {
 };
 
 export type Config = {
-  populate_last_update: Timestamp | null;
+  c_date: Timestamp | null;
+  id: Generated<number>;
+  label: string | null;
 };
 
 export type Descriptions = {
@@ -156,14 +158,6 @@ export type GlobalSeGravityTypes = {
   id: Generated<number>;
   label: string | null;
   n: number | null;
-  pct: number | null;
-};
-
-export type GlobalSeIndicators = {
-  comment: string | null;
-  id: Generated<number>;
-  label: string | null;
-  n: string | null;
   pct: number | null;
 };
 
@@ -405,6 +399,12 @@ export type SubstancesCaseAge = {
   substance_id: number | null;
 };
 
+export type SubstancesCases = {
+  id: Generated<number>;
+  nb_cases: number | null;
+  substance_id: number | null;
+};
+
 export type SubstancesCaseSevere = {
   id: Generated<number>;
   severe_case: number | null;
@@ -421,14 +421,11 @@ export type SubstancesCaseSex = {
 };
 
 export type SubstancesExposition = {
-  case_exposition: number | null;
-  case_rate: number | null;
   consumption_year_trunc: number | null;
   exposition: number | null;
   id: Generated<number>;
   substance_id: number | null;
   year: number | null;
-  year_cases: number | null;
   year_consumption: number | null;
 };
 
@@ -444,6 +441,7 @@ export type SubstancesHlt = {
 
 export type SubstancesNotif = {
   id: Generated<number>;
+  notification_number: number | null;
   notification_percentage: number | null;
   notifier_id: number | null;
   substance_id: number | null;
@@ -496,7 +494,6 @@ export type DB = {
   global_se_ages: GlobalSeAges;
   global_se_grave: GlobalSeGrave;
   global_se_gravity_types: GlobalSeGravityTypes;
-  global_se_indicators: GlobalSeIndicators;
   global_se_notifiers: GlobalSeNotifiers;
   global_se_sex: GlobalSeSex;
   global_se_soc: GlobalSeSoc;
@@ -531,6 +528,7 @@ export type DB = {
   substances_case_age: SubstancesCaseAge;
   substances_case_severe: SubstancesCaseSevere;
   substances_case_sex: SubstancesCaseSex;
+  substances_cases: SubstancesCases;
   substances_exposition: SubstancesExposition;
   substances_hlt: SubstancesHlt;
   substances_notif: SubstancesNotif;
