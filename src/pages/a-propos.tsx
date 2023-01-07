@@ -47,9 +47,13 @@ const SectionEIG = () => (
       <div>
         Cet outil est né d’une collaboration entre trois Entrepreneurs d’Intérêt Général et l’ANSM,
         à travers le{' '}
-        <Button externalLink href="https://eig.etalab.gouv.fr/defis/datamed/">
+        <a
+          rel="external noreferrer"
+          target="_blank"
+          href="https://eig.etalab.gouv.fr/defis/datamed/"
+        >
           défi DataMed
-        </Button>
+        </a>
         .
       </div>
       <div className="py-4">
@@ -68,9 +72,9 @@ const SectionOpenDataComplex = () => (
   <Section title="L'ouverture de données complexes et sensibles">
     <div className="py-4">
       <div>
-        <Button externalLink href="https://ansm.sante.fr/">
+        <a rel="external noreferrer" target="_blank" href="https://ansm.sante.fr/">
           L&apos;Agence Nationale de Sécurité du Médicament et des produits de santé (ANSM)
-        </Button>{' '}
+        </a>{' '}
         est chargée de faciliter l&apos;accès à l&apos;innovation thérapeutique, de garantir la
         sécurité des produits de santé et d&apos;informer et échanger avec les patients et
         professionnels de santé. Elle détient, pour assurer ses missions, de nombreuses données

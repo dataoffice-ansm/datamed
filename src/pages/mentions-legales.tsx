@@ -50,14 +50,14 @@ const SectionServer = () => (
 const SectionAuthor = () => (
   <Section title="Conception & Développements">
     <div className="py-4">
-      <Button externalLink href="https://eig.etalab.gouv.fr/">
+      <a rel="external noreferrer" target="_blank" href="https://eig.etalab.gouv.fr/">
         Entrepreneurs d&apos;Intérêt Général
-      </Button>
+      </a>
     </div>
     <div>
-      <Button externalLink href="https://www.health-data-hub.fr/">
+      <a rel="external noreferrer" target="_blank" href="https://www.health-data-hub.fr/">
         Health Data Hub
-      </Button>
+      </a>
     </div>
   </Section>
 );
@@ -96,13 +96,13 @@ const SectionEtablisment = () => (
       <div>
         Tout site public ou privé est autorisé à établir, sans autorisation préalable, un lien vers
         la page d’accueil ou directement vers les informations diffusées par le site
-        <Button externalLink href="www.data.ansm.sante.fr">
+        <a rel="external noreferrer" target="_blank" href="www.data.ansm.sante.fr">
           www.data.ansm.sante.fr
-        </Button>
+        </a>
         . Mais en aucun cas les pages du site
-        <Button externalLink href="www.data.ansm.sante.fr">
+        <a rel="external noreferrer" target="_blank" href="www.data.ansm.sante.fr">
           www.data.ansm.sante.fr
-        </Button>
+        </a>
         . ne doivent se retrouver imbriquées à l&apos;intérieur des pages d&apos;un autre site. Tout
         doit être fait pour indiquer clairement à l’internaute qu’il se trouve sur le site
         <Button href="www.data.ansm.sante.fr">www.data.ansm.sante.fr</Button>. et lui permettre d’y
@@ -112,9 +112,9 @@ const SectionEtablisment = () => (
         Pour sa part, l’ANSM établit des liens uniquement sur les sites publics et n&apos;est en
         rien responsable de liens qui sont faits vers son site. Cependant si vous créez un lien vers
         l’ANSM nous apprécierions d’en être informé par un simple mail à :{' '}
-        <Button externalLink href="mailto:webmaster@ansm.sante.fr">
+        <a rel="external noreferrer" target="_blank" href="mailto:webmaster@ansm.sante.fr">
           webmaster@ansm.sante.fr
-        </Button>
+        </a>
       </div>
     </div>
   </Section>

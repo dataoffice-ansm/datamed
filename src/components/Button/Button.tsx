@@ -9,7 +9,6 @@ type CallToActionBaseProps = {
 export type CallToActionLinkProps = CallToActionBaseProps &
   HTMLAttributes<HTMLAnchorElement> & {
     as: 'link';
-    externalLink?: boolean;
     href: string;
   };
 
@@ -64,7 +63,7 @@ export const Button = (props: CallToActionProps) => {
     );
   }
 
-  const { href, externalLink } = props;
+  const { href } = props;
   const classAnchor = classnames(
     {
       'underline border-primary text-primary hover:decoration-primary focus:decoration-primary':
@@ -75,14 +74,6 @@ export const Button = (props: CallToActionProps) => {
     'hover:font-medium focus:font-medium',
     className
   );
-
-  if (externalLink) {
-    return (
-      <a id={id} href={href} className={classAnchor}>
-        {children}
-      </a>
-    );
-  }
 
   return (
     <Link href={href}>

@@ -1198,7 +1198,11 @@ export const faqData: FaqType[] = [
                 identifé. Patients, Professionnels de santé peuvent le faire via le portail des
                 signalements. Voir la section consacrée sur le site de l&apos;ANSM
                 <br />
-                <a href="https://ansm.sante.fr/documents/reference/declarer-un-effet-indesirable">
+                <a
+                  rel="external noreferrer"
+                  target="_blank"
+                  href="https://ansm.sante.fr/documents/reference/declarer-un-effet-indesirable"
+                >
                   Voir la section consacrée sur le site de l&apos;ANSM
                 </a>
               </p>

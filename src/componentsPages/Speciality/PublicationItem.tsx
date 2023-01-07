@@ -17,9 +17,9 @@ export const PublicationItem = ({ publication }: { publication: Publication }) =
     <div className="px-4 py-8 flex gap-4 flex-col">
       <div className="text-xl font-medium">{publication?.name}</div>
       {publication.link && (
-        <Button externalLink href={publication.link}>
+        <a rel="external noreferrer" target="_blank" href={publication.link}>
           {publication?.type?.name}
-        </Button>
+        </a>
       )}
     </div>
   </div>

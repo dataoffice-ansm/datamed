@@ -78,7 +78,11 @@ export const SpecialitySubstancesContainer = ({
                     selon votre situation.
                   </div>
                   <Link href="https://ansm.sante.fr/documents/reference/declarer-un-effet-indesirable">
-                    <a className="text-primary rounded border border-primary py-2 px-4 no-underline block md:text-center">
+                    <a
+                      rel="external noreferrer"
+                      target="_blank"
+                      className="text-primary rounded border border-primary py-2 px-4 no-underline block md:text-center"
+                    >
                       VOIR LES RECOMMANDATIONS DE L&apos;ANSM
                     </a>
                   </Link>

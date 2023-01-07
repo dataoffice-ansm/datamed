@@ -280,18 +280,18 @@ const SectionMedicinalErrors = () => {
           des déclarations soit de risque d’erreur soit d’erreurs médicamenteuses avec ou sans
           évènements indésirables. Elles sont déclarées par les patients ou les professionnels de
           santé, notamment via{' '}
-          <Button externalLink href="#">
+          <a rel="external noreferrer" target="_blank" href="#">
             le portail des signalements
-          </Button>
+          </a>
         </p>
         <p>
           Les erreurs médicamenteuses se classent en fonction de l&lsquo;étape de survenue (erreur
           de prescription, erreur de délivrance, erreur d’administration), de la cause de
           l&lsquo;erreur (produit, humaine et technique) et de la nature de l&lsquo;erreur (de
           médicament ou de patient).{' '}
-          <Button externalLink href="#">
+          <a rel="external noreferrer" target="_blank" href="#">
             En savoir plus sur le site de l&lsquo;ANSM
-          </Button>
+          </a>
         </p>
       </Accordion>
 
