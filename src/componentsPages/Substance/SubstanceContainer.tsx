@@ -18,8 +18,9 @@ import { NotEnoughData } from '../../components/NotEnoughData';
 import { getSideEffectPathologyIcon, getNotifierIcon } from '../../utils/iconsMapping';
 import { Button } from '../../components/Button/Button';
 import { Modal } from '../../components/Modal/Modal';
-import { GraphBoxSelect } from '../../components/GraphBoxSelect';
+import { GraphBoxSelect, type OptionsValue } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
+import { type RepartitionPerNotifier } from '../../graphql/__generated__/generated-documents';
 
 /**
  *
@@ -106,20 +107,49 @@ export const SubstanceContainer = ({
     totalExposition,
   } = substance;
 
-  const repPerPathologyFiltered = useMemo(
-    () =>
-      repartitionPerPathology?.filter(
-        (pathologyRepartition) =>
-          pathologyRepartition?.id !== undefined &&
-          pathologyRepartition?.id !== null &&
-          pathologyRepartition?.range &&
-          pathologyRepartition?.value !== undefined &&
-          pathologyRepartition?.value !== null &&
-          pathologyRepartition?.valuePercent !== undefined &&
-          pathologyRepartition?.valuePercent !== null
-      ) ?? [],
-    [repartitionPerPathology]
-  );
+  const getRepartitionPerNotifier = (selectedOption: OptionsValue) => {
+    const rows = (repartitionPerNotifier?.filter(
+      (row) => row?.value !== null && row?.valuePercent !== null
+    ) ?? []) as RepartitionPerNotifier[];
+
+    if (selectedOption === 'number') {
+      return rows
+        .sort((a, b) => (a.value !== null && b.value !== null ? a.value - b.value : 1))
+        .reverse();
+    }
+
+    if (selectedOption === 'percent') {
+      return rows
+        .sort((a, b) =>
+          a.valuePercent !== null && b.valuePercent !== null ? a.valuePercent - b.valuePercent : 1
+        )
+        .reverse();
+    }
+
+    return rows;
+  };
+
+  const getRepartitionPerPathology = (selectedOption: OptionsValue) => {
+    const rows = (repartitionPerPathology?.filter(
+      (row) => row?.value !== null && row?.valuePercent !== null
+    ) ?? []) as RepartitionPerPathology[];
+
+    if (selectedOption === 'number') {
+      return rows
+        .sort((a, b) => (a.value !== null && b.value !== null ? a.value - b.value : 1))
+        .reverse();
+    }
+
+    if (selectedOption === 'percent') {
+      return rows
+        .sort((a, b) =>
+          a.valuePercent !== null && b.valuePercent !== null ? a.valuePercent - b.valuePercent : 1
+        )
+        .reverse();
+    }
+
+    return rows;
+  };
 
   return (
     <div className="SubstancesContainerContentTitle text-left">
@@ -196,35 +226,30 @@ export const SubstanceContainer = ({
         title="Répartition par type de déclarants"
         theme="secondary"
         className="max-w-full my-8"
-        render={(selectedOption) => (
-          <GraphFiguresGrid
-            data={
-              repartitionPerNotifier?.filter(
-                (notifier) =>
-                  notifier?.job &&
-                  notifier?.value !== undefined &&
-                  notifier?.value !== null &&
-                  notifier?.valuePercent !== undefined &&
-                  notifier?.valuePercent !== null
-              ) ?? []
-            }
-            renderItem={(notifier) =>
-              notifier?.id && notifier.job ? (
-                <GraphFigure
-                  key={notifier.id}
-                  className="NotifierRepartitionFigure"
-                  unit={selectedOption === 'percent' ? ' % ' : ''}
-                  description={notifier.job}
-                  valueClassName="text-secondary my-2"
-                  icon={getNotifierIcon(notifier.id)}
-                  value={
-                    (selectedOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0
-                  }
-                />
-              ) : null
-            }
-          />
-        )}
+        render={(selectedOption) => {
+          const repartitionPerNotifier = getRepartitionPerNotifier(selectedOption);
+          console.log(repartitionPerNotifier);
+          return (
+            <GraphFiguresGrid
+              data={repartitionPerNotifier}
+              renderItem={(notifier) =>
+                notifier?.id && notifier.job ? (
+                  <GraphFigure
+                    key={notifier.id}
+                    className="NotifierRepartition"
+                    unit={selectedOption === 'percent' ? ' % ' : ''}
+                    description={notifier.job}
+                    valueClassName="text-secondary my-2"
+                    icon={getNotifierIcon(notifier.id)}
+                    value={
+                      (selectedOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0
+                    }
+                  />
+                ) : null
+              }
+            />
+          );
+        }}
       />
 
       <Accordion
@@ -250,28 +275,24 @@ export const SubstanceContainer = ({
 
       <GraphBoxSelect
         title="Effets indésirables suspectés de la substance active"
-        render={(selectedOption) => (
-          <div className="GraphBoxSelectContent">
-            {repPerPathologyFiltered.length !== 0 && (
-              <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
-                Parmi les{' '}
-                <span className="text-secondary font-medium">{totalExposition?.total}</span>{' '}
-                déclarations d’effets indésirables pour:{' '}
-                <span className="text-secondary font-medium">{substance.name}</span>
-              </div>
-            )}
+        render={(selectedOption) => {
+          const repartitionPerPathology = getRepartitionPerPathology(selectedOption);
+          return (
+            <div className="GraphBoxSelectContent">
+              {repartitionPerPathology.length !== 0 && (
+                <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
+                  Parmi les{' '}
+                  <span className="text-secondary font-medium">{totalExposition?.total}</span>{' '}
+                  déclarations d’effets indésirables pour:{' '}
+                  <span className="text-secondary font-medium">{substance.name}</span>
+                </div>
+              )}
 
-            <GraphFiguresGrid
-              data={repPerPathologyFiltered}
-              renderItem={(pathologyRepartition) =>
-                pathologyRepartition?.id !== undefined &&
-                pathologyRepartition?.id !== null &&
-                pathologyRepartition?.range &&
-                pathologyRepartition?.value &&
-                pathologyRepartition?.valuePercent !== undefined &&
-                pathologyRepartition?.valuePercent !== null ? (
+              <GraphFiguresGrid
+                data={repartitionPerPathology}
+                renderItem={(pathologyRepartition) => (
                   <GraphFigure
-                    className="pathologyGraphFigure"
+                    className="PathologyRepartition"
                     unit={selectedOption === 'percent' ? ' % ' : ''}
                     description={pathologyRepartition.range}
                     icon={getSideEffectPathologyIcon(pathologyRepartition.id)}
@@ -283,11 +304,11 @@ export const SubstanceContainer = ({
                         : pathologyRepartition.value
                     }
                   />
-                ) : null
-              }
-            />
-          </div>
-        )}
+                )}
+              />
+            </div>
+          );
+        }}
       />
     </div>
   );

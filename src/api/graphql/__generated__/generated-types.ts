@@ -31,17 +31,17 @@ export type CisExposition = {
 export type GlobStaticRepartitionPerNotifier = {
   __typename?: 'GlobStaticRepartitionPerNotifier';
   id: Scalars['Int'];
-  job?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  job: Scalars['String'];
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type GlobStaticRepartitionPerPathology = {
   __typename?: 'GlobStaticRepartitionPerPathology';
   id: Scalars['Int'];
   range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type GlobalRuptures = {
@@ -69,9 +69,9 @@ export type GlobalStatistic = {
 export type HltEffect = {
   __typename?: 'HltEffect';
   id: Scalars['Int'];
-  range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  range: Scalars['String'];
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type Icon = {
@@ -196,26 +196,26 @@ export type RepartitionPerGender = {
 export type RepartitionPerGravity = {
   __typename?: 'RepartitionPerGravity';
   range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type RepartitionPerNotifier = {
   __typename?: 'RepartitionPerNotifier';
   id: Scalars['Int'];
-  job?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  job: Scalars['String'];
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type RepartitionPerPathology = {
   __typename?: 'RepartitionPerPathology';
   htlEffects?: Maybe<Array<Maybe<HltEffect>>>;
   id: Scalars['Int'];
-  range?: Maybe<Scalars['String']>;
+  range: Scalars['String'];
   subId: Scalars['Int'];
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type RepartitionPerSeriousEffect = {
@@ -228,10 +228,10 @@ export type RepartitionPerSeriousEffect = {
 export type RepartitionRange = {
   __typename?: 'RepartitionRange';
   description?: Maybe<Scalars['String']>;
-  id: Scalars['Int'];
-  range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  range: Scalars['String'];
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type RuptureAction = {
@@ -276,8 +276,8 @@ export type RuptureClassificationRepartition = {
 export type RuptureExposition = {
   __typename?: 'RuptureExposition';
   range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type RuptureStock = {
@@ -301,7 +301,7 @@ export type RuptureTotalExposition = {
   __typename?: 'RuptureTotalExposition';
   ruptureExpositions?: Maybe<Array<Maybe<RuptureExposition>>>;
   total: Scalars['Int'];
-  year?: Maybe<Scalars['Int']>;
+  year: Scalars['Int'];
 };
 
 export type RuptureYear = {
@@ -666,9 +666,9 @@ export type GlobStaticRepartitionPerNotifierResolvers<
   ParentType extends ResolversParentTypes['GlobStaticRepartitionPerNotifier'] = ResolversParentTypes['GlobStaticRepartitionPerNotifier']
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  job?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  job?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  valuePercent?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -678,8 +678,8 @@ export type GlobStaticRepartitionPerPathologyResolvers<
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  valuePercent?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -768,9 +768,9 @@ export type HltEffectResolvers<
   ParentType extends ResolversParentTypes['HltEffect'] = ResolversParentTypes['HltEffect']
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  valuePercent?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -939,8 +939,8 @@ export type RepartitionPerGravityResolvers<
   ParentType extends ResolversParentTypes['RepartitionPerGravity'] = ResolversParentTypes['RepartitionPerGravity']
 > = {
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  valuePercent?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -949,9 +949,9 @@ export type RepartitionPerNotifierResolvers<
   ParentType extends ResolversParentTypes['RepartitionPerNotifier'] = ResolversParentTypes['RepartitionPerNotifier']
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  job?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  job?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  valuePercent?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -961,10 +961,10 @@ export type RepartitionPerPathologyResolvers<
 > = {
   htlEffects?: Resolver<Maybe<Array<Maybe<ResolversTypes['HltEffect']>>>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   subId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  valuePercent?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -983,10 +983,10 @@ export type RepartitionRangeResolvers<
   ParentType extends ResolversParentTypes['RepartitionRange'] = ResolversParentTypes['RepartitionRange']
 > = {
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  valuePercent?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1052,8 +1052,8 @@ export type RuptureExpositionResolvers<
   ParentType extends ResolversParentTypes['RuptureExposition'] = ResolversParentTypes['RuptureExposition']
 > = {
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  valuePercent?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1090,7 +1090,7 @@ export type RuptureTotalExpositionResolvers<
     ContextType
   >;
   total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

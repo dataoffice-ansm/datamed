@@ -32,11 +32,11 @@ type WithRepartition {
 }
 
 type RepartitionRange {
-    id: Int!
-    range: String @capitalize
+    id: Int
+    range: String! @capitalize
+    value: Int!
+    valuePercent: Int!
     description: String
-    value: Int
-    valuePercent: Int
 }
 
 type RepartitionPerSeriousEffect {
@@ -126,9 +126,9 @@ type SpecialityRupturesHistory {
 
 type HltEffect {
     id: Int!
-    range: String @capitalize
-    value: Int
-    valuePercent: Int
+    range: String! @capitalize
+    value: Int!
+    valuePercent: Int!
 }
 
 type RepartitionPerGender {
@@ -138,38 +138,38 @@ type RepartitionPerGender {
 
 type RepartitionPerNotifier {
     id: Int!
-    job: String @capitalize
-    value: Int
-    valuePercent: Int
+    job: String! @capitalize
+    value: Int!
+    valuePercent: Int!
 }
 
 type GlobStaticRepartitionPerNotifier {
     id: Int!
-    job: String @capitalize
-    value: Int
-    valuePercent: Int
+    job: String! @capitalize
+    value: Int!
+    valuePercent: Int!
 }
 
 type RepartitionPerPathology {
     id: Int!
     subId: Int!
-    range: String @capitalize
-    value: Int
-    valuePercent: Int
+    range: String! @capitalize
+    value: Int!
+    valuePercent: Int!
     htlEffects: [HltEffect]
 }
 
 type  GlobStaticRepartitionPerPathology {
     id: Int!
     range: String @capitalize
-    value: Int
-    valuePercent: Int
+    value: Int!
+    valuePercent: Int!
 }
 
 type RepartitionPerGravity {
     range: String @capitalize
-    value: Int
-    valuePercent: Int
+    value: Int!
+    valuePercent: Int!
 }
 
 type TotalExposition {
@@ -180,14 +180,14 @@ type TotalExposition {
 
 type RuptureTotalExposition {
     total: Int!
-    year: Int
+    year: Int!
     ruptureExpositions: [RuptureExposition]
 }
 
 type RuptureExposition {
     range: String @capitalize
-    value: Int
-    valuePercent: Int
+    value: Int!
+    valuePercent: Int!
 }
 
 type Substance {

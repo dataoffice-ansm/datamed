@@ -307,35 +307,26 @@ const SectionMedicinalErrors = () => {
 
         <div className="flex-1 flex-shrink">
           <GraphBox title="Existence d’effets indésirables suite aux erreurs médicamenteuses déclarées">
-            {currentEntity?.medicalErrors?.sideEffectsOriginRepartition ? (
+            {currentEntity?.medicalErrors?.sideEffectsOriginRepartition?.with?.valuePercent &&
+            currentEntity?.medicalErrors?.sideEffectsOriginRepartition?.without?.valuePercent ? (
               <div className="flex justify-center text-center gap-2 w-full">
                 <div className="w-full flex flex-col justify-center items-center gap-1">
                   <ManFaceYes className="w-32" />
-                  {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with
-                    ?.valuePercent && (
-                    <span className="text-3xl text-dark-violet-800 mt-3">
-                      {
-                        currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with
-                          ?.valuePercent
-                      }
-                      %
-                    </span>
-                  )}
+                  <span className="text-3xl text-dark-violet-800 mt-3">
+                    {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with?.valuePercent}%
+                  </span>
                   <span className="text-base">Sans effets indésirables</span>
                 </div>
 
                 <div className="w-full flex flex-col justify-center items-center gap-1">
                   <ManFaceNo className="w-32" />
-                  {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without
-                    ?.valuePercent && (
-                    <span className="text-3xl text-dark-violet-800 mt-3">
-                      {
-                        currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without
-                          ?.valuePercent
-                      }
-                      %
-                    </span>
-                  )}
+                  <span className="text-3xl text-dark-violet-800 mt-3">
+                    {
+                      currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without
+                        ?.valuePercent
+                    }
+                    %
+                  </span>
                   <span className="text-base">Avec effets indésirables</span>
                 </div>
               </div>
