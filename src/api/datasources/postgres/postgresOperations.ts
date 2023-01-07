@@ -29,6 +29,7 @@ import type {
   TotalExposition,
 } from '../../graphql/__generated__/generated-types';
 import {
+  getCisExpositionByLevelId,
   getMedicalErrorApparitionStep,
   getMedicalErrorNatureByNatureId,
 } from '../../utils/mapping';
@@ -90,7 +91,7 @@ export class PostgresOperations {
         pharmaFormLabel,
       } = row;
 
-      // const expositionLevel = getCisExpositionLevelMapping(exposition ?? 0);
+      const expositionLevel = getCisExpositionByLevelId(exposition);
 
       return {
         id,
@@ -126,12 +127,9 @@ export class PostgresOperations {
           : null,
         exposition: expositionId
           ? {
-              id: expositionId,
               consumption,
-              expositionLevel: exposition ?? 0,
-              description: '',
-              // expositionLevel,
-              // description: getCisExpositionLevelLabelMapping(expositionLevel),
+              expositionLevel: expositionLevel.level,
+              description: expositionLevel.description,
             }
           : null,
       };
@@ -516,10 +514,10 @@ export class PostgresOperations {
     }));
   }
 
-  async getSubstanceRepGender(subCode: number): Promise<RepartitionPerGender> {
+  async getSubstanceRepGender(subId: number): Promise<RepartitionPerGender> {
     const rows = await dbInstance
       .selectFrom('substances_case_sex')
-      .where('substance_id', '=', subCode)
+      .where('substance_id', '=', subId)
       .select(['id', 'sex', 'case_percentage', 'nb_cases'])
       .execute();
 
@@ -542,10 +540,10 @@ export class PostgresOperations {
     };
   }
 
-  async getSubstanceRepAge(subCode: number): Promise<RepartitionRange[]> {
+  async getSubstanceRepAge(subId: number): Promise<RepartitionRange[]> {
     const rows = await dbInstance
       .selectFrom('substances_patient_age as s_p_a')
-      .where('s_p_a.substance_id', '=', subCode)
+      .where('s_p_a.substance_id', '=', subId)
       .leftJoin('ages', 'ages.id', 's_p_a.age_id')
       .select([
         's_p_a.id',
@@ -664,23 +662,20 @@ export class PostgresOperations {
     return effects.filter((e) => e.id === repartitionPerPathologyId);
   }
 
-  async getSubstanceTotalExposition(subCode: number): Promise<TotalExposition> {
-    const { sum, min, max } = dbInstance.fn;
-    const rows = await dbInstance
-      .selectFrom('substances_exposition')
-      .where('substance_id', '=', subCode)
-      .select([
-        sum<number>('year_cases').as('total'),
-        min('year').as('minYear'),
-        max('year').as('maxYear'),
-      ])
+  async getSubstanceTotalExposition(subId: number): Promise<TotalExposition> {
+    const { min, max } = dbInstance.fn;
+    const row = await dbInstance
+      .selectFrom('substances_exposition as s')
+      .where('s.substance_id', '=', subId)
+      .leftJoin('substances_cases as sc', 'sc.substance_id', 's.substance_id')
+      .select(['sc.nb_cases as nbCases', min('year').as('minYear'), max('year').as('maxYear')])
       .executeTakeFirst();
 
-    if (rows?.total && rows?.maxYear && rows?.minYear) {
-      const { total, minYear, maxYear } = rows;
+    if (row) {
+      const { nbCases, minYear, maxYear } = row;
 
       return {
-        total,
+        total: nbCases ?? 0,
         minYear: minYear as number,
         maxYear: maxYear as number,
       };
@@ -691,29 +686,22 @@ export class PostgresOperations {
     };
   }
 
-  async getSubstanceCisExposition(subCode: number): Promise<CisExposition | null> {
-    const rows = await dbInstance
+  async getSubstanceCisExposition(subId: number): Promise<CisExposition | null> {
+    const row = await dbInstance
       .selectFrom('mp_substances')
-      .where('substance_id', '=', subCode)
+      .where('substance_id', '=', subId)
       .leftJoin('mp_exposition as mpe', 'mpe.mp_id', 'mp_substances.mp_id')
-      .select([
-        'mpe.exposition as expositionId',
-        'mpe.consumption_year_trunc as consumption',
-        'mpe.exposition as exposition',
-      ])
+      .select(['mpe.consumption_year_trunc as consumption', 'mpe.exposition as exposition'])
       .executeTakeFirst();
 
-    if (rows?.expositionId && rows?.consumption && rows?.exposition) {
-      const { expositionId, exposition, consumption } = rows;
-      // const expositionLevel = getCisExpositionLevelMapping(exposition ?? 0);
+    if (row) {
+      const { exposition, consumption } = row;
+      const { level, description } = getCisExpositionByLevelId(exposition);
 
       return {
-        id: expositionId,
         consumption,
-        expositionLevel: exposition ?? 0,
-        // expositionLevel,
-        description: '',
-        // description: getCisExpositionLevelLabelMapping(expositionLevel),
+        expositionLevel: level,
+        description,
       };
     }
 

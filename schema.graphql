@@ -3,16 +3,6 @@ directive @uppercase on FIELD_DEFINITION
 directive @lowercase on FIELD_DEFINITION
 directive @capitalize on FIELD_DEFINITION
 
-# enum ExpositionLevelEnum {
-#    UKNOWN
-#    LOW,
-#    VERYLOW,
-#    LOW
-#    MODERED
-#    HIGH
-#    VERYHIGH
-#}
-
 enum MedicalErrorApparitionStep {
     FIRST_PRESCRIPTION_STEP
     SECOND_PRESCRIPTION_STEP
@@ -104,9 +94,8 @@ type MedicalErrors {
 }
 
 type CisExposition {
-    id: Int!
     consumption: Int
-    expositionLevel: Int
+    expositionLevel: String
     description: String
 }
 

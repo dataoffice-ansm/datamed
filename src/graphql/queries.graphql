@@ -1,326 +1,324 @@
 fragment SpecialityFragment on Speciality {
-  id
-  name
-  code
-  description
-  atc {
     id
     name
     code
-  }
-  pharmaForm {
-    id
-    name
-  }
-  substances {
-    ...SubstanceFragment
-  }
-  dosageIndication
-  dosageSubstances {
-    id
-    code
-    name
-    dosage
-  }
-  commercialisationState
-  commercialisationType
-  repartitionPerGender {
-    male {
-      value
-      valuePercent
-    }
-    female {
-      value
-      valuePercent
-    }
-  }
-  repartitionPerAge {
-    id
-    range
-    value
     description
-    valuePercent
-  }
-  publications {
-    id
-    name
-    link
-    type {
-      id
-      name
-    }
-  }
-  icon {
-    id
-    name
-  }
-  laboratory {
-    id
-    name
-  }
-  exposition {
-    id
-    consumption
-    expositionLevel
-    description
-  }
-  medicalErrors {
-    populationRepartition {
-      id
-      range
-      description
-      value
-      valuePercent
-    }
-    sideEffectsOriginRepartition {
-      with {
-        value
-        valuePercent
-      }
-      without {
-        value
-        valuePercent
-      }
-    }
-    apparitionStepRepartition {
-      id
-      range
-      description
-      value
-      valuePercent
-    }
-    natureRepartition {
-      id
-      range
-      description
-      value
-      valuePercent
-    }
-  }
-  rupturesHistory {
-    ruptures {
-      id
-      num
-      name
-      active
-      date
-      cause {
+    atc {
         id
         name
-      }
-      classification {
+        code
+    }
+    pharmaForm {
         id
         name
-      }
     }
-    meta {
-      count
+    substances {
+        ...SubstanceFragment
     }
-  }
+    dosageIndication
+    dosageSubstances {
+        id
+        code
+        name
+        dosage
+    }
+    commercialisationState
+    commercialisationType
+    repartitionPerGender {
+        male {
+            value
+            valuePercent
+        }
+        female {
+            value
+            valuePercent
+        }
+    }
+    repartitionPerAge {
+        id
+        range
+        value
+        description
+        valuePercent
+    }
+    publications {
+        id
+        name
+        link
+        type {
+            id
+            name
+        }
+    }
+    icon {
+        id
+        name
+    }
+    laboratory {
+        id
+        name
+    }
+    exposition {
+        consumption
+        expositionLevel
+        description
+    }
+    medicalErrors {
+        populationRepartition {
+            id
+            range
+            description
+            value
+            valuePercent
+        }
+        sideEffectsOriginRepartition {
+            with {
+                value
+                valuePercent
+            }
+            without {
+                value
+                valuePercent
+            }
+        }
+        apparitionStepRepartition {
+            id
+            range
+            description
+            value
+            valuePercent
+        }
+        natureRepartition {
+            id
+            range
+            description
+            value
+            valuePercent
+        }
+    }
+    rupturesHistory {
+        ruptures {
+            id
+            num
+            name
+            active
+            date
+            cause {
+                id
+                name
+            }
+            classification {
+                id
+                name
+            }
+        }
+        meta {
+            count
+        }
+    }
 }
 
 fragment SubstanceFragment on Substance {
-  id
-  code
-  name
-  retrieveSpecialities {
-    meta {
-      count
-    }
-    specialities {
-      id
-      code
-      name
-      description
-    }
-  }
-  repartitionPerGender {
-    male {
-      value
-      valuePercent
-    }
-    female {
-      value
-      valuePercent
-    }
-  }
-  repartitionPerAge {
     id
-    range
-    description
-    value
-    valuePercent
-  }
-  repartitionPerNotifier {
-    id
-    job
-    value
-    valuePercent
-  }
-  repartitionPerPathology {
-    id
-    range
-    value
-    valuePercent
-    htlEffects {
-      id
-      range
-      value
-      valuePercent
+    code
+    name
+    retrieveSpecialities {
+        meta {
+            count
+        }
+        specialities {
+            id
+            code
+            name
+            description
+        }
     }
-  }
-  totalExposition {
-    total
-    minYear
-    maxYear
-  }
-  exposition {
-    id
-    consumption
-    expositionLevel
-    description
-  }
+    repartitionPerGender {
+        male {
+            value
+            valuePercent
+        }
+        female {
+            value
+            valuePercent
+        }
+    }
+    repartitionPerAge {
+        id
+        range
+        description
+        value
+        valuePercent
+    }
+    repartitionPerNotifier {
+        id
+        job
+        value
+        valuePercent
+    }
+    repartitionPerPathology {
+        id
+        range
+        value
+        valuePercent
+        htlEffects {
+            id
+            range
+            value
+            valuePercent
+        }
+    }
+    totalExposition {
+        total
+        minYear
+        maxYear
+    }
+    exposition {
+        consumption
+        expositionLevel
+        description
+    }
 }
 
 query Speciality($cisCode: String!) {
-  getSpeciality(cisCode: $cisCode) {
-    ...SpecialityFragment
-  }
+    getSpeciality(cisCode: $cisCode) {
+        ...SpecialityFragment
+    }
 }
 
 query Specialities {
-  getSpecialities {
-    meta {
-      count
+    getSpecialities {
+        meta {
+            count
+        }
+        specialities {
+            id
+            code
+            name
+        }
     }
-    specialities {
-      id
-      code
-      name
-    }
-  }
 }
 
 query Substance($subCode: String!) {
-  getSubstance(subCode: $subCode) {
-    ...SubstanceFragment
-  }
+    getSubstance(subCode: $subCode) {
+        ...SubstanceFragment
+    }
 }
 
 query Substances {
-  getSubstances {
-    meta {
-      count
+    getSubstances {
+        meta {
+            count
+        }
+        substances {
+            id
+            name
+            code
+        }
     }
-    substances {
-      id
-      name
-      code
-    }
-  }
 }
 
 query GlobalStatistic {
-  getGlobalStatistic {
-    repartitionPerGender {
-      male {
-        value
-        valuePercent
-      }
-      female {
-        value
-        valuePercent
-      }
-    }
-    repartitionPerAge {
-      id
-      range
-      description
-      value
-      valuePercent
-    }
+    getGlobalStatistic {
+        repartitionPerGender {
+            male {
+                value
+                valuePercent
+            }
+            female {
+                value
+                valuePercent
+            }
+        }
+        repartitionPerAge {
+            id
+            range
+            description
+            value
+            valuePercent
+        }
 
-    totalExposition {
-      total
-      minYear
-      maxYear
-    }
+        totalExposition {
+            total
+            minYear
+            maxYear
+        }
 
-    repartitionPerSeriousEffect {
-      value
-      range
-      valuePercent
-    }
+        repartitionPerSeriousEffect {
+            value
+            range
+            valuePercent
+        }
 
-    repartitionPerPathology {
-      valuePercent
-      value
-      range
-    }
-    repartitionPerNotifier {
-      id
-      job
-      value
-      valuePercent
-    }
+        repartitionPerPathology {
+            valuePercent
+            value
+            range
+        }
+        repartitionPerNotifier {
+            id
+            job
+            value
+            valuePercent
+        }
 
-    repartitionPerGravity {
-      range
-      value
-      valuePercent
+        repartitionPerGravity {
+            range
+            value
+            valuePercent
+        }
     }
-  }
 }
 
 query GlobalRuptures {
-  getGlobalRuptures {
-    ruptureStocks {
-      year
-      total
-      nbRisque
-      nbRisqueClosed
-      nbRuptureClosed
-      nbRupture
+    getGlobalRuptures {
+        ruptureStocks {
+            year
+            total
+            nbRisque
+            nbRisqueClosed
+            nbRuptureClosed
+            nbRupture
+        }
+        ruptureYears {
+            value
+        }
+        repartitionPerClassification {
+            value
+            classification
+            year
+        }
+        repartitionPerTherapeuticClass {
+            year
+            total
+            repartition {
+                name
+                value
+                totalCis
+            }
+        }
+        repartitionPerCause {
+            year
+            causes {
+                value
+                range
+            }
+            total
+        }
+        repartitionPerAction {
+            year
+            total
+            actions {
+                value
+                range
+            }
+        }
+        totalAction {
+            year
+            total
+            totalWithAtLeastOneAction
+        }
     }
-    ruptureYears {
-      value
-    }
-    repartitionPerClassification {
-      value
-      classification
-      year
-    }
-    repartitionPerTherapeuticClass {
-      year
-      total
-      repartition {
-        name
-        value
-        totalCis
-      }
-    }
-    repartitionPerCause {
-      year
-      causes {
-        value
-        range
-      }
-      total
-    }
-    repartitionPerAction {
-      year
-      total
-      actions {
-        value
-        range
-      }
-    }
-    totalAction {
-      year
-      total
-      totalWithAtLeastOneAction
-    }
-  }
 }
 
 mutation Login($username:String,$password:String) {

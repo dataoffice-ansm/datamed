@@ -19,6 +19,7 @@ import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartit
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
 import { SectionTitle } from '../../components/SectionTitle';
+import { ExpositionLevel } from '../../api/graphql/enums';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
@@ -76,16 +77,16 @@ const SectionOneGlobalInformation = () => {
             <span className="text-white">{exposition?.description}</span>
 
             <div className="UsageBarContainer mt-12 flex justify-center items-end gap-2">
-              {[...Array(5).keys()].map((pos) => (
+              {Object.keys(ExpositionLevel).map((levelKey, index) => (
                 <div
-                  key={pos}
+                  key={levelKey}
                   className={classnames(
-                    `UsageBarLevel${pos}`,
+                    `UsageBarLevel${index}`,
                     'relative w-6 bg-white border border-solid border-gray-200'
                   )}
-                  style={{ height: 20 + 10 * pos }}
+                  style={{ height: 20 + 10 * index }}
                 >
-                  {exposition?.expositionLevel === pos + 1 && (
+                  {exposition?.expositionLevel === levelKey && (
                     <div className="bouncingPil animate-bounce absolute -top-8">
                       <PilIcon className="w-6 h-6" />
                     </div>

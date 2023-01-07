@@ -25,8 +25,7 @@ export type CisExposition = {
   __typename?: 'CisExposition';
   consumption?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['String']>;
-  expositionLevel?: Maybe<Scalars['Int']>;
-  id: Scalars['Int'];
+  expositionLevel?: Maybe<Scalars['String']>;
 };
 
 export type GlobStaticRepartitionPerNotifier = {
@@ -502,9 +501,8 @@ export type SpecialityFragmentFragment = {
     } | null;
     exposition?: {
       __typename?: 'CisExposition';
-      id: number;
       consumption?: number | null;
-      expositionLevel?: number | null;
+      expositionLevel?: string | null;
       description?: string | null;
     } | null;
   } | null> | null;
@@ -547,9 +545,8 @@ export type SpecialityFragmentFragment = {
   laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
   exposition?: {
     __typename?: 'CisExposition';
-    id: number;
     consumption?: number | null;
-    expositionLevel?: number | null;
+    expositionLevel?: string | null;
     description?: string | null;
   } | null;
   medicalErrors?: {
@@ -674,9 +671,8 @@ export type SubstanceFragmentFragment = {
   } | null;
   exposition?: {
     __typename?: 'CisExposition';
-    id: number;
     consumption?: number | null;
-    expositionLevel?: number | null;
+    expositionLevel?: string | null;
     description?: string | null;
   } | null;
 };
@@ -769,9 +765,8 @@ export type SpecialityQuery = {
       } | null;
       exposition?: {
         __typename?: 'CisExposition';
-        id: number;
         consumption?: number | null;
-        expositionLevel?: number | null;
+        expositionLevel?: string | null;
         description?: string | null;
       } | null;
     } | null> | null;
@@ -814,9 +809,8 @@ export type SpecialityQuery = {
     laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
     exposition?: {
       __typename?: 'CisExposition';
-      id: number;
       consumption?: number | null;
-      expositionLevel?: number | null;
+      expositionLevel?: string | null;
       description?: string | null;
     } | null;
     medicalErrors?: {
@@ -964,9 +958,8 @@ export type SubstanceQuery = {
     } | null;
     exposition?: {
       __typename?: 'CisExposition';
-      id: number;
       consumption?: number | null;
-      expositionLevel?: number | null;
+      expositionLevel?: string | null;
       description?: string | null;
     } | null;
   } | null;
@@ -1178,7 +1171,6 @@ export const SubstanceFragmentFragmentDoc = gql`
       maxYear
     }
     exposition {
-      id
       consumption
       expositionLevel
       description
@@ -1247,7 +1239,6 @@ export const SpecialityFragmentFragmentDoc = gql`
       name
     }
     exposition {
-      id
       consumption
       expositionLevel
       description
