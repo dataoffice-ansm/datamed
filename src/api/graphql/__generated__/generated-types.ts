@@ -25,8 +25,7 @@ export type CisExposition = {
   __typename?: 'CisExposition';
   consumption?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['String']>;
-  expositionLevel?: Maybe<Scalars['Int']>;
-  id: Scalars['Int'];
+  expositionLevel?: Maybe<Scalars['String']>;
 };
 
 export type GlobStaticRepartitionPerNotifier = {
@@ -420,9 +419,6 @@ export type WithRepartition = {
   without?: Maybe<IndicatorValues>;
 };
 
-export type WithIndex<TObject> = TObject & Record<string, any>;
-export type ResolversObject<TObject> = WithIndex<TObject>;
-
 export type ResolverTypeWrapper<T> = Promise<T> | T;
 
 export type ResolverWithResolve<TResult, TParent, TContext, TArgs> = {
@@ -506,7 +502,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 ) => TResult | Promise<TResult>;
 
 /** Mapping between all available schema types and the resolvers types */
-export type ResolversTypes = ResolversObject<{
+export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Cause: ResolverTypeWrapper<Cause>;
   CisExposition: ResolverTypeWrapper<CisExposition>;
@@ -561,10 +557,10 @@ export type ResolversTypes = ResolversObject<{
   TherapeuticClassesRupturesPerYear: ResolverTypeWrapper<TherapeuticClassesRupturesPerYear>;
   TotalExposition: ResolverTypeWrapper<TotalExposition>;
   WithRepartition: ResolverTypeWrapper<WithRepartition>;
-}>;
+};
 
 /** Mapping between all available schema types and the resolvers parents */
-export type ResolversParentTypes = ResolversObject<{
+export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Cause: Cause;
   CisExposition: CisExposition;
@@ -617,7 +613,7 @@ export type ResolversParentTypes = ResolversObject<{
   TherapeuticClassesRupturesPerYear: TherapeuticClassesRupturesPerYear;
   TotalExposition: TotalExposition;
   WithRepartition: WithRepartition;
-}>;
+};
 
 export type CapitalizeDirectiveArgs = {};
 
@@ -649,49 +645,48 @@ export type UppercaseDirectiveResolver<
 export type CauseResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Cause'] = ResolversParentTypes['Cause']
-> = ResolversObject<{
+> = {
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type CisExpositionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['CisExposition'] = ResolversParentTypes['CisExposition']
-> = ResolversObject<{
+> = {
   consumption?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  expositionLevel?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  expositionLevel?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type GlobStaticRepartitionPerNotifierResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['GlobStaticRepartitionPerNotifier'] = ResolversParentTypes['GlobStaticRepartitionPerNotifier']
-> = ResolversObject<{
+> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   job?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type GlobStaticRepartitionPerPathologyResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['GlobStaticRepartitionPerPathology'] = ResolversParentTypes['GlobStaticRepartitionPerPathology']
-> = ResolversObject<{
+> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type GlobalRupturesResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['GlobalRuptures'] = ResolversParentTypes['GlobalRuptures']
-> = ResolversObject<{
+> = {
   repartitionPerAction?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['RuptureActionRepartition']>>>,
     ParentType,
@@ -728,12 +723,12 @@ export type GlobalRupturesResolvers<
     ContextType
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type GlobalStatisticResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['GlobalStatistic'] = ResolversParentTypes['GlobalStatistic']
-> = ResolversObject<{
+> = {
   repartitionPerAge?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['RepartitionRange']>>>,
     ParentType,
@@ -766,76 +761,76 @@ export type GlobalStatisticResolvers<
   >;
   totalExposition?: Resolver<Maybe<ResolversTypes['TotalExposition']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type HltEffectResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['HltEffect'] = ResolversParentTypes['HltEffect']
-> = ResolversObject<{
+> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type IconResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Icon'] = ResolversParentTypes['Icon']
-> = ResolversObject<{
+> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type IndicatorValuesResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['IndicatorValues'] = ResolversParentTypes['IndicatorValues']
-> = ResolversObject<{
+> = {
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type LaboratoryResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Laboratory'] = ResolversParentTypes['Laboratory']
-> = ResolversObject<{
+> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type LoginResultResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['LoginResult'] = ResolversParentTypes['LoginResult']
-> = ResolversObject<{
+> = {
   token?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type MedicalAtcResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['MedicalATC'] = ResolversParentTypes['MedicalATC']
-> = ResolversObject<{
+> = {
   code?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type MedicalErrorResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['MedicalError'] = ResolversParentTypes['MedicalError']
-> = ResolversObject<{
+> = {
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type MedicalErrorsResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['MedicalErrors'] = ResolversParentTypes['MedicalErrors']
-> = ResolversObject<{
+> = {
   apparitionStepRepartition?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['RepartitionRange']>>>,
     ParentType,
@@ -857,61 +852,61 @@ export type MedicalErrorsResolvers<
     ContextType
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type MetaResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Meta'] = ResolversParentTypes['Meta']
-> = ResolversObject<{
+> = {
   count?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type MutationResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Mutation'] = ResolversParentTypes['Mutation']
-> = ResolversObject<{
+> = {
   login?: Resolver<
     Maybe<ResolversTypes['LoginResult']>,
     ParentType,
     ContextType,
     Partial<MutationLoginArgs>
   >;
-}>;
+};
 
 export type PharmaFormResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['PharmaForm'] = ResolversParentTypes['PharmaForm']
-> = ResolversObject<{
+> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type PublicationResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Publication'] = ResolversParentTypes['Publication']
-> = ResolversObject<{
+> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   link?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes['PublicationType']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type PublicationTypeResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['PublicationType'] = ResolversParentTypes['PublicationType']
-> = ResolversObject<{
+> = {
   id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type QueryResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
-> = ResolversObject<{
+> = {
   getGlobalRuptures?: Resolver<Maybe<ResolversTypes['GlobalRuptures']>, ParentType, ContextType>;
   getGlobalStatistic?: Resolver<Maybe<ResolversTypes['GlobalStatistic']>, ParentType, ContextType>;
   getSpecialities?: Resolver<Maybe<ResolversTypes['SpecialitiesReturn']>, ParentType, ContextType>;
@@ -928,42 +923,42 @@ export type QueryResolvers<
     RequireFields<QueryGetSubstanceArgs, 'subCode'>
   >;
   getSubstances?: Resolver<Maybe<ResolversTypes['SubstancesReturn']>, ParentType, ContextType>;
-}>;
+};
 
 export type RepartitionPerGenderResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RepartitionPerGender'] = ResolversParentTypes['RepartitionPerGender']
-> = ResolversObject<{
+> = {
   female?: Resolver<Maybe<ResolversTypes['IndicatorValues']>, ParentType, ContextType>;
   male?: Resolver<Maybe<ResolversTypes['IndicatorValues']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RepartitionPerGravityResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RepartitionPerGravity'] = ResolversParentTypes['RepartitionPerGravity']
-> = ResolversObject<{
+> = {
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RepartitionPerNotifierResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RepartitionPerNotifier'] = ResolversParentTypes['RepartitionPerNotifier']
-> = ResolversObject<{
+> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   job?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RepartitionPerPathologyResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RepartitionPerPathology'] = ResolversParentTypes['RepartitionPerPathology']
-> = ResolversObject<{
+> = {
   htlEffects?: Resolver<Maybe<Array<Maybe<ResolversTypes['HltEffect']>>>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -971,101 +966,101 @@ export type RepartitionPerPathologyResolvers<
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RepartitionPerSeriousEffectResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RepartitionPerSeriousEffect'] = ResolversParentTypes['RepartitionPerSeriousEffect']
-> = ResolversObject<{
+> = {
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RepartitionRangeResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RepartitionRange'] = ResolversParentTypes['RepartitionRange']
-> = ResolversObject<{
+> = {
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureActionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureAction'] = ResolversParentTypes['RuptureAction']
-> = ResolversObject<{
+> = {
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureActionRepartitionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureActionRepartition'] = ResolversParentTypes['RuptureActionRepartition']
-> = ResolversObject<{
+> = {
   actions?: Resolver<Maybe<Array<Maybe<ResolversTypes['RuptureAction']>>>, ParentType, ContextType>;
   total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureCauseResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureCause'] = ResolversParentTypes['RuptureCause']
-> = ResolversObject<{
+> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureCauseRepartitionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureCauseRepartition'] = ResolversParentTypes['RuptureCauseRepartition']
-> = ResolversObject<{
+> = {
   causes?: Resolver<Maybe<Array<Maybe<ResolversTypes['Cause']>>>, ParentType, ContextType>;
   total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureClassResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureClass'] = ResolversParentTypes['RuptureClass']
-> = ResolversObject<{
+> = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureClassificationRepartitionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureClassificationRepartition'] = ResolversParentTypes['RuptureClassificationRepartition']
-> = ResolversObject<{
+> = {
   classification?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureExpositionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureExposition'] = ResolversParentTypes['RuptureExposition']
-> = ResolversObject<{
+> = {
   range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   valuePercent?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureStockResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureStock'] = ResolversParentTypes['RuptureStock']
-> = ResolversObject<{
+> = {
   nbRisque?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   nbRisqueClosed?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   nbRupture?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
@@ -1073,22 +1068,22 @@ export type RuptureStockResolvers<
   total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureTotalActionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureTotalAction'] = ResolversParentTypes['RuptureTotalAction']
-> = ResolversObject<{
+> = {
   total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   totalWithAtLeastOneAction?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureTotalExpositionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureTotalExposition'] = ResolversParentTypes['RuptureTotalExposition']
-> = ResolversObject<{
+> = {
   ruptureExpositions?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['RuptureExposition']>>>,
     ParentType,
@@ -1097,20 +1092,20 @@ export type RuptureTotalExpositionResolvers<
   total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type RuptureYearResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureYear'] = ResolversParentTypes['RuptureYear']
-> = ResolversObject<{
+> = {
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type SpecialitiesReturnResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SpecialitiesReturn'] = ResolversParentTypes['SpecialitiesReturn']
-> = ResolversObject<{
+> = {
   meta?: Resolver<Maybe<ResolversTypes['Meta']>, ParentType, ContextType>;
   specialities?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['SpecialityLight']>>>,
@@ -1118,12 +1113,12 @@ export type SpecialitiesReturnResolvers<
     ContextType
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type SpecialityResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Speciality'] = ResolversParentTypes['Speciality']
-> = ResolversObject<{
+> = {
   atc?: Resolver<Maybe<ResolversTypes['MedicalATC']>, ParentType, ContextType>;
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   commercialisationState?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1164,24 +1159,24 @@ export type SpecialityResolvers<
   >;
   substances?: Resolver<Maybe<Array<Maybe<ResolversTypes['Substance']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type SpecialityLightResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SpecialityLight'] = ResolversParentTypes['SpecialityLight']
-> = ResolversObject<{
+> = {
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   exposition?: Resolver<Maybe<ResolversTypes['CisExposition']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type SpecialityRuptureResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SpecialityRupture'] = ResolversParentTypes['SpecialityRupture']
-> = ResolversObject<{
+> = {
   active?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
   cause?: Resolver<Maybe<ResolversTypes['RuptureCause']>, ParentType, ContextType>;
   classification?: Resolver<Maybe<ResolversTypes['RuptureClass']>, ParentType, ContextType>;
@@ -1190,12 +1185,12 @@ export type SpecialityRuptureResolvers<
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   num?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type SpecialityRupturesHistoryResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SpecialityRupturesHistory'] = ResolversParentTypes['SpecialityRupturesHistory']
-> = ResolversObject<{
+> = {
   meta?: Resolver<Maybe<ResolversTypes['Meta']>, ParentType, ContextType>;
   ruptures?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['SpecialityRupture']>>>,
@@ -1203,23 +1198,23 @@ export type SpecialityRupturesHistoryResolvers<
     ContextType
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type SpecialitySubstanceResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SpecialitySubstance'] = ResolversParentTypes['SpecialitySubstance']
-> = ResolversObject<{
+> = {
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   dosage?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type SubstanceResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Substance'] = ResolversParentTypes['Substance']
-> = ResolversObject<{
+> = {
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   exposition?: Resolver<Maybe<ResolversTypes['CisExposition']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -1251,31 +1246,31 @@ export type SubstanceResolvers<
   >;
   totalExposition?: Resolver<Maybe<ResolversTypes['TotalExposition']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type SubstancesReturnResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SubstancesReturn'] = ResolversParentTypes['SubstancesReturn']
-> = ResolversObject<{
+> = {
   meta?: Resolver<Maybe<ResolversTypes['Meta']>, ParentType, ContextType>;
   substances?: Resolver<Maybe<Array<Maybe<ResolversTypes['Substance']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type TherapeuticClassRuptureResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['TherapeuticClassRupture'] = ResolversParentTypes['TherapeuticClassRupture']
-> = ResolversObject<{
+> = {
   name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   totalCis?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type TherapeuticClassesRupturesPerYearResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['TherapeuticClassesRupturesPerYear'] = ResolversParentTypes['TherapeuticClassesRupturesPerYear']
-> = ResolversObject<{
+> = {
   repartition?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['TherapeuticClassRupture']>>>,
     ParentType,
@@ -1284,28 +1279,28 @@ export type TherapeuticClassesRupturesPerYearResolvers<
   total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type TotalExpositionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['TotalExposition'] = ResolversParentTypes['TotalExposition']
-> = ResolversObject<{
+> = {
   maxYear?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   minYear?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
 export type WithRepartitionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['WithRepartition'] = ResolversParentTypes['WithRepartition']
-> = ResolversObject<{
+> = {
   with?: Resolver<Maybe<ResolversTypes['IndicatorValues']>, ParentType, ContextType>;
   without?: Resolver<Maybe<ResolversTypes['IndicatorValues']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-}>;
+};
 
-export type Resolvers<ContextType = ContextValue> = ResolversObject<{
+export type Resolvers<ContextType = ContextValue> = {
   Cause?: CauseResolvers<ContextType>;
   CisExposition?: CisExpositionResolvers<ContextType>;
   GlobStaticRepartitionPerNotifier?: GlobStaticRepartitionPerNotifierResolvers<ContextType>;
@@ -1355,10 +1350,10 @@ export type Resolvers<ContextType = ContextValue> = ResolversObject<{
   TherapeuticClassesRupturesPerYear?: TherapeuticClassesRupturesPerYearResolvers<ContextType>;
   TotalExposition?: TotalExpositionResolvers<ContextType>;
   WithRepartition?: WithRepartitionResolvers<ContextType>;
-}>;
+};
 
-export type DirectiveResolvers<ContextType = ContextValue> = ResolversObject<{
+export type DirectiveResolvers<ContextType = ContextValue> = {
   capitalize?: CapitalizeDirectiveResolver<any, any, ContextType>;
   lowercase?: LowercaseDirectiveResolver<any, any, ContextType>;
   uppercase?: UppercaseDirectiveResolver<any, any, ContextType>;
-}>;
+};

@@ -32,6 +32,7 @@ import { SectionTitle } from '../../components/SectionTitle';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { PieChartNatureMedicalErrors } from '../../components/Charts/PieChartNatureMedicalErrors';
+import { ExpositionLevel } from '../../api/graphql/enums';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -166,16 +167,16 @@ const SectionTreatedPatients = () => {
             <span className="text-white">{currentEntity?.exposition?.description}</span>
 
             <div className="UsageBarContainer mt-12 flex justify-center items-end gap-2">
-              {[...Array(5).keys()].map((pos) => (
+              {Object.keys(ExpositionLevel).map((levelKey, index) => (
                 <div
-                  key={pos}
+                  key={levelKey}
                   className={classnames(
-                    `UsageBarLevel${pos}`,
+                    `UsageBarLevel${index}`,
                     'relative w-6 bg-white border border-solid border-gray-200'
                   )}
-                  style={{ height: 20 + 10 * pos }}
+                  style={{ height: 20 + 10 * index }}
                 >
-                  {currentEntity?.exposition?.expositionLevel === pos + 1 && (
+                  {currentEntity?.exposition?.expositionLevel === levelKey && (
                     <div className="bouncingPil animate-bounce absolute -top-8">
                       <PilIcon className="w-6 h-6" />
                     </div>

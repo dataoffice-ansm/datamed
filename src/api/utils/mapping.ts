@@ -2,24 +2,25 @@ import {
   MedicalErrorApparitionStep,
   MedicalErrorNature,
 } from '../graphql/__generated__/generated-types';
+import { ExpositionLevel } from '../graphql/enums';
 
-// export const getCisExpositionByLevelId = (level: number) => {
-//   switch (level) {
-//     case 1:
-//       return { level: ExpositionLevel.Verylow, description: 'Utilisation très faible' };
-//     case 2:
-//       return { level: ExpositionLevel.Low, description: 'Utilisation faible' };
-//     case 3:
-//       return { level: ExpositionLevel.Modered, description: 'Utilisation modérée' };
-//     case 4:
-//       return { level: ExpositionLevel.High, description: 'Utilisation élevée' };
-//     case 5:
-//       return { level: ExpositionLevel.Veryhigh, description: 'Utilisation très élevée' };
-//     case 0:
-//     default:
-//       return { level: ExpositionLevel.Uknown, description: 'Utilisation inconnue' };
-//   }
-// };
+export const getCisExpositionByLevelId = (level: number | null) => {
+  switch (level) {
+    case 1:
+      return { level: ExpositionLevel.VERYLOW, description: 'Utilisation très faible' };
+    case 2:
+      return { level: ExpositionLevel.LOW, description: 'Utilisation faible' };
+    case 3:
+      return { level: ExpositionLevel.MODERED, description: 'Utilisation modérée' };
+    case 4:
+      return { level: ExpositionLevel.HIGH, description: 'Utilisation élevée' };
+    case 5:
+      return { level: ExpositionLevel.VERYHIGH, description: 'Utilisation très élevée' };
+    case 0:
+    default:
+      return { level: ExpositionLevel.UKNOWN, description: 'Utilisation inconnue' };
+  }
+};
 
 export const getMedicalErrorApparitionStep = (initialErrorId: number) => {
   switch (initialErrorId) {
