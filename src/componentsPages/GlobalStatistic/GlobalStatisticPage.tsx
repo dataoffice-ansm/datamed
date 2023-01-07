@@ -306,20 +306,25 @@ const SectionDataOrigin = () => {
             (CRPV). Elle inclut l&apos;ensemble des déclarations suspectées comme étant en lien avec
             l&apos;usage d&apos;un ou plusieurs médicaments. Ces dernières sont notifiées par les
             professionnels de santé ou par les patients et association agréées via un portail dédié:{' '}
-            <Button externalLink href="https://signalement.social-sante.gouv.fr">
+            <a
+              rel="external noreferrer"
+              target="_blank"
+              href="https://signalement.social-sante.gouv.fr"
+            >
               https://signalement.social-sante.gouv.fr
-            </Button>
+            </a>
           </p>
           <p>
             Estimations obtenues à partir des données Open-Medic portant sur le nombre de patients
             ayant bénéficié d&apos;un remboursement du médicament délivré en pharmacie de ville.
             Pour plus d&apos;informations, consultez:{' '}
-            <Button
-              externalLink
+            <a
+              rel="external noreferrer"
+              target="_blank"
               href="http://open-data-assurance-maladie.ameli.fr/medicaments/index.php"
             >
               http://open-data-assurance-maladie.ameli.fr/medicaments/index.php
-            </Button>
+            </a>
           </p>
         </Section>
         <Section title="Avertissement">
@@ -337,20 +342,22 @@ const SectionDataOrigin = () => {
           </p>
           <p>
             Pour plus d&apos;informations, consultez:{' '}
-            <Button
-              externalLink
+            <a
+              rel="external noreferrer"
+              target="_blank"
               href="https://ansm.sante.fr/page/la-surveillance-renforcee-des-medicaments"
             >
               {' '}
               https://ansm.sante.fr/page/la-surveillance-renforcee-des-medicaments
-            </Button>
+            </a>
             et les bonnes pratiques de pharmacovigilance{' '}
-            <Button
-              externalLink
+            <a
+              rel="external noreferrer"
+              target="_blank"
               href="https://ansm.sante.fr/actualites/nouvelle-edition-des-bonnes-pratiques-de-pharmacovigilance"
             >
               https://ansm.sante.fr/actualites/nouvelle-edition-des-bonnes-pratiques-de-pharmacovigilance
-            </Button>
+            </a>
           </p>
         </Section>
       </div>

@@ -16,9 +16,9 @@ const GraphFigurePage = () => (
           description="Hommes"
           icon={<ManFigure width={150} height={150} />}
           action={
-            <Button externalLink as="link" href="http://fake.com">
+            <a rel="external noreferrer" target="_blank" href="http://fake.com">
               action
-            </Button>
+            </a>
           }
         />
       </div>
@@ -29,9 +29,9 @@ const GraphFigurePage = () => (
           description="Femme"
           icon={<WomanFigure width={150} height={150} />}
           action={
-            <Button externalLink as="link" href="http://fake.com">
+            <a rel="external noreferrer" target="_blank" href="http://fake.com">
               action
-            </Button>
+            </a>
           }
         />
       </div>
