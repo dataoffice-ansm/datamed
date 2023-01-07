@@ -11,7 +11,7 @@ const options = {
   number: { label: 'Nombre' },
 } as const;
 
-type OptionsValue = keyof typeof options;
+export type OptionsValue = keyof typeof options;
 
 const selectOptions: Array<SelectOption<OptionsValue>> = Object.entries(options).map(([k, v]) => ({
   value: k as OptionsValue,

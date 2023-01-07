@@ -31,17 +31,17 @@ export type CisExposition = {
 export type GlobStaticRepartitionPerNotifier = {
   __typename?: 'GlobStaticRepartitionPerNotifier';
   id: Scalars['Int'];
-  job?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  job: Scalars['String'];
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type GlobStaticRepartitionPerPathology = {
   __typename?: 'GlobStaticRepartitionPerPathology';
   id: Scalars['Int'];
   range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type GlobalRuptures = {
@@ -69,9 +69,9 @@ export type GlobalStatistic = {
 export type HltEffect = {
   __typename?: 'HltEffect';
   id: Scalars['Int'];
-  range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  range: Scalars['String'];
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type Icon = {
@@ -196,26 +196,26 @@ export type RepartitionPerGender = {
 export type RepartitionPerGravity = {
   __typename?: 'RepartitionPerGravity';
   range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type RepartitionPerNotifier = {
   __typename?: 'RepartitionPerNotifier';
   id: Scalars['Int'];
-  job?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  job: Scalars['String'];
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type RepartitionPerPathology = {
   __typename?: 'RepartitionPerPathology';
   htlEffects?: Maybe<Array<Maybe<HltEffect>>>;
   id: Scalars['Int'];
-  range?: Maybe<Scalars['String']>;
+  range: Scalars['String'];
   subId: Scalars['Int'];
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type RepartitionPerSeriousEffect = {
@@ -228,10 +228,10 @@ export type RepartitionPerSeriousEffect = {
 export type RepartitionRange = {
   __typename?: 'RepartitionRange';
   description?: Maybe<Scalars['String']>;
-  id: Scalars['Int'];
-  range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  id?: Maybe<Scalars['Int']>;
+  range: Scalars['String'];
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type RuptureAction = {
@@ -276,8 +276,8 @@ export type RuptureClassificationRepartition = {
 export type RuptureExposition = {
   __typename?: 'RuptureExposition';
   range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  valuePercent?: Maybe<Scalars['Int']>;
+  value: Scalars['Int'];
+  valuePercent: Scalars['Int'];
 };
 
 export type RuptureStock = {
@@ -301,7 +301,7 @@ export type RuptureTotalExposition = {
   __typename?: 'RuptureTotalExposition';
   ruptureExpositions?: Maybe<Array<Maybe<RuptureExposition>>>;
   total: Scalars['Int'];
-  year?: Maybe<Scalars['Int']>;
+  year: Scalars['Int'];
 };
 
 export type RuptureYear = {
@@ -466,31 +466,30 @@ export type SpecialityFragmentFragment = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
-      range?: string | null;
+      range: string;
       description?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      value: number;
+      valuePercent: number;
     } | null> | null;
     repartitionPerNotifier?: Array<{
       __typename?: 'RepartitionPerNotifier';
       id: number;
-      job?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      job: string;
+      value: number;
+      valuePercent: number;
     } | null> | null;
     repartitionPerPathology?: Array<{
       __typename?: 'RepartitionPerPathology';
       id: number;
-      range?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      range: string;
+      value: number;
+      valuePercent: number;
       htlEffects?: Array<{
         __typename?: 'HltEffect';
         id: number;
-        range?: string | null;
-        value?: number | null;
-        valuePercent?: number | null;
+        range: string;
+        value: number;
+        valuePercent: number;
       } | null> | null;
     } | null> | null;
     totalExposition?: {
@@ -528,11 +527,10 @@ export type SpecialityFragmentFragment = {
   } | null;
   repartitionPerAge?: Array<{
     __typename?: 'RepartitionRange';
-    id: number;
-    range?: string | null;
-    value?: number | null;
+    range: string;
+    value: number;
     description?: string | null;
-    valuePercent?: number | null;
+    valuePercent: number;
   } | null> | null;
   publications?: Array<{
     __typename?: 'Publication';
@@ -553,11 +551,11 @@ export type SpecialityFragmentFragment = {
     __typename?: 'MedicalErrors';
     populationRepartition?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
-      range?: string | null;
+      id?: number | null;
+      range: string;
       description?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      value: number;
+      valuePercent: number;
     } | null> | null;
     sideEffectsOriginRepartition?: {
       __typename?: 'WithRepartition';
@@ -574,19 +572,19 @@ export type SpecialityFragmentFragment = {
     } | null;
     apparitionStepRepartition?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
-      range?: string | null;
+      id?: number | null;
+      range: string;
       description?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      value: number;
+      valuePercent: number;
     } | null> | null;
     natureRepartition?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
-      range?: string | null;
+      id?: number | null;
+      range: string;
       description?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      value: number;
+      valuePercent: number;
     } | null> | null;
   } | null;
   rupturesHistory?: {
@@ -636,31 +634,30 @@ export type SubstanceFragmentFragment = {
   } | null;
   repartitionPerAge?: Array<{
     __typename?: 'RepartitionRange';
-    id: number;
-    range?: string | null;
+    range: string;
     description?: string | null;
-    value?: number | null;
-    valuePercent?: number | null;
+    value: number;
+    valuePercent: number;
   } | null> | null;
   repartitionPerNotifier?: Array<{
     __typename?: 'RepartitionPerNotifier';
     id: number;
-    job?: string | null;
-    value?: number | null;
-    valuePercent?: number | null;
+    job: string;
+    value: number;
+    valuePercent: number;
   } | null> | null;
   repartitionPerPathology?: Array<{
     __typename?: 'RepartitionPerPathology';
     id: number;
-    range?: string | null;
-    value?: number | null;
-    valuePercent?: number | null;
+    range: string;
+    value: number;
+    valuePercent: number;
     htlEffects?: Array<{
       __typename?: 'HltEffect';
       id: number;
-      range?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      range: string;
+      value: number;
+      valuePercent: number;
     } | null> | null;
   } | null> | null;
   totalExposition?: {
@@ -730,31 +727,30 @@ export type SpecialityQuery = {
       } | null;
       repartitionPerAge?: Array<{
         __typename?: 'RepartitionRange';
-        id: number;
-        range?: string | null;
+        range: string;
         description?: string | null;
-        value?: number | null;
-        valuePercent?: number | null;
+        value: number;
+        valuePercent: number;
       } | null> | null;
       repartitionPerNotifier?: Array<{
         __typename?: 'RepartitionPerNotifier';
         id: number;
-        job?: string | null;
-        value?: number | null;
-        valuePercent?: number | null;
+        job: string;
+        value: number;
+        valuePercent: number;
       } | null> | null;
       repartitionPerPathology?: Array<{
         __typename?: 'RepartitionPerPathology';
         id: number;
-        range?: string | null;
-        value?: number | null;
-        valuePercent?: number | null;
+        range: string;
+        value: number;
+        valuePercent: number;
         htlEffects?: Array<{
           __typename?: 'HltEffect';
           id: number;
-          range?: string | null;
-          value?: number | null;
-          valuePercent?: number | null;
+          range: string;
+          value: number;
+          valuePercent: number;
         } | null> | null;
       } | null> | null;
       totalExposition?: {
@@ -792,11 +788,10 @@ export type SpecialityQuery = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
-      range?: string | null;
-      value?: number | null;
+      range: string;
+      value: number;
       description?: string | null;
-      valuePercent?: number | null;
+      valuePercent: number;
     } | null> | null;
     publications?: Array<{
       __typename?: 'Publication';
@@ -817,11 +812,11 @@ export type SpecialityQuery = {
       __typename?: 'MedicalErrors';
       populationRepartition?: Array<{
         __typename?: 'RepartitionRange';
-        id: number;
-        range?: string | null;
+        id?: number | null;
+        range: string;
         description?: string | null;
-        value?: number | null;
-        valuePercent?: number | null;
+        value: number;
+        valuePercent: number;
       } | null> | null;
       sideEffectsOriginRepartition?: {
         __typename?: 'WithRepartition';
@@ -838,19 +833,19 @@ export type SpecialityQuery = {
       } | null;
       apparitionStepRepartition?: Array<{
         __typename?: 'RepartitionRange';
-        id: number;
-        range?: string | null;
+        id?: number | null;
+        range: string;
         description?: string | null;
-        value?: number | null;
-        valuePercent?: number | null;
+        value: number;
+        valuePercent: number;
       } | null> | null;
       natureRepartition?: Array<{
         __typename?: 'RepartitionRange';
-        id: number;
-        range?: string | null;
+        id?: number | null;
+        range: string;
         description?: string | null;
-        value?: number | null;
-        valuePercent?: number | null;
+        value: number;
+        valuePercent: number;
       } | null> | null;
     } | null;
     rupturesHistory?: {
@@ -923,31 +918,30 @@ export type SubstanceQuery = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
-      range?: string | null;
+      range: string;
       description?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      value: number;
+      valuePercent: number;
     } | null> | null;
     repartitionPerNotifier?: Array<{
       __typename?: 'RepartitionPerNotifier';
       id: number;
-      job?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      job: string;
+      value: number;
+      valuePercent: number;
     } | null> | null;
     repartitionPerPathology?: Array<{
       __typename?: 'RepartitionPerPathology';
       id: number;
-      range?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      range: string;
+      value: number;
+      valuePercent: number;
       htlEffects?: Array<{
         __typename?: 'HltEffect';
         id: number;
-        range?: string | null;
-        value?: number | null;
-        valuePercent?: number | null;
+        range: string;
+        value: number;
+        valuePercent: number;
       } | null> | null;
     } | null> | null;
     totalExposition?: {
@@ -1002,11 +996,11 @@ export type GlobalStatisticQuery = {
     } | null;
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
-      id: number;
-      range?: string | null;
+      id?: number | null;
+      range: string;
       description?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      value: number;
+      valuePercent: number;
     } | null> | null;
     totalExposition?: {
       __typename?: 'TotalExposition';
@@ -1022,22 +1016,22 @@ export type GlobalStatisticQuery = {
     } | null> | null;
     repartitionPerPathology?: Array<{
       __typename?: 'GlobStaticRepartitionPerPathology';
-      valuePercent?: number | null;
-      value?: number | null;
+      valuePercent: number;
+      value: number;
       range?: string | null;
     } | null> | null;
     repartitionPerNotifier?: Array<{
       __typename?: 'GlobStaticRepartitionPerNotifier';
       id: number;
-      job?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      job: string;
+      value: number;
+      valuePercent: number;
     } | null> | null;
     repartitionPerGravity?: Array<{
       __typename?: 'RepartitionPerGravity';
       range?: string | null;
-      value?: number | null;
-      valuePercent?: number | null;
+      value: number;
+      valuePercent: number;
     } | null> | null;
   } | null;
 };
@@ -1141,7 +1135,6 @@ export const SubstanceFragmentFragmentDoc = gql`
       }
     }
     repartitionPerAge {
-      id
       range
       description
       value
@@ -1215,7 +1208,6 @@ export const SpecialityFragmentFragmentDoc = gql`
       }
     }
     repartitionPerAge {
-      id
       range
       value
       description

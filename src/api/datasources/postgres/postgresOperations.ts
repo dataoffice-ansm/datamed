@@ -168,23 +168,18 @@ export class PostgresOperations {
       .selectFrom('mp_substances as mp')
       .where('mp.mp_id', '=', cisId)
       .leftJoin('substances as sub', 'sub.id', 'mp.substance_id')
-      .select([
-        'mp.substance_id as subId',
-        'mp.dosage',
-        'sub.code as subCode',
-        'sub.name as subName',
-      ])
+      .select(['mp.substance_id as id', 'mp.dosage', 'sub.code as code', 'sub.name as name'])
       .execute();
 
     return rows.reduce<SpecialitySubstance[]>((carry, row) => {
-      const { subId, subCode, subName, dosage } = row;
-      return subId !== null && subCode && subName
+      const { id, code, name, dosage } = row;
+      return id !== null && code && name
         ? [
             ...carry,
             {
-              id: subId,
-              code: subCode,
-              name: subName,
+              id,
+              code,
+              name,
               dosage,
             },
           ]
@@ -219,17 +214,16 @@ export class PostgresOperations {
       .selectFrom('mp_patient_ages as mp_a')
       .where('mp_a.mp_id', '=', cisId)
       .leftJoin('ages', 'ages.id', 'mp_a.age_id')
-      .select(['mp_a.patients_consumption', 'mp_a.patients_percentage', 'ages.id', 'ages.range'])
+      .select(['mp_a.patients_consumption', 'mp_a.patients_percentage', 'ages.range'])
       .execute();
 
     return rows.reduce<RepartitionRange[]>((carry, row) => {
-      const { id, range, patients_consumption, patients_percentage } = row;
-      // eslint-disable-next-line no-negated-condition
-      return id !== null
+      const { range, patients_consumption, patients_percentage } = row;
+
+      return range
         ? [
             ...carry,
             {
-              id,
               range,
               value: Math.round(patients_consumption ?? 0),
               valuePercent: Math.round(patients_percentage ?? 0),
@@ -244,17 +238,16 @@ export class PostgresOperations {
       .selectFrom('error_med_population as err')
       .leftJoin('population_errors as pop', 'pop.id', 'err.population_error_id')
       .where('err.mp_id', '=', cisId)
-      .select(['err.number', 'err.percentage', 'pop.id', 'pop.label as range'])
+      .select(['err.number', 'err.percentage', 'pop.label as range'])
       .execute();
 
     return rows.reduce<RepartitionRange[]>((carry, row) => {
-      const { id, range, number, percentage } = row;
-      // eslint-disable-next-line no-negated-condition
-      return id !== null
+      const { range, number, percentage } = row;
+
+      return range
         ? [
             ...carry,
             {
-              id,
               range,
               value: Math.round(number ?? 0),
               valuePercent: Math.round(percentage ?? 0),
@@ -339,8 +332,8 @@ export class PostgresOperations {
             ...carry,
             {
               id: natureId,
-              range: getMedicalErrorNatureByNatureId(natureId),
               description,
+              range: getMedicalErrorNatureByNatureId(natureId),
               value: Math.round(value ?? 0),
               valuePercent: Math.round(valuePercent ?? 0),
             },
@@ -546,7 +539,6 @@ export class PostgresOperations {
       .where('s_p_a.substance_id', '=', subId)
       .leftJoin('ages', 'ages.id', 's_p_a.age_id')
       .select([
-        's_p_a.id',
         'ages.range',
         's_p_a.patients_percentage as percentage',
         's_p_a.patients_consumption as consumption',
@@ -554,12 +546,11 @@ export class PostgresOperations {
       .execute();
 
     return rows.reduce<RepartitionRange[]>((carry, row) => {
-      const { id, range, consumption, percentage } = row;
-      return id && range && consumption && percentage
+      const { range, consumption, percentage } = row;
+      return range
         ? [
             ...carry,
             {
-              id,
               range,
               value: Math.round(consumption ?? 0),
               valuePercent: Math.round(percentage ?? 0),
@@ -613,7 +604,7 @@ export class PostgresOperations {
 
     return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id !== null && range
+      return id !== null && range && value && valuePercent
         ? [
             ...carry,
             {
@@ -646,7 +637,7 @@ export class PostgresOperations {
 
     const effects = rowsHltEffects.reduce<HltEffect[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id && range && value
+      return id !== null && range && value
         ? [
             ...carry,
             {
@@ -786,13 +777,11 @@ export class PostgresOperations {
       .execute();
 
     return rows.reduce<RepartitionRange[]>((carry, row) => {
-      const { id, range, consumption, percentage } = row;
-      // eslint-disable-next-line no-negated-condition
-      return id !== null
+      const { range, consumption, percentage } = row;
+      return range
         ? [
             ...carry,
             {
-              id,
               range,
               value: Math.round(Number(consumption)),
               valuePercent: Math.round(percentage ?? 0),
@@ -880,7 +869,7 @@ export class PostgresOperations {
             {
               id,
               job,
-              value: Math.round(Number(value)),
+              value: Math.round(value ?? 0),
               valuePercent: Math.round(valuePercent ?? 0),
             },
           ]
