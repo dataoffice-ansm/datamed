@@ -4,7 +4,6 @@ import type { EntityCis } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
 import type { Speciality } from '../../api/graphql/__generated__/generated-types';
 import Link from 'next/link';
-import Page404 from '../../pages/[404]';
 import { useMemo } from 'react';
 import type { SpecialityRupture, Substance } from '../../graphql/__generated__/generated-documents';
 import { SpecialitySubstancesContainer } from './SpecialitySubstancesContainer';
@@ -468,52 +467,46 @@ const SectionPublications = () => {
   );
 };
 
-export const SpecialityPage = ({ cis }: { cis: Speciality }) => {
-  if (!cis) {
-    return <Page404 />;
-  }
-
-  return (
-    <EntityContextProvider entity={{ type: 'cis', ...cis }}>
-      <EntityPageLayout
-        offsetContent={60}
-        colorMenu="primary"
-        sections={[
-          {
-            id: 'global-infos',
-            label: 'Description',
-            content: <SectionOneGlobalInformation />,
-          },
-          {
-            id: 'treated-patients',
-            label: 'Patients traités',
-            content: <SectionTreatedPatients />,
-          },
-          {
-            id: 'side-effects',
-            label: 'Effets indésirables',
-            content: <SectionSideEffects />,
-          },
-          {
-            id: 'shortage-risks-history',
-            label: 'Historique des risques et des ruptures de stocks',
-            content: <SectionRisksShortageHistory />,
-          },
-          {
-            id: 'medicinal-errors',
-            label: 'Erreurs médicamenteuses',
-            content: <SectionMedicinalErrors />,
-          },
-          {
-            id: 'publications',
-            label: 'Publications',
-            content: <SectionPublications />,
-          },
-        ]}
-        render={(content) => content}
-      >
-        <HeroHeader />
-      </EntityPageLayout>
-    </EntityContextProvider>
-  );
-};
+export const SpecialityPage = ({ cis }: { cis: Speciality }) => (
+  <EntityContextProvider entity={{ type: 'cis', ...cis }}>
+    <EntityPageLayout
+      offsetContent={60}
+      colorMenu="primary"
+      sections={[
+        {
+          id: 'global-infos',
+          label: 'Description',
+          content: <SectionOneGlobalInformation />,
+        },
+        {
+          id: 'treated-patients',
+          label: 'Patients traités',
+          content: <SectionTreatedPatients />,
+        },
+        {
+          id: 'side-effects',
+          label: 'Effets indésirables',
+          content: <SectionSideEffects />,
+        },
+        {
+          id: 'shortage-risks-history',
+          label: 'Historique des risques et des ruptures de stocks',
+          content: <SectionRisksShortageHistory />,
+        },
+        {
+          id: 'medicinal-errors',
+          label: 'Erreurs médicamenteuses',
+          content: <SectionMedicinalErrors />,
+        },
+        {
+          id: 'publications',
+          label: 'Publications',
+          content: <SectionPublications />,
+        },
+      ]}
+      render={(content) => content}
+    >
+      <HeroHeader />
+    </EntityPageLayout>
+  </EntityContextProvider>
+);

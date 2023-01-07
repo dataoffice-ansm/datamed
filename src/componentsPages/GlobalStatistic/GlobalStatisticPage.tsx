@@ -11,10 +11,7 @@ import FolderSVG from '../../assets/icons/folder/folder.svg';
 import { BoxInfo } from '../../components/BoxInfo';
 import { SectionTitle } from '../../components/SectionTitle';
 import { PieChartGlobalStatisticSeriousEffects } from '../../components/Charts/PieChartGlobalStatisticSeriousEffects';
-import {
-  getSideEffectPathologyIconByName,
-  getNotifierIconByJobName,
-} from '../../utils/iconsMapping';
+import { getNotifierIconByJobName, getSideEffectPathologyIcon } from '../../utils/iconsMapping';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { Accordion } from '../../components/Accordion/Accordion';
@@ -250,7 +247,7 @@ const SectionTypesOfSideEffects = () => {
                     className="pathologyGraphFigure"
                     unit={selectedOption === 'percent' ? ' % ' : ''}
                     description={pathologyRepartition.range}
-                    icon={getSideEffectPathologyIconByName(pathologyRepartition.range)}
+                    icon={getSideEffectPathologyIcon(pathologyRepartition.id)}
                     valueClassName="text-dark-green-900"
                     value={
                       selectedOption === 'percent'

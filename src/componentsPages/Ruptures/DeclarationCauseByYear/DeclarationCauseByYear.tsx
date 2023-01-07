@@ -6,7 +6,7 @@ import { NotEnoughData } from 'components/NotEnoughData';
 import { SectionTitle } from '../../../components/SectionTitle';
 import { GraphFiguresGrid } from '../../../components/GraphFiguresGrid';
 import { GraphFigure } from '../../../components/GraphFigure';
-import { getFigureByCauseName } from '../../../utils/iconsMapping';
+import { getRuptureCauseIcon } from '../../../utils/iconsMapping';
 import { GraphBox } from '../../../components/GraphBox/GraphBox';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 
@@ -101,7 +101,7 @@ export const DeclarationCauseByYear = ({
                       className="pathologyGraphFigure"
                       unit={selectedUnitOption === 'number' ? '' : '%'}
                       description={cause.range}
-                      icon={getFigureByCauseName(cause.range)}
+                      icon={getRuptureCauseIcon(cause.range)}
                       valueClassName="text-dark-green-900"
                       value={
                         selectedUnitOption === 'number'

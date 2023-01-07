@@ -8,16 +8,31 @@ import type {
 import { SpecialityDocument } from '../../graphql/__generated__/generated-documents';
 import { SpecialityPage } from '../../componentsPages/Speciality/SpecialityPage';
 import { addApolloState, initializeApolloClient } from '../../config/apolloClient';
+import { getServerSideErrors } from '../../utils/errors';
+import toast from 'react-hot-toast';
+import Page404 from '../[404]';
 
 type CisSSRPageProps = {
   cis: Speciality;
+  err?: string;
 };
 
 type ContextParams = {
   cisCode: string;
 } & ParsedUrlQuery;
 
-const PageCisServerSideRendered = ({ cis }: CisSSRPageProps) => <SpecialityPage cis={cis} />;
+const PageCisServerSideRendered = ({ cis, err }: CisSSRPageProps) => {
+  if (!cis) {
+    console.log(err);
+    if (err) {
+      toast.error(err);
+    }
+
+    return <Page404 />;
+  }
+
+  return <SpecialityPage cis={cis} />;
+};
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const apolloClient = initializeApolloClient({ context });
@@ -38,13 +53,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     });
   } catch (err: unknown) {
     console.log('Failed to fetch Speciality for given code', cisCode);
-    console.log(err);
-
-    return addApolloState(apolloClient, {
-      props: {
-        err: err instanceof Error ? err.message : err,
-      },
-    });
+    return getServerSideErrors(err);
   }
 };
 

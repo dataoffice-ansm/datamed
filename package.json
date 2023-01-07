@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "up": "yarn upgrade-interactive --latest",
     "kyselygen": "yarn kysely-codegen",
     "generate-types": "graphql-codegen --config codegen-api.ts",
     "generate-queries": "graphql-codegen --config codegen-front.ts",
@@ -33,7 +34,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "graphql": "^16.6.0",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "kysely": "^0.22.0",
     "lodash": "^4.17.21",
     "next": "12.3.4",
@@ -42,6 +43,7 @@
     "react-chartjs-2": "^5.0.1",
     "react-countup": "^6.4.0",
     "react-dom": "18.2.0",
+    "react-hot-toast": "^2.4.0",
     "react-popper-tooltip": "^4.4.2",
     "react-scroll": "^1.8.9",
     "tailwindcss": "^3.2.1"

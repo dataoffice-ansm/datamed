@@ -8,16 +8,29 @@ import type {
 import { SubstanceDocument } from '../../graphql/__generated__/generated-documents';
 import type { GetServerSidePropsContext } from 'next';
 import { addApolloState, initializeApolloClient } from '../../config/apolloClient';
+import toast from 'react-hot-toast';
+import Page404 from '../[404]';
 
 type SubSSRPageProps = {
   sub: Substance;
+  err?: string;
 };
 
 type ContextParams = {
   subCode: string;
 } & ParsedUrlQuery;
 
-const PageSubServerSideRendered = ({ sub }: SubSSRPageProps) => <SubstancePage sub={sub} />;
+const PageSubServerSideRendered = ({ sub, err }: SubSSRPageProps) => {
+  if (!sub) {
+    if (err) {
+      toast.error(err);
+    }
+
+    return <Page404 />;
+  }
+
+  return <SubstancePage sub={sub} />;
+};
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const apolloClient = initializeApolloClient({ context });
@@ -40,11 +53,11 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     console.log('Failed to fetch Substance for given code', subCode);
     console.log(err);
 
-    return addApolloState(apolloClient, {
+    return {
       props: {
         err: err instanceof Error ? err.message : err,
       },
-    });
+    };
   }
 };
 

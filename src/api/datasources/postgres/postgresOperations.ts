@@ -637,7 +637,7 @@ export class PostgresOperations {
       .where('s_htl.substance_id', '=', subId)
       .leftJoin('hlt_effects as hlt_e', 'hlt_e.id', 's_htl.hlt_effect_id')
       .select([
-        's_htl.soc_long_id as id',
+        'hlt_e.id',
         'hlt_e.effect as range',
         's_htl.case_percentage as valuePercent',
         's_htl.n_decla_eff_hlt as value',
@@ -665,17 +665,22 @@ export class PostgresOperations {
   async getSubstanceTotalExposition(subId: number): Promise<TotalExposition> {
     const { min, max } = dbInstance.fn;
     const row = await dbInstance
-      .selectFrom('substances_exposition as s')
-      .where('s.substance_id', '=', subId)
-      .leftJoin('substances_cases as sc', 'sc.substance_id', 's.substance_id')
-      .select(['sc.nb_cases as nbCases', min('year').as('minYear'), max('year').as('maxYear')])
+      .selectFrom('substances_exposition')
+      .where('substance_id', '=', subId)
+      .select([min('year').as('minYear'), max('year').as('maxYear')])
+      .executeTakeFirst();
+
+    const subCases = await dbInstance
+      .selectFrom('substances_cases')
+      .where('substance_id', '=', subId)
+      .select('nb_cases as nbCases')
       .executeTakeFirst();
 
     if (row) {
-      const { nbCases, minYear, maxYear } = row;
+      const { minYear, maxYear } = row;
 
       return {
-        total: nbCases ?? 0,
+        total: subCases?.nbCases ?? 0,
         minYear: minYear as number,
         maxYear: maxYear as number,
       };

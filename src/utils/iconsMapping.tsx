@@ -201,69 +201,7 @@ export const getSideEffectPathologyIcon = (id: number) => {
   }
 };
 
-// eslint-disable-next-line complexity
-export const getSideEffectPathologyIconByName = (name: string) => {
-  switch (name) {
-    case 'Affections cardiaques':
-      return <AffectionsCardiaquesFigure className="w-32" />;
-    case 'Affections de la peau et du tissu sous-cutané':
-      return <AffectionPeauFigure className="w-32" />;
-    case 'Affections du rein et des voies urinaires':
-      return <AffectionsReinFigure className="w-32" />;
-    case 'Affections du système nerveux':
-      return <AffectionsNerveuxFigure className="w-32" />;
-    case 'Affections gastro-intestinales':
-      return <AffectionGastroFigure className="w-32" />;
-    case 'Affections hématologiques et du système lymphatique':
-      return <AffectionHematologiqueFigure className="w-32" />;
-    case 'Affections hépatobiliaires':
-      return <AffectionHepatobilaireFigure className="w-32" />;
-    case 'Affections musculosquelettiques et du tissu conjonctif':
-      return <AffectionMusculosquelettiquesFigure className="w-32" />;
-    case 'Affections psychiatriques':
-      return <AffectionPsychiatriquesFigure className="w-32" />;
-    case 'Affections respiratoires, thoraciques et médiastinales':
-      return <AffectionRespiratoiresFigure className="w-32" />;
-    case 'Affections vasculaires':
-      return <AffectionVasculaireFigure className="w-32" />;
-    case 'Investigations':
-      return <InvestigationsFigure className="w-32" />;
-    case "Lésions, intoxications et complications d'interventions":
-      return <LesionsFigure className="w-32" />;
-    case 'Troubles du métabolisme et de la nutrition':
-      return <TroublesMetabolismeFigure className="w-32" />;
-    case "Troubles généraux et anomalies au site d'administration":
-      return <TroublesGenerauxFigure className="w-32" />;
-    case "Affections de l'oreille et du labyrinthe":
-      return <AffectionOreilleFigure className="w-32" />;
-    case 'Affections des organes de reproduction et du sein':
-      return <AffectionOrganeFigure className="w-32" />;
-    case 'Affections du système immunitaire':
-      return <AffectionSystemeImmuFigure className="w-32" />;
-    case 'Affections endocriniennes':
-      return <AffectionEndocriFigure className="w-32" />;
-    case 'Affections oculaires':
-      return <AffectionsOculaireFigure className="w-32" />;
-    case 'Infections et infestations':
-      return <InfectionFigure className="w-32" />;
-    case 'Problèmes de produit':
-      return <ProblemeFigure className="w-32" />;
-    case 'Affections congénitales, familiales et génétiques':
-      return <AffectionCongenitalesFigure className="w-32" />;
-    case 'Tumeurs bénignes, malignes et non précisées (incl kystes et polypes)':
-      return <TumeursBenignesFigure className="w-32" />;
-    case 'Actes médicaux et chirurgicaux':
-      return <ActeMedicauxFigure className="w-32" />;
-    case 'Affections gravidiques, puerpérales et périnatales':
-      return <AffectionGravidiquesFigure className="w-32" />;
-    case 'Caractéristiques socio-environnementales':
-      return <CaracteristiqueSocioFigure className="w-32" />;
-    default:
-      return <NotFoundFigure className="w-32" />;
-  }
-};
-
-export const getFigureByActionName = (name: string) => {
+export const getDeclarationActionIcon = (name: string) => {
   switch (name) {
     case 'Contingentement quantitatif':
       return <ContigentementQuantitatif className="w-32" />;
@@ -282,7 +220,7 @@ export const getFigureByActionName = (name: string) => {
   }
 };
 
-export const getFigureByCauseName = (name: string) => {
+export const getRuptureCauseIcon = (name: string) => {
   switch (name) {
     case 'Incident de production':
       return <IncidentProductionSvg className="w-32" />;

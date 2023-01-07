@@ -3,7 +3,6 @@ import { HeroHeader } from '../../components/HeroHeader/HeroHeader';
 import type { EntitySub } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
 import type { Substance } from '../../api/graphql/__generated__/generated-types';
-import Page404 from '../../pages/[404]';
 import { useSubstanceQuery } from '../../graphql/__generated__/generated-documents';
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 import Link from 'next/link';
@@ -219,36 +218,30 @@ const SectionAssociatedSpecialities = () => {
   );
 };
 
-export const SubstancePage = ({ sub }: { sub: Substance }) => {
-  if (!sub) {
-    return <Page404 />;
-  }
-
-  return (
-    <EntityContextProvider entity={{ type: 'sub', ...sub }}>
-      <EntityPageLayout
-        colorMenu="primary"
-        sections={[
-          {
-            id: 'population-concernee',
-            label: 'POPULATION CONCERNÉÉ',
-            content: <SectionOneGlobalInformation />,
-          },
-          {
-            id: 'effets-indesirables',
-            label: 'EFFETS INDÉSIRABLES',
-            content: <SectionSideEffects />,
-          },
-          {
-            id: 'liste-des-specialites',
-            label: 'LISTE DES SPÉCIALITÉS',
-            content: <SectionAssociatedSpecialities />,
-          },
-        ]}
-        render={(content) => content}
-      >
-        <HeroHeader />
-      </EntityPageLayout>
-    </EntityContextProvider>
-  );
-};
+export const SubstancePage = ({ sub }: { sub: Substance }) => (
+  <EntityContextProvider entity={{ type: 'sub', ...sub }}>
+    <EntityPageLayout
+      colorMenu="primary"
+      sections={[
+        {
+          id: 'population-concernee',
+          label: 'POPULATION CONCERNÉÉ',
+          content: <SectionOneGlobalInformation />,
+        },
+        {
+          id: 'effets-indesirables',
+          label: 'EFFETS INDÉSIRABLES',
+          content: <SectionSideEffects />,
+        },
+        {
+          id: 'liste-des-specialites',
+          label: 'LISTE DES SPÉCIALITÉS',
+          content: <SectionAssociatedSpecialities />,
+        },
+      ]}
+      render={(content) => content}
+    >
+      <HeroHeader />
+    </EntityPageLayout>
+  </EntityContextProvider>
+);

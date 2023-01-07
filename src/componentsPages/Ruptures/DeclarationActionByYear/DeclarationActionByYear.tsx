@@ -9,7 +9,7 @@ import DeclarationWithOneActionSvg from '../../../assets/images/actions/declarat
 import { SectionTitle } from '../../../components/SectionTitle';
 import { GraphFiguresGrid } from '../../../components/GraphFiguresGrid';
 import { GraphFigure } from '../../../components/GraphFigure';
-import { getFigureByActionName } from '../../../utils/iconsMapping';
+import { getDeclarationActionIcon } from '../../../utils/iconsMapping';
 import { GraphBox } from '../../../components/GraphBox/GraphBox';
 import { BaseTooltipContent } from '../Tooltip';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
@@ -169,7 +169,7 @@ export const RupturesDeclarationActionByYear = ({
                       className="pathologyGraphFigure"
                       unit={selectedUnitOption === 'number' ? '' : '%'}
                       description={action.range}
-                      icon={getFigureByActionName(action.range)}
+                      icon={getDeclarationActionIcon(action.range)}
                       valueClassName="text-dark-green-900"
                       value={
                         selectedUnitOption === 'number'
