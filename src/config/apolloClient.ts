@@ -1,12 +1,11 @@
 import type { NormalizedCacheObject } from '@apollo/client';
-import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client';
+import { ApolloClient, createHttpLink, from, InMemoryCache } from '@apollo/client';
 import { useMemo } from 'react';
 import type { GetServerSidePropsContext } from 'next';
 import { config } from './config';
-// import cookie from 'cookie';
+import { onError } from '@apollo/client/link/error';
 
 export const APOLLO_STATE_PROPERTY_NAME = '__APOLLO_STATE__';
-export const COOKIES_TOKEN_NAME = 'jwt';
 
 type PageProps = {
   props?: Record<string, unknown>;
@@ -45,9 +44,23 @@ const createApolloLink = (context?: GetServerSidePropsContext) => {
   });
 };
 
-const createApolloClient = (context?: GetServerSidePropsContext) =>
-  new ApolloClient<NormalizedCacheObject>({
-    link: createApolloLink(context),
+const errorLink = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) => {
+      // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+      console.log(`[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`);
+    });
+
+  if (networkError) {
+    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
+    console.log(`[Network error]: ${networkError}`);
+  }
+});
+
+const createApolloClient = (context?: GetServerSidePropsContext) => {
+  const httpLink = createApolloLink(context);
+  return new ApolloClient<NormalizedCacheObject>({
+    link: from([errorLink, httpLink]),
     ssrMode: typeof window === 'undefined',
     cache: new InMemoryCache({
       typePolicies: {
@@ -60,6 +73,7 @@ const createApolloClient = (context?: GetServerSidePropsContext) =>
       },
     }),
   });
+};
 
 export const initializeApolloClient = ({ initialCache, context }: Props) => {
   const _apolloClient = apolloClient ?? createApolloClient(context);

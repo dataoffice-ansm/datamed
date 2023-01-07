@@ -1,7 +1,6 @@
 import type { Resolvers } from './graphql/__generated__/generated-types';
 import jwt from 'jsonwebtoken';
 import { config } from '../config/config';
-import { ExpositionLevel } from './graphql/enums';
 
 const users = [{ id: 1, username: 'beta', password: 'dem0_123' }];
 

@@ -14,6 +14,12 @@ import jwt from 'jsonwebtoken';
 import App from 'next/app';
 import { config } from '../config/config';
 import Head from 'next/head';
+import { toastConfig } from '../utils/toasts';
+import dynamic from 'next/dynamic';
+
+const Toaster = dynamic(async () => import('react-hot-toast').then((c) => c.Toaster), {
+  ssr: false,
+});
 
 export type AppCustomProps<PP extends Record<string, unknown> = Record<string, unknown>> = {
   pageProps: PP;
@@ -60,7 +66,7 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
       <Head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
       </Head>
-
+      <Toaster toastOptions={toastConfig} />
       <ApolloProvider client={apolloClient}>
         <BodyScrollProvider>
           <LayoutProvider authSSR={authed}>
@@ -86,7 +92,7 @@ MyApp.getInitialProps = async (appContext: any) => {
   }
 
   try {
-    const data = jwt.verify(token, config?.ssr?.jwtToken);
+    const data = jwt.verify(token, config?.ssr?.jwtToken, { algorithms: ['none'] });
     if (data)
       return {
         ...ctx,
