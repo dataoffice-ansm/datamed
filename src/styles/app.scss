@@ -140,3 +140,11 @@ figure {
     @apply block p-3 text-center text-sm;
   }
 }
+
+// cf https://stackoverflow.com/a/37594943/6604424
+@supports (-webkit-backdrop-filter: blur(1px)) {
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+}
