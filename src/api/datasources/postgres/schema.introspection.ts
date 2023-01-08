@@ -1,4 +1,4 @@
-import { type ColumnType, type RawBuilder } from 'kysely';
+import type { ColumnType } from 'kysely';
 
 export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
   ? ColumnType<S, I | undefined, U>
@@ -6,23 +6,23 @@ export type Generated<T> = T extends ColumnType<infer S, infer I, infer U>
 
 export type Int8 = ColumnType<string, string | number | bigint, string | number | bigint>;
 
-export type Timestamp = ColumnType<Date, Date | string | RawBuilder, Date | string | RawBuilder>;
+export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
 export type Actions = {
-  action_status_id: number | null;
-  closing_date: Timestamp | null;
-  description: string | null;
-  estimated_end_date: Timestamp | null;
   id: Generated<number>;
   identifier: string | null;
-  implementation_date: Timestamp | null;
-  justification: string | null;
+  description: string | null;
   name: string | null;
   request_date: Timestamp | null;
-  sold_out_id: number | null;
-  type_id: number | null;
-  with_action: string | null;
+  implementation_date: Timestamp | null;
+  estimated_end_date: Timestamp | null;
+  closing_date: Timestamp | null;
+  justification: string | null;
   year: string | null;
+  with_action: string | null;
+  sold_out_id: number | null;
+  action_status_id: number | null;
+  type_id: number | null;
 };
 
 export type ActionsStatus = {
@@ -46,29 +46,29 @@ export type Ages = {
 };
 
 export type AtcClasses = {
-  code: string | null;
   id: Generated<number>;
+  code: string | null;
   label: string | null;
 };
 
 export type CasePv = {
   id: Generated<number>;
-  pv_case: Int8 | null;
   year: Int8 | null;
+  pv_case: Int8 | null;
 };
 
 export type Causes = {
-  cause_id: number | null;
   id: Generated<number>;
-  sold_out_id: number | null;
   year: Int8 | null;
+  sold_out_id: number | null;
+  cause_id: number | null;
 };
 
 export type CausesAll = {
-  cause_id: number | null;
   id: Generated<number>;
-  sold_out_id: number | null;
   year: Int8 | null;
+  sold_out_id: number | null;
+  cause_id: number | null;
 };
 
 export type CausesTypes = {
@@ -77,60 +77,60 @@ export type CausesTypes = {
 };
 
 export type Config = {
-  c_date: Timestamp | null;
   id: Generated<number>;
   label: string | null;
+  c_date: Timestamp | null;
 };
 
 export type Descriptions = {
-  description: string | null;
   id: Generated<number>;
+  description: string | null;
   mp_id: number | null;
 };
 
 export type ErrorMedDenomination = {
-  denomination: string | null;
   id: Generated<number>;
+  denomination: string | null;
   mp_id: number | null;
 };
 
 export type ErrorMedGravity = {
-  gravity_error_id: number | null;
   id: Generated<number>;
-  mp_id: number | null;
   number: number | null;
   percentage: number | null;
+  mp_id: number | null;
+  gravity_error_id: number | null;
 };
 
 export type ErrorMedInitial = {
   id: Generated<number>;
-  initial_error_id: number | null;
-  mp_id: number | null;
   number: number | null;
   percentage: number | null;
+  mp_id: number | null;
+  initial_error_id: number | null;
 };
 
 export type ErrorMedNature = {
   id: Generated<number>;
-  mp_id: number | null;
-  nature_error_id: number | null;
   number: number | null;
   percentage: number | null;
+  mp_id: number | null;
+  nature_error_id: number | null;
 };
 
 export type ErrorMedPopulation = {
   id: Generated<number>;
-  mp_id: number | null;
   number: number | null;
   percentage: number | null;
+  mp_id: number | null;
   population_error_id: number | null;
 };
 
 export type ErrorMedSideEffect = {
   id: Generated<number>;
-  mp_id: number | null;
   number: number | null;
   percentage: number | null;
+  mp_id: number | null;
   side_effect_id: number | null;
 };
 
@@ -141,10 +141,10 @@ export type GlobalSe = {
 };
 
 export type GlobalSeAges = {
-  age_id: number | null;
   id: Generated<number>;
   n: number | null;
   pct: number | null;
+  age_id: number | null;
 };
 
 export type GlobalSeGrave = {
@@ -188,8 +188,8 @@ export type GravityErrors = {
 };
 
 export type HltEffects = {
-  effect: string | null;
   id: Generated<number>;
+  effect: string | null;
 };
 
 export type Icons = {
@@ -218,59 +218,59 @@ export type MarketingAuthorizationTypes = {
 };
 
 export type MedicinalProducts = {
-  admin_route_id: number | null;
-  authorization_number: string | null;
-  bdpm_status: string | null;
+  id: Generated<number>;
   cis: string;
+  name: string;
+  marketing_status: string | null;
+  ma_date: Timestamp | null;
+  bdpm_status: string | null;
+  authorization_number: string | null;
   enhanced_monitoring: string | null;
   icon_id: number | null;
-  id: Generated<number>;
-  laboratory_id: number | null;
-  ma_date: Timestamp | null;
+  pharma_form_id: number | null;
+  admin_route_id: number | null;
   ma_status_id: number | null;
   ma_type_id: number | null;
-  marketing_status: string | null;
-  name: string;
-  pharma_form_id: number | null;
+  laboratory_id: number | null;
 };
 
 export type MpAtc = {
+  id: Generated<number>;
   atc: string | null;
   atc_name: string | null;
-  id: Generated<number>;
   mp_id: number | null;
 };
 
 export type MpExposition = {
+  id: Generated<number>;
   consumption_year_trunc: number | null;
   exposition: number | null;
-  id: Generated<number>;
   mp_id: number | null;
 };
 
 export type MpPatientAges = {
-  age_id: number | null;
   id: Generated<number>;
-  mp_id: number | null;
   patients_consumption: number | null;
   patients_percentage: number | null;
+  mp_id: number | null;
+  age_id: number | null;
 };
 
 export type MpPatientSex = {
   id: Generated<number>;
-  mp_id: number | null;
+  sex: number | null;
   patients_consumption: number | null;
   patients_percentage: number | null;
-  sex: number | null;
+  mp_id: number | null;
 };
 
 export type MpSubstances = {
-  dosage: string | null;
   id: Generated<number>;
+  dosage: string | null;
+  substance_id: number | null;
   mp_id: number | null;
   pharma_form_id: number | null;
   ref_dosage_id: number | null;
-  substance_id: number | null;
 };
 
 export type NatureErrors = {
@@ -284,8 +284,8 @@ export type Notifiers = {
 };
 
 export type PharmaForms = {
-  form: string | null;
   id: Generated<number>;
+  form: string | null;
 };
 
 export type PopulationErrors = {
@@ -294,23 +294,23 @@ export type PopulationErrors = {
 };
 
 export type Presentations = {
-  cip13: string | null;
-  cip7: Int8 | null;
-  collectivity_agrement: string | null;
   id: Generated<number>;
-  ma_presentation_status_id: number | null;
-  marketing_declaration_date: Timestamp | null;
-  marketing_state_id: number | null;
-  mp_id: number | null;
+  cip7: Int8 | null;
   presentation_label: string | null;
+  marketing_declaration_date: Timestamp | null;
+  cip13: string | null;
+  collectivity_agrement: string | null;
   repayment_rate: string | null;
+  mp_id: number | null;
+  ma_presentation_status_id: number | null;
+  marketing_state_id: number | null;
 };
 
 export type Publications = {
   id: Generated<number>;
+  title: string | null;
   link: string | null;
   mp_id: number | null;
-  title: string | null;
   type_id: number | null;
 };
 
@@ -326,10 +326,10 @@ export type RefDosages = {
 
 export type Reports = {
   id: Generated<number>;
-  label: string | null;
-  nb_presentations: number | null;
-  nb_reports: number | null;
   year: string | null;
+  label: string | null;
+  nb_reports: number | null;
+  nb_presentations: number | null;
 };
 
 export type SideEffects = {
@@ -343,60 +343,60 @@ export type SocLongs = {
 };
 
 export type SoldOut = {
+  id: Generated<number>;
+  num: string | null;
+  state: string | null;
+  date: Timestamp | null;
+  year: string | null;
+  name: string | null;
+  dci: string | null;
+  cip13: string | null;
+  presentation: string | null;
   atc: string | null;
   atc1: string | null;
   atc2: string | null;
-  cip13: string | null;
-  classification_id: number | null;
-  date: Timestamp | null;
-  dci: string | null;
-  id: Generated<number>;
-  laboratory_id: number | null;
-  mp_id: number | null;
-  name: string | null;
   name_atc: string | null;
-  num: string | null;
-  presentation: string | null;
-  state: string | null;
-  year: string | null;
+  mp_id: number | null;
+  classification_id: number | null;
+  laboratory_id: number | null;
 };
 
 export type SoldOutAll = {
+  id: Generated<number>;
+  num: string | null;
+  state: string | null;
+  date: Timestamp | null;
+  year: string | null;
+  classification: string | null;
+  ma_holder: string | null;
+  cis: string | null;
+  name: string | null;
+  dci: string | null;
+  cip13: string | null;
+  presentation: string | null;
   atc: string | null;
   atc1: string | null;
   atc2: string | null;
-  cip13: string | null;
-  cis: string | null;
-  classification: string | null;
-  date: Timestamp | null;
-  dci: string | null;
-  id: Generated<number>;
-  ma_holder: string | null;
-  name: string | null;
   name_atc: string | null;
-  num: string | null;
-  presentation: string | null;
-  state: string | null;
-  year: string | null;
 };
 
 export type SoldOutClasses = {
-  classification: string | null;
   id: Generated<number>;
+  classification: string | null;
 };
 
 export type Substances = {
-  code: string;
   id: Generated<number>;
+  code: string;
   name: string;
 };
 
 export type SubstancesCaseAge = {
-  age_id: number | null;
-  case_percentage: number | null;
   id: Generated<number>;
   nb_cases: number | null;
+  case_percentage: number | null;
   substance_id: number | null;
+  age_id: number | null;
 };
 
 export type SubstancesCases = {
@@ -407,68 +407,68 @@ export type SubstancesCases = {
 
 export type SubstancesCaseSevere = {
   id: Generated<number>;
-  severe_case: number | null;
   severity: string | null;
+  severe_case: number | null;
   substance_id: number | null;
 };
 
 export type SubstancesCaseSex = {
-  case_percentage: number | null;
   id: Generated<number>;
-  nb_cases: number | null;
   sex: string | null;
+  nb_cases: number | null;
+  case_percentage: number | null;
   substance_id: number | null;
 };
 
 export type SubstancesExposition = {
-  consumption_year_trunc: number | null;
-  exposition: number | null;
   id: Generated<number>;
-  substance_id: number | null;
   year: number | null;
   year_consumption: number | null;
+  exposition: number | null;
+  consumption_year_trunc: number | null;
+  substance_id: number | null;
 };
 
 export type SubstancesHlt = {
-  case_percentage: number | null;
-  hlt_effect_id: number | null;
   id: Generated<number>;
   n_decla_eff_hlt: number | null;
   n_decla_eff_soclong: number | null;
-  soc_long_id: number | null;
+  case_percentage: number | null;
   substance_id: number | null;
+  soc_long_id: number | null;
+  hlt_effect_id: number | null;
 };
 
 export type SubstancesNotif = {
   id: Generated<number>;
   notification_number: number | null;
   notification_percentage: number | null;
-  notifier_id: number | null;
   substance_id: number | null;
+  notifier_id: number | null;
 };
 
 export type SubstancesPatientAge = {
-  age_id: number | null;
   id: Generated<number>;
   patients_consumption: number | null;
   patients_percentage: number | null;
   substance_id: number | null;
+  age_id: number | null;
 };
 
 export type SubstancesPatientSex = {
   id: Generated<number>;
+  sex: number | null;
   patients_consumption: number | null;
   patients_percentage: number | null;
-  sex: number | null;
   substance_id: number | null;
 };
 
 export type SubstancesSoclong = {
-  case_percentage: number | null;
   id: Generated<number>;
   n_case_effect: number | null;
-  soc_long_id: number | null;
+  case_percentage: number | null;
   substance_id: number | null;
+  soc_long_id: number | null;
 };
 
 export type DB = {

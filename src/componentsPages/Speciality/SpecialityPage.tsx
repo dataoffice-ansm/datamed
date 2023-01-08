@@ -19,7 +19,6 @@ import classnames from 'classnames';
 import { useLayoutContext } from '../../contexts/LayoutContext';
 import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
-import { Button } from '../../components/Button/Button';
 import { GraphFigure } from '../../components/GraphFigure';
 import { PublicationItem } from './PublicationItem';
 import { RuptureHistoryItem } from './RuptureHistoryItem';
