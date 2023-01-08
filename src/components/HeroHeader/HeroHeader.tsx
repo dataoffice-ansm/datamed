@@ -1,10 +1,11 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import SubSvg from '../../assets/pictos/sub.svg';
-import CisSvg from '../../assets/pictos/cis.svg';
 import { CisTooltip } from '../../componentsPages/Speciality/CisTooltip';
 import { SubTooltip } from '../../componentsPages/Substance/SubTooltip';
-import { useEntityContext } from '../../contexts/EntityContext';
+import { type Entity, useEntityContext } from '../../contexts/EntityContext';
 import { HeadlessHeroHeader } from './HeadlessHeroHeader';
+import { getPharmaFormIcon } from '../../utils/iconsMapping';
+import { type PharmaFormType } from '../../graphql/__generated__/generated-documents';
 
 type EntityOptions = {
   tooltip: ReactNode;
@@ -14,21 +15,26 @@ type EntityOptions = {
   description: string;
 };
 
-const entitiesOptionsMapping: Record<'sub' | 'cis', EntityOptions> = {
-  sub: {
-    tooltip: <SubTooltip />,
-    theme: 'bg-secondary-900',
-    icon: <SubSvg />,
-    type: 'Substance',
-    description: 'Substance active',
-  },
-  cis: {
+const getEntityTypeParams = (entity: Entity): EntityOptions => {
+  if (entity.type === 'sub') {
+    return {
+      tooltip: <SubTooltip />,
+      theme: 'bg-secondary-900',
+      icon: <SubSvg />,
+      type: 'Substance',
+      description: 'Substance active',
+    };
+  }
+
+  const cisPharmaFormIcon = getPharmaFormIcon(entity.pharmaForm?.type as PharmaFormType);
+
+  return {
     tooltip: <CisTooltip />,
     theme: 'bg-primary',
-    icon: <CisSvg />,
+    icon: cisPharmaFormIcon,
     type: 'Spécialité',
     description: 'Spécialité de médicament',
-  },
+  };
 };
 
 /**
@@ -38,7 +44,7 @@ const entitiesOptionsMapping: Record<'sub' | 'cis', EntityOptions> = {
  */
 export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
   const { currentEntity } = useEntityContext();
-  const { description, theme, icon, type, tooltip } = entitiesOptionsMapping[currentEntity.type];
+  const { description, theme, icon, type, tooltip } = getEntityTypeParams(currentEntity);
 
   return (
     <HeadlessHeroHeader

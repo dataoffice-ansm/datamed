@@ -73,3 +73,50 @@ export const getMedicalErrorNatureByNatureId = (natureErrorId: number) => {
       return MedicalErrorNature.OtherError;
   }
 };
+
+//TODO end this + export FormType as union type
+export const getPharmaFormTypeByLabel = (source: string) => {
+  const findWordInText = (words: string[]) => words.some((w) => source.includes(w));
+
+  if (findWordInText(['comprimé'])) {
+    return 'caps';
+  }
+
+  if (findWordInText(['gélule'])) {
+    return 'gelule';
+  }
+
+  if (findWordInText(['gel'])) {
+    return 'gel';
+  }
+
+  if (findWordInText(['gel'])) {
+    return 'gel';
+  }
+
+  if (findWordInText(['poudre'])) {
+    return 'poudre';
+  }
+
+  if (findWordInText(['pansement'])) {
+    return 'pansement';
+  }
+
+  if (findWordInText(['spray'])) {
+    return 'spray';
+  }
+
+  if (findWordInText(['sirop'])) {
+    return 'sirop';
+  }
+
+  if (findWordInText(['buvable'])) {
+    return 'buvable';
+  }
+
+  if (findWordInText(['supositoire'])) {
+    return 'supositoire';
+  }
+
+  return 'other';
+};

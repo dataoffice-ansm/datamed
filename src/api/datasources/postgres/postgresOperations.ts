@@ -32,6 +32,7 @@ import {
   getCisExpositionByLevelId,
   getMedicalErrorApparitionStep,
   getMedicalErrorNatureByNatureId,
+  getPharmaFormTypeByLabel,
 } from '../../utils/mapping';
 
 export class PostgresOperations {
@@ -104,12 +105,14 @@ export class PostgresOperations {
               name: atcName,
             }
           : null,
-        pharmaForm: pharmaFormId
-          ? {
-              id: pharmaFormId,
-              name: pharmaFormLabel,
-            }
-          : null,
+        pharmaForm:
+          pharmaFormId && pharmaFormLabel
+            ? {
+                id: pharmaFormId,
+                name: pharmaFormLabel,
+                type: getPharmaFormTypeByLabel(pharmaFormLabel),
+              }
+            : null,
         icon: iconId
           ? {
               id: iconId,

@@ -152,8 +152,22 @@ export type MutationLoginArgs = {
 export type PharmaForm = {
   __typename?: 'PharmaForm';
   id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  type: Scalars['String'];
 };
+
+export enum PharmaFormType {
+  Buvable = 'BUVABLE',
+  Comprime = 'COMPRIME',
+  Gel = 'GEL',
+  Gelule = 'GELULE',
+  Other = 'OTHER',
+  Pansement = 'PANSEMENT',
+  Poudre = 'POUDRE',
+  Sirop = 'SIROP',
+  Spray = 'SPRAY',
+  Supositoire = 'SUPOSITOIRE',
+}
 
 export type Publication = {
   __typename?: 'Publication';
@@ -524,6 +538,7 @@ export type ResolversTypes = {
   Meta: ResolverTypeWrapper<Meta>;
   Mutation: ResolverTypeWrapper<{}>;
   PharmaForm: ResolverTypeWrapper<PharmaForm>;
+  PharmaFormType: PharmaFormType;
   Publication: ResolverTypeWrapper<Publication>;
   PublicationType: ResolverTypeWrapper<PublicationType>;
   Query: ResolverTypeWrapper<{}>;
@@ -879,7 +894,8 @@ export type PharmaFormResolvers<
   ParentType extends ResolversParentTypes['PharmaForm'] = ResolversParentTypes['PharmaForm']
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

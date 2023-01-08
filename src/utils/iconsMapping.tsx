@@ -1,5 +1,9 @@
 import React from 'react';
-import { type Maybe, MedicalErrorNature } from '../graphql/__generated__/generated-documents';
+import {
+  type Maybe,
+  MedicalErrorNature,
+  type PharmaFormType,
+} from '../graphql/__generated__/generated-documents';
 
 import ErrorAdministration from '../assets/pictos/errors/errorAdministration.svg';
 import ErrorDelivrance from '../assets/pictos/errors/errorDelivrance.svg';
@@ -67,6 +71,59 @@ import NonConformeSvg from '../assets/pictos/causes/non-conformite-bpf.svg';
 import ProblemeTransportSvg from '../assets/pictos/causes/probleme-transport-logistique.svg';
 import TransfertSiteSvg from '../assets/pictos/causes/transfert-site.svg';
 import DifficulteReglementSvg from '../assets/pictos/causes/difficulte-reglementaire.svg';
+
+import PharmaFormOther from '../assets/pictos/pharmaForm/Autre-120.svg';
+import PharmaFormCollyre from '../assets/pictos/pharmaForm/Collyre-120.svg';
+import PharmaFormCap from '../assets/pictos/pharmaForm/Comprimé-120.svg';
+import PharmaFormCreme from '../assets/pictos/pharmaForm/Creme-120.svg';
+import PharmaFormGaz from '../assets/pictos/pharmaForm/Gaz-120.svg';
+import PharmaFormGelule from '../assets/pictos/pharmaForm/Gélule-120.svg';
+import PharmaFormGranule from '../assets/pictos/pharmaForm/Granules-120.svg';
+import PharmaFormImplant from '../assets/pictos/pharmaForm/Implant-120.svg';
+import PharmaFormLiquide from '../assets/pictos/pharmaForm/Liquide-120.svg';
+import PharmaFormMulti from '../assets/pictos/pharmaForm/Multi-120.svg';
+import PharmaFormPansement from '../assets/pictos/pharmaForm/Pansement-120.svg';
+import PharmaFormPlante from '../assets/pictos/pharmaForm/Plante-120.svg';
+import PharmaFormPoudre from '../assets/pictos/pharmaForm/Poudre-120.svg';
+import PharmaFormSeringue from '../assets/pictos/pharmaForm/Seringue-120.svg';
+import PharmaFormSirop from '../assets/pictos/pharmaForm/Sirop-120.svg';
+import PharmaFormSpray from '../assets/pictos/pharmaForm/Spray-120.svg';
+import PharmaFormSubstanceActive from '../assets/pictos/pharmaForm/SubstanceActive-120.svg';
+import PharmaFormSuppositoire from '../assets/pictos/pharmaForm/Suppositoire-120.svg';
+
+export const getPharmaFormIcon = (pharmaForm: PharmaFormType) => {
+  console.log(pharmaForm);
+
+  switch (pharmaForm) {
+    case 'COMPRIME':
+      return <PharmaFormCap className="w-32" />;
+
+    case 'GELULE':
+      return <PharmaFormGelule className="w-32" />;
+
+    case 'POUDRE':
+      return <PharmaFormPoudre />;
+
+    case 'PANSEMENT':
+      return <PharmaFormPansement />;
+
+    case 'SPRAY':
+      return <PharmaFormSpray />;
+
+    case 'SIROP':
+      return <PharmaFormSirop />;
+
+    case 'BUVABLE':
+      return <PharmaFormLiquide />;
+
+    case 'SUPOSITOIRE':
+      return <PharmaFormSuppositoire />;
+
+    case 'OTHER':
+    default:
+      return <PharmaFormOther />;
+  }
+};
 
 export const getMedicinalErrorNatureIcon = (errorInitial?: Maybe<MedicalErrorNature>) => {
   switch (errorInitial) {

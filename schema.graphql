@@ -12,6 +12,19 @@ enum MedicalErrorApparitionStep {
 }
 
 
+enum PharmaFormType {
+    GEL
+    GELULE
+    COMPRIME
+    POUDRE
+    PANSEMENT
+    SPRAY
+    SIROP
+    BUVABLE
+    SUPOSITOIRE
+    OTHER
+}
+
 enum MedicalErrorNature {
     PREPARATION_ERROR
     DELIVERANCE_ERROR
@@ -68,7 +81,8 @@ type Publication {
 
 type PharmaForm {
     id: Int!
-    name: String @capitalize
+    name: String! @capitalize
+    type: String!
 }
 
 type Laboratory {
