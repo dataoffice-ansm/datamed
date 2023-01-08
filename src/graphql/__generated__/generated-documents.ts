@@ -152,8 +152,22 @@ export type MutationLoginArgs = {
 export type PharmaForm = {
   __typename?: 'PharmaForm';
   id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+  type: Scalars['String'];
 };
+
+export enum PharmaFormType {
+  Buvable = 'BUVABLE',
+  Comprime = 'COMPRIME',
+  Gel = 'GEL',
+  Gelule = 'GELULE',
+  Other = 'OTHER',
+  Pansement = 'PANSEMENT',
+  Poudre = 'POUDRE',
+  Sirop = 'SIROP',
+  Spray = 'SPRAY',
+  Supositoire = 'SUPOSITOIRE',
+}
 
 export type Publication = {
   __typename?: 'Publication';
@@ -434,7 +448,7 @@ export type SpecialityFragmentFragment = {
     name?: string | null;
     code?: string | null;
   } | null;
-  pharmaForm?: { __typename?: 'PharmaForm'; id: number; name?: string | null } | null;
+  pharmaForm?: { __typename?: 'PharmaForm'; id: number; name: string; type: string } | null;
   substances?: Array<{
     __typename?: 'Substance';
     id: number;
@@ -692,7 +706,7 @@ export type SpecialityQuery = {
       name?: string | null;
       code?: string | null;
     } | null;
-    pharmaForm?: { __typename?: 'PharmaForm'; id: number; name?: string | null } | null;
+    pharmaForm?: { __typename?: 'PharmaForm'; id: number; name: string; type: string } | null;
     substances?: Array<{
       __typename?: 'Substance';
       id: number;
@@ -1176,6 +1190,7 @@ export const SpecialityFragmentFragmentDoc = gql`
     pharmaForm {
       id
       name
+      type
     }
     substances {
       ...SubstanceFragment

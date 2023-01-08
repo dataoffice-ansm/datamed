@@ -1,0 +1,22 @@
+<svg width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect x="-1.875" y="26.2498" width="39.775" height="132.583" rx="19.8875" transform="rotate(-45 -1.875 26.2498)" fill="white"/>
+<rect x="31.2607" y="55.6357" width="34.4718" height="48.5983" rx="2" transform="rotate(-45 31.2607 55.6357)" fill="#E0E0E0"/>
+<path d="M8.4373 22.5C9.3748 23.4375 91.8749 107.812 93.7499 109.688C90.0002 110.625 83.4374 107.812 81.5622 105.937L13.1248 37.5C10.3122 34.6875 7.49986 28.125 8.4373 22.5Z" fill="#E0E0E0"/>
+<rect x="-1.875" y="26.25" width="39.775" height="132.583" rx="19.8875" transform="rotate(-45 -1.875 26.25)" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+<rect x="34.063" y="55.9377" width="30.9361" height="44.1945" rx="2" transform="rotate(-45 34.063 55.9377)" stroke="black" stroke-linecap="round" stroke-linejoin="round"/>
+<circle r="1.10486" transform="matrix(0.707106 -0.707107 0.707106 0.707107 43.437 54.3755)" stroke="black"/>
+<circle r="1.10486" transform="matrix(0.707106 -0.707107 0.707106 0.707107 52.812 63.75)" stroke="black"/>
+<circle r="1.10486" transform="matrix(0.707106 -0.707108 0.707106 0.707108 62.187 73.1252)" stroke="black"/>
+<circle cx="51.25" cy="55.9377" r="1.10486" transform="rotate(-45 51.25 55.9377)" stroke="black"/>
+<circle r="1.10486" transform="matrix(0.707106 -0.707107 0.707106 0.707107 60.625 65.313)" stroke="black"/>
+<circle r="1.10486" transform="matrix(0.707106 -0.707108 0.707106 0.707108 70 74.688)" stroke="black"/>
+<circle r="1.10486" transform="matrix(0.707106 -0.707107 0.707106 0.707107 49.6875 48.125)" stroke="black"/>
+<circle cx="59.063" cy="57.5" r="1.10486" transform="rotate(-45 59.063 57.5)" stroke="black"/>
+<circle r="1.10486" transform="matrix(0.707106 -0.707108 0.707106 0.707108 68.438 66.8755)" stroke="black"/>
+<circle cx="57.5005" cy="49.6877" r="1.10486" transform="rotate(-45 57.5005 49.6877)" stroke="black"/>
+<circle cx="66.8755" cy="59.0625" r="1.10486" transform="rotate(-45 66.8755 59.0625)" stroke="black"/>
+<circle r="1.10486" transform="matrix(0.707106 -0.707108 0.707106 0.707108 76.2505 68.4377)" stroke="black"/>
+<circle r="1.10486" transform="matrix(0.707106 -0.707107 0.707106 0.707107 55.938 41.875)" stroke="black"/>
+<circle cx="65.312" cy="51.2502" r="1.10486" transform="rotate(-45 65.312 51.2502)" stroke="black"/>
+<circle cx="74.6875" cy="60.6255" r="1.10486" transform="rotate(-45 74.6875 60.6255)" stroke="black"/>
+</svg>

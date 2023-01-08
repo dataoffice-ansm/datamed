@@ -11,6 +11,7 @@ fragment SpecialityFragment on Speciality {
     pharmaForm {
         id
         name
+        type
     }
     substances {
         ...SubstanceFragment

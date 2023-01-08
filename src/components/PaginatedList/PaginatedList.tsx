@@ -37,6 +37,23 @@ const hoverAndFocusBackgroundColor = (theme: PaginatedListThemeColor) => {
   }
 };
 
+const NavigationButton = ({
+  disabled,
+  onClick,
+  children,
+  theme = 'primary',
+}: { disabled: boolean; theme?: PaginatedListThemeColor } & HTMLAttributes<HTMLButtonElement>) => (
+  <button
+    className={classNames('rounded-[50%]', hoverAndFocusBackgroundColor(theme), {
+      'opacity-25 cursor-not-allowed': disabled,
+    })}
+    disabled={disabled}
+    onClick={onClick}
+  >
+    {children}
+  </button>
+);
+
 /**
  *
  * @param data
@@ -64,22 +81,6 @@ export const PaginatedList = <T,>({
     return data.slice(trimStart, trimEnd);
   }, [data, itemsPerPage, pageIndex]);
 
-  const NavigationButton = ({
-    disabled,
-    onClick,
-    children,
-  }: { disabled: boolean } & HTMLAttributes<HTMLButtonElement>) => (
-    <button
-      className={classNames('rounded-[50%]', hoverAndFocusBackgroundColor(theme), {
-        'opacity-25 cursor-not-allowed': disabled,
-      })}
-      disabled={disabled}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-
   const handleSelectPageSize = useCallback((size: string) => {
     setItemsPerPage(Number(size));
   }, []);
@@ -105,6 +106,7 @@ export const PaginatedList = <T,>({
             Nombre de lignes par page :
           </label>
           <select
+            defaultValue={itemsPerPage}
             name="selectSizePageOption"
             onChange={({ target }) => {
               handleSelectPageSize(target.value);
