@@ -196,7 +196,6 @@ const SectionTypesOfSideEffects = () => {
         }
       />
       <Accordion
-        defaultOpen
         title="Comment sont calculés ces indicateurs ? D'où viennent ces données ?"
         theme="secondary-variant"
         classNameTitle="text-dark-green-900"

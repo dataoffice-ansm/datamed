@@ -11,7 +11,6 @@ type AccordionDevPreview = {
 
 const faq: AccordionDevPreview[] = [
   {
-    defaultOpen: false,
     key: 'faq_1',
     title: `Quelle est la différence entre le site de l'ANSM et data.ansm ?`,
     content: (
@@ -34,7 +33,7 @@ const faq: AccordionDevPreview[] = [
     ),
   },
   {
-    defaultOpen: true,
+    forceDefaultOpen: true,
     key: 'faq_2',
     theme: 'primary',
     title: `Beaucoup des données sont basées sur de la déclaration, qu'est-ce que cela implique ? Les données sur les effets indésirables représentent-elles l'exhaustivité des cas ?`,
@@ -49,7 +48,6 @@ const faq: AccordionDevPreview[] = [
     ),
   },
   {
-    defaultOpen: false,
     key: 'faq_3',
     theme: 'success',
     title: 'Quelles données de la Cnam sont utilisées sur data.ansm ?',
@@ -63,7 +61,6 @@ const faq: AccordionDevPreview[] = [
     ),
   },
   {
-    defaultOpen: false,
     key: 'faq_3',
     theme: 'warning',
     title: 'Quelles données de la Cnam sont utilisées sur data.ansm ?',
@@ -77,7 +74,6 @@ const faq: AccordionDevPreview[] = [
     ),
   },
   {
-    defaultOpen: false,
     key: 'faq_3',
     theme: 'error',
     title: 'Quelles données de la Cnam sont utilisées sur data.ansm ?',
@@ -91,7 +87,6 @@ const faq: AccordionDevPreview[] = [
     ),
   },
   {
-    defaultOpen: false,
     key: 'faq_3',
     theme: 'grey',
     title: 'Quelles données de la Cnam sont utilisées sur data.ansm ?',
@@ -109,8 +104,8 @@ const faq: AccordionDevPreview[] = [
 export const AccordionPage = () => (
   <DevPageLayout title="Accordion">
     <div className="my-4 flex flex-col gap-4 m-auto max-w-2xl min-h-screen">
-      {faq.map(({ title, content, key, defaultOpen, theme }) => (
-        <Accordion key={key} defaultOpen={defaultOpen} title={title} theme={theme}>
+      {faq.map(({ title, content, key, forceDefaultOpen, theme }) => (
+        <Accordion key={key} forceDefaultOpen={forceDefaultOpen} title={title} theme={theme}>
           {content}
         </Accordion>
       ))}

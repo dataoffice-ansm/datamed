@@ -219,7 +219,6 @@ export const SubstanceContainer = ({
         className="max-w-full my-8"
         render={(selectedOption) => {
           const repartitionPerNotifier = getRepartitionPerNotifier(selectedOption);
-          console.log(repartitionPerNotifier);
           return (
             <GraphFiguresGrid
               data={repartitionPerNotifier}
@@ -246,7 +245,6 @@ export const SubstanceContainer = ({
       <h3>Effets indésirables par système d’organes</h3>
 
       <Accordion
-        defaultOpen
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
         theme="secondary"
         className="my-8 shadow"

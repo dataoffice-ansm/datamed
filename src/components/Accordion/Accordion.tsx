@@ -3,6 +3,7 @@ import SparkSVG from '../../assets/pictos/icons/spark.svg';
 import ChevronSVG from '../../assets/pictos/icons/chevron.svg';
 import { Disclosure, Transition } from '@headlessui/react';
 import classNames from 'classnames';
+import { isMobile } from '../../utils/web';
 
 export type AccordionThemeColor =
   | 'primary'
@@ -15,7 +16,7 @@ export type AccordionThemeColor =
 
 export type AccordionProps = {
   title: string;
-  defaultOpen?: boolean;
+  forceDefaultOpen?: boolean;
   theme?: AccordionThemeColor;
   disabled?: boolean;
   classNameTitle?: string;
@@ -63,54 +64,58 @@ export const Accordion = ({
   id,
   children,
   title,
-  defaultOpen = false,
+  forceDefaultOpen,
   theme = 'secondary',
   disabled = false,
   classNameTitle = '',
   className,
-}: AccordionProps & HTMLAttributes<HTMLDivElement>) => (
-  <div id={id} className={classNames('Accordion bg-white rounded-lg shadow', className)}>
-    <Disclosure defaultOpen={defaultOpen}>
-      {({ open }) => (
-        <>
-          <Disclosure.Button
-            className={classNames(
-              'AccordionTriggerButton py-4 w-full flex gap-4 px-4 items-center font-medium justify-between',
-              { 'opacity-50': disabled }
-            )}
-            disabled={disabled}
-          >
-            <div className="AccordionLeftIcon h-8 w-8">
-              <SparkSVG className={strokeTheme(theme)} />
-            </div>
-            <span className={classNames('AccordionTitle text-left flex-1', classNameTitle)}>
-              {title}
-            </span>
-            <div
+}: AccordionProps & HTMLAttributes<HTMLDivElement>) => {
+  const enableAutoOpen = forceDefaultOpen ? forceDefaultOpen : !isMobile();
+
+  return (
+    <div id={id} className={classNames('Accordion bg-white rounded-lg shadow', className)}>
+      <Disclosure defaultOpen={enableAutoOpen}>
+        {({ open }) => (
+          <>
+            <Disclosure.Button
               className={classNames(
-                'AccordionChevronIcon h-8 w-8 transform duration-500 rotate-180',
-                {
-                  '-rotate-0': open,
-                }
+                'AccordionTriggerButton py-4 w-full flex gap-4 px-4 items-center font-medium justify-between',
+                { 'opacity-50': disabled }
               )}
+              disabled={disabled}
             >
-              <ChevronSVG className={fillTheme(theme)} />
-            </div>
-          </Disclosure.Button>
-          <Transition
-            enter="transition-all duration-200 ease-in"
-            enterFrom="transform opacity-0"
-            enterTo="transform h-full opacity-100"
-            leave="transition duration-75 ease-out"
-            leaveFrom="transform h-full opacity-100"
-            leaveTo="transform h-0 opacity-0"
-          >
-            <Disclosure.Panel className="AccordionContent px-8 py-4 border-t-[1px] border-grey-50">
-              {children}
-            </Disclosure.Panel>
-          </Transition>
-        </>
-      )}
-    </Disclosure>
-  </div>
-);
+              <div className="AccordionLeftIcon h-8 w-8">
+                <SparkSVG className={strokeTheme(theme)} />
+              </div>
+              <span className={classNames('AccordionTitle text-left flex-1', classNameTitle)}>
+                {title}
+              </span>
+              <div
+                className={classNames(
+                  'AccordionChevronIcon h-8 w-8 transform duration-500 rotate-180',
+                  {
+                    '-rotate-0': open,
+                  }
+                )}
+              >
+                <ChevronSVG className={fillTheme(theme)} />
+              </div>
+            </Disclosure.Button>
+            <Transition
+              enter="transition-all duration-200 ease-in"
+              enterFrom="transform opacity-0"
+              enterTo="transform h-full opacity-100"
+              leave="transition duration-75 ease-out"
+              leaveFrom="transform h-full opacity-100"
+              leaveTo="transform h-0 opacity-0"
+            >
+              <Disclosure.Panel className="AccordionContent px-8 py-4 border-t-[1px] border-grey-50">
+                {children}
+              </Disclosure.Panel>
+            </Transition>
+          </>
+        )}
+      </Disclosure>
+    </div>
+  );
+};

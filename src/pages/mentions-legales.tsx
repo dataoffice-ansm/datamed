@@ -3,8 +3,8 @@ import IllustrationMentionLegal from '../assets/pictos/mention_legal.svg';
 import classnames from 'classnames';
 import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
-import { Button } from '../components/Button/Button';
 import { BackgroundSquares } from '../components/BackgroundSquares/BackgroundSquares';
+import Link from 'next/link';
 
 const Section = ({
   title,
@@ -23,9 +23,11 @@ const SectionEditor = () => (
     <div className="py-4">
       <strong>Agence nationale de sécurité du médicament et des produits de santé</strong>
       <div>
-        143-147, Boulevard Anatole France 93285 Saint-Denis Cedex Tél : +33(0)1 55 87 30 00 Fax :
-        +33(0)1 55 87 30 12 Directeur de la publication : Direction générale de l’ANSM Pour
-        contacter les webmasters : webmaster@ansm.sante.fr
+        <p>143-147, Boulevard Anatole France 93285 Saint-Denis Cedex</p>
+        <p>Tél: +33(0)1 55 87 30 00</p>
+        <p>Fax: +33(0)1 55 87 30 12</p>
+        <p>Directeur de la publication: Direction générale de l’ANSM </p>
+        <p>Pour contacter les webmasters : webmaster@ansm.sante.fr</p>
       </div>
     </div>
   </Section>
@@ -95,18 +97,20 @@ const SectionEtablisment = () => (
     <div className="py-4">
       <div>
         Tout site public ou privé est autorisé à établir, sans autorisation préalable, un lien vers
-        la page d’accueil ou directement vers les informations diffusées par le site
-        <a rel="external noreferrer" target="_blank" href="www.data.ansm.sante.fr">
-          www.data.ansm.sante.fr
-        </a>
-        . Mais en aucun cas les pages du site
-        <a rel="external noreferrer" target="_blank" href="www.data.ansm.sante.fr">
-          www.data.ansm.sante.fr
-        </a>
-        . ne doivent se retrouver imbriquées à l&apos;intérieur des pages d&apos;un autre site. Tout
-        doit être fait pour indiquer clairement à l’internaute qu’il se trouve sur le site
-        <Button href="www.data.ansm.sante.fr">www.data.ansm.sante.fr</Button>. et lui permettre d’y
-        naviguer librement.
+        la page d’accueil ou directement vers les informations diffusées par le site{' '}
+        <Link href="/">
+          <a>www.data.ansm.sante.fr</a>
+        </Link>
+        . Mais en aucun cas les pages du site{' '}
+        <Link href="/">
+          <a>www.data.ansm.sante.fr</a>
+        </Link>{' '}
+        ne doivent se retrouver imbriquées à l&apos;intérieur des pages d&apos;un autre site. Tout
+        doit être fait pour indiquer clairement à l’internaute qu’il se trouve sur le site{' '}
+        <Link href="/">
+          <a>www.data.ansm.sante.fr</a>
+        </Link>{' '}
+        et lui permettre d’y naviguer librement.
       </div>
       <div className="py-4">
         Pour sa part, l’ANSM établit des liens uniquement sur les sites publics et n&apos;est en

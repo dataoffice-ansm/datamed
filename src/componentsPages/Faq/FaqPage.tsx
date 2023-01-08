@@ -1,14 +1,12 @@
 /* eslint-disable react/no-danger */
 import type { HTMLAttributes } from 'react';
-import { useCallback, useState, useEffect, useMemo } from 'react';
+import ReactDOMServer from 'react-dom/server';
+import { useEffect, useMemo } from 'react';
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
-import { FullWidthRow } from '../../components/FullWidthRow/FullWidthRow';
 import { Accordion } from '../../components/Accordion/Accordion';
 import { faqData } from './mock/faq-data';
 
-import FaqSVG from '../../assets/landing/faq.svg';
 import SparkSVG from '../../assets/pictos/icons/spark.svg';
-import { useLayoutContext } from 'contexts/LayoutContext';
 import { toNormalForm } from '../../utils/format';
 
 export type FaqType = {
@@ -49,103 +47,158 @@ export const FaqEntryQuestion = ({
   color,
   children,
 }: { title: string | HTMLElement; color?: string } & HTMLAttributes<HTMLDivElement>) => (
-  <div>
-    <div className="FaqEntryQuestion w-full flex gap-4 items-center font-medium justify-between px-8 py-6">
-      <div className="FaqEntryQuestionLeftIcon h-8 w-8">
+  <div className="FaqEntryQuestion my-6 px-4">
+    <div className="w-full flex gap-4 items-center font-medium justify-between">
+      <div className="h-8 w-8">
         <SparkSVG className={iconColor(color)} />
       </div>
       <span
         dangerouslySetInnerHTML={{
           __html: title,
         }}
-        className="FaqEntryQuestionTitle text-left flex-1"
+        className="text-left flex-1"
       />
     </div>
-    <div className="px-8 text-sm pb-4">{children}</div>
+    {children && <div className="px-8 text-sm">{children}</div>}
   </div>
 );
+
+const filterSections = (formattedSearch: string) =>
+  faqData.reduce<FaqType[]>((faqSections, faqSection) => {
+    const filteredSectionParts = faqSection.parts.reduce<FaqSectionPart[]>(
+      (sectionParts, sectionPart) => {
+        if (sectionPart.disabled) {
+          return sectionParts;
+        }
+
+        if (toNormalForm(sectionPart.title.toLowerCase()).includes(toNormalForm(formattedSearch))) {
+          return [...sectionParts, sectionPart];
+        }
+
+        const filteredEntries = sectionPart.entries.reduce<FaqEntry[]>(
+          (sectionPartEntries, sectionPartEntry) => {
+            if (sectionPartEntry.disabled) {
+              return sectionPartEntries;
+            }
+
+            if (
+              toNormalForm(sectionPartEntry.title.toLowerCase()).includes(
+                toNormalForm(formattedSearch)
+              )
+            ) {
+              return [...sectionPartEntries, sectionPartEntry];
+            }
+
+            if (sectionPartEntry.content) {
+              if (
+                ReactDOMServer.renderToString(sectionPartEntry.content).includes(
+                  toNormalForm(formattedSearch)
+                )
+              ) {
+                return [...sectionPartEntries, sectionPartEntry];
+              }
+            }
+
+            return sectionPartEntries;
+          },
+          []
+        );
+
+        if (filteredEntries.length > 0) {
+          return [...sectionParts, { ...sectionPart, entries: filteredEntries }];
+        }
+
+        return sectionParts;
+      },
+      []
+    );
+
+    if (filteredSectionParts.length > 0) {
+      return [...faqSections, { ...faqSection, parts: filteredSectionParts }];
+    }
+
+    return faqSections;
+  }, []);
 
 /**
  *
  * @param search
+ * @param notifyEntriesCount
  * @constructor
  */
-export const FaqContent = ({ search = '' }: { search?: string }) => {
+export const FaqContent = ({
+  search = '',
+  notifyEntriesCount,
+}: {
+  notifyEntriesCount: (_count: number) => void;
+  search: string;
+}) => {
   const formattedSearch = search.toLowerCase();
+  const filteredSections = useMemo(() => filterSections(formattedSearch), [formattedSearch]);
+
+  const entriesLength = useMemo(
+    () =>
+      filteredSections.reduce<number>((countN1, faqSection) => {
+        const partsLength = faqSection.parts.reduce<number>(
+          (countN2, sectionPart) => countN2 + sectionPart.entries.length,
+          0
+        );
+        return countN1 + partsLength;
+      }, 0),
+    [filteredSections]
+  );
+
   const sections = useMemo(
     () =>
-      faqData
-        .reduce<FaqType[]>((faqTypes, faqType) => {
-          const filteredParts = faqType.parts.reduce<FaqSectionPart[]>((p2, n2) => {
-            if (n2.disabled) {
-              return p2;
-            }
-
-            const entries = n2.entries.reduce<FaqEntry[]>((p3, n3) => {
-              if (n3.disabled) {
-                return p3;
-              }
-
-              const matchTitle = toNormalForm(n3.title.toLowerCase()).includes(
-                toNormalForm(formattedSearch)
-              );
-
-              return matchTitle ? [...p3, n3] : p3;
-            }, []);
-            if (entries.length > 0) {
-              return [...p2, { ...n2, entries }];
-            }
-
-            return p2;
-          }, []);
-
-          if (filteredParts.length > 0) {
-            return [...faqTypes, { ...faqType, parts: filteredParts }];
-          }
-
-          return faqTypes;
-        }, [])
-        .map((section) => ({
-          id: section.id,
-          label: section.title,
-          content: (
-            <div className="bg-grey-50 p-8 rounded-lg">
-              {section.parts.map((sectionPart: FaqSectionPart, index) => (
-                <div key={`section-part-${index.toString()}-${section.id}`} className="my-2">
-                  <div className="text-2xl py-4">{section.title}</div>
-                  {sectionPart.style === 'accordion' ? (
-                    <div>
-                      {sectionPart.entries.map((value, index) => (
-                        <div
-                          key={`section-part-accordion-${index.toString()}-${value.title}`}
-                          className="py-2"
-                        >
-                          <Accordion title={value.title} disabled={value.disabled}>
-                            {value.content}
-                          </Accordion>
-                        </div>
-                      ))}
-                    </div>
-                  ) : (
-                    <div className="rounded-xl bg-white">
-                      {sectionPart.entries.map(({ title, content }, index) => (
-                        <FaqEntryQuestion
-                          key={`section-part-question-${index.toString()}-${title}`}
-                          color={sectionPart.bubbleColor}
-                          title={title}
-                        >
-                          {content}
-                        </FaqEntryQuestion>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          ),
-        })),
-    [formattedSearch]
+      filteredSections.map((section) => ({
+        id: section.id,
+        label: section.title,
+        content: (
+          <div className="bg-grey-50 p-8 rounded-lg">
+            <h2 className="py-4 m-0">{section.title}</h2>
+            {section.parts.map((sectionPart: FaqSectionPart, sectionPartIndex) => (
+              <div
+                key={`section-part-${sectionPartIndex.toString()}-${section.id}`}
+                className="my-2"
+              >
+                <h3 className="py-4 m-0">{sectionPart.title}</h3>
+                {sectionPart.style === 'accordion' ? (
+                  <div>
+                    {sectionPart.entries.map((value, index) => (
+                      <div
+                        key={`section-part-accordion-${index.toString()}-${value.title}`}
+                        className="py-2"
+                      >
+                        <Accordion title={value.title} disabled={value.disabled}>
+                          {value.content}
+                        </Accordion>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="SectionPartEntries rounded-xl bg-white p-2">
+                    {sectionPart.entries.map(({ title, content }, index) => (
+                      <FaqEntryQuestion
+                        key={`section-part-question-${index.toString()}-${title}`}
+                        color={sectionPart.bubbleColor}
+                        title={title}
+                      >
+                        {content}
+                      </FaqEntryQuestion>
+                    ))}
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        ),
+      })),
+    [filteredSections]
   );
+
+  useEffect(() => {
+    notifyEntriesCount(entriesLength);
+  }, [entriesLength, notifyEntriesCount]);
 
   return (
     <div>
@@ -159,43 +212,5 @@ export const FaqContent = ({ search = '' }: { search?: string }) => {
         render={(content) => content}
       />
     </div>
-  );
-};
-
-export const FaqPage = () => {
-  const [search, setSearch] = useState<string>('');
-  const { setStickyHeroHeight } = useLayoutContext();
-
-  useEffect(() => {
-    setStickyHeroHeight(0);
-  }, [setStickyHeroHeight]);
-
-  const handleSearch = useCallback((value: string) => {
-    setSearch(value);
-  }, []);
-
-  return (
-    <FullWidthRow className="FaqPage bg-background" flexContent={false}>
-      <div className="max-w-7xl m-auto">
-        <div className="FaqHeader flex flex-col justify-center items-center py-16">
-          <h1 className="text-center">Questions fréquemment posées</h1>
-          <FaqSVG className="max-w-lg lg:max-w-xl xl:max-w-2xl" />
-        </div>
-        <div>
-          <input
-            className="w-full m-auto max-w-3xl my-16 px-4 py-3 rounded-lg border-grey-400"
-            type="text"
-            placeholder="Rechercher une question ou une réponse"
-            onChange={({ target }) => {
-              handleSearch(target.value);
-            }}
-          />
-        </div>
-        <FaqContent search={search} />
-        <FullWidthRow className="bg-background">
-          <div className="h-96" />
-        </FullWidthRow>
-      </div>
-    </FullWidthRow>
   );
 };
