@@ -26,21 +26,24 @@ export const CardWithImage = ({
   href: string;
   source?: string;
 }) => (
-  <div className={classnames('CardWithImage', 'w-full lg:flex border border-grey-100', className)}>
-    <div className="h-auto w-full lg:w-96 flex-none overflow-hidden">
-      <div className="h-full">{image}</div>
-    </div>
-    <div className="p-8">
-      <div className="flex flex-col">
-        <div className="text-xl font-medium">{title}</div>
-        <div className="mt-4 mb-8 flex flex-col xl:flex-row gap-8">
-          <div>{description}</div>
-          {source && (
-            <div>
-              <span className="font-me dium">Source des données :</span> {source}
-            </div>
-          )}
-        </div>
+  <div
+    className={classnames(
+      'CardWithImage',
+      'w-full lg:flex pt-6 lg:pt-0 border border-grey-100',
+      className
+    )}
+  >
+    <div className="flex-none m-auto w-full w-56 lg:w-72 overflow-hidden">{image}</div>
+    <div className="flex flex-col p-4">
+      <div className="text-md lg:text-xl font-medium">{title}</div>
+      <div className="description flex flex-col xl:flex-row gap-8 mt-4 mb-8 text-base lg:text-md">
+        <span>{description}</span>
+        {source && (
+          <span>
+            <span className="font-medium">Source des données :</span>
+            {source}
+          </span>
+        )}
       </div>
       <Button href={href}>Découvrir les données</Button>
     </div>
