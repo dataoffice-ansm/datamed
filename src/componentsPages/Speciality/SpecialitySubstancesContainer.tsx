@@ -4,10 +4,8 @@ import { Select } from '../../components/Select/Select';
 import type { Substance } from '../../graphql/__generated__/generated-documents';
 import type { HTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import SubSVG from '../../assets/icons/sub.svg';
+import SubSVG from '../../assets/pictos/sub.svg';
 import { SubstanceContainer } from '../Substance/SubstanceContainer';
-import Link from 'next/link';
-import SickPerson from '../../assets/images/sick_transparent_person.svg';
 
 export type SpecialitySubstancesContainerProps = {
   substances: Substance[];
@@ -64,31 +62,7 @@ export const SpecialitySubstancesContainer = ({
               Substance active sélectionnée:{' '}
               <span className="text-secondary-900 font-medium">{selectedSubstance?.name}</span>
             </span>
-            <SubstanceContainer substance={selectedSubstance}>
-              <div className="bg-white p-8 shadow rounded-lg mt-8 flex flex-col justify-center items-center lg:flex-row gap-8">
-                <div className="h-48 w-48">
-                  <SickPerson />
-                </div>
-                <div className="">
-                  <div className="text-2xl md:text-3xl">
-                    Comment déclarer un effet indésirable ?
-                  </div>
-                  <div className="my-8">
-                    Découvrez comment l’ANSM centralise les signalements et alertes, et que faire
-                    selon votre situation.
-                  </div>
-                  <Link href="https://ansm.sante.fr/documents/reference/declarer-un-effet-indesirable">
-                    <a
-                      rel="external noreferrer"
-                      target="_blank"
-                      className="text-primary rounded border border-primary py-2 px-4 no-underline block md:text-center"
-                    >
-                      VOIR LES RECOMMANDATIONS DE L&apos;ANSM
-                    </a>
-                  </Link>
-                </div>
-              </div>
-            </SubstanceContainer>
+            <SubstanceContainer substance={selectedSubstance} />
           </div>
         )}
       </div>

@@ -4,11 +4,11 @@ import type {
   HltEffect,
 } from '../../graphql/__generated__/generated-documents';
 import { BoxInfo } from '../../components/BoxInfo';
-import FolderSVG from '../../assets/icons/folder/folder.svg';
+import FolderSVG from '../../assets/pictos/folder.svg';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
-import WomanFigure from '../../assets/images/woman_illustration.svg';
-import ManFigure from '../../assets/images/man_illustration.svg';
+import WomanFigure from '../../assets/pictos/woman_illustration.svg';
+import ManFigure from '../../assets/pictos/man_illustration.svg';
 import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
 import { Accordion } from '../../components/Accordion/Accordion';
 import type { HTMLAttributes } from 'react';
@@ -21,6 +21,8 @@ import { Modal } from '../../components/Modal/Modal';
 import { GraphBoxSelect, type OptionsValue } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { type RepartitionPerNotifier } from '../../graphql/__generated__/generated-documents';
+import { CardWithImage } from '../../components/CardWithImage/CardWithImage';
+import SickPersonSvg from '../../assets/pictos/sick_transparent_person.svg';
 
 /**
  *
@@ -158,22 +160,12 @@ export const SubstanceContainer = ({
         icon={<FolderSVG />}
         theme="secondary"
         className="my-8"
-        tooltip={
-          <div>
-            <strong>Nombre de déclarations</strong>
-            <div>
-              Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise à jour
-              progressive des données.
-            </div>
-          </div>
-        }
       >
-        Nombre de déclarations d&lsquo;effets indésirables
+        Nombre cumulé de déclarations d&lsquo;effets indésirables suspectés{' '}
         {totalExposition?.minYear &&
           totalExposition?.maxYear &&
           `sur la période ${totalExposition?.minYear} ${totalExposition?.maxYear}`}
       </BoxInfo>
-
       <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto">
         <div className="flex-1 flex-shrink">
           <GraphBox
@@ -221,7 +213,6 @@ export const SubstanceContainer = ({
           </GraphBox>
         </div>
       </div>
-
       <GraphBoxSelect
         title="Répartition par type de déclarants"
         theme="secondary"
@@ -252,6 +243,8 @@ export const SubstanceContainer = ({
         }}
       />
 
+      <h3>Effets indésirables par système d’organes</h3>
+
       <Accordion
         defaultOpen
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
@@ -263,9 +256,10 @@ export const SubstanceContainer = ({
           systèmes d&apos;organes ont été définis (<strong>Système Organe Classe ou SOC</strong>).
         </p>
         <p>
-          Si une déclaration concerne des effets indésirables appartenant à plusieurs SOC, elle sera
-          comptabilisée dans chacun de ces SOC. À l&apos;inverse, si tous ces effets indésirables
-          appartiennent au même SOC, ils ne seront comptabilisés qu&apos;une fois.
+          Une déclaration peut contenir plusieurs effets indésirables d’un même patient. Ces effets
+          peuvent être catégorisés dans plusieurs SOC, ils seront donc comptabilités dans chacun de
+          ces SOC. À l&apos;inverse, si tous ces effets indésirables appartiennent au même SOC, ils
+          ne seront comptabilisés qu&apos;une fois dans ce SOC.
         </p>
         <p>
           Sont affichés ici tous les SOC, ainsi que le détail du type d’effet si les effectifs sont
@@ -283,7 +277,7 @@ export const SubstanceContainer = ({
                 <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
                   Parmi les{' '}
                   <span className="text-secondary font-medium">{totalExposition?.total}</span>{' '}
-                  déclarations d’effets indésirables pour:{' '}
+                  déclarations d’effets indésirables pour :{' '}
                   <span className="text-secondary font-medium">{substance.name}</span>
                 </div>
               )}
@@ -310,6 +304,27 @@ export const SubstanceContainer = ({
           );
         }}
       />
+
+      <CardWithImage
+        className="mb-8"
+        imageClassName="w-52"
+        title="Comment déclarer un effet indésirable ?"
+        image={<SickPersonSvg className="h-48 w-44 m-auto" />}
+        button={
+          <Button
+            externalLink
+            variant="outlined"
+            href="https://ansm.sante.fr/documents/reference/declarer-un-effet-indesirable"
+          >
+            VOIR LES RECOMMANDATIONS DE L&apos;ANSM
+          </Button>
+        }
+      >
+        <p>
+          Découvrez comment l’ANSM centralise les signalements et alertes, et que faire selon votre
+          situation.
+        </p>
+      </CardWithImage>
     </div>
   );
 };

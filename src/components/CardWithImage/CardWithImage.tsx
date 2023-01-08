@@ -1,51 +1,37 @@
 import classnames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
-import { Button } from '../Button/Button';
 
 /**
  *
  * @param className
+ * @param imageClassName
  * @param image
  * @param title
- * @param description
- * @param href
- * @param source
+ * @param button
+ * @param children
  * @constructor
  */
 export const CardWithImage = ({
   className,
+  imageClassName,
   image,
   title,
-  description,
-  href,
-  source,
+  button,
+  children,
 }: HTMLAttributes<HTMLDivElement> & {
   image: ReactNode;
+  imageClassName: string;
   title: string;
-  description: string;
-  href: string;
-  source?: string;
+  button: ReactNode;
 }) => (
-  <div
-    className={classnames(
-      'CardWithImage',
-      'w-full lg:flex pt-6 lg:pt-0 border border-grey-100',
-      className
-    )}
-  >
-    <div className="flex-none m-auto w-full w-56 lg:w-72 overflow-hidden">{image}</div>
-    <div className="flex flex-col p-4">
-      <div className="text-md lg:text-xl font-medium">{title}</div>
-      <div className="description flex flex-col xl:flex-row gap-8 mt-4 mb-8 text-base lg:text-md">
-        <span>{description}</span>
-        {source && (
-          <span>
-            <span className="font-medium">Source des données :</span>
-            {source}
-          </span>
-        )}
-      </div>
-      <Button href={href}>Découvrir les données</Button>
+  <div className={classnames('CardWithImage bg-white w-full lg:flex pt-6 lg:pt-0', className)}>
+    <div className={classnames('flex-none m-auto w-40 w-full overflow-hidden', imageClassName)}>
+      {image}
+    </div>
+    <div className="flex flex-col p-4 items-center text-center lg:items-start lg:text-left">
+      <div className="text-md lg:text-xl font-bold">{title}</div>
+      <div className="description gap-8 mt-4 mb-8 text-base lg:text-md">{children}</div>
+      <div className="BoxLinkAction flex">{button}</div>
     </div>
   </div>
 );

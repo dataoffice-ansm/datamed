@@ -8,11 +8,12 @@ import { useMemo } from 'react';
 import type { SpecialityRupture, Substance } from '../../graphql/__generated__/generated-documents';
 import { SpecialitySubstancesContainer } from './SpecialitySubstancesContainer';
 import { Accordion } from '../../components/Accordion/Accordion';
-import PilIcon from '../../assets/images/gellule.svg';
-import WomanIllustration from '../../assets/images/woman_illustration.svg';
-import ManIllustration from '../../assets/images/man_illustration.svg';
-import ManFaceNo from '../../assets/images/manFaceNo.svg';
-import ManFaceYes from '../../assets/images/manFaceYes.svg';
+import PilIcon from '../../assets/pictos/gellule.svg';
+import WomanIllustration from '../../assets/pictos/woman_illustration.svg';
+import ManIllustration from '../../assets/pictos/man_illustration.svg';
+import ManFaceNo from '../../assets/pictos/manFaceNo.svg';
+import ManFaceYes from '../../assets/pictos/manFaceYes.svg';
+import OutOfStockSvg from '../../assets/pictos/out_of_stock.svg';
 
 import { ChartBox } from '../../components/ChartBox';
 import classnames from 'classnames';
@@ -31,6 +32,9 @@ import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { PieChartNatureMedicalErrors } from '../../components/Charts/PieChartNatureMedicalErrors';
 import { ExpositionLevel } from '../../api/graphql/enums';
+import { CardWithImage } from '../../components/CardWithImage/CardWithImage';
+import SickPersonSvg from '../../assets/pictos/sick_transparent_person.svg';
+import { Button } from '../../components/Button/Button';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -94,19 +98,34 @@ const SectionOneGlobalInformation = () => {
       <div className="flex justify-between items-center gap-3">
         <div>
           <h5>Infos pour les patients</h5>
-          <a href="#" className="text-sm text-primary">
+          <a
+            rel="external noreferrer"
+            target="_blank"
+            href="https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=60234100&typedoc=N"
+            className="text-sm text-primary"
+          >
             Afficher la notice
           </a>
         </div>
         <div>
           <h5>Infos pour les professionnels de santé</h5>
-          <a href="#" className="text-sm text-primary">
+          <a
+            rel="external noreferrer"
+            target="_blank"
+            href="https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=60234100&typedoc=R"
+            className="text-sm text-primary"
+          >
             Afficher le RCP
           </a>
         </div>
         <div>
           <h5>Avis de la commission transparence</h5>
-          <a href="#" className="text-sm text-primary">
+          <a
+            rel="external noreferrer"
+            target="_blank"
+            href="https://www.has-sante.fr/jcms/fc_2875171/fr/resultat-de-recherche?text=doliprane&tmpParam=&opSearch=&types=guidelines"
+            className="text-sm text-primary"
+          >
             Afficher les recommandations
           </a>
         </div>
@@ -185,12 +204,12 @@ const SectionTreatedPatients = () => {
           </div>
 
           <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
-            <h3 className="text-primary">
+            <h3 className="text-2xl text-primary">
               {numberWithThousand(currentEntity?.exposition?.consumption)} / an
             </h3>
             <p>
-              Approximation du nombre de patients ayant été remboursés sur la période 2014-2018 pour
-              une substance active ou une spécialité de médicament.
+              Moyenne annuelle du nombre de remboursements de médicament par patient et par
+              conditionnement de médicament.
             </p>
           </div>
         </div>
@@ -410,26 +429,77 @@ const SectionRisksShortageHistory = () => {
         subTitle="Données issues de la période 2021 - 2022"
       />
 
-      {count ? (
-        <div className="p-4 border border-grey-200 rounded-lg bg-white">
-          <div className="text-secondary-900 font-medium">
-            <span>{`${count} ${count === 1 ? 'déclaration' : 'déclarations'}`}</span>
+      <Accordion
+        defaultOpen
+        className="shadow rounded-lg"
+        classNameTitle="text-primary"
+        theme="primary"
+        title="Quelles données sont affichées ? D’où viennent-elles ?"
+      >
+        <p>
+          Cette rubrique recense l&apos;historique des déclarations de ruptures et de risques de
+          rupture concernant les médicaments d’intérêt thérapeutique majeur (MITM), pour lesquelles
+          les industriels ont une obligation de déclaration auprès de l&apos;ANSM depuis le 3 Mai
+          2021.
+        </p>
+
+        <p>
+          Pour retrouver les dernières informations destinées aux professionnels de santé et aux
+          patients concernant les médicaments d’intérêt thérapeutique majeur faisant actuellement
+          l’objet de difficultés d’approvisionnement et pour lesquels il n’y a pas d’alternative
+          thérapeutique disponible sur le marché français, vous pouvez vous référer au site :
+          <a
+            rel="external noreferrer"
+            target="_blank"
+            href="https://ansm.sante.fr/disponibilites-des-produits-de-sante/medicaments"
+          />
+        </p>
+      </Accordion>
+
+      <div className="my-8 RupturesHistory">
+        {count ? (
+          <div className="p-4 border border-grey-200 rounded-lg bg-white">
+            <div className="text-secondary-900 font-medium">
+              <span>{`${count} ${count === 1 ? 'déclaration' : 'déclarations'}`}</span>
+            </div>
+            <div className="pt-6">
+              <PaginatedList
+                theme="secondary"
+                data={ruptures}
+                renderItem={(ruptureItem) => (
+                  <RuptureHistoryItem cisName={currentEntity?.name} ruptureItem={ruptureItem} />
+                )}
+              />
+            </div>
           </div>
-          <div className="pt-6">
-            <PaginatedList
-              theme="secondary"
-              data={ruptures}
-              renderItem={(ruptureItem) => (
-                <RuptureHistoryItem cisName={currentEntity?.name} ruptureItem={ruptureItem} />
-              )}
-            />
-          </div>
-        </div>
-      ) : (
-        <ChartBox>
-          <NotEnoughData />
-        </ChartBox>
-      )}
+        ) : (
+          <ChartBox>
+            <NotEnoughData />
+          </ChartBox>
+        )}
+      </div>
+
+      <CardWithImage
+        className="my-8 border border-grey-100"
+        imageClassName="w-48 px-2"
+        title="Rupture ou risque de rupture des produits de santé"
+        image={<OutOfStockSvg className="h-48 w-32 m-auto" />}
+        button={
+          <Button
+            externalLink
+            variant="outlined"
+            href="https://ansm.sante.fr/documents/reference/declarer-un-effet-indesirable"
+            className="uppercase"
+          >
+            disponiblité des produits de santé
+          </Button>
+        }
+      >
+        <p>
+          Accédez à l’actualité des ruptures et risques de rupture des produits de santé
+          (médicaments, dispositifs médicaux, vaccins) disponibles sur le site de l’ANSM.
+        </p>
+      </CardWithImage>
     </div>
   );
 };
@@ -479,14 +549,14 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => (
           content: <SectionSideEffects />,
         },
         {
-          id: 'shortage-risks-history',
-          label: 'Historique des risques et des ruptures de stocks',
-          content: <SectionRisksShortageHistory />,
-        },
-        {
           id: 'medicinal-errors',
           label: 'Erreurs médicamenteuses',
           content: <SectionMedicinalErrors />,
+        },
+        {
+          id: 'shortage-risks-history',
+          label: 'Historique des risques et des ruptures de stocks',
+          content: <SectionRisksShortageHistory />,
         },
         {
           id: 'publications',

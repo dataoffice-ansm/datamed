@@ -1,7 +1,8 @@
 import { CardWithImage } from '../../../components/CardWithImage/CardWithImage';
 
-import OutOfStockSvg from '../../../assets/images/out_of_stock.svg';
-import SickPersonSvg from '../../../assets/images/sick_person.svg';
+import OutOfStockSvg from '../../../assets/pictos/out_of_stock_green.svg';
+import SickPersonSvg from '../../../assets/pictos/sick_person.svg';
+import { Button } from '../../../components/Button/Button';
 
 export const MoreInfoSection = () => (
   <div className="w-full flex justify-center items-center flex-col py-16">
@@ -14,20 +15,40 @@ export const MoreInfoSection = () => (
 
     <div className="m-auto max-w-xl lg:max-w-3xl">
       <CardWithImage
-        className="mb-8"
+        className="mb-8 border border-grey-100"
+        imageClassName="w-56 lg:w-72"
         title="Déclarations de ruptures et risques de rupture de stock de médicament"
-        description="Consultez les statistiques globales sur l'historique des déclarations de rupture et de risque de rupture des  médicaments d'intérêt thérapeutique majeur"
-        href="/ruptures"
         image={<OutOfStockSvg />}
-      />
+        button={<Button href="/ruptures">Découvrir les données</Button>}
+      >
+        <p>
+          Consultez les statistiques globales sur l&apos;historique des déclarations de rupture et
+          de risque de rupture des médicaments d&apos;intérêt thérapeutique majeur
+        </p>
+
+        {/*<span>*/}
+        {/*      <span className="font-medium">Source des données :</span>*/}
+        {/*    {source}*/}
+        {/*</span>*/}
+      </CardWithImage>
 
       <CardWithImage
-        className="mb-8"
+        className="mb-8 border border-grey-100"
+        imageClassName="w-56 lg:w-72"
         title="Déclarations d'effets indésirables suspectés d’être liés aux médicaments"
-        description="Consultez les données de déclarations d'effets indésirables qu'on suspecte d'être en lien avec l'utilisation d'un ou plusieurs médicaments"
-        href="/globaldec"
         image={<SickPersonSvg />}
-      />
+        button={<Button href="/globaldec">Découvrir les données</Button>}
+      >
+        <p>
+          Consultez les données de déclarations d&apos;effets indésirables qu&apos;on suspecte
+          d&apos;être en lien avec l&apos;utilisation d&apos;un ou plusieurs médicaments
+        </p>
+
+        {/*<span>*/}
+        {/*      <span className="font-medium">Source des données :</span>*/}
+        {/*    {source}*/}
+        {/*</span>*/}
+      </CardWithImage>
     </div>
   </div>
 );
