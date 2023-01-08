@@ -1,15 +1,13 @@
 import { Pie } from 'react-chartjs-2';
-import { ArcElement, Chart as ChartJS, Legend, Tooltip } from 'chart.js';
+import { ArcElement, Chart as ChartJS, Legend, Tooltip, type TooltipItem } from 'chart.js';
 
 import type {
   GlobalStatistic,
-  Maybe,
-  RepartitionPerGravity,
-  RepartitionPerSeriousEffect,
+  RepartitionRange,
 } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
 import { darkGreen } from '../../../tailwind.palette.config';
-import { tooltipHandler } from '../../utils/tooltips';
+import { numberWithThousand } from '../../utils/format';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -34,23 +32,18 @@ export const PieChartGlobalStatisticSeriousEffects = ({
   const labels = seriousEffectData.map((row) => row?.range);
   const data = seriousEffectData.map((row) => row?.valuePercent);
 
-  const renderTooltip =
-    (range: string) =>
-    (value: string): HTMLElement => {
-      const repartition = (
-        seriousEffectData as Array<
-          Maybe<RepartitionPerSeriousEffect> | Maybe<RepartitionPerGravity>
-        >
-      )?.find((e) => range === e?.range);
-      const content = document.createElement('span');
-      content.innerHTML = `
-    <div>
-      <div>Pourcentage: <strong>${value}</strong>%</div>
-      <div>Nombre: <strong>${repartition?.value ?? '-'}</strong></div>
-    </div>
-    `;
-      return content;
-    };
+  const tooltip = (tooltipItems: Array<TooltipItem<'pie'>>) => {
+    const tooltipItem = tooltipItems[0];
+
+    const range = tooltipItem.label;
+    if (seriousEffectData && Array.isArray(seriousEffectData)) {
+      const repartition = (seriousEffectData as unknown as RepartitionRange[]).find(
+        (e) => range === e?.range
+      );
+      const rawValue = repartition?.value ?? 0;
+      return [`Nombre: ${numberWithThousand(rawValue)}`];
+    }
+  };
 
   const backgroundColor = [
     darkGreen[200],
@@ -72,9 +65,13 @@ export const PieChartGlobalStatisticSeriousEffects = ({
           responsive: true,
           plugins: {
             tooltip: {
-              enabled: false,
-              position: 'nearest',
-              external: tooltipHandler(renderTooltip) as never,
+              callbacks: {
+                afterBody: tooltip,
+                label(context) {
+                  const percent = context.formattedValue;
+                  return `Pourcentage: ${percent}%`;
+                },
+              },
             },
           },
         }}

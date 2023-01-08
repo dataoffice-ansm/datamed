@@ -226,7 +226,7 @@ export class PostgresOperations {
             {
               range,
               value: Math.round(patients_consumption ?? 0),
-              valuePercent: Math.round(patients_percentage ?? 0),
+              valuePercent: (patients_percentage ?? 0).toFixed(2),
             },
           ]
         : carry;
@@ -250,7 +250,7 @@ export class PostgresOperations {
             {
               range,
               value: Math.round(number ?? 0),
-              valuePercent: Math.round(percentage ?? 0),
+              valuePercent: (percentage ?? 0).toFixed(2),
             },
           ]
         : carry;
@@ -304,7 +304,7 @@ export class PostgresOperations {
               range: step,
               description,
               value: Math.round(value ?? 0),
-              valuePercent: Math.round(valuePercent ?? 0),
+              valuePercent: (valuePercent ?? 0).toFixed(2),
             },
           ]
         : carry;
@@ -335,7 +335,7 @@ export class PostgresOperations {
               description,
               range: getMedicalErrorNatureByNatureId(natureId),
               value: Math.round(value ?? 0),
-              valuePercent: Math.round(valuePercent ?? 0),
+              valuePercent: (valuePercent ?? 0).toFixed(2),
             },
           ]
         : carry;
@@ -553,7 +553,7 @@ export class PostgresOperations {
             {
               range,
               value: Math.round(consumption ?? 0),
-              valuePercent: Math.round(percentage ?? 0),
+              valuePercent: (percentage ?? 0).toFixed(2),
             },
           ]
         : carry;
@@ -784,7 +784,7 @@ export class PostgresOperations {
             {
               range,
               value: Math.round(Number(consumption)),
-              valuePercent: Math.round(percentage ?? 0),
+              valuePercent: (percentage ?? 0).toFixed(2),
             },
           ]
         : carry;

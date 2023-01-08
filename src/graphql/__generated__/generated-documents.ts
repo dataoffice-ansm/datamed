@@ -231,7 +231,7 @@ export type RepartitionRange = {
   id?: Maybe<Scalars['Int']>;
   range: Scalars['String'];
   value: Scalars['Int'];
-  valuePercent: Scalars['Int'];
+  valuePercent: Scalars['String'];
 };
 
 export type RuptureAction = {
@@ -467,9 +467,8 @@ export type SpecialityFragmentFragment = {
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
       range: string;
-      description?: string | null;
       value: number;
-      valuePercent: number;
+      valuePercent: string;
     } | null> | null;
     repartitionPerNotifier?: Array<{
       __typename?: 'RepartitionPerNotifier';
@@ -529,8 +528,7 @@ export type SpecialityFragmentFragment = {
     __typename?: 'RepartitionRange';
     range: string;
     value: number;
-    description?: string | null;
-    valuePercent: number;
+    valuePercent: string;
   } | null> | null;
   publications?: Array<{
     __typename?: 'Publication';
@@ -555,7 +553,7 @@ export type SpecialityFragmentFragment = {
       range: string;
       description?: string | null;
       value: number;
-      valuePercent: number;
+      valuePercent: string;
     } | null> | null;
     sideEffectsOriginRepartition?: {
       __typename?: 'WithRepartition';
@@ -576,7 +574,7 @@ export type SpecialityFragmentFragment = {
       range: string;
       description?: string | null;
       value: number;
-      valuePercent: number;
+      valuePercent: string;
     } | null> | null;
     natureRepartition?: Array<{
       __typename?: 'RepartitionRange';
@@ -584,7 +582,7 @@ export type SpecialityFragmentFragment = {
       range: string;
       description?: string | null;
       value: number;
-      valuePercent: number;
+      valuePercent: string;
     } | null> | null;
   } | null;
   rupturesHistory?: {
@@ -635,9 +633,8 @@ export type SubstanceFragmentFragment = {
   repartitionPerAge?: Array<{
     __typename?: 'RepartitionRange';
     range: string;
-    description?: string | null;
     value: number;
-    valuePercent: number;
+    valuePercent: string;
   } | null> | null;
   repartitionPerNotifier?: Array<{
     __typename?: 'RepartitionPerNotifier';
@@ -728,9 +725,8 @@ export type SpecialityQuery = {
       repartitionPerAge?: Array<{
         __typename?: 'RepartitionRange';
         range: string;
-        description?: string | null;
         value: number;
-        valuePercent: number;
+        valuePercent: string;
       } | null> | null;
       repartitionPerNotifier?: Array<{
         __typename?: 'RepartitionPerNotifier';
@@ -790,8 +786,7 @@ export type SpecialityQuery = {
       __typename?: 'RepartitionRange';
       range: string;
       value: number;
-      description?: string | null;
-      valuePercent: number;
+      valuePercent: string;
     } | null> | null;
     publications?: Array<{
       __typename?: 'Publication';
@@ -816,7 +811,7 @@ export type SpecialityQuery = {
         range: string;
         description?: string | null;
         value: number;
-        valuePercent: number;
+        valuePercent: string;
       } | null> | null;
       sideEffectsOriginRepartition?: {
         __typename?: 'WithRepartition';
@@ -837,7 +832,7 @@ export type SpecialityQuery = {
         range: string;
         description?: string | null;
         value: number;
-        valuePercent: number;
+        valuePercent: string;
       } | null> | null;
       natureRepartition?: Array<{
         __typename?: 'RepartitionRange';
@@ -845,7 +840,7 @@ export type SpecialityQuery = {
         range: string;
         description?: string | null;
         value: number;
-        valuePercent: number;
+        valuePercent: string;
       } | null> | null;
     } | null;
     rupturesHistory?: {
@@ -919,9 +914,8 @@ export type SubstanceQuery = {
     repartitionPerAge?: Array<{
       __typename?: 'RepartitionRange';
       range: string;
-      description?: string | null;
       value: number;
-      valuePercent: number;
+      valuePercent: string;
     } | null> | null;
     repartitionPerNotifier?: Array<{
       __typename?: 'RepartitionPerNotifier';
@@ -998,9 +992,8 @@ export type GlobalStatisticQuery = {
       __typename?: 'RepartitionRange';
       id?: number | null;
       range: string;
-      description?: string | null;
       value: number;
-      valuePercent: number;
+      valuePercent: string;
     } | null> | null;
     totalExposition?: {
       __typename?: 'TotalExposition';
@@ -1136,7 +1129,6 @@ export const SubstanceFragmentFragmentDoc = gql`
     }
     repartitionPerAge {
       range
-      description
       value
       valuePercent
     }
@@ -1210,7 +1202,6 @@ export const SpecialityFragmentFragmentDoc = gql`
     repartitionPerAge {
       range
       value
-      description
       valuePercent
     }
     publications {
@@ -1492,7 +1483,6 @@ export const GlobalStatisticDocument = gql`
       repartitionPerAge {
         id
         range
-        description
         value
         valuePercent
       }

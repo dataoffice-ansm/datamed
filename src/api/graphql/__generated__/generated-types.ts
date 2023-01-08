@@ -231,7 +231,7 @@ export type RepartitionRange = {
   id?: Maybe<Scalars['Int']>;
   range: Scalars['String'];
   value: Scalars['Int'];
-  valuePercent: Scalars['Int'];
+  valuePercent: Scalars['String'];
 };
 
 export type RuptureAction = {
@@ -986,7 +986,7 @@ export type RepartitionRangeResolvers<
   id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  valuePercent?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  valuePercent?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

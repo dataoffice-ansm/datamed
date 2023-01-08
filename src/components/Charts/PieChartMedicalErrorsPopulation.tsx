@@ -1,10 +1,10 @@
 import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, type TooltipItem } from 'chart.js';
 
 import type { MedicalErrors } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
 import { darkViolet, turquoise } from '../../../tailwind.palette.config';
-import { tooltipHandler } from '../../utils/tooltips';
+import { numberWithThousand } from '../../utils/format';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -29,19 +29,14 @@ export const PieChartMedicalErrorsPopulation = ({
   const labels = errorsMedRepPopData.map((row) => row?.range);
   const data = errorsMedRepPopData?.map((row) => row?.valuePercent);
 
-  const renderTooltip =
-    (range: string) =>
-    (value: string): HTMLElement => {
-      const repartition = errorsMedRepPopData.find((e) => range === e?.range);
-      const content = document.createElement('span');
-      content.innerHTML = `
-    <div>
-      <div>Pourcentage: <strong>${value}</strong>%</div>
-      <div>Nombre: <strong>${repartition?.value ?? '-'}</strong></div>
-    </div>
-    `;
-      return content;
-    };
+  const tooltip = (tooltipItems: Array<TooltipItem<'pie'>>) => {
+    const tooltipItem = tooltipItems[0];
+
+    const range = tooltipItem.label;
+    const repartition = errorsMedRepPopData.find((e) => range === e?.range);
+    const rawValue = repartition?.value ?? 0;
+    return [`Nombre: ${numberWithThousand(rawValue)}`];
+  };
 
   const backgroundColor =
     theme === 'primary'
@@ -54,9 +49,13 @@ export const PieChartMedicalErrorsPopulation = ({
         options={{
           plugins: {
             tooltip: {
-              enabled: false,
-              position: 'nearest',
-              external: tooltipHandler(renderTooltip) as never,
+              callbacks: {
+                afterBody: tooltip,
+                label(context) {
+                  const percent = context.formattedValue;
+                  return `Pourcentage: ${percent}%`;
+                },
+              },
             },
           },
         }}
