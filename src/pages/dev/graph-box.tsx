@@ -1,5 +1,5 @@
 import { GraphBox } from '../../components/GraphBox/GraphBox';
-import SickPerson from '../../assets/images/sick_person.svg';
+import SickPerson from '../../assets/pictos/sick_person.svg';
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
 
 export const GraphBoxPage = () => (

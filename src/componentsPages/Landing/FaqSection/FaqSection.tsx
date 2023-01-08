@@ -1,4 +1,4 @@
-import FaqSvg from '../../../assets/images/landing_illustration_faq.svg';
+import FaqSvg from '../../../assets/landing/landing_illustration_faq.svg';
 import { FullWidthRow } from '../../../components/FullWidthRow/FullWidthRow';
 import { Button } from '../../../components/Button/Button';
 

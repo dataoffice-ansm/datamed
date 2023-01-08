@@ -6,7 +6,7 @@ import type { SelectOption } from '../../../components/Select/Select';
 import { Select } from '../../../components/Select/Select';
 import { NotEnoughData } from 'components/NotEnoughData';
 import { BoxInfo } from '../../../components/BoxInfo';
-import FolderSVG from '../../../assets/icons/folder/folder.svg';
+import FolderSVG from '../../../assets/pictos/folder.svg';
 import { BaseTooltipContent } from '../Tooltip';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 import { KPIBoxProgression } from '../../../components/KPIBoxProgression';

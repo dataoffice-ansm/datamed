@@ -1,9 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
-import LandingIllustration from '../../../assets/images/landing_illustration.svg';
-import Logo from '../../../assets/images/logo_ansm.svg';
+import LandingIllustration from '../../../assets/landing/landing_illustration.svg';
+import Logo from '../../../assets/logo_ansm.svg';
 import { FullScreenSection } from '../../../components/FullScreenSection/FullScreenSection';
 import { useLayoutContext } from '../../../contexts/LayoutContext';
-import CheckDoctorSVG from '../../../assets/icons/check-doctor/check-doctor.svg';
+import CheckDoctorSVG from '../../../assets/pictos/check-doctor.svg';
 
 export const IntroSection = () => {
   const { navBarHeight } = useLayoutContext();

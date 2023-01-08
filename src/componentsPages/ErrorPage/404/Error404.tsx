@@ -1,5 +1,5 @@
 import { FullScreenSection } from '../../../components/FullScreenSection/FullScreenSection';
-import Error404SVG from '../../../assets/icons/404/404.svg';
+import Error404SVG from '../../../assets/landing/404.svg';
 import Link from 'next/link';
 import { Button } from '../../../components/Button/Button';
 

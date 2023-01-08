@@ -2,10 +2,10 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import classNames from 'classnames';
 
-import FirstPageSVG from '../../assets/icons/pagination/first.svg';
-import LastPageSVG from '../../assets/icons/pagination/last.svg';
-import PreviousPageSVG from '../../assets/icons/pagination/previous.svg';
-import NextPageSVG from '../../assets/icons/pagination/next.svg';
+import FirstPageSVG from '../../assets/pictos/icons/pagination/first.svg';
+import LastPageSVG from '../../assets/pictos/icons/pagination/last.svg';
+import PreviousPageSVG from '../../assets/pictos/icons/pagination/previous.svg';
+import NextPageSVG from '../../assets/pictos/icons/pagination/next.svg';
 
 export type PaginatedListThemeColor = 'primary' | 'secondary' | 'grey';
 

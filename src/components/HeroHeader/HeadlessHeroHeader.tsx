@@ -6,7 +6,7 @@ import { stickyHeroHeightPx, useLayoutContext } from '../../contexts/LayoutConte
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { useRefHeight } from '../../hooks/useRefHeight';
 import { FullWidthRow } from '../FullWidthRow/FullWidthRow';
-import BackArrowSVG from '../../assets/icons/back-arrow.svg';
+import BackArrowSVG from '../../assets/pictos/icons/back-arrow.svg';
 import Link from 'next/link';
 import classNames from 'classnames';
 
