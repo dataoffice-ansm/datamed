@@ -130,7 +130,6 @@ export const Autocomplete = ({
       <div className={classnames({ 'relative flex': !embedded })}>
         <Combobox onChange={onSelected}>
           <Combobox.Input
-            autoFocus
             placeholder={cisLoading || subLoading ? loadingPlaceholder : placeholder}
             disabled={cisLoading || subLoading}
             className={classnames('AutocompleteInput flex-1 border-none', {

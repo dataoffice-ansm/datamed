@@ -1,6 +1,6 @@
 import '../styles/index.scss';
 import type { AppProps } from 'next/app';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { AppLayout } from '../components/Layouts/AppLayout';
 import { BodyScrollProvider } from '../contexts/BodyScrollContext';
@@ -33,31 +33,29 @@ const LoadingContainer = () => (
 );
 
 const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
+  const [isLoading, setIsLoading] = useState(false);
   const apolloClient = useApollo(pageProps[APOLLO_STATE_PROPERTY_NAME] as NormalizedCacheObject);
-  const [loading, setLoading] = React.useState(false);
 
   useEffect(() => {
-    const start = () => {
-      setLoading(true);
-    };
-
-    const end = () => {
-      setLoading(false);
-    };
-
-    Router.events.on('routeChangeStart', start);
-    Router.events.on('routeChangeComplete', end);
-    Router.events.on('routeChangeError', end);
-
+    Router.events.on('routeChangeStart', () => {
+      setIsLoading(true);
+    });
+    Router.events.on('routeChangeComplete', () => {
+      setIsLoading(false);
+    });
+    Router.events.on('routeChangeError', () => {
+      setIsLoading(false);
+    });
     return () => {
-      window.scrollTo({
-        top: 0,
-        behavior: 'smooth',
+      Router.events.off('routeChangeStart', () => {
+        setIsLoading(true);
       });
-
-      Router.events.off('routeChangeStart', start);
-      Router.events.off('routeChangeComplete', end);
-      Router.events.off('routeChangeError', end);
+      Router.events.off('routeChangeComplete', () => {
+        setIsLoading(false);
+      });
+      Router.events.off('routeChangeError', () => {
+        setIsLoading(false);
+      });
     };
   }, []);
 
@@ -70,8 +68,8 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
       <ApolloProvider client={apolloClient}>
         <BodyScrollProvider>
           <LayoutProvider authSSR={authed}>
-            <AuthModal />
-            <AppLayout>{loading ? <LoadingContainer /> : <Component {...pageProps} />} </AppLayout>
+            {/*<AuthModal />*/}
+            <AppLayout>{isLoading ? <LoadingContainer /> : <Component {...pageProps} />}</AppLayout>
           </LayoutProvider>
         </BodyScrollProvider>
       </ApolloProvider>
