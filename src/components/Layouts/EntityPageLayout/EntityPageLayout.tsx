@@ -81,7 +81,7 @@ export const EntityPageLayout = ({
             smooth
             className="no-underline"
             to={id}
-            duration={200}
+            duration={100}
             offset={-(navBarHeight + stickyHeroHeight + 10)}
             onSetActive={() => {
               handleSelectedIndex(index);
@@ -93,11 +93,19 @@ export const EntityPageLayout = ({
                   tabIndex={1}
                   id={id}
                   className={classnames(
-                    'text-grey-400 tracking-wider cursor-pointer md:text-right pr-6',
-                    selected ? 'selected font-medium' : 'font-light notSelected',
+                    'sideMenuTab tracking-wider cursor-pointer md:text-right pr-6',
+                    selected
+                      ? 'selected border-r-[2px] border-primary font-medium'
+                      : 'notSelected font-light text-grey-400',
+
                     colorMenu === 'primary' && 'hover:text-primary',
                     colorMenu === 'secondary' && 'hover:text-secondary',
                     colorMenu === 'green' && 'hover:text-dark-green-900',
+
+                    selected && colorMenu === 'primary' && 'text-primary',
+                    selected && colorMenu === 'secondary' && 'text-secondary',
+                    selected && colorMenu === 'green' && 'text-dark-green-900',
+
                     itemClassName
                   )}
                 >
@@ -107,26 +115,12 @@ export const EntityPageLayout = ({
             </Tab>
           </Link>
         ))}
-
         <div
           className={classnames(
-            'sideMenuHelper bg-grey-300 w-[1px] top-0',
+            'sideMenuHelperBg bg-grey-300 w-[2px] top-0 -ml-[2px] -z-[1]',
             'transition-all ease-in-out absolute left-full h-full'
           )}
         />
-
-        {vertical && (
-          <div
-            style={{
-              top: `calc((100% / ${sections.length}) * ${selectedIndex})`,
-            }}
-            className={classnames(
-              'sideMenuHelper bg-primary w-[2px]',
-              'transition-all ease-in-out absolute left-full',
-              itemClassName
-            )}
-          />
-        )}
       </Tab.List>
     </Tab.Group>
   );
