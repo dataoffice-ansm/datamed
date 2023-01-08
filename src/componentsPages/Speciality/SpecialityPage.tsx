@@ -33,7 +33,6 @@ import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { PieChartNatureMedicalErrors } from '../../components/Charts/PieChartNatureMedicalErrors';
 import { ExpositionLevel } from '../../api/graphql/enums';
 import { CardWithImage } from '../../components/CardWithImage/CardWithImage';
-import SickPersonSvg from '../../assets/pictos/sick_transparent_person.svg';
 import { Button } from '../../components/Button/Button';
 
 const SectionOneGlobalInformation = () => {
@@ -144,7 +143,6 @@ const SectionTreatedPatients = () => {
       />
 
       <Accordion
-        defaultOpen
         className="shadow rounded-lg"
         classNameTitle="text-primary"
         theme="primary"
@@ -298,7 +296,11 @@ const SectionMedicinalErrors = () => {
           des déclarations soit de risque d’erreur soit d’erreurs médicamenteuses avec ou sans
           évènements indésirables. Elles sont déclarées par les patients ou les professionnels de
           santé, notamment via{' '}
-          <a rel="external noreferrer" target="_blank" href="#">
+          <a
+            rel="external noreferrer"
+            target="_blank"
+            href="https://signalement.social-sante.gouv.fr/psig_ihm_utilisateurs/index.html#/accueil"
+          >
             le portail des signalements
           </a>
         </p>
@@ -307,7 +309,11 @@ const SectionMedicinalErrors = () => {
           de prescription, erreur de délivrance, erreur d’administration), de la cause de
           l&lsquo;erreur (produit, humaine et technique) et de la nature de l&lsquo;erreur (de
           médicament ou de patient).{' '}
-          <a rel="external noreferrer" target="_blank" href="#">
+          <a
+            rel="external noreferrer"
+            target="_blank"
+            href="https://ansm.sante.fr/page/la-gestion-des-erreurs-medicamenteuses"
+          >
             En savoir plus sur le site de l&lsquo;ANSM
           </a>
         </p>
@@ -430,7 +436,6 @@ const SectionRisksShortageHistory = () => {
       />
 
       <Accordion
-        defaultOpen
         className="shadow rounded-lg"
         classNameTitle="text-primary"
         theme="primary"
@@ -488,7 +493,7 @@ const SectionRisksShortageHistory = () => {
           <Button
             externalLink
             variant="outlined"
-            href="https://ansm.sante.fr/documents/reference/declarer-un-effet-indesirable"
+            href="https://ansm.sante.fr/disponibilites-des-produits-de-sante/medicaments"
             className="uppercase"
           >
             disponiblité des produits de santé

@@ -134,7 +134,7 @@ const PageAbout = () => (
                 className="h-full w-full overflow-hidden"
                 sandbox="allow-scripts allow-same-origin allow-presentation"
                 allow="autoplay"
-                src="https://www.dailymotion.com/embed/video/x82dxy0?autoplay=1"
+                src="https://www.dailymotion.com/embed/video/x82dxy0"
                 title="Datamed EIG4"
               />
             </div>

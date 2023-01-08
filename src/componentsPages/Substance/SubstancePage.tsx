@@ -36,7 +36,6 @@ const SectionOneGlobalInformation = () => {
       />
 
       <Accordion
-        defaultOpen
         className="shadow"
         theme="secondary"
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"

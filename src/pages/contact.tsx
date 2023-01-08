@@ -6,6 +6,7 @@ import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 
 import { BackgroundSquares } from '../components/BackgroundSquares/BackgroundSquares';
+import { Button } from '../components/Button/Button';
 
 const SectionContact = ({
   title,
@@ -25,17 +26,15 @@ const SectionAskFrequentlyQuestion = () => (
       Une question autour des données ? Autour du site ? data.ansm dispose d’une FAQ où les
       questions fréquemment posées y sont répertoriées.
     </p>
-    <Link href="/faq">
-      <a className="text-primary rounded border border-primary py-2 px-4 no-underline">
-        ACCÉDER À LA FAQ
-      </a>
-    </Link>
+    <Button href="/faq" variant="outlined" className="uppercase">
+      accéder à la faq
+    </Button>
   </SectionContact>
 );
 
-const SectionNumStandartAnsm = () => (
-  <SectionContact title="Numéro du standart de l'ANSM">
-    <p>01 55 87 30 00</p>
+const SectionNumStandard = () => (
+  <SectionContact title="Numéro du standard de l'ANSM">
+    <a href="tel:+33155873000">(+33) 01 55 87 30 00</a>
   </SectionContact>
 );
 
@@ -59,11 +58,14 @@ const SectionGuichetUsager = () => (
     <p className="mb-8">
       Pour les autres demandes, merci de contacter directement les services concernés.
     </p>
-    <Link href="#">
-      <a className="text-primary rounded border border-primary py-2 px-4 no-underline">
-        ACCÉDER AU FORMULAIRE DE CONTACT
-      </a>
-    </Link>
+    <Button
+      externalLink
+      variant="outlined"
+      href="https://ansm.sante.fr/contact"
+      className="uppercase"
+    >
+      accéder au formulaire contact de contact
+    </Button>
   </SectionContact>
 );
 
@@ -81,7 +83,7 @@ const PageContact = () => (
         </div>
         <div className="flex flex-col justify-center bg-white rounded shadow p-6 mb-4">
           <SectionAskFrequentlyQuestion />
-          <SectionNumStandartAnsm />
+          <SectionNumStandard />
           <SectionGuichetUsager />
         </div>
       </SmallContainer>
