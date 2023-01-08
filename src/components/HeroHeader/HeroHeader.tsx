@@ -1,6 +1,6 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import SubSvg from '../../assets/icons/sub.svg';
-import CisSvg from '../../assets/icons/cis.svg';
+import SubSvg from '../../assets/pictos/sub.svg';
+import CisSvg from '../../assets/pictos/cis.svg';
 import { CisTooltip } from '../../componentsPages/Speciality/CisTooltip';
 import { SubTooltip } from '../../componentsPages/Substance/SubTooltip';
 import { useEntityContext } from '../../contexts/EntityContext';

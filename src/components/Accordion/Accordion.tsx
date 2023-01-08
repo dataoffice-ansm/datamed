@@ -1,6 +1,6 @@
 import type { HTMLAttributes } from 'react';
-import SparkSVG from '../../assets/icons/spark/spark.svg';
-import ChevronSVG from '../../assets/icons/chevron/chevron.svg';
+import SparkSVG from '../../assets/pictos/icons/spark.svg';
+import ChevronSVG from '../../assets/pictos/icons/chevron.svg';
 import { Disclosure, Transition } from '@headlessui/react';
 import classNames from 'classnames';
 

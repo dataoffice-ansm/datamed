@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import { Tooltip } from './Tooltip/Tooltip';
 import type { HTMLAttributes, ReactNode } from 'react';
-import InfoSVG from '../assets/icons/info/info.svg';
+import InfoSVG from '../assets/pictos/icons/info.svg';
 
 export type BoxInfoTitleThemeColor = 'primary' | 'secondary' | 'success' | 'dark-green';
 

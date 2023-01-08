@@ -1,4 +1,4 @@
-import Notfound from '../assets/icons/indice-nodata.svg';
+import Notfound from '../assets/pictos/indice-nodata.svg';
 
 export const NotEnoughData = () => (
   <div className="flex flex-col justify-center items-center gap-3 my-8">

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
 import { BoxInfo } from '../../components/BoxInfo';
-import FolderSVG from '../../assets/icons/folder/folder.svg';
+import FolderSVG from '../../assets/pictos/folder.svg';
 
 const BoxInfoTitlePage = () => (
   <DevPageLayout title="BoxInfoTitle">

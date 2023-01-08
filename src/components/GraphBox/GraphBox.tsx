@@ -2,7 +2,7 @@ import type { HTMLAttributes, ReactNode } from 'react';
 import React from 'react';
 import classnames from 'classnames';
 import { Tooltip } from '../Tooltip/Tooltip';
-import InfoSVG from '../../assets/icons/info/info.svg';
+import InfoSVG from '../../assets/pictos/icons/info.svg';
 
 /**
  *

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import MouseScrollSvg from '../../assets/images/mouse_scroll.svg';
+import MouseScrollSvg from '../../assets/pictos/mouse_scroll.svg';
 import type { HTMLAttributes } from 'react';
 
 /**

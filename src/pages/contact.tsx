@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react';
-import Contact from '../assets/images/contact.svg';
+import Contact from '../assets/landing/contact.svg';
 import classnames from 'classnames';
 import Link from 'next/link';
 import { SmallContainer } from '../components/SmallContainer';

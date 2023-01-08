@@ -4,7 +4,7 @@ import type { ReactNode, HTMLAttributes } from 'react';
 import { useCallback, useState } from 'react';
 import classNames from 'classnames';
 import { Tooltip } from './Tooltip/Tooltip';
-import InfoSVG from '../assets/icons/info/info.svg';
+import InfoSVG from '../assets/pictos/icons/info.svg';
 
 const options = {
   percent: { label: 'Pourcentage' },

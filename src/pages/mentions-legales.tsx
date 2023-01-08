@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react';
-import IllustrationMentionLegal from '../assets/images/mention_legal.svg';
+import IllustrationMentionLegal from '../assets/pictos/mention_legal.svg';
 import classnames from 'classnames';
 import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';

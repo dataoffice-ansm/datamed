@@ -1,6 +1,6 @@
 import { FullWidthRow } from '../../../components/FullWidthRow/FullWidthRow';
 import { Autocomplete } from '../../../components/Autocomplete/Autocomplete';
-import LandingIllustrationSearch from '../../../assets/images/landing_illustration_search.svg';
+import LandingIllustrationSearch from '../../../assets/landing/landing_illustration_search.svg';
 
 export const SearchSection = () => (
   <FullWidthRow className="bg-background shadow-inner">

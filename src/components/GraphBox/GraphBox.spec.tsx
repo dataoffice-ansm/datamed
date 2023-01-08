@@ -1,6 +1,6 @@
 import { GraphBox } from './GraphBox';
 import { getByTestId, getByText, render } from '@testing-library/react';
-import SickPerson from '../../assets/images/sick_person.svg';
+import SickPerson from '../../assets/pictos/sick_person.svg';
 
 describe(GraphBox.name, () => {
   test('should render', () => {

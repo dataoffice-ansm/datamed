@@ -6,8 +6,8 @@ import { FullWidthRow } from '../../components/FullWidthRow/FullWidthRow';
 import { Accordion } from '../../components/Accordion/Accordion';
 import { faqData } from './mock/faq-data';
 
-import FaqSVG from '../../assets/images/faq.svg';
-import SparkSVG from '../../assets/icons/spark/spark.svg';
+import FaqSVG from '../../assets/landing/faq.svg';
+import SparkSVG from '../../assets/pictos/icons/spark.svg';
 import { useLayoutContext } from 'contexts/LayoutContext';
 import { toNormalForm } from '../../utils/format';
 

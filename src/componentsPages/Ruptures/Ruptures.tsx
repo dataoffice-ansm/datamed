@@ -1,7 +1,7 @@
 import { HeadlessHeroHeader } from '../../components/HeroHeader/HeadlessHeroHeader';
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
 import { Tooltip } from '../../components/Tooltip/Tooltip';
-import RupturesSVG from '../../assets/icons/ruptures.svg';
+import RupturesSVG from '../../assets/pictos/ruptures.svg';
 import { DeclarationByYear } from './DeclarationByYear.tsx/DeclarationByYear';
 import { DeclarationNatureCount } from './DeclarationNatureCount/DeclarationNatureCount';
 import { BaseTooltipContent } from './Tooltip';

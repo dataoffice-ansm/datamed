@@ -1,5 +1,5 @@
-import ManFigure from '../../assets/images/man_illustration.svg';
-import WomanFigure from '../../assets/images/woman_illustration.svg';
+import ManFigure from '../../assets/pictos/man_illustration.svg';
+import WomanFigure from '../../assets/pictos/woman_illustration.svg';
 import { GraphFigure } from '../../components/GraphFigure';
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
 import { Button } from '../../components/Button/Button';
