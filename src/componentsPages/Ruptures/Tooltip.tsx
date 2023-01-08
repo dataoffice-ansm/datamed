@@ -1,5 +1,5 @@
 import type { ReactNode } from 'react';
-import InfoSVG from '../../assets/icons/info/info.svg';
+import InfoSVG from '../../assets/pictos/icons/info.svg';
 import { Tooltip } from '../../components/Tooltip/Tooltip';
 
 export const BaseTooltipContent = ({ children }: { children: JSX.Element | ReactNode }) => (

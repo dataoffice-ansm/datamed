@@ -1,72 +1,72 @@
 import React from 'react';
 import { type Maybe, MedicalErrorNature } from '../graphql/__generated__/generated-documents';
 
-import ErrorAdministration from '../assets/images/errorAdministration.svg';
-import ErrorDelivrance from '../assets/images/errorDelivrance.svg';
-import ErrorSuiviTherapeutique from '../assets/images/errorSuivitherapeutique.svg';
-import ErrorOther from '../assets/images/errorOther.svg';
-import ErrorPreparation from '../assets/images/errorPreparation.svg';
-import ErrorPrescription from '../assets/images/errorPrescription.svg';
-import PublicationOtherSVG from '../assets/icons/publications/other.svg';
-import PublicationSpeakSVG from '../assets/icons/publications/speak.svg';
-import PublicationInfoSVG from '../assets/icons/publications/info.svg';
-import OtherDoctorFigure from '../assets/images/notifiers/0.svg';
-import NurseFigure from '../assets/images/notifiers/2.svg';
-import JuristeFigure from '../assets/images/notifiers/8.svg';
-import DoctorFigure from '../assets/images/notifiers/3.svg';
-import SpecialistFigure from '../assets/images/notifiers/4.svg';
-import PatientFigure from '../assets/images/notifiers/5.svg';
-import PharmacistFigure from '../assets/images/notifiers/6.svg';
-import AffectionsCardiaquesFigure from '../assets/images/pathology/0.svg';
-import AffectionPeauFigure from '../assets/images/pathology/1.svg';
-import AffectionsReinFigure from '../assets/images/pathology/2.svg';
-import AffectionsNerveuxFigure from '../assets/images/pathology/3.svg';
-import AffectionGastroFigure from '../assets/images/pathology/4.svg';
-import AffectionHematologiqueFigure from '../assets/images/pathology/5.svg';
-import AffectionHepatobilaireFigure from '../assets/images/pathology/6.svg';
-import AffectionMusculosquelettiquesFigure from '../assets/images/pathology/7.svg';
-import AffectionPsychiatriquesFigure from '../assets/images/pathology/8.svg';
-import AffectionRespiratoiresFigure from '../assets/images/pathology/9.svg';
-import AffectionVasculaireFigure from '../assets/images/pathology/10.svg';
-import InvestigationsFigure from '../assets/images/pathology/11.svg';
-import LesionsFigure from '../assets/images/pathology/12.svg';
-import TroublesMetabolismeFigure from '../assets/images/pathology/13.svg';
-import TroublesGenerauxFigure from '../assets/images/pathology/14.svg';
-import AffectionOreilleFigure from '../assets/images/pathology/15.svg';
-import AffectionOrganeFigure from '../assets/images/pathology/16.svg';
-import AffectionSystemeImmuFigure from '../assets/images/pathology/17.svg';
-import AffectionEndocriFigure from '../assets/images/pathology/18.svg';
-import AffectionsOculaireFigure from '../assets/images/pathology/19.svg';
-import InfectionFigure from '../assets/images/pathology/20.svg';
-import ProblemeFigure from '../assets/images/pathology/21.svg';
-import AffectionCongenitalesFigure from '../assets/images/pathology/22.svg';
-import TumeursBenignesFigure from '../assets/images/pathology/23.svg';
-import ActeMedicauxFigure from '../assets/images/pathology/24.svg';
-import AffectionGravidiquesFigure from '../assets/images/pathology/25.svg';
-import CaracteristiqueSocioFigure from '../assets/images/pathology/26.svg';
-import ContigentementQualitatif from '../assets/images/actions/contigetement-qualitatif.svg';
-import ContigentementQuantitatif from '../assets/images/actions/contigetement-quantitatif.svg';
-import FlexibiliteReglementaire from '../assets/images/actions/flexibilite-reglementaire.svg';
-import Importation from '../assets/images/actions/importation.svg';
-import MiseEnPlaceStock from '../assets/images/actions/mise-en-place-stock-depannage.svg';
-import RestrictionCircuitDistribution from '../assets/images/actions/restriction-circuit-distribution.svg';
-import NotFoundFigure from '../assets/images/notfound.svg';
-import ArretCommerceSvg from '../assets/images/causes/arret-commercialisation.svg';
-import AnalyseLiberationNonConformesSvg from '../assets/images/causes/analyses-de-liberation-non-conformes.svg';
-import AnalyseNonConformeSvg from '../assets/images/causes/analyse-non-conforme.svg';
-import AugmentationVolumesVenteSvg from '../assets/images/causes/augmentation-volumes-vente.svg';
-import AutreSvg from '../assets/images/causes/autre.svg';
-import CapaciteProductionInsuffisante from '../assets/images/causes/capacite-production-insuffisante.svg';
-import Coronavirus from '../assets/images/causes/coronavirus.svg';
-import DefautApprovisionnementSvg from '../assets/images/causes/defaut-approvisionnement.svg';
-import DefautApprovisionnementMpSvg from '../assets/images/causes/defaut-approvisionnement-mp.svg';
-import DefautQualiteSvg from '../assets/images/causes/defaut-qualite-produit-fini.svg';
-import IncidentProductionSvg from '../assets/images/causes/incident-production.svg';
-import MiseADispositionSvg from '../assets/images/causes/mise-a-disposition.svg';
-import NonConformeSvg from '../assets/images/causes/non-conformite-bpf.svg';
-import ProblemeTransportSvg from '../assets/images/causes/probleme-transport-logistique.svg';
-import TransfertSiteSvg from '../assets/images/causes/transfert-site.svg';
-import DifficulteReglementSvg from '../assets/images/causes/difficulte-reglementaire.svg';
+import ErrorAdministration from '../assets/pictos/errors/errorAdministration.svg';
+import ErrorDelivrance from '../assets/pictos/errors/errorDelivrance.svg';
+import ErrorSuiviTherapeutique from '../assets/pictos/errors/errorSuivitherapeutique.svg';
+import ErrorOther from '../assets/pictos/errors/errorOther.svg';
+import ErrorPreparation from '../assets/pictos/errors/errorPreparation.svg';
+import ErrorPrescription from '../assets/pictos/errors/errorPrescription.svg';
+import PublicationOtherSVG from '../assets/pictos/publications/other.svg';
+import PublicationSpeakSVG from '../assets/pictos/publications/speak.svg';
+import PublicationInfoSVG from '../assets/pictos/publications/info.svg';
+import OtherDoctorFigure from '../assets/pictos/notifiers/0.svg';
+import NurseFigure from '../assets/pictos/notifiers/2.svg';
+import JuristeFigure from '../assets/pictos/notifiers/8.svg';
+import DoctorFigure from '../assets/pictos/notifiers/3.svg';
+import SpecialistFigure from '../assets/pictos/notifiers/4.svg';
+import PatientFigure from '../assets/pictos/notifiers/5.svg';
+import PharmacistFigure from '../assets/pictos/notifiers/6.svg';
+import AffectionsCardiaquesFigure from '../assets/pictos/pathology/0.svg';
+import AffectionPeauFigure from '../assets/pictos/pathology/1.svg';
+import AffectionsReinFigure from '../assets/pictos/pathology/2.svg';
+import AffectionsNerveuxFigure from '../assets/pictos/pathology/3.svg';
+import AffectionGastroFigure from '../assets/pictos/pathology/4.svg';
+import AffectionHematologiqueFigure from '../assets/pictos/pathology/5.svg';
+import AffectionHepatobilaireFigure from '../assets/pictos/pathology/6.svg';
+import AffectionMusculosquelettiquesFigure from '../assets/pictos/pathology/7.svg';
+import AffectionPsychiatriquesFigure from '../assets/pictos/pathology/8.svg';
+import AffectionRespiratoiresFigure from '../assets/pictos/pathology/9.svg';
+import AffectionVasculaireFigure from '../assets/pictos/pathology/10.svg';
+import InvestigationsFigure from '../assets/pictos/pathology/11.svg';
+import LesionsFigure from '../assets/pictos/pathology/12.svg';
+import TroublesMetabolismeFigure from '../assets/pictos/pathology/13.svg';
+import TroublesGenerauxFigure from '../assets/pictos/pathology/14.svg';
+import AffectionOreilleFigure from '../assets/pictos/pathology/15.svg';
+import AffectionOrganeFigure from '../assets/pictos/pathology/16.svg';
+import AffectionSystemeImmuFigure from '../assets/pictos/pathology/17.svg';
+import AffectionEndocriFigure from '../assets/pictos/pathology/18.svg';
+import AffectionsOculaireFigure from '../assets/pictos/pathology/19.svg';
+import InfectionFigure from '../assets/pictos/pathology/20.svg';
+import ProblemeFigure from '../assets/pictos/pathology/21.svg';
+import AffectionCongenitalesFigure from '../assets/pictos/pathology/22.svg';
+import TumeursBenignesFigure from '../assets/pictos/pathology/23.svg';
+import ActeMedicauxFigure from '../assets/pictos/pathology/24.svg';
+import AffectionGravidiquesFigure from '../assets/pictos/pathology/25.svg';
+import CaracteristiqueSocioFigure from '../assets/pictos/pathology/26.svg';
+import ContigentementQualitatif from '../assets/pictos/actions/contigetement-qualitatif.svg';
+import ContigentementQuantitatif from '../assets/pictos/actions/contigetement-quantitatif.svg';
+import FlexibiliteReglementaire from '../assets/pictos/actions/flexibilite-reglementaire.svg';
+import Importation from '../assets/pictos/actions/importation.svg';
+import MiseEnPlaceStock from '../assets/pictos/actions/mise-en-place-stock-depannage.svg';
+import RestrictionCircuitDistribution from '../assets/pictos/actions/restriction-circuit-distribution.svg';
+import Notfound from '../assets/pictos/indice-nodata.svg';
+import ArretCommerceSvg from '../assets/pictos/causes/arret-commercialisation.svg';
+import AnalyseLiberationNonConformesSvg from '../assets/pictos/causes/analyses-de-liberation-non-conformes.svg';
+import AnalyseNonConformeSvg from '../assets/pictos/causes/analyse-non-conforme.svg';
+import AugmentationVolumesVenteSvg from '../assets/pictos/causes/augmentation-volumes-vente.svg';
+import AutreSvg from '../assets/pictos/causes/autre.svg';
+import CapaciteProductionInsuffisante from '../assets/pictos/causes/capacite-production-insuffisante.svg';
+import Coronavirus from '../assets/pictos/causes/coronavirus.svg';
+import DefautApprovisionnementSvg from '../assets/pictos/causes/defaut-approvisionnement.svg';
+import DefautApprovisionnementMpSvg from '../assets/pictos/causes/defaut-approvisionnement-mp.svg';
+import DefautQualiteSvg from '../assets/pictos/causes/defaut-qualite-produit-fini.svg';
+import IncidentProductionSvg from '../assets/pictos/causes/incident-production.svg';
+import MiseADispositionSvg from '../assets/pictos/causes/mise-a-disposition.svg';
+import NonConformeSvg from '../assets/pictos/causes/non-conformite-bpf.svg';
+import ProblemeTransportSvg from '../assets/pictos/causes/probleme-transport-logistique.svg';
+import TransfertSiteSvg from '../assets/pictos/causes/transfert-site.svg';
+import DifficulteReglementSvg from '../assets/pictos/causes/difficulte-reglementaire.svg';
 
 export const getMedicinalErrorNatureIcon = (errorInitial?: Maybe<MedicalErrorNature>) => {
   switch (errorInitial) {
@@ -197,7 +197,7 @@ export const getSideEffectPathologyIcon = (id: number) => {
     case 26:
       return <CaracteristiqueSocioFigure className="w-32" />;
     default:
-      return <NotFoundFigure className="w-32" />;
+      return <Notfound className="w-32" />;
   }
 };
 
@@ -216,7 +216,7 @@ export const getDeclarationActionIcon = (name: string) => {
     case 'Importation':
       return <Importation className="w-32" />;
     default:
-      return <NotFoundFigure className="w-32" />;
+      return <Notfound className="w-32" />;
   }
 };
 

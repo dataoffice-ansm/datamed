@@ -10,10 +10,10 @@ import classnames from 'classnames';
 import { SubstanceContainer } from './SubstanceContainer';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { Accordion } from '../../components/Accordion/Accordion';
-import PilIcon from '../../assets/images/gellule.svg';
+import PilIcon from '../../assets/pictos/gellule.svg';
 import { numberWithThousand } from '../../utils/format';
-import ManIllustration from '../../assets/images/man_illustration.svg';
-import WomanIllustration from '../../assets/images/woman_illustration.svg';
+import ManIllustration from '../../assets/pictos/man_illustration.svg';
+import WomanIllustration from '../../assets/pictos/woman_illustration.svg';
 import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
@@ -96,12 +96,12 @@ const SectionOneGlobalInformation = () => {
           </div>
 
           <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
-            <h3 className="text-secondary-900">
+            <h3 className="text-2xl text-secondary-900">
               {numberWithThousand(exposition?.consumption)} / an
             </h3>
             <p>
-              Approximation du nombre de patients ayant été remboursés sur la période 2014-2018 pour
-              une substance active ou une spécialité de médicament.
+              Moyenne annuelle du nombre de remboursements de médicament par patient et par
+              conditionnement de médicament.
             </p>
           </div>
         </div>
