@@ -35,7 +35,7 @@ type RepartitionRange {
     id: Int
     range: String! @capitalize
     value: Int!
-    valuePercent: Int!
+    valuePercent: String!
     description: String
 }
 

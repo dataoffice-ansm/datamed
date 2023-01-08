@@ -37,7 +37,6 @@ fragment SpecialityFragment on Speciality {
     repartitionPerAge {
         range
         value
-        description
         valuePercent
     }
     publications {
@@ -144,7 +143,6 @@ fragment SubstanceFragment on Substance {
     }
     repartitionPerAge {
         range
-        description
         value
         valuePercent
     }
@@ -231,7 +229,6 @@ query GlobalStatistic {
         repartitionPerAge {
             id
             range
-            description
             value
             valuePercent
         }
