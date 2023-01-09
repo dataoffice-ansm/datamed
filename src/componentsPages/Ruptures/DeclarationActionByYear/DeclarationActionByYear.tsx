@@ -168,7 +168,7 @@ export const RupturesDeclarationActionByYear = ({
                     <GraphFigure
                       className="pathologyGraphFigure"
                       unit={selectedUnitOption === 'number' ? '' : '%'}
-                      description={action.range}
+                      label={action.range}
                       icon={getDeclarationActionIcon(action.range)}
                       valueClassName="text-dark-green-900"
                       value={

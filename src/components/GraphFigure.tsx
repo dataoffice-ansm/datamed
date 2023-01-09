@@ -17,7 +17,7 @@ import { Tooltip } from './Tooltip/Tooltip';
  */
 export const GraphFigure = ({
   value = 0,
-  description,
+  label,
   icon,
   action,
   unit = '%',
@@ -28,7 +28,7 @@ export const GraphFigure = ({
   ...props
 }: HTMLAttributes<HTMLDivElement> & {
   value: number;
-  description: string;
+  label: string;
   icon?: ReactNode;
   action?: ReactNode;
   unit?: string;
@@ -53,7 +53,7 @@ export const GraphFigure = ({
           placement="bottom"
           render={(refCb) => (
             <span ref={refCb} className="underline cursor-help">
-              {description}
+              {label}
             </span>
           )}
           content={<div className="p-4">{contentTooltip}</div>}
@@ -62,9 +62,7 @@ export const GraphFigure = ({
       </div>
     ) : (
       <section>
-        <div className={classnames('GraphFigureDescription', descriptionClassName)}>
-          {description}
-        </div>
+        <div className={classnames('GraphFigureDescription', descriptionClassName)}>{label}</div>
         {action}
       </section>
     )}

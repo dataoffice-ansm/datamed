@@ -83,45 +83,66 @@ import PharmaFormImplant from '../assets/pictos/pharmaForm/Implant-120.svg';
 import PharmaFormLiquide from '../assets/pictos/pharmaForm/Liquide-120.svg';
 import PharmaFormMulti from '../assets/pictos/pharmaForm/Multi-120.svg';
 import PharmaFormPansement from '../assets/pictos/pharmaForm/Pansement-120.svg';
-import PharmaFormPlante from '../assets/pictos/pharmaForm/Plante-120.svg';
 import PharmaFormPoudre from '../assets/pictos/pharmaForm/Poudre-120.svg';
 import PharmaFormSeringue from '../assets/pictos/pharmaForm/Seringue-120.svg';
 import PharmaFormSirop from '../assets/pictos/pharmaForm/Sirop-120.svg';
 import PharmaFormSpray from '../assets/pictos/pharmaForm/Spray-120.svg';
-import PharmaFormSubstanceActive from '../assets/pictos/pharmaForm/SubstanceActive-120.svg';
 import PharmaFormSuppositoire from '../assets/pictos/pharmaForm/Suppositoire-120.svg';
+import { MedicalErrorApparitionStep } from '../graphql/__generated__/generated-documents';
 
 export const getPharmaFormIcon = (pharmaForm: PharmaFormType) => {
   console.log(pharmaForm);
 
   switch (pharmaForm) {
+    case 'COLLYRE':
+      return <PharmaFormCollyre />;
+    case 'CREME':
+      return <PharmaFormCreme />;
     case 'COMPRIME':
-      return <PharmaFormCap className="w-32" />;
-
+      return <PharmaFormCap />;
+    case 'LIQUIDE':
+      return <PharmaFormLiquide />;
+    case 'GAZ':
+      return <PharmaFormGaz />;
+    case 'GRANULE':
+      return <PharmaFormGranule />;
     case 'GELULE':
-      return <PharmaFormGelule className="w-32" />;
-
+      return <PharmaFormGelule />;
     case 'POUDRE':
       return <PharmaFormPoudre />;
-
+    case 'IMPLANT':
+      return <PharmaFormImplant />;
+    case 'SERINGUE':
+      return <PharmaFormSeringue />;
     case 'PANSEMENT':
       return <PharmaFormPansement />;
-
-    case 'SPRAY':
-      return <PharmaFormSpray />;
-
     case 'SIROP':
       return <PharmaFormSirop />;
-
-    case 'BUVABLE':
-      return <PharmaFormLiquide />;
-
     case 'SUPOSITOIRE':
       return <PharmaFormSuppositoire />;
-
-    case 'OTHER':
+    case 'SPRAY':
+      return <PharmaFormSpray />;
+    case 'MULTI':
+      return <PharmaFormMulti />;
+    case 'AUTRE':
     default:
       return <PharmaFormOther />;
+  }
+};
+
+export const getMedErrorApparitionStepIcon = (apparitionStep: MedicalErrorApparitionStep) => {
+  switch (apparitionStep) {
+    case MedicalErrorApparitionStep.SecondPrescriptionStep:
+      return <ErrorPreparation className="w-32" />;
+    case MedicalErrorApparitionStep.FirstPrescriptionStep:
+      return <ErrorDelivrance className="w-32" />;
+    case MedicalErrorApparitionStep.AdministrationStep:
+      return <ErrorPrescription className="w-32" />;
+    case MedicalErrorApparitionStep.AfterSurveillanceStep:
+      return <ErrorAdministration className="w-32" />;
+    case MedicalErrorApparitionStep.OtherStep:
+    default:
+      return <ErrorSuiviTherapeutique className="w-32" />;
   }
 };
 

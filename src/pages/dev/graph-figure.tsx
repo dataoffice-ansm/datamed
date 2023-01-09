@@ -13,7 +13,7 @@ const GraphFigurePage = () => (
           id="graph-figure-homme"
           value={53}
           valueClassName="text-secondary"
-          description="Hommes"
+          label="Hommes"
           icon={<ManFigure width={150} height={150} />}
           action={
             <a rel="external noreferrer" target="_blank" href="http://fake.com">
@@ -26,7 +26,7 @@ const GraphFigurePage = () => (
         <p className="text-primary">with default color (primary)</p>
         <GraphFigure
           value={47}
-          description="Femme"
+          label="Femme"
           icon={<WomanFigure width={150} height={150} />}
           action={
             <a rel="external noreferrer" target="_blank" href="http://fake.com">

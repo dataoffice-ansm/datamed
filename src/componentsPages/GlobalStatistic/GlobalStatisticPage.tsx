@@ -64,7 +64,7 @@ const SectionDemography = () => {
                 {repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
                     value={repartitionPerGender?.female?.valuePercent}
-                    description="Femmes"
+                    label="Femmes"
                     valueClassName="mt-2 text-dark-green"
                     icon={<WomanIllustration className="w-32" />}
                   />
@@ -73,7 +73,7 @@ const SectionDemography = () => {
                   <GraphFigure
                     value={repartitionPerGender.male?.valuePercent}
                     valueClassName="mt-2 text-dark-green"
-                    description="Hommes"
+                    label="Hommes"
                     icon={<ManIllustration className="w-32" />}
                   />
                 )}
@@ -168,7 +168,7 @@ const SectionRepartitionNotifiers = () => {
                 key={notifier.id}
                 className="NotifierRepartitionFigure"
                 unit={selectedOption === 'percent' ? ' % ' : ''}
-                description={notifier.job}
+                label={notifier.job}
                 icon={getNotifierIconByJobName(notifier.job)}
                 valueClassName="text-dark-green-900"
                 value={(selectedOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0}
@@ -245,7 +245,7 @@ const SectionTypesOfSideEffects = () => {
                   <GraphFigure
                     className="pathologyGraphFigure"
                     unit={selectedOption === 'percent' ? ' % ' : ''}
-                    description={pathologyRepartition.range}
+                    label={pathologyRepartition.range}
                     icon={getSideEffectPathologyIcon(pathologyRepartition.id)}
                     valueClassName="text-dark-green-900"
                     value={

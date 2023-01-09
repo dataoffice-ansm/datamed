@@ -25,7 +25,7 @@ export type CisExposition = {
   __typename?: 'CisExposition';
   consumption?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['String']>;
-  expositionLevel?: Maybe<Scalars['String']>;
+  level?: Maybe<Scalars['String']>;
 };
 
 export type GlobalRuptures = {
@@ -97,12 +97,6 @@ export type HltEffect = {
   valuePercent: Scalars['Float'];
 };
 
-export type Icon = {
-  __typename?: 'Icon';
-  id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
-};
-
 export type IndicatorValues = {
   __typename?: 'IndicatorValues';
   value: Scalars['Int'];
@@ -159,18 +153,17 @@ export type MedicalErrors = {
 
 export type MedicalErrorsApparitionStep = {
   __typename?: 'MedicalErrorsApparitionStep';
-  description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Int']>;
-  range: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['Int'];
+  step: Scalars['String'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
 };
 
 export type MedicalErrorsNature = {
   __typename?: 'MedicalErrorsNature';
-  description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Int']>;
-  range: Scalars['String'];
+  id: Scalars['Int'];
+  nature: Scalars['String'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
 };
@@ -202,18 +195,25 @@ export type MutationLoginArgs = {
 export type PharmaForm = {
   __typename?: 'PharmaForm';
   id: Scalars['Int'];
-  name: Scalars['String'];
+  label: Scalars['String'];
   type: Scalars['String'];
 };
 
 export enum PharmaFormType {
-  Buvable = 'BUVABLE',
+  Autre = 'AUTRE',
+  Collyre = 'COLLYRE',
   Comprime = 'COMPRIME',
-  Gel = 'GEL',
+  Creme = 'CREME',
+  Gaz = 'GAZ',
   Gelule = 'GELULE',
-  Other = 'OTHER',
+  Granule = 'GRANULE',
+  Implant = 'IMPLANT',
+  Liquide = 'LIQUIDE',
+  Multi = 'MULTI',
   Pansement = 'PANSEMENT',
+  Plante = 'PLANTE',
   Poudre = 'POUDRE',
+  Seringue = 'SERINGUE',
   Sirop = 'SIROP',
   Spray = 'SPRAY',
   Supositoire = 'SUPOSITOIRE',
@@ -366,7 +366,6 @@ export type Speciality = {
   dosageIndication?: Maybe<Scalars['String']>;
   dosageSubstances?: Maybe<Array<Maybe<SpecialitySubstance>>>;
   exposition?: Maybe<CisExposition>;
-  icon?: Maybe<Icon>;
   id: Scalars['Int'];
   laboratory?: Maybe<Laboratory>;
   medicalErrors?: Maybe<MedicalErrors>;
@@ -574,7 +573,6 @@ export type ResolversTypes = {
   GlobalStatsUsagePerPathology: ResolverTypeWrapper<GlobalStatsUsagePerPathology>;
   GlobalStatsUsagePerSeriousEffect: ResolverTypeWrapper<GlobalStatsUsagePerSeriousEffect>;
   HltEffect: ResolverTypeWrapper<HltEffect>;
-  Icon: ResolverTypeWrapper<Icon>;
   IndicatorValues: ResolverTypeWrapper<IndicatorValues>;
   Int: ResolverTypeWrapper<Scalars['Int']>;
   Laboratory: ResolverTypeWrapper<Laboratory>;
@@ -639,7 +637,6 @@ export type ResolversParentTypes = {
   GlobalStatsUsagePerPathology: GlobalStatsUsagePerPathology;
   GlobalStatsUsagePerSeriousEffect: GlobalStatsUsagePerSeriousEffect;
   HltEffect: HltEffect;
-  Icon: Icon;
   IndicatorValues: IndicatorValues;
   Int: Scalars['Int'];
   Laboratory: Laboratory;
@@ -729,7 +726,7 @@ export type CisExpositionResolvers<
 > = {
   consumption?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  expositionLevel?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  level?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -878,15 +875,6 @@ export type HltEffectResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type IconResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['Icon'] = ResolversParentTypes['Icon']
-> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type IndicatorValuesResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['IndicatorValues'] = ResolversParentTypes['IndicatorValues']
@@ -962,9 +950,9 @@ export type MedicalErrorsApparitionStepResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['MedicalErrorsApparitionStep'] = ResolversParentTypes['MedicalErrorsApparitionStep']
 > = {
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  step?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   valuePercent?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -974,9 +962,8 @@ export type MedicalErrorsNatureResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['MedicalErrorsNature'] = ResolversParentTypes['MedicalErrorsNature']
 > = {
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  nature?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   valuePercent?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1019,7 +1006,7 @@ export type PharmaFormResolvers<
   ParentType extends ResolversParentTypes['PharmaForm'] = ResolversParentTypes['PharmaForm']
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   type?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1240,7 +1227,6 @@ export type SpecialityResolvers<
     ContextType
   >;
   exposition?: Resolver<Maybe<ResolversTypes['CisExposition']>, ParentType, ContextType>;
-  icon?: Resolver<Maybe<ResolversTypes['Icon']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   laboratory?: Resolver<Maybe<ResolversTypes['Laboratory']>, ParentType, ContextType>;
   medicalErrors?: Resolver<Maybe<ResolversTypes['MedicalErrors']>, ParentType, ContextType>;
@@ -1444,7 +1430,6 @@ export type Resolvers<ContextType = ContextValue> = {
   GlobalStatsUsagePerPathology?: GlobalStatsUsagePerPathologyResolvers<ContextType>;
   GlobalStatsUsagePerSeriousEffect?: GlobalStatsUsagePerSeriousEffectResolvers<ContextType>;
   HltEffect?: HltEffectResolvers<ContextType>;
-  Icon?: IconResolvers<ContextType>;
   IndicatorValues?: IndicatorValuesResolvers<ContextType>;
   Laboratory?: LaboratoryResolvers<ContextType>;
   LoginResult?: LoginResultResolvers<ContextType>;

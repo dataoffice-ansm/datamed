@@ -178,7 +178,7 @@ export const SubstanceContainer = ({
                 {repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
                     value={repartitionPerGender.female.valuePercent}
-                    description="Femmes"
+                    label="Femmes"
                     valueClassName="mt-2 text-secondary"
                     icon={<WomanFigure className="w-32" />}
                   />
@@ -187,7 +187,7 @@ export const SubstanceContainer = ({
                   <GraphFigure
                     value={repartitionPerGender.male.valuePercent}
                     valueClassName="mt-2 text-secondary"
-                    description="Hommes"
+                    label="Hommes"
                     icon={<ManFigure className="w-32" />}
                   />
                 )}
@@ -228,7 +228,7 @@ export const SubstanceContainer = ({
                     key={notifier.id}
                     className="NotifierRepartition"
                     unit={selectedOption === 'percent' ? ' % ' : ''}
-                    description={notifier.job}
+                    label={notifier.job}
                     valueClassName="text-secondary my-2"
                     icon={getNotifierIcon(notifier.id)}
                     value={
@@ -286,7 +286,7 @@ export const SubstanceContainer = ({
                   <GraphFigure
                     className="PathologyRepartition"
                     unit={selectedOption === 'percent' ? ' % ' : ''}
-                    description={pathologyRepartition.range}
+                    label={pathologyRepartition.range}
                     icon={getSideEffectPathologyIcon(pathologyRepartition.id)}
                     action={<PathologyOrgansRepartitionModal pathology={pathologyRepartition} />}
                     valueClassName="text-secondary-900"

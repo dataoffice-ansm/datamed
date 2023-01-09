@@ -35,9 +35,8 @@ import type {
 } from '../../graphql/__generated__/generated-types';
 import {
   getCisExpositionByLevelId,
+  getCisPharmaFormType,
   getMedicalErrorApparitionStep,
-  getMedicalErrorNatureByNatureId,
-  getPharmaFormTypeByLabel,
 } from '../../utils/mapping';
 import { roundFloat } from '../../utils/format';
 
@@ -84,7 +83,6 @@ export class PostgresOperations {
         atcId,
         actCode,
         atcName,
-        iconId,
         iconName,
         description,
         commercialisationState,
@@ -98,8 +96,6 @@ export class PostgresOperations {
         pharmaFormLabel,
       } = row;
 
-      const expositionLevel = getCisExpositionByLevelId(exposition);
-
       return {
         id,
         code,
@@ -112,19 +108,13 @@ export class PostgresOperations {
             }
           : null,
         pharmaForm:
-          pharmaFormId && pharmaFormLabel
+          pharmaFormId && pharmaFormLabel && iconName
             ? {
                 id: pharmaFormId,
-                name: pharmaFormLabel,
-                type: getPharmaFormTypeByLabel(pharmaFormLabel),
+                label: pharmaFormLabel,
+                type: getCisPharmaFormType(iconName),
               }
             : null,
-        icon: iconId
-          ? {
-              id: iconId,
-              name: iconName,
-            }
-          : null,
         description,
         commercialisationState,
         commercialisationType,
@@ -137,8 +127,7 @@ export class PostgresOperations {
         exposition: expositionId
           ? {
               consumption,
-              expositionLevel: expositionLevel.level,
-              description: expositionLevel.description,
+              ...getCisExpositionByLevelId(exposition),
             }
           : null,
       };
@@ -298,21 +287,21 @@ export class PostgresOperations {
       .selectFrom('error_med_initial as err')
       .leftJoin('initial_errors as ini', 'ini.id', 'err.initial_error_id')
       .where('err.mp_id', '=', cisId)
-      .select(['ini.id as apparitionId', 'err.number as value', 'err.percentage as valuePercent'])
+      .select(['ini.id as stepId', 'err.number as value', 'err.percentage as valuePercent'])
       .execute();
 
     return rows.reduce<MedicalErrorsApparitionStep[]>((carry, row) => {
-      const { apparitionId, value, valuePercent } = row;
+      const { stepId, value, valuePercent } = row;
 
-      const { step, description } = getMedicalErrorApparitionStep(apparitionId ?? 0);
+      const { step, description } = getMedicalErrorApparitionStep(stepId ?? 0);
 
       // eslint-disable-next-line no-negated-condition
-      return apparitionId !== null
+      return stepId !== null
         ? [
             ...carry,
             {
-              id: apparitionId,
-              range: step,
+              id: stepId,
+              step,
               description,
               value: Math.round(value ?? 0),
               valuePercent: roundFloat(valuePercent ?? 0),
@@ -329,22 +318,21 @@ export class PostgresOperations {
       .where('err.mp_id', '=', cisId)
       .select([
         'nat.id as natureId',
-        'nat.label as description',
+        'nat.label as nature',
         'err.number as value',
         'err.percentage as valuePercent',
       ])
       .execute();
 
     return rows.reduce<MedicalErrorsNature[]>((carry, row) => {
-      const { natureId, description, value, valuePercent } = row;
-      // eslint-disable-next-line no-negated-condition
-      return natureId !== null
+      const { natureId, nature, value, valuePercent } = row;
+
+      return natureId !== null && nature
         ? [
             ...carry,
             {
               id: natureId,
-              description,
-              range: getMedicalErrorNatureByNatureId(natureId),
+              nature,
               value: Math.round(value ?? 0),
               valuePercent: roundFloat(valuePercent ?? 0),
             },
@@ -707,12 +695,10 @@ export class PostgresOperations {
 
     if (row) {
       const { exposition, consumption } = row;
-      const { level, description } = getCisExpositionByLevelId(exposition);
 
       return {
         consumption,
-        expositionLevel: level,
-        description,
+        ...getCisExpositionByLevelId(exposition),
       };
     }
 

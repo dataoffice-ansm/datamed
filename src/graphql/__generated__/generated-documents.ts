@@ -25,7 +25,7 @@ export type CisExposition = {
   __typename?: 'CisExposition';
   consumption?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['String']>;
-  expositionLevel?: Maybe<Scalars['String']>;
+  level?: Maybe<Scalars['String']>;
 };
 
 export type GlobalRuptures = {
@@ -97,12 +97,6 @@ export type HltEffect = {
   valuePercent: Scalars['Float'];
 };
 
-export type Icon = {
-  __typename?: 'Icon';
-  id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
-};
-
 export type IndicatorValues = {
   __typename?: 'IndicatorValues';
   value: Scalars['Int'];
@@ -159,18 +153,17 @@ export type MedicalErrors = {
 
 export type MedicalErrorsApparitionStep = {
   __typename?: 'MedicalErrorsApparitionStep';
-  description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Int']>;
-  range: Scalars['String'];
+  description: Scalars['String'];
+  id: Scalars['Int'];
+  step: Scalars['String'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
 };
 
 export type MedicalErrorsNature = {
   __typename?: 'MedicalErrorsNature';
-  description?: Maybe<Scalars['String']>;
-  id?: Maybe<Scalars['Int']>;
-  range: Scalars['String'];
+  id: Scalars['Int'];
+  nature: Scalars['String'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
 };
@@ -202,18 +195,25 @@ export type MutationLoginArgs = {
 export type PharmaForm = {
   __typename?: 'PharmaForm';
   id: Scalars['Int'];
-  name: Scalars['String'];
+  label: Scalars['String'];
   type: Scalars['String'];
 };
 
 export enum PharmaFormType {
-  Buvable = 'BUVABLE',
+  Autre = 'AUTRE',
+  Collyre = 'COLLYRE',
   Comprime = 'COMPRIME',
-  Gel = 'GEL',
+  Creme = 'CREME',
+  Gaz = 'GAZ',
   Gelule = 'GELULE',
-  Other = 'OTHER',
+  Granule = 'GRANULE',
+  Implant = 'IMPLANT',
+  Liquide = 'LIQUIDE',
+  Multi = 'MULTI',
   Pansement = 'PANSEMENT',
+  Plante = 'PLANTE',
   Poudre = 'POUDRE',
+  Seringue = 'SERINGUE',
   Sirop = 'SIROP',
   Spray = 'SPRAY',
   Supositoire = 'SUPOSITOIRE',
@@ -366,7 +366,6 @@ export type Speciality = {
   dosageIndication?: Maybe<Scalars['String']>;
   dosageSubstances?: Maybe<Array<Maybe<SpecialitySubstance>>>;
   exposition?: Maybe<CisExposition>;
-  icon?: Maybe<Icon>;
   id: Scalars['Int'];
   laboratory?: Maybe<Laboratory>;
   medicalErrors?: Maybe<MedicalErrors>;
@@ -493,7 +492,7 @@ export type SpecialityFragmentFragment = {
     name?: string | null;
     code?: string | null;
   } | null;
-  pharmaForm?: { __typename?: 'PharmaForm'; id: number; name: string; type: string } | null;
+  pharmaForm?: { __typename?: 'PharmaForm'; id: number; label: string; type: string } | null;
   substances?: Array<{
     __typename?: 'Substance';
     id: number;
@@ -551,7 +550,7 @@ export type SpecialityFragmentFragment = {
     exposition?: {
       __typename?: 'CisExposition';
       consumption?: number | null;
-      expositionLevel?: string | null;
+      level?: string | null;
       description?: string | null;
     } | null;
   } | null> | null;
@@ -580,12 +579,11 @@ export type SpecialityFragmentFragment = {
     link?: string | null;
     type?: { __typename?: 'PublicationType'; id?: number | null; name?: string | null } | null;
   } | null> | null;
-  icon?: { __typename?: 'Icon'; id: number; name?: string | null } | null;
   laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
   exposition?: {
     __typename?: 'CisExposition';
     consumption?: number | null;
-    expositionLevel?: string | null;
+    level?: string | null;
     description?: string | null;
   } | null;
   medicalErrors?: {
@@ -605,17 +603,16 @@ export type SpecialityFragmentFragment = {
     } | null;
     apparitionStepRepartition?: Array<{
       __typename?: 'MedicalErrorsApparitionStep';
-      id?: number | null;
-      range: string;
-      description?: string | null;
+      id: number;
+      step: string;
+      description: string;
       value: number;
       valuePercent: number;
     } | null> | null;
     natureRepartition?: Array<{
       __typename?: 'MedicalErrorsNature';
-      id?: number | null;
-      range: string;
-      description?: string | null;
+      id: number;
+      nature: string;
       value: number;
       valuePercent: number;
     } | null> | null;
@@ -693,7 +690,7 @@ export type SubstanceFragmentFragment = {
   exposition?: {
     __typename?: 'CisExposition';
     consumption?: number | null;
-    expositionLevel?: string | null;
+    level?: string | null;
     description?: string | null;
   } | null;
 };
@@ -719,7 +716,7 @@ export type SpecialityQuery = {
       name?: string | null;
       code?: string | null;
     } | null;
-    pharmaForm?: { __typename?: 'PharmaForm'; id: number; name: string; type: string } | null;
+    pharmaForm?: { __typename?: 'PharmaForm'; id: number; label: string; type: string } | null;
     substances?: Array<{
       __typename?: 'Substance';
       id: number;
@@ -777,7 +774,7 @@ export type SpecialityQuery = {
       exposition?: {
         __typename?: 'CisExposition';
         consumption?: number | null;
-        expositionLevel?: string | null;
+        level?: string | null;
         description?: string | null;
       } | null;
     } | null> | null;
@@ -806,12 +803,11 @@ export type SpecialityQuery = {
       link?: string | null;
       type?: { __typename?: 'PublicationType'; id?: number | null; name?: string | null } | null;
     } | null> | null;
-    icon?: { __typename?: 'Icon'; id: number; name?: string | null } | null;
     laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
     exposition?: {
       __typename?: 'CisExposition';
       consumption?: number | null;
-      expositionLevel?: string | null;
+      level?: string | null;
       description?: string | null;
     } | null;
     medicalErrors?: {
@@ -831,17 +827,16 @@ export type SpecialityQuery = {
       } | null;
       apparitionStepRepartition?: Array<{
         __typename?: 'MedicalErrorsApparitionStep';
-        id?: number | null;
-        range: string;
-        description?: string | null;
+        id: number;
+        step: string;
+        description: string;
         value: number;
         valuePercent: number;
       } | null> | null;
       natureRepartition?: Array<{
         __typename?: 'MedicalErrorsNature';
-        id?: number | null;
-        range: string;
-        description?: string | null;
+        id: number;
+        nature: string;
         value: number;
         valuePercent: number;
       } | null> | null;
@@ -942,7 +937,7 @@ export type SubstanceQuery = {
     exposition?: {
       __typename?: 'CisExposition';
       consumption?: number | null;
-      expositionLevel?: string | null;
+      level?: string | null;
       description?: string | null;
     } | null;
   } | null;
@@ -1144,7 +1139,7 @@ export const SubstanceFragmentFragmentDoc = gql`
     }
     exposition {
       consumption
-      expositionLevel
+      level
       description
     }
   }
@@ -1162,7 +1157,7 @@ export const SpecialityFragmentFragmentDoc = gql`
     }
     pharmaForm {
       id
-      name
+      label
       type
     }
     substances {
@@ -1201,17 +1196,13 @@ export const SpecialityFragmentFragmentDoc = gql`
         name
       }
     }
-    icon {
-      id
-      name
-    }
     laboratory {
       id
       name
     }
     exposition {
       consumption
-      expositionLevel
+      level
       description
     }
     medicalErrors {
@@ -1234,15 +1225,14 @@ export const SpecialityFragmentFragmentDoc = gql`
       }
       apparitionStepRepartition {
         id
-        range
+        step
         description
         value
         valuePercent
       }
       natureRepartition {
         id
-        range
-        description
+        nature
         value
         valuePercent
       }

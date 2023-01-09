@@ -10,7 +10,7 @@ fragment SpecialityFragment on Speciality {
     }
     pharmaForm {
         id
-        name
+        label
         type
     }
     substances {
@@ -49,17 +49,13 @@ fragment SpecialityFragment on Speciality {
             name
         }
     }
-    icon {
-        id
-        name
-    }
     laboratory {
         id
         name
     }
     exposition {
         consumption
-        expositionLevel
+        level
         description
     }
     medicalErrors {
@@ -82,15 +78,14 @@ fragment SpecialityFragment on Speciality {
         }
         apparitionStepRepartition {
             id
-            range
+            step
             description
             value
             valuePercent
         }
         natureRepartition {
             id
-            range
-            description
+            nature
             value
             valuePercent
         }
@@ -172,7 +167,7 @@ fragment SubstanceFragment on Substance {
     }
     exposition {
         consumption
-        expositionLevel
+        level
         description
     }
 }

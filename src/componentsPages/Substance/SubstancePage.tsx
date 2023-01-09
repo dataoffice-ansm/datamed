@@ -2,8 +2,7 @@ import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/Enti
 import { HeroHeader } from '../../components/HeroHeader/HeroHeader';
 import type { EntitySub } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
-import type { Substance } from '../../api/graphql/__generated__/generated-types';
-import { useSubstanceQuery } from '../../graphql/__generated__/generated-documents';
+import { type Substance, useSubstanceQuery } from '../../graphql/__generated__/generated-documents';
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 import Link from 'next/link';
 import classnames from 'classnames';
@@ -84,7 +83,7 @@ const SectionOneGlobalInformation = () => {
                   )}
                   style={{ height: 20 + 10 * index }}
                 >
-                  {exposition?.expositionLevel === levelKey && (
+                  {exposition?.level === levelKey && (
                     <div className="bouncingPil animate-bounce absolute -top-8">
                       <PilIcon className="w-6 h-6" />
                     </div>
@@ -117,7 +116,7 @@ const SectionOneGlobalInformation = () => {
                 {repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
                     value={repartitionPerGender.female.valuePercent}
-                    description="Femmes"
+                    label="Femmes"
                     valueClassName="mt-2 text-secondary"
                     icon={<WomanIllustration className="w-32" />}
                   />
@@ -126,7 +125,7 @@ const SectionOneGlobalInformation = () => {
                   <GraphFigure
                     value={repartitionPerGender.male.valuePercent}
                     valueClassName="mt-2 text-secondary"
-                    description="Hommes"
+                    label="Hommes"
                     icon={<ManIllustration className="w-32" />}
                   />
                 )}
