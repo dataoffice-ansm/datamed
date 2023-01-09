@@ -14,11 +14,11 @@ export const RuptureHistoryItem = ({
     </div>
     <div className="row flex items-center">
       <span className="flex-2 uppercase text-sm">Statut</span>
-      <span className="flex-2">{ruptureItem?.classification?.name}</span>
+      <span className="flex-2">{ruptureItem?.classification?.label}</span>
     </div>
     <div className="row flex items-center">
       <span className="flex-2 uppercase text-sm">Cause</span>
-      <span className="flex-2">{ruptureItem?.cause?.name}</span>
+      <span className="flex-2">{ruptureItem?.cause?.type}</span>
     </div>
     <div className="row flex items-center">
       <span className="flex-2 uppercase text-sm">Date de début de la difficulté:</span>

@@ -99,11 +99,11 @@ fragment SpecialityFragment on Speciality {
             date
             cause {
                 id
-                name
+                type
             }
             classification {
                 id
-                name
+                label
             }
         }
         meta {

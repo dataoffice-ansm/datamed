@@ -77,3 +77,30 @@ export const getMedicalErrorApparitionStep = (initialErrorId: number) => {
       return MedicalErrorApparitionStep.OtherStep;
   }
 };
+
+export const getRuptureTypeLabel = (ruptureId: number) => {
+  switch (ruptureId) {
+    case 0:
+      return 'Rupture';
+    case 1:
+      return 'Risque de rupture de stock';
+    case 3:
+      return 'Arrêt de commercialisation';
+    case 4:
+    default:
+      return 'Autre';
+  }
+};
+
+export const getPublicationsTypeLabel = (publishTypeId: number) => {
+  switch (publishTypeId) {
+    case 0:
+    case 2:
+    case 4:
+      return "Point d'information";
+    case 3:
+      return 'Communiqué';
+    default:
+      return 'Autre';
+  }
+};
