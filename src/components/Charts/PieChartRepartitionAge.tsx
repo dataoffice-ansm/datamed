@@ -1,9 +1,14 @@
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip, type TooltipItem } from 'chart.js';
 import { darkGreen, darkViolet, turquoise } from '../../../tailwind.palette.config';
-import type { Speciality, Substance } from '../../graphql/__generated__/generated-documents';
+import type {
+  GlobalStatistic,
+  Speciality,
+  Substance,
+} from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
 import { numberWithThousand } from '../../utils/format';
+import { type RepartitionUsageCommon } from '../../utils/entities';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -19,7 +24,10 @@ export const PieChartRepartitionAge = ({
   className,
   theme = 'primary',
 }: {
-  ageData: Speciality['repartitionPerAge'] | Substance['repartitionPerAge'];
+  ageData:
+    | Speciality['repartitionPerAge']
+    | Substance['repartitionPerAge']
+    | GlobalStatistic['repartitionPerAge'];
   theme?: 'primary' | 'secondary' | 'secondary-variant';
   className?: string;
 }) => {
@@ -34,7 +42,7 @@ export const PieChartRepartitionAge = ({
     const tooltipItem = tooltipItems[0];
 
     const range = tooltipItem.label;
-    const repartition = ageData.find((e) => range === e?.range);
+    const repartition = (ageData as RepartitionUsageCommon[]).find((e) => range === e?.range);
     const rawValue = repartition?.value ?? 0;
     return [`Nombre: ${numberWithThousand(rawValue)}`];
   };

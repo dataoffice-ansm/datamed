@@ -17,7 +17,6 @@ import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { Accordion } from '../../components/Accordion/Accordion';
 import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
-import { Button } from '../../components/Button/Button';
 import GlobStatSvg from '../../assets/pictos/sick_transparent_person.svg';
 import { Tooltip } from '../../components/Tooltip/Tooltip';
 import { useGlobalDecPageContext } from '../../contexts/GlobaleDecPageContext';
@@ -126,6 +125,7 @@ const SectionSeriousEffect = () => {
             />
           </GraphBox>
         </div>
+
         <div className="flex-1">
           <GraphBox
             title="Détail des déclarations d'effets indésirables graves"

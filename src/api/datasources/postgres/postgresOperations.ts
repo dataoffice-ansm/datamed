@@ -2,17 +2,20 @@ import { dbInstance } from './postgreDb';
 import type {
   CisExposition,
   GlobalStatistic,
-  GlobStaticRepartitionPerNotifier,
-  GlobStaticRepartitionPerPathology,
+  GlobalStatsUsagePerAge,
+  GlobalStatsUsagePerGravity,
+  GlobalStatsUsagePerNotifier,
+  GlobalStatsUsagePerPathology,
+  GlobalStatsUsagePerSeriousEffect,
   HltEffect,
   MedicalErrors,
+  MedicalErrorsApparitionStep,
+  MedicalErrorsNature,
+  MedicalErrorsPopulation,
   Publication,
   RepartitionPerGender,
-  RepartitionPerGravity,
   RepartitionPerNotifier,
   RepartitionPerPathology,
-  RepartitionPerSeriousEffect,
-  RepartitionRange,
   RuptureAction,
   RuptureActionRepartition,
   RuptureCauseRepartition,
@@ -23,7 +26,9 @@ import type {
   Speciality,
   SpecialityRupture,
   SpecialitySubstance,
+  SpecialityUsagePerAge,
   Substance,
+  SubstanceUsagePerAge,
   TherapeuticClassesRupturesPerYear,
   TherapeuticClassRupture,
   TotalExposition,
@@ -34,6 +39,7 @@ import {
   getMedicalErrorNatureByNatureId,
   getPharmaFormTypeByLabel,
 } from '../../utils/mapping';
+import { roundFloat } from '../../utils/format';
 
 export class PostgresOperations {
   async getFullSpecialitiesByCode(cisCodes: string[]): Promise<Speciality[]> {
@@ -202,17 +208,17 @@ export class PostgresOperations {
 
     return {
       male: {
-        value: male ? Math.round(male.patients_consumption ?? 0) : null,
-        valuePercent: male ? Math.round(male.patients_percentage ?? 0) : null,
+        value: Math.round(male?.patients_consumption ?? 0),
+        valuePercent: roundFloat(male?.patients_percentage ?? 0),
       },
       female: {
-        value: female ? Math.round(female.patients_consumption ?? 0) : null,
-        valuePercent: female ? Math.round(female.patients_percentage ?? 0) : null,
+        value: Math.round(female?.patients_consumption ?? 0),
+        valuePercent: roundFloat(female?.patients_percentage ?? 0),
       },
     };
   }
 
-  async getSpecialityRepAge(cisId: number): Promise<RepartitionRange[]> {
+  async getSpecialityRepAge(cisId: number): Promise<SpecialityUsagePerAge[]> {
     const rows = await dbInstance
       .selectFrom('mp_patient_ages as mp_a')
       .where('mp_a.mp_id', '=', cisId)
@@ -220,7 +226,7 @@ export class PostgresOperations {
       .select(['mp_a.patients_consumption', 'mp_a.patients_percentage', 'ages.range'])
       .execute();
 
-    return rows.reduce<RepartitionRange[]>((carry, row) => {
+    return rows.reduce<SpecialityUsagePerAge[]>((carry, row) => {
       const { range, patients_consumption, patients_percentage } = row;
 
       return range
@@ -229,14 +235,14 @@ export class PostgresOperations {
             {
               range,
               value: Math.round(patients_consumption ?? 0),
-              valuePercent: (patients_percentage ?? 0).toFixed(2),
+              valuePercent: roundFloat(patients_percentage ?? 0),
             },
           ]
         : carry;
     }, []);
   }
 
-  async getErrorsMedRepPopulation(cisId: number): Promise<RepartitionRange[]> {
+  async getErrorsMedRepPopulation(cisId: number): Promise<MedicalErrorsPopulation[]> {
     const rows = await dbInstance
       .selectFrom('error_med_population as err')
       .leftJoin('population_errors as pop', 'pop.id', 'err.population_error_id')
@@ -244,7 +250,7 @@ export class PostgresOperations {
       .select(['err.number', 'err.percentage', 'pop.label as range'])
       .execute();
 
-    return rows.reduce<RepartitionRange[]>((carry, row) => {
+    return rows.reduce<MedicalErrorsPopulation[]>((carry, row) => {
       const { range, number, percentage } = row;
 
       return range
@@ -253,7 +259,7 @@ export class PostgresOperations {
             {
               range,
               value: Math.round(number ?? 0),
-              valuePercent: (percentage ?? 0).toFixed(2),
+              valuePercent: roundFloat(percentage ?? 0),
             },
           ]
         : carry;
@@ -275,17 +281,19 @@ export class PostgresOperations {
 
     return {
       with: {
-        value: withSideEffect ? Math.round(withSideEffect.number ?? 0) : null,
-        valuePercent: withSideEffect ? Math.round(withSideEffect.percentage ?? 0) : null,
+        value: Math.round(withSideEffect?.number ?? 0),
+        valuePercent: roundFloat(withSideEffect?.percentage ?? 0),
       },
       without: {
-        value: withoutSideEffect ? Math.round(withoutSideEffect.number ?? 0) : null,
-        valuePercent: withoutSideEffect ? Math.round(withoutSideEffect.percentage ?? 0) : null,
+        value: Math.round(withoutSideEffect?.number ?? 0),
+        valuePercent: roundFloat(withoutSideEffect?.percentage ?? 0),
       },
     };
   }
 
-  async getErrorsMedicalApparitionStepRepartition(cisId: number): Promise<RepartitionRange[]> {
+  async getErrorsMedicalApparitionStepRepartition(
+    cisId: number
+  ): Promise<MedicalErrorsApparitionStep[]> {
     const rows = await dbInstance
       .selectFrom('error_med_initial as err')
       .leftJoin('initial_errors as ini', 'ini.id', 'err.initial_error_id')
@@ -293,7 +301,7 @@ export class PostgresOperations {
       .select(['ini.id as apparitionId', 'err.number as value', 'err.percentage as valuePercent'])
       .execute();
 
-    return rows.reduce<RepartitionRange[]>((carry, row) => {
+    return rows.reduce<MedicalErrorsApparitionStep[]>((carry, row) => {
       const { apparitionId, value, valuePercent } = row;
 
       const { step, description } = getMedicalErrorApparitionStep(apparitionId ?? 0);
@@ -307,14 +315,14 @@ export class PostgresOperations {
               range: step,
               description,
               value: Math.round(value ?? 0),
-              valuePercent: (valuePercent ?? 0).toFixed(2),
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
     }, []);
   }
 
-  async getErrorsMedicalNatureRepartition(cisId: number): Promise<RepartitionRange[]> {
+  async getErrorsMedicalNatureRepartition(cisId: number): Promise<MedicalErrorsNature[]> {
     const rows = await dbInstance
       .selectFrom('error_med_nature as err')
       .leftJoin('nature_errors as nat', 'nat.id', 'err.nature_error_id')
@@ -327,7 +335,7 @@ export class PostgresOperations {
       ])
       .execute();
 
-    return rows.reduce<RepartitionRange[]>((carry, row) => {
+    return rows.reduce<MedicalErrorsNature[]>((carry, row) => {
       const { natureId, description, value, valuePercent } = row;
       // eslint-disable-next-line no-negated-condition
       return natureId !== null
@@ -338,7 +346,7 @@ export class PostgresOperations {
               description,
               range: getMedicalErrorNatureByNatureId(natureId),
               value: Math.round(value ?? 0),
-              valuePercent: (valuePercent ?? 0).toFixed(2),
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -524,19 +532,19 @@ export class PostgresOperations {
       male: male
         ? {
             value: Math.round(male.nb_cases ?? 0),
-            valuePercent: Math.round(male.case_percentage ?? 0),
+            valuePercent: roundFloat(male.case_percentage ?? 0),
           }
         : null,
       female: female
         ? {
             value: Math.round(female.nb_cases ?? 0),
-            valuePercent: Math.round(female.case_percentage ?? 0),
+            valuePercent: roundFloat(female.case_percentage ?? 0),
           }
         : null,
     };
   }
 
-  async getSubstanceRepAge(subId: number): Promise<RepartitionRange[]> {
+  async getSubstanceRepAge(subId: number): Promise<SubstanceUsagePerAge[]> {
     const rows = await dbInstance
       .selectFrom('substances_patient_age as s_p_a')
       .where('s_p_a.substance_id', '=', subId)
@@ -548,7 +556,7 @@ export class PostgresOperations {
       ])
       .execute();
 
-    return rows.reduce<RepartitionRange[]>((carry, row) => {
+    return rows.reduce<SubstanceUsagePerAge[]>((carry, row) => {
       const { range, consumption, percentage } = row;
       return range
         ? [
@@ -556,7 +564,7 @@ export class PostgresOperations {
             {
               range,
               value: Math.round(consumption ?? 0),
-              valuePercent: (percentage ?? 0).toFixed(2),
+              valuePercent: roundFloat(percentage ?? 0),
             },
           ]
         : carry;
@@ -585,7 +593,7 @@ export class PostgresOperations {
               id,
               job,
               value: Math.round(value ?? 0),
-              valuePercent: Math.round(valuePercent ?? 0),
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -605,17 +613,17 @@ export class PostgresOperations {
       ])
       .execute();
 
-    return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
+    return rows.slice(0, 1).reduce<RepartitionPerPathology[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id !== null && range && value && valuePercent
+      return id !== null && range !== null
         ? [
             ...carry,
             {
               id,
               subId,
               range,
-              value,
-              valuePercent: Math.round(valuePercent ?? 0),
+              value: Math.round(value ?? 0),
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -626,15 +634,17 @@ export class PostgresOperations {
     subId: number,
     repartitionPerPathologyId: number
   ): Promise<HltEffect[]> {
+    console.log('getSubstanceRepPathologyEffects', subId, repartitionPerPathologyId);
+
     const rowsHltEffects = await dbInstance
       .selectFrom('substances_hlt as s_htl')
       .where('s_htl.substance_id', '=', subId)
       .leftJoin('hlt_effects as hlt_e', 'hlt_e.id', 's_htl.hlt_effect_id')
       .select([
-        'hlt_e.id',
+        's_htl.hlt_effect_id as id',
         'hlt_e.effect as range',
-        's_htl.case_percentage as valuePercent',
         's_htl.n_decla_eff_hlt as value',
+        's_htl.case_percentage as valuePercent',
       ])
       .execute();
 
@@ -647,11 +657,13 @@ export class PostgresOperations {
               id,
               range,
               value: Math.round(value ?? 0),
-              valuePercent: Math.round(valuePercent ?? 0),
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
     }, []);
+
+    console.log(effects);
 
     return effects.filter((e) => e.id === repartitionPerPathologyId);
   }
@@ -759,121 +771,121 @@ export class PostgresOperations {
     return {
       male: male
         ? {
-            value: Math.round(Number(male.value)),
-            valuePercent: Math.round(Number(male.valuePercent)),
+            value: Math.round(male.value ?? 0),
+            valuePercent: roundFloat(male.valuePercent ?? 0),
           }
         : null,
       female: female
         ? {
-            value: Math.round(Number(female.value)),
-            valuePercent: Math.round(Number(female.valuePercent)),
+            value: Math.round(female.value ?? 0),
+            valuePercent: roundFloat(female.valuePercent ?? 0),
           }
         : null,
     };
   }
 
-  async getGlobalStatisticRepAge(): Promise<RepartitionRange[]> {
+  async getGlobalStatisticRepAge(): Promise<GlobalStatsUsagePerAge[]> {
     const rows = await dbInstance
       .selectFrom('global_se_ages as gsa')
       .leftJoin('ages', 'gsa.age_id', 'ages.id')
       .select(['ages.id', 'ages.range as range', 'gsa.pct as percentage', 'gsa.n as consumption'])
       .execute();
 
-    return rows.reduce<RepartitionRange[]>((carry, row) => {
+    return rows.reduce<GlobalStatsUsagePerAge[]>((carry, row) => {
       const { range, consumption, percentage } = row;
       return range
         ? [
             ...carry,
             {
               range,
-              value: Math.round(Number(consumption)),
-              valuePercent: (percentage ?? 0).toFixed(2),
+              value: Math.round(consumption ?? 0),
+              valuePercent: roundFloat(percentage ?? 0),
             },
           ]
         : carry;
     }, []);
   }
 
-  async getGlobalStatisticSeriousEffects(): Promise<RepartitionPerSeriousEffect[]> {
+  async getGlobalStatisticSeriousEffects(): Promise<GlobalStatsUsagePerSeriousEffect[]> {
     const rows = await dbInstance
       .selectFrom('global_se_gravity_types as gsg')
       .select(['label as range', 'pct as valuePercent', 'n as value'])
       .execute();
 
-    return rows.reduce<RepartitionPerSeriousEffect[]>((carry, row) => {
+    return rows.reduce<GlobalStatsUsagePerSeriousEffect[]>((carry, row) => {
       const { range, value, valuePercent } = row;
-      return range && value && valuePercent
+      return range
         ? [
             ...carry,
             {
               range,
-              value: Math.round(Number(value)),
-              valuePercent: Math.round(valuePercent ?? 0),
+              value: Math.round(value ?? 0),
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
     }, []);
   }
 
-  async getGlobalStatisticGravity(): Promise<RepartitionPerGravity[]> {
+  async getGlobalStatisticGravity(): Promise<GlobalStatsUsagePerGravity[]> {
     const rows = await dbInstance
       .selectFrom('global_se_grave')
       .select(['label as range', 'n as value', 'pct as valuePercent'])
       .execute();
 
-    return rows.reduce<RepartitionPerGravity[]>((carry, row) => {
+    return rows.reduce<GlobalStatsUsagePerGravity[]>((carry, row) => {
       const { range, value, valuePercent } = row;
-      return range && value && valuePercent
+      return range
         ? [
             ...carry,
             {
               range: range === 'OUI' ? 'Grave' : 'Non grave',
-              value: Math.round(Number(value)),
-              valuePercent: Math.round(valuePercent ?? 0),
+              value: Math.round(value ?? 0),
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
     }, []);
   }
 
-  async getGlobalStatisticRepPerPathology(): Promise<GlobStaticRepartitionPerPathology[]> {
+  async getGlobalStatisticRepPerPathology(): Promise<GlobalStatsUsagePerPathology[]> {
     const rows = await dbInstance
       .selectFrom('global_se_soc')
       .select(['id', 'label as range', 'pct as valuePercent', 'n as value'])
       .execute();
 
-    return rows.reduce<GlobStaticRepartitionPerPathology[]>((carry, row) => {
+    return rows.reduce<GlobalStatsUsagePerPathology[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id && range && value && valuePercent
+      return id && range
         ? [
             ...carry,
             {
               id,
               range,
-              value: Math.round(Number(value)),
-              valuePercent: Math.round(valuePercent ?? 0),
+              value: Math.round(value ?? 0),
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
     }, []);
   }
 
-  async getGlobalStatisticRepPerNotifier(): Promise<GlobStaticRepartitionPerNotifier[]> {
+  async getGlobalStatisticRepPerNotifier(): Promise<GlobalStatsUsagePerNotifier[]> {
     const rows = await dbInstance
       .selectFrom('global_se_notifiers')
       .select(['id', 'label as job', 'pct as valuePercent', 'n as value'])
       .execute();
 
-    return rows.reduce<GlobStaticRepartitionPerNotifier[]>((carry, row) => {
+    return rows.reduce<GlobalStatsUsagePerNotifier[]>((carry, row) => {
       const { id, job, value, valuePercent } = row;
-      return id && job && value && valuePercent
+      return id && job
         ? [
             ...carry,
             {
               id,
               job,
               value: Math.round(value ?? 0),
-              valuePercent: Math.round(valuePercent ?? 0),
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;

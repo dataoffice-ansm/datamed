@@ -3,3 +3,9 @@ export const entityTypeLabel = (type: 'cis' | 'sub') => {
   if (type === 'sub') return 'Substance';
   return null;
 };
+
+export type RepartitionUsageCommon = {
+  range: string;
+  value: number;
+  valuePercent: number;
+};
