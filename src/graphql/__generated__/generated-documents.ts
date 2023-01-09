@@ -47,7 +47,7 @@ export type GlobalStatistic = {
   repartitionPerNotifier?: Maybe<Array<Maybe<GlobalStatsUsagePerNotifier>>>;
   repartitionPerPathology?: Maybe<Array<Maybe<GlobalStatsUsagePerPathology>>>;
   repartitionPerSeriousEffect?: Maybe<Array<Maybe<GlobalStatsUsagePerSeriousEffect>>>;
-  totalExposition?: Maybe<TotalExposition>;
+  totalExposition?: Maybe<SubstanceTotalExposition>;
 };
 
 export type GlobalStatsUsagePerAge = {
@@ -292,7 +292,7 @@ export type RuptureActionRepartition = {
 export type RuptureCause = {
   __typename?: 'RuptureCause';
   id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
 };
 
 export type RuptureCauseRepartition = {
@@ -305,7 +305,7 @@ export type RuptureCauseRepartition = {
 export type RuptureClass = {
   __typename?: 'RuptureClass';
   id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
 };
 
 export type RuptureClassificationRepartition = {
@@ -313,13 +313,6 @@ export type RuptureClassificationRepartition = {
   classification?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
-};
-
-export type RuptureExposition = {
-  __typename?: 'RuptureExposition';
-  range: Scalars['String'];
-  value: Scalars['Int'];
-  valuePercent: Scalars['Float'];
 };
 
 export type RuptureStock = {
@@ -337,13 +330,6 @@ export type RuptureTotalAction = {
   total?: Maybe<Scalars['Int']>;
   totalWithAtLeastOneAction?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
-};
-
-export type RuptureTotalExposition = {
-  __typename?: 'RuptureTotalExposition';
-  ruptureExpositions?: Maybe<Array<Maybe<RuptureExposition>>>;
-  total: Scalars['Int'];
-  year: Scalars['Int'];
 };
 
 export type RuptureYear = {
@@ -433,7 +419,14 @@ export type Substance = {
   repartitionPerNotifier?: Maybe<Array<Maybe<RepartitionPerNotifier>>>;
   repartitionPerPathology?: Maybe<Array<Maybe<RepartitionPerPathology>>>;
   retrieveSpecialities?: Maybe<SpecialitiesReturn>;
-  totalExposition?: Maybe<TotalExposition>;
+  totalExposition?: Maybe<SubstanceTotalExposition>;
+};
+
+export type SubstanceTotalExposition = {
+  __typename?: 'SubstanceTotalExposition';
+  maxYear: Scalars['Int'];
+  minYear: Scalars['Int'];
+  total: Scalars['Int'];
 };
 
 export type SubstanceUsagePerAge = {
@@ -463,13 +456,6 @@ export type TherapeuticClassesRupturesPerYear = {
   repartition?: Maybe<Array<Maybe<TherapeuticClassRupture>>>;
   total?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
-};
-
-export type TotalExposition = {
-  __typename?: 'TotalExposition';
-  maxYear?: Maybe<Scalars['Int']>;
-  minYear?: Maybe<Scalars['Int']>;
-  total: Scalars['Int'];
 };
 
 export type WithRepartition = {
@@ -543,10 +529,10 @@ export type SpecialityFragmentFragment = {
       } | null> | null;
     } | null> | null;
     totalExposition?: {
-      __typename?: 'TotalExposition';
+      __typename?: 'SubstanceTotalExposition';
       total: number;
-      minYear?: number | null;
-      maxYear?: number | null;
+      minYear: number;
+      maxYear: number;
     } | null;
     exposition?: {
       __typename?: 'CisExposition';
@@ -627,8 +613,8 @@ export type SpecialityFragmentFragment = {
       name?: string | null;
       active?: boolean | null;
       date?: string | null;
-      cause?: { __typename?: 'RuptureCause'; id: number; name?: string | null } | null;
-      classification?: { __typename?: 'RuptureClass'; id: number; name?: string | null } | null;
+      cause?: { __typename?: 'RuptureCause'; id: number; type?: string | null } | null;
+      classification?: { __typename?: 'RuptureClass'; id: number; label?: string | null } | null;
     } | null> | null;
     meta?: { __typename?: 'Meta'; count?: number | null } | null;
   } | null;
@@ -683,10 +669,10 @@ export type SubstanceFragmentFragment = {
     } | null> | null;
   } | null> | null;
   totalExposition?: {
-    __typename?: 'TotalExposition';
+    __typename?: 'SubstanceTotalExposition';
     total: number;
-    minYear?: number | null;
-    maxYear?: number | null;
+    minYear: number;
+    maxYear: number;
   } | null;
   exposition?: {
     __typename?: 'CisExposition';
@@ -767,10 +753,10 @@ export type SpecialityQuery = {
         } | null> | null;
       } | null> | null;
       totalExposition?: {
-        __typename?: 'TotalExposition';
+        __typename?: 'SubstanceTotalExposition';
         total: number;
-        minYear?: number | null;
-        maxYear?: number | null;
+        minYear: number;
+        maxYear: number;
       } | null;
       exposition?: {
         __typename?: 'CisExposition';
@@ -851,8 +837,8 @@ export type SpecialityQuery = {
         name?: string | null;
         active?: boolean | null;
         date?: string | null;
-        cause?: { __typename?: 'RuptureCause'; id: number; name?: string | null } | null;
-        classification?: { __typename?: 'RuptureClass'; id: number; name?: string | null } | null;
+        cause?: { __typename?: 'RuptureCause'; id: number; type?: string | null } | null;
+        classification?: { __typename?: 'RuptureClass'; id: number; label?: string | null } | null;
       } | null> | null;
       meta?: { __typename?: 'Meta'; count?: number | null } | null;
     } | null;
@@ -930,10 +916,10 @@ export type SubstanceQuery = {
       } | null> | null;
     } | null> | null;
     totalExposition?: {
-      __typename?: 'TotalExposition';
+      __typename?: 'SubstanceTotalExposition';
       total: number;
-      minYear?: number | null;
-      maxYear?: number | null;
+      minYear: number;
+      maxYear: number;
     } | null;
     exposition?: {
       __typename?: 'CisExposition';
@@ -979,10 +965,10 @@ export type GlobalStatisticQuery = {
       valuePercent: number;
     } | null> | null;
     totalExposition?: {
-      __typename?: 'TotalExposition';
+      __typename?: 'SubstanceTotalExposition';
       total: number;
-      minYear?: number | null;
-      maxYear?: number | null;
+      minYear: number;
+      maxYear: number;
     } | null;
     repartitionPerSeriousEffect?: Array<{
       __typename?: 'GlobalStatsUsagePerSeriousEffect';
@@ -1247,11 +1233,11 @@ export const SpecialityFragmentFragmentDoc = gql`
         date
         cause {
           id
-          name
+          type
         }
         classification {
           id
-          name
+          label
         }
       }
       meta {

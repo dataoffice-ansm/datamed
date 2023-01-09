@@ -133,12 +133,12 @@ type CisExposition {
 
 type RuptureClass {
     id: Int!
-    name: String @capitalize
+    label: String @capitalize
 }
 
 type RuptureCause {
     id: Int!
-    name: String @capitalize
+    type: String @capitalize
 }
 
 type SpecialityRupture {
@@ -204,22 +204,10 @@ type GlobalStatsUsagePerGravity {
     valuePercent: Float!
 }
 
-type TotalExposition {
+type SubstanceTotalExposition {
     total: Int!
-    minYear: Int
-    maxYear: Int
-}
-
-type RuptureTotalExposition {
-    total: Int!
-    year: Int!
-    ruptureExpositions: [RuptureExposition]
-}
-
-type RuptureExposition {
-    range: String! @capitalize
-    value: Int!
-    valuePercent: Float!
+    minYear: Int!
+    maxYear: Int!
 }
 
 type SubstanceUsagePerAge {
@@ -239,7 +227,7 @@ type Substance {
     repartitionPerAge: [SubstanceUsagePerAge]
     repartitionPerNotifier: [RepartitionPerNotifier]
     repartitionPerPathology: [RepartitionPerPathology]
-    totalExposition: TotalExposition
+    totalExposition: SubstanceTotalExposition
     exposition: CisExposition
 }
 
@@ -296,7 +284,7 @@ type GlobalStatsUsagePerAge {
 }
 
 type GlobalStatistic {
-    totalExposition: TotalExposition
+    totalExposition: SubstanceTotalExposition
     repartitionPerGender: RepartitionPerGender
     repartitionPerAge: [GlobalStatsUsagePerAge]
     repartitionPerSeriousEffect: [GlobalStatsUsagePerSeriousEffect]

@@ -28,15 +28,17 @@ import type {
   SpecialitySubstance,
   SpecialityUsagePerAge,
   Substance,
+  SubstanceTotalExposition,
   SubstanceUsagePerAge,
   TherapeuticClassesRupturesPerYear,
   TherapeuticClassRupture,
-  TotalExposition,
 } from '../../graphql/__generated__/generated-types';
 import {
   getCisExpositionByLevelId,
   getCisPharmaFormType,
   getMedicalErrorApparitionStep,
+  getPublicationsTypeLabel,
+  getRuptureTypeLabel,
 } from '../../utils/mapping';
 import { roundFloat } from '../../utils/format';
 
@@ -218,13 +220,13 @@ export class PostgresOperations {
     return rows.reduce<SpecialityUsagePerAge[]>((carry, row) => {
       const { range, patients_consumption, patients_percentage } = row;
 
-      return range
+      return range && patients_consumption && patients_percentage
         ? [
             ...carry,
             {
               range,
-              value: Math.round(patients_consumption ?? 0),
-              valuePercent: roundFloat(patients_percentage ?? 0),
+              value: Math.round(patients_consumption),
+              valuePercent: roundFloat(patients_percentage),
             },
           ]
         : carry;
@@ -242,13 +244,13 @@ export class PostgresOperations {
     return rows.reduce<MedicalErrorsPopulation[]>((carry, row) => {
       const { range, number, percentage } = row;
 
-      return range
+      return range && number && percentage
         ? [
             ...carry,
             {
               range,
-              value: Math.round(number ?? 0),
-              valuePercent: roundFloat(percentage ?? 0),
+              value: Math.round(number),
+              valuePercent: roundFloat(percentage),
             },
           ]
         : carry;
@@ -298,15 +300,15 @@ export class PostgresOperations {
     return rows.reduce<MedicalErrorsApparitionStep[]>((carry, row) => {
       const { stepId, label, value, valuePercent } = row;
 
-      return stepId !== null && label
+      return stepId && label && value && valuePercent
         ? [
             ...carry,
             {
               id: stepId,
-              step: getMedicalErrorApparitionStep(stepId ?? 0),
+              step: getMedicalErrorApparitionStep(stepId),
               label,
-              value: Math.round(value ?? 0),
-              valuePercent: roundFloat(valuePercent ?? 0),
+              value: Math.round(value),
+              valuePercent: roundFloat(valuePercent),
             },
           ]
         : carry;
@@ -329,14 +331,14 @@ export class PostgresOperations {
     return rows.reduce<MedicalErrorsNature[]>((carry, row) => {
       const { natureId, nature, value, valuePercent } = row;
 
-      return natureId !== null && nature
+      return natureId && nature && value && valuePercent
         ? [
             ...carry,
             {
               id: natureId,
               nature,
-              value: Math.round(value ?? 0),
-              valuePercent: roundFloat(valuePercent ?? 0),
+              value: Math.round(value),
+              valuePercent: roundFloat(valuePercent),
             },
           ]
         : carry;
@@ -362,18 +364,10 @@ export class PostgresOperations {
       ])
       .execute();
 
-    const ruptureTypeLabelMapping = {
-      0: 'Rupture',
-      1: 'Risque de rupture de stock',
-      2: null,
-      3: 'Arrêt de commercialisation',
-      4: 'Autre',
-    };
-
     return rows.reduce<SpecialityRupture[]>((carry, row) => {
       const { id, num, name, state, date, classId, causeId, causeType } = row;
 
-      return id !== null && classId !== null && causeId !== null
+      return id && classId && causeId
         ? [
             ...carry,
             {
@@ -381,16 +375,14 @@ export class PostgresOperations {
               num,
               name,
               active: state === 'ouvert',
-              date: date ? date.toLocaleDateString() : null,
+              date: date?.toLocaleDateString(),
               classification: {
                 id: classId,
-                name:
-                  ruptureTypeLabelMapping[causeId as keyof typeof ruptureTypeLabelMapping] ??
-                  ruptureTypeLabelMapping[4],
+                label: getRuptureTypeLabel(classId),
               },
               cause: {
                 id: causeId,
-                name: causeType,
+                type: causeType,
               },
             },
           ]
@@ -407,19 +399,6 @@ export class PostgresOperations {
       .select(['p.id', 'p.title as name', 'p.link', 'pt.id as typeId'])
       .execute();
 
-    const publicationsTypeLabelMapping = (publishTypeId: number) => {
-      switch (publishTypeId) {
-        case 0:
-        case 2:
-        case 4:
-          return "Point d'information";
-        case 3:
-          return 'Communiqué';
-        default:
-          return 'Autre';
-      }
-    };
-
     return rows.reduce<Publication[]>((carry, row) => {
       const { id, name, link, typeId } = row;
       return id !== null && name && link && typeId
@@ -431,7 +410,7 @@ export class PostgresOperations {
               link,
               type: {
                 id: typeId,
-                name: publicationsTypeLabelMapping(typeId),
+                type: getPublicationsTypeLabel(typeId),
               },
             },
           ]
@@ -452,7 +431,7 @@ export class PostgresOperations {
 
     return rows.reduce<Substance[]>((carry, row) => {
       const { id, name, code } = row;
-      return id !== null && name && code
+      return id && name && code
         ? [
             ...carry,
             {
@@ -515,6 +494,7 @@ export class PostgresOperations {
       .select(['id', 'sex', 'case_percentage', 'nb_cases'])
       .execute();
 
+    //TODO: to be fixed in bdd
     const male = rows.find((row) => row.sex === 'Homme');
     const female = rows.find((row) => row.sex === 'Femme');
 
@@ -548,13 +528,13 @@ export class PostgresOperations {
 
     return rows.reduce<SubstanceUsagePerAge[]>((carry, row) => {
       const { range, consumption, percentage } = row;
-      return range
+      return range && consumption && percentage
         ? [
             ...carry,
             {
               range,
-              value: Math.round(consumption ?? 0),
-              valuePercent: roundFloat(percentage ?? 0),
+              value: Math.round(consumption),
+              valuePercent: roundFloat(percentage),
             },
           ]
         : carry;
@@ -576,14 +556,14 @@ export class PostgresOperations {
 
     return rows.reduce<RepartitionPerNotifier[]>((carry, row) => {
       const { id, job, value, valuePercent } = row;
-      return id !== null && job
+      return id && job && value && valuePercent
         ? [
             ...carry,
             {
               id,
               job,
-              value: Math.round(value ?? 0),
-              valuePercent: roundFloat(valuePercent ?? 0),
+              value: Math.round(value),
+              valuePercent: roundFloat(valuePercent),
             },
           ]
         : carry;
@@ -603,17 +583,18 @@ export class PostgresOperations {
       ])
       .execute();
 
-    return rows.slice(0, 1).reduce<RepartitionPerPathology[]>((carry, row) => {
+    return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id !== null && range !== null
+      // hide result under 11 declarations
+      return id && range && value && value > 11 && valuePercent
         ? [
             ...carry,
             {
               id,
               subId,
               range,
-              value: Math.round(value ?? 0),
-              valuePercent: roundFloat(valuePercent ?? 0),
+              value: Math.round(value),
+              valuePercent: roundFloat(valuePercent),
             },
           ]
         : carry;
@@ -638,14 +619,14 @@ export class PostgresOperations {
 
     const effects = rowsHltEffects.reduce<HltEffect[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id !== null && range && value
+      return id && range && value && valuePercent
         ? [
             ...carry,
             {
               id,
               range,
-              value: Math.round(value ?? 0),
-              valuePercent: roundFloat(valuePercent ?? 0),
+              value: Math.round(value),
+              valuePercent: roundFloat(valuePercent),
             },
           ]
         : carry;
@@ -654,7 +635,7 @@ export class PostgresOperations {
     return effects.filter((e) => e.id === repartitionPerPathologyId);
   }
 
-  async getSubstanceTotalExposition(subId: number): Promise<TotalExposition> {
+  async getSubstanceTotalExposition(subId: number): Promise<SubstanceTotalExposition | null> {
     const { min, max } = dbInstance.fn;
     const row = await dbInstance
       .selectFrom('substances_exposition')
@@ -668,19 +649,15 @@ export class PostgresOperations {
       .select('nb_cases as nbCases')
       .executeTakeFirst();
 
-    if (row) {
-      const { minYear, maxYear } = row;
-
+    if (row?.minYear && row?.maxYear && subCases?.nbCases) {
       return {
-        total: subCases?.nbCases ?? 0,
-        minYear: minYear as number,
-        maxYear: maxYear as number,
+        total: subCases?.nbCases,
+        minYear: row?.minYear as number,
+        maxYear: row?.maxYear as number,
       };
     }
 
-    return {
-      total: 0,
-    };
+    return null;
   }
 
   async getSubstanceCisExposition(subId: number): Promise<CisExposition | null> {
@@ -703,7 +680,7 @@ export class PostgresOperations {
     return null;
   }
 
-  async getGlobalStatisticExposition(): Promise<TotalExposition> {
+  async getGlobalStatisticExposition(): Promise<SubstanceTotalExposition | null> {
     const rowTotal = await dbInstance
       .selectFrom('global_se')
       .where('label', '=', 'cas_total')
@@ -722,21 +699,15 @@ export class PostgresOperations {
       .select(['n as maxYear'])
       .executeTakeFirst();
 
-    if (rowTotal && rowMaxPeriod && rowMinPeriod) {
-      const { total } = rowTotal;
-      const { minYear } = rowMinPeriod;
-      const { maxYear } = rowMaxPeriod;
-
+    if (rowTotal?.total && rowMaxPeriod?.maxYear && rowMinPeriod?.minYear) {
       return {
-        total: total ?? 0,
-        minYear,
-        maxYear,
+        total: rowTotal?.total,
+        minYear: rowMinPeriod?.minYear,
+        maxYear: rowMaxPeriod?.maxYear,
       };
     }
 
-    return {
-      total: 0,
-    };
+    return null;
   }
 
   async getGlobalStatisticRepGender(): Promise<RepartitionPerGender> {
@@ -777,13 +748,13 @@ export class PostgresOperations {
 
     return rows.reduce<GlobalStatsUsagePerAge[]>((carry, row) => {
       const { range, consumption, percentage } = row;
-      return range
+      return range && consumption && percentage
         ? [
             ...carry,
             {
               range,
-              value: Math.round(consumption ?? 0),
-              valuePercent: roundFloat(percentage ?? 0),
+              value: Math.round(consumption),
+              valuePercent: roundFloat(percentage),
             },
           ]
         : carry;
@@ -798,13 +769,13 @@ export class PostgresOperations {
 
     return rows.reduce<GlobalStatsUsagePerSeriousEffect[]>((carry, row) => {
       const { range, value, valuePercent } = row;
-      return range
+      return range && value && valuePercent
         ? [
             ...carry,
             {
               range,
-              value: Math.round(value ?? 0),
-              valuePercent: roundFloat(valuePercent ?? 0),
+              value: Math.round(value),
+              valuePercent: roundFloat(valuePercent),
             },
           ]
         : carry;
@@ -819,13 +790,13 @@ export class PostgresOperations {
 
     return rows.reduce<GlobalStatsUsagePerGravity[]>((carry, row) => {
       const { range, value, valuePercent } = row;
-      return range
+      return range && value && valuePercent
         ? [
             ...carry,
             {
               range: range === 'OUI' ? 'Grave' : 'Non grave',
-              value: Math.round(value ?? 0),
-              valuePercent: roundFloat(valuePercent ?? 0),
+              value: Math.round(value),
+              valuePercent: roundFloat(valuePercent),
             },
           ]
         : carry;
@@ -840,14 +811,14 @@ export class PostgresOperations {
 
     return rows.reduce<GlobalStatsUsagePerPathology[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id && range
+      return id && range && value && valuePercent
         ? [
             ...carry,
             {
               id,
               range,
-              value: Math.round(value ?? 0),
-              valuePercent: roundFloat(valuePercent ?? 0),
+              value: Math.round(value),
+              valuePercent: roundFloat(valuePercent),
             },
           ]
         : carry;
@@ -862,14 +833,14 @@ export class PostgresOperations {
 
     return rows.reduce<GlobalStatsUsagePerNotifier[]>((carry, row) => {
       const { id, job, value, valuePercent } = row;
-      return id && job
+      return id && job && value && valuePercent
         ? [
             ...carry,
             {
               id,
               job,
-              value: Math.round(value ?? 0),
-              valuePercent: roundFloat(valuePercent ?? 0),
+              value: Math.round(value),
+              valuePercent: roundFloat(valuePercent),
             },
           ]
         : carry;
@@ -947,7 +918,7 @@ export class PostgresOperations {
   async getRuptureStockRepartitionPerClassification(): Promise<RuptureClassificationRepartition[]> {
     const { count } = dbInstance.fn;
 
-    const rowsRisque = await dbInstance
+    const rowsRisk = await dbInstance
       .selectFrom('sold_out_all')
       .select([count('num').as('value'), 'year', 'classification'])
       .where('classification', '=', 'risque')
@@ -967,8 +938,9 @@ export class PostgresOperations {
 
     const result: RuptureClassificationRepartition[] = [];
 
-    rowsRisque.forEach((row) => {
+    rowsRisk.forEach((row) => {
       const { classification, value, year } = row;
+
       if (classification && value && year) {
         result.push({
           year: parseInt(year, 10),
@@ -980,6 +952,7 @@ export class PostgresOperations {
 
     rowsRupture.forEach((row) => {
       const { classification, value, year } = row;
+
       if (classification && value && year) {
         result.push({
           year: parseInt(year, 10),
@@ -1007,6 +980,7 @@ export class PostgresOperations {
           .where('sold_out_all.year', '=', year)
           .select([count('sold_out_all.num').as('value')])
           .executeTakeFirst();
+
         const rows = await dbInstance
           .selectFrom('sold_out_all')
           .leftJoin('causes_all as ca', 'sold_out_all.id', 'ca.sold_out_id')
@@ -1015,6 +989,7 @@ export class PostgresOperations {
           .select([count('sold_out_all.num').as('value'), 'cat.type'])
           .groupBy('cat.type')
           .execute();
+
         return {
           year: Number(value),
           causes: rows.map((r) => ({
@@ -1027,7 +1002,7 @@ export class PostgresOperations {
     );
   }
 
-  async getRupturesTotalActionByYear(year: string): Promise<number> {
+  async _getRupturesTotalActionByYear(year: string): Promise<number> {
     const { count } = dbInstance.fn;
     const rowTotal = await dbInstance
       .selectFrom('actions')
@@ -1058,10 +1033,11 @@ export class PostgresOperations {
 
   async getRuptureStockRepartitionPerAction(): Promise<RuptureActionRepartition[]> {
     const years = await this.getRuptureYears();
+
     return Promise.all(
       years.map(async ({ value }) => {
         const year = String(value);
-        const total = await this.getRupturesTotalActionByYear(year);
+        const total = await this._getRupturesTotalActionByYear(year);
         const actions = await this.getRuptureActionsByYear(year);
         return {
           year: value,
@@ -1072,7 +1048,7 @@ export class PostgresOperations {
     );
   }
 
-  async getRuptureStockByTherapeuticClass(year: string): Promise<TherapeuticClassRupture[]> {
+  async _getRuptureStockByTherapeuticClass(year: string): Promise<TherapeuticClassRupture[]> {
     const { count } = dbInstance.fn;
 
     const rowsCis = await dbInstance
@@ -1102,12 +1078,21 @@ export class PostgresOperations {
       .groupBy('atc_classes.label')
       .execute();
 
-    return rows.map((r) => ({
-      name: r.name,
-      value: Number(r.value ?? 0),
-      year: Number(r.year ?? 0),
-      totalCis: Number(rowsCis?.value ?? 0),
-    }));
+    return rows.reduce<TherapeuticClassRupture[]>((carry, row) => {
+      const { name, value, year } = row;
+
+      return name && value && year
+        ? [
+            ...carry,
+            {
+              name: row.name,
+              value: Number(row.value ?? 0),
+              // year: Number(row.year ?? 0),
+              totalCis: Number(rowsCis?.value ?? 0),
+            },
+          ]
+        : carry;
+    }, []);
   }
 
   async getRupturesPerTherapeuticClassesPerYearRepartition(
@@ -1116,8 +1101,9 @@ export class PostgresOperations {
     return Promise.all(
       years.map(async ({ value }) => {
         const year = String(value);
-        const total = await this.getRupturesTotalActionByYear(year);
-        const repartition = await this.getRuptureStockByTherapeuticClass(year);
+        const total = await this._getRupturesTotalActionByYear(year);
+        const repartition = await this._getRuptureStockByTherapeuticClass(year);
+
         return {
           year: value,
           repartition,
@@ -1147,10 +1133,19 @@ export class PostgresOperations {
     // 0 = "Pas de mesure"
     const totalWithAtLeastOneAction = rows.filter((r) => r.actionTypeId !== 0).length ?? 0;
 
-    return rows.map((r) => ({
-      total: Number(r.value ?? 0),
-      totalWithAtLeastOneAction,
-      year: Number(r.year ?? 0),
-    }));
+    return rows.reduce<RuptureTotalAction[]>((carry, row) => {
+      const { value, year } = row;
+
+      return value && year
+        ? [
+            ...carry,
+            {
+              total: Number(row.value),
+              totalWithAtLeastOneAction,
+              year: Number(row.year),
+            },
+          ]
+        : carry;
+    }, []);
   }
 }
