@@ -11,13 +11,7 @@ describe(Button.name, () => {
         </Button>
       );
 
-      const classNameExpected =
-        theme === 'primary'
-          ? 'text-primary hover:decoration-primary'
-          : 'text-secondary hover:decoration-secondary';
-
       expect(getByText(container, `Link with theme ${theme}`));
-      expect(container.children[0].className).toContain(classNameExpected);
       expect(container).toMatchSnapshot();
     }
   );

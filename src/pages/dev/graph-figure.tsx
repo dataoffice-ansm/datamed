@@ -2,7 +2,6 @@ import ManFigure from '../../assets/pictos/man_illustration.svg';
 import WomanFigure from '../../assets/pictos/woman_illustration.svg';
 import { GraphFigure } from '../../components/GraphFigure';
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
-import { Button } from '../../components/Button/Button';
 
 const GraphFigurePage = () => (
   <DevPageLayout title="graphFigure">

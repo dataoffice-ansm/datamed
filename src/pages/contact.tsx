@@ -1,7 +1,6 @@
 import type { HTMLAttributes } from 'react';
 import Contact from '../assets/landing/contact.svg';
 import classnames from 'classnames';
-import Link from 'next/link';
 import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 

@@ -4,7 +4,6 @@
  * @param subTitle
  * @constructor
  */
-import classnames from 'classnames';
 import type { ReactNode } from 'react';
 
 export const SectionTitle = ({
