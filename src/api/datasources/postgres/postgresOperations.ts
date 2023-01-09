@@ -287,22 +287,24 @@ export class PostgresOperations {
       .selectFrom('error_med_initial as err')
       .leftJoin('initial_errors as ini', 'ini.id', 'err.initial_error_id')
       .where('err.mp_id', '=', cisId)
-      .select(['ini.id as stepId', 'err.number as value', 'err.percentage as valuePercent'])
+      .select([
+        'ini.id as stepId',
+        'ini.label',
+        'err.number as value',
+        'err.percentage as valuePercent',
+      ])
       .execute();
 
     return rows.reduce<MedicalErrorsApparitionStep[]>((carry, row) => {
-      const { stepId, value, valuePercent } = row;
+      const { stepId, label, value, valuePercent } = row;
 
-      const { step, description } = getMedicalErrorApparitionStep(stepId ?? 0);
-
-      // eslint-disable-next-line no-negated-condition
-      return stepId !== null
+      return stepId !== null && label
         ? [
             ...carry,
             {
               id: stepId,
-              step,
-              description,
+              step: getMedicalErrorApparitionStep(stepId ?? 0),
+              label,
               value: Math.round(value ?? 0),
               valuePercent: roundFloat(valuePercent ?? 0),
             },

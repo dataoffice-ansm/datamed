@@ -3,8 +3,8 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend, type TooltipItem } from 
 
 import type { MedicalErrors } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
-import { darkViolet, turquoise } from '../../../tailwind.palette.config';
 import { numberWithThousand } from '../../utils/format';
+import { type ChartPalette, chartThemeGradient } from '../../utils/charts';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -16,10 +16,10 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 export const PieChartMedicalErrorsPopulation = ({
   errorsMedRepPopData,
   className,
-  theme,
+  theme = 'primary',
 }: {
   errorsMedRepPopData: MedicalErrors['populationRepartition'];
-  theme?: 'primary' | 'secondary';
+  theme?: ChartPalette;
   className?: string;
 }) => {
   if (!errorsMedRepPopData?.length) {
@@ -38,10 +38,7 @@ export const PieChartMedicalErrorsPopulation = ({
     return [`Nombre: ${numberWithThousand(rawValue)}`];
   };
 
-  const backgroundColor =
-    theme === 'primary'
-      ? [darkViolet[200], darkViolet[500], darkViolet[900]]
-      : [turquoise[200], turquoise[500], turquoise[900]];
+  const backgroundColor = chartThemeGradient(theme);
 
   return (
     <div className={className}>

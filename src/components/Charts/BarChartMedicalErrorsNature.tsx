@@ -1,13 +1,20 @@
-import { Pie } from 'react-chartjs-2';
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+} from 'chart.js';
+
+import { Bar } from 'react-chartjs-2';
 
 import type { MedicalErrors } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
-import { darkViolet, turquoise } from '../../../tailwind.palette.config';
-import { type TooltipItem } from 'chart.js/dist/types';
-import { numberWithThousand } from '../../utils/format';
+import { chartThemeGradient } from '../../utils/charts';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 /**
  *
@@ -16,11 +23,11 @@ ChartJS.register(ArcElement, Tooltip, Legend);
  */
 export const BarChartMedicalErrorsNature = ({
   natureMedicalErrors,
+  dataKey,
   className,
-  theme,
 }: {
   natureMedicalErrors: MedicalErrors['natureRepartition'];
-  theme?: 'primary' | 'secondary';
+  dataKey: 'number' | 'percent';
   className?: string;
 }) => {
   if (!natureMedicalErrors?.length) {
@@ -28,35 +35,53 @@ export const BarChartMedicalErrorsNature = ({
   }
 
   const labels = natureMedicalErrors.map((row) => row?.nature);
-  const data = natureMedicalErrors?.map((row) => row?.valuePercent);
+  const data = natureMedicalErrors?.map((row) =>
+    dataKey === 'percent' ? row?.valuePercent : row?.value
+  );
 
-  const tooltip = (tooltipItems: Array<TooltipItem<'pie'>>) => {
-    const tooltipItem = tooltipItems[0];
-
-    const range = tooltipItem.label;
-    const repartition = natureMedicalErrors.find((e) => range === e?.nature);
-    const rawValue = repartition?.value ?? 0;
-    return [`Nombre: ${numberWithThousand(rawValue)}`];
-  };
-
-  const backgroundColor =
-    theme === 'primary'
-      ? [darkViolet[200], darkViolet[500], darkViolet[900]]
-      : [turquoise[200], turquoise[500], turquoise[900]];
+  const backgroundColor = chartThemeGradient('primary-full');
 
   return (
     <div className={className}>
-      <Pie
+      <Bar
+        redraw
+        updateMode="resize"
         options={{
-          plugins: {
-            tooltip: {
-              callbacks: {
-                afterBody: tooltip,
-                label(context) {
-                  const percent = context.formattedValue;
-                  return `Pourcentage: ${percent}%`;
-                },
+          maintainAspectRatio: false,
+          indexAxis: 'y' as const,
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: 'bottomLegend',
               },
+              grid: {
+                display: false,
+              },
+            },
+            y: {
+              title: {
+                display: true,
+                text: 'leftLegend',
+              },
+              grid: {
+                display: true,
+              },
+            },
+          },
+          elements: {
+            bar: {
+              borderWidth: 2,
+            },
+          },
+          responsive: true,
+          plugins: {
+            legend: {
+              position: 'right' as const,
+            },
+            title: {
+              display: true,
+              text: 'Chart.js Horizontal Bar Chart',
             },
           },
         }}
@@ -66,7 +91,6 @@ export const BarChartMedicalErrorsNature = ({
             {
               data,
               backgroundColor,
-              hoverOffset: 4,
               borderWidth: 1,
             },
           ],

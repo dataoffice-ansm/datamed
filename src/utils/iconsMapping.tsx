@@ -91,8 +91,6 @@ import PharmaFormSuppositoire from '../assets/pictos/pharmaForm/Suppositoire-120
 import { MedicalErrorApparitionStep } from '../graphql/__generated__/generated-documents';
 
 export const getPharmaFormIcon = (pharmaForm: PharmaFormType) => {
-  console.log(pharmaForm);
-
   switch (pharmaForm) {
     case 'COLLYRE':
       return <PharmaFormCollyre />;
@@ -132,17 +130,19 @@ export const getPharmaFormIcon = (pharmaForm: PharmaFormType) => {
 
 export const getMedErrorApparitionStepIcon = (apparitionStep: MedicalErrorApparitionStep) => {
   switch (apparitionStep) {
-    case MedicalErrorApparitionStep.SecondPrescriptionStep:
+    case MedicalErrorApparitionStep.PreparationStep:
       return <ErrorPreparation className="w-32" />;
-    case MedicalErrorApparitionStep.FirstPrescriptionStep:
+    case MedicalErrorApparitionStep.DeliveranceStep:
       return <ErrorDelivrance className="w-32" />;
-    case MedicalErrorApparitionStep.AdministrationStep:
+    case MedicalErrorApparitionStep.PrescriptionStep:
       return <ErrorPrescription className="w-32" />;
-    case MedicalErrorApparitionStep.AfterSurveillanceStep:
+    case MedicalErrorApparitionStep.AdministrationStep:
       return <ErrorAdministration className="w-32" />;
+    case MedicalErrorApparitionStep.SurveillanceStep:
+      return <ErrorSuiviTherapeutique className="w-32" />;
     case MedicalErrorApparitionStep.OtherStep:
     default:
-      return <ErrorSuiviTherapeutique className="w-32" />;
+      return <ErrorOther className="w-32" />;
   }
 };
 

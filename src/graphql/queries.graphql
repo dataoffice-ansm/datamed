@@ -79,7 +79,7 @@ fragment SpecialityFragment on Speciality {
         apparitionStepRepartition {
             id
             step
-            description
+            label
             value
             valuePercent
         }

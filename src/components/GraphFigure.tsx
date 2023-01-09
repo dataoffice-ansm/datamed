@@ -8,7 +8,6 @@ import { Tooltip } from './Tooltip/Tooltip';
  *
  * @param value
  * @param description
- * @param link
  * @param icon
  * @param valueClassName
  * @param unit default is '%'

@@ -91,7 +91,7 @@ const SectionDemography = () => {
             className="h-full max-w-[100%]"
           >
             <PieChartRepartitionAge
-              theme="secondary-variant"
+              theme="green"
               className="h-64 w-full flex justify-center items-center"
               ageData={repartitionPerAge}
             />
