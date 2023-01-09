@@ -2,10 +2,15 @@ import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/Enti
 import { HeroHeader } from '../../components/HeroHeader/HeroHeader';
 import type { EntityCis } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
-import type { Speciality } from '../../api/graphql/__generated__/generated-types';
 import Link from 'next/link';
 import { useMemo } from 'react';
-import type { SpecialityRupture, Substance } from '../../graphql/__generated__/generated-documents';
+import type {
+  MedicalErrorsApparitionStep,
+  MedicalErrorApparitionStep,
+  SpecialityRupture,
+  Substance,
+  Speciality,
+} from '../../graphql/__generated__/generated-documents';
 import { SpecialitySubstancesContainer } from './SpecialitySubstancesContainer';
 import { Accordion } from '../../components/Accordion/Accordion';
 import PilIcon from '../../assets/pictos/gellule.svg';
@@ -30,10 +35,11 @@ import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { SectionTitle } from '../../components/SectionTitle';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
-import { PieChartNatureMedicalErrors } from '../../components/Charts/PieChartNatureMedicalErrors';
+import { BarChartMedicalErrorsNature } from '../../components/Charts/BarChartMedicalErrorsNature';
 import { ExpositionLevel } from '../../api/graphql/enums';
 import { CardWithImage } from '../../components/CardWithImage/CardWithImage';
 import { Button } from '../../components/Button/Button';
+import { getMedErrorApparitionStepIcon } from '../../utils/iconsMapping';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -191,7 +197,7 @@ const SectionTreatedPatients = () => {
                   )}
                   style={{ height: 20 + 10 * index }}
                 >
-                  {currentEntity?.exposition?.expositionLevel === levelKey && (
+                  {currentEntity?.exposition?.level === levelKey && (
                     <div className="bouncingPil animate-bounce absolute -top-8">
                       <PilIcon className="w-6 h-6" />
                     </div>
@@ -229,7 +235,7 @@ const SectionTreatedPatients = () => {
                 {currentEntity.repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
                     value={currentEntity.repartitionPerGender?.female?.valuePercent}
-                    description="Femmes"
+                    label="Femmes"
                     valueClassName="mt-2 text-primary"
                     icon={<WomanIllustration className="w-32" />}
                   />
@@ -238,7 +244,7 @@ const SectionTreatedPatients = () => {
                   <GraphFigure
                     value={currentEntity.repartitionPerGender.male?.valuePercent}
                     valueClassName="mt-2 text-primary"
-                    description="Hommes"
+                    label="Hommes"
                     icon={<ManIllustration className="w-32" />}
                   />
                 )}
@@ -271,7 +277,9 @@ const SectionMedicinalErrors = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
 
   const apparitionStepsRepartition = useMemo(
-    () => currentEntity.medicalErrors?.apparitionStepRepartition ?? [],
+    () =>
+      (currentEntity.medicalErrors?.apparitionStepRepartition ??
+        []) as MedicalErrorsApparitionStep[],
     [currentEntity.medicalErrors?.apparitionStepRepartition]
   );
 
@@ -366,26 +374,25 @@ const SectionMedicinalErrors = () => {
         render={(selectedOption) => (
           <GraphFiguresGrid
             data={apparitionStepsRepartition}
-            renderItem={(apparitionStep) =>
-              apparitionStep?.id !== undefined &&
-              apparitionStep?.id !== null &&
-              apparitionStep?.range ? (
+            renderItem={(apparitionStep) => {
+              const step = apparitionStep.step as MedicalErrorApparitionStep;
+              return (
                 <GraphFigure
                   unit={selectedOption === 'percent' ? ' % ' : ''}
-                  value={apparitionStep.value ?? 0}
-                  description={apparitionStep.range}
-                  contentTooltip={apparitionStep.description ?? ''}
-                  // TODO: icon={getMedErrorNatureIcon(apparitionStep.id)}
+                  value={apparitionStep.value}
+                  label={apparitionStep.description}
+                  contentTooltip={apparitionStep.description}
+                  icon={getMedErrorApparitionStepIcon(step)}
                 />
-              ) : null
-            }
+              );
+            }}
           />
         )}
       />
 
       <GraphBox title="Nature des erreurs médicamenteuses" className="h-full max-w-[100%]">
         <div className="m-auto max-w-max">
-          <PieChartNatureMedicalErrors
+          <BarChartMedicalErrorsNature
             theme="primary"
             natureMedicalErrors={currentEntity?.medicalErrors?.natureRepartition}
           />

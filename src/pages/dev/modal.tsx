@@ -13,7 +13,7 @@ export const ModalPage = () => {
         id="graph-figure-homme"
         value={53}
         valueClassName="text-secondary"
-        description="Hommes"
+        label="Hommes"
         icon={<ManFigure width={150} height={150} />}
         action={
           <Button

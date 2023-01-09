@@ -14,7 +14,7 @@ ChartJS.register(ArcElement, Tooltip, Legend);
  * @param ageData
  * @constructor
  */
-export const PieChartNatureMedicalErrors = ({
+export const BarChartMedicalErrorsNature = ({
   natureMedicalErrors,
   className,
   theme,
@@ -27,14 +27,14 @@ export const PieChartNatureMedicalErrors = ({
     return <NotEnoughData />;
   }
 
-  const labels = natureMedicalErrors.map((row) => row?.range);
+  const labels = natureMedicalErrors.map((row) => row?.nature);
   const data = natureMedicalErrors?.map((row) => row?.valuePercent);
 
   const tooltip = (tooltipItems: Array<TooltipItem<'pie'>>) => {
     const tooltipItem = tooltipItems[0];
 
     const range = tooltipItem.label;
-    const repartition = natureMedicalErrors.find((e) => range === e?.range);
+    const repartition = natureMedicalErrors.find((e) => range === e?.nature);
     const rawValue = repartition?.value ?? 0;
     return [`Nombre: ${numberWithThousand(rawValue)}`];
   };

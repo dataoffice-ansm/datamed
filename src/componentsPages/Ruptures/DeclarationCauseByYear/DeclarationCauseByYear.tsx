@@ -100,7 +100,7 @@ export const DeclarationCauseByYear = ({
                     <GraphFigure
                       className="pathologyGraphFigure"
                       unit={selectedUnitOption === 'number' ? '' : '%'}
-                      description={cause.range}
+                      label={cause.range}
                       icon={getRuptureCauseIcon(cause.range)}
                       valueClassName="text-dark-green-900"
                       value={

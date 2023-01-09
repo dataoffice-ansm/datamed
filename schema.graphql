@@ -11,18 +11,24 @@ enum MedicalErrorApparitionStep {
     OTHER_STEP,
 }
 
-
 enum PharmaFormType {
-    GEL
-    GELULE
+    COLLYRE
     COMPRIME
+    CREME
+    LIQUIDE
+    GAZ
+    GRANULE
+    GELULE
+    PLANTE
     POUDRE
+    IMPLANT
+    SERINGUE
     PANSEMENT
-    SPRAY
     SIROP
-    BUVABLE
     SUPOSITOIRE
-    OTHER
+    SPRAY
+    MULTI
+    AUTRE
 }
 
 enum MedicalErrorNature {
@@ -54,11 +60,6 @@ type Meta {
     count: Int
 }
 
-type Icon {
-    id: Int!
-    name: String
-}
-
 type PublicationType {
     id: Int
     name: String @capitalize
@@ -73,8 +74,8 @@ type Publication {
 
 type PharmaForm {
     id: Int!
-    name: String! @capitalize
     type: String!
+    label: String! @capitalize
 }
 
 type Laboratory {
@@ -101,19 +102,18 @@ type MedicalErrorsPopulation {
 }
 
 type MedicalErrorsApparitionStep {
-    id: Int
-    range: String! @capitalize
+    id: Int!
+    step: String!
     value: Int!
     valuePercent: Float!
-    description: String
+    description: String!
 }
 
 type MedicalErrorsNature {
-    id: Int
-    range: String! @capitalize
+    id: Int!
+    nature: String!
     value: Int!
     valuePercent: Float!
-    description: String
 }
 
 type MedicalErrors {
@@ -125,7 +125,7 @@ type MedicalErrors {
 
 type CisExposition {
     consumption: Int
-    expositionLevel: String
+    level: String
     description: String
 }
 
@@ -261,7 +261,6 @@ type Speciality {
     code: String!
     name: String! @capitalize
     atc: MedicalATC
-    icon: Icon
     dosageIndication: String
     substances: [Substance]
     dosageSubstances: [SpecialitySubstance]
