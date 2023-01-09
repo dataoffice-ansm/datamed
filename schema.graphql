@@ -210,7 +210,7 @@ type SubstanceTotalExposition {
     maxYear: Int!
 }
 
-type SubstanceUsagePerAge {
+type RepartitionPerAge {
     id: Int
     range: String! @capitalize
     value: Int!
@@ -218,17 +218,23 @@ type SubstanceUsagePerAge {
     description: String
 }
 
+type SubstanceSideEffects {
+    repartitionPerGender: RepartitionPerGender
+    repartitionPerAge: [RepartitionPerAge]
+    repartitionPerNotifier: [RepartitionPerNotifier]
+    repartitionPerPathology: [RepartitionPerPathology]
+}
+
 type Substance {
     id: Int!
     code: String!
     name: String! @capitalize
-    retrieveSpecialities: SpecialitiesReturn
-    repartitionPerGender: RepartitionPerGender
-    repartitionPerAge: [SubstanceUsagePerAge]
-    repartitionPerNotifier: [RepartitionPerNotifier]
-    repartitionPerPathology: [RepartitionPerPathology]
-    totalExposition: SubstanceTotalExposition
     exposition: CisExposition
+    totalExposition: SubstanceTotalExposition
+    repartitionPerGender: RepartitionPerGender
+    repartitionPerAge: [RepartitionPerAge]
+    sideEffects: SubstanceSideEffects
+    retrieveSpecialities: SpecialitiesReturn
 }
 
 type SpecialitySubstance {

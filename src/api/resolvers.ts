@@ -163,8 +163,24 @@ export const resolvers: Resolvers = {
   },
 
   Substance: {
+    async exposition(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceCisExposition(substance.id);
+    },
+
+    async totalExposition(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceTotalExposition(substance.id);
+    },
+
+    async repartitionPerAge(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceDeclarationsPerAge(substance.id);
+    },
+
+    async repartitionPerGender(substance, args, context) {
+      return context.dataSources.postgresOperations.getSubstanceDeclarationsPerGender(substance.id);
+    },
+
     async retrieveSpecialities(substance, args, context) {
-      const cisCodes = await context.dataSources.postgresOperations.getSpecialitiesCodeBySubstance(
+      const cisCodes = await context.dataSources.postgresOperations.getCisCodeBySubstanceId(
         substance.id
       );
 
@@ -185,28 +201,33 @@ export const resolvers: Resolvers = {
       };
     },
 
-    async repartitionPerAge(substance, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceRepAge(substance.id);
-    },
+    async sideEffects(substance, args, context) {
+      const repartitionPerGender =
+        await context.dataSources.postgresOperations.getSubstanceDeclarationsWithSideEffectsPerGender(
+          substance.id
+        );
 
-    async repartitionPerGender(substance, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceRepGender(substance.id);
-    },
+      const repartitionPerAge =
+        await context.dataSources.postgresOperations.getSubstanceDeclarationsWithSideEffectsPerAge(
+          substance.id
+        );
 
-    async repartitionPerNotifier(substance, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceRepNotifier(substance.id);
-    },
+      const repartitionPerNotifier =
+        await context.dataSources.postgresOperations.getSubstanceDeclarationsWithSideEffectsPerNotifier(
+          substance.id
+        );
 
-    async repartitionPerPathology(substance, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceRepPathology(substance.id);
-    },
+      const repartitionPerPathology =
+        await context.dataSources.postgresOperations.getSubstanceDeclarationsWithSideEffectsPerPathology(
+          substance.id
+        );
 
-    async totalExposition(substance, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceTotalExposition(substance.id);
-    },
-
-    async exposition(substance, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceCisExposition(substance.id);
+      return {
+        repartitionPerGender,
+        repartitionPerAge,
+        repartitionPerNotifier,
+        repartitionPerPathology,
+      };
     },
   },
 
