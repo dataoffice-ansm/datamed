@@ -1,13 +1,11 @@
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip, type TooltipItem } from 'chart.js';
 
-import type {
-  GlobalStatistic,
-  RepartitionRange,
-} from '../../graphql/__generated__/generated-documents';
+import type { GlobalStatistic } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
 import { darkGreen } from '../../../tailwind.palette.config';
 import { numberWithThousand } from '../../utils/format';
+import { type RepartitionUsageCommon } from '../../utils/entities';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -20,7 +18,7 @@ export const PieChartGlobalStatisticSeriousEffects = ({
   seriousEffectData = [],
   className,
 }: {
-  seriousEffectData:
+  seriousEffectData?:
     | GlobalStatistic['repartitionPerSeriousEffect']
     | GlobalStatistic['repartitionPerGravity'];
   className?: string;
@@ -37,7 +35,7 @@ export const PieChartGlobalStatisticSeriousEffects = ({
 
     const range = tooltipItem.label;
     if (seriousEffectData && Array.isArray(seriousEffectData)) {
-      const repartition = (seriousEffectData as unknown as RepartitionRange[]).find(
+      const repartition = (seriousEffectData as RepartitionUsageCommon[]).find(
         (e) => range === e?.range
       );
       const rawValue = repartition?.value ?? 0;
