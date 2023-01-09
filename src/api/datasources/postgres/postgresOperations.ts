@@ -13,6 +13,7 @@ import type {
   MedicalErrorsNature,
   MedicalErrorsPopulation,
   Publication,
+  RepartitionPerAge,
   RepartitionPerGender,
   RepartitionPerNotifier,
   RepartitionPerPathology,
@@ -29,7 +30,6 @@ import type {
   SpecialityUsagePerAge,
   Substance,
   SubstanceTotalExposition,
-  SubstanceUsagePerAge,
   TherapeuticClassesRupturesPerYear,
   TherapeuticClassRupture,
 } from '../../graphql/__generated__/generated-types';
@@ -444,7 +444,7 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSpecialitiesCodeBySubstance(subId: number): Promise<string[]> {
+  async getCisCodeBySubstanceId(subId: number): Promise<string[]> {
     const rows = await dbInstance
       .selectFrom('mp_substances as mp_s')
       .where('mp_s.substance_id', '=', subId)
@@ -487,7 +487,67 @@ export class PostgresOperations {
     }));
   }
 
-  async getSubstanceRepGender(subId: number): Promise<RepartitionPerGender> {
+  async getSubstanceDeclarationsPerGender(subId: number): Promise<RepartitionPerGender> {
+    const rows = await dbInstance
+      .selectFrom('substances_patient_sex')
+      .where('substance_id', '=', subId)
+      .select(['sex', 'patients_consumption', 'patients_percentage'])
+      .execute();
+
+    //TODO: to be fixed in bdd
+    const male = rows.find((row) => row.sex === 1);
+    const female = rows.find((row) => row.sex === 2);
+
+    return {
+      male: male
+        ? {
+            value: Math.round(male.patients_consumption ?? 0),
+            valuePercent: roundFloat(male.patients_percentage ?? 0),
+          }
+        : null,
+      female: female
+        ? {
+            value: Math.round(female.patients_consumption ?? 0),
+            valuePercent: roundFloat(female.patients_percentage ?? 0),
+          }
+        : null,
+    };
+  }
+
+  async getSubstanceDeclarationsPerAge(subId: number): Promise<RepartitionPerAge[]> {
+    const rows = await dbInstance
+      .selectFrom('substances_patient_age as s_p_a')
+      .where('s_p_a.substance_id', '=', subId)
+      .leftJoin('ages', 'ages.id', 's_p_a.age_id')
+      .select([
+        'ages.range',
+        's_p_a.patients_percentage as percentage',
+        's_p_a.patients_consumption as consumption',
+      ])
+      .execute();
+
+    return rows.reduce<RepartitionPerAge[]>((carry, row) => {
+      const { range, consumption, percentage } = row;
+      return range && consumption && percentage
+        ? [
+            ...carry,
+            {
+              range,
+              value: Math.round(consumption),
+              valuePercent: roundFloat(percentage),
+            },
+          ]
+        : carry;
+    }, []);
+  }
+
+  // Substance sideEffects
+
+  async getSubstanceDeclarationsWithSideEffectsPerGender(
+    subId: number
+  ): Promise<RepartitionPerGender> {
+    console.log('zefzefzefzefzefz');
+
     const rows = await dbInstance
       .selectFrom('substances_case_sex')
       .where('substance_id', '=', subId)
@@ -514,19 +574,15 @@ export class PostgresOperations {
     };
   }
 
-  async getSubstanceRepAge(subId: number): Promise<SubstanceUsagePerAge[]> {
+  async getSubstanceDeclarationsWithSideEffectsPerAge(subId: number): Promise<RepartitionPerAge[]> {
     const rows = await dbInstance
-      .selectFrom('substances_patient_age as s_p_a')
-      .where('s_p_a.substance_id', '=', subId)
-      .leftJoin('ages', 'ages.id', 's_p_a.age_id')
-      .select([
-        'ages.range',
-        's_p_a.patients_percentage as percentage',
-        's_p_a.patients_consumption as consumption',
-      ])
+      .selectFrom('substances_case_age as sca')
+      .where('sca.substance_id', '=', subId)
+      .leftJoin('ages', 'ages.id', 'sca.age_id')
+      .select(['ages.range', 'sca.nb_cases as consumption', 'sca.case_percentage as percentage'])
       .execute();
 
-    return rows.reduce<SubstanceUsagePerAge[]>((carry, row) => {
+    return rows.reduce<RepartitionPerAge[]>((carry, row) => {
       const { range, consumption, percentage } = row;
       return range && consumption && percentage
         ? [
@@ -541,7 +597,9 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSubstanceRepNotifier(subId: number): Promise<RepartitionPerNotifier[]> {
+  async getSubstanceDeclarationsWithSideEffectsPerNotifier(
+    subId: number
+  ): Promise<RepartitionPerNotifier[]> {
     const rows = await dbInstance
       .selectFrom('substances_notif as sn')
       .where('sn.substance_id', '=', subId)
@@ -570,7 +628,9 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSubstanceRepPathology(subId: number): Promise<RepartitionPerPathology[]> {
+  async getSubstanceDeclarationsWithSideEffectsPerPathology(
+    subId: number
+  ): Promise<RepartitionPerPathology[]> {
     const rows = await dbInstance
       .selectFrom('substances_soclong as s_s')
       .where('s_s.substance_id', '=', subId)

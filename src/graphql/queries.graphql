@@ -142,24 +142,44 @@ fragment SubstanceFragment on Substance {
         value
         valuePercent
     }
-    repartitionPerNotifier {
-        id
-        job
-        value
-        valuePercent
-    }
-    repartitionPerPathology {
-        id
-        range
-        value
-        valuePercent
-        htlEffects {
-            id
+    sideEffects {
+        repartitionPerGender {
+            male {
+                value
+                valuePercent
+            }
+            female {
+                value
+                valuePercent
+            }
+        }
+        repartitionPerAge {
             range
             value
             valuePercent
         }
+        repartitionPerNotifier {
+            id
+            job
+            value
+            valuePercent
+        }
+
+        repartitionPerPathology {
+            id
+            range
+            value
+            valuePercent
+            htlEffects {
+                id
+                range
+                value
+                valuePercent
+            }
+        }
     }
+
+
     totalExposition {
         total
         minYear

@@ -2,11 +2,11 @@ import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/Enti
 import { HeroHeader } from '../../components/HeroHeader/HeroHeader';
 import type { EntitySub } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
-import { type Substance, useSubstanceQuery } from '../../graphql/__generated__/generated-documents';
+import { type Substance } from '../../graphql/__generated__/generated-documents';
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 import Link from 'next/link';
 import classnames from 'classnames';
-import { SubstanceContainer } from './SubstanceContainer';
+import { SubstanceSideEffects } from './SubstanceSideEffects';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { Accordion } from '../../components/Accordion/Accordion';
 import PilIcon from '../../assets/pictos/gellule.svg';
@@ -162,7 +162,7 @@ const SectionSideEffects = () => {
         title="Déclarations d’effets indésirables suspectés de la substance active"
         subTitle="Données issues de la période 2009 - 2021"
       />
-      <SubstanceContainer substance={currentEntity} />
+      <SubstanceSideEffects substance={currentEntity} />
     </div>
   );
 };
@@ -170,31 +170,18 @@ const SectionSideEffects = () => {
 const SectionAssociatedSpecialities = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
 
-  const { data } = useSubstanceQuery({
-    variables: {
-      subCode: currentEntity.code,
-    },
-  });
-
-  if (!data) {
-    return (
-      <div className="w-full flex justify-center items-center">
-        <NotEnoughData />
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen">
       <SectionTitle title={`Spécialités de médicaments contenant: ${currentEntity.name}`} />
+
       <div className="p-4 border border-grey-200 rounded-lg bg-white">
         <div className="text-secondary-900 font-medium">
-          {data?.getSubstance?.retrieveSpecialities?.meta?.count} médicaments identifiés
+          {currentEntity.retrieveSpecialities?.meta?.count} médicaments identifiés
         </div>
         <div className="pt-6">
           <PaginatedList
             theme="secondary"
-            data={data?.getSubstance?.retrieveSpecialities?.specialities ?? []}
+            data={currentEntity.retrieveSpecialities?.specialities ?? []}
             renderItem={(item) =>
               item?.code ? (
                 <Link href={`/specialite/${item.code}`}>

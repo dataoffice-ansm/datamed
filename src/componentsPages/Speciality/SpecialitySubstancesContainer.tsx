@@ -5,7 +5,7 @@ import type { Substance } from '../../graphql/__generated__/generated-documents'
 import type { HTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';
 import SubSVG from '../../assets/pictos/sub.svg';
-import { SubstanceContainer } from '../Substance/SubstanceContainer';
+import { SubstanceSideEffects } from '../Substance/SubstanceSideEffects';
 
 export type SpecialitySubstancesContainerProps = {
   substances: Substance[];
@@ -62,7 +62,7 @@ export const SpecialitySubstancesContainer = ({
               Substance active sélectionnée:{' '}
               <span className="text-secondary-900 font-medium">{selectedSubstance?.name}</span>
             </span>
-            <SubstanceContainer substance={selectedSubstance} />
+            <SubstanceSideEffects substance={selectedSubstance} />
           </div>
         )}
       </div>
