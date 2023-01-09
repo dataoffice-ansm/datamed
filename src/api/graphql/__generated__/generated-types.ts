@@ -128,10 +128,11 @@ export type MedicalError = {
 
 export enum MedicalErrorApparitionStep {
   AdministrationStep = 'ADMINISTRATION_STEP',
-  AfterSurveillanceStep = 'AFTER_SURVEILLANCE_STEP',
-  FirstPrescriptionStep = 'FIRST_PRESCRIPTION_STEP',
+  DeliveranceStep = 'DELIVERANCE_STEP',
   OtherStep = 'OTHER_STEP',
-  SecondPrescriptionStep = 'SECOND_PRESCRIPTION_STEP',
+  PreparationStep = 'PREPARATION_STEP',
+  PrescriptionStep = 'PRESCRIPTION_STEP',
+  SurveillanceStep = 'SURVEILLANCE_STEP',
 }
 
 export enum MedicalErrorNature {
@@ -153,8 +154,8 @@ export type MedicalErrors = {
 
 export type MedicalErrorsApparitionStep = {
   __typename?: 'MedicalErrorsApparitionStep';
-  description: Scalars['String'];
   id: Scalars['Int'];
+  label: Scalars['String'];
   step: Scalars['String'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
@@ -950,8 +951,8 @@ export type MedicalErrorsApparitionStepResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['MedicalErrorsApparitionStep'] = ResolversParentTypes['MedicalErrorsApparitionStep']
 > = {
-  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   step?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   valuePercent?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;

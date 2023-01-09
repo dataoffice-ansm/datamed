@@ -128,10 +128,11 @@ export type MedicalError = {
 
 export enum MedicalErrorApparitionStep {
   AdministrationStep = 'ADMINISTRATION_STEP',
-  AfterSurveillanceStep = 'AFTER_SURVEILLANCE_STEP',
-  FirstPrescriptionStep = 'FIRST_PRESCRIPTION_STEP',
+  DeliveranceStep = 'DELIVERANCE_STEP',
   OtherStep = 'OTHER_STEP',
-  SecondPrescriptionStep = 'SECOND_PRESCRIPTION_STEP',
+  PreparationStep = 'PREPARATION_STEP',
+  PrescriptionStep = 'PRESCRIPTION_STEP',
+  SurveillanceStep = 'SURVEILLANCE_STEP',
 }
 
 export enum MedicalErrorNature {
@@ -153,8 +154,8 @@ export type MedicalErrors = {
 
 export type MedicalErrorsApparitionStep = {
   __typename?: 'MedicalErrorsApparitionStep';
-  description: Scalars['String'];
   id: Scalars['Int'];
+  label: Scalars['String'];
   step: Scalars['String'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
@@ -605,7 +606,7 @@ export type SpecialityFragmentFragment = {
       __typename?: 'MedicalErrorsApparitionStep';
       id: number;
       step: string;
-      description: string;
+      label: string;
       value: number;
       valuePercent: number;
     } | null> | null;
@@ -829,7 +830,7 @@ export type SpecialityQuery = {
         __typename?: 'MedicalErrorsApparitionStep';
         id: number;
         step: string;
-        description: string;
+        label: string;
         value: number;
         valuePercent: number;
       } | null> | null;
@@ -1226,7 +1227,7 @@ export const SpecialityFragmentFragmentDoc = gql`
       apparitionStepRepartition {
         id
         step
-        description
+        label
         value
         valuePercent
       }

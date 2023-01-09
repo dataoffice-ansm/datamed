@@ -1,6 +1,5 @@
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip, type TooltipItem } from 'chart.js';
-import { darkGreen, darkViolet, turquoise } from '../../../tailwind.palette.config';
 import type {
   GlobalStatistic,
   Speciality,
@@ -9,6 +8,7 @@ import type {
 import { NotEnoughData } from '../NotEnoughData';
 import { numberWithThousand } from '../../utils/format';
 import { type RepartitionUsageCommon } from '../../utils/entities';
+import { type ChartPalette, chartThemeGradient } from '../../utils/charts';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -28,7 +28,7 @@ export const PieChartRepartitionAge = ({
     | Speciality['repartitionPerAge']
     | Substance['repartitionPerAge']
     | GlobalStatistic['repartitionPerAge'];
-  theme?: 'primary' | 'secondary' | 'secondary-variant';
+  theme?: ChartPalette;
   className?: string;
 }) => {
   if (!ageData?.length) {
@@ -47,12 +47,7 @@ export const PieChartRepartitionAge = ({
     return [`Nombre: ${numberWithThousand(rawValue)}`];
   };
 
-  const backgroundColor =
-    theme === 'primary'
-      ? [darkViolet[200], darkViolet[500], darkViolet[900]]
-      : theme === 'secondary'
-      ? [turquoise[200], turquoise[500], turquoise[900]]
-      : [darkGreen[200], darkGreen[500], darkGreen[900]];
+  const backgroundColor = chartThemeGradient(theme);
 
   return (
     <div className={className}>

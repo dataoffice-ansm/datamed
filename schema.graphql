@@ -4,11 +4,12 @@ directive @lowercase on FIELD_DEFINITION
 directive @capitalize on FIELD_DEFINITION
 
 enum MedicalErrorApparitionStep {
-    FIRST_PRESCRIPTION_STEP
-    SECOND_PRESCRIPTION_STEP
+    PREPARATION_STEP
+    DELIVERANCE_STEP
+    PRESCRIPTION_STEP
     ADMINISTRATION_STEP
-    AFTER_SURVEILLANCE_STEP
-    OTHER_STEP,
+    SURVEILLANCE_STEP
+    OTHER_STEP
 }
 
 enum PharmaFormType {
@@ -104,9 +105,10 @@ type MedicalErrorsPopulation {
 type MedicalErrorsApparitionStep {
     id: Int!
     step: String!
+    label: String!
     value: Int!
     valuePercent: Float!
-    description: String!
+
 }
 
 type MedicalErrorsNature {

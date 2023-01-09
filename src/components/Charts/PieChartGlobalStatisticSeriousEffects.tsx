@@ -3,9 +3,9 @@ import { ArcElement, Chart as ChartJS, Legend, Tooltip, type TooltipItem } from 
 
 import type { GlobalStatistic } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
-import { darkGreen } from '../../../tailwind.palette.config';
 import { numberWithThousand } from '../../utils/format';
 import { type RepartitionUsageCommon } from '../../utils/entities';
+import { chartThemeGradient } from '../../utils/charts';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -43,18 +43,7 @@ export const PieChartGlobalStatisticSeriousEffects = ({
     }
   };
 
-  const backgroundColor = [
-    darkGreen[200],
-    darkGreen[50],
-    darkGreen[100],
-    darkGreen[300],
-    darkGreen[400],
-    darkGreen[500],
-    darkGreen[600],
-    darkGreen[700],
-    darkGreen[800],
-    darkGreen[900],
-  ];
+  const backgroundColor = chartThemeGradient('green');
 
   return (
     <div className={className}>
