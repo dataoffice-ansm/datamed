@@ -1,4 +1,5 @@
 import { ApolloError } from '@apollo/client';
+import { config } from '../config/config';
 
 const errorsMessages = {
   INTERNAL_SERVER_ERROR: 'Une erreur est survenue lors du chargement de la page',
@@ -6,11 +7,13 @@ const errorsMessages = {
 
 export const getServerSideErrors = (err: unknown) => {
   if (err instanceof ApolloError) {
-    // console.log('err.message:', err.message);
-    // console.log('err.networkError:', err.networkError);
-    // console.log('err.extraInfo:', err.extraInfo);
-    // console.log('err.clientErrors:', err.clientErrors);
-    // console.log('err.graphQLErrors:', err.graphQLErrors);
+    if (config.dev) {
+      console.log('err.message:', err.message);
+      console.log('err.networkError:', err.networkError);
+      console.log('err.extraInfo:', err.extraInfo);
+      console.log('err.clientErrors:', err.clientErrors);
+      console.log('err.graphQLErrors:', err.graphQLErrors);
+    }
   }
 
   return {

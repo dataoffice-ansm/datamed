@@ -34,13 +34,14 @@ import { PieChartMedicalErrorsPopulation } from '../../components/Charts/PieChar
 import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { SectionTitle } from '../../components/SectionTitle';
-import { GraphBoxSelect, type OptionsValue } from '../../components/GraphBoxSelect';
+import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { BarChartMedicalErrorsNature } from '../../components/Charts/BarChartMedicalErrorsNature';
 import { ExpositionLevel } from '../../api/graphql/enums';
 import { CardWithImage } from '../../components/CardWithImage/CardWithImage';
 import { Button } from '../../components/Button/Button';
 import { getMedErrorApparitionStepIcon } from '../../utils/iconsMapping';
+import { buildSortedData } from '../../utils/entities';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -277,64 +278,6 @@ const SectionTreatedPatients = () => {
 const SectionMedicinalErrors = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
 
-  const getApparitionStepsRepartition = useMemo(
-    () => (selectedOption: OptionsValue) => {
-      const apparitionStepsRepartition = (
-        currentEntity.medicalErrors?.apparitionStepRepartition
-          ? currentEntity.medicalErrors?.apparitionStepRepartition.filter(
-              (row) => row?.value !== null && row?.valuePercent !== null
-            )
-          : []
-      ) as MedicalErrorsApparitionStep[];
-
-      if (selectedOption === 'number') {
-        return apparitionStepsRepartition
-          .sort((a, b) => (a.value !== null && b.value !== null ? a.value - b.value : 1))
-          .reverse();
-      }
-
-      if (selectedOption === 'percent') {
-        return apparitionStepsRepartition
-          .sort((a, b) =>
-            a.valuePercent !== null && b.valuePercent !== null ? a.valuePercent - b.valuePercent : 1
-          )
-          .reverse();
-      }
-
-      return apparitionStepsRepartition;
-    },
-    [currentEntity.medicalErrors?.apparitionStepRepartition]
-  );
-
-  const getNatureRepartition = useMemo(
-    () => (selectedOption: OptionsValue) => {
-      const apparitionStepsRepartition = (
-        currentEntity?.medicalErrors?.natureRepartition
-          ? currentEntity?.medicalErrors?.natureRepartition.filter(
-              (row) => row?.value !== null && row?.valuePercent !== null
-            )
-          : []
-      ) as MedicalErrorsNature[];
-
-      if (selectedOption === 'number') {
-        return apparitionStepsRepartition
-          .sort((a, b) => (a.value !== null && b.value !== null ? a.value - b.value : 1))
-          .reverse();
-      }
-
-      if (selectedOption === 'percent') {
-        return apparitionStepsRepartition
-          .sort((a, b) =>
-            a.valuePercent !== null && b.valuePercent !== null ? a.valuePercent - b.valuePercent : 1
-          )
-          .reverse();
-      }
-
-      return apparitionStepsRepartition;
-    },
-    [currentEntity?.medicalErrors?.natureRepartition]
-  );
-
   return (
     <div className="SectionMedicinalErrors sectionPart mt-4 mb-8" id="sectionMedicinalErrors">
       <SectionTitle
@@ -421,42 +364,52 @@ const SectionMedicinalErrors = () => {
         </div>
       </div>
 
-      <GraphBoxSelect
-        title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
-        render={(selectedOption) => (
-          <GraphFiguresGrid
-            data={getApparitionStepsRepartition(selectedOption)}
-            renderItem={(apparitionStep) => {
-              const step = apparitionStep.step as MedicalErrorApparitionStep;
-              return (
-                <GraphFigure
-                  unit={selectedOption === 'percent' ? ' % ' : ''}
-                  value={
-                    (selectedOption === 'percent'
-                      ? apparitionStep.valuePercent
-                      : apparitionStep.value) ?? 0
-                  }
-                  label={apparitionStep.label}
-                  icon={getMedErrorApparitionStepIcon(step)}
-                />
-              );
-            }}
-          />
-        )}
-      />
-
-      <GraphBoxSelect
-        title="Nature des erreurs médicamenteuses"
-        className="max-w-full my-8"
-        render={(selectedOption) => (
-          <div className="m-auto max-w-max">
-            <BarChartMedicalErrorsNature
-              dataKey={selectedOption}
-              natureMedicalErrors={getNatureRepartition(selectedOption)}
+      {currentEntity.medicalErrors?.apparitionStepRepartition && (
+        <GraphBoxSelect
+          title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
+          render={(selectedOption) => (
+            <GraphFiguresGrid
+              data={buildSortedData<MedicalErrorsApparitionStep>(
+                currentEntity.medicalErrors?.apparitionStepRepartition,
+                selectedOption
+              )}
+              renderItem={(apparitionStep) => {
+                const step = apparitionStep.step as MedicalErrorApparitionStep;
+                return (
+                  <GraphFigure
+                    unit={selectedOption === 'percent' ? ' % ' : ''}
+                    value={
+                      (selectedOption === 'percent'
+                        ? apparitionStep.valuePercent
+                        : apparitionStep.value) ?? 0
+                    }
+                    label={apparitionStep.label}
+                    icon={getMedErrorApparitionStepIcon(step)}
+                  />
+                );
+              }}
             />
-          </div>
-        )}
-      />
+          )}
+        />
+      )}
+
+      {currentEntity.medicalErrors?.natureRepartition && (
+        <GraphBoxSelect
+          title="Nature des erreurs médicamenteuses"
+          className="max-w-full my-8"
+          render={(selectedOption) => (
+            <div className="m-auto max-w-max">
+              <BarChartMedicalErrorsNature
+                dataKey={selectedOption}
+                natureMedicalErrors={buildSortedData<MedicalErrorsNature>(
+                  currentEntity.medicalErrors?.natureRepartition,
+                  selectedOption
+                )}
+              />
+            </div>
+          )}
+        />
+      )}
     </div>
   );
 };

@@ -3,7 +3,6 @@ import { SmallContainer } from '../components/SmallContainer';
 import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
 import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
-import { Button } from '../components/Button/Button';
 import { BackgroundSquares } from '../components/BackgroundSquares/BackgroundSquares';
 
 /**

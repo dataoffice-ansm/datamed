@@ -624,8 +624,6 @@ export class PostgresOperations {
     subId: number,
     repartitionPerPathologyId: number
   ): Promise<HltEffect[]> {
-    console.log('getSubstanceRepPathologyEffects', subId, repartitionPerPathologyId);
-
     const rowsHltEffects = await dbInstance
       .selectFrom('substances_hlt as s_htl')
       .where('s_htl.substance_id', '=', subId)
@@ -652,8 +650,6 @@ export class PostgresOperations {
           ]
         : carry;
     }, []);
-
-    console.log(effects);
 
     return effects.filter((e) => e.id === repartitionPerPathologyId);
   }
