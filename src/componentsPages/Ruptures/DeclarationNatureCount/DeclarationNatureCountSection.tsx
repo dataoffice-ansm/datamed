@@ -2,7 +2,7 @@ import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
 import { ChartBox } from 'components/ChartBox';
 import { NotEnoughData } from 'components/NotEnoughData';
-import { LineChart } from 'components/Charts/LineChart/LineChart';
+import { LineChart } from 'components/Charts/LineChart';
 import tailwindPaletteConfig from '../../../../tailwind.palette.config';
 import { BaseTooltipContent, ContainerWithTooltip } from '../Tooltip';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';

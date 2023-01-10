@@ -1,56 +1,67 @@
-import { Pie } from 'react-chartjs-2';
-import { ArcElement, Chart as ChartJS, Legend, Tooltip, type TooltipItem } from 'chart.js';
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  Title,
+  Tooltip,
+  Legend,
+  type TooltipItem,
+} from 'chart.js';
+import { Bar } from 'react-chartjs-2';
 
 import type { GlobalStatistic } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
 import { numberWithThousand } from '../../utils/format';
 import { type RepartitionUsageCommon } from '../../utils/entities';
-import { chartThemeGradient } from '../../utils/charts';
+import { type ChartPalette, chartThemeGradient } from '../../utils/charts';
 
-ChartJS.register(ArcElement, Tooltip, Legend);
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 /**
  *
  * @param ageData
  * @constructor
  */
-export const PieChartGlobalStatisticSeriousEffects = ({
-  seriousEffectData = [],
+export const BarChartRepartition = ({
+  data = [],
   className,
+  theme,
 }: {
-  seriousEffectData?:
-    | GlobalStatistic['repartitionPerSeriousEffect']
-    | GlobalStatistic['repartitionPerGravity'];
+  data?: GlobalStatistic['repartitionPerSeriousEffect'] | GlobalStatistic['repartitionPerGravity'];
+  theme: ChartPalette;
   className?: string;
 }) => {
-  if (!seriousEffectData?.length) {
+  if (!data?.length) {
     return <NotEnoughData />;
   }
 
-  const labels = seriousEffectData.map((row) => row?.range);
-  const data = seriousEffectData.map((row) => row?.valuePercent);
+  const labels = data.map((row) => row?.range);
+  const rows = data.map((row) => row?.valuePercent);
 
-  const tooltip = (tooltipItems: Array<TooltipItem<'pie'>>) => {
+  const tooltip = (tooltipItems: Array<TooltipItem<'bar'>>) => {
     const tooltipItem = tooltipItems[0];
 
     const range = tooltipItem.label;
-    if (seriousEffectData && Array.isArray(seriousEffectData)) {
-      const repartition = (seriousEffectData as RepartitionUsageCommon[]).find(
-        (e) => range === e?.range
-      );
+    if (data && Array.isArray(data)) {
+      const repartition = (data as RepartitionUsageCommon[]).find((e) => range === e?.range);
       const rawValue = repartition?.value ?? 0;
       return [`Nombre: ${numberWithThousand(rawValue)}`];
     }
   };
 
-  const backgroundColor = chartThemeGradient('green');
+  const backgroundColor = chartThemeGradient(theme);
 
   return (
     <div className={className}>
-      <Pie
+      <Bar
         options={{
           responsive: true,
+          indexAxis: 'y' as const,
           plugins: {
+            legend: {
+              display: false,
+            },
             tooltip: {
               callbacks: {
                 afterBody: tooltip,
@@ -66,9 +77,8 @@ export const PieChartGlobalStatisticSeriousEffects = ({
           labels,
           datasets: [
             {
-              data,
+              data: rows,
               backgroundColor,
-              hoverOffset: 4,
               borderWidth: 1,
             },
           ],

@@ -6,12 +6,15 @@ import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
 import WomanIllustration from '../../assets/pictos/woman_illustration.svg';
 import ManIllustration from '../../assets/pictos/man_illustration.svg';
-import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
+import { PieChartRepartition } from '../../components/Charts/PieChartRepartition';
 import FolderSVG from '../../assets/pictos/folder.svg';
 import { BoxInfo } from '../../components/BoxInfo';
 import { SectionTitle } from '../../components/SectionTitle';
-import { PieChartGlobalStatisticSeriousEffects } from '../../components/Charts/PieChartGlobalStatisticSeriousEffects';
-import { getNotifierIconByJobName, getSideEffectPathologyIcon } from '../../utils/iconsMapping';
+import { BarChartRepartition } from '../../components/Charts/BarChartRepartition';
+import {
+  getNotifierIcon,
+  getSideEffectPathologyIconByName,
+} from '../../utils/iconsMapping';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { Accordion } from '../../components/Accordion/Accordion';
@@ -20,10 +23,24 @@ import classnames from 'classnames';
 import GlobStatSvg from '../../assets/pictos/sick_transparent_person.svg';
 import { Tooltip } from '../../components/Tooltip/Tooltip';
 import { useGlobalDecPageContext } from '../../contexts/GlobaleDecPageContext';
+import { useMemo } from 'react';
+import { buildSortedRangeData } from '../../utils/entities';
+import {
+  type GlobalStatsUsagePerAge,
+  type GlobalStatsUsagePerGravity,
+  type GlobalStatsUsagePerNotifier,
+  type GlobalStatsUsagePerPathology,
+  type GlobalStatsUsagePerSeriousEffect,
+} from '../../graphql/__generated__/generated-documents';
 
 const SectionDemography = () => {
   const { globalDec } = useGlobalDecPageContext();
-  const { repartitionPerAge, repartitionPerGender, totalExposition } = globalDec;
+  const { repartitionPerGender, totalExposition } = globalDec;
+
+  const repartitionPerAge = useMemo(
+    () => buildSortedRangeData<GlobalStatsUsagePerAge>(globalDec.repartitionPerAge, 'number'),
+    [globalDec.repartitionPerAge]
+  );
 
   return (
     <div className="GlobalStatisticDemographySection text-left">
@@ -90,10 +107,10 @@ const SectionDemography = () => {
             title="Répartition par âge des patients traités"
             className="h-full max-w-[100%]"
           >
-            <PieChartRepartitionAge
+            <PieChartRepartition
               theme="green"
               className="h-64 w-full flex justify-center items-center"
-              ageData={repartitionPerAge}
+              data={repartitionPerAge}
             />
           </GraphBox>
         </div>
@@ -104,7 +121,22 @@ const SectionDemography = () => {
 
 const SectionSeriousEffect = () => {
   const { globalDec } = useGlobalDecPageContext();
-  const { totalExposition, repartitionPerSeriousEffect, repartitionPerGravity } = globalDec;
+  const { totalExposition } = globalDec;
+
+  const repartitionPerGravity = useMemo(
+    () =>
+      buildSortedRangeData<GlobalStatsUsagePerGravity>(globalDec.repartitionPerGravity, 'number'),
+    [globalDec.repartitionPerGravity]
+  );
+
+  const repartitionPerSeriousEffect = useMemo(
+    () =>
+      buildSortedRangeData<GlobalStatsUsagePerSeriousEffect>(
+        globalDec.repartitionPerSeriousEffect,
+        'number'
+      ),
+    [globalDec.repartitionPerSeriousEffect]
+  );
 
   return (
     <div className="GlobalStatisticSeriousEffectSection text-left">
@@ -116,12 +148,30 @@ const SectionSeriousEffect = () => {
             : 'Période des données issues non renseignée'
         }
       />
+
       <div className="flex flex-col gap-8 mb-8 m-auto mt-8">
         <div className="flex-1">
-          <GraphBox title="Répartition par gravité" className="h-full max-w-[100%]">
-            <PieChartGlobalStatisticSeriousEffects
+          <GraphBox
+            title="Répartition par gravité"
+            className="h-full max-w-[100%]"
+            tooltip={
+              <>
+                <div className="font-medium mb-4 text-lg">
+                  Mesures prises pour palier ou prévenir les ruptures de stock
+                </div>
+                <div>
+                  Lorsqu’un signalement arrive à l’ANSM, est mise en place une évaluation afin de
+                  déterminer les mesures les plus adaptées pour pallier l’insuffisance de stock.
+                  Plusieurs mesures peuvent être mobilisées pour une même situation de risque ou de
+                  rupture de stock, aussi le total peut dépasser 100%.
+                </div>
+              </>
+            }
+          >
+            <PieChartRepartition
               className="h-64 w-full flex justify-center items-center"
-              seriousEffectData={repartitionPerGravity}
+              theme="green"
+              data={repartitionPerGravity}
             />
           </GraphBox>
         </div>
@@ -131,9 +181,10 @@ const SectionSeriousEffect = () => {
             title="Détail des déclarations d'effets indésirables graves"
             className="h-full max-w-[100%]"
           >
-            <PieChartGlobalStatisticSeriousEffects
+            <BarChartRepartition
               className="h-64 w-full flex justify-center items-center"
-              seriousEffectData={repartitionPerSeriousEffect}
+              data={repartitionPerSeriousEffect}
+              theme="green-full"
             />
           </GraphBox>
         </div>
@@ -144,48 +195,43 @@ const SectionSeriousEffect = () => {
 
 const SectionRepartitionNotifiers = () => {
   const { globalDec } = useGlobalDecPageContext();
-  const { repartitionPerNotifier } = globalDec;
 
   return (
     <GraphBoxSelect
       title="Répartition par type de déclarants"
       theme="secondary-variant"
-      render={({ selectedUnitOption }) => (
-        <GraphFiguresGrid
-          data={
-            repartitionPerNotifier?.filter(
-              (notifier) =>
-                notifier?.job &&
-                notifier?.value !== undefined &&
-                notifier?.value !== null &&
-                notifier?.valuePercent !== undefined &&
-                notifier?.valuePercent !== null
-            ) ?? []
-          }
-          renderItem={(notifier) =>
-            notifier?.id && notifier.job ? (
+      render={({ selectedUnitOption }) => {
+        const repartitionPerNotifier = buildSortedRangeData<GlobalStatsUsagePerNotifier>(
+          globalDec.repartitionPerNotifier,
+          selectedUnitOption
+        );
+
+        return (
+          <GraphFiguresGrid
+            data={repartitionPerNotifier}
+            renderItem={(notifier) => (
               <GraphFigure
                 key={notifier.id}
                 className="NotifierRepartitionFigure"
                 unit={selectedUnitOption === 'percent' ? ' % ' : ''}
                 label={notifier.job}
-                icon={getNotifierIconByJobName(notifier.job)}
+                icon={getNotifierIcon(notifier.id)}
                 valueClassName="text-dark-green-900"
                 value={
                   (selectedUnitOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0
                 }
               />
-            ) : null
-          }
-        />
-      )}
+            )}
+          />
+        );
+      }}
     />
   );
 };
 
 const SectionTypesOfSideEffects = () => {
   const { globalDec } = useGlobalDecPageContext();
-  const { repartitionPerPathology, totalExposition } = globalDec;
+  const { totalExposition } = globalDec;
 
   return (
     <div className="GlobalStatTypesOfSideEffects text-left">
@@ -217,50 +263,49 @@ const SectionTypesOfSideEffects = () => {
           sont supérieurs ou égaux à 11.
         </p>
       </Accordion>
+
       <GraphBoxSelect
         theme="secondary-variant"
         title="Répartition des déclarations d'effets indésirables par système d'organe"
-        render={({ selectedUnitOption }) => (
-          <div className="GraphBoxSelectContent">
-            <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
-              Parmi les{' '}
-              <span className="text-dark-green-900 font-medium">{totalExposition?.total}</span>{' '}
-              déclarations d&apos;effets indésirables pour
-              <span className="text-dark-green-900 font-medium"> au global</span>:
-            </div>
+        render={({ selectedUnitOption }) => {
+          const repartitionPerPathology = buildSortedRangeData<GlobalStatsUsagePerPathology>(
+            globalDec.repartitionPerPathology,
+            selectedUnitOption
+          );
 
-            <GraphFiguresGrid
-              data={
-                repartitionPerPathology?.filter(
-                  (pathologyRepartition) =>
-                    pathologyRepartition?.range &&
-                    pathologyRepartition?.value !== undefined &&
-                    pathologyRepartition?.value !== null &&
-                    pathologyRepartition?.valuePercent !== undefined &&
-                    pathologyRepartition?.valuePercent !== null
-                ) ?? []
-              }
-              renderItem={(pathologyRepartition) =>
-                pathologyRepartition?.range &&
-                pathologyRepartition?.value &&
-                pathologyRepartition?.valuePercent ? (
-                  <GraphFigure
-                    className="pathologyGraphFigure"
-                    unit={selectedUnitOption === 'percent' ? ' % ' : ''}
-                    label={pathologyRepartition.range}
-                    icon={getSideEffectPathologyIcon(pathologyRepartition.id)}
-                    valueClassName="text-dark-green-900"
-                    value={
-                      selectedUnitOption === 'percent'
-                        ? pathologyRepartition.valuePercent
-                        : pathologyRepartition.value
-                    }
-                  />
-                ) : null
-              }
-            />
-          </div>
-        )}
+          return (
+            <div className="GraphBoxSelectContent">
+              <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
+                Parmi les{' '}
+                <span className="text-dark-green-900 font-medium">{totalExposition?.total}</span>{' '}
+                déclarations d&apos;effets indésirables pour
+                <span className="text-dark-green-900 font-medium"> au global</span>:
+              </div>
+
+              <GraphFiguresGrid
+                data={repartitionPerPathology}
+                renderItem={(pathologyRepartition) =>
+                  pathologyRepartition?.range &&
+                  pathologyRepartition?.value &&
+                  pathologyRepartition?.valuePercent ? (
+                    <GraphFigure
+                      className="pathologyGraphFigure"
+                      unit={selectedUnitOption === 'percent' ? ' % ' : ''}
+                      label={pathologyRepartition.range}
+                      icon={getSideEffectPathologyIconByName(pathologyRepartition.range)}
+                      valueClassName="text-dark-green-900"
+                      value={
+                        selectedUnitOption === 'percent'
+                          ? pathologyRepartition.valuePercent
+                          : pathologyRepartition.value
+                      }
+                    />
+                  ) : null
+                }
+              />
+            </div>
+          );
+        }}
       />
     </div>
   );

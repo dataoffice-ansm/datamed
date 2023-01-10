@@ -6,7 +6,7 @@ import { BaseTooltipContent, ContainerWithTooltip } from '../Tooltip';
 import tailwindPaletteConfig from '../../../../tailwind.palette.config';
 import type { SelectOption } from 'components/Select/Select';
 import { Select } from 'components/Select/Select';
-import { BarChart } from '../../../components/Charts/BarChart/BarChart';
+import { BarChart } from '../../../components/Charts/BarChart';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 import { buildSortedRangeData } from '../../../utils/entities';
 import { type TherapeuticClassRupture } from '../../../graphql/__generated__/generated-documents';

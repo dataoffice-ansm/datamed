@@ -301,7 +301,7 @@ export class PostgresOperations {
     return rows.reduce<MedicalErrorsApparitionStep[]>((carry, row) => {
       const { stepId, label, value, valuePercent } = row;
 
-      return stepId && label && value && valuePercent
+      return stepId && label && value && value >= 10 && valuePercent
         ? [
             ...carry,
             {
@@ -332,7 +332,7 @@ export class PostgresOperations {
     return rows.reduce<MedicalErrorsNature[]>((carry, row) => {
       const { natureId, nature, value, valuePercent } = row;
 
-      return natureId && nature && value && valuePercent
+      return natureId && nature && value && value >= 10 && valuePercent
         ? [
             ...carry,
             {
