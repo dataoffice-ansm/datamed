@@ -1,5 +1,6 @@
 import { dbInstance } from './postgreDb';
 import type {
+  Cause,
   CisExposition,
   GlobalStatistic,
   GlobalStatsUsagePerAge,
@@ -945,6 +946,7 @@ export class PostgresOperations {
       (carry, row) => {
         const { classification, state } = row;
 
+        //TODO: transform with enum
         if (classification === 'rupture') {
           carry.nbRupture += 1;
           if (state === 'fermé') {
@@ -984,7 +986,7 @@ export class PostgresOperations {
       .orderBy('year')
       .execute();
 
-    const rowsRupture = await dbInstance
+    const rowsRiskRupture = await dbInstance
       .selectFrom('sold_out_all')
       .select([count('num').as('value'), 'year', 'classification'])
       .where('classification', '=', 'rupture')
@@ -1007,7 +1009,7 @@ export class PostgresOperations {
       }
     });
 
-    rowsRupture.forEach((row) => {
+    rowsRiskRupture.forEach((row) => {
       const { classification, value, year } = row;
 
       if (classification && value && year) {
@@ -1049,10 +1051,18 @@ export class PostgresOperations {
 
         return {
           year: Number(value),
-          causes: rows.map((r) => ({
-            range: r.type,
-            value: Number(r.value),
-          })),
+          causes: rows.reduce<Cause[]>((carry, row) => {
+            const { type, value } = row;
+            return type && value && value >= 10
+              ? [
+                  ...carry,
+                  {
+                    range: type,
+                    value: Number(value),
+                  },
+                ]
+              : carry;
+          }, []),
           total: Number(rowsTotal?.value),
         };
       })
@@ -1071,7 +1081,7 @@ export class PostgresOperations {
     return Number(rowTotal?.value);
   }
 
-  async getRuptureActionsByYear(year: string): Promise<RuptureAction[]> {
+  async _getRuptureActionsByYear(year: string): Promise<RuptureAction[]> {
     const { count } = dbInstance.fn;
     const rows = await dbInstance
       .selectFrom('actions')
@@ -1082,10 +1092,18 @@ export class PostgresOperations {
       .orderBy('at.type')
       .execute();
 
-    return rows.map((r) => ({
-      range: r.name,
-      value: Number(r.value),
-    }));
+    return rows.reduce<RuptureAction[]>((carry, row) => {
+      const { name, value } = row;
+      return name && value && value >= 10
+        ? [
+            ...carry,
+            {
+              range: name,
+              value: Number(value),
+            },
+          ]
+        : carry;
+    }, []);
   }
 
   async getRuptureStockRepartitionPerAction(): Promise<RuptureActionRepartition[]> {
@@ -1095,7 +1113,8 @@ export class PostgresOperations {
       years.map(async ({ value }) => {
         const year = String(value);
         const total = await this._getRupturesTotalActionByYear(year);
-        const actions = await this.getRuptureActionsByYear(year);
+        const actions = await this._getRuptureActionsByYear(year);
+
         return {
           year: value,
           actions,
@@ -1138,7 +1157,7 @@ export class PostgresOperations {
     return rows.reduce<TherapeuticClassRupture[]>((carry, row) => {
       const { name, value, year } = row;
 
-      return name && value && year
+      return name && year && value && value >= 10
         ? [
             ...carry,
             {
@@ -1170,7 +1189,7 @@ export class PostgresOperations {
     );
   }
 
-  async getRupturesTotalAction(): Promise<RuptureTotalAction[]> {
+  async getRupturesTotalActions(): Promise<RuptureTotalAction[]> {
     const { count } = dbInstance.fn;
     const rows = await dbInstance
       .selectFrom('actions')

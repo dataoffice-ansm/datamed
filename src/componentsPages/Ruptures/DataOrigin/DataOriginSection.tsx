@@ -2,14 +2,18 @@ import { Button } from '../../../components/Button/Button';
 import { ChartBox } from '../../../components/ChartBox';
 import { SectionTitle } from '../../../components/SectionTitle';
 
-export const DataOrigin = () => (
-  <div>
-    <div>
-      <SectionTitle title="Origine des données" />
-      <ChartBox>
-        <div className="flex flex-col justify-start items-start flex-auto text-left">
+export const DataOriginSection = () => (
+  <div className="DataOriginSection my-12">
+    <SectionTitle title="Origine des données" />
+    <ChartBox>
+      <div className="flex flex-col justify-start items-start flex-auto text-left">
+        <div className="mb-8">
+          <h4 className="mt-0 mb-2">Bases de données exploitées</h4>
           <p>Plateforme de télédéclaration des ruptures et risques de rupture de stock des MITM</p>
-          <p className="font-medium">D&apos;où viennent les données ? Quelle est leur nature ?</p>
+        </div>
+
+        <div className="mb-8">
+          <h4 className="mt-0 mb-2">D&apos;où viennent les données ? Quelle est leur nature ?</h4>
           <p>
             Les laboratoires pharmaceutiques ont l&apos;obligation de déclarer toute rupture ou
             risque de rupture concernant des Médicaments d&apos;Intérêt Thérapeutique Majeur (MITM)
@@ -32,7 +36,10 @@ export const DataOrigin = () => (
             Retrouvez différentes statistiques sur les déclarations reçues par l&apos;ANSM et les
             actions mises en place pour y remédier.
           </p>
-          <p className="mt-8 font-medium">Avertissements</p>
+        </div>
+
+        <div className="mb-8">
+          <h4 className="mt-0 mb-2">Avertissements</h4>
           <p>
             La publication de ces données fait partie de l&apos;objectif de transparence de
             l&apos;ANSM sur ses actions pour sécuriser l&apos;approvisionnement en médicaments
@@ -49,23 +56,34 @@ export const DataOrigin = () => (
             sous forme de base de données, elles ne sont pas toutes exploitables sous le format
             présenté.
           </p>
-          <p className="mt-8 font-medium">Pour aller plus loin</p>
+        </div>
+
+        <div className="mb-8">
+          <h4 className="mt-0 mb-2">Pour aller plus loin</h4>
           <p>
             La sécurisation de l&apos;approvisionnement en médicaments d&apos;intérêt thérapeutique
-            majeur.{' '}
-            <Button href="https://ansm.sante.fr/qui-sommes-nous/nos-missions/assurer-la-securite-des-produits-de-sante/p/assurer-la-disponibilite#title">
+            majeur. <br />
+            <a
+              rel="external noreferrer"
+              target="_blank"
+              href="https://ansm.sante.fr/qui-sommes-nous/nos-missions/assurer-la-securite-des-produits-de-sante/p/assurer-la-disponibilite#title"
+            >
               Voir l&apos;infographie sur le site de l&apos;ANSM
-            </Button>
+            </a>
           </p>
           <p>
             La liste des MITM en rupture ou en risque de rupture de stock faisant l&apos;objet de
-            mesures palliatives :{' '}
-            <Button href="https://ansm.sante.fr/disponibilites-des-produits-de-sante/medicaments">
+            mesures palliatives: <br />
+            <a
+              rel="external noreferrer"
+              target="_blank"
+              href="https://ansm.sante.fr/disponibilites-des-produits-de-sante/medicaments"
+            >
               Trouvez la liste des MITM sur le site de l&apos;ANSM
-            </Button>
+            </a>
           </p>
         </div>
-      </ChartBox>
-    </div>
+      </div>
+    </ChartBox>
   </div>
 );

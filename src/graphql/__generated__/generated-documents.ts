@@ -17,8 +17,8 @@ export type Scalars = {
 
 export type Cause = {
   __typename?: 'Cause';
-  range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
+  range: Scalars['String'];
+  value: Scalars['Int'];
 };
 
 export type CisExposition = {
@@ -36,7 +36,7 @@ export type GlobalRuptures = {
   repartitionPerTherapeuticClass?: Maybe<Array<Maybe<TherapeuticClassesRupturesPerYear>>>;
   ruptureStocks?: Maybe<Array<Maybe<RuptureStock>>>;
   ruptureYears?: Maybe<Array<Maybe<RuptureYear>>>;
-  totalAction?: Maybe<Array<Maybe<RuptureTotalAction>>>;
+  totalActions?: Maybe<Array<Maybe<RuptureTotalAction>>>;
 };
 
 export type GlobalStatistic = {
@@ -288,8 +288,8 @@ export type RepartitionPerPathology = {
 
 export type RuptureAction = {
   __typename?: 'RuptureAction';
-  range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
+  range: Scalars['String'];
+  value: Scalars['Int'];
 };
 
 export type RuptureActionRepartition = {
@@ -1103,23 +1103,15 @@ export type GlobalRupturesQuery = {
       __typename?: 'RuptureCauseRepartition';
       year?: number | null;
       total?: number | null;
-      causes?: Array<{
-        __typename?: 'Cause';
-        value?: number | null;
-        range?: string | null;
-      } | null> | null;
+      causes?: Array<{ __typename?: 'Cause'; value: number; range: string } | null> | null;
     } | null> | null;
     repartitionPerAction?: Array<{
       __typename?: 'RuptureActionRepartition';
       year?: number | null;
       total?: number | null;
-      actions?: Array<{
-        __typename?: 'RuptureAction';
-        value?: number | null;
-        range?: string | null;
-      } | null> | null;
+      actions?: Array<{ __typename?: 'RuptureAction'; value: number; range: string } | null> | null;
     } | null> | null;
-    totalAction?: Array<{
+    totalActions?: Array<{
       __typename?: 'RuptureTotalAction';
       year?: number | null;
       total?: number | null;
@@ -1650,7 +1642,7 @@ export const GlobalRupturesDocument = gql`
           range
         }
       }
-      totalAction {
+      totalActions {
         year
         total
         totalWithAtLeastOneAction

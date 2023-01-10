@@ -332,8 +332,8 @@ type TherapeuticClassesRupturesPerYear {
 }
 
 type Cause {
-    range: String
-    value: Int
+    range: String!
+    value: Int!
 }
 
 type RuptureCauseRepartition {
@@ -349,8 +349,8 @@ type RuptureTotalAction {
 }
 
 type RuptureAction {
-    range: String
-    value: Int
+    range: String!
+    value: Int!
 }
 
 type RuptureActionRepartition {
@@ -366,7 +366,7 @@ type GlobalRuptures {
     repartitionPerTherapeuticClass: [TherapeuticClassesRupturesPerYear]
     repartitionPerCause: [RuptureCauseRepartition]
     repartitionPerAction: [RuptureActionRepartition]
-    totalAction: [RuptureTotalAction]
+    totalActions: [RuptureTotalAction]
 }
 
 ##### QUERIES #####

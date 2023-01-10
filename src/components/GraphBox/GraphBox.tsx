@@ -30,7 +30,7 @@ export const GraphBox = ({
             content={<div className="p-4 max-w-md">{tooltip}</div>}
             placement="bottom"
             render={(refCb) => (
-              <div ref={refCb} className="h-5 w-5">
+              <div ref={refCb} className="h-6 w-6">
                 <InfoSVG />
               </div>
             )}

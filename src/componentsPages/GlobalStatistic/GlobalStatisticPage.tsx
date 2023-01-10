@@ -150,7 +150,7 @@ const SectionRepartitionNotifiers = () => {
     <GraphBoxSelect
       title="Répartition par type de déclarants"
       theme="secondary-variant"
-      render={(selectedOption) => (
+      render={({ selectedUnitOption }) => (
         <GraphFiguresGrid
           data={
             repartitionPerNotifier?.filter(
@@ -167,11 +167,13 @@ const SectionRepartitionNotifiers = () => {
               <GraphFigure
                 key={notifier.id}
                 className="NotifierRepartitionFigure"
-                unit={selectedOption === 'percent' ? ' % ' : ''}
+                unit={selectedUnitOption === 'percent' ? ' % ' : ''}
                 label={notifier.job}
                 icon={getNotifierIconByJobName(notifier.job)}
                 valueClassName="text-dark-green-900"
-                value={(selectedOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0}
+                value={
+                  (selectedUnitOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0
+                }
               />
             ) : null
           }
@@ -218,7 +220,7 @@ const SectionTypesOfSideEffects = () => {
       <GraphBoxSelect
         theme="secondary-variant"
         title="Répartition des déclarations d'effets indésirables par système d'organe"
-        render={(selectedOption) => (
+        render={({ selectedUnitOption }) => (
           <div className="GraphBoxSelectContent">
             <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
               Parmi les{' '}
@@ -244,12 +246,12 @@ const SectionTypesOfSideEffects = () => {
                 pathologyRepartition?.valuePercent ? (
                   <GraphFigure
                     className="pathologyGraphFigure"
-                    unit={selectedOption === 'percent' ? ' % ' : ''}
+                    unit={selectedUnitOption === 'percent' ? ' % ' : ''}
                     label={pathologyRepartition.range}
                     icon={getSideEffectPathologyIcon(pathologyRepartition.id)}
                     valueClassName="text-dark-green-900"
                     value={
-                      selectedOption === 'percent'
+                      selectedUnitOption === 'percent'
                         ? pathologyRepartition.valuePercent
                         : pathologyRepartition.value
                     }

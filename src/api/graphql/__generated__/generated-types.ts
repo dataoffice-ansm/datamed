@@ -17,8 +17,8 @@ export type Scalars = {
 
 export type Cause = {
   __typename?: 'Cause';
-  range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
+  range: Scalars['String'];
+  value: Scalars['Int'];
 };
 
 export type CisExposition = {
@@ -36,7 +36,7 @@ export type GlobalRuptures = {
   repartitionPerTherapeuticClass?: Maybe<Array<Maybe<TherapeuticClassesRupturesPerYear>>>;
   ruptureStocks?: Maybe<Array<Maybe<RuptureStock>>>;
   ruptureYears?: Maybe<Array<Maybe<RuptureYear>>>;
-  totalAction?: Maybe<Array<Maybe<RuptureTotalAction>>>;
+  totalActions?: Maybe<Array<Maybe<RuptureTotalAction>>>;
 };
 
 export type GlobalStatistic = {
@@ -288,8 +288,8 @@ export type RepartitionPerPathology = {
 
 export type RuptureAction = {
   __typename?: 'RuptureAction';
-  range?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
+  range: Scalars['String'];
+  value: Scalars['Int'];
 };
 
 export type RuptureActionRepartition = {
@@ -708,8 +708,8 @@ export type CauseResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Cause'] = ResolversParentTypes['Cause']
 > = {
-  range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -757,7 +757,7 @@ export type GlobalRupturesResolvers<
     ParentType,
     ContextType
   >;
-  totalAction?: Resolver<
+  totalActions?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['RuptureTotalAction']>>>,
     ParentType,
     ContextType
@@ -1100,8 +1100,8 @@ export type RuptureActionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureAction'] = ResolversParentTypes['RuptureAction']
 > = {
-  range?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

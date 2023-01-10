@@ -2,14 +2,12 @@ import { HeadlessHeroHeader } from '../../components/HeroHeader/HeadlessHeroHead
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
 import { Tooltip } from '../../components/Tooltip/Tooltip';
 import RupturesSVG from '../../assets/pictos/ruptures.svg';
-import { DeclarationByYear } from './DeclarationByYear.tsx/DeclarationByYear';
-import { DeclarationNatureCount } from './DeclarationNatureCount/DeclarationNatureCount';
+import { DeclarationByYearSection } from './DeclarationByYear.tsx/DeclarationByYearSection';
+import { DeclarationNatureCountSection } from './DeclarationNatureCount/DeclarationNatureCountSection';
 import { BaseTooltipContent } from './Tooltip';
-import { RupturesDeclarationActionByYear } from './DeclarationActionByYear/DeclarationActionByYear';
-import { DataOrigin } from './DataOrigin/DataOrigin';
-import { RepartitionPerTherapeuticClass } from './DeclarationNatureCount/RepartitionPerTherapeuticClass';
-import { SectionTitle } from 'components/SectionTitle';
-import { DeclarationCauseByYear } from './DeclarationCauseByYear/DeclarationCauseByYear';
+import { RupturesDeclarationActionByYearSection } from './DeclarationActionByYear/DeclarationActionByYear';
+import { DataOriginSection } from './DataOrigin/DataOriginSection';
+import { RepartitionPerTherapeuticClassSection } from './DeclarationNatureCount/RepartitionPerTherapeuticClassSection';
 import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
 
 const useGetGlobalRupturesPeriod = () => {
@@ -29,15 +27,10 @@ const buildRupturesPageSections = (periodString: string) => [
     id: 'declarations',
     label: 'DÉCLARATIONS',
     content: (
-      <div className="w-full flex flex-col gap-4">
-        <DeclarationByYear />
-        <SectionTitle
-          title="Nombre et nature des déclarations de ruptures et risques de rupture de stock"
-          subTitle={periodString}
-        />
-        <DeclarationNatureCount />
-        <RepartitionPerTherapeuticClass />
-        <DeclarationCauseByYear />
+      <div className="SectionDeclarations mt-4 mb-8">
+        <DeclarationByYearSection />
+        <DeclarationNatureCountSection periodString={periodString} />
+        <RepartitionPerTherapeuticClassSection />
       </div>
     ),
   },
@@ -46,21 +39,21 @@ const buildRupturesPageSections = (periodString: string) => [
     label: 'GESTION',
     content: (
       <div className="w-full">
-        <RupturesDeclarationActionByYear />
+        <RupturesDeclarationActionByYearSection />
       </div>
     ),
   },
   {
     id: 'origine-des-donnees',
     label: 'ORIGINES DES DONNÉES',
-    content: <DataOrigin />,
+    content: <DataOriginSection />,
   },
 ];
 
 export const Ruptures = () => {
   const rupturesMinMaxPeriod = useGetGlobalRupturesPeriod();
   return (
-    <div>
+    <div className="RupturesPage">
       <HeadlessHeroHeader
         theme="bg-secondary-variant"
         icon={<RupturesSVG className="h-full" />}

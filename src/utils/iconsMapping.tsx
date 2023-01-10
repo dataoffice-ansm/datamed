@@ -52,6 +52,7 @@ import ContigentementQualitatif from '../assets/pictos/actions/contigetement-qua
 import ContigentementQuantitatif from '../assets/pictos/actions/contigetement-quantitatif.svg';
 import FlexibiliteReglementaire from '../assets/pictos/actions/flexibilite-reglementaire.svg';
 import Importation from '../assets/pictos/actions/importation.svg';
+import NoAction from '../assets/pictos/actions/no-action.svg';
 import MiseEnPlaceStock from '../assets/pictos/actions/mise-en-place-stock-depannage.svg';
 import RestrictionCircuitDistribution from '../assets/pictos/actions/restriction-circuit-distribution.svg';
 import Notfound from '../assets/pictos/indice-nodata.svg';
@@ -217,6 +218,7 @@ export const getNotifierIconByJobName = (name: string) => {
   }
 };
 
+// TODO: replace with enum
 // eslint-disable-next-line complexity
 export const getSideEffectPathologyIcon = (id: number) => {
   switch (id) {
@@ -279,6 +281,7 @@ export const getSideEffectPathologyIcon = (id: number) => {
   }
 };
 
+// TODO: replace with enum
 export const getDeclarationActionIcon = (name: string) => {
   switch (name) {
     case 'Contingentement quantitatif':
@@ -293,11 +296,16 @@ export const getDeclarationActionIcon = (name: string) => {
       return <FlexibiliteReglementaire className="w-32" />;
     case 'Importation':
       return <Importation className="w-32" />;
+    case 'Mise à disposition':
+      return <MiseADispositionSvg className="w-32" />;
+    case 'Pas de mesure':
+      return <NoAction className="w-32" />;
     default:
       return <Notfound className="w-32" />;
   }
 };
 
+// TODO: replace with enum
 export const getRuptureCauseIcon = (name: string) => {
   switch (name) {
     case 'Incident de production':
@@ -330,7 +338,6 @@ export const getRuptureCauseIcon = (name: string) => {
       return <AnalyseNonConformeSvg className="w-32" />;
     case "Défaut d'approvisionnement en Article de Conditionnement":
       return <DefautApprovisionnementSvg className="w-32" />;
-
     case 'Problème qualité : Non conformité aux BPF':
       return <NonConformeSvg className="w-32" />;
     default:

@@ -41,7 +41,7 @@ import { ExpositionLevel } from '../../api/graphql/enums';
 import { CardWithImage } from '../../components/CardWithImage/CardWithImage';
 import { Button } from '../../components/Button/Button';
 import { getMedErrorApparitionStepIcon } from '../../utils/iconsMapping';
-import { buildSortedData } from '../../utils/entities';
+import { buildSortedRangeData } from '../../utils/entities';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -367,19 +367,19 @@ const SectionMedicinalErrors = () => {
       {currentEntity.medicalErrors?.apparitionStepRepartition && (
         <GraphBoxSelect
           title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
-          render={(selectedOption) => (
+          render={({ selectedUnitOption }) => (
             <GraphFiguresGrid
-              data={buildSortedData<MedicalErrorsApparitionStep>(
+              data={buildSortedRangeData<MedicalErrorsApparitionStep>(
                 currentEntity.medicalErrors?.apparitionStepRepartition,
-                selectedOption
+                selectedUnitOption
               )}
               renderItem={(apparitionStep) => {
                 const step = apparitionStep.step as MedicalErrorApparitionStep;
                 return (
                   <GraphFigure
-                    unit={selectedOption === 'percent' ? ' % ' : ''}
+                    unit={selectedUnitOption === 'percent' ? ' % ' : ''}
                     value={
-                      (selectedOption === 'percent'
+                      (selectedUnitOption === 'percent'
                         ? apparitionStep.valuePercent
                         : apparitionStep.value) ?? 0
                     }
@@ -397,13 +397,13 @@ const SectionMedicinalErrors = () => {
         <GraphBoxSelect
           title="Nature des erreurs médicamenteuses"
           className="max-w-full my-8"
-          render={(selectedOption) => (
+          render={({ selectedUnitOption }) => (
             <div className="m-auto max-w-max">
               <BarChartMedicalErrorsNature
-                dataKey={selectedOption}
-                natureMedicalErrors={buildSortedData<MedicalErrorsNature>(
+                dataKey={selectedUnitOption}
+                natureMedicalErrors={buildSortedRangeData<MedicalErrorsNature>(
                   currentEntity.medicalErrors?.natureRepartition,
-                  selectedOption
+                  selectedUnitOption
                 )}
               />
             </div>

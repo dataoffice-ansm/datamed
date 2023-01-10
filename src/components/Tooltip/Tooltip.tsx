@@ -31,9 +31,10 @@ export const Tooltip = ({
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
       placement,
-      delayShow: 100,
-      delayHide: 200,
-      trigger: 'hover',
+      delayShow: 200,
+      delayHide: 500,
+      // followCursor: true,
+      trigger: ['hover', 'click'],
     });
 
   return (

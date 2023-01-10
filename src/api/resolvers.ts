@@ -91,7 +91,7 @@ export const resolvers: Resolvers = {
         repartitionPerAction:
           await context.dataSources.postgresOperations.getRuptureStockRepartitionPerAction(),
 
-        totalAction: await context.dataSources.postgresOperations.getRupturesTotalAction(),
+        totalActions: await context.dataSources.postgresOperations.getRupturesTotalActions(),
       };
     },
   },
