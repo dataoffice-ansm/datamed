@@ -230,13 +230,4 @@ export const resolvers: Resolvers = {
       };
     },
   },
-
-  RepartitionPerPathology: {
-    async htlEffects(pathologyRep, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceRepPathologyEffects(
-        pathologyRep.subId,
-        pathologyRep.id
-      );
-    },
-  },
 };

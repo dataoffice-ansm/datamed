@@ -546,8 +546,6 @@ export class PostgresOperations {
   async getSubstanceDeclarationsWithSideEffectsPerGender(
     subId: number
   ): Promise<RepartitionPerGender> {
-    console.log('zefzefzefzefzefz');
-
     const rows = await dbInstance
       .selectFrom('substances_case_sex')
       .where('substance_id', '=', subId)
@@ -632,58 +630,63 @@ export class PostgresOperations {
     subId: number
   ): Promise<RepartitionPerPathology[]> {
     const rows = await dbInstance
-      .selectFrom('substances_soclong as s_s')
-      .where('s_s.substance_id', '=', subId)
-      .leftJoin('soc_longs as soc', 'soc.id', 's_s.soc_long_id')
+      .selectFrom('substances_soclong as ss')
+      .where('ss.substance_id', '=', subId)
+      .leftJoin('soc_longs as sl', 'sl.id', 'ss.soc_long_id')
       .select([
-        'soc.id',
-        'soc.soc as range',
-        's_s.n_case_effect as value',
-        's_s.case_percentage as valuePercent',
+        'sl.id as socId',
+        'sl.soc as range',
+        'ss.n_case_effect as value',
+        'ss.case_percentage as valuePercent',
       ])
       .execute();
 
+    const htlEffects = await this._getSubstanceRepPathologyEffects(subId);
+
     return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
-      const { id, range, value, valuePercent } = row;
-      // hide result under 11 declarations
-      return id && range && value && value > 11 && valuePercent
+      const { socId, range, value, valuePercent } = row;
+      // hide results under 11 declarations
+      return socId && range && value && value > 11 && valuePercent
         ? [
             ...carry,
             {
-              id,
+              id: socId,
               subId,
               range,
               value: Math.round(value),
               valuePercent: roundFloat(valuePercent),
+              htlEffects: htlEffects
+                .filter((htfEffect) => htfEffect.socId === socId)
+                // hide results under 10 declarations
+                .filter((htfEffect) => htfEffect.value >= 10),
             },
           ]
         : carry;
     }, []);
   }
 
-  async getSubstanceRepPathologyEffects(
-    subId: number,
-    repartitionPerPathologyId: number
-  ): Promise<HltEffect[]> {
+  async _getSubstanceRepPathologyEffects(subId: number): Promise<HltEffect[]> {
     const rowsHltEffects = await dbInstance
       .selectFrom('substances_hlt as s_htl')
       .where('s_htl.substance_id', '=', subId)
       .leftJoin('hlt_effects as hlt_e', 'hlt_e.id', 's_htl.hlt_effect_id')
       .select([
-        's_htl.hlt_effect_id as id',
+        's_htl.hlt_effect_id as hltEffectId',
+        's_htl.soc_long_id as socId',
         'hlt_e.effect as range',
         's_htl.n_decla_eff_hlt as value',
         's_htl.case_percentage as valuePercent',
       ])
       .execute();
 
-    const effects = rowsHltEffects.reduce<HltEffect[]>((carry, row) => {
-      const { id, range, value, valuePercent } = row;
-      return id && range && value && valuePercent
+    return rowsHltEffects.reduce<HltEffect[]>((carry, row) => {
+      const { hltEffectId, socId, range, value, valuePercent } = row;
+      return hltEffectId && socId && range && value && valuePercent
         ? [
             ...carry,
             {
-              id,
+              id: hltEffectId,
+              socId,
               range,
               value: Math.round(value),
               valuePercent: roundFloat(valuePercent),
@@ -691,8 +694,6 @@ export class PostgresOperations {
           ]
         : carry;
     }, []);
-
-    return effects.filter((e) => e.id === repartitionPerPathologyId);
   }
 
   async getSubstanceTotalExposition(subId: number): Promise<SubstanceTotalExposition | null> {

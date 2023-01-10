@@ -172,6 +172,7 @@ fragment SubstanceFragment on Substance {
             valuePercent
             htlEffects {
                 id
+                socId
                 range
                 value
                 valuePercent
