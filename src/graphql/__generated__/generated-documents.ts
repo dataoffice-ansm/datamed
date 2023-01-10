@@ -344,7 +344,7 @@ export type RuptureTotalAction = {
 
 export type RuptureYear = {
   __typename?: 'RuptureYear';
-  value?: Maybe<Scalars['Int']>;
+  value: Scalars['Int'];
 };
 
 export type SpecialitiesReturn = {
@@ -1081,7 +1081,7 @@ export type GlobalRupturesQuery = {
       nbRuptureClosed?: number | null;
       nbRupture?: number | null;
     } | null> | null;
-    ruptureYears?: Array<{ __typename?: 'RuptureYear'; value?: number | null } | null> | null;
+    ruptureYears?: Array<{ __typename?: 'RuptureYear'; value: number } | null> | null;
     repartitionPerClassification?: Array<{
       __typename?: 'RuptureClassificationRepartition';
       value?: number | null;

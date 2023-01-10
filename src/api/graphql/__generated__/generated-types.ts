@@ -344,7 +344,7 @@ export type RuptureTotalAction = {
 
 export type RuptureYear = {
   __typename?: 'RuptureYear';
-  value?: Maybe<Scalars['Int']>;
+  value: Scalars['Int'];
 };
 
 export type SpecialitiesReturn = {
@@ -1180,7 +1180,7 @@ export type RuptureYearResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureYear'] = ResolversParentTypes['RuptureYear']
 > = {
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 

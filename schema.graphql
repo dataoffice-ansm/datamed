@@ -301,7 +301,7 @@ type GlobalStatistic {
 }
 
 type RuptureYear {
-    value: Int
+    value: Int!
 }
 
 type RuptureStock {
