@@ -93,6 +93,7 @@ export type HltEffect = {
   __typename?: 'HltEffect';
   id: Scalars['Int'];
   range: Scalars['String'];
+  socId: Scalars['Int'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
 };
@@ -866,6 +867,7 @@ export type HltEffectResolvers<
 > = {
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  socId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   valuePercent?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

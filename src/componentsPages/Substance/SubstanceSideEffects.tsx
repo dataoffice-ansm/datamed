@@ -33,17 +33,14 @@ import { buildSortedData } from '../../utils/entities';
 const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: RepartitionPerPathology }) => {
   const [openModal, setOpenModal] = useState(false);
 
-  const htlEffects: RepartitionPerPathology['htlEffects'] = useMemo(
-    () =>
-      (pathology.htlEffects ?? [])
-        .filter((htfEffect) => (htfEffect?.value ?? 0) >= 10)
-        .sort((a, b) => (b?.value ?? 0) - (a?.value ?? 0)),
+  const htlEffects = useMemo(
+    () => buildSortedData<HltEffect>(pathology.htlEffects, 'number'),
     [pathology.htlEffects]
   );
 
   return (
     <div className="PathologyOrgansRepartitionModal">
-      {(pathology.htlEffects as HltEffect[]).length > 0 && (
+      {htlEffects.length > 0 && (
         <Button
           as="button"
           variant="none"
@@ -71,22 +68,21 @@ const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: Repartition
           <div className="text-xl text-center font-medium">
             Sous-répartition des déclarations d’effets indésirables : {pathology.range}
           </div>
-          {htlEffects && (
-            <ul className="list-none border-t border-grey-100">
-              {htlEffects.map((e, index) => (
-                <li
-                  key={`htlEffects_${index.toString()}`}
-                  className="flex justify-between border-b border-grey-100 py-4 gap-4"
-                >
-                  <div>{e?.range} </div>
-                  <div className="flex gap-8 justify-center items-center">
-                    <strong>{e?.value}</strong>
-                    <strong>{e?.valuePercent}%</strong>
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
+
+          <ul className="list-none border-t border-grey-100">
+            {htlEffects.map((e, index) => (
+              <li
+                key={`htlEffects_${index.toString()}`}
+                className="flex justify-between border-b border-grey-100 py-4 gap-4"
+              >
+                <div>{e?.range} </div>
+                <div className="flex gap-8 justify-center items-center">
+                  <strong>{e?.value}</strong>
+                  <strong>{e?.valuePercent}%</strong>
+                </div>
+              </li>
+            ))}
+          </ul>
         </Modal>
       )}
     </div>

@@ -93,6 +93,7 @@ export type HltEffect = {
   __typename?: 'HltEffect';
   id: Scalars['Int'];
   range: Scalars['String'];
+  socId: Scalars['Int'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
 };
@@ -543,6 +544,7 @@ export type SpecialityFragmentFragment = {
         htlEffects?: Array<{
           __typename?: 'HltEffect';
           id: number;
+          socId: number;
           range: string;
           value: number;
           valuePercent: number;
@@ -697,6 +699,7 @@ export type SubstanceFragmentFragment = {
       htlEffects?: Array<{
         __typename?: 'HltEffect';
         id: number;
+        socId: number;
         range: string;
         value: number;
         valuePercent: number;
@@ -795,6 +798,7 @@ export type SpecialityQuery = {
           htlEffects?: Array<{
             __typename?: 'HltEffect';
             id: number;
+            socId: number;
             range: string;
             value: number;
             valuePercent: number;
@@ -972,6 +976,7 @@ export type SubstanceQuery = {
         htlEffects?: Array<{
           __typename?: 'HltEffect';
           id: number;
+          socId: number;
           range: string;
           value: number;
           valuePercent: number;
@@ -1193,6 +1198,7 @@ export const SubstanceFragmentFragmentDoc = gql`
         valuePercent
         htlEffects {
           id
+          socId
           range
           value
           valuePercent

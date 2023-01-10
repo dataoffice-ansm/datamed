@@ -158,6 +158,7 @@ type SpecialityRupturesHistory {
 
 type HltEffect {
     id: Int!
+    socId: Int!
     range: String! @capitalize
     value: Int!
     valuePercent: Float!
