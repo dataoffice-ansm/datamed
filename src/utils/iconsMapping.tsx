@@ -1,9 +1,5 @@
 import React from 'react';
-import {
-  type Maybe,
-  MedicalErrorNature,
-  type PharmaFormType,
-} from '../graphql/__generated__/generated-documents';
+import { type PharmaFormType } from '../graphql/__generated__/generated-documents';
 
 import ErrorAdministration from '../assets/pictos/errors/errorAdministration.svg';
 import ErrorDelivrance from '../assets/pictos/errors/errorDelivrance.svg';

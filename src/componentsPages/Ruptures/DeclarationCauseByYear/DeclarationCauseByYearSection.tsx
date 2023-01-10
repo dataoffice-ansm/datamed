@@ -1,7 +1,6 @@
 import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
 import type { SelectOption } from '../../../components/Select/Select';
-import { NotEnoughData } from 'components/NotEnoughData';
 import { GraphFiguresGrid } from '../../../components/GraphFiguresGrid';
 import { GraphFigure } from '../../../components/GraphFigure';
 import { getRuptureCauseIcon } from '../../../utils/iconsMapping';

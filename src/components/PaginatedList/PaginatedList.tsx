@@ -7,7 +7,6 @@ import LastPageSVG from '../../assets/pictos/icons/pagination/last.svg';
 import PreviousPageSVG from '../../assets/pictos/icons/pagination/previous.svg';
 import NextPageSVG from '../../assets/pictos/icons/pagination/next.svg';
 import { NotEnoughData } from '../NotEnoughData';
-import { Maybe } from '../../graphql/__generated__/generated-documents';
 
 export type PaginatedListThemeColor = 'primary' | 'secondary' | 'grey';
 

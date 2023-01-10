@@ -1,4 +1,3 @@
-import { Button } from '../../../components/Button/Button';
 import { ChartBox } from '../../../components/ChartBox';
 import { SectionTitle } from '../../../components/SectionTitle';
 

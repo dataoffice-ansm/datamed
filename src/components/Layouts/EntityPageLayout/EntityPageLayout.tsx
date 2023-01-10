@@ -95,16 +95,16 @@ export const EntityPageLayout = ({
                   className={classnames(
                     'sideMenuTab tracking-wider cursor-pointer md:text-right pr-6',
                     selected
-                      ? 'selected border-r-[2px] border-primary font-medium'
+                      ? 'selected border-r-[2px] font-medium'
                       : 'notSelected font-light text-grey-400',
 
                     colorMenu === 'primary' && 'hover:text-primary',
                     colorMenu === 'secondary' && 'hover:text-secondary',
                     colorMenu === 'green' && 'hover:text-dark-green-900',
 
-                    selected && colorMenu === 'primary' && 'text-primary',
-                    selected && colorMenu === 'secondary' && 'text-secondary',
-                    selected && colorMenu === 'green' && 'text-dark-green-900',
+                    selected && colorMenu === 'primary' && 'text-primary border-primary',
+                    selected && colorMenu === 'secondary' && 'text-secondary border-secondary',
+                    selected && colorMenu === 'green' && 'text-dark-green-900 border-green',
 
                     itemClassName
                   )}

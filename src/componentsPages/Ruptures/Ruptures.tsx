@@ -86,9 +86,10 @@ export const Ruptures = () => {
           />
         }
       />
+
       <EntityPageLayout
         className="pb-64"
-        colorMenu="primary"
+        colorMenu="green"
         sections={buildRupturesPageSections(rupturesMinMaxPeriod)}
         render={(content) => content}
       />
