@@ -11,7 +11,7 @@ import { BaseTooltipContent } from '../Tooltip';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 import { KPIBoxProgression } from '../../../components/KPIBoxProgression';
 
-export const DeclarationByYear = (_props: HTMLAttributes<HTMLDivElement>) => {
+export const DeclarationByYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { ruptures } = useRupturesPageContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
@@ -56,7 +56,7 @@ export const DeclarationByYear = (_props: HTMLAttributes<HTMLDivElement>) => {
   );
 
   return (
-    <div>
+    <div className="DeclarationByYear my-12">
       <SectionTitle
         title="Déclarations de ruptures et risques de rupture de stock depuis le début de l'année civile en cours"
         subTitle={`Données mises à jour mensuellement, issues de la période ${
@@ -67,12 +67,11 @@ export const DeclarationByYear = (_props: HTMLAttributes<HTMLDivElement>) => {
       </SectionTitle>
 
       {(ruptures?.ruptureYears ?? []).length > 0 ? (
-        <>
+        <div className="DeclarationByYearSectionContent flex flex-col gap-4">
           <BoxInfo
             title={`${selectedData?.total ?? 0} déclaration(s) reçues(s)`}
             icon={<FolderSVG />}
             theme="dark-green"
-            className="my-8"
             tooltip={
               <BaseTooltipContent>
                 Les ruptures, les risques de rupture de stock ainsi que les stocks de sécurité
@@ -119,7 +118,7 @@ export const DeclarationByYear = (_props: HTMLAttributes<HTMLDivElement>) => {
               }
             />
           </div>
-        </>
+        </div>
       ) : (
         <div className="w-full flex justify-center items-center">
           <NotEnoughData />

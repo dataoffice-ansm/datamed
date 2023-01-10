@@ -77,7 +77,7 @@ const PageContact = () => (
     <div className="flex flex-col items-center justify-center mb-16">
       <h1 className="py-8">Contact</h1>
       <SmallContainer>
-        <div className="IllustrationContainer my-4">
+        <div className="IllustrationContainer my-8">
           <Contact />
         </div>
         <div className="flex flex-col justify-center bg-white rounded shadow p-6 mb-4">

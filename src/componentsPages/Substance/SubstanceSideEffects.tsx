@@ -23,7 +23,7 @@ import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { type RepartitionPerNotifier } from '../../graphql/__generated__/generated-documents';
 import { CardWithImage } from '../../components/CardWithImage/CardWithImage';
 import SickPersonSvg from '../../assets/pictos/sick_transparent_person.svg';
-import { buildSortedData } from '../../utils/entities';
+import { buildSortedRangeData } from '../../utils/entities';
 
 /**
  *
@@ -34,7 +34,7 @@ const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: Repartition
   const [openModal, setOpenModal] = useState(false);
 
   const htlEffects = useMemo(
-    () => buildSortedData<HltEffect>(pathology.htlEffects, 'number'),
+    () => buildSortedRangeData<HltEffect>(pathology.htlEffects, 'number'),
     [pathology.htlEffects]
   );
 
@@ -165,10 +165,10 @@ export const SubstanceSideEffects = ({
         title="Répartition par type de déclarants"
         theme="secondary"
         className="max-w-full my-8"
-        render={(selectedOption) => {
-          const repartitionPerNotifier = buildSortedData<RepartitionPerNotifier>(
+        render={({ selectedUnitOption }) => {
+          const repartitionPerNotifier = buildSortedRangeData<RepartitionPerNotifier>(
             substance.sideEffects?.repartitionPerNotifier,
-            selectedOption
+            selectedUnitOption
           );
           return (
             <GraphFiguresGrid
@@ -178,12 +178,13 @@ export const SubstanceSideEffects = ({
                   <GraphFigure
                     key={notifier.id}
                     className="NotifierRepartition"
-                    unit={selectedOption === 'percent' ? ' % ' : ''}
+                    unit={selectedUnitOption === 'percent' ? ' % ' : ''}
                     label={notifier.job}
                     valueClassName="text-secondary my-2"
                     icon={getNotifierIcon(notifier.id)}
                     value={
-                      (selectedOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0
+                      (selectedUnitOption === 'percent' ? notifier.valuePercent : notifier.value) ??
+                      0
                     }
                   />
                 ) : null
@@ -220,10 +221,10 @@ export const SubstanceSideEffects = ({
     {substance.sideEffects?.repartitionPerPathology && (
       <GraphBoxSelect
         title="Effets indésirables suspectés de la substance active"
-        render={(selectedOption) => {
-          const repartitionPerPathology = buildSortedData<RepartitionPerPathology>(
+        render={({ selectedUnitOption }) => {
+          const repartitionPerPathology = buildSortedRangeData<RepartitionPerPathology>(
             substance.sideEffects?.repartitionPerPathology,
-            selectedOption
+            selectedUnitOption
           );
           return (
             <div className="GraphBoxSelectContent">
@@ -243,13 +244,13 @@ export const SubstanceSideEffects = ({
                 renderItem={(pathologyRepartition) => (
                   <GraphFigure
                     className="PathologyRepartition"
-                    unit={selectedOption === 'percent' ? ' % ' : ''}
+                    unit={selectedUnitOption === 'percent' ? ' % ' : ''}
                     label={pathologyRepartition.range}
                     icon={getSideEffectPathologyIcon(pathologyRepartition.id)}
                     action={<PathologyOrgansRepartitionModal pathology={pathologyRepartition} />}
                     valueClassName="text-secondary-900"
                     value={
-                      selectedOption === 'percent'
+                      selectedUnitOption === 'percent'
                         ? pathologyRepartition.valuePercent
                         : pathologyRepartition.value
                     }

@@ -6,7 +6,7 @@ export const CisTooltip = () => (
   <Tooltip
     content={
       <div className="p-4 max-w-lg">
-        <p className="text-md md:text-lg font-bold my-4">
+        <p className="text-md md:text-lg font-bold my-12">
           Qu’est-ce qu’une spécialité de médicament ?
         </p>
 

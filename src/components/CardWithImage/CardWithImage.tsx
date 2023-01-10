@@ -30,7 +30,7 @@ export const CardWithImage = ({
     </div>
     <div className="flex flex-col p-4 items-center text-center lg:items-start lg:text-left">
       <div className="text-md lg:text-xl font-bold">{title}</div>
-      <div className="description gap-8 mt-4 mb-8 text-base lg:text-md">{children}</div>
+      <div className="description gap-8 my-4 text-base lg:text-md">{children}</div>
       <div className="BoxLinkAction flex">{button}</div>
     </div>
   </div>

@@ -11,24 +11,35 @@ const options = {
   number: { label: 'Nombre' },
 } as const;
 
-export type OptionsValue = keyof typeof options;
+export type UnitOptionsValue = keyof typeof options;
 
-const selectOptions: Array<SelectOption<OptionsValue>> = Object.entries(options).map(([k, v]) => ({
-  value: k as OptionsValue,
-  ...v,
-}));
+const selectOptions: Array<SelectOption<UnitOptionsValue>> = Object.entries(options).map(
+  ([k, v]) => ({
+    value: k as UnitOptionsValue,
+    ...v,
+  })
+);
 
 type GraphFiguresContainerProps = HTMLAttributes<HTMLDivElement> & {
   title: string;
   tooltip?: JSX.Element | ReactNode;
   renderHeader?: ReactNode;
-  render: (_selectedOption: OptionsValue) => ReactNode;
-  defaultOption?: OptionsValue;
+  yearsOptions?: SelectOption[];
+  render: ({
+    // eslint-disable-next-line no-unused-vars
+    selectedUnitOption,
+    // eslint-disable-next-line no-unused-vars
+    selectedYearOption,
+  }: {
+    selectedUnitOption: UnitOptionsValue;
+    selectedYearOption: number;
+  }) => ReactNode;
+  defaultOption?: UnitOptionsValue;
   theme?: 'primary' | 'secondary' | 'secondary-variant' | 'gray';
 };
 
-const findOptionIndex = (selectedOption: OptionsValue) =>
-  (Object.keys(options) as OptionsValue[]).findIndex((option) => option === selectedOption);
+const findOptionIndex = (selectedOption: UnitOptionsValue) =>
+  (Object.keys(options) as UnitOptionsValue[]).findIndex((option) => option === selectedOption);
 
 /**
  *
@@ -46,13 +57,21 @@ export const GraphBoxSelect = ({
   renderHeader,
   tooltip,
   className,
+  yearsOptions,
   defaultOption = 'number',
   theme = 'secondary',
 }: GraphFiguresContainerProps) => {
-  const [selectedOption, setSelectedOption] = useState<OptionsValue>(defaultOption);
+  const [selectedYearOption, setSelectedYearOption] = useState<number>(
+    yearsOptions ? (yearsOptions[0].value as number) : 0
+  );
+  const [selectedUnitOption, setSelectedUnitOption] = useState<UnitOptionsValue>(defaultOption);
 
-  const onChange = useCallback((optionKey: OptionsValue) => {
-    setSelectedOption(optionKey);
+  const onChangeYear = useCallback((optionKey: number) => {
+    setSelectedYearOption(optionKey);
+  }, []);
+
+  const onChangeUnit = useCallback((optionKey: UnitOptionsValue) => {
+    setSelectedUnitOption(optionKey);
   }, []);
 
   return (
@@ -68,7 +87,7 @@ export const GraphBoxSelect = ({
                 content={<div className="p-2">{tooltip}</div>}
                 placement="auto-start"
                 render={(refCb) => (
-                  <div ref={refCb} className="h-5 w-5">
+                  <div ref={refCb} className="h-6 w-6">
                     <InfoSVG />
                   </div>
                 )}
@@ -77,20 +96,36 @@ export const GraphBoxSelect = ({
           )}
         </div>
 
-        <div className="GraphFiguresContainerSelect max-w-xs">
-          <Select
-            theme={theme}
-            defaultOptionIndex={findOptionIndex(defaultOption)}
-            options={selectOptions}
-            onSelectOption={(index, option) => {
-              onChange(option.value as OptionsValue);
-            }}
-          />
+        <div className="flex gap-2">
+          {yearsOptions && (
+            <div className="GraphFiguresContainerSelect max-w-xs">
+              <Select
+                options={yearsOptions}
+                theme="secondary-variant"
+                onSelectOption={(index, option) => {
+                  onChangeYear(option.value as number);
+                }}
+              />
+            </div>
+          )}
+
+          <div className="GraphFiguresContainerSelect max-w-xs">
+            <Select
+              theme={theme}
+              defaultOptionIndex={findOptionIndex(defaultOption)}
+              options={selectOptions}
+              onSelectOption={(index, option) => {
+                onChangeUnit(option.value as UnitOptionsValue);
+              }}
+            />
+          </div>
         </div>
       </div>
 
       {renderHeader}
-      <div className="GraphBoxSelectContent m-auto">{render(selectedOption)}</div>
+      <div className="GraphBoxSelectContent m-auto">
+        {render({ selectedUnitOption, selectedYearOption })}
+      </div>
     </div>
   );
 };

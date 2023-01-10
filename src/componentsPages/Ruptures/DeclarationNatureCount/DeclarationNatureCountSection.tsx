@@ -6,8 +6,17 @@ import { LineChart } from 'components/Charts/LineChart/LineChart';
 import tailwindPaletteConfig from '../../../../tailwind.palette.config';
 import { BaseTooltipContent, ContainerWithTooltip } from '../Tooltip';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
+import { SectionTitle } from '../../../components/SectionTitle';
+import { DeclarationCauseByYearSection } from '../DeclarationCauseByYear/DeclarationCauseByYearSection';
 
-export const DeclarationNatureCount = (_props: HTMLAttributes<HTMLDivElement>) => {
+/**
+ *
+ * @param periodString
+ * @constructor
+ */
+export const DeclarationNatureCountSection = ({
+  periodString,
+}: { periodString: string } & HTMLAttributes<HTMLDivElement>) => {
   const { ruptures } = useRupturesPageContext();
 
   const years = useMemo(
@@ -43,9 +52,14 @@ export const DeclarationNatureCount = (_props: HTMLAttributes<HTMLDivElement>) =
   );
 
   return (
-    <div>
+    <div className="DeclarationNatureCount my-12">
+      <SectionTitle
+        title="Nombre et nature des déclarations de ruptures et risques de rupture de stock"
+        subTitle={periodString}
+      />
+
       {ruptures?.repartitionPerClassification ? (
-        <div className="flex flex-col gap-8 pt-8">
+        <div className="DeclarationNatureCountContent flex flex-col gap-8">
           <ChartBox className="w-full">
             <div className="w-full flex flex-col justify-start items-start gap-4">
               <ContainerWithTooltip
@@ -96,6 +110,8 @@ export const DeclarationNatureCount = (_props: HTMLAttributes<HTMLDivElement>) =
           <NotEnoughData />
         </div>
       )}
+
+      <DeclarationCauseByYearSection />
     </div>
   );
 };

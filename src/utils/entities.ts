@@ -1,4 +1,4 @@
-import { type OptionsValue } from '../components/GraphBoxSelect';
+import { type UnitOptionsValue } from '../components/GraphBoxSelect';
 
 export const entityTypeLabel = (type: 'cis' | 'sub') => {
   if (type === 'cis') return 'Specialité';
@@ -12,7 +12,7 @@ export type RepartitionUsageCommon = {
   valuePercent: number;
 };
 
-export const buildSortedData = <T>(data: any, selectedOption?: OptionsValue) => {
+export const buildSortedRangeData = <T>(data: any, selectedOption?: UnitOptionsValue) => {
   const rows =
     (data as RepartitionUsageCommon[])?.filter(
       (row) => row?.value !== null && row?.valuePercent !== null
