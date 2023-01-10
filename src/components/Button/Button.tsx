@@ -30,25 +30,29 @@ export const Button = (props: CallToActionProps) => {
     'data-variant': variant,
   };
 
-  const computedVariantStyles = classnames('btn cursor:pointer py-2 px-4 rounded', {
-    'text-primary underline': theme === 'primary' && variant === 'none',
-    'text-secondary hover:bg-secondary-500 focus:bg-secondary-500':
-      theme === 'secondary' && variant === 'none',
-    'text-grey hover:bg-grey-500 focus:bg-grey-500': theme === 'grey' && variant === 'none',
+  const computedVariantStyles = classnames(
+    'btn cursor:pointer py-2 px-4 rounded',
+    variant === 'none' ? 'hover:font-medium focus:font-medium underline' : 'no-underline',
+    {
+      'text-primary underline': theme === 'primary' && variant === 'none',
+      'text-secondary hover:bg-secondary-500 focus:bg-secondary-500':
+        theme === 'secondary' && variant === 'none',
+      'text-grey': theme === 'grey' && variant === 'none',
 
-    'bg-primary text-white hover:bg-primary-500 focus:bg-primary-500':
-      theme === 'primary' && variant === 'contained',
-    'bg-secondary-800 text-white hover:bg-secondary focus:bg-secondary':
-      theme === 'secondary' && variant === 'contained',
-    'bg-grey text-white hover:bg-grey-500': theme === 'grey' && variant === 'contained',
+      'bg-primary text-white hover:bg-primary-500 focus:bg-primary-500':
+        theme === 'primary' && variant === 'contained',
+      'bg-secondary-800 text-white hover:bg-secondary focus:bg-secondary':
+        theme === 'secondary' && variant === 'contained',
+      'bg-grey text-white hover:bg-grey-500': theme === 'grey' && variant === 'contained',
 
-    'border border-primary text-primary hover:text-white hover:bg-primary focus:bg-primary':
-      theme === 'primary' && variant === 'outlined',
-    'border border-secondary text-secondary hover:bg-secondary focus:bg-secondary':
-      theme === 'secondary' && variant === 'outlined',
-    'border border-grey text-grey hover:bg-grey focus:bg-grey':
-      theme === 'grey' && variant === 'outlined',
-  });
+      'border border-primary text-primary hover:text-white hover:bg-primary focus:bg-primary':
+        theme === 'primary' && variant === 'outlined',
+      'border border-secondary text-secondary hover:bg-secondary focus:bg-secondary':
+        theme === 'secondary' && variant === 'outlined',
+      'border border-grey text-grey hover:bg-grey focus:bg-grey':
+        theme === 'grey' && variant === 'outlined',
+    }
+  );
 
   if (props.as === 'button') {
     const { type = 'button', onClick = () => null } = props;
@@ -68,7 +72,7 @@ export const Button = (props: CallToActionProps) => {
 
   const { href, externalLink } = props;
 
-  const classAnchor = classnames(computedVariantStyles, 'no-underline', className);
+  const classAnchor = classnames(computedVariantStyles, className);
 
   if (externalLink) {
     return (

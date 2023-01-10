@@ -7,7 +7,6 @@ import {
   type Substance,
 } from '../../graphql/__generated__/generated-documents';
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
-import Link from 'next/link';
 import classnames from 'classnames';
 import { SubstanceSideEffects } from './SubstanceSideEffects';
 import { NotEnoughData } from '../../components/NotEnoughData';
@@ -23,6 +22,7 @@ import { SectionTitle } from '../../components/SectionTitle';
 import { ExpositionLevel } from '../../api/graphql/enums';
 import { useMemo } from 'react';
 import { buildSortedRangeData } from '../../utils/entities';
+import { Button } from '../../components/Button/Button';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
@@ -194,16 +194,9 @@ const SectionAssociatedSpecialities = () => {
             data={currentEntity.retrieveSpecialities?.specialities ?? []}
             renderItem={(item) =>
               item?.code ? (
-                <Link href={`/specialite/${item.code}`}>
-                  <a
-                    className={classnames(
-                      'w-full no-underline hover:underline p-2 focus:bg-grey-50 block',
-                      'hover:font-medium focus:font-medium'
-                    )}
-                  >
-                    {item?.name}
-                  </a>
-                </Link>
+                <Button variant="none" theme="grey" href={`/specialite/${item.code}`}>
+                  {item?.name}
+                </Button>
               ) : null
             }
           />
@@ -216,7 +209,7 @@ const SectionAssociatedSpecialities = () => {
 export const SubstancePage = ({ sub }: { sub: Substance }) => (
   <EntityContextProvider entity={{ type: 'sub', ...sub }}>
     <EntityPageLayout
-      colorMenu="primary"
+      colorMenu="secondary"
       sections={[
         {
           id: 'population-concernee',
