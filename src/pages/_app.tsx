@@ -39,6 +39,10 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
   useEffect(() => {
     Router.events.on('routeChangeStart', () => {
       setIsLoading(true);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     });
     Router.events.on('routeChangeComplete', () => {
       setIsLoading(false);
@@ -46,6 +50,7 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
     Router.events.on('routeChangeError', () => {
       setIsLoading(false);
     });
+
     return () => {
       Router.events.off('routeChangeStart', () => {
         setIsLoading(true);
