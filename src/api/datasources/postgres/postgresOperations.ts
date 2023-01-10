@@ -928,14 +928,10 @@ export class PostgresOperations {
       .distinct()
       .execute();
 
-    return rowTotal.reduce<RuptureYear[]>((carry, { year }) => {
-      if (year) {
-        const ruptureYear: RuptureYear = { value: parseInt(year, 10) };
-        carry.push(ruptureYear);
-      }
-
-      return carry;
-    }, []);
+    return rowTotal.reduce<RuptureYear[]>(
+      (carry, { year }) => (year ? [...carry, { value: parseInt(year, 10) }] : carry),
+      []
+    );
   }
 
   async getRuptureStockTotalExposition(year: number): Promise<RuptureStock> {

@@ -8,6 +8,8 @@ import type { SelectOption } from 'components/Select/Select';
 import { Select } from 'components/Select/Select';
 import { BarChart } from '../../../components/Charts/BarChart/BarChart';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
+import { buildSortedData } from '../../../utils/entities';
+import { type TherapeuticClassRupture } from '../../../graphql/__generated__/generated-documents';
 
 export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { ruptures } = useRupturesPageContext();
@@ -23,7 +25,7 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
                     ...carry,
                     {
                       value: ruptureYear.value,
-                      label: (ruptureYear.value ?? '').toString(),
+                      label: ruptureYear.value.toString(),
                     },
                   ]
                 : carry,
@@ -33,10 +35,6 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
     [ruptures?.ruptureYears]
   );
 
-  const onSelectedYear = useCallback((index: number) => {
-    setSelectedIndex(index);
-  }, []);
-
   const therapeuticDataForSelectedYear = useMemo(() => {
     if (ruptures?.repartitionPerTherapeuticClass) {
       return ruptures.repartitionPerTherapeuticClass.find(
@@ -45,17 +43,18 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
     }
   }, [options, ruptures?.repartitionPerTherapeuticClass, selectedIndex]);
 
-  const repartitionDataForSelectedYear = useMemo(() => {
-    const rows = therapeuticDataForSelectedYear?.repartition ?? [];
-    return [...rows].sort((a, b) => (a?.value && b?.value ? a.value - b.value : 0)).reverse();
-  }, [therapeuticDataForSelectedYear?.repartition]);
+  const therapeuticRepartitionForSelectedYear = useMemo(
+    () =>
+      buildSortedData<TherapeuticClassRupture>(
+        therapeuticDataForSelectedYear?.repartition,
+        'number'
+      ),
+    [therapeuticDataForSelectedYear?.repartition]
+  );
 
   const labels = useMemo(
-    () =>
-      repartitionDataForSelectedYear
-        ? repartitionDataForSelectedYear?.map((element) => element?.name)
-        : [],
-    [repartitionDataForSelectedYear]
+    () => therapeuticRepartitionForSelectedYear.map((e) => e.name),
+    [therapeuticRepartitionForSelectedYear]
   );
 
   const datasets = useMemo(
@@ -65,11 +64,15 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
         label: 'Nombre de signalements',
         backgroundColor: tailwindPaletteConfig.darkGreen[300],
         borderColor: tailwindPaletteConfig.darkGreen[300],
-        data: repartitionDataForSelectedYear?.map((element) => element?.value),
+        data: therapeuticRepartitionForSelectedYear?.map((element) => element?.value),
       },
     ],
-    [repartitionDataForSelectedYear]
+    [therapeuticRepartitionForSelectedYear]
   );
+
+  const onSelectedYear = useCallback((index: number) => {
+    setSelectedIndex(index);
+  }, []);
 
   return (
     <ChartBox className="w-full">
