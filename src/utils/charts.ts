@@ -11,7 +11,7 @@ export type ChartPalette =
 export const chartThemeGradient = (theme: ChartPalette) => {
   switch (theme) {
     case 'secondary':
-      return [turquoise[200], turquoise[500], turquoise[900]];
+      return [turquoise[200], turquoise[500], turquoise[900]].reverse();
 
     case 'secondary-full':
       return [
@@ -25,10 +25,10 @@ export const chartThemeGradient = (theme: ChartPalette) => {
         turquoise[700],
         turquoise[800],
         turquoise[900],
-      ];
+      ].reverse();
 
     case 'green':
-      return [darkGreen[200], darkGreen[500], darkGreen[900]];
+      return [darkGreen[200], darkGreen[500], darkGreen[900]].reverse();
 
     case 'green-full':
       return [
@@ -42,24 +42,21 @@ export const chartThemeGradient = (theme: ChartPalette) => {
         darkGreen[700],
         darkGreen[800],
         darkGreen[900],
-      ];
+      ].reverse();
 
     case 'primary-full':
       return [
         darkViolet[50],
         darkViolet[100],
         darkViolet[200],
-        darkViolet[300],
         darkViolet[400],
-        darkViolet[500],
         darkViolet[600],
-        darkViolet[700],
         darkViolet[800],
         darkViolet[900],
-      ];
+      ].reverse();
 
     case 'primary':
     default:
-      return [darkViolet[200], darkViolet[500], darkViolet[900]];
+      return [darkViolet[200], darkViolet[500], darkViolet[900]].reverse();
   }
 };

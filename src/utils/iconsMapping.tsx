@@ -132,89 +132,50 @@ export const getPharmaFormIcon = (pharmaForm: PharmaFormType) => {
 export const getMedErrorApparitionStepIcon = (apparitionStep: MedicalErrorApparitionStep) => {
   switch (apparitionStep) {
     case MedicalErrorApparitionStep.PreparationStep:
-      return <ErrorPreparation className="w-32" />;
+      return <ErrorPreparation className="w-24 md:w-32" />;
     case MedicalErrorApparitionStep.DeliveranceStep:
-      return <ErrorDelivrance className="w-32" />;
+      return <ErrorDelivrance className="w-24 md:w-32" />;
     case MedicalErrorApparitionStep.PrescriptionStep:
-      return <ErrorPrescription className="w-32" />;
+      return <ErrorPrescription className="w-24 md:w-32" />;
     case MedicalErrorApparitionStep.AdministrationStep:
-      return <ErrorAdministration className="w-32" />;
+      return <ErrorAdministration className="w-24 md:w-32" />;
     case MedicalErrorApparitionStep.SurveillanceStep:
-      return <ErrorSuiviTherapeutique className="w-32" />;
+      return <ErrorSuiviTherapeutique className="w-24 md:w-32" />;
     case MedicalErrorApparitionStep.OtherStep:
     default:
-      return <ErrorOther className="w-32" />;
-  }
-};
-
-export const getMedicinalErrorNatureIcon = (errorInitial?: Maybe<MedicalErrorNature>) => {
-  switch (errorInitial) {
-    case MedicalErrorNature.PreparationError:
-      return <ErrorPreparation className="w-32" />;
-    case MedicalErrorNature.DeliveranceError:
-      return <ErrorDelivrance className="w-32" />;
-    case MedicalErrorNature.PrescriptionError:
-      return <ErrorPrescription className="w-32" />;
-    case MedicalErrorNature.AdministrationError:
-      return <ErrorAdministration className="w-32" />;
-    case MedicalErrorNature.TherapeuticCareError:
-      return <ErrorSuiviTherapeutique className="w-32" />;
-    case MedicalErrorNature.OtherError:
-    default:
-      return <ErrorOther className="w-32" />;
+      return <ErrorOther className="w-24 md:w-32" />;
   }
 };
 
 export const getPublicationIcon = (publicationTypeId: number) => {
   switch (publicationTypeId) {
     case 1:
-      return <PublicationOtherSVG className="w-32" />;
+      return <PublicationOtherSVG className="w-24 md:w-32" />;
     case 3:
-      return <PublicationSpeakSVG className="w-32" />;
+      return <PublicationSpeakSVG className="w-24 md:w-32" />;
     default:
-      return <PublicationInfoSVG className="w-32" />;
+      return <PublicationInfoSVG className="w-24 md:w-32" />;
   }
 };
 
 export const getNotifierIcon = (id: number) => {
   switch (id) {
     case 0:
-      return <OtherDoctorFigure className="w-32" />;
+      return <OtherDoctorFigure className="w-24 md:w-32" />;
     case 1:
-      return <NurseFigure className="w-32" />;
+      return <NurseFigure className="w-24 md:w-32" />;
     case 2:
-      return <JuristeFigure className="w-32" />;
+      return <JuristeFigure className="w-24 md:w-32" />;
     case 3:
-      return <DoctorFigure className="w-32" />;
+      return <DoctorFigure className="w-24 md:w-32" />;
     case 4:
-      return <SpecialistFigure className="w-32" />;
+      return <SpecialistFigure className="w-24 md:w-32" />;
     case 5:
-      return <PatientFigure className="w-32" />;
+      return <PatientFigure className="w-24 md:w-32" />;
     case 6:
-      return <PharmacistFigure className="w-32" />;
+      return <PharmacistFigure className="w-24 md:w-32" />;
     default:
-      return <OtherDoctorFigure className="w-32" />;
-  }
-};
-
-export const getNotifierIconByJobName = (name: string) => {
-  switch (name) {
-    case 'Autre professionnel de santé':
-      return <OtherDoctorFigure className="w-32" />;
-    case 'Infirmière':
-      return <NurseFigure className="w-32" />;
-    case 'Juriste':
-      return <JuristeFigure className="w-32" />;
-    case 'Médecin généraliste':
-      return <DoctorFigure className="w-32" />;
-    case 'Médecin spécialiste':
-      return <SpecialistFigure className="w-32" />;
-    case 'Non professionnel de santé':
-      return <PatientFigure className="w-32" />;
-    case 'Pharmacien':
-      return <PharmacistFigure className="w-32" />;
-    default:
-      return <OtherDoctorFigure className="w-32" />;
+      return <OtherDoctorFigure className="w-24 md:w-32" />;
   }
 };
 
@@ -222,62 +183,131 @@ export const getNotifierIconByJobName = (name: string) => {
 // eslint-disable-next-line complexity
 export const getSideEffectPathologyIcon = (id: number) => {
   switch (id) {
-    case 0:
-      return <AffectionsCardiaquesFigure className="w-32" />;
     case 1:
-      return <AffectionPeauFigure className="w-32" />;
+      return <ActeMedicauxFigure className="w-24 md:w-32" />;
     case 2:
-      return <AffectionsReinFigure className="w-32" />;
+    case 30:
+      return <AffectionsCardiaquesFigure className="w-24 md:w-32" />;
     case 3:
-      return <AffectionsNerveuxFigure className="w-32" />;
+      return <AffectionOreilleFigure className="w-24 md:w-32" />;
     case 4:
-      return <AffectionGastroFigure className="w-32" />;
+      return <AffectionPeauFigure className="w-24 md:w-32" />;
     case 5:
-      return <AffectionHematologiqueFigure className="w-32" />;
+      return <AffectionOrganeFigure className="w-24 md:w-32" />;
     case 6:
-      return <AffectionHepatobilaireFigure className="w-32" />;
+      return <AffectionsReinFigure className="w-24 md:w-32" />;
     case 7:
-      return <AffectionMusculosquelettiquesFigure className="w-32" />;
+      return <AffectionSystemeImmuFigure className="w-24 md:w-32" />;
     case 8:
-      return <AffectionPsychiatriquesFigure className="w-32" />;
+    case 28:
+      return <AffectionsNerveuxFigure className="w-24 md:w-32" />;
     case 9:
-      return <AffectionRespiratoiresFigure className="w-32" />;
+    case 31:
+      return <AffectionEndocriFigure className="w-24 md:w-32" />;
     case 10:
-      return <AffectionVasculaireFigure className="w-32" />;
+      return <AffectionGastroFigure className="w-24 md:w-32" />;
     case 11:
-      return <InvestigationsFigure className="w-32" />;
+      return <AffectionHematologiqueFigure className="w-24 md:w-32" />;
     case 12:
-      return <LesionsFigure className="w-32" />;
+      return <AffectionHepatobilaireFigure className="w-24 md:w-32" />;
     case 13:
-      return <TroublesMetabolismeFigure className="w-32" />;
+    case 34:
+      return <AffectionMusculosquelettiquesFigure className="w-24 md:w-32" />;
     case 14:
-      return <TroublesGenerauxFigure className="w-32" />;
+    case 33:
+      return <AffectionsOculaireFigure className="w-24 md:w-32" />;
     case 15:
-      return <AffectionOreilleFigure className="w-32" />;
+    case 29:
+    case 32:
+      return <AffectionPsychiatriquesFigure className="w-24 md:w-32" />;
     case 16:
-      return <AffectionOrganeFigure className="w-32" />;
+      return <AffectionRespiratoiresFigure className="w-24 md:w-32" />;
     case 17:
-      return <AffectionSystemeImmuFigure className="w-32" />;
+      return <AffectionVasculaireFigure className="w-24 md:w-32" />;
     case 18:
-      return <AffectionEndocriFigure className="w-32" />;
+      return <CaracteristiqueSocioFigure className="w-24 md:w-32" />;
     case 19:
-      return <AffectionsOculaireFigure className="w-32" />;
+      return <InfectionFigure className="w-24 md:w-32" />;
     case 20:
-      return <InfectionFigure className="w-32" />;
+      return <InvestigationsFigure className="w-24 md:w-32" />;
     case 21:
-      return <ProblemeFigure className="w-32" />;
+      return <LesionsFigure className="w-24 md:w-32" />;
     case 22:
-      return <AffectionCongenitalesFigure className="w-32" />;
+      return <ProblemeFigure className="w-24 md:w-32" />;
     case 23:
-      return <TumeursBenignesFigure className="w-32" />;
+      return <TroublesMetabolismeFigure className="w-24 md:w-32" />;
     case 24:
-      return <ActeMedicauxFigure className="w-32" />;
+      return <TroublesGenerauxFigure className="w-24 md:w-32" />;
     case 25:
-      return <AffectionGravidiquesFigure className="w-32" />;
+      return <TumeursBenignesFigure className="w-24 md:w-32" />;
     case 26:
-      return <CaracteristiqueSocioFigure className="w-32" />;
+      return <AffectionCongenitalesFigure className="w-24 md:w-32" />;
+    case 27:
+      return <AffectionGravidiquesFigure className="w-24 md:w-32" />;
     default:
-      return <Notfound className="w-32" />;
+      return <Notfound className="w-24 md:w-32" />;
+  }
+};
+
+// eslint-disable-next-line complexity
+export const getSideEffectPathologyIconByName = (name: string) => {
+  switch (name) {
+    case 'Affections cardiaques':
+      return <AffectionsCardiaquesFigure className="w-24 md:w-32" />;
+    case 'Affections de la peau et du tissu sous-cutané':
+      return <AffectionPeauFigure className="w-24 md:w-32" />;
+    case 'Affections du rein et des voies urinaires':
+      return <AffectionsReinFigure className="w-24 md:w-32" />;
+    case 'Affections du système nerveux':
+      return <AffectionsNerveuxFigure className="w-24 md:w-32" />;
+    case 'Affections gastro-intestinales':
+      return <AffectionGastroFigure className="w-24 md:w-32" />;
+    case 'Affections hématologiques et du système lymphatique':
+      return <AffectionHematologiqueFigure className="w-24 md:w-32" />;
+    case 'Affections hépatobiliaires':
+      return <AffectionHepatobilaireFigure className="w-24 md:w-32" />;
+    case 'Affections musculosquelettiques et du tissu conjonctif':
+      return <AffectionMusculosquelettiquesFigure className="w-24 md:w-32" />;
+    case 'Affections psychiatriques':
+      return <AffectionPsychiatriquesFigure className="w-24 md:w-32" />;
+    case 'Affections respiratoires, thoraciques et médiastinales':
+      return <AffectionRespiratoiresFigure className="w-24 md:w-32" />;
+    case 'Affections vasculaires':
+      return <AffectionVasculaireFigure className="w-24 md:w-32" />;
+    case 'Investigations':
+      return <InvestigationsFigure className="w-24 md:w-32" />;
+    case "Lésions, intoxications et complications d'interventions":
+      return <LesionsFigure className="w-24 md:w-32" />;
+    case 'Troubles du métabolisme et de la nutrition':
+      return <TroublesMetabolismeFigure className="w-24 md:w-32" />;
+    case "Troubles généraux et anomalies au site d'administration":
+      return <TroublesGenerauxFigure className="w-24 md:w-32" />;
+    case "Affections de l'oreille et du labyrinthe":
+      return <AffectionOreilleFigure className="w-24 md:w-32" />;
+    case 'Affections des organes de reproduction et du sein':
+      return <AffectionOrganeFigure className="w-24 md:w-32" />;
+    case 'Affections du système immunitaire':
+      return <AffectionSystemeImmuFigure className="w-24 md:w-32" />;
+    case 'Affections endocriniennes':
+      return <AffectionEndocriFigure className="w-24 md:w-32" />;
+    case 'Affections oculaires':
+      return <AffectionsOculaireFigure className="w-24 md:w-32" />;
+    case 'Infections et infestations':
+      return <InfectionFigure className="w-24 md:w-32" />;
+    case 'Problèmes de produit':
+      return <ProblemeFigure className="w-24 md:w-32" />;
+    case 'Affections congénitales, familiales et génétiques':
+      return <AffectionCongenitalesFigure className="w-24 md:w-32" />;
+    case 'Tumeurs bénignes, malignes et non précisées (incl kystes et polypes)':
+      return <TumeursBenignesFigure className="w-24 md:w-32" />;
+    case 'Actes médicaux et chirurgicaux':
+      return <ActeMedicauxFigure className="w-24 md:w-32" />;
+    case 'Affections gravidiques, puerpérales et périnatales':
+      return <AffectionGravidiquesFigure className="w-24 md:w-32" />;
+    case 'Caractéristiques socio-environnementales':
+      return <CaracteristiqueSocioFigure className="w-24 md:w-32" />;
+    default:
+      return <Notfound className="w-24 md:w-32" />;
   }
 };
 
@@ -285,23 +315,23 @@ export const getSideEffectPathologyIcon = (id: number) => {
 export const getDeclarationActionIcon = (name: string) => {
   switch (name) {
     case 'Contingentement quantitatif':
-      return <ContigentementQuantitatif className="w-32" />;
+      return <ContigentementQuantitatif className="w-24 md:w-32" />;
     case 'Contingentement qualitatif':
-      return <ContigentementQualitatif className="w-32" />;
+      return <ContigentementQualitatif className="w-24 md:w-32" />;
     case 'Restriction du circuit de distribution':
-      return <RestrictionCircuitDistribution className="w-32" />;
+      return <RestrictionCircuitDistribution className="w-24 md:w-32" />;
     case "Mise en place d'un stock de dépannage":
-      return <MiseEnPlaceStock className="w-32" />;
+      return <MiseEnPlaceStock className="w-24 md:w-32" />;
     case 'Flexibilité réglementaire':
-      return <FlexibiliteReglementaire className="w-32" />;
+      return <FlexibiliteReglementaire className="w-24 md:w-32" />;
     case 'Importation':
-      return <Importation className="w-32" />;
+      return <Importation className="w-24 md:w-32" />;
     case 'Mise à disposition':
-      return <MiseADispositionSvg className="w-32" />;
+      return <MiseADispositionSvg className="w-24 md:w-32" />;
     case 'Pas de mesure':
-      return <NoAction className="w-32" />;
+      return <NoAction className="w-24 md:w-32" />;
     default:
-      return <Notfound className="w-32" />;
+      return <Notfound className="w-24 md:w-32" />;
   }
 };
 
@@ -309,38 +339,38 @@ export const getDeclarationActionIcon = (name: string) => {
 export const getRuptureCauseIcon = (name: string) => {
   switch (name) {
     case 'Incident de production':
-      return <IncidentProductionSvg className="w-32" />;
+      return <IncidentProductionSvg className="w-24 md:w-32" />;
     case 'Augmentation du volume de vente':
-      return <AugmentationVolumesVenteSvg className="w-32" />;
+      return <AugmentationVolumesVenteSvg className="w-24 md:w-32" />;
     case 'Autre':
-      return <AutreSvg className="w-32" />;
+      return <AutreSvg className="w-24 md:w-32" />;
     case 'Transfert de site':
-      return <TransfertSiteSvg className="w-32" />;
+      return <TransfertSiteSvg className="w-24 md:w-32" />;
     case 'Capacité de production insuffisante':
-      return <CapaciteProductionInsuffisante className="w-32" />;
+      return <CapaciteProductionInsuffisante className="w-24 md:w-32" />;
     case 'Défaut qualité produit fini':
-      return <DefautQualiteSvg className="w-32" />;
+      return <DefautQualiteSvg className="w-24 md:w-32" />;
     case 'Difficulté réglementaire':
-      return <DifficulteReglementSvg className="w-32" />;
+      return <DifficulteReglementSvg className="w-24 md:w-32" />;
     case "Défaut d'approvisionnement MP/AC":
-      return <DefautApprovisionnementMpSvg className="w-32" />;
+      return <DefautApprovisionnementMpSvg className="w-24 md:w-32" />;
     case 'Analyses de libération non conformes':
-      return <AnalyseLiberationNonConformesSvg className="w-32" />;
+      return <AnalyseLiberationNonConformesSvg className="w-24 md:w-32" />;
     case 'Problème de transport/logistique':
-      return <ProblemeTransportSvg className="w-32" />;
+      return <ProblemeTransportSvg className="w-24 md:w-32" />;
     case 'Arrêt de commercialisation':
-      return <ArretCommerceSvg className="w-32" />;
+      return <ArretCommerceSvg className="w-24 md:w-32" />;
     case 'Coronavirus':
-      return <Coronavirus className="w-32" />;
+      return <Coronavirus className="w-24 md:w-32" />;
     case "Défaut d'approvisionnement en Matière Première":
-      return <AutreSvg className="w-32" />;
+      return <AutreSvg className="w-24 md:w-32" />;
     case 'Problème qualité : Analyse non conforme':
-      return <AnalyseNonConformeSvg className="w-32" />;
+      return <AnalyseNonConformeSvg className="w-24 md:w-32" />;
     case "Défaut d'approvisionnement en Article de Conditionnement":
-      return <DefautApprovisionnementSvg className="w-32" />;
+      return <DefautApprovisionnementSvg className="w-24 md:w-32" />;
     case 'Problème qualité : Non conformité aux BPF':
-      return <NonConformeSvg className="w-32" />;
+      return <NonConformeSvg className="w-24 md:w-32" />;
     default:
-      return <MiseADispositionSvg className="w-32" />;
+      return <MiseADispositionSvg className="w-24 md:w-32" />;
   }
 };

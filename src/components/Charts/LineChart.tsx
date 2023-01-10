@@ -44,7 +44,7 @@ export const LineChart = ({
           datasets,
         }}
         options={{
-          maintainAspectRatio: false,
+          responsive: true,
           scales: {
             x: {
               title: {

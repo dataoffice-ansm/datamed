@@ -30,7 +30,7 @@ export const Button = (props: CallToActionProps) => {
     'data-variant': variant,
   };
 
-  const computedVariantStyles = classnames('cursor:pointer py-2 px-4 rounded', {
+  const computedVariantStyles = classnames('btn cursor:pointer py-2 px-4 rounded', {
     'text-primary underline': theme === 'primary' && variant === 'none',
     'text-secondary hover:bg-secondary-500 focus:bg-secondary-500':
       theme === 'secondary' && variant === 'none',

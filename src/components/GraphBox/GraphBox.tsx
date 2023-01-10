@@ -23,7 +23,7 @@ export const GraphBox = ({
 }) => (
   <div className={classnames('GraphBox rounded-lg shadow bg-white p-4', className)}>
     <div className="GraphBoxTitle flex items-center gap-4 w-full mb-2">
-      <div className="flex-1 text-lg font-medium">{title}</div>
+      <div className="text-lg font-medium">{title}</div>
       {tooltip && (
         <div className="GraphBoxTooltip flex gap-4 items-center">
           <Tooltip

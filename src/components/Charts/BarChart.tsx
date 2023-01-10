@@ -44,7 +44,7 @@ export const BarChart = ({
           datasets,
         }}
         options={{
-          maintainAspectRatio: false,
+          responsive: true,
           scales: {
             x: {
               title: {

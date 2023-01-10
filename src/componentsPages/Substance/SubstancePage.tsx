@@ -2,7 +2,10 @@ import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/Enti
 import { HeroHeader } from '../../components/HeroHeader/HeroHeader';
 import type { EntitySub } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
-import { type Substance } from '../../graphql/__generated__/generated-documents';
+import {
+  type RepartitionPerAge,
+  type Substance,
+} from '../../graphql/__generated__/generated-documents';
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
 import Link from 'next/link';
 import classnames from 'classnames';
@@ -13,15 +16,22 @@ import PilIcon from '../../assets/pictos/gellule.svg';
 import { numberWithThousand } from '../../utils/format';
 import ManIllustration from '../../assets/pictos/man_illustration.svg';
 import WomanIllustration from '../../assets/pictos/woman_illustration.svg';
-import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
+import { PieChartRepartition } from '../../components/Charts/PieChartRepartition';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
 import { SectionTitle } from '../../components/SectionTitle';
 import { ExpositionLevel } from '../../api/graphql/enums';
+import { useMemo } from 'react';
+import { buildSortedRangeData } from '../../utils/entities';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
-  const { totalExposition, exposition, repartitionPerGender, repartitionPerAge } = currentEntity;
+  const { totalExposition, exposition, repartitionPerGender } = currentEntity;
+
+  const repartitionPerAge = useMemo(
+    () => buildSortedRangeData<RepartitionPerAge>(currentEntity.repartitionPerAge, 'number'),
+    [currentEntity.repartitionPerAge]
+  );
 
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
@@ -142,10 +152,10 @@ const SectionOneGlobalInformation = () => {
             title="Répartition par âge des patients traités"
             className="h-full max-w-[100%]"
           >
-            <PieChartRepartitionAge
+            <PieChartRepartition
               theme="secondary"
               className="h-64 w-full flex justify-center items-center"
-              ageData={repartitionPerAge}
+              data={repartitionPerAge}
             />
           </GraphBox>
         </div>

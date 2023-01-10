@@ -30,8 +30,7 @@ import { GraphFigure } from '../../components/GraphFigure';
 import { PublicationItem } from './PublicationItem';
 import { RuptureHistoryItem } from './RuptureHistoryItem';
 import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
-import { PieChartMedicalErrorsPopulation } from '../../components/Charts/PieChartMedicalErrorsPopulation';
-import { PieChartRepartitionAge } from '../../components/Charts/PieChartRepartitionAge';
+import { PieChartRepartition } from '../../components/Charts/PieChartRepartition';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { SectionTitle } from '../../components/SectionTitle';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
@@ -42,6 +41,10 @@ import { CardWithImage } from '../../components/CardWithImage/CardWithImage';
 import { Button } from '../../components/Button/Button';
 import { getMedErrorApparitionStepIcon } from '../../utils/iconsMapping';
 import { buildSortedRangeData } from '../../utils/entities';
+import {
+  type MedicalErrorsPopulation,
+  type SpecialityUsagePerAge,
+} from '../../graphql/__generated__/generated-documents';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -143,6 +146,12 @@ const SectionOneGlobalInformation = () => {
 
 const SectionTreatedPatients = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
+
+  const repartitionPerAge = useMemo(
+    () => buildSortedRangeData<SpecialityUsagePerAge>(currentEntity?.repartitionPerAge, 'number'),
+    [currentEntity?.repartitionPerAge]
+  );
+
   return (
     <div className="SectionTreatedPatients sectionPart mt-4 mb-8" id="sectionTreatedPatients">
       <SectionTitle
@@ -263,10 +272,10 @@ const SectionTreatedPatients = () => {
             title="Répartition par âge des patients traités"
             className="h-full max-w-[100%]"
           >
-            <PieChartRepartitionAge
+            <PieChartRepartition
               theme="primary"
               className="h-64 w-full flex justify-center items-center"
-              ageData={currentEntity?.repartitionPerAge}
+              data={repartitionPerAge}
             />
           </GraphBox>
         </div>
@@ -277,6 +286,15 @@ const SectionTreatedPatients = () => {
 
 const SectionMedicinalErrors = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
+
+  const populationRepartition = useMemo(
+    () =>
+      buildSortedRangeData<MedicalErrorsPopulation>(
+        currentEntity?.medicalErrors?.populationRepartition,
+        'number'
+      ),
+    [currentEntity?.medicalErrors?.populationRepartition]
+  );
 
   return (
     <div className="SectionMedicinalErrors sectionPart mt-4 mb-8" id="sectionMedicinalErrors">
@@ -325,10 +343,7 @@ const SectionMedicinalErrors = () => {
       <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto mt-8">
         <div className="flex-1 flex-shrink">
           <GraphBox title="Répartition de la population concernée" className="h-full max-w-[100%]">
-            <PieChartMedicalErrorsPopulation
-              theme="primary"
-              errorsMedRepPopData={currentEntity?.medicalErrors?.populationRepartition}
-            />
+            <PieChartRepartition theme="primary-full" data={populationRepartition} />
           </GraphBox>
         </div>
 
@@ -367,29 +382,34 @@ const SectionMedicinalErrors = () => {
       {currentEntity.medicalErrors?.apparitionStepRepartition && (
         <GraphBoxSelect
           title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
-          render={({ selectedUnitOption }) => (
-            <GraphFiguresGrid
-              data={buildSortedRangeData<MedicalErrorsApparitionStep>(
-                currentEntity.medicalErrors?.apparitionStepRepartition,
-                selectedUnitOption
-              )}
-              renderItem={(apparitionStep) => {
-                const step = apparitionStep.step as MedicalErrorApparitionStep;
-                return (
-                  <GraphFigure
-                    unit={selectedUnitOption === 'percent' ? ' % ' : ''}
-                    value={
-                      (selectedUnitOption === 'percent'
-                        ? apparitionStep.valuePercent
-                        : apparitionStep.value) ?? 0
-                    }
-                    label={apparitionStep.label}
-                    icon={getMedErrorApparitionStepIcon(step)}
-                  />
-                );
-              }}
-            />
-          )}
+          render={({ selectedUnitOption }) => {
+            const apparitionStepRepartition = buildSortedRangeData<MedicalErrorsApparitionStep>(
+              currentEntity.medicalErrors?.apparitionStepRepartition,
+              selectedUnitOption
+            );
+
+            return (
+              <GraphFiguresGrid
+                data={apparitionStepRepartition}
+                renderItem={(apparitionStep) => {
+                  const step = apparitionStep.step as MedicalErrorApparitionStep;
+
+                  return (
+                    <GraphFigure
+                      unit={selectedUnitOption === 'percent' ? ' % ' : ''}
+                      value={
+                        (selectedUnitOption === 'percent'
+                          ? apparitionStep.valuePercent
+                          : apparitionStep.value) ?? 0
+                      }
+                      label={apparitionStep.label}
+                      icon={getMedErrorApparitionStepIcon(step)}
+                    />
+                  );
+                }}
+              />
+            );
+          }}
         />
       )}
 
@@ -397,17 +417,20 @@ const SectionMedicinalErrors = () => {
         <GraphBoxSelect
           title="Nature des erreurs médicamenteuses"
           className="max-w-full my-8"
-          render={({ selectedUnitOption }) => (
-            <div className="m-auto max-w-max">
+          render={({ selectedUnitOption }) => {
+            const natureRepartition = buildSortedRangeData<MedicalErrorsNature>(
+              currentEntity.medicalErrors?.natureRepartition,
+              selectedUnitOption
+            );
+
+            return (
               <BarChartMedicalErrorsNature
                 dataKey={selectedUnitOption}
-                natureMedicalErrors={buildSortedRangeData<MedicalErrorsNature>(
-                  currentEntity.medicalErrors?.natureRepartition,
-                  selectedUnitOption
-                )}
+                className="h-64 w-full flex justify-center items-center"
+                natureMedicalErrors={natureRepartition}
               />
-            </div>
-          )}
+            );
+          }}
         />
       )}
     </div>
@@ -483,7 +506,7 @@ const SectionRisksShortageHistory = () => {
       <div className="my-8 RupturesHistory">
         {count ? (
           <div className="p-4 border border-grey-200 rounded-lg bg-white">
-            <div className="text-secondary-900 font-medium">
+            <div className="text-primary font-medium">
               <span>{`${count} ${count === 1 ? 'déclaration' : 'déclarations'}`}</span>
             </div>
             <div className="pt-6">

@@ -47,41 +47,19 @@ export const BarChartMedicalErrorsNature = ({
         redraw
         updateMode="resize"
         options={{
-          maintainAspectRatio: false,
+          responsive: true,
           indexAxis: 'y' as const,
           scales: {
             x: {
               title: {
                 display: true,
-                text: 'bottomLegend',
-              },
-              grid: {
-                display: false,
-              },
-            },
-            y: {
-              title: {
-                display: true,
-                text: 'leftLegend',
-              },
-              grid: {
-                display: true,
+                text: dataKey === 'percent' ? 'Proportion (%)' : 'Proportion (Nombre)',
               },
             },
           },
           elements: {
             bar: {
               borderWidth: 2,
-            },
-          },
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'right' as const,
-            },
-            title: {
-              display: true,
-              text: 'Chart.js Horizontal Bar Chart',
             },
           },
         }}
