@@ -116,9 +116,9 @@ export const SubstanceSideEffects = ({
         className="my-8"
       >
         Nombre cumulé de déclarations d&lsquo;effets indésirables suspectés{' '}
-        {substance.totalExposition?.minYear &&
-          substance.totalExposition?.maxYear &&
-          `sur la période ${substance.totalExposition?.minYear} ${substance.totalExposition?.maxYear}`}
+        {substance.exposition?.minYear &&
+          substance.exposition?.maxYear &&
+          `sur la période ${substance.exposition?.minYear} ${substance.exposition?.maxYear}`}
       </BoxInfo>
 
       <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto">
@@ -235,6 +235,7 @@ export const SubstanceSideEffects = ({
               substance.sideEffects?.repartitionPerPathology,
               selectedUnitOption
             );
+
             return (
               <div className="GraphBoxSelectContent">
                 {repartitionPerPathology.length !== 0 && (

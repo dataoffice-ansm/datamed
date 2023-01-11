@@ -6,9 +6,7 @@ export const CisTooltip = () => (
   <Tooltip
     content={
       <div className="p-4 max-w-lg">
-        <p className="text-md md:text-lg font-bold my-12">
-          Qu’est-ce qu’une spécialité de médicament ?
-        </p>
+        <p className="text-md md:text-lg font-bold">Qu’est-ce qu’une spécialité de médicament ?</p>
 
         <div className="mb-3">
           Les médicaments peuvent être regroupés selon différents niveaux, allant de la simple

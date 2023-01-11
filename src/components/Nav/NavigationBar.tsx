@@ -1,39 +1,19 @@
 import { useRef, useEffect, useState, useCallback } from 'react';
 import classnames from 'classnames';
 import Link from 'next/link';
-import { NavDrawerMobile } from '../NavDrawerMobile/NavDrawerMobile';
-import { NavLink } from '../NavLink/NavLink';
-import LogoBrand from '../../icons/logo.svg';
+import { NavDrawerMobile } from './NavDrawerMobile';
+import LogoBrand from '../../assets/logo-ansm-beta.svg';
 import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { useRefHeight } from '../../hooks/useRefHeight';
 import { useLayoutContext } from '../../contexts/LayoutContext';
-import { SearchBar } from '../SearchBar/SearchBar';
+import { SearchBar } from '../SearchBar';
 import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
-import MenuIcon from '../../icons/menu.svg';
-import CloseIcon from '../../icons/close.svg';
+import MenuIcon from '../../assets/nav/menu.svg';
+import CloseIcon from '../../assets/nav/close.svg';
 import { useBodyScrollContext } from '../../contexts/BodyScrollContext';
 import { Autocomplete } from '../Autocomplete/Autocomplete';
-import type { NavLinkItem } from '../../config/layoutConfig';
-import { navIconSize } from '../../config/layoutConfig';
-
-const links: NavLinkItem[] = [
-  {
-    text: 'FAQ',
-    href: '/faq',
-  },
-  {
-    text: 'A propos',
-    href: '/a-propos',
-  },
-  {
-    text: 'Ruptures',
-    href: '/ruptures',
-  },
-  {
-    text: 'Statistiques globales',
-    href: '/globaldec',
-  },
-];
+import { navBarLinks, navIconSize } from '../../config/layoutConfig';
+import { RenderNavLinks } from '../../utils/nav';
 
 export const NavigationBar = () => {
   const [navDrawerOpened, setNavDrawerOpened] = useState(false);
@@ -106,20 +86,19 @@ export const NavigationBar = () => {
           <MenuIcon height={navIconSize} width={navIconSize} />
         )}
       </button>
-      {navDrawerOpened && <NavDrawerMobile links={links} topFromNavbar={navBarHeight} />}
+
+      {navDrawerOpened && <NavDrawerMobile links={navBarLinks} topFromNavbar={navBarHeight} />}
+
       <div className="flex justify-center md:justify-between items-center gap-8">
         <Link href="/">
           <a className="flex justify-center items-center border-b-4 border-transparent">
-            <LogoBrand width={128} height={32} alt="Logo DATAMED" />
+            <LogoBrand width={128} height={46} alt="Logo DATAMED" />
           </a>
         </Link>
-        {links.map((link) => (
-          <NavLink key={link.href} enableAnimation className="hidden md:block" href={link.href}>
-            {link.text}
-          </NavLink>
-        ))}
+        <RenderNavLinks links={navBarLinks} />
       </div>
       <span className="hidden md:block flex-auto" />
+
       <SearchBar handleSearchDrawer={handleSearchDrawer} />
       {searchDrawerOpened && (
         <div
@@ -127,7 +106,7 @@ export const NavigationBar = () => {
           className="AutocompleteMobileContainer fixed left-0 right-0 bottom-0 z-[3] overflow-auto"
         >
           <div className="AutocompleteMobileContent bg-white flex flex-col justify-center align-center">
-            <Autocomplete embedded handleOnSelected={handleSearchDrawer} />
+            <Autocomplete embedded autoFocus handleOnSelected={handleSearchDrawer} />
           </div>
         </div>
       )}
