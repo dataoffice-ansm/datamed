@@ -107,10 +107,16 @@ export const SubstanceSideEffects = ({
     [substance.sideEffects?.repartitionPerAge]
   );
 
+  //TODO: to be fixed in db
+  const realTotalDeclarations =
+    (substance.sideEffects?.repartitionPerGender?.male?.value ?? 0) +
+    (substance.sideEffects?.repartitionPerGender?.female?.value ?? 0) +
+    repartitionPerAge.reduce((carry, row) => carry + row.value, 0);
+
   return (
     <div className="SubstanceContainerContentTitle text-left">
       <BoxInfo
-        title={`${substance.totalExposition?.total ?? 'Aucune'} déclaration(s) reçue(s)`}
+        title={`${realTotalDeclarations ?? 'Aucune'} déclaration(s) reçue(s)`}
         icon={<FolderSVG />}
         theme="secondary"
         className="my-8"
@@ -241,9 +247,7 @@ export const SubstanceSideEffects = ({
                 {repartitionPerPathology.length !== 0 && (
                   <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
                     Parmi les{' '}
-                    <span className="text-secondary font-medium">
-                      {substance.totalExposition?.total}
-                    </span>{' '}
+                    <span className="text-secondary font-medium">{realTotalDeclarations}</span>{' '}
                     déclarations d’effets indésirables pour :{' '}
                     <span className="text-secondary font-medium">{substance.name}</span>
                   </div>
