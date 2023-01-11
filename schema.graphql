@@ -125,12 +125,6 @@ type MedicalErrors {
     natureRepartition: [MedicalErrorsNature]
 }
 
-type CisExposition {
-    consumption: Int
-    level: String
-    description: String
-}
-
 type RuptureClass {
     id: Int!
     label: String @capitalize
@@ -192,7 +186,7 @@ type RepartitionPerPathology {
     htlEffects: [HltEffect]
 }
 
-type  GlobalStatsUsagePerPathology {
+type GlobalStatsUsagePerPathology {
     id: Int!
     range: String! @capitalize
     value: Int!
@@ -205,12 +199,6 @@ type GlobalStatsUsagePerGravity {
     valuePercent: Float!
 }
 
-type SubstanceTotalExposition {
-    total: Int!
-    minYear: Int!
-    maxYear: Int!
-}
-
 type RepartitionPerAge {
     id: Int
     range: String! @capitalize
@@ -219,23 +207,36 @@ type RepartitionPerAge {
     description: String
 }
 
+type SubstanceSideEffectsDeclarations {
+    total: Int!
+}
+
 type SubstanceSideEffects {
+    declarations: SubstanceSideEffectsDeclarations
     repartitionPerGender: RepartitionPerGender
     repartitionPerAge: [RepartitionPerAge]
     repartitionPerNotifier: [RepartitionPerNotifier]
     repartitionPerPathology: [RepartitionPerPathology]
 }
 
+type EntityExpositionPeriod {
+    consumption: Int!
+    expositionCode: Int!
+    expositionLevel: String!
+    description: String!
+    minYear: Int!
+    maxYear: Int!
+}
+
 type Substance {
     id: Int!
     code: String!
     name: String! @capitalize
-    exposition: CisExposition
-    totalExposition: SubstanceTotalExposition
+    exposition: EntityExpositionPeriod
     repartitionPerGender: RepartitionPerGender
     repartitionPerAge: [RepartitionPerAge]
     sideEffects: SubstanceSideEffects
-    retrieveSpecialities: SpecialitiesReturn
+    retrievedSpecialities: SpecialitiesReturn
 }
 
 type SpecialitySubstance {
@@ -252,7 +253,6 @@ type SpecialityUsagePerAge {
     valuePercent: Float!
     description: String
 }
-
 type Speciality {
     id: Int!
     code: String!
@@ -268,7 +268,7 @@ type Speciality {
     laboratory: Laboratory @capitalize
     repartitionPerGender: RepartitionPerGender
     repartitionPerAge: [SpecialityUsagePerAge]
-    exposition: CisExposition
+    exposition: EntityExpositionPeriod
     medicalErrors: MedicalErrors
     publications: [Publication]
     rupturesHistory: SpecialityRupturesHistory
@@ -279,7 +279,6 @@ type SpecialityLight {
     code: String!
     name: String! @capitalize
     description: String
-    exposition: CisExposition
 }
 
 type GlobalStatsUsagePerAge {
@@ -290,8 +289,14 @@ type GlobalStatsUsagePerAge {
     description: String
 }
 
+type GlobalExpositionPeriod {
+    consumption: Int!
+    minYear: Int
+    maxYear: Int
+}
+
 type GlobalStatistic {
-    totalExposition: SubstanceTotalExposition
+    exposition: GlobalExpositionPeriod
     repartitionPerGender: RepartitionPerGender
     repartitionPerAge: [GlobalStatsUsagePerAge]
     repartitionPerSeriousEffect: [GlobalStatsUsagePerSeriousEffect]

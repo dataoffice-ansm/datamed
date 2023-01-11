@@ -26,7 +26,7 @@ import { Button } from '../../components/Button/Button';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
-  const { totalExposition, exposition, repartitionPerGender } = currentEntity;
+  const { exposition, repartitionPerGender } = currentEntity;
 
   const repartitionPerAge = useMemo(
     () => buildSortedRangeData<RepartitionPerAge>(currentEntity.repartitionPerAge, 'number'),
@@ -38,8 +38,8 @@ const SectionOneGlobalInformation = () => {
       <SectionTitle
         title="Patients traités en ville"
         subTitle={
-          totalExposition?.maxYear && totalExposition?.minYear
-            ? `Données issues de la période ${totalExposition.minYear} - ${totalExposition.maxYear}`
+          exposition?.maxYear && exposition?.minYear
+            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -80,42 +80,42 @@ const SectionOneGlobalInformation = () => {
         </p>
       </Accordion>
 
-      {exposition?.consumption ? (
-        <div className="expositionChart my-4 flex rounded-lg shadow bg-white overflow-hidden">
-          <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-secondary-900 py-6">
-            <span className="text-white">{exposition?.description}</span>
+      <div className="expositionChart my-4 flex rounded-lg shadow bg-white overflow-hidden">
+        <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-secondary-900 py-6">
+          <span className="text-white">{exposition?.description}</span>
 
-            <div className="UsageBarContainer mt-12 flex justify-center items-end gap-2">
-              {Object.keys(ExpositionLevel).map((levelKey, index) => (
-                <div
-                  key={levelKey}
-                  className={classnames(
-                    `UsageBarLevel${index}`,
-                    'relative w-6 bg-white border border-solid border-gray-200'
-                  )}
-                  style={{ height: 20 + 10 * index }}
-                >
-                  {exposition?.level === levelKey && (
-                    <div className="bouncingPil animate-bounce absolute -top-8">
-                      <PilIcon className="w-6 h-6" />
-                    </div>
-                  )}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
-            <h3 className="text-2xl text-secondary-900">
-              {numberWithThousand(exposition?.consumption)} / an
-            </h3>
-            <p>
-              Moyenne annuelle du nombre de remboursements de médicament par patient et par
-              conditionnement de médicament.
-            </p>
+          <div className="UsageBarContainer mt-12 flex justify-center items-end gap-2">
+            {Object.keys(ExpositionLevel).map((levelKey, index) => (
+              <div
+                key={levelKey}
+                className={classnames(
+                  `UsageBarLevel${index}`,
+                  'relative w-6 bg-white border border-solid border-gray-200'
+                )}
+                style={{ height: 20 + 10 * index }}
+              >
+                {exposition?.expositionLevel === levelKey && (
+                  <div className="bouncingPil animate-bounce absolute -top-8">
+                    <PilIcon className="w-6 h-6" />
+                  </div>
+                )}
+              </div>
+            ))}
           </div>
         </div>
-      ) : null}
+
+        <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
+          <h3 className="text-2xl text-secondary-900">
+            {exposition?.consumption
+              ? `${numberWithThousand(exposition?.consumption)} / an`
+              : 'Données insuffisantes'}
+          </h3>
+          <p>
+            Moyenne annuelle du nombre de remboursements de médicament par patient et par
+            conditionnement de médicament.
+          </p>
+        </div>
+      </div>
 
       <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto mt-8">
         <div className="flex-1 flex-shrink">
@@ -189,12 +189,12 @@ const SectionAssociatedSpecialities = () => {
 
       <div className="p-4 border border-grey-200 rounded-lg bg-white">
         <div className="text-secondary-900 font-medium">
-          {currentEntity.retrieveSpecialities?.meta?.count} médicaments identifiés
+          {currentEntity.retrievedSpecialities?.meta?.count} médicaments identifiés
         </div>
         <div className="pt-6">
           <PaginatedList
             theme="secondary"
-            data={currentEntity.retrieveSpecialities?.specialities ?? []}
+            data={currentEntity.retrievedSpecialities?.specialities ?? []}
             renderItem={(item) =>
               item?.code ? (
                 <Button variant="none" theme="grey" href={`/specialite/${item.code}`}>

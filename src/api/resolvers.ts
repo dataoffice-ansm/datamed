@@ -97,10 +97,6 @@ export const resolvers: Resolvers = {
   },
 
   Speciality: {
-    async substances(speciality, args, context) {
-      return context.dataSources.postgresOperations.getSubstancesBySpeciality(speciality.id);
-    },
-
     async dosageIndication(speciality, args, context) {
       return context.dataSources.postgresOperations.getSpecialityDosageIndication(speciality.id);
     },
@@ -115,6 +111,10 @@ export const resolvers: Resolvers = {
 
     async repartitionPerAge(speciality, args, context) {
       return context.dataSources.postgresOperations.getSpecialityRepAge(speciality.id);
+    },
+
+    async substances(speciality, args, context) {
+      return context.dataSources.postgresOperations.getSubstancesBySpeciality(speciality.id);
     },
 
     async publications(speciality, args, context) {
@@ -164,11 +164,7 @@ export const resolvers: Resolvers = {
 
   Substance: {
     async exposition(substance, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceCisExposition(substance.id);
-    },
-
-    async totalExposition(substance, args, context) {
-      return context.dataSources.postgresOperations.getSubstanceTotalExposition(substance.id);
+      return context.dataSources.postgresOperations.getSubstanceExposition(substance.id);
     },
 
     async repartitionPerAge(substance, args, context) {
@@ -179,7 +175,7 @@ export const resolvers: Resolvers = {
       return context.dataSources.postgresOperations.getSubstanceDeclarationsPerGender(substance.id);
     },
 
-    async retrieveSpecialities(substance, args, context) {
+    async retrievedSpecialities(substance, args, context) {
       const cisCodes = await context.dataSources.postgresOperations.getCisCodeBySubstanceId(
         substance.id
       );
@@ -202,6 +198,11 @@ export const resolvers: Resolvers = {
     },
 
     async sideEffects(substance, args, context) {
+      const declarations =
+        await context.dataSources.postgresOperations.getSubstanceSideEffectsDeclarations(
+          substance.id
+        );
+
       const repartitionPerGender =
         await context.dataSources.postgresOperations.getSubstanceDeclarationsWithSideEffectsPerGender(
           substance.id
@@ -223,6 +224,7 @@ export const resolvers: Resolvers = {
         );
 
       return {
+        declarations,
         repartitionPerGender,
         repartitionPerAge,
         repartitionPerNotifier,
