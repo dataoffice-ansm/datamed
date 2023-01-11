@@ -1,5 +1,5 @@
-import FaqSvg from '../../../assets/landing/landing_illustration_faq.svg';
-import { FullWidthRow } from '../../../components/FullWidthRow/FullWidthRow';
+import FaqSvg from '../../../assets/landing/faq-hp.svg';
+import { FullWidthRow } from '../../../components/FullWidthRow';
 import { Button } from '../../../components/Button/Button';
 
 export const FaqSection = () => (

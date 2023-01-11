@@ -10,21 +10,21 @@ import { GraphFigure } from '../../components/GraphFigure';
 import WomanFigure from '../../assets/pictos/woman_illustration.svg';
 import ManFigure from '../../assets/pictos/man_illustration.svg';
 import { PieChartRepartition } from '../../components/Charts/PieChartRepartition';
-import { Accordion } from '../../components/Accordion/Accordion';
+import { Accordion } from '../../components/Accordion';
 import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
 import { useState } from 'react';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { getSideEffectPathologyIcon, getNotifierIcon } from '../../utils/iconsMapping';
 import { Button } from '../../components/Button/Button';
-import { Modal } from '../../components/Modal/Modal';
+import { Modal } from '../../components/Modal';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import {
   type RepartitionPerAge,
   type RepartitionPerNotifier,
 } from '../../graphql/__generated__/generated-documents';
-import { CardWithImage } from '../../components/CardWithImage/CardWithImage';
+import { CardWithImage } from '../../components/CardWithImage';
 import SickPersonSvg from '../../assets/pictos/sick_transparent_person.svg';
 import { buildSortedRangeData } from '../../utils/entities';
 

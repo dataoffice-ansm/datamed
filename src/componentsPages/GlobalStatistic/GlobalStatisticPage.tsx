@@ -11,13 +11,10 @@ import FolderSVG from '../../assets/pictos/folder.svg';
 import { BoxInfo } from '../../components/BoxInfo';
 import { SectionTitle } from '../../components/SectionTitle';
 import { BarChartRepartition } from '../../components/Charts/BarChartRepartition';
-import {
-  getNotifierIcon,
-  getSideEffectPathologyIconByName,
-} from '../../utils/iconsMapping';
+import { getNotifierIcon, getSideEffectPathologyIconByName } from '../../utils/iconsMapping';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
-import { Accordion } from '../../components/Accordion/Accordion';
+import { Accordion } from '../../components/Accordion';
 import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
 import GlobStatSvg from '../../assets/pictos/sick_transparent_person.svg';
@@ -49,15 +46,15 @@ const SectionDemography = () => {
         icon={<FolderSVG />}
         theme="dark-green"
         className="my-8"
-        tooltip={
-          <div>
-            <strong>Déclarations cumulées</strong>
-            <div>
-              Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise à jour
-              progressive des données.
-            </div>
-          </div>
-        }
+        // tooltip={
+        //   <div>
+        //     <strong>Déclarations cumulées</strong>
+        //     <div>
+        //       Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise à jour
+        //       progressive des données.
+        //     </div>
+        //   </div>
+        // }
       >
         Cumul de toutes les déclarations d&apos;effets indésirables suspectés, tous médicaments
         confondus, reçues par les centres régionaux de pharmacovigilance sur la période considérée
@@ -76,7 +73,8 @@ const SectionDemography = () => {
             title="Répartition par sexe des patients traités"
             className="h-full max-w-[100%]"
           >
-            {repartitionPerGender?.female && repartitionPerGender?.male ? (
+            {repartitionPerGender?.female?.valuePercent !== 0 &&
+            repartitionPerGender?.male?.valuePercent !== 0 ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
                 {repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure

@@ -2,8 +2,8 @@ import type { HTMLAttributes } from 'react';
 import IllustrationMentionLegal from '../assets/pictos/mention_legal.svg';
 import classnames from 'classnames';
 import { SmallContainer } from '../components/SmallContainer';
-import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
-import { BackgroundSquares } from '../components/BackgroundSquares/BackgroundSquares';
+import { FullWidthRow } from '../components/FullWidthRow';
+import { BackgroundSquares } from '../components/BackgroundSquares';
 import Link from 'next/link';
 
 const Section = ({

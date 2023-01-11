@@ -1,6 +1,6 @@
 import type { FormEvent } from 'react';
 import { useState } from 'react';
-import { Modal } from '../components/Modal/Modal';
+import { Modal } from '../components/Modal';
 import { setCookie } from 'cookies-next';
 import { useLoginMutation } from '../graphql/__generated__/generated-documents';
 import { useLayoutContext } from '../contexts/LayoutContext';

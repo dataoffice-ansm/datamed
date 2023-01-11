@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'react';
-import BottomLeftSquareSVG from '../../assets/pictos/squares/bottom-left-square.svg';
-import TopLeftSquareSVG from '../../assets/pictos/squares/top-left-square.svg';
-import RightMiddleSquareSVG from '../../assets/pictos/squares/right-middle-square.svg';
+import BottomLeftSquareSVG from '../assets/pictos/squares/bottom-left-square.svg';
+import TopLeftSquareSVG from '../assets/pictos/squares/top-left-square.svg';
+import RightMiddleSquareSVG from '../assets/pictos/squares/right-middle-square.svg';
 
 export const BackgroundSquares = ({
   className,

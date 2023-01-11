@@ -1,6 +1,6 @@
 import AppendixAnchor from '../AppendixSection/AppendixAnchor';
 import type { HTMLAttributes } from 'react';
-import { FullWidthRow } from '../FullWidthRow/FullWidthRow';
+import { FullWidthRow } from '../FullWidthRow';
 
 /**
  *

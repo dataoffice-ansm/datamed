@@ -1,5 +1,5 @@
-import type { SelectOption } from './Select/Select';
-import { Select } from './Select/Select';
+import type { SelectOption } from './Select';
+import { Select } from './Select';
 import type { ReactNode, HTMLAttributes } from 'react';
 import { useCallback, useState } from 'react';
 import classNames from 'classnames';

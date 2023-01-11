@@ -1,6 +1,6 @@
 import classNames from 'classnames';
-import type { SelectOption } from '../../components/Select/Select';
-import { Select } from '../../components/Select/Select';
+import type { SelectOption } from '../../components/Select';
+import { Select } from '../../components/Select';
 import type { Substance } from '../../graphql/__generated__/generated-documents';
 import type { HTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';

@@ -6,7 +6,7 @@
 // @ts-expect-error
 
 import { render } from '@testing-library/react';
-import { FullWidthRow } from '../FullWidthRow/FullWidthRow';
+import { FullWidthRow } from '../FullWidthRow';
 
 describe(FullWidthRow.name, () => {
   test('should render', () => {

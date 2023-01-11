@@ -13,7 +13,7 @@ import type {
   MedicalErrorsNature,
 } from '../../graphql/__generated__/generated-documents';
 import { SpecialitySubstancesContainer } from './SpecialitySubstancesContainer';
-import { Accordion } from '../../components/Accordion/Accordion';
+import { Accordion } from '../../components/Accordion';
 import PilIcon from '../../assets/pictos/gellule.svg';
 import WomanIllustration from '../../assets/pictos/woman_illustration.svg';
 import ManIllustration from '../../assets/pictos/man_illustration.svg';
@@ -29,7 +29,7 @@ import { NotEnoughData } from '../../components/NotEnoughData';
 import { GraphFigure } from '../../components/GraphFigure';
 import { PublicationItem } from './PublicationItem';
 import { RuptureHistoryItem } from './RuptureHistoryItem';
-import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
+import { PaginatedList } from '../../components/PaginatedList';
 import { PieChartRepartition } from '../../components/Charts/PieChartRepartition';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { SectionTitle } from '../../components/SectionTitle';
@@ -37,7 +37,7 @@ import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { BarChartMedicalErrorsNature } from '../../components/Charts/BarChartMedicalErrorsNature';
 import { ExpositionLevel } from '../../api/graphql/enums';
-import { CardWithImage } from '../../components/CardWithImage/CardWithImage';
+import { CardWithImage } from '../../components/CardWithImage';
 import { Button } from '../../components/Button/Button';
 import { getMedErrorApparitionStepIcon } from '../../utils/iconsMapping';
 import { buildSortedRangeData } from '../../utils/entities';
@@ -105,40 +105,44 @@ const SectionOneGlobalInformation = () => {
         </div>
       )}
 
-      <div className="flex justify-between items-center gap-3">
-        <div>
+      <div className="flex justify-center items-center gap-3">
+        <div className="flex-1">
           <h5>Infos pour les patients</h5>
           <a
             rel="external noreferrer"
             target="_blank"
-            href="https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=60234100&typedoc=N"
+            href={`https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=${currentEntity.code}&typedoc=N`}
             className="text-sm text-primary"
           >
             Afficher la notice
           </a>
         </div>
-        <div>
+
+        <div className="flex-1">
           <h5>Infos pour les professionnels de santé</h5>
           <a
             rel="external noreferrer"
             target="_blank"
-            href="https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=60234100&typedoc=R"
+            href={`https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=${currentEntity.code}&typedoc=R`}
             className="text-sm text-primary"
           >
             Afficher le RCP
           </a>
         </div>
-        <div>
-          <h5>Avis de la commission transparence</h5>
-          <a
-            rel="external noreferrer"
-            target="_blank"
-            href="https://www.has-sante.fr/jcms/fc_2875171/fr/resultat-de-recherche?text=doliprane&tmpParam=&opSearch=&types=guidelines"
-            className="text-sm text-primary"
-          >
-            Afficher les recommandations
-          </a>
-        </div>
+
+        {/*<div>*/}
+        {/*  <h5>Avis de la commission transparence</h5>*/}
+        {/*  <a*/}
+        {/*    rel="external noreferrer"*/}
+        {/*    target="_blank"*/}
+        {/*    href={`https://www.has-sante.fr/jcms/fc_2875171/fr/resultat-de-recherche?text=${encodeURI(*/}
+        {/*      currentEntity.name.split(' ')?.[0]*/}
+        {/*    )}&tmpParam=&opSearch=&types=guidelines`}*/}
+        {/*    className="text-sm text-primary"*/}
+        {/*  >*/}
+        {/*    Afficher les recommandations*/}
+        {/*  </a>*/}
+        {/*</div>*/}
       </div>
     </div>
   );
@@ -170,6 +174,8 @@ const SectionTreatedPatients = () => {
           ayant bénéficié d’un remboursement du médicament délivré en pharmacie de ville. Pour plus
           d’informations, consultez:{' '}
           <a
+            rel="external noreferrer"
+            target="_blank"
             className="text-primary"
             href="http://open-data-assurance-maladie.ameli.fr/medicaments/index.php"
           >
@@ -240,8 +246,8 @@ const SectionTreatedPatients = () => {
             title="Répartition par sexe des patients traités"
             className="h-full max-w-[100%]"
           >
-            {currentEntity.repartitionPerGender?.female &&
-            currentEntity.repartitionPerGender?.male ? (
+            {currentEntity.repartitionPerGender?.female?.valuePercent !== 0 &&
+            currentEntity.repartitionPerGender?.male?.valuePercent !== 0 ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
                 {currentEntity.repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
@@ -485,21 +491,23 @@ const SectionRisksShortageHistory = () => {
       >
         <p>
           Cette rubrique recense l&apos;historique des déclarations de ruptures et de risques de
-          rupture concernant les médicaments d’intérêt thérapeutique majeur (MITM), pour lesquelles
-          les industriels ont une obligation de déclaration auprès de l&apos;ANSM depuis le 3 Mai
-          2021.
+          rupture concernant les <b>médicaments d’intérêt thérapeutique majeur (MITM)</b>, pour
+          lesquelles les industriels ont une obligation de déclaration auprès de l&apos;ANSM depuis
+          le 3 Mai 2021.
         </p>
 
         <p>
           Pour retrouver les dernières informations destinées aux professionnels de santé et aux
           patients concernant les médicaments d’intérêt thérapeutique majeur faisant actuellement
           l’objet de difficultés d’approvisionnement et pour lesquels il n’y a pas d’alternative
-          thérapeutique disponible sur le marché français, vous pouvez vous référer au site :
+          thérapeutique disponible sur le marché français, vous pouvez vous référer au site:{' '}
           <a
             rel="external noreferrer"
             target="_blank"
             href="https://ansm.sante.fr/disponibilites-des-produits-de-sante/medicaments"
-          />
+          >
+            https://ansm.sante.fr/disponibilites-des-produits-de-sante/medicaments
+          </a>
         </p>
       </Accordion>
 

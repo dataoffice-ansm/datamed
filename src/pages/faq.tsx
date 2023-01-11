@@ -1,8 +1,8 @@
 import { FaqContent } from '../componentsPages/Faq/FaqPage';
 import { useCallback, useLayoutEffect, useState } from 'react';
 import { useLayoutContext } from '../contexts/LayoutContext';
-import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
-import FaqSVG from '../assets/landing/faq.svg';
+import { FullWidthRow } from '../components/FullWidthRow';
+import FaqSVG from '../assets/landing/landing-faq.svg';
 
 const PageFaq = () => {
   const [search, setSearch] = useState<string>('');
