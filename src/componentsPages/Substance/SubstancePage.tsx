@@ -6,11 +6,11 @@ import {
   type RepartitionPerAge,
   type Substance,
 } from '../../graphql/__generated__/generated-documents';
-import { PaginatedList } from '../../components/PaginatedList/PaginatedList';
+import { PaginatedList } from '../../components/PaginatedList';
 import classnames from 'classnames';
 import { SubstanceSideEffects } from './SubstanceSideEffects';
 import { NotEnoughData } from '../../components/NotEnoughData';
-import { Accordion } from '../../components/Accordion/Accordion';
+import { Accordion } from '../../components/Accordion';
 import PilIcon from '../../assets/pictos/gellule.svg';
 import { numberWithThousand } from '../../utils/format';
 import ManIllustration from '../../assets/pictos/man_illustration.svg';
@@ -55,6 +55,8 @@ const SectionOneGlobalInformation = () => {
           ayant bénéficié d’un remboursement du médicament délivré en pharmacie de ville. Pour plus
           d’informations, consultez:{' '}
           <a
+            rel="external noreferrer"
+            target="_blank"
             className="text-primary"
             href="http://open-data-assurance-maladie.ameli.fr/medicaments/index.php"
           >
@@ -121,7 +123,8 @@ const SectionOneGlobalInformation = () => {
             title="Répartition par sexe des patients traités"
             className="h-full max-w-[100%]"
           >
-            {repartitionPerGender?.female && repartitionPerGender?.male ? (
+            {repartitionPerGender?.female?.valuePercent !== 0 &&
+            repartitionPerGender?.male?.valuePercent !== 0 ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
                 {repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure

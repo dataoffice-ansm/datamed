@@ -1,4 +1,4 @@
-import { FullWidthRow } from '../../../components/FullWidthRow/FullWidthRow';
+import { FullWidthRow } from '../../../components/FullWidthRow';
 import { Autocomplete } from '../../../components/Autocomplete/Autocomplete';
 import LandingIllustrationSearch from '../../../assets/landing/landing_illustration_search.svg';
 

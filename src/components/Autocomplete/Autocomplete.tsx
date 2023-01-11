@@ -12,7 +12,7 @@ import {
 } from '../../graphql/__generated__/generated-documents';
 import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import { LoaderSpinner } from '../LoadingSpinner';
-import SearchIcon from '../../icons/search.svg';
+import SearchIcon from '../../assets/nav/search.svg';
 import { navIconSize } from '../../config/layoutConfig';
 
 /**
@@ -23,8 +23,13 @@ import { navIconSize } from '../../config/layoutConfig';
  */
 export const Autocomplete = ({
   embedded,
+  autoFocus,
   handleOnSelected,
-}: HTMLAttributes<HTMLDivElement> & { embedded?: boolean; handleOnSelected?: () => void }) => {
+}: HTMLAttributes<HTMLDivElement> & {
+  embedded?: boolean;
+  autoFocus?: boolean;
+  handleOnSelected?: () => void;
+}) => {
   const isLargeDesktop = useBreakpoint('lg');
   const { data: cisData, loading: cisLoading } = useSpecialitiesQuery();
   const { data: subData, loading: subLoading } = useSubstancesQuery();
@@ -130,6 +135,7 @@ export const Autocomplete = ({
       <div className={classnames({ 'relative flex': !embedded })}>
         <Combobox onChange={onSelected}>
           <Combobox.Input
+            autoFocus={autoFocus}
             placeholder={cisLoading || subLoading ? loadingPlaceholder : placeholder}
             disabled={cisLoading || subLoading}
             className={classnames('AutocompleteInput flex-1 border-none', {

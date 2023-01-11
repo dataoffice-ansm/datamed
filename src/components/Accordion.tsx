@@ -1,9 +1,9 @@
 import type { HTMLAttributes } from 'react';
-import SparkSVG from '../../assets/pictos/icons/spark.svg';
-import ChevronSVG from '../../assets/pictos/icons/chevron.svg';
+import SparkSVG from '../assets/pictos/icons/spark.svg';
+import ChevronSVG from '../assets/pictos/icons/chevron.svg';
 import { Disclosure, Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import { isMobile } from '../../utils/web';
+import { isMobile } from '../utils/web';
 
 export type AccordionThemeColor =
   | 'primary'
@@ -70,7 +70,8 @@ export const Accordion = ({
   classNameTitle = '',
   className,
 }: AccordionProps & HTMLAttributes<HTMLDivElement>) => {
-  const enableAutoOpen = forceDefaultOpen ? forceDefaultOpen : !isMobile();
+  // const enableAutoOpen = forceDefaultOpen ? forceDefaultOpen : !isMobile();
+  const enableAutoOpen = false;
 
   return (
     <div id={id} className={classNames('Accordion bg-white rounded-lg shadow', className)}>

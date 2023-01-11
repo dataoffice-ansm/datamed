@@ -4,7 +4,7 @@ import { useCallback } from 'react';
 import { Fragment } from 'react';
 import { Listbox, Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import ChevronSVG from '../../assets/pictos/icons/chevron.svg';
+import ChevronSVG from '../assets/pictos/icons/chevron.svg';
 
 export type SelectThemeColor = 'primary' | 'secondary' | 'secondary-variant' | 'gray';
 

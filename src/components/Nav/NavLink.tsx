@@ -1,5 +1,5 @@
 import type { LinkProps } from 'next/link';
-import { ActiveLink } from '../ActiveLink/ActiveLink';
+import { ActiveLink } from '../ActiveLink';
 import type { HTMLAttributes } from 'react';
 import classNames from 'classnames';
 

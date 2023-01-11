@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'react';
 import { useCallback, useMemo, useState } from 'react';
-import type { SelectOption } from '../../../components/Select/Select';
-import { Select } from '../../../components/Select/Select';
+import type { SelectOption } from '../../../components/Select';
+import { Select } from '../../../components/Select';
 import { NotEnoughData } from 'components/NotEnoughData';
 import { BoxInfo } from '../../../components/BoxInfo';
 import FolderSVG from '../../../assets/pictos/folder.svg';

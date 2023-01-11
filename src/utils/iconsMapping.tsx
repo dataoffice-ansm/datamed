@@ -11,10 +11,8 @@ import PublicationOtherSVG from '../assets/pictos/publications/other.svg';
 import PublicationSpeakSVG from '../assets/pictos/publications/speak.svg';
 import PublicationInfoSVG from '../assets/pictos/publications/info.svg';
 import OtherDoctorFigure from '../assets/pictos/notifiers/0.svg';
-import NurseFigure from '../assets/pictos/notifiers/2.svg';
 import JuristeFigure from '../assets/pictos/notifiers/8.svg';
 import DoctorFigure from '../assets/pictos/notifiers/3.svg';
-import SpecialistFigure from '../assets/pictos/notifiers/4.svg';
 import PatientFigure from '../assets/pictos/notifiers/5.svg';
 import PharmacistFigure from '../assets/pictos/notifiers/6.svg';
 import AffectionsCardiaquesFigure from '../assets/pictos/pathology/0.svg';
@@ -156,20 +154,21 @@ export const getPublicationIcon = (publicationTypeId: number) => {
 
 export const getNotifierIcon = (id: number) => {
   switch (id) {
-    case 0:
-      return <OtherDoctorFigure className="w-24 md:w-32" />;
-    case 1:
-      return <NurseFigure className="w-24 md:w-32" />;
+    // case 1:
+    //   return <NurseFigure className="w-24 md:w-32" />;
+    // case 4:
+    //   return <SpecialistFigure className="w-24 md:w-32" />;
     case 2:
-      return <JuristeFigure className="w-24 md:w-32" />;
+      return <PatientFigure className="w-24 md:w-32" />;
     case 3:
       return <DoctorFigure className="w-24 md:w-32" />;
     case 4:
-      return <SpecialistFigure className="w-24 md:w-32" />;
-    case 5:
-      return <PatientFigure className="w-24 md:w-32" />;
-    case 6:
       return <PharmacistFigure className="w-24 md:w-32" />;
+    case 5:
+      return <JuristeFigure className="w-24 md:w-32" />;
+    // default:
+    //   return <OtherDoctorFigure className="w-24 md:w-32" />;
+    case 1:
     default:
       return <OtherDoctorFigure className="w-24 md:w-32" />;
   }

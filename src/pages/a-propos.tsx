@@ -1,9 +1,9 @@
 /* eslint-disable react/iframe-missing-sandbox */
 import { SmallContainer } from '../components/SmallContainer';
-import { FullWidthRow } from '../components/FullWidthRow/FullWidthRow';
+import { FullWidthRow } from '../components/FullWidthRow';
 import type { HTMLAttributes } from 'react';
 import classnames from 'classnames';
-import { BackgroundSquares } from '../components/BackgroundSquares/BackgroundSquares';
+import { BackgroundSquares } from '../components/BackgroundSquares';
 
 /**
  *

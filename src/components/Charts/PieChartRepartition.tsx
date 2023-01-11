@@ -60,9 +60,6 @@ export const PieChartRepartition = ({
         options={{
           responsive: true,
           plugins: {
-            legend: {
-              display: false,
-            },
             tooltip: {
               callbacks: {
                 afterBody: tooltip,
@@ -80,8 +77,8 @@ export const PieChartRepartition = ({
             {
               data: rows,
               backgroundColor,
-              hoverOffset: 4,
-              borderWidth: 1,
+              hoverOffset: 6,
+              borderWidth: 2,
             },
           ],
         }}

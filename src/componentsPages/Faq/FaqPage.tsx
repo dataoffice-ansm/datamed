@@ -3,7 +3,7 @@ import type { HTMLAttributes } from 'react';
 import ReactDOMServer from 'react-dom/server';
 import { useEffect, useMemo } from 'react';
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
-import { Accordion } from '../../components/Accordion/Accordion';
+import { Accordion } from '../../components/Accordion';
 import { faqData } from './mock/faq-data';
 
 import SparkSVG from '../../assets/pictos/icons/spark.svg';

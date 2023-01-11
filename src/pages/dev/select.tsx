@@ -1,5 +1,5 @@
-import type { SelectOption } from '../../components/Select/Select';
-import { Select } from '../../components/Select/Select';
+import type { SelectOption } from '../../components/Select';
+import { Select } from '../../components/Select';
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
 
 const SelectPage = () => {

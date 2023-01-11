@@ -1,5 +1,5 @@
 import { DevPageLayout } from '../../components/Layouts/DevPageLayout';
-import { Modal } from '../../components/Modal/Modal';
+import { Modal } from '../../components/Modal';
 import { useState } from 'react';
 import ManFigure from '../../assets/pictos/man_illustration.svg';
 import { GraphFigure } from '../../components/GraphFigure';

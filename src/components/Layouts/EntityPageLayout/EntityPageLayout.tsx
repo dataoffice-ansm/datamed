@@ -6,7 +6,7 @@ import React, { Fragment, useMemo } from 'react';
 import { Link } from 'react-scroll';
 import { useBreakpoint } from '../../../hooks/useTailwindBreakpoint';
 import { useLayoutContext } from '../../../contexts/LayoutContext';
-import { FullWidthRow } from '../../FullWidthRow/FullWidthRow';
+import { FullWidthRow } from '../../FullWidthRow';
 
 export type SectionNavProps = {
   id: string;

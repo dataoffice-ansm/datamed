@@ -59,9 +59,6 @@ export const BarChartRepartition = ({
           responsive: true,
           indexAxis: 'y' as const,
           plugins: {
-            legend: {
-              display: false,
-            },
             tooltip: {
               callbacks: {
                 afterBody: tooltip,
@@ -79,7 +76,7 @@ export const BarChartRepartition = ({
             {
               data: rows,
               backgroundColor,
-              borderWidth: 1,
+              borderWidth: 2,
             },
           ],
         }}

@@ -1,8 +1,8 @@
 import { Dialog, Transition } from '@headlessui/react';
 import type { HTMLAttributes } from 'react';
 import React, { Fragment, useEffect } from 'react';
-import { useBodyScrollContext } from '../../contexts/BodyScrollContext';
-import CloseSvg from '../../assets/pictos/icons/close.svg';
+import { useBodyScrollContext } from '../contexts/BodyScrollContext';
+import CloseSvg from '../assets/pictos/icons/close.svg';
 import classNames from 'classnames';
 
 export const Modal = ({

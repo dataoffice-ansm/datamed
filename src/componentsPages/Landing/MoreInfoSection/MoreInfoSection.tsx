@@ -1,4 +1,4 @@
-import { CardWithImage } from '../../../components/CardWithImage/CardWithImage';
+import { CardWithImage } from '../../../components/CardWithImage';
 
 import OutOfStockSvg from '../../../assets/pictos/out_of_stock_green.svg';
 import SickPersonSvg from '../../../assets/pictos/sick_person.svg';
