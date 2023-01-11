@@ -1,17 +1,26 @@
 import { type NavLinkItem } from '../config/layoutConfig';
 import { NavLink } from '../components/Nav/NavLink';
 import { Menu } from '@headlessui/react';
-import { isMobile } from './web';
+import classNames from 'classnames';
 
-const RenderNavLink = ({ link }: { link: NavLinkItem; active?: boolean }) => {
+const RenderNavLink = ({
+  link,
+  mobile = false,
+}: {
+  link: NavLinkItem;
+  // eslint-disable-next-line react/no-unused-prop-types
+  active?: boolean;
+  mobile?: boolean;
+}) => {
   const url = link?.url ?? '#';
 
-  return isMobile() ? (
-    <NavLink key={link.url} href={url}>
-      {link.title}
-    </NavLink>
-  ) : (
-    <NavLink key={link.url} enableAnimation className="hidden md:block" href={url}>
+  return (
+    <NavLink
+      key={link.url}
+      enableAnimation
+      className={classNames(!mobile && 'hidden md:block')}
+      href={url}
+    >
       {link.title}
     </NavLink>
   );
@@ -31,14 +40,14 @@ const NavLinkDropdown = ({ link }: { link: NavLinkItem }) => (
   </Menu>
 );
 
-export const RenderNavLinks = ({ links }: { links: NavLinkItem[] }) => (
+export const RenderNavLinks = ({ links, mobile }: { links: NavLinkItem[]; mobile?: boolean }) => (
   <>
     {links.map(
       (link) => (
         // link.links ? (
         //   <NavLinkDropdown key={link.url} link={link} />
         // ) : (
-        <RenderNavLink key={link.url} link={link} />
+        <RenderNavLink key={link.url} link={link} mobile={mobile} />
       )
       // )
     )}

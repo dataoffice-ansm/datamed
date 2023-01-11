@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect } from 'react';
 
 export const isSafari = () => typeof window === 'object' && /apple/i.test(window.navigator.vendor);
 
-export const isMobile = () => {
+export const useIsMobile = () => {
   if (!isBrowser) return false;
   if (window.innerWidth < 400) return true;
   return /iPhone|iPad|iPod|Android|BlackBerry|Opera Mini|IEMobile|WPDesktop/i.test(

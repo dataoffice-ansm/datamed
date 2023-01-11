@@ -3,7 +3,6 @@ import SparkSVG from '../assets/pictos/icons/spark.svg';
 import ChevronSVG from '../assets/pictos/icons/chevron.svg';
 import { Disclosure, Transition } from '@headlessui/react';
 import classNames from 'classnames';
-import { isMobile } from '../utils/web';
 
 export type AccordionThemeColor =
   | 'primary'
@@ -64,7 +63,6 @@ export const Accordion = ({
   id,
   children,
   title,
-  forceDefaultOpen,
   theme = 'secondary',
   disabled = false,
   classNameTitle = '',
