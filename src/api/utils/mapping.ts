@@ -80,13 +80,13 @@ export const getMedicalErrorApparitionStep = (initialErrorId: number) => {
 
 export const getRuptureTypeLabel = (ruptureId: number) => {
   switch (ruptureId) {
-    case 0:
-      return 'Rupture';
     case 1:
+      return 'Rupture';
+    case 2:
       return 'Risque de rupture de stock';
-    case 3:
-      return 'Arrêt de commercialisation';
     case 4:
+      return 'Arrêt de commercialisation';
+    case 5:
     default:
       return 'Autre';
   }
@@ -94,12 +94,11 @@ export const getRuptureTypeLabel = (ruptureId: number) => {
 
 export const getPublicationsTypeLabel = (publishTypeId: number) => {
   switch (publishTypeId) {
-    case 0:
-    case 2:
-    case 4:
+    case 1:
       return "Point d'information";
     case 3:
       return 'Communiqué';
+    case 2:
     default:
       return 'Autre';
   }

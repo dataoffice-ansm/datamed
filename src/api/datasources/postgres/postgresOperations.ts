@@ -396,11 +396,10 @@ export class PostgresOperations {
 
   async getSpecialityPublications(cisId: number): Promise<Publication[]> {
     const rows = await dbInstance
-      .selectFrom('medicinal_products as mp')
-      .where('mp.id', '=', cisId)
-      .leftJoin('publications as p', 'p.mp_id', 'mp.id')
-      .leftJoin('publication_types as pt', 'pt.id', 'p.type_id')
-      .select(['p.id', 'p.title as name', 'p.link', 'pt.id as typeId'])
+      .selectFrom('publications as publi')
+      .where('publi.mp_id', '=', cisId)
+      .leftJoin('publication_types as pt', 'pt.id', 'publi.type_id')
+      .select(['publi.id', 'publi.title as name', 'publi.link', 'pt.id as typeId'])
       .execute();
 
     return rows.reduce<Publication[]>((carry, row) => {
@@ -414,7 +413,7 @@ export class PostgresOperations {
               link,
               type: {
                 id: typeId,
-                type: getPublicationsTypeLabel(typeId),
+                name: getPublicationsTypeLabel(typeId),
               },
             },
           ]
