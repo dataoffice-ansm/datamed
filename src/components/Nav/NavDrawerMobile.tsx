@@ -14,7 +14,7 @@ export const NavDrawerMobile = ({
     style={{ top: topFromNavbar }}
   >
     <div className="NavigationMenuLinkWrapper h-fit bg-white border-t-2 border-grey-100 flex flex-col justify-center align-center">
-      <RenderNavLinks links={links} />
+      <RenderNavLinks mobile links={links} />
     </div>
   </div>
 );
