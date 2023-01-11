@@ -138,7 +138,7 @@ export const Autocomplete = ({
             value={query}
             onChange={debounceInputOnChange}
           />
-          {query.length > 3 && renderOptions()}
+          {query.length >= 3 && renderOptions()}
         </Combobox>
         <div
           className={classnames('afterElement flex justify-center items-center w-10 z-[1]', {
