@@ -32,7 +32,7 @@ import {
 
 const SectionDemography = () => {
   const { globalDec } = useGlobalDecPageContext();
-  const { repartitionPerGender, totalExposition } = globalDec;
+  const { repartitionPerGender, exposition } = globalDec;
 
   const repartitionPerAge = useMemo(
     () => buildSortedRangeData<GlobalStatsUsagePerAge>(globalDec.repartitionPerAge, 'number'),
@@ -42,7 +42,7 @@ const SectionDemography = () => {
   return (
     <div className="GlobalStatisticDemographySection text-left">
       <BoxInfo
-        title={`${totalExposition?.total ?? 'Aucune'} Déclaration(s) cumulée(s)`}
+        title={`${exposition?.consumption ?? 'Aucune'} Déclaration(s) cumulée(s)`}
         icon={<FolderSVG />}
         theme="dark-green"
         className="my-8"
@@ -62,8 +62,8 @@ const SectionDemography = () => {
       <SectionTitle
         title="Caractéristiques des patients"
         subTitle={
-          totalExposition?.maxYear && totalExposition?.minYear
-            ? `Données issues de la période ${totalExposition.minYear} - ${totalExposition.maxYear}`
+          exposition?.maxYear && exposition?.minYear
+            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -119,7 +119,7 @@ const SectionDemography = () => {
 
 const SectionSeriousEffect = () => {
   const { globalDec } = useGlobalDecPageContext();
-  const { totalExposition } = globalDec;
+  const { exposition } = globalDec;
 
   const repartitionPerGravity = useMemo(
     () =>
@@ -141,8 +141,8 @@ const SectionSeriousEffect = () => {
       <SectionTitle
         title="Déclarations d'effets indésirables suspectés graves et non graves"
         subTitle={
-          totalExposition?.maxYear && totalExposition?.minYear
-            ? `Données issues de la période ${totalExposition.minYear} - ${totalExposition.maxYear}`
+          exposition?.maxYear && exposition?.minYear
+            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -229,15 +229,14 @@ const SectionRepartitionNotifiers = () => {
 
 const SectionTypesOfSideEffects = () => {
   const { globalDec } = useGlobalDecPageContext();
-  const { totalExposition } = globalDec;
-
+  const { exposition } = globalDec;
   return (
     <div className="GlobalStatTypesOfSideEffects text-left">
       <SectionTitle
         title="Effets indésirables par système d'organes"
         subTitle={
-          totalExposition?.maxYear && totalExposition?.minYear
-            ? `Données issues de la période ${totalExposition.minYear} - ${totalExposition.maxYear}`
+          exposition?.maxYear && exposition?.minYear
+            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -275,7 +274,7 @@ const SectionTypesOfSideEffects = () => {
             <div className="GraphBoxSelectContent">
               <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
                 Parmi les{' '}
-                <span className="text-dark-green-900 font-medium">{totalExposition?.total}</span>{' '}
+                <span className="text-dark-green-900 font-medium">{exposition?.consumption}</span>{' '}
                 déclarations d&apos;effets indésirables pour
                 <span className="text-dark-green-900 font-medium"> au global</span>:
               </div>

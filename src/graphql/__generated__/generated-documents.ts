@@ -21,11 +21,21 @@ export type Cause = {
   value: Scalars['Int'];
 };
 
-export type CisExposition = {
-  __typename?: 'CisExposition';
-  consumption?: Maybe<Scalars['Int']>;
-  description?: Maybe<Scalars['String']>;
-  level?: Maybe<Scalars['String']>;
+export type EntityExpositionPeriod = {
+  __typename?: 'EntityExpositionPeriod';
+  consumption: Scalars['Int'];
+  description: Scalars['String'];
+  expositionCode: Scalars['Int'];
+  expositionLevel: Scalars['String'];
+  maxYear: Scalars['Int'];
+  minYear: Scalars['Int'];
+};
+
+export type GlobalExpositionPeriod = {
+  __typename?: 'GlobalExpositionPeriod';
+  consumption: Scalars['Int'];
+  maxYear?: Maybe<Scalars['Int']>;
+  minYear?: Maybe<Scalars['Int']>;
 };
 
 export type GlobalRuptures = {
@@ -41,13 +51,13 @@ export type GlobalRuptures = {
 
 export type GlobalStatistic = {
   __typename?: 'GlobalStatistic';
+  exposition?: Maybe<GlobalExpositionPeriod>;
   repartitionPerAge?: Maybe<Array<Maybe<GlobalStatsUsagePerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
   repartitionPerGravity?: Maybe<Array<Maybe<GlobalStatsUsagePerGravity>>>;
   repartitionPerNotifier?: Maybe<Array<Maybe<GlobalStatsUsagePerNotifier>>>;
   repartitionPerPathology?: Maybe<Array<Maybe<GlobalStatsUsagePerPathology>>>;
   repartitionPerSeriousEffect?: Maybe<Array<Maybe<GlobalStatsUsagePerSeriousEffect>>>;
-  totalExposition?: Maybe<SubstanceTotalExposition>;
 };
 
 export type GlobalStatsUsagePerAge = {
@@ -362,7 +372,7 @@ export type Speciality = {
   description?: Maybe<Scalars['String']>;
   dosageIndication?: Maybe<Scalars['String']>;
   dosageSubstances?: Maybe<Array<Maybe<SpecialitySubstance>>>;
-  exposition?: Maybe<CisExposition>;
+  exposition?: Maybe<EntityExpositionPeriod>;
   id: Scalars['Int'];
   laboratory?: Maybe<Laboratory>;
   medicalErrors?: Maybe<MedicalErrors>;
@@ -379,7 +389,6 @@ export type SpecialityLight = {
   __typename?: 'SpecialityLight';
   code: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  exposition?: Maybe<CisExposition>;
   id: Scalars['Int'];
   name: Scalars['String'];
 };
@@ -421,28 +430,26 @@ export type SpecialityUsagePerAge = {
 export type Substance = {
   __typename?: 'Substance';
   code: Scalars['String'];
-  exposition?: Maybe<CisExposition>;
+  exposition?: Maybe<EntityExpositionPeriod>;
   id: Scalars['Int'];
   name: Scalars['String'];
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionPerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
-  retrieveSpecialities?: Maybe<SpecialitiesReturn>;
+  retrievedSpecialities?: Maybe<SpecialitiesReturn>;
   sideEffects?: Maybe<SubstanceSideEffects>;
-  totalExposition?: Maybe<SubstanceTotalExposition>;
 };
 
 export type SubstanceSideEffects = {
   __typename?: 'SubstanceSideEffects';
+  declarations?: Maybe<SubstanceSideEffectsDeclarations>;
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionPerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
   repartitionPerNotifier?: Maybe<Array<Maybe<RepartitionPerNotifier>>>;
   repartitionPerPathology?: Maybe<Array<Maybe<RepartitionPerPathology>>>;
 };
 
-export type SubstanceTotalExposition = {
-  __typename?: 'SubstanceTotalExposition';
-  maxYear: Scalars['Int'];
-  minYear: Scalars['Int'];
+export type SubstanceSideEffectsDeclarations = {
+  __typename?: 'SubstanceSideEffectsDeclarations';
   total: Scalars['Int'];
 };
 
@@ -493,7 +500,7 @@ export type SpecialityFragmentFragment = {
     id: number;
     code: string;
     name: string;
-    retrieveSpecialities?: {
+    retrievedSpecialities?: {
       __typename?: 'SpecialitiesReturn';
       meta?: { __typename?: 'Meta'; count?: number | null } | null;
       specialities?: Array<{
@@ -517,6 +524,7 @@ export type SpecialityFragmentFragment = {
     } | null> | null;
     sideEffects?: {
       __typename?: 'SubstanceSideEffects';
+      declarations?: { __typename?: 'SubstanceSideEffectsDeclarations'; total: number } | null;
       repartitionPerGender?: {
         __typename?: 'RepartitionPerGender';
         male?: { __typename?: 'IndicatorValues'; value: number; valuePercent: number } | null;
@@ -551,17 +559,14 @@ export type SpecialityFragmentFragment = {
         } | null> | null;
       } | null> | null;
     } | null;
-    totalExposition?: {
-      __typename?: 'SubstanceTotalExposition';
-      total: number;
+    exposition?: {
+      __typename?: 'EntityExpositionPeriod';
+      consumption: number;
+      expositionCode: number;
+      expositionLevel: string;
+      description: string;
       minYear: number;
       maxYear: number;
-    } | null;
-    exposition?: {
-      __typename?: 'CisExposition';
-      consumption?: number | null;
-      level?: string | null;
-      description?: string | null;
     } | null;
   } | null> | null;
   dosageSubstances?: Array<{
@@ -591,10 +596,13 @@ export type SpecialityFragmentFragment = {
   } | null> | null;
   laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
   exposition?: {
-    __typename?: 'CisExposition';
-    consumption?: number | null;
-    level?: string | null;
-    description?: string | null;
+    __typename?: 'EntityExpositionPeriod';
+    consumption: number;
+    expositionCode: number;
+    expositionLevel: string;
+    description: string;
+    minYear: number;
+    maxYear: number;
   } | null;
   medicalErrors?: {
     __typename?: 'MedicalErrors';
@@ -648,7 +656,7 @@ export type SubstanceFragmentFragment = {
   id: number;
   code: string;
   name: string;
-  retrieveSpecialities?: {
+  retrievedSpecialities?: {
     __typename?: 'SpecialitiesReturn';
     meta?: { __typename?: 'Meta'; count?: number | null } | null;
     specialities?: Array<{
@@ -672,6 +680,7 @@ export type SubstanceFragmentFragment = {
   } | null> | null;
   sideEffects?: {
     __typename?: 'SubstanceSideEffects';
+    declarations?: { __typename?: 'SubstanceSideEffectsDeclarations'; total: number } | null;
     repartitionPerGender?: {
       __typename?: 'RepartitionPerGender';
       male?: { __typename?: 'IndicatorValues'; value: number; valuePercent: number } | null;
@@ -706,17 +715,14 @@ export type SubstanceFragmentFragment = {
       } | null> | null;
     } | null> | null;
   } | null;
-  totalExposition?: {
-    __typename?: 'SubstanceTotalExposition';
-    total: number;
+  exposition?: {
+    __typename?: 'EntityExpositionPeriod';
+    consumption: number;
+    expositionCode: number;
+    expositionLevel: string;
+    description: string;
     minYear: number;
     maxYear: number;
-  } | null;
-  exposition?: {
-    __typename?: 'CisExposition';
-    consumption?: number | null;
-    level?: string | null;
-    description?: string | null;
   } | null;
 };
 
@@ -747,7 +753,7 @@ export type SpecialityQuery = {
       id: number;
       code: string;
       name: string;
-      retrieveSpecialities?: {
+      retrievedSpecialities?: {
         __typename?: 'SpecialitiesReturn';
         meta?: { __typename?: 'Meta'; count?: number | null } | null;
         specialities?: Array<{
@@ -771,6 +777,7 @@ export type SpecialityQuery = {
       } | null> | null;
       sideEffects?: {
         __typename?: 'SubstanceSideEffects';
+        declarations?: { __typename?: 'SubstanceSideEffectsDeclarations'; total: number } | null;
         repartitionPerGender?: {
           __typename?: 'RepartitionPerGender';
           male?: { __typename?: 'IndicatorValues'; value: number; valuePercent: number } | null;
@@ -805,17 +812,14 @@ export type SpecialityQuery = {
           } | null> | null;
         } | null> | null;
       } | null;
-      totalExposition?: {
-        __typename?: 'SubstanceTotalExposition';
-        total: number;
+      exposition?: {
+        __typename?: 'EntityExpositionPeriod';
+        consumption: number;
+        expositionCode: number;
+        expositionLevel: string;
+        description: string;
         minYear: number;
         maxYear: number;
-      } | null;
-      exposition?: {
-        __typename?: 'CisExposition';
-        consumption?: number | null;
-        level?: string | null;
-        description?: string | null;
       } | null;
     } | null> | null;
     dosageSubstances?: Array<{
@@ -845,10 +849,13 @@ export type SpecialityQuery = {
     } | null> | null;
     laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
     exposition?: {
-      __typename?: 'CisExposition';
-      consumption?: number | null;
-      level?: string | null;
-      description?: string | null;
+      __typename?: 'EntityExpositionPeriod';
+      consumption: number;
+      expositionCode: number;
+      expositionLevel: string;
+      description: string;
+      minYear: number;
+      maxYear: number;
     } | null;
     medicalErrors?: {
       __typename?: 'MedicalErrors';
@@ -925,7 +932,7 @@ export type SubstanceQuery = {
     id: number;
     code: string;
     name: string;
-    retrieveSpecialities?: {
+    retrievedSpecialities?: {
       __typename?: 'SpecialitiesReturn';
       meta?: { __typename?: 'Meta'; count?: number | null } | null;
       specialities?: Array<{
@@ -949,6 +956,7 @@ export type SubstanceQuery = {
     } | null> | null;
     sideEffects?: {
       __typename?: 'SubstanceSideEffects';
+      declarations?: { __typename?: 'SubstanceSideEffectsDeclarations'; total: number } | null;
       repartitionPerGender?: {
         __typename?: 'RepartitionPerGender';
         male?: { __typename?: 'IndicatorValues'; value: number; valuePercent: number } | null;
@@ -983,17 +991,14 @@ export type SubstanceQuery = {
         } | null> | null;
       } | null> | null;
     } | null;
-    totalExposition?: {
-      __typename?: 'SubstanceTotalExposition';
-      total: number;
+    exposition?: {
+      __typename?: 'EntityExpositionPeriod';
+      consumption: number;
+      expositionCode: number;
+      expositionLevel: string;
+      description: string;
       minYear: number;
       maxYear: number;
-    } | null;
-    exposition?: {
-      __typename?: 'CisExposition';
-      consumption?: number | null;
-      level?: string | null;
-      description?: string | null;
     } | null;
   } | null;
 };
@@ -1032,11 +1037,11 @@ export type GlobalStatisticQuery = {
       value: number;
       valuePercent: number;
     } | null> | null;
-    totalExposition?: {
-      __typename?: 'SubstanceTotalExposition';
-      total: number;
-      minYear: number;
-      maxYear: number;
+    exposition?: {
+      __typename?: 'GlobalExpositionPeriod';
+      consumption: number;
+      minYear?: number | null;
+      maxYear?: number | null;
     } | null;
     repartitionPerSeriousEffect?: Array<{
       __typename?: 'GlobalStatsUsagePerSeriousEffect';
@@ -1135,7 +1140,7 @@ export const SubstanceFragmentFragmentDoc = gql`
     id
     code
     name
-    retrieveSpecialities {
+    retrievedSpecialities {
       meta {
         count
       }
@@ -1162,6 +1167,9 @@ export const SubstanceFragmentFragmentDoc = gql`
       valuePercent
     }
     sideEffects {
+      declarations {
+        total
+      }
       repartitionPerGender {
         male {
           value
@@ -1197,15 +1205,13 @@ export const SubstanceFragmentFragmentDoc = gql`
         }
       }
     }
-    totalExposition {
-      total
-      minYear
-      maxYear
-    }
     exposition {
       consumption
-      level
+      expositionCode
+      expositionLevel
       description
+      minYear
+      maxYear
     }
   }
 `;
@@ -1267,8 +1273,11 @@ export const SpecialityFragmentFragmentDoc = gql`
     }
     exposition {
       consumption
-      level
+      expositionCode
+      expositionLevel
       description
+      minYear
+      maxYear
     }
     medicalErrors {
       populationRepartition {
@@ -1529,8 +1538,8 @@ export const GlobalStatisticDocument = gql`
         value
         valuePercent
       }
-      totalExposition {
-        total
+      exposition {
+        consumption
         minYear
         maxYear
       }

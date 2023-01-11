@@ -21,11 +21,21 @@ export type Cause = {
   value: Scalars['Int'];
 };
 
-export type CisExposition = {
-  __typename?: 'CisExposition';
-  consumption?: Maybe<Scalars['Int']>;
-  description?: Maybe<Scalars['String']>;
-  level?: Maybe<Scalars['String']>;
+export type EntityExpositionPeriod = {
+  __typename?: 'EntityExpositionPeriod';
+  consumption: Scalars['Int'];
+  description: Scalars['String'];
+  expositionCode: Scalars['Int'];
+  expositionLevel: Scalars['String'];
+  maxYear: Scalars['Int'];
+  minYear: Scalars['Int'];
+};
+
+export type GlobalExpositionPeriod = {
+  __typename?: 'GlobalExpositionPeriod';
+  consumption: Scalars['Int'];
+  maxYear?: Maybe<Scalars['Int']>;
+  minYear?: Maybe<Scalars['Int']>;
 };
 
 export type GlobalRuptures = {
@@ -41,13 +51,13 @@ export type GlobalRuptures = {
 
 export type GlobalStatistic = {
   __typename?: 'GlobalStatistic';
+  exposition?: Maybe<GlobalExpositionPeriod>;
   repartitionPerAge?: Maybe<Array<Maybe<GlobalStatsUsagePerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
   repartitionPerGravity?: Maybe<Array<Maybe<GlobalStatsUsagePerGravity>>>;
   repartitionPerNotifier?: Maybe<Array<Maybe<GlobalStatsUsagePerNotifier>>>;
   repartitionPerPathology?: Maybe<Array<Maybe<GlobalStatsUsagePerPathology>>>;
   repartitionPerSeriousEffect?: Maybe<Array<Maybe<GlobalStatsUsagePerSeriousEffect>>>;
-  totalExposition?: Maybe<SubstanceTotalExposition>;
 };
 
 export type GlobalStatsUsagePerAge = {
@@ -362,7 +372,7 @@ export type Speciality = {
   description?: Maybe<Scalars['String']>;
   dosageIndication?: Maybe<Scalars['String']>;
   dosageSubstances?: Maybe<Array<Maybe<SpecialitySubstance>>>;
-  exposition?: Maybe<CisExposition>;
+  exposition?: Maybe<EntityExpositionPeriod>;
   id: Scalars['Int'];
   laboratory?: Maybe<Laboratory>;
   medicalErrors?: Maybe<MedicalErrors>;
@@ -379,7 +389,6 @@ export type SpecialityLight = {
   __typename?: 'SpecialityLight';
   code: Scalars['String'];
   description?: Maybe<Scalars['String']>;
-  exposition?: Maybe<CisExposition>;
   id: Scalars['Int'];
   name: Scalars['String'];
 };
@@ -421,28 +430,26 @@ export type SpecialityUsagePerAge = {
 export type Substance = {
   __typename?: 'Substance';
   code: Scalars['String'];
-  exposition?: Maybe<CisExposition>;
+  exposition?: Maybe<EntityExpositionPeriod>;
   id: Scalars['Int'];
   name: Scalars['String'];
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionPerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
-  retrieveSpecialities?: Maybe<SpecialitiesReturn>;
+  retrievedSpecialities?: Maybe<SpecialitiesReturn>;
   sideEffects?: Maybe<SubstanceSideEffects>;
-  totalExposition?: Maybe<SubstanceTotalExposition>;
 };
 
 export type SubstanceSideEffects = {
   __typename?: 'SubstanceSideEffects';
+  declarations?: Maybe<SubstanceSideEffectsDeclarations>;
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionPerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
   repartitionPerNotifier?: Maybe<Array<Maybe<RepartitionPerNotifier>>>;
   repartitionPerPathology?: Maybe<Array<Maybe<RepartitionPerPathology>>>;
 };
 
-export type SubstanceTotalExposition = {
-  __typename?: 'SubstanceTotalExposition';
-  maxYear: Scalars['Int'];
-  minYear: Scalars['Int'];
+export type SubstanceSideEffectsDeclarations = {
+  __typename?: 'SubstanceSideEffectsDeclarations';
   total: Scalars['Int'];
 };
 
@@ -558,8 +565,9 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
   Cause: ResolverTypeWrapper<Cause>;
-  CisExposition: ResolverTypeWrapper<CisExposition>;
+  EntityExpositionPeriod: ResolverTypeWrapper<EntityExpositionPeriod>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
+  GlobalExpositionPeriod: ResolverTypeWrapper<GlobalExpositionPeriod>;
   GlobalRuptures: ResolverTypeWrapper<GlobalRuptures>;
   GlobalStatistic: ResolverTypeWrapper<GlobalStatistic>;
   GlobalStatsUsagePerAge: ResolverTypeWrapper<GlobalStatsUsagePerAge>;
@@ -610,7 +618,7 @@ export type ResolversTypes = {
   String: ResolverTypeWrapper<Scalars['String']>;
   Substance: ResolverTypeWrapper<Substance>;
   SubstanceSideEffects: ResolverTypeWrapper<SubstanceSideEffects>;
-  SubstanceTotalExposition: ResolverTypeWrapper<SubstanceTotalExposition>;
+  SubstanceSideEffectsDeclarations: ResolverTypeWrapper<SubstanceSideEffectsDeclarations>;
   SubstancesReturn: ResolverTypeWrapper<SubstancesReturn>;
   TherapeuticClassRupture: ResolverTypeWrapper<TherapeuticClassRupture>;
   TherapeuticClassesRupturesPerYear: ResolverTypeWrapper<TherapeuticClassesRupturesPerYear>;
@@ -621,8 +629,9 @@ export type ResolversTypes = {
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
   Cause: Cause;
-  CisExposition: CisExposition;
+  EntityExpositionPeriod: EntityExpositionPeriod;
   Float: Scalars['Float'];
+  GlobalExpositionPeriod: GlobalExpositionPeriod;
   GlobalRuptures: GlobalRuptures;
   GlobalStatistic: GlobalStatistic;
   GlobalStatsUsagePerAge: GlobalStatsUsagePerAge;
@@ -670,7 +679,7 @@ export type ResolversParentTypes = {
   String: Scalars['String'];
   Substance: Substance;
   SubstanceSideEffects: SubstanceSideEffects;
-  SubstanceTotalExposition: SubstanceTotalExposition;
+  SubstanceSideEffectsDeclarations: SubstanceSideEffectsDeclarations;
   SubstancesReturn: SubstancesReturn;
   TherapeuticClassRupture: TherapeuticClassRupture;
   TherapeuticClassesRupturesPerYear: TherapeuticClassesRupturesPerYear;
@@ -713,13 +722,26 @@ export type CauseResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type CisExpositionResolvers<
+export type EntityExpositionPeriodResolvers<
   ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['CisExposition'] = ResolversParentTypes['CisExposition']
+  ParentType extends ResolversParentTypes['EntityExpositionPeriod'] = ResolversParentTypes['EntityExpositionPeriod']
 > = {
-  consumption?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  level?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  consumption?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  expositionCode?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  expositionLevel?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  maxYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  minYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type GlobalExpositionPeriodResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['GlobalExpositionPeriod'] = ResolversParentTypes['GlobalExpositionPeriod']
+> = {
+  consumption?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  maxYear?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  minYear?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -769,6 +791,7 @@ export type GlobalStatisticResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['GlobalStatistic'] = ResolversParentTypes['GlobalStatistic']
 > = {
+  exposition?: Resolver<Maybe<ResolversTypes['GlobalExpositionPeriod']>, ParentType, ContextType>;
   repartitionPerAge?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['GlobalStatsUsagePerAge']>>>,
     ParentType,
@@ -796,11 +819,6 @@ export type GlobalStatisticResolvers<
   >;
   repartitionPerSeriousEffect?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['GlobalStatsUsagePerSeriousEffect']>>>,
-    ParentType,
-    ContextType
-  >;
-  totalExposition?: Resolver<
-    Maybe<ResolversTypes['SubstanceTotalExposition']>,
     ParentType,
     ContextType
   >;
@@ -1212,7 +1230,7 @@ export type SpecialityResolvers<
     ParentType,
     ContextType
   >;
-  exposition?: Resolver<Maybe<ResolversTypes['CisExposition']>, ParentType, ContextType>;
+  exposition?: Resolver<Maybe<ResolversTypes['EntityExpositionPeriod']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   laboratory?: Resolver<Maybe<ResolversTypes['Laboratory']>, ParentType, ContextType>;
   medicalErrors?: Resolver<Maybe<ResolversTypes['MedicalErrors']>, ParentType, ContextType>;
@@ -1248,7 +1266,6 @@ export type SpecialityLightResolvers<
 > = {
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  exposition?: Resolver<Maybe<ResolversTypes['CisExposition']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1309,7 +1326,7 @@ export type SubstanceResolvers<
   ParentType extends ResolversParentTypes['Substance'] = ResolversParentTypes['Substance']
 > = {
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  exposition?: Resolver<Maybe<ResolversTypes['CisExposition']>, ParentType, ContextType>;
+  exposition?: Resolver<Maybe<ResolversTypes['EntityExpositionPeriod']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   repartitionPerAge?: Resolver<
@@ -1322,17 +1339,12 @@ export type SubstanceResolvers<
     ParentType,
     ContextType
   >;
-  retrieveSpecialities?: Resolver<
+  retrievedSpecialities?: Resolver<
     Maybe<ResolversTypes['SpecialitiesReturn']>,
     ParentType,
     ContextType
   >;
   sideEffects?: Resolver<Maybe<ResolversTypes['SubstanceSideEffects']>, ParentType, ContextType>;
-  totalExposition?: Resolver<
-    Maybe<ResolversTypes['SubstanceTotalExposition']>,
-    ParentType,
-    ContextType
-  >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1340,6 +1352,11 @@ export type SubstanceSideEffectsResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SubstanceSideEffects'] = ResolversParentTypes['SubstanceSideEffects']
 > = {
+  declarations?: Resolver<
+    Maybe<ResolversTypes['SubstanceSideEffectsDeclarations']>,
+    ParentType,
+    ContextType
+  >;
   repartitionPerAge?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['RepartitionPerAge']>>>,
     ParentType,
@@ -1363,12 +1380,10 @@ export type SubstanceSideEffectsResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type SubstanceTotalExpositionResolvers<
+export type SubstanceSideEffectsDeclarationsResolvers<
   ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['SubstanceTotalExposition'] = ResolversParentTypes['SubstanceTotalExposition']
+  ParentType extends ResolversParentTypes['SubstanceSideEffectsDeclarations'] = ResolversParentTypes['SubstanceSideEffectsDeclarations']
 > = {
-  maxYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  minYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   total?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1417,7 +1432,8 @@ export type WithRepartitionResolvers<
 
 export type Resolvers<ContextType = ContextValue> = {
   Cause?: CauseResolvers<ContextType>;
-  CisExposition?: CisExpositionResolvers<ContextType>;
+  EntityExpositionPeriod?: EntityExpositionPeriodResolvers<ContextType>;
+  GlobalExpositionPeriod?: GlobalExpositionPeriodResolvers<ContextType>;
   GlobalRuptures?: GlobalRupturesResolvers<ContextType>;
   GlobalStatistic?: GlobalStatisticResolvers<ContextType>;
   GlobalStatsUsagePerAge?: GlobalStatsUsagePerAgeResolvers<ContextType>;
@@ -1463,7 +1479,7 @@ export type Resolvers<ContextType = ContextValue> = {
   SpecialityUsagePerAge?: SpecialityUsagePerAgeResolvers<ContextType>;
   Substance?: SubstanceResolvers<ContextType>;
   SubstanceSideEffects?: SubstanceSideEffectsResolvers<ContextType>;
-  SubstanceTotalExposition?: SubstanceTotalExpositionResolvers<ContextType>;
+  SubstanceSideEffectsDeclarations?: SubstanceSideEffectsDeclarationsResolvers<ContextType>;
   SubstancesReturn?: SubstancesReturnResolvers<ContextType>;
   TherapeuticClassRupture?: TherapeuticClassRuptureResolvers<ContextType>;
   TherapeuticClassesRupturesPerYear?: TherapeuticClassesRupturesPerYearResolvers<ContextType>;

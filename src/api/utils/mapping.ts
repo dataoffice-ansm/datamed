@@ -42,21 +42,21 @@ export const getCisPharmaFormType = (v: string) => {
   }
 };
 
-export const getCisExpositionByLevelId = (level: number | null) => {
+export const getExpositionByLevelId = (level: number | null) => {
   switch (level) {
     case 1:
-      return { level: ExpositionLevel.VERYLOW, description: 'Utilisation très faible' };
+      return { expositionLevel: ExpositionLevel.VERYLOW, description: 'Utilisation très faible' };
     case 2:
-      return { level: ExpositionLevel.LOW, description: 'Utilisation faible' };
+      return { expositionLevel: ExpositionLevel.LOW, description: 'Utilisation faible' };
     case 3:
-      return { level: ExpositionLevel.MODERED, description: 'Utilisation modérée' };
+      return { expositionLevel: ExpositionLevel.MODERED, description: 'Utilisation modérée' };
     case 4:
-      return { level: ExpositionLevel.HIGH, description: 'Utilisation élevée' };
+      return { expositionLevel: ExpositionLevel.HIGH, description: 'Utilisation élevée' };
     case 5:
-      return { level: ExpositionLevel.VERYHIGH, description: 'Utilisation très élevée' };
+      return { expositionLevel: ExpositionLevel.VERYHIGH, description: 'Utilisation très élevée' };
     case 0:
     default:
-      return { level: ExpositionLevel.UKNOWN, description: 'Utilisation inconnue' };
+      return { expositionLevel: ExpositionLevel.UKNOWN, description: 'Utilisation inconnue' };
   }
 };
 

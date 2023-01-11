@@ -55,8 +55,11 @@ fragment SpecialityFragment on Speciality {
     }
     exposition {
         consumption
-        level
+        expositionCode
+        expositionLevel
         description
+        minYear
+        maxYear
     }
     medicalErrors {
         populationRepartition {
@@ -116,7 +119,7 @@ fragment SubstanceFragment on Substance {
     id
     code
     name
-    retrieveSpecialities {
+    retrievedSpecialities {
         meta {
             count
         }
@@ -143,6 +146,9 @@ fragment SubstanceFragment on Substance {
         valuePercent
     }
     sideEffects {
+        declarations {
+            total
+        }
         repartitionPerGender {
             male {
                 value
@@ -179,17 +185,13 @@ fragment SubstanceFragment on Substance {
             }
         }
     }
-
-
-    totalExposition {
-        total
-        minYear
-        maxYear
-    }
     exposition {
         consumption
-        level
+        expositionCode
+        expositionLevel
         description
+        minYear
+        maxYear
     }
 }
 
@@ -249,19 +251,16 @@ query GlobalStatistic {
             value
             valuePercent
         }
-
-        totalExposition {
-            total
+        exposition {
+            consumption
             minYear
             maxYear
         }
-
         repartitionPerSeriousEffect {
             value
             range
             valuePercent
         }
-
         repartitionPerPathology {
             valuePercent
             value

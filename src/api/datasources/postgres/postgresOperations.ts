@@ -1,7 +1,8 @@
 import { dbInstance } from './postgreDb';
 import type {
   Cause,
-  CisExposition,
+  EntityExpositionPeriod,
+  GlobalExpositionPeriod,
   GlobalStatistic,
   GlobalStatsUsagePerAge,
   GlobalStatsUsagePerGravity,
@@ -30,12 +31,12 @@ import type {
   SpecialitySubstance,
   SpecialityUsagePerAge,
   Substance,
-  SubstanceTotalExposition,
+  SubstanceSideEffectsDeclarations,
   TherapeuticClassesRupturesPerYear,
   TherapeuticClassRupture,
 } from '../../graphql/__generated__/generated-types';
 import {
-  getCisExpositionByLevelId,
+  getExpositionByLevelId,
   getCisPharmaFormType,
   getMedicalErrorApparitionStep,
   getPublicationsTypeLabel,
@@ -68,9 +69,8 @@ export class PostgresOperations {
         'lab.id as laboratoryId',
         'lab.name as laboratoryName',
         'mp.icon_id as iconId',
-        'mp_exp.exposition as expositionId',
+        'mp_exp.exposition as expositionCode',
         'mp_exp.consumption_year_trunc as consumption',
-        'mp_exp.exposition as exposition',
         'ph_f.form as pharmaFormLabel',
         'ph_f.id as pharmaFormId',
         'i.name as iconName',
@@ -92,9 +92,8 @@ export class PostgresOperations {
         commercialisationType,
         laboratoryId,
         laboratoryName,
-        expositionId,
+        expositionCode,
         consumption,
-        exposition,
         pharmaFormId,
         pharmaFormLabel,
       } = row;
@@ -127,12 +126,16 @@ export class PostgresOperations {
               name: laboratoryName,
             }
           : null,
-        exposition: expositionId
-          ? {
-              consumption,
-              ...getCisExpositionByLevelId(exposition),
-            }
-          : null,
+        exposition:
+          expositionCode && consumption && consumption >= 10
+            ? {
+                consumption,
+                expositionCode,
+                ...getExpositionByLevelId(expositionCode),
+                minYear: 2014,
+                maxYear: 2021,
+              }
+            : null,
       };
     });
   }
@@ -544,6 +547,24 @@ export class PostgresOperations {
 
   // Substance sideEffects
 
+  async getSubstanceSideEffectsDeclarations(
+    subId: number
+  ): Promise<SubstanceSideEffectsDeclarations | null> {
+    const row = await dbInstance
+      .selectFrom('substances_cases')
+      .where('substance_id', '=', subId)
+      .select('nb_cases as total')
+      .executeTakeFirst();
+
+    if (row?.total) {
+      return {
+        total: row.total,
+      };
+    }
+
+    return null;
+  }
+
   async getSubstanceDeclarationsWithSideEffectsPerGender(
     subId: number
   ): Promise<RepartitionPerGender> {
@@ -583,7 +604,7 @@ export class PostgresOperations {
 
     return rows.reduce<RepartitionPerAge[]>((carry, row) => {
       const { range, consumption, percentage } = row;
-      return range && consumption && percentage
+      return range && percentage && consumption && consumption >= 10
         ? [
             ...carry,
             {
@@ -697,75 +718,69 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSubstanceTotalExposition(subId: number): Promise<SubstanceTotalExposition | null> {
+  async getSubstanceExposition(subId: number): Promise<EntityExpositionPeriod | null> {
     const { min, max } = dbInstance.fn;
+
     const row = await dbInstance
       .selectFrom('substances_exposition')
       .where('substance_id', '=', subId)
-      .select([min('year').as('minYear'), max('year').as('maxYear')])
+      .select([
+        'consumption_year_trunc as consumption',
+        'exposition as expositionCode',
+        min('year').as('minYear'),
+        max('year').as('maxYear'),
+      ])
+      .groupBy('consumption')
+      .groupBy('expositionCode')
       .executeTakeFirst();
 
-    const subCases = await dbInstance
-      .selectFrom('substances_cases')
-      .where('substance_id', '=', subId)
-      .select('nb_cases as nbCases')
-      .executeTakeFirst();
-
-    if (row?.minYear && row?.maxYear && subCases?.nbCases) {
+    if (
+      row?.expositionCode &&
+      row?.minYear &&
+      row?.minYear &&
+      row?.consumption &&
+      row?.consumption >= 10
+    ) {
       return {
-        total: subCases?.nbCases,
-        minYear: row?.minYear as number,
-        maxYear: row?.maxYear as number,
+        consumption: row.consumption,
+        expositionCode: row.expositionCode,
+        minYear: row.minYear as number,
+        maxYear: row.maxYear as number,
+        ...getExpositionByLevelId(row.expositionCode),
       };
     }
 
     return null;
   }
 
-  async getSubstanceCisExposition(subId: number): Promise<CisExposition | null> {
-    const row = await dbInstance
-      .selectFrom('mp_substances')
-      .where('substance_id', '=', subId)
-      .leftJoin('mp_exposition as mpe', 'mpe.mp_id', 'mp_substances.mp_id')
-      .select(['mpe.consumption_year_trunc as consumption', 'mpe.exposition as exposition'])
-      .executeTakeFirst();
-
-    if (row) {
-      const { exposition, consumption } = row;
-
-      return {
-        consumption,
-        ...getCisExpositionByLevelId(exposition),
-      };
-    }
-
-    return null;
-  }
-
-  async getGlobalStatisticExposition(): Promise<SubstanceTotalExposition | null> {
-    const rowTotal = await dbInstance
+  async getGlobalStatisticExposition(): Promise<GlobalExpositionPeriod | null> {
+    const rowConsumption = await dbInstance
       .selectFrom('global_se')
-      .where('label', '=', 'cas_total')
-      .select(['n as total'])
+      .select(['n as consumption'])
       .executeTakeFirst();
 
-    const rowMinPeriod = await dbInstance
+    const rowMinYear = await dbInstance
       .selectFrom('global_se')
       .where('label', '=', 'min_annee')
       .select(['n as minYear'])
       .executeTakeFirst();
 
-    const rowMaxPeriod = await dbInstance
+    const rowMaxYear = await dbInstance
       .selectFrom('global_se')
       .where('label', '=', 'max_annee')
       .select(['n as maxYear'])
       .executeTakeFirst();
 
-    if (rowTotal?.total && rowMaxPeriod?.maxYear && rowMinPeriod?.minYear) {
+    if (
+      rowMinYear?.minYear &&
+      rowMaxYear?.maxYear &&
+      rowConsumption?.consumption &&
+      rowConsumption?.consumption >= 10
+    ) {
       return {
-        total: rowTotal?.total,
-        minYear: rowMinPeriod?.minYear,
-        maxYear: rowMaxPeriod?.maxYear,
+        consumption: rowConsumption.consumption,
+        minYear: rowMinYear.minYear,
+        maxYear: rowMaxYear.maxYear,
       };
     }
 
@@ -810,7 +825,7 @@ export class PostgresOperations {
 
     return rows.reduce<GlobalStatsUsagePerAge[]>((carry, row) => {
       const { range, consumption, percentage } = row;
-      return range && consumption && percentage
+      return range && percentage && consumption && consumption >= 10
         ? [
             ...carry,
             {
@@ -913,7 +928,7 @@ export class PostgresOperations {
     return {
       repartitionPerGender: await this.getGlobalStatisticRepGender(),
       repartitionPerAge: await this.getGlobalStatisticRepAge(),
-      totalExposition: await this.getGlobalStatisticExposition(),
+      exposition: await this.getGlobalStatisticExposition(),
       repartitionPerSeriousEffect: await this.getGlobalStatisticSeriousEffects(),
       repartitionPerPathology: await this.getGlobalStatisticRepPerPathology(),
       repartitionPerNotifier: await this.getGlobalStatisticRepPerNotifier(),
@@ -1162,9 +1177,8 @@ export class PostgresOperations {
             ...carry,
             {
               name: row.name,
-              value: Number(row.value ?? 0),
-              // year: Number(row.year ?? 0),
-              totalCis: Number(rowsCis?.value ?? 0),
+              value: Number(row.value),
+              totalCis: Number(rowsCis?.value),
             },
           ]
         : carry;
