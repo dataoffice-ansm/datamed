@@ -59,7 +59,7 @@ export const HeadlessHeroHeader = ({
     <FullWidthRow id={id} className={theme}>
       <div
         className={classnames(
-          'HeadlessHeroHeaderSticky h-16 fixed left-0 right-0 z-[1]',
+          'HeadlessHeroHeaderSticky h-12 fixed left-0 right-0 z-[1]',
           'ease-in-out duration-500 transition-all',
           textColor,
           theme
@@ -69,8 +69,8 @@ export const HeadlessHeroHeader = ({
         }}
       >
         <div className="max-md:px-3 md:container max-w-[1920px] md:mx-auto flex gap-8 h-full items-center text-xl">
-          <div className="w-11 h-11">{icon}</div>
-          <div className="text-2xl font-medium text-ellipsis overflow-hidden whitespace-nowrap">
+          <div className="w-10 h-10">{icon}</div>
+          <div className="text-xl font-medium text-ellipsis overflow-hidden whitespace-nowrap">
             {title}
           </div>
         </div>
@@ -86,7 +86,8 @@ export const HeadlessHeroHeader = ({
         </Link>
         <div
           className={classNames(
-            'HeroHeader flex flex-col md:flex-row justify-center min-h[20rem] pt-24 md:pt-48 pb-16 md:pb-24 lg:pb-32 gap-16',
+            'HeroHeader flex flex-col md:flex-row justify-center min-h[20rem]',
+            'pt-24 md:pt-16 pb-16 md:pb-24 lg:pb-32 gap-16',
             textColor
           )}
         >

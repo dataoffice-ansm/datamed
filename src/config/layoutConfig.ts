@@ -1,38 +1,61 @@
-export type NavLink = {
-  name: string;
-  url: string;
-};
-
-export type NavLinkGroup = {
-  title: string;
-  links: NavLink[];
-};
-
 export type NavLinkItem = {
-  href: string;
-  text: string;
+  title: string;
+  url?: string;
+  links?: NavLinkItem[];
 };
 
 export const navIconSize = 24;
 
-export const footerLinks: NavLinkGroup[] = [
+export const navBarLinks: NavLinkItem[] = [
+  {
+    title: 'FAQ',
+    url: '/faq',
+  },
+  {
+    title: 'A propos',
+    url: '/a-propos',
+  },
+  {
+    title: 'Ruptures',
+    url: '/ruptures',
+  },
+  {
+    title: 'Statistiques globales',
+    url: '/globaldec',
+  },
+  // {
+  //   title: 'Statistiques globales',
+  //   links: [
+  //     {
+  //       title: 'Ruptures',
+  //       url: '/ruptures',
+  //     },
+  //     {
+  //       title: 'Statistiques globales',
+  //       url: '/globaldec',
+  //     },
+  //   ],
+  // },
+];
+
+export const footerLinks: NavLinkItem[] = [
   {
     title: 'Partenaires',
     links: [
       {
-        name: 'Base de données publique du médicament',
+        title: 'Base de données publique du médicament',
         url: 'https://base-donnees-publique.medicaments.gouv.fr/',
       },
       {
-        name: 'Etalab',
+        title: 'Etalab',
         url: 'https://www.etalab.gouv.fr/',
       },
       {
-        name: 'DINUM',
+        title: 'DINUM',
         url: 'https://www.numerique.gouv.fr/dinum/',
       },
       {
-        name: 'HDH',
+        title: 'HDH',
         url: 'https://www.health-data-hub.fr/',
       },
     ],
@@ -41,15 +64,15 @@ export const footerLinks: NavLinkGroup[] = [
     title: 'Le site',
     links: [
       {
-        name: 'A propos',
+        title: 'A propos',
         url: '/a-propos',
       },
       {
-        name: 'Mentions légales',
+        title: 'Mentions légales',
         url: '/mentions-legales',
       },
       {
-        name: 'Contact',
+        title: 'Contact',
         url: '/contact',
       },
     ],
