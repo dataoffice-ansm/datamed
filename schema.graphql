@@ -348,9 +348,9 @@ type RuptureCauseRepartition {
 }
 
 type RuptureTotalAction {
-    year: Int
     total: Int
     totalWithAtLeastOneAction: Int
+    year: Int
 }
 
 type RuptureAction {

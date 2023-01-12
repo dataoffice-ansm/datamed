@@ -1207,30 +1207,33 @@ export class PostgresOperations {
     const rows = await dbInstance
       .selectFrom('actions')
       .leftJoin('actions_types as at', 'at.id', 'actions.type_id')
-      .select([
-        count('actions.id').as('value'),
-        'actions.year',
-        'at.id as actionTypeId',
-        'at.type as name',
-      ])
-      .groupBy('actions.with_action')
+      .select([count('actions.id').as('value'), 'actions.year', 'at.id as actionTypeId'])
       .groupBy('actions.year')
       .groupBy('at.type')
       .groupBy('at.id')
       .execute();
 
-    // 0 = "Pas de mesure"
-    const totalWithAtLeastOneAction = rows.filter((r) => r.actionTypeId !== 0).length ?? 0;
+    const rowsTotal = await dbInstance
+      .selectFrom('actions')
+      .leftJoin('actions_types as at', 'at.id', 'actions.type_id')
+      .select([count('actions.id').as('value'), 'actions.with_action', 'actions.year'])
+      .groupBy('actions.with_action')
+      .groupBy('actions.year')
+      .execute();
 
     return rows.reduce<RuptureTotalAction[]>((carry, row) => {
       const { value, year } = row;
+
+      const totalWithAtLeastOneAction = rowsTotal.find(
+        (r) => r.with_action === 'Avec mesure' && Number(r.year) === Number(year)
+      );
 
       return value && year
         ? [
             ...carry,
             {
               total: Number(row.value),
-              totalWithAtLeastOneAction,
+              totalWithAtLeastOneAction: Number(totalWithAtLeastOneAction?.value ?? 0),
               year: Number(row.year),
             },
           ]

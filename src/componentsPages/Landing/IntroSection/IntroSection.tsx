@@ -19,7 +19,7 @@ export const IntroSection = () => {
           </h2>
           <p className="max-w-2xl text-lg md:text-xl">
             data.ansm est un site d'information et de transparence sur les déclarations relatives à
-            la pharmacovigilance et les ruptures de stock. Il est destiné aux particuliers,
+            la pharmacovigilance et aux ruptures de stock. Il est destiné aux particuliers,
             professionnels de santé ou industriels.
           </p>
           <div className="flex flex-col md:flex-row justify-center align-center gap-4 pt-2 max-w-2xl text-lg md:text-xl">
