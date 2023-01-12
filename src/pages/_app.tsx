@@ -16,6 +16,7 @@ import { config } from '../config/config';
 import Head from 'next/head';
 import { toastConfig } from '../utils/toasts';
 import dynamic from 'next/dynamic';
+import { Loader } from '../components/Loader';
 
 const Toaster = dynamic(async () => import('react-hot-toast').then((c) => c.Toaster), {
   ssr: false,
@@ -25,12 +26,6 @@ export type AppCustomProps<PP extends Record<string, unknown> = Record<string, u
   pageProps: PP;
   authed: boolean;
 } & AppProps;
-
-const LoadingContainer = () => (
-  <div className="h-screen opacity-30 flex justify-center items-center">
-    <h1>Chargement des données en cours</h1>
-  </div>
-);
 
 const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -74,7 +69,7 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
         <BodyScrollProvider>
           <LayoutProvider authSSR={authed}>
             <AuthModal />
-            <AppLayout>{isLoading ? <LoadingContainer /> : <Component {...pageProps} />}</AppLayout>
+            <AppLayout>{isLoading ? <Loader /> : <Component {...pageProps} />}</AppLayout>
           </LayoutProvider>
         </BodyScrollProvider>
       </ApolloProvider>

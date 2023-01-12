@@ -143,6 +143,7 @@ export const RupturesDeclarationActionByYearSection = ({
             >
               des dossiers ont donné lieu à au moins une mesure
             </BoxInfo>
+
             <BoxInfo
               title={selectedRupturesTotalActionsRepartition?.total?.toString() ?? ''}
               icon={<FolderSVG />}
