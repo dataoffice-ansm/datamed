@@ -1,25 +1,13 @@
-import React, { type ReactElement, useEffect, useState } from 'react';
+import React from 'react';
 
 import GelOrange from '../assets/loader/Gélule-120-orange.svg';
 import GelGreen from '../assets/loader/Gélule-120-green.svg';
-import GelRed from '../assets/loader/Gélule-120-red.svg';
 import GelViolet from '../assets/loader/Gélule-120-violet.svg';
 import GelBlue from '../assets/loader/Gélule-120-blue.svg';
 
 export const Loader = () => {
-  const pictos = [GelOrange, GelGreen, GelRed, GelViolet, GelBlue];
-  const [selected, setSelected] = useState(Math.floor(Math.random() * pictos.length));
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     console.log('This will run every second!');
-  //     const random = Math.floor(Math.random() * pictos.length);
-  //     setSelected(random);
-  //   }, 500);
-  //   return () => {
-  //     clearInterval(interval);
-  //   };
-  // }, [pictos.length]);
+  const pictos = [GelOrange, GelGreen, GelViolet, GelBlue];
+  const selected = Math.floor(Math.random() * pictos.length);
 
   return (
     <div className="h-screen flex justify-center items-center">

@@ -21,7 +21,6 @@ import ManFaceNo from '../../assets/pictos/manFaceNo.svg';
 import ManFaceYes from '../../assets/pictos/manFaceYes.svg';
 import OutOfStockSvg from '../../assets/pictos/out_of_stock.svg';
 
-import { ChartBox } from '../../components/ChartBox';
 import classnames from 'classnames';
 import { useLayoutContext } from '../../contexts/LayoutContext';
 import { numberWithThousand } from '../../utils/format';
@@ -531,7 +530,9 @@ const SectionRisksShortageHistory = () => {
         {count ? (
           <div className="p-4 border border-grey-200 rounded-lg bg-white">
             <div className="text-primary font-medium">
-              <span>{`${count} ${count === 1 ? 'déclaration' : 'déclarations'}`}</span>
+              <span>{`${numberWithThousand(count)} ${
+                count === 1 ? 'déclaration' : 'déclarations'
+              }`}</span>
             </div>
             <div className="pt-6">
               <PaginatedList
@@ -544,9 +545,9 @@ const SectionRisksShortageHistory = () => {
             </div>
           </div>
         ) : (
-          <ChartBox>
+          <div className="w-full flex justify-center items-center">
             <NotEnoughData />
-          </ChartBox>
+          </div>
         )}
       </div>
 
@@ -590,9 +591,9 @@ const SectionPublications = () => {
           </div>
         ))
       ) : (
-        <ChartBox>
+        <div className="w-full flex justify-center items-center">
           <NotEnoughData />
-        </ChartBox>
+        </div>
       )}
     </div>
   );

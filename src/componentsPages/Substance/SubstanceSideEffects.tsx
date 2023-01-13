@@ -27,6 +27,7 @@ import {
 import { CardWithImage } from '../../components/CardWithImage';
 import SickPersonSvg from '../../assets/pictos/sick_transparent_person.svg';
 import { buildSortedRangeData } from '../../utils/entities';
+import { numberWithThousand } from '../../utils/format';
 
 /**
  *
@@ -110,7 +111,9 @@ export const SubstanceSideEffects = ({
   return (
     <div className="SubstanceContainerContentTitle text-left">
       <BoxInfo
-        title={`${substance.exposition?.consumption ?? 'Aucune'} déclaration(s) reçue(s)`}
+        title={`${
+          numberWithThousand(substance.exposition?.consumption ?? 0) ?? 'Aucune'
+        } déclaration(s) reçue(s)`}
         icon={<FolderSVG />}
         theme="secondary"
         className="my-8"
@@ -158,7 +161,7 @@ export const SubstanceSideEffects = ({
 
         <div className="flex-1 flex-shrink">
           <GraphBox
-            title="Répartition par âge des patiens traités parmi les cas déclarés d'effets indésirables"
+            title="Répartition par âge des patients traités parmi les cas déclarés d'effets indésirables"
             className="h-full max-w-[100%]"
           >
             <PieChartRepartition
@@ -238,16 +241,14 @@ export const SubstanceSideEffects = ({
 
             return (
               <div className="GraphBoxSelectContent">
-                {repartitionPerPathology.length !== 0 && (
-                  <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
-                    Parmi les{' '}
-                    <span className="text-secondary font-medium">
-                      {substance.exposition?.consumption}
-                    </span>{' '}
-                    déclarations d’effets indésirables pour :{' '}
-                    <span className="text-secondary font-medium">{substance.name}</span>
-                  </div>
-                )}
+                <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
+                  Parmi les{' '}
+                  <span className="text-secondary font-medium">
+                    {numberWithThousand(substance.exposition?.consumption ?? 0)}
+                  </span>{' '}
+                  déclarations d’effets indésirables pour :{' '}
+                  <span className="text-secondary font-medium">{substance.name}</span>
+                </div>
 
                 <GraphFiguresGrid
                   data={repartitionPerPathology}

@@ -347,8 +347,8 @@ export type RuptureStock = {
 
 export type RuptureTotalAction = {
   __typename?: 'RuptureTotalAction';
-  total?: Maybe<Scalars['Int']>;
-  totalWithAtLeastOneAction?: Maybe<Scalars['Int']>;
+  totalDeclarationsWithMesure?: Maybe<Scalars['Int']>;
+  totalMesures?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
 };
 
@@ -1119,8 +1119,8 @@ export type GlobalRupturesQuery = {
     totalActions?: Array<{
       __typename?: 'RuptureTotalAction';
       year?: number | null;
-      total?: number | null;
-      totalWithAtLeastOneAction?: number | null;
+      totalDeclarationsWithMesure?: number | null;
+      totalMesures?: number | null;
     } | null> | null;
   } | null;
 };
@@ -1653,8 +1653,8 @@ export const GlobalRupturesDocument = gql`
       }
       totalActions {
         year
-        total
-        totalWithAtLeastOneAction
+        totalDeclarationsWithMesure
+        totalMesures
       }
     }
   }

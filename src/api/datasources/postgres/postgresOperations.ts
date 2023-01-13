@@ -1204,37 +1204,35 @@ export class PostgresOperations {
 
   async getRupturesTotalActions(): Promise<RuptureTotalAction[]> {
     const { count } = dbInstance.fn;
-    const rows = await dbInstance
-      .selectFrom('actions')
-      .leftJoin('actions_types as at', 'at.id', 'actions.type_id')
-      .select([count('actions.id').as('value'), 'actions.year', 'at.id as actionTypeId'])
-      .groupBy('actions.year')
-      .groupBy('at.type')
-      .groupBy('at.id')
-      .execute();
 
-    const rowsTotal = await dbInstance
+    //declarations avec au moins 1 mesure
+    const totalDeclarationsWithMesure = await dbInstance
       .selectFrom('actions')
-      .leftJoin('actions_types as at', 'at.id', 'actions.type_id')
-      .select([count('actions.id').as('value'), 'actions.with_action', 'actions.year'])
-      .groupBy('actions.with_action')
+      .select([count('actions.sold_out_id').distinct().as('value'), 'actions.year'])
+      .where('actions.with_action', '=', 'Avec mesure')
       .groupBy('actions.year')
       .execute();
 
-    return rows.reduce<RuptureTotalAction[]>((carry, row) => {
+    // toutes les mesures
+    const totalMesures = await dbInstance
+      .selectFrom('actions')
+      .select([count('actions.id').as('value'), 'actions.year'])
+      .where('actions.with_action', '=', 'Avec mesure')
+      .groupBy('actions.year')
+      .execute();
+
+    return totalDeclarationsWithMesure.reduce<RuptureTotalAction[]>((carry, row) => {
       const { value, year } = row;
 
-      const totalWithAtLeastOneAction = rowsTotal.find(
-        (r) => r.with_action === 'Avec mesure' && Number(r.year) === Number(year)
-      );
+      const totalWithAtLeastOneAction = totalMesures.find((r) => Number(r.year) === Number(year));
 
-      return value && year
+      return value && year && totalWithAtLeastOneAction?.value
         ? [
             ...carry,
             {
-              total: Number(row.value),
-              totalWithAtLeastOneAction: Number(totalWithAtLeastOneAction?.value ?? 0),
-              year: Number(row.year),
+              totalDeclarationsWithMesure: Number(value),
+              totalMesures: Number(totalWithAtLeastOneAction?.value),
+              year: Number(year),
             },
           ]
         : carry;

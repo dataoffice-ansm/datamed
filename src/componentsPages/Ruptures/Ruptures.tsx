@@ -2,9 +2,8 @@ import { HeadlessHeroHeader } from '../../components/HeroHeader/HeadlessHeroHead
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
 import { Tooltip } from '../../components/Tooltip/Tooltip';
 import RupturesSVG from '../../assets/pictos/ruptures.svg';
-import { DeclarationByYearSection } from './DeclarationByYear.tsx/DeclarationByYearSection';
+import { DeclarationsPerYearSection } from './DeclarationByYear.tsx/DeclarationsPerYearSection';
 import { DeclarationNatureCountSection } from './DeclarationNatureCount/DeclarationNatureCountSection';
-import { BaseTooltipContent } from './Tooltip';
 import { RupturesDeclarationActionByYearSection } from './DeclarationActionByYear/DeclarationActionByYear';
 import { DataOriginSection } from './DataOrigin/DataOriginSection';
 import { RepartitionPerTherapeuticClassSection } from './DeclarationNatureCount/RepartitionPerTherapeuticClassSection';
@@ -28,7 +27,7 @@ const buildRupturesPageSections = (periodString: string) => [
     label: 'DÉCLARATIONS',
     content: (
       <div className="SectionDeclarations mt-4 mb-8">
-        <DeclarationByYearSection />
+        <DeclarationsPerYearSection />
         <DeclarationNatureCountSection periodString={periodString} />
         <RepartitionPerTherapeuticClassSection />
       </div>
@@ -66,17 +65,17 @@ export const Ruptures = () => {
           <Tooltip
             placement="bottom"
             content={
-              <BaseTooltipContent>
-                <div className="font-medium mb-4">
+              <div className="p-2 max-w-md">
+                <p className="font-medium mb-4">
                   Qu&apos;est-ce qu&apos;un Médicament d&apos;Intérêt Thérapeutique Majeur ?
-                </div>
-                <div className="text-base">
+                </p>
+                <p className="text-base">
                   Les MITM sont des médicaments pour lesquelles une interruption de traitement est
                   susceptible de mettre en jeu le pronostic vital des patients à court ou moyen
                   terme, ou représente une perte de chance importante pour les patients au regard de
                   la gravité ou du potentiel évolutif de la maladie.
-                </div>
-              </BaseTooltipContent>
+                </p>
+              </div>
             }
             render={(refCb) => (
               <span ref={refCb} className="underline cursor-help">

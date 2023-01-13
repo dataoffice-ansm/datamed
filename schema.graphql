@@ -348,8 +348,8 @@ type RuptureCauseRepartition {
 }
 
 type RuptureTotalAction {
-    total: Int
-    totalWithAtLeastOneAction: Int
+    totalDeclarationsWithMesure: Int
+    totalMesures: Int
     year: Int
 }
 

@@ -34,7 +34,7 @@ export const Tooltip = ({
       delayShow: 200,
       delayHide: 500,
       // followCursor: true,
-      trigger: ['hover', 'click'],
+      trigger: ['click'],
     });
 
   return (

@@ -326,8 +326,8 @@ query GlobalRuptures {
         }
         totalActions {
             year
-            total
-            totalWithAtLeastOneAction
+            totalDeclarationsWithMesure
+            totalMesures
         }
     }
 }

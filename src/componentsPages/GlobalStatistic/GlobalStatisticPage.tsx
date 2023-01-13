@@ -29,6 +29,7 @@ import {
   type GlobalStatsUsagePerPathology,
   type GlobalStatsUsagePerSeriousEffect,
 } from '../../graphql/__generated__/generated-documents';
+import { numberWithThousand } from '../../utils/format';
 
 const SectionDemography = () => {
   const { globalDec } = useGlobalDecPageContext();
@@ -154,15 +155,21 @@ const SectionSeriousEffect = () => {
             className="h-full max-w-[100%]"
             tooltip={
               <>
-                <div className="font-medium mb-4 text-lg">
-                  Mesures prises pour palier ou prévenir les ruptures de stock
-                </div>
-                <div>
-                  Lorsqu’un signalement arrive à l’ANSM, est mise en place une évaluation afin de
-                  déterminer les mesures les plus adaptées pour pallier l’insuffisance de stock.
-                  Plusieurs mesures peuvent être mobilisées pour une même situation de risque ou de
-                  rupture de stock, aussi le total peut dépasser 100%.
-                </div>
+                <p className="font-medium mb-4 text-lg">Répartition par gravité</p>
+                <b>
+                  <p>Non grave</p>
+                </b>
+                <p>Tout effet indésirable qui n&apos;est pas grave</p>
+
+                <b>
+                  <p>Grave</p>
+                </b>
+                <p>
+                  Un effet indésirable est grave en cas de décès, de mise en jeu du pronostic vital,
+                  d&apos;hospitalisation ou prolongement d&apos;hospitalisation, d&apos;invalidité
+                  ou d&apos;incapacité importante ou durable, d&apos;anomalie ou de malformation
+                  congénitale, ou s&apos;il est considéré comme médicalement pertinent{' '}
+                </p>
               </>
             }
           >
@@ -274,7 +281,9 @@ const SectionTypesOfSideEffects = () => {
             <div className="GraphBoxSelectContent">
               <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
                 Parmi les{' '}
-                <span className="text-dark-green-900 font-medium">{exposition?.consumption}</span>{' '}
+                <span className="text-dark-green-900 font-medium">
+                  {numberWithThousand(exposition?.consumption ?? 0)}
+                </span>{' '}
                 déclarations d&apos;effets indésirables pour
                 <span className="text-dark-green-900 font-medium"> au global</span>:
               </div>
@@ -459,14 +468,14 @@ export const GlobalStatisticPage = () => {
           <Tooltip
             placement="bottom"
             content={
-              <div className="p-4 max-w-md">
-                <div className="font-medium mb-4 text-lg">Qu’est-ce que la pharmacovigilance ?</div>
-                <div>
+              <div className="max-w-md">
+                <p className="font-medium mb-4 text-lg">Qu’est-ce que la pharmacovigilance ?</p>
+                <p>
                   La pharmacovigilance est la surveillance, l’évaluation, la prévention et la
                   gestion du risque d’effet indésirable résultant de l’utilisation des médicaments.
                   Elle s’exerce en permanence, avant et après la commercialisation des médicaments,
                   et constitue un élément essentiel du contrôle de la sécurité des médicaments.
-                </div>
+                </p>
               </div>
             }
             render={(refCb) => (

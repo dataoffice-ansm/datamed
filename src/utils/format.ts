@@ -4,7 +4,7 @@
  * @param unit
  */
 export const formatDecimalToUnit = (value: number, unit: string) =>
-  `${value.toLocaleString()} ${unit}`;
+  `${numberWithThousand(value)} ${unit}`;
 
 export const numberWithThousand = (x: number) => x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 

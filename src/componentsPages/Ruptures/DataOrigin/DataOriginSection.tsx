@@ -1,10 +1,11 @@
-import { ChartBox } from '../../../components/ChartBox';
 import { SectionTitle } from '../../../components/SectionTitle';
+import { GraphBox } from '../../../components/GraphBox/GraphBox';
 
 export const DataOriginSection = () => (
   <div className="DataOriginSection my-12">
     <SectionTitle title="Origine des données" />
-    <ChartBox>
+
+    <GraphBox title="">
       <div className="flex flex-col justify-start items-start flex-auto text-left">
         <div className="mb-8">
           <h4 className="mt-0 mb-2">Bases de données exploitées</h4>
@@ -83,6 +84,6 @@ export const DataOriginSection = () => (
           </p>
         </div>
       </div>
-    </ChartBox>
+    </GraphBox>
   </div>
 );

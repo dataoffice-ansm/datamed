@@ -3,8 +3,7 @@ import { Select } from './Select';
 import type { ReactNode, HTMLAttributes } from 'react';
 import { useCallback, useState } from 'react';
 import classNames from 'classnames';
-import { Tooltip } from './Tooltip/Tooltip';
-import InfoSVG from '../assets/pictos/icons/info.svg';
+import { TooltipInformation } from '../componentsPages/Ruptures/Tooltip';
 
 const options = {
   percent: { label: 'Pourcentage' },
@@ -75,24 +74,14 @@ export const GraphBoxSelect = ({
   }, []);
 
   return (
-    <div
-      className={classNames('GraphBoxSelect flex-1 shadow rounded-lg bg-white my-8 p-4', className)}
-    >
-      <div className="flex flex-wrap gap-3 justify-between items-center text-left px-4">
-        <div className="GraphBoxTitle flex items-center font-medium">
-          <span>{title}</span>
+    <div className={classNames('GraphBoxSelect rounded-lg bg-white p-4', className)}>
+      <div className="GraphBoxHeader flex flex-wrap gap-4 justify-between items-start px-4 mb-4">
+        <div className="GraphBoxTitle flex items-start gap-4 w-full text-left">
+          <span className="text-lg font-medium">{title}</span>
           {tooltip && (
-            <div className="GraphBoxTooltip flex justify-center items-center">
-              <Tooltip
-                content={<div className="p-2">{tooltip}</div>}
-                placement="auto-start"
-                render={(refCb) => (
-                  <div ref={refCb} className="h-6 w-6">
-                    <InfoSVG />
-                  </div>
-                )}
-              />
-            </div>
+            <TooltipInformation>
+              <div className="p-2">{tooltip}</div>
+            </TooltipInformation>
           )}
         </div>
 

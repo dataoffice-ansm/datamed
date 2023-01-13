@@ -347,8 +347,8 @@ export type RuptureStock = {
 
 export type RuptureTotalAction = {
   __typename?: 'RuptureTotalAction';
-  total?: Maybe<Scalars['Int']>;
-  totalWithAtLeastOneAction?: Maybe<Scalars['Int']>;
+  totalDeclarationsWithMesure?: Maybe<Scalars['Int']>;
+  totalMesures?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
 };
 
@@ -1188,8 +1188,8 @@ export type RuptureTotalActionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureTotalAction'] = ResolversParentTypes['RuptureTotalAction']
 > = {
-  total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  totalWithAtLeastOneAction?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  totalDeclarationsWithMesure?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  totalMesures?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

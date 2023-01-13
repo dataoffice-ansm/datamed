@@ -7,11 +7,11 @@ import { Select } from '../../../components/Select';
 import { NotEnoughData } from 'components/NotEnoughData';
 import { BoxInfo } from '../../../components/BoxInfo';
 import FolderSVG from '../../../assets/pictos/folder.svg';
-import { BaseTooltipContent } from '../Tooltip';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 import { KPIBoxProgression } from '../../../components/KPIBoxProgression';
+import { numberWithThousand } from '../../../utils/format';
 
-export const DeclarationByYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
+export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { ruptures } = useRupturesPageContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
@@ -69,15 +69,28 @@ export const DeclarationByYearSection = (_props: HTMLAttributes<HTMLDivElement>)
       {(ruptures?.ruptureYears ?? []).length > 0 ? (
         <div className="DeclarationByYearSectionContent flex flex-col gap-4">
           <BoxInfo
-            title={`${selectedData?.total ?? 0} déclaration(s) reçues(s)`}
+            title={`${numberWithThousand(selectedData?.total ?? 0)} déclarations reçues`}
             icon={<FolderSVG />}
             theme="dark-green"
             tooltip={
-              <BaseTooltipContent>
-                Les ruptures, les risques de rupture de stock ainsi que les stocks de sécurité
-                inférieurs au seuil défini par décret sont déclarés à l’ANSM par les entreprises
-                pharmaceutiques.
-              </BaseTooltipContent>
+              <>
+                <p className="font-medium mb-4 text-lg">
+                  Historique du nombre de déclarations de ruptures et de risques de rupture de stock
+                </p>
+                <p>
+                  Les industriels qui produisent des Médicaments d’Intérêt Thérapeutique Majeur
+                  (MITM) sont tenus de signaler à l’ANSM toute rupture de stock ou risque de rupture
+                  de stock. les concernant (CSP Art. R. 5124-49-1).{' '}
+                </p>
+                <p>
+                  Depuis 2019, dans le cadre de la feuille de route ministérielle et de la loi de
+                  financement de la sécurité sociale qui renforce ses pouvoirs, l&apos;ANSM demande
+                  aux industriels de déclarer le plus en amont possible tout risque de rupture.
+                  Cette politique d&apos;anticipation maximale a pour conséquence une augmentation
+                  du nombre de déclarations reçues.
+                </p>
+                <p>Les déclarations de décret stock sans risque ne sont pas représentées ici.</p>
+              </>
             }
           >
             Nombre de déclarations de ruptures et risques de rupture de stock et de décret sans
@@ -86,6 +99,7 @@ export const DeclarationByYearSection = (_props: HTMLAttributes<HTMLDivElement>)
 
           <div className="flex gap-8 flex-col md:flex-row">
             <KPIBoxProgression
+              key="declar-ruptures"
               title="Déclarations de ruptures depuis le début de l’année civile en cours"
               total={selectedData?.nbRupture ?? 0}
               percentageTitle="ont été clôturées à ce jour"
@@ -94,14 +108,15 @@ export const DeclarationByYearSection = (_props: HTMLAttributes<HTMLDivElement>)
               percentBackgroundColor="bg-teal-300"
               percentForegroundColor="bg-teal-900"
               tooltip={
-                <BaseTooltipContent>
+                <p>
                   Une déclaration de rupture de stock est faite par l&apos;exploitant lorsque le
                   laboratoire ne dispose plus de stock ou d’un stock très limité réservé à une
                   distribution d’urgence.
-                </BaseTooltipContent>
+                </p>
               }
             />
             <KPIBoxProgression
+              key="declar-risques-ruptures"
               title="Déclarations de risques de rupture depuis le début de l’année civile en cours"
               percentageTitle="ont été clôturées à ce jour"
               percent={percentRisk}
@@ -110,11 +125,11 @@ export const DeclarationByYearSection = (_props: HTMLAttributes<HTMLDivElement>)
               percentBackgroundColor="bg-green-300"
               percentForegroundColor="bg-green-900"
               tooltip={
-                <BaseTooltipContent>
+                <p>
                   Une déclaration de risque de rupture de stock est faite par l&apos;exploitant
                   lorsqu&apos;il est anticipé que le niveau de stock ne pourra pas répondre
                   complètement aux besoins.
-                </BaseTooltipContent>
+                </p>
               }
             />
           </div>

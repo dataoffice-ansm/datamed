@@ -1,13 +1,13 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import React from 'react';
 import classnames from 'classnames';
-import { Tooltip } from '../Tooltip/Tooltip';
-import InfoSVG from '../../assets/pictos/icons/info.svg';
+import { TooltipInformation } from '../../componentsPages/Ruptures/Tooltip';
 
 /**
  *
  * @param title
  * @param tooltip
+ * @param suffix
  * @param children
  * @param className
  * @constructor
@@ -22,20 +22,12 @@ export const GraphBox = ({
   title: string;
 }) => (
   <div className={classnames('GraphBox rounded-lg shadow bg-white p-4', className)}>
-    <div className="GraphBoxTitle flex items-center gap-4 w-full mb-2">
-      <div className="text-lg font-medium">{title}</div>
+    <div className="GraphBoxTitle flex items-start gap-4 w-full text-left mb-4">
+      <span className="text-lg font-medium">{title}</span>
       {tooltip && (
-        <div className="GraphBoxTooltip flex gap-4 items-center">
-          <Tooltip
-            content={<div className="p-4 max-w-md">{tooltip}</div>}
-            placement="bottom"
-            render={(refCb) => (
-              <div ref={refCb} className="h-6 w-6">
-                <InfoSVG />
-              </div>
-            )}
-          />
-        </div>
+        <TooltipInformation>
+          <div className="TooltipContent p-2 max-w-md">{tooltip}</div>
+        </TooltipInformation>
       )}
     </div>
     {children}

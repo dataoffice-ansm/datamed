@@ -1,7 +1,6 @@
 import classNames from 'classnames';
-import { Tooltip } from './Tooltip/Tooltip';
 import type { HTMLAttributes, ReactNode } from 'react';
-import InfoSVG from '../assets/pictos/icons/info.svg';
+import { TooltipInformation } from '../componentsPages/Ruptures/Tooltip';
 
 export type BoxInfoTitleThemeColor = 'primary' | 'secondary' | 'success' | 'dark-green';
 
@@ -51,17 +50,9 @@ export const BoxInfo = ({
       >
         <span className="BoxInfoTitle text-3xl font-medium">{title}</span>
         {tooltip && (
-          <div className="BoxInfoTooltip flex justify-center items-center">
-            <Tooltip
-              content={<div className="p-2">{tooltip}</div>}
-              placement="bottom"
-              render={(refCb) => (
-                <div ref={refCb} className="h-6 w-6">
-                  <InfoSVG />
-                </div>
-              )}
-            />
-          </div>
+          <TooltipInformation>
+            <div className="TooltipContent p-2 max-w-md">{tooltip}</div>
+          </TooltipInformation>
         )}
       </div>
       <div>{children}</div>

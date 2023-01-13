@@ -11,10 +11,10 @@ import { GraphFiguresGrid } from '../../../components/GraphFiguresGrid';
 import { GraphFigure } from '../../../components/GraphFigure';
 import { getDeclarationActionIcon } from '../../../utils/iconsMapping';
 import { GraphBox } from '../../../components/GraphBox/GraphBox';
-import { BaseTooltipContent } from '../Tooltip';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 import { type RuptureAction } from '../../../graphql/__generated__/generated-documents';
 import { buildSortedRangeData } from '../../../utils/entities';
+import { numberWithThousand } from '../../../utils/format';
 
 export type DeclarationActionByYearProps = {
   defaultOption?: OptionsValue;
@@ -41,24 +41,24 @@ export const RupturesDeclarationActionByYearSection = ({
   defaultOption = 'number',
 }: DeclarationActionByYearProps) => {
   const { ruptures } = useRupturesPageContext();
-  const [selectedIndex, setSelectedIndex] = useState<number>(0);
+  const [selectedIndex, setSelectedIndex] = useState<number>(2022);
   const [selectedUnitOption, setSelectedUnitOption] = useState<OptionsValue>(defaultOption);
 
   const options = useMemo(
     () =>
-      (ruptures.ruptureYears ?? []).map((ruptureYear) => ({
-        value: ruptureYear?.value,
-        label: ruptureYear?.value,
+      (ruptures?.totalActions ?? []).map((ruptureYear) => ({
+        value: ruptureYear?.year,
+        label: ruptureYear?.year,
       })),
-    [ruptures.ruptureYears]
+    [ruptures?.totalActions]
   );
 
   const selectedRupturesActionsRepartition = useMemo(
     () =>
       (ruptures.repartitionPerAction ?? []).find(
-        (ruptureActionsRep) => ruptureActionsRep?.year === options[selectedIndex].value
+        (ruptureActionsRep) => ruptureActionsRep?.year === selectedIndex
       ),
-    [options, ruptures.repartitionPerAction, selectedIndex]
+    [ruptures.repartitionPerAction, selectedIndex]
   );
 
   const selectedRupturesActions = useMemo(
@@ -68,17 +68,16 @@ export const RupturesDeclarationActionByYearSection = ({
   );
 
   const selectedRupturesTotalActionsRepartition = useMemo(
-    () =>
-      (ruptures?.totalActions ?? []).find(
-        (element) => element?.year === options[selectedIndex].value
-      ),
+    () => (ruptures?.totalActions ?? []).find((element) => element?.year === selectedIndex),
     [options, ruptures?.totalActions, selectedIndex]
   );
 
+  console.log(selectedIndex);
+
   const percentWithOneAction = `${
     Math.round(
-      Math.round(selectedRupturesTotalActionsRepartition?.totalWithAtLeastOneAction ?? 0) /
-        (selectedRupturesTotalActionsRepartition?.total ?? 1)
+      Math.round(selectedRupturesTotalActionsRepartition?.totalDeclarationsWithMesure ?? 0) /
+        (selectedRupturesTotalActionsRepartition?.totalDeclarationsWithMesure ?? 1)
     ) * 100
   } %`;
 
@@ -122,30 +121,34 @@ export const RupturesDeclarationActionByYearSection = ({
             <BoxInfo
               title={`${
                 selectedUnitOption === 'number'
-                  ? selectedRupturesTotalActionsRepartition?.totalWithAtLeastOneAction ?? 0
+                  ? numberWithThousand(
+                      selectedRupturesTotalActionsRepartition?.totalDeclarationsWithMesure ?? 0
+                    )
                   : percentWithOneAction
               }`}
               icon={<DeclarationWithOneActionSvg />}
               theme="dark-green"
               className="flex-1"
               tooltip={
-                <BaseTooltipContent>
-                  <div className="font-medium mb-4 text-lg">Dossiers donnant lieu à une mesure</div>
-                  <div>
+                <>
+                  <p className="font-medium mb-4 text-lg">Dossiers donnant lieu à une mesure</p>
+                  <p>
                     La pharmacovigilance est la surveillance, l’évaluation, la prévention et la
                     gestion du risque d’effet indésirable résultant de l’utilisation des
                     médicaments. Elle s’exerce en permanence, avant et après la commercialisation
                     des médicaments, et constitue un élément essentiel du contrôle de la sécurité
                     des médicaments.
-                  </div>
-                </BaseTooltipContent>
+                  </p>
+                </>
               }
             >
               des dossiers ont donné lieu à au moins une mesure
             </BoxInfo>
 
             <BoxInfo
-              title={selectedRupturesTotalActionsRepartition?.total?.toString() ?? ''}
+              title={`${numberWithThousand(
+                selectedRupturesTotalActionsRepartition?.totalMesures ?? 0
+              )}`}
               icon={<FolderSVG />}
               theme="dark-green"
               className="flex-1"
@@ -158,15 +161,15 @@ export const RupturesDeclarationActionByYearSection = ({
             title="Répartition des mesures prises pour pallier ou prévenir les ruptures de stock"
             tooltip={
               <>
-                <div className="font-medium mb-4 text-lg">
+                <p className="font-medium mb-4 text-lg">
                   Mesures prises pour palier ou prévenir les ruptures de stock
-                </div>
-                <div>
+                </p>
+                <p>
                   Lorsqu’un signalement arrive à l’ANSM, est mise en place une évaluation afin de
                   déterminer les mesures les plus adaptées pour pallier l’insuffisance de stock.
                   Plusieurs mesures peuvent être mobilisées pour une même situation de risque ou de
                   rupture de stock, aussi le total peut dépasser 100%.
-                </div>
+                </p>
               </>
             }
           >
