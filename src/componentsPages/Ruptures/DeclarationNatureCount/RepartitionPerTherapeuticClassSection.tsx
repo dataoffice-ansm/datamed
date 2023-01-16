@@ -10,6 +10,8 @@ import {
   type TherapeuticClassRupture,
 } from '../../../graphql/__generated__/generated-documents';
 import { GraphBoxSelect } from '../../../components/GraphBoxSelect';
+import { MixedBarChart } from '../../../components/Charts/MixedBarBublleChart';
+import { type ChartDataset } from 'chart.js';
 
 export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { ruptures } = useRupturesPageContext();
@@ -36,10 +38,10 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
 
   return (
     <GraphBoxSelect
+      disableUnitSelect
       className="RepartitionPerTherapeuticClass"
       theme="secondary-variant"
-      title="Nombre de déclarations de ruptures et risques de rupture de stock par classe
-              thérapeutique"
+      title="Nombre de déclarations de ruptures et risques de rupture de stock par classe thérapeutique"
       yearsOptions={options}
       tooltip={
         <>
@@ -67,7 +69,7 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
         </>
       }
       render={({ selectedYearOption }) => {
-        const therapeuticDataForSelectedYear =
+        const therapeuticClassDataForSelectedYear =
           ruptures.repartitionPerTherapeuticClass && selectedYearOption
             ? ruptures.repartitionPerTherapeuticClass.find(
                 (element) => element?.year === selectedYearOption
@@ -75,25 +77,33 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
             : ([] as TherapeuticClassesRupturesPerYear);
 
         const therapeuticRepartitionForSelectedYear = buildSortedRangeData<TherapeuticClassRupture>(
-          therapeuticDataForSelectedYear?.repartition,
+          therapeuticClassDataForSelectedYear?.repartition,
           'number'
         );
 
         const labels = therapeuticRepartitionForSelectedYear.map((e) => e.name);
 
-        const datasets = [
-          {
-            id: 1,
-            label: 'Nombre de signalements',
-            backgroundColor: tailwindPaletteConfig.darkGreen[300],
-            borderColor: tailwindPaletteConfig.darkGreen[300],
-            data: therapeuticRepartitionForSelectedYear?.map((element) => element?.value),
-          },
-        ];
+        const datasetBubble: ChartDataset<'scatter'> = {
+          order: 1,
+          type: 'scatter',
+          label: 'Nombre de médicaments',
+          borderColor: tailwindPaletteConfig.red[300],
+          data: therapeuticRepartitionForSelectedYear?.map((element) => element?.totalCis ?? 0),
+        };
+
+        const datasetBar: ChartDataset<'bar'> = {
+          order: 2,
+          label: 'Nombre de signalements',
+          backgroundColor: tailwindPaletteConfig.darkGreen[300],
+          borderColor: tailwindPaletteConfig.darkGreen[300],
+          data: therapeuticRepartitionForSelectedYear?.map((element) => element?.value ?? 0),
+        };
+
+        const datasets = [datasetBubble, datasetBar];
 
         return (
           <div className="min-h-[256px] md:min-h-[512px] lg:min-h-[600px] w-full relative">
-            <BarChart
+            <MixedBarChart
               className="flex justify-center mt-4 w-full h-full absolute"
               labels={labels as unknown as never}
               datasets={datasets}

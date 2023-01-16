@@ -1125,7 +1125,6 @@ export class PostgresOperations {
       .orderBy('at.type')
       .execute();
 
-    console.log(rows);
     return rows.reduce<RuptureAction[]>((carry, row) => {
       const { name, value } = row;
 
@@ -1162,17 +1161,15 @@ export class PostgresOperations {
   async _getRuptureStockByTherapeuticClass(year: string): Promise<TherapeuticClassRupture[]> {
     const { count } = dbInstance.fn;
 
-    const rowsCis = await dbInstance
+    const rowCountCisPerClass = await dbInstance
       .selectFrom('sold_out_all')
+      .leftJoin('atc_classes', 'atc_classes.code', 'sold_out_all.atc1')
       .where('sold_out_all.year', '=', year)
       .where('sold_out_all.classification', 'in', ['risque', 'rupture'])
-      .leftJoin('atc_classes', 'atc_classes.code', 'sold_out_all.atc1')
       .where('atc_classes.label', 'is not', null)
-      .select([count('sold_out_all.cis').as('value')])
-      .distinctOn('sold_out_all.cis')
-      .groupBy('sold_out_all.cis')
+      .select([count('sold_out_all.cis').distinct().as('value'), 'atc_classes.label as name'])
       .groupBy('atc_classes.label')
-      .executeTakeFirst();
+      .execute();
 
     const rows = await dbInstance
       .selectFrom('sold_out_all')
@@ -1191,14 +1188,15 @@ export class PostgresOperations {
 
     return rows.reduce<TherapeuticClassRupture[]>((carry, row) => {
       const { name, value, year } = row;
+      const totalCis = Number(rowCountCisPerClass.find((r) => r.name === name)?.value ?? 0);
 
       return name && year && value && value >= 10
         ? [
             ...carry,
             {
-              name: row.name,
-              value: Number(row.value),
-              totalCis: Number(rowsCis?.value),
+              name,
+              value: Number(value),
+              totalCis,
             },
           ]
         : carry;
@@ -1211,13 +1209,13 @@ export class PostgresOperations {
     return Promise.all(
       years.map(async ({ value }) => {
         const year = String(value);
-        const total = await this._getRupturesTotalActionByYear(year);
-        const repartition = await this._getRuptureStockByTherapeuticClass(year);
+        const countRupturesPerYear = await this._getRupturesTotalActionByYear(year);
+        const repartitionPerTherapeuticClass = await this._getRuptureStockByTherapeuticClass(year);
 
         return {
           year: value,
-          repartition,
-          total,
+          repartition: repartitionPerTherapeuticClass,
+          total: countRupturesPerYear,
         };
       })
     );

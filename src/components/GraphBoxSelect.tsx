@@ -24,6 +24,7 @@ type GraphFiguresContainerProps = HTMLAttributes<HTMLDivElement> & {
   tooltip?: JSX.Element | ReactNode;
   renderHeader?: ReactNode;
   yearsOptions?: SelectOption[];
+  disableUnitSelect?: boolean;
   render: ({
     // eslint-disable-next-line no-unused-vars
     selectedUnitOption,
@@ -57,6 +58,7 @@ export const GraphBoxSelect = ({
   tooltip,
   className,
   yearsOptions,
+  disableUnitSelect,
   defaultOption = 'number',
   theme = 'secondary',
 }: GraphFiguresContainerProps) => {
@@ -75,14 +77,16 @@ export const GraphBoxSelect = ({
 
   return (
     <div className={classNames('GraphBoxSelect rounded-lg bg-white p-4', className)}>
-      <div className="GraphBoxHeader flex flex-wrap gap-4 justify-between items-start px-4 mb-4">
-        <div className="GraphBoxTitle flex items-start gap-4 w-full text-left">
-          <span className="text-lg font-medium">{title}</span>
-          {tooltip && (
-            <TooltipInformation>
-              <div className="p-2">{tooltip}</div>
-            </TooltipInformation>
-          )}
+      <div className="GraphBoxHeader flex gap-4 justify-between items-start px-4 mb-4">
+        <div className="GraphBoxTitle flex items-start gap-2 w-full text-left">
+          <div className="flex items-start gap-2">
+            <span className="text-lg font-medium">{title}</span>
+            {tooltip && (
+              <TooltipInformation>
+                <div className="p-2">{tooltip}</div>
+              </TooltipInformation>
+            )}
+          </div>
         </div>
 
         <div className="flex gap-2">
@@ -98,16 +102,18 @@ export const GraphBoxSelect = ({
             </div>
           )}
 
-          <div className="GraphFiguresContainerSelect max-w-xs">
-            <Select
-              theme={theme}
-              defaultOptionIndex={findOptionIndex(defaultOption)}
-              options={selectOptions}
-              onSelectOption={(index, option) => {
-                onChangeUnit(option.value as UnitOptionsValue);
-              }}
-            />
-          </div>
+          {!disableUnitSelect && (
+            <div className="GraphFiguresContainerSelect max-w-xs">
+              <Select
+                theme={theme}
+                defaultOptionIndex={findOptionIndex(defaultOption)}
+                options={selectOptions}
+                onSelectOption={(index, option) => {
+                  onChangeUnit(option.value as UnitOptionsValue);
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
 

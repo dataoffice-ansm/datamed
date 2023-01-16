@@ -7,9 +7,9 @@ export const TooltipInformation = ({ children }: { children: JSX.Element | React
     content={children}
     placement="bottom"
     render={(refCb) => (
-      <div ref={refCb} className="h-6 w-6">
-        <InfoSVG />
-      </div>
+      <i ref={refCb} className="h-6 w-6">
+        <InfoSVG className="h-6 w-6" />
+      </i>
     )}
   />
 );
