@@ -283,6 +283,10 @@ query GlobalStatistic {
 
 query GlobalRuptures {
     getGlobalRuptures {
+        config {
+            minYear
+            maxYear
+        }
         ruptureStocks {
             year
             total

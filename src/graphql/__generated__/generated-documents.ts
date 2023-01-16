@@ -40,6 +40,7 @@ export type GlobalExpositionPeriod = {
 
 export type GlobalRuptures = {
   __typename?: 'GlobalRuptures';
+  config?: Maybe<GlobalRupturesConfig>;
   repartitionPerAction?: Maybe<Array<Maybe<RuptureActionRepartition>>>;
   repartitionPerCause?: Maybe<Array<Maybe<RuptureCauseRepartition>>>;
   repartitionPerClassification?: Maybe<Array<Maybe<RuptureClassificationRepartition>>>;
@@ -47,6 +48,12 @@ export type GlobalRuptures = {
   ruptureStocks?: Maybe<Array<Maybe<RuptureStock>>>;
   ruptureYears?: Maybe<Array<Maybe<RuptureYear>>>;
   totalActions?: Maybe<Array<Maybe<RuptureTotalAction>>>;
+};
+
+export type GlobalRupturesConfig = {
+  __typename?: 'GlobalRupturesConfig';
+  maxYear?: Maybe<Scalars['String']>;
+  minYear?: Maybe<Scalars['String']>;
 };
 
 export type GlobalStatistic = {
@@ -1077,6 +1084,11 @@ export type GlobalRupturesQuery = {
   __typename?: 'Query';
   getGlobalRuptures?: {
     __typename?: 'GlobalRuptures';
+    config?: {
+      __typename?: 'GlobalRupturesConfig';
+      minYear?: string | null;
+      maxYear?: string | null;
+    } | null;
     ruptureStocks?: Array<{
       __typename?: 'RuptureStock';
       year?: number | null;
@@ -1610,6 +1622,10 @@ export type GlobalStatisticQueryResult = Apollo.QueryResult<
 export const GlobalRupturesDocument = gql`
   query GlobalRuptures {
     getGlobalRuptures {
+      config {
+        minYear
+        maxYear
+      }
       ruptureStocks {
         year
         total

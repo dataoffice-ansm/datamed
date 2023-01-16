@@ -55,13 +55,16 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
     (Math.round(selectedData?.nbRuptureClosed ?? 0) / (selectedData?.nbRupture ?? 1)) * 100
   );
 
+  const sectionSubtitlePeriod =
+    ruptures.config?.minYear && ruptures.config.maxYear
+      ? `${ruptures.config?.minYear} - ${ruptures.config.maxYear} `
+      : 'Année non disponible';
+
   return (
     <div className="DeclarationByYear my-12">
       <SectionTitle
         title="Déclarations de ruptures et risques de rupture de stock depuis le début de l'année civile en cours"
-        subTitle={`Données mises à jour mensuellement, issues de la période ${
-          selectedData?.year ?? '- année non disponible'
-        }`}
+        subTitle={`Données mises à jour mensuellement, issues de la période ${sectionSubtitlePeriod}`}
       >
         <Select options={options} theme="secondary-variant" onSelectOption={onSelectedYear} />
       </SectionTitle>

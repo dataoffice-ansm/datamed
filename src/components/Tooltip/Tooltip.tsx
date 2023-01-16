@@ -19,6 +19,8 @@ export const Tooltip = ({
   content,
   theme = 'white',
   placement = 'right',
+  delayShow = 200,
+  delayHide = 500,
   render,
 }: {
   enable?: boolean;
@@ -26,15 +28,17 @@ export const Tooltip = ({
   content: ReactNode;
   theme?: TooltipTheme;
   placement?: Placement;
+  delayShow?: number;
+  delayHide?: number;
   render: (_refCb: Dispatch<SetStateAction<HTMLElement | null>>) => ReactNode;
 }) => {
   const { getArrowProps, getTooltipProps, setTooltipRef, setTriggerRef, visible } =
     usePopperTooltip({
       placement,
-      delayShow: 200,
-      delayHide: 500,
+      delayShow,
+      delayHide,
       // followCursor: true,
-      trigger: ['click'],
+      trigger: ['hover', 'click'],
     });
 
   return (

@@ -42,10 +42,79 @@ export const getCisPharmaFormType = (v: string) => {
   }
 };
 
+const getExpositionConsumptionCis = (exposition: keyof typeof ExpositionLevel) => {
+  switch (exposition) {
+    case 'VERYLOW':
+      return '< 5 000';
+    case 'LOW':
+      return '5 000 - 25 000';
+    case 'MODERED':
+      return '25 000 - 100 000';
+    case 'HIGH':
+      return '100 000 - 500 000';
+    case 'VERYHIGH':
+      return '> 500 000';
+    default:
+      return 'Inconnu';
+  }
+};
+
+const getExpositionConsumptionSub = (exposition: keyof typeof ExpositionLevel) => {
+  switch (exposition) {
+    case 'VERYLOW':
+      return '< 1 000';
+    case 'LOW':
+      return '1 000 - 5 000';
+    case 'MODERED':
+      return '5 000 - 15 000';
+    case 'HIGH':
+      return '15 000 - 50 000';
+    case 'VERYHIGH':
+      return '> 50 000';
+    default:
+      return 'Inconnu';
+  }
+};
+
+export const getExpositionDescription = (exposition: keyof typeof ExpositionLevel) => {
+  switch (exposition) {
+    case 'VERYLOW':
+      return 'Utilisation très faible';
+    case 'LOW':
+      return 'Utilisation faible';
+    case 'MODERED':
+      return 'Utilisation modérée';
+    case 'HIGH':
+      return 'Utilisation élevée';
+    case 'VERYHIGH':
+      return 'Utilisation très élevée';
+    default:
+      return 'Utilisation inconnue';
+  }
+};
+
+export const getExpositionConsumptionLabels = (
+  exposition: keyof typeof ExpositionLevel,
+  entityType: 'cis' | 'sub'
+) => {
+  const consumptionLabel =
+    entityType === 'cis'
+      ? getExpositionConsumptionCis(exposition)
+      : getExpositionConsumptionSub(exposition);
+
+  return {
+    consumptionLabel,
+    expositionLabel: getExpositionDescription(exposition),
+  };
+};
+
 export const getExpositionByLevelId = (level: number | null) => {
   switch (level) {
     case 1:
-      return { expositionLevel: ExpositionLevel.VERYLOW, description: 'Utilisation très faible' };
+      return {
+        expositionLevel: ExpositionLevel.VERYLOW,
+        description: 'Utilisation très faible',
+      };
     case 2:
       return { expositionLevel: ExpositionLevel.LOW, description: 'Utilisation faible' };
     case 3:

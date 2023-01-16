@@ -22,8 +22,8 @@ export const MoreInfoSection = () => (
         button={<Button href="/ruptures">Découvrir les données</Button>}
       >
         <p>
-          Consultez les statistiques globales sur l&apos;historique des déclarations de rupture et
-          de risque de rupture des médicaments d&apos;intérêt thérapeutique majeur
+          Consultez les statistiques globales sur l&apos;historique des déclarations de ruptures et
+          de risques de rupture des médicaments d&apos;intérêt thérapeutique majeur
         </p>
 
         {/*<span>*/}

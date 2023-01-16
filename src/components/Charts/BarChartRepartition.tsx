@@ -25,10 +25,12 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend)
  */
 export const BarChartRepartition = ({
   data = [],
+  dataLabel = '',
   className,
   theme,
 }: {
   data?: GlobalStatistic['repartitionPerSeriousEffect'] | GlobalStatistic['repartitionPerGravity'];
+  dataLabel?: string;
   theme: ChartPalette;
   className?: string;
 }) => {
@@ -77,6 +79,7 @@ export const BarChartRepartition = ({
               data: rows,
               backgroundColor,
               borderWidth: 2,
+              label: dataLabel,
             },
           ],
         }}

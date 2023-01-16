@@ -14,14 +14,12 @@ import type {
 } from '../../graphql/__generated__/generated-documents';
 import { SpecialitySubstancesContainer } from './SpecialitySubstancesContainer';
 import { Accordion } from '../../components/Accordion';
-import PilIcon from '../../assets/pictos/gellule.svg';
 import WomanIllustration from '../../assets/pictos/woman_illustration.svg';
 import ManIllustration from '../../assets/pictos/man_illustration.svg';
 import ManFaceNo from '../../assets/pictos/manFaceNo.svg';
 import ManFaceYes from '../../assets/pictos/manFaceYes.svg';
 import OutOfStockSvg from '../../assets/pictos/out_of_stock.svg';
 
-import classnames from 'classnames';
 import { useLayoutContext } from '../../contexts/LayoutContext';
 import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
@@ -35,7 +33,6 @@ import { SectionTitle } from '../../components/SectionTitle';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { BarChartMedicalErrorsNature } from '../../components/Charts/BarChartMedicalErrorsNature';
-import { ExpositionLevel } from '../../api/graphql/enums';
 import { CardWithImage } from '../../components/CardWithImage';
 import { Button } from '../../components/Button/Button';
 import { getMedErrorApparitionStepIcon } from '../../utils/iconsMapping';
@@ -44,6 +41,7 @@ import {
   type MedicalErrorsPopulation,
   type SpecialityUsagePerAge,
 } from '../../graphql/__generated__/generated-documents';
+import { UsageBarContainer } from '../../components/UsageBarContainer';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -206,25 +204,7 @@ const SectionTreatedPatients = () => {
       <div className="expositionChart my-4 flex rounded-lg shadow bg-white overflow-hidden">
         <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-primary py-6">
           <span className="text-white">{exposition?.description}</span>
-
-          <div className="UsageBarContainer mt-12 flex justify-center items-end gap-2">
-            {Object.keys(ExpositionLevel).map((levelKey, index) => (
-              <div
-                key={levelKey}
-                className={classnames(
-                  `UsageBarLevel${index}`,
-                  'relative w-6 bg-white border border-solid border-gray-200'
-                )}
-                style={{ height: 20 + 10 * index }}
-              >
-                {currentEntity?.exposition?.expositionLevel === levelKey && (
-                  <div className="bouncingPil animate-bounce absolute -top-8">
-                    <PilIcon className="w-6 h-6" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+          {exposition && <UsageBarContainer exposition={exposition} entityType="cis" />}
         </div>
 
         <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
@@ -354,7 +334,11 @@ const SectionMedicinalErrors = () => {
       <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto mt-8">
         <div className="flex-1 flex-shrink">
           <GraphBox title="Répartition de la population concernée" className="h-full max-w-[100%]">
-            <PieChartRepartition theme="primary-full" data={populationRepartition} />
+            <PieChartRepartition
+              theme="primary-full"
+              data={populationRepartition}
+              className="h-64 justify-center items-center"
+            />
           </GraphBox>
         </div>
 

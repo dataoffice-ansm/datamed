@@ -3,6 +3,7 @@ import { useEffect } from 'react';
 import { createContext, useContext, useMemo, useState } from 'react';
 import type { Speciality, Substance } from '../graphql/__generated__/generated-documents';
 
+export type EntityType = 'cis' | 'sub';
 export type EntityCis = Speciality & { type: 'cis' };
 export type EntitySub = Substance & { type: 'sub' };
 export type Entity = EntityCis | EntitySub;

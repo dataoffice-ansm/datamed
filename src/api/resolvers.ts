@@ -67,12 +67,15 @@ export const resolvers: Resolvers = {
     },
 
     async getGlobalRuptures(parent, args, context) {
-      const years = await context.dataSources.postgresOperations.getRuptureYears();
+      const config = await context.dataSources.postgresOperations.getRuptureConfig();
+
+      const ruptureYears = await context.dataSources.postgresOperations.getRuptureYears();
 
       return {
-        ruptureYears: years,
+        config,
+        ruptureYears,
         ruptureStocks: await Promise.all(
-          years.map(async ({ value }) =>
+          ruptureYears.map(async ({ value }) =>
             context.dataSources.postgresOperations.getRuptureStockTotalExposition(value ?? 0)
           )
         ),
@@ -82,11 +85,13 @@ export const resolvers: Resolvers = {
 
         repartitionPerTherapeuticClass:
           await context.dataSources.postgresOperations.getRupturesPerTherapeuticClassesPerYearRepartition(
-            years
+            ruptureYears
           ),
 
         repartitionPerCause:
-          await context.dataSources.postgresOperations.getRuptureStockRepartitionPerCause(years),
+          await context.dataSources.postgresOperations.getRuptureStockRepartitionPerCause(
+            ruptureYears
+          ),
 
         repartitionPerAction:
           await context.dataSources.postgresOperations.getRuptureStockRepartitionPerAction(),

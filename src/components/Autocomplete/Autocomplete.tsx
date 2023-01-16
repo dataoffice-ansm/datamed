@@ -71,7 +71,7 @@ export const Autocomplete = ({
   };
 
   const optionsContainerClassname = classnames(
-    'AutocompleteContainer bg-white z-[1] w-full border-grey-400 px-0',
+    'AutocompleteOptions bg-white z-[1] w-full border-grey-400 px-0',
     embedded
       ? 'm-0'
       : 'rounded-lg absolute max-h-80 overflow-auto border mt-1 top-[48px] left-0 right-0'
@@ -126,7 +126,7 @@ export const Autocomplete = ({
   return (
     <div
       className={classnames(
-        'AutocompleteContainer',
+        'AutocompleteContainer bg-white',
         embedded
           ? 'border-grey-100 rounded-none sticky top-0 shadow-lg flex flex-col'
           : 'rounded-lg border border-grey-400 pl-3 py-1 px-2 top-[48px] left-0 right-0'

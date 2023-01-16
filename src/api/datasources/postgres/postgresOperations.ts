@@ -3,6 +3,7 @@ import type {
   Cause,
   EntityExpositionPeriod,
   GlobalExpositionPeriod,
+  GlobalRupturesConfig,
   GlobalStatistic,
   GlobalStatsUsagePerAge,
   GlobalStatsUsagePerGravity,
@@ -935,6 +936,24 @@ export class PostgresOperations {
     };
   }
 
+  async getRuptureConfig(): Promise<GlobalRupturesConfig | null> {
+    const rows = await dbInstance
+      .selectFrom('config')
+      .select(['id', 'label', 'c_date'])
+      .where('label', 'in', ['sold_out_all_date_min', 'sold_out_all_date_max'])
+      .execute();
+
+    const minYear = rows.find((r) => r.label === 'sold_out_all_date_min')?.c_date ?? null;
+    const maxYear = rows.find((r) => r.label === 'sold_out_all_date_max')?.c_date ?? null;
+
+    return minYear && maxYear
+      ? {
+          minYear: minYear.toLocaleDateString(),
+          maxYear: maxYear.toLocaleDateString(),
+        }
+      : null;
+  }
+
   async getRuptureYears(): Promise<RuptureYear[]> {
     const rowTotal = await dbInstance
       .selectFrom('sold_out_all')
@@ -1106,9 +1125,11 @@ export class PostgresOperations {
       .orderBy('at.type')
       .execute();
 
+    console.log(rows);
     return rows.reduce<RuptureAction[]>((carry, row) => {
       const { name, value } = row;
-      return name && value && value >= 10
+
+      return name && value && value >= 10 && name !== 'Pas de mesure'
         ? [
             ...carry,
             {

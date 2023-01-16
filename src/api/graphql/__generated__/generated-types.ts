@@ -40,6 +40,7 @@ export type GlobalExpositionPeriod = {
 
 export type GlobalRuptures = {
   __typename?: 'GlobalRuptures';
+  config?: Maybe<GlobalRupturesConfig>;
   repartitionPerAction?: Maybe<Array<Maybe<RuptureActionRepartition>>>;
   repartitionPerCause?: Maybe<Array<Maybe<RuptureCauseRepartition>>>;
   repartitionPerClassification?: Maybe<Array<Maybe<RuptureClassificationRepartition>>>;
@@ -47,6 +48,12 @@ export type GlobalRuptures = {
   ruptureStocks?: Maybe<Array<Maybe<RuptureStock>>>;
   ruptureYears?: Maybe<Array<Maybe<RuptureYear>>>;
   totalActions?: Maybe<Array<Maybe<RuptureTotalAction>>>;
+};
+
+export type GlobalRupturesConfig = {
+  __typename?: 'GlobalRupturesConfig';
+  maxYear?: Maybe<Scalars['String']>;
+  minYear?: Maybe<Scalars['String']>;
 };
 
 export type GlobalStatistic = {
@@ -569,6 +576,7 @@ export type ResolversTypes = {
   Float: ResolverTypeWrapper<Scalars['Float']>;
   GlobalExpositionPeriod: ResolverTypeWrapper<GlobalExpositionPeriod>;
   GlobalRuptures: ResolverTypeWrapper<GlobalRuptures>;
+  GlobalRupturesConfig: ResolverTypeWrapper<GlobalRupturesConfig>;
   GlobalStatistic: ResolverTypeWrapper<GlobalStatistic>;
   GlobalStatsUsagePerAge: ResolverTypeWrapper<GlobalStatsUsagePerAge>;
   GlobalStatsUsagePerGravity: ResolverTypeWrapper<GlobalStatsUsagePerGravity>;
@@ -633,6 +641,7 @@ export type ResolversParentTypes = {
   Float: Scalars['Float'];
   GlobalExpositionPeriod: GlobalExpositionPeriod;
   GlobalRuptures: GlobalRuptures;
+  GlobalRupturesConfig: GlobalRupturesConfig;
   GlobalStatistic: GlobalStatistic;
   GlobalStatsUsagePerAge: GlobalStatsUsagePerAge;
   GlobalStatsUsagePerGravity: GlobalStatsUsagePerGravity;
@@ -749,6 +758,7 @@ export type GlobalRupturesResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['GlobalRuptures'] = ResolversParentTypes['GlobalRuptures']
 > = {
+  config?: Resolver<Maybe<ResolversTypes['GlobalRupturesConfig']>, ParentType, ContextType>;
   repartitionPerAction?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['RuptureActionRepartition']>>>,
     ParentType,
@@ -784,6 +794,15 @@ export type GlobalRupturesResolvers<
     ParentType,
     ContextType
   >;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type GlobalRupturesConfigResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['GlobalRupturesConfig'] = ResolversParentTypes['GlobalRupturesConfig']
+> = {
+  maxYear?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  minYear?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1435,6 +1454,7 @@ export type Resolvers<ContextType = ContextValue> = {
   EntityExpositionPeriod?: EntityExpositionPeriodResolvers<ContextType>;
   GlobalExpositionPeriod?: GlobalExpositionPeriodResolvers<ContextType>;
   GlobalRuptures?: GlobalRupturesResolvers<ContextType>;
+  GlobalRupturesConfig?: GlobalRupturesConfigResolvers<ContextType>;
   GlobalStatistic?: GlobalStatisticResolvers<ContextType>;
   GlobalStatsUsagePerAge?: GlobalStatsUsagePerAgeResolvers<ContextType>;
   GlobalStatsUsagePerGravity?: GlobalStatsUsagePerGravityResolvers<ContextType>;

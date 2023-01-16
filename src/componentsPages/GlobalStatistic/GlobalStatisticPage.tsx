@@ -43,7 +43,7 @@ const SectionDemography = () => {
   return (
     <div className="GlobalStatisticDemographySection text-left">
       <BoxInfo
-        title={`${exposition?.consumption ?? 'Aucune'} Déclaration(s) cumulée(s)`}
+        title={`${numberWithThousand(exposition?.consumption ?? 0)} déclarations cumulées`}
         icon={<FolderSVG />}
         theme="dark-green"
         className="my-8"
@@ -189,6 +189,7 @@ const SectionSeriousEffect = () => {
             <BarChartRepartition
               className="h-64 w-full flex justify-center items-center"
               data={repartitionPerSeriousEffect}
+              dataLabel="Détail des déclarations d'effets indésirables graves"
               theme="green-full"
             />
           </GraphBox>
@@ -259,12 +260,24 @@ const SectionTypesOfSideEffects = () => {
         </p>
         <p>
           Si une déclaration concerne des effets indésirables appartenant à plusieurs SOC, elle sera
-          comptabilisée dans chacun de ces SOC. À l&apos;inverse, si tous ces effets indésirables
-          appartiennent au même SOC, ils ne seront comptabilisés qu&apos;une fois.
+          comptabilisée dans chacun de ces SOC.{' '}
+          <i>
+            Par exemple, un mal de tête et acné seront comptabilisés chacun une fois dans
+            “Affections du système nerveux” et “Affections de la peau et du tissu sous-cutané”.
+          </i>
+        </p>
+        <p>
+          À l&apos;inverse, si tous ces effets indésirables appartiennent au même SOC, ils ne seront
+          comptabilisés qu&apos;une fois dans ce SOC.
+          <i>
+            Par exemple, de l’acné et de l’eczéma seront comptabilisés une seule fois dans le SOC
+            “Affections de la peau et du tissu sous-cutané”. <br />
+            Ils seront en revanche bien comptabilisés 2 fois dans le détail de ce SOC.
+          </i>
         </p>
         <p>
           Sont affichés ici tous les SOC, ainsi que le détail du type d&apos;effet si les effectifs
-          sont supérieurs ou égaux à 11.
+          sont supérieurs ou égaux à 11, pour le respect de la confidentialité des données.
         </p>
       </Accordion>
 

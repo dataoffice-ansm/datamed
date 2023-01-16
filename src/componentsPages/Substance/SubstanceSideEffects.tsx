@@ -113,7 +113,7 @@ export const SubstanceSideEffects = ({
       <BoxInfo
         title={`${
           numberWithThousand(substance.exposition?.consumption ?? 0) ?? 'Aucune'
-        } déclaration(s) reçue(s)`}
+        } déclarations reçues`}
         icon={<FolderSVG />}
         theme="secondary"
         className="my-8"
@@ -128,7 +128,7 @@ export const SubstanceSideEffects = ({
         <div className="flex-1 flex-shrink">
           {}
           <GraphBox
-            title="Répartition par sexe des patients traités parmi les cas déclarés d'effets indésirables"
+            title="Répartition par sexe des patients traités parmi les déclarations d'effets indésirables"
             className="h-full max-w-[100%]"
           >
             {substance.sideEffects?.repartitionPerGender?.female?.valuePercent &&
@@ -161,7 +161,7 @@ export const SubstanceSideEffects = ({
 
         <div className="flex-1 flex-shrink">
           <GraphBox
-            title="Répartition par âge des patients traités parmi les cas déclarés d'effets indésirables"
+            title="Répartition par âge des patients traités parmi les déclarations d'effets indésirables"
             className="h-full max-w-[100%]"
           >
             <PieChartRepartition
@@ -219,14 +219,26 @@ export const SubstanceSideEffects = ({
           systèmes d&apos;organes ont été définis (<strong>Système Organe Classe ou SOC</strong>).
         </p>
         <p>
-          Une déclaration peut contenir plusieurs effets indésirables d’un même patient. Ces effets
-          peuvent être catégorisés dans plusieurs SOC, ils seront donc comptabilités dans chacun de
-          ces SOC. À l&apos;inverse, si tous ces effets indésirables appartiennent au même SOC, ils
-          ne seront comptabilisés qu&apos;une fois dans ce SOC.
+          Si une déclaration concerne des effets indésirables appartenant à plusieurs SOC, elle sera
+          comptabilisée dans chacun de ces SOC.{' '}
+          <i>
+            Par exemple, un mal de tête et acné seront comptabilisés chacun une fois dans
+            “Affections du système nerveux” et “Affections de la peau et du tissu sous-cutané”.
+          </i>
         </p>
         <p>
-          Sont affichés ici tous les SOC, ainsi que le détail du type d’effet si les effectifs sont
-          supérieurs ou égaux à 11.
+          À l&apos;inverse, si tous ces effets indésirables appartiennent au même SOC, ils ne seront
+          comptabilisés qu&apos;une fois dans ce SOC.
+          <i>
+            Par exemple, de l’acné et de l’eczéma seront comptabilisés une seule fois dans le SOC
+            “Affections de la peau et du tissu sous-cutané”.
+            <br />
+            Ils seront en revanche bien comptabilisés 2 fois dans le détail de ce SOC.
+          </i>
+        </p>
+        <p>
+          Sont affichés ici tous les SOC, ainsi que le détail du type d&apos;effet si les effectifs
+          sont supérieurs ou égaux à 11, pour le respect de la confidentialité des données.
         </p>
       </Accordion>
 
@@ -241,15 +253,6 @@ export const SubstanceSideEffects = ({
 
             return (
               <div className="GraphBoxSelectContent">
-                <div className="font-medium text-lg md:text-xl lg:text-2xl mt-2 mb-6 px-4">
-                  Parmi les{' '}
-                  <span className="text-secondary font-medium">
-                    {numberWithThousand(substance.exposition?.consumption ?? 0)}
-                  </span>{' '}
-                  déclarations d’effets indésirables pour :{' '}
-                  <span className="text-secondary font-medium">{substance.name}</span>
-                </div>
-
                 <GraphFiguresGrid
                   data={repartitionPerPathology}
                   renderItem={(pathologyRepartition) => (

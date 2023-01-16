@@ -364,7 +364,13 @@ type RuptureActionRepartition {
     total: Int
 }
 
+type GlobalRupturesConfig {
+    minYear: String
+    maxYear: String
+}
+
 type GlobalRuptures {
+    config: GlobalRupturesConfig
     ruptureStocks: [RuptureStock]
     ruptureYears: [RuptureYear]
     repartitionPerClassification: [RuptureClassificationRepartition]

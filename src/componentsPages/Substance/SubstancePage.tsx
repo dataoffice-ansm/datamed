@@ -7,11 +7,9 @@ import {
   type Substance,
 } from '../../graphql/__generated__/generated-documents';
 import { PaginatedList } from '../../components/PaginatedList';
-import classnames from 'classnames';
 import { SubstanceSideEffects } from './SubstanceSideEffects';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { Accordion } from '../../components/Accordion';
-import PilIcon from '../../assets/pictos/gellule.svg';
 import { numberWithThousand } from '../../utils/format';
 import ManIllustration from '../../assets/pictos/man_illustration.svg';
 import WomanIllustration from '../../assets/pictos/woman_illustration.svg';
@@ -19,10 +17,10 @@ import { PieChartRepartition } from '../../components/Charts/PieChartRepartition
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
 import { SectionTitle } from '../../components/SectionTitle';
-import { ExpositionLevel } from '../../api/graphql/enums';
 import { useMemo } from 'react';
 import { buildSortedRangeData } from '../../utils/entities';
 import { Button } from '../../components/Button/Button';
+import { UsageBarContainer } from '../../components/UsageBarContainer';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
@@ -83,25 +81,7 @@ const SectionOneGlobalInformation = () => {
       <div className="expositionChart my-4 flex rounded-lg shadow bg-white overflow-hidden">
         <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-secondary-900 py-6">
           <span className="text-white">{exposition?.description}</span>
-
-          <div className="UsageBarContainer mt-12 flex justify-center items-end gap-2">
-            {Object.keys(ExpositionLevel).map((levelKey, index) => (
-              <div
-                key={levelKey}
-                className={classnames(
-                  `UsageBarLevel${index}`,
-                  'relative w-6 bg-white border border-solid border-gray-200'
-                )}
-                style={{ height: 20 + 10 * index }}
-              >
-                {exposition?.expositionLevel === levelKey && (
-                  <div className="bouncingPil animate-bounce absolute -top-8">
-                    <PilIcon className="w-6 h-6" />
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+          {exposition && <UsageBarContainer exposition={exposition} entityType="sub" />}
         </div>
 
         <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
@@ -169,11 +149,17 @@ const SectionOneGlobalInformation = () => {
 
 const SectionSideEffects = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
+  const { exposition } = currentEntity;
+
   return (
     <div className="min-h-screen text-center">
       <SectionTitle
         title="Déclarations d’effets indésirables suspectés de la substance active"
-        subTitle="Données issues de la période 2009 - 2021"
+        subTitle={
+          exposition?.maxYear && exposition?.minYear
+            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
+            : 'Période des données issues non renseignée'
+        }
       />
       <SubstanceSideEffects substance={currentEntity} />
     </div>
