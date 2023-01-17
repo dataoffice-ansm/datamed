@@ -311,7 +311,7 @@ type RuptureYear {
 
 type RuptureStock {
     year: Int
-    total: Int
+    nbDeclarations: Int
     nbRisque: Int
     nbRupture: Int
     nbRisqueClosed: Int

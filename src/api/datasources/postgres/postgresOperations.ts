@@ -972,10 +972,11 @@ export class PostgresOperations {
     const rows = await dbInstance
       .selectFrom('sold_out_all')
       .where('year', '=', year.toString())
-      .select(['num', 'year', 'classification', 'state'])
+      .select(['num', 'classification', 'state'])
+      .distinct()
       .execute();
 
-    return (rows ?? []).reduce(
+    return rows.reduce(
       (carry, row) => {
         const { classification, state } = row;
 
@@ -998,7 +999,7 @@ export class PostgresOperations {
       },
       {
         year,
-        total: (rows ?? []).length,
+        nbDeclarations: (rows ?? []).length,
         nbRisque: 0,
         nbRupture: 0,
         nbRuptureClosed: 0,

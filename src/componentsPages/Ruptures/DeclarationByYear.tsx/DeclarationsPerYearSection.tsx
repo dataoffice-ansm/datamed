@@ -39,7 +39,7 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
     setSelectedIndex(index);
   }, []);
 
-  const selectedData = useMemo(
+  const rupturesDeclarationsForSelectedYear = useMemo(
     () =>
       (ruptures?.ruptureStocks ?? []).find(
         (element) => element?.year === options[selectedIndex].value
@@ -48,16 +48,20 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
   );
 
   const percentRisk = Math.trunc(
-    (Math.round(selectedData?.nbRisqueClosed ?? 0) / (selectedData?.nbRisque ?? 1)) * 100
+    (Math.round(rupturesDeclarationsForSelectedYear?.nbRisqueClosed ?? 0) /
+      (rupturesDeclarationsForSelectedYear?.nbRisque ?? 1)) *
+      100
   );
 
-  const percentRupture = Math.trunc(
-    (Math.round(selectedData?.nbRuptureClosed ?? 0) / (selectedData?.nbRupture ?? 1)) * 100
+  const percentRuptureRisk = Math.trunc(
+    (Math.round(rupturesDeclarationsForSelectedYear?.nbRuptureClosed ?? 0) /
+      (rupturesDeclarationsForSelectedYear?.nbRupture ?? 1)) *
+      100
   );
 
   const sectionSubtitlePeriod =
     ruptures.config?.minYear && ruptures.config.maxYear
-      ? `${ruptures.config?.minYear} - ${ruptures.config.maxYear} `
+      ? `${ruptures.config?.minYear} - ${ruptures.config.maxYear}`
       : 'Année non disponible';
 
   return (
@@ -72,7 +76,9 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
       {(ruptures?.ruptureYears ?? []).length > 0 ? (
         <div className="DeclarationByYearSectionContent flex flex-col gap-4">
           <BoxInfo
-            title={`${numberWithThousand(selectedData?.total ?? 0)} déclarations reçues`}
+            title={`${numberWithThousand(
+              rupturesDeclarationsForSelectedYear?.nbDeclarations ?? 0
+            )} déclarations reçues`}
             icon={<FolderSVG />}
             theme="dark-green"
             tooltip={
@@ -104,9 +110,9 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
             <KPIBoxProgression
               key="declar-ruptures"
               title="Déclarations de ruptures depuis le début de l’année civile en cours"
-              total={selectedData?.nbRupture ?? 0}
+              total={rupturesDeclarationsForSelectedYear?.nbRupture ?? 0}
               percentageTitle="ont été clôturées à ce jour"
-              percent={percentRupture}
+              percent={percentRuptureRisk}
               numberColor="text-teal-900"
               percentBackgroundColor="bg-teal-300"
               percentForegroundColor="bg-teal-900"
@@ -123,7 +129,7 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
               title="Déclarations de risques de rupture depuis le début de l’année civile en cours"
               percentageTitle="ont été clôturées à ce jour"
               percent={percentRisk}
-              total={selectedData?.nbRisque ?? 0}
+              total={rupturesDeclarationsForSelectedYear?.nbRisque ?? 0}
               numberColor="text-green-900"
               percentBackgroundColor="bg-green-300"
               percentForegroundColor="bg-green-900"

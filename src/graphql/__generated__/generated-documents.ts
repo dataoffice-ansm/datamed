@@ -344,11 +344,11 @@ export type RuptureClassificationRepartition = {
 
 export type RuptureStock = {
   __typename?: 'RuptureStock';
+  nbDeclarations?: Maybe<Scalars['Int']>;
   nbRisque?: Maybe<Scalars['Int']>;
   nbRisqueClosed?: Maybe<Scalars['Int']>;
   nbRupture?: Maybe<Scalars['Int']>;
   nbRuptureClosed?: Maybe<Scalars['Int']>;
-  total?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
 };
 
@@ -1092,7 +1092,7 @@ export type GlobalRupturesQuery = {
     ruptureStocks?: Array<{
       __typename?: 'RuptureStock';
       year?: number | null;
-      total?: number | null;
+      nbDeclarations?: number | null;
       nbRisque?: number | null;
       nbRisqueClosed?: number | null;
       nbRuptureClosed?: number | null;
@@ -1628,7 +1628,7 @@ export const GlobalRupturesDocument = gql`
       }
       ruptureStocks {
         year
-        total
+        nbDeclarations
         nbRisque
         nbRisqueClosed
         nbRuptureClosed

@@ -344,11 +344,11 @@ export type RuptureClassificationRepartition = {
 
 export type RuptureStock = {
   __typename?: 'RuptureStock';
+  nbDeclarations?: Maybe<Scalars['Int']>;
   nbRisque?: Maybe<Scalars['Int']>;
   nbRisqueClosed?: Maybe<Scalars['Int']>;
   nbRupture?: Maybe<Scalars['Int']>;
   nbRuptureClosed?: Maybe<Scalars['Int']>;
-  total?: Maybe<Scalars['Int']>;
   year?: Maybe<Scalars['Int']>;
 };
 
@@ -1194,11 +1194,11 @@ export type RuptureStockResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureStock'] = ResolversParentTypes['RuptureStock']
 > = {
+  nbDeclarations?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   nbRisque?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   nbRisqueClosed?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   nbRupture?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   nbRuptureClosed?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

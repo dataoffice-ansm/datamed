@@ -289,7 +289,7 @@ query GlobalRuptures {
         }
         ruptureStocks {
             year
-            total
+            nbDeclarations
             nbRisque
             nbRisqueClosed
             nbRuptureClosed

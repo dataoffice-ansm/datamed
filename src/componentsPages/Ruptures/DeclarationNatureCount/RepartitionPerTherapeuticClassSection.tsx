@@ -2,7 +2,6 @@ import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
 import tailwindPaletteConfig from '../../../../tailwind.palette.config';
 import type { SelectOption } from 'components/Select';
-import { BarChart } from '../../../components/Charts/BarChart';
 import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
 import { buildSortedRangeData } from '../../../utils/entities';
 import {
