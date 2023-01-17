@@ -882,13 +882,19 @@ export class PostgresOperations {
 
   async getGlobalStatisticRepPerPathology(): Promise<GlobalStatsUsagePerPathology[]> {
     const rows = await dbInstance
-      .selectFrom('global_se_soc')
-      .select(['id', 'label as range', 'pct as valuePercent', 'n as value'])
+      .selectFrom('global_se_soc as gsoc')
+      .leftJoin('soc_longs', 'soc_longs.id', 'gsoc.soc_long_id')
+      .select([
+        'gsoc.id as id',
+        'gsoc.pct as valuePercent',
+        'gsoc.n as value',
+        'soc_longs.soc as range',
+      ])
       .execute();
 
     return rows.reduce<GlobalStatsUsagePerPathology[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id && range && value && valuePercent
+      return id && range && value && value >= 10 && valuePercent
         ? [
             ...carry,
             {
@@ -904,13 +910,19 @@ export class PostgresOperations {
 
   async getGlobalStatisticRepPerNotifier(): Promise<GlobalStatsUsagePerNotifier[]> {
     const rows = await dbInstance
-      .selectFrom('global_se_notifiers')
-      .select(['id', 'label as job', 'pct as valuePercent', 'n as value'])
+      .selectFrom('global_se_notifiers as gnotif')
+      .leftJoin('notifiers', 'notifiers.id', 'gnotif.notifier_id')
+      .select([
+        'gnotif.id as id',
+        'gnotif.pct as valuePercent',
+        'gnotif.n as value',
+        'notifiers.job as job',
+      ])
       .execute();
 
     return rows.reduce<GlobalStatsUsagePerNotifier[]>((carry, row) => {
       const { id, job, value, valuePercent } = row;
-      return id && job && value && valuePercent
+      return id && job && value && value >= 10 && valuePercent
         ? [
             ...carry,
             {

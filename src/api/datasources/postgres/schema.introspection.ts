@@ -161,11 +161,17 @@ export type GlobalSeGravityTypes = {
   pct: number | null;
 };
 
-export type GlobalSeNotifiers = {
+export type GlobalSeNbEvol = {
   id: Generated<number>;
   label: string | null;
   n: number | null;
+};
+
+export type GlobalSeNotifiers = {
+  id: Generated<number>;
+  n: number | null;
   pct: number | null;
+  notifier_id: number | null;
 };
 
 export type GlobalSeSex = {
@@ -177,9 +183,9 @@ export type GlobalSeSex = {
 
 export type GlobalSeSoc = {
   id: Generated<number>;
-  label: string | null;
   n: number | null;
   pct: number | null;
+  soc_long_id: number | null;
 };
 
 export type GravityErrors = {
@@ -494,6 +500,7 @@ export type DB = {
   global_se_ages: GlobalSeAges;
   global_se_grave: GlobalSeGrave;
   global_se_gravity_types: GlobalSeGravityTypes;
+  global_se_nb_evol: GlobalSeNbEvol;
   global_se_notifiers: GlobalSeNotifiers;
   global_se_sex: GlobalSeSex;
   global_se_soc: GlobalSeSoc;
