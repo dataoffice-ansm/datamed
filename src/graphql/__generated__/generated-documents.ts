@@ -305,6 +305,7 @@ export type RepartitionPerPathology = {
 
 export type RuptureAction = {
   __typename?: 'RuptureAction';
+  description?: Maybe<Scalars['String']>;
   range: Scalars['String'];
   value: Scalars['Int'];
 };
@@ -468,7 +469,8 @@ export type SubstancesReturn = {
 
 export type TherapeuticClassRupture = {
   __typename?: 'TherapeuticClassRupture';
-  name?: Maybe<Scalars['String']>;
+  atcId: Scalars['Int'];
+  atcName: Scalars['String'];
   totalCis?: Maybe<Scalars['Int']>;
   value?: Maybe<Scalars['Int']>;
 };
@@ -1111,7 +1113,8 @@ export type GlobalRupturesQuery = {
       total?: number | null;
       repartition?: Array<{
         __typename?: 'TherapeuticClassRupture';
-        name?: string | null;
+        atcId: number;
+        atcName: string;
         value?: number | null;
         totalCis?: number | null;
       } | null> | null;
@@ -1126,7 +1129,12 @@ export type GlobalRupturesQuery = {
       __typename?: 'RuptureActionRepartition';
       year?: number | null;
       total?: number | null;
-      actions?: Array<{ __typename?: 'RuptureAction'; value: number; range: string } | null> | null;
+      actions?: Array<{
+        __typename?: 'RuptureAction';
+        value: number;
+        range: string;
+        description?: string | null;
+      } | null> | null;
     } | null> | null;
     totalActions?: Array<{
       __typename?: 'RuptureTotalAction';
@@ -1646,7 +1654,8 @@ export const GlobalRupturesDocument = gql`
         year
         total
         repartition {
-          name
+          atcId
+          atcName
           value
           totalCis
         }
@@ -1665,6 +1674,7 @@ export const GlobalRupturesDocument = gql`
         actions {
           value
           range
+          description
         }
       }
       totalActions {

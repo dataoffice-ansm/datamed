@@ -20,7 +20,7 @@ export const navBarLinks: NavLinkItem[] = [
     url: '/ruptures',
   },
   {
-    title: 'Statistiques globales',
+    title: 'Pharmacovigilance',
     url: '/globaldec',
   },
   // {

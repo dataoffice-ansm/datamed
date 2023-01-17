@@ -307,7 +307,8 @@ query GlobalRuptures {
             year
             total
             repartition {
-                name
+                atcId
+                atcName
                 value
                 totalCis
             }
@@ -326,6 +327,7 @@ query GlobalRuptures {
             actions {
                 value
                 range
+                description
             }
         }
         totalActions {

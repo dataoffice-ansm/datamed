@@ -139,6 +139,7 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
                   label={action.range}
                   icon={getDeclarationActionIcon(action.range)}
                   valueClassName="text-dark-green-900"
+                  contentTooltip={getRuptureActionTypeDescription(action.range)}
                   value={
                     selectedUnitOption === 'number'
                       ? action.value

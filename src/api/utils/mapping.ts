@@ -45,23 +45,6 @@ export const getCisPharmaFormType = (v: string) => {
 const getExpositionConsumptionCis = (exposition: keyof typeof ExpositionLevel) => {
   switch (exposition) {
     case 'VERYLOW':
-      return '< 5 000';
-    case 'LOW':
-      return '5 000 - 25 000';
-    case 'MODERED':
-      return '25 000 - 100 000';
-    case 'HIGH':
-      return '100 000 - 500 000';
-    case 'VERYHIGH':
-      return '> 500 000';
-    default:
-      return 'Inconnu';
-  }
-};
-
-const getExpositionConsumptionSub = (exposition: keyof typeof ExpositionLevel) => {
-  switch (exposition) {
-    case 'VERYLOW':
       return '< 1 000';
     case 'LOW':
       return '1 000 - 5 000';
@@ -71,6 +54,23 @@ const getExpositionConsumptionSub = (exposition: keyof typeof ExpositionLevel) =
       return '15 000 - 50 000';
     case 'VERYHIGH':
       return '> 50 000';
+    default:
+      return 'Inconnu';
+  }
+};
+
+const getExpositionConsumptionSub = (exposition: keyof typeof ExpositionLevel) => {
+  switch (exposition) {
+    case 'VERYLOW':
+      return '< 5 000';
+    case 'LOW':
+      return '5 000 - 25 000';
+    case 'MODERED':
+      return '25 000 - 100 000';
+    case 'HIGH':
+      return '100 000 - 500 000';
+    case 'VERYHIGH':
+      return '> 500 000';
     default:
       return 'Inconnu';
   }
@@ -158,6 +158,30 @@ export const getRuptureTypeLabel = (ruptureId: number) => {
     case 5:
     default:
       return 'Autre';
+  }
+};
+
+export const getRuptureActionTypeDescription = (actionType: string) => {
+  switch (actionType) {
+    // "Avec mesure": "Situation ayant nécessité la mise en place d’une ou plusieurs mesures pour pallier ou pour éviter la rupture.",
+    // "Sans mesure": "Situation n’ayant pas nécessité la mise en place de mesures palliatives.",
+
+    case 'Restriction du circuit de distribution':
+      return 'Restriction de la distribution aux pharmacies de ville ou aux pharmacies hospitalières.';
+    case 'Contingentement qualitatif':
+      return 'Mise en place d’une priorisation de l’utilisation du médicament pour certaines populations de patients en accord avec l’ANSM après consultation des associations de patients et professionnels de santé.';
+    case 'Contingentement quantitatif':
+      return 'Mise en place d’une distribution limitée en quantité pour permettre une répartition harmonieuse des stocks.';
+    case 'Importation':
+      return 'Importation de médicaments identiques ou similaires de l’étranger autorisée par l’ANSM.';
+    case 'Flexibilité réglementaire':
+      return 'Dérogation ponctuelle à la réglementation';
+    case 'Mise à disposition':
+      return "Mise à disposition d'un médicament produit sur le territoire français et initialement destiné à un autre pays.";
+    case "Mise en place d'un stock de dépannage":
+      return 'Réserve d’un stock très limité afin de répondre aux besoins urgents.';
+    default:
+      return '';
   }
 };
 

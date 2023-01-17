@@ -305,6 +305,7 @@ export type RepartitionPerPathology = {
 
 export type RuptureAction = {
   __typename?: 'RuptureAction';
+  description?: Maybe<Scalars['String']>;
   range: Scalars['String'];
   value: Scalars['Int'];
 };
@@ -468,7 +469,8 @@ export type SubstancesReturn = {
 
 export type TherapeuticClassRupture = {
   __typename?: 'TherapeuticClassRupture';
-  name?: Maybe<Scalars['String']>;
+  atcId: Scalars['Int'];
+  atcName: Scalars['String'];
   totalCis?: Maybe<Scalars['Int']>;
   value?: Maybe<Scalars['Int']>;
 };
@@ -1137,6 +1139,7 @@ export type RuptureActionResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RuptureAction'] = ResolversParentTypes['RuptureAction']
 > = {
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1420,7 +1423,8 @@ export type TherapeuticClassRuptureResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['TherapeuticClassRupture'] = ResolversParentTypes['TherapeuticClassRupture']
 > = {
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  atcId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  atcName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   totalCis?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

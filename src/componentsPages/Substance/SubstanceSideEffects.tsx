@@ -112,7 +112,7 @@ export const SubstanceSideEffects = ({
     <div className="SubstanceContainerContentTitle text-left">
       <BoxInfo
         title={`${
-          numberWithThousand(substance.exposition?.consumption ?? 0) ?? 'Aucune'
+          numberWithThousand(substance.sideEffects?.declarations?.total ?? 0) ?? 'Aucune'
         } déclarations reçues`}
         icon={<FolderSVG className="h-24 w-24" />}
         theme="secondary"

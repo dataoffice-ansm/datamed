@@ -325,7 +325,8 @@ type RuptureClassificationRepartition {
 }
 
 type TherapeuticClassRupture {
-    name: String
+    atcId: Int!
+    atcName: String!
     value: Int
     totalCis: Int
 }
@@ -356,6 +357,7 @@ type RuptureTotalAction {
 type RuptureAction {
     range: String!
     value: Int!
+    description: String
 }
 
 type RuptureActionRepartition {

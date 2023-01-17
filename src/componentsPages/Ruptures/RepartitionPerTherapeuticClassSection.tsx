@@ -1,15 +1,15 @@
 import type { HTMLAttributes } from 'react';
-import { useMemo } from 'react';
-import tailwindPaletteConfig from '../../../../tailwind.palette.config';
+import React, { useMemo } from 'react';
+import tailwindPaletteConfig from '../../../tailwind.palette.config';
 import type { SelectOption } from 'components/Select';
-import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
-import { buildSortedRangeData } from '../../../utils/entities';
+import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
+import { buildSortedRangeData } from '../../utils/entities';
 import {
   type TherapeuticClassesRupturesPerYear,
   type TherapeuticClassRupture,
-} from '../../../graphql/__generated__/generated-documents';
-import { GraphBoxSelect } from '../../../components/GraphBoxSelect';
-import { MixedBarChart } from '../../../components/Charts/MixedBarBublleChart';
+} from '../../graphql/__generated__/generated-documents';
+import { GraphBoxSelect } from '../../components/GraphBoxSelect';
+import { MixedBarChart } from '../../components/Charts/MixedBarBublleChart';
 import { type ChartDataset } from 'chart.js';
 
 export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTMLDivElement>) => {
@@ -80,7 +80,7 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
           'number'
         );
 
-        const labels = therapeuticRepartitionForSelectedYear.map((e) => e.name);
+        const labels = therapeuticRepartitionForSelectedYear.map((e) => e.atcName);
 
         const datasetBubble: ChartDataset<'scatter'> = {
           order: 1,
@@ -104,7 +104,7 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
           <div className="min-h-[256px] md:min-h-[512px] lg:min-h-[600px] w-full relative">
             <MixedBarChart
               className="flex justify-center mt-4 w-full h-full absolute"
-              labels={labels as unknown as never}
+              labels={labels}
               datasets={datasets}
               leftLegend="Nombre de signalements"
               bottomLegend="Classe thérapeutique"

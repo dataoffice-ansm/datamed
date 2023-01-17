@@ -42,6 +42,7 @@ import {
   getMedicalErrorApparitionStep,
   getPublicationsTypeLabel,
   getRuptureTypeLabel,
+  getRuptureActionTypeDescription,
 } from '../../utils/mapping';
 import { roundFloat } from '../../utils/format';
 
@@ -1132,21 +1133,21 @@ export class PostgresOperations {
     const rows = await dbInstance
       .selectFrom('actions')
       .leftJoin('actions_types as at', 'actions.type_id', 'at.id')
-      .select([count('actions.id').as('value'), 'at.type as name'])
+      .select([count('actions.id').as('value'), 'at.type as label'])
       .where('actions.year', '=', year)
       .groupBy('at.type')
-      .orderBy('at.type')
       .execute();
 
     return rows.reduce<RuptureAction[]>((carry, row) => {
-      const { name, value } = row;
+      const { label, value } = row;
 
-      return name && value && value >= 10 && name !== 'Pas de mesure'
+      return label && value && value >= 10 && label !== 'Pas de mesure'
         ? [
             ...carry,
             {
-              range: name,
+              range: label,
               value: Number(value),
+              description: getRuptureActionTypeDescription(label),
             },
           ]
         : carry;
@@ -1193,21 +1194,24 @@ export class PostgresOperations {
       .select([
         count('sold_out_all.id').as('value'),
         'sold_out_all.year',
-        'atc_classes.label as name',
+        'atc_classes.id as atcId',
+        'atc_classes.label as atcName',
       ])
       .groupBy('sold_out_all.year')
+      .groupBy('atc_classes.id')
       .groupBy('atc_classes.label')
       .execute();
 
     return rows.reduce<TherapeuticClassRupture[]>((carry, row) => {
-      const { name, value, year } = row;
-      const totalCis = Number(rowCountCisPerClass.find((r) => r.name === name)?.value ?? 0);
+      const { atcId, atcName, value, year } = row;
+      const totalCis = Number(rowCountCisPerClass.find((r) => r.name === atcName)?.value ?? 0);
 
-      return name && year && value && value >= 10
+      return atcId && atcName && year && value && value >= 10
         ? [
             ...carry,
             {
-              name,
+              atcId,
+              atcName,
               value: Number(value),
               totalCis,
             },

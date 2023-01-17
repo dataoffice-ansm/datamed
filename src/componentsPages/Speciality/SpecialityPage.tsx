@@ -398,6 +398,8 @@ const SectionMedicinalErrors = () => {
                           : apparitionStep.value) ?? 0
                       }
                       label={apparitionStep.label}
+                      // TODO
+                      // contentTooltip=""
                       icon={getMedErrorApparitionStepIcon(step)}
                     />
                   );
