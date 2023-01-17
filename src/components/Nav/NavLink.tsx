@@ -9,6 +9,7 @@ import classNames from 'classnames';
  * @param href
  * @param className
  * @param enableAnimation
+ * @param handleOnClick
  * @constructor
  */
 export const NavLink = ({

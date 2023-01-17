@@ -22,15 +22,20 @@ export const NavigationBar = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
   const navBarRefHeight = useRefHeight(navbarRef);
   const { navBarHeight, setNavBarHeight } = useLayoutContext();
-
   const { setScrollEnabled } = useBodyScrollContext();
   const { scrollY } = useScrollPosition();
   const pageScrolled = scrollY > navBarHeight;
 
   const isDesktop = useBreakpoint('md');
 
-  const handleNavDrawer = useCallback(() => {
+  const toggleOpenNavDrawer = useCallback(() => {
     setNavDrawerOpened((v) => !v);
+    setSearchDrawerOpened(false);
+  }, []);
+
+  const closeNavDrawer = useCallback(() => {
+    console.log('sdfsef');
+    setNavDrawerOpened(false);
     setSearchDrawerOpened(false);
   }, []);
 
@@ -78,7 +83,7 @@ export const NavigationBar = () => {
         aria-label={navDrawerOpened ? 'Fermer menu' : 'Ouvrir menu'}
         type="button"
         className="flex justify-center align-center p-2 md:hidden"
-        onClick={handleNavDrawer}
+        onClick={toggleOpenNavDrawer}
       >
         {navDrawerOpened ? (
           <CloseIcon height={navIconSize} width={navIconSize} />
@@ -87,7 +92,13 @@ export const NavigationBar = () => {
         )}
       </button>
 
-      {navDrawerOpened && <NavDrawerMobile links={navBarLinks} topFromNavbar={navBarHeight} />}
+      {navDrawerOpened && (
+        <NavDrawerMobile
+          links={navBarLinks}
+          topFromNavbar={navBarHeight}
+          handleOnClick={closeNavDrawer}
+        />
+      )}
 
       <div className="flex justify-center md:justify-between items-center gap-8">
         <Link href="/">

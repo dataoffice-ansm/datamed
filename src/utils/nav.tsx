@@ -3,21 +3,13 @@ import { NavLink } from '../components/Nav/NavLink';
 import { Menu } from '@headlessui/react';
 import classNames from 'classnames';
 
-const RenderNavLink = ({
-  link,
-  mobile = false,
-}: {
-  link: NavLinkItem;
-  // eslint-disable-next-line react/no-unused-prop-types
-  active?: boolean;
-  mobile?: boolean;
-}) => {
-  const url = link?.url ?? '#';
+const RenderNavLink = ({ link, mobile = false }: { link: NavLinkItem; mobile?: boolean }) => {
+  const url = link?.url ?? '';
 
   return (
     <NavLink
       key={link.url}
-      enableAnimation
+      enableAnimation={!mobile}
       className={classNames(!mobile && 'hidden md:block')}
       href={url}
     >
@@ -32,9 +24,7 @@ const NavLinkDropdown = ({ link }: { link: NavLinkItem }) => (
     <Menu.Items>
       {link?.links &&
         link.links.map((link) => (
-          <Menu.Item key={link.url}>
-            {({ active }) => <RenderNavLink link={link} active={active} />}
-          </Menu.Item>
+          <Menu.Item key={link.url}>{() => <RenderNavLink link={link} />}</Menu.Item>
         ))}
     </Menu.Items>
   </Menu>
