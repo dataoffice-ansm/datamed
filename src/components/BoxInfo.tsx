@@ -34,11 +34,13 @@ export const BoxInfo = ({
 }: BoxInfoTitleProps) => (
   <div
     className={classNames(
-      'BoxInfo flex flex-col sm:flex-row justify-center align-center shadow p-4 gap-8 bg-white',
+      'BoxInfo flex flex-row justify-center align-center shadow p-4 gap-8 bg-white',
       className
     )}
   >
-    <div className={classNames('BoxInfoIcon h-24 w-24', iconClassName)}>{icon}</div>
+    <div className={classNames('BoxInfoIcon flex align-center h-24 w-24', iconClassName)}>
+      {icon}
+    </div>
     <div className="BoxInfoContent flex flex-col flex-auto justify-center gap-2 md:gap-0">
       <div
         className={classNames('BoxInfoTitleContainer flex justify-start items-center gap-3', {
@@ -48,7 +50,7 @@ export const BoxInfo = ({
           'text-success': theme === 'success',
         })}
       >
-        <span className="BoxInfoTitle text-3xl font-medium">{title}</span>
+        <span className="BoxInfoTitle text-2xl lg:text-3xl font-medium">{title}</span>
         {tooltip && (
           <TooltipInformation>
             <div className="TooltipContent p-2 max-w-md">{tooltip}</div>

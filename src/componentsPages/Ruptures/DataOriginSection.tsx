@@ -1,8 +1,8 @@
-import { SectionTitle } from '../../../components/SectionTitle';
-import { GraphBox } from '../../../components/GraphBox/GraphBox';
+import { SectionTitle } from '../../components/SectionTitle';
+import { GraphBox } from '../../components/GraphBox/GraphBox';
 
 export const DataOriginSection = () => (
-  <div className="DataOriginSection my-12">
+  <div className="DataOriginSection mb-12">
     <SectionTitle title="Origine des données" />
 
     <GraphBox title="">

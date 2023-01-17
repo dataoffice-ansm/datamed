@@ -1,21 +1,22 @@
 import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
-import type { SelectOption } from '../../../components/Select';
-import { BoxInfo } from '../../../components/BoxInfo';
-import FolderSVG from '../../../assets/pictos/folder.svg';
-import DeclarationWithOneActionSvg from '../../../assets/pictos/actions/declaration-avec-au-moin-une-mesure.svg';
-import { GraphFiguresGrid } from '../../../components/GraphFiguresGrid';
-import { GraphFigure } from '../../../components/GraphFigure';
-import { getDeclarationActionIcon } from '../../../utils/iconsMapping';
-import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
+import type { SelectOption } from '../../components/Select';
+import { BoxInfo } from '../../components/BoxInfo';
+import FolderSVG from '../../assets/pictos/folder.svg';
+import DeclarationWithOneActionSvg from '../../assets/pictos/actions/declaration-avec-au-moin-une-mesure.svg';
+import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
+import { GraphFigure } from '../../components/GraphFigure';
+import { getDeclarationActionIcon } from '../../utils/iconsMapping';
+import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
 import {
   type RuptureAction,
   type RuptureActionRepartition,
   type RuptureTotalAction,
-} from '../../../graphql/__generated__/generated-documents';
-import { buildSortedRangeData } from '../../../utils/entities';
-import { numberWithThousand } from '../../../utils/format';
-import { GraphBoxSelect } from '../../../components/GraphBoxSelect';
+} from '../../graphql/__generated__/generated-documents';
+import { buildSortedRangeData } from '../../utils/entities';
+import { numberWithThousand } from '../../utils/format';
+import { GraphBoxSelect } from '../../components/GraphBoxSelect';
+import { getRuptureActionTypeDescription } from '../../api/utils/mapping';
 
 export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { ruptures } = useRupturesPageContext();
@@ -30,7 +31,7 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
   );
 
   return (
-    <div className="RupturesDeclarationActionByYearSection my-12">
+    <div className="RupturesDeclarationActionByYearSection mb-12">
       <GraphBoxSelect
         title="Gestion des déclarations de ruptures et risques de rupture de stocks"
         className="my-8"
@@ -62,7 +63,7 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
                       )
                     : percentWithOneAction
                 }`}
-                icon={<DeclarationWithOneActionSvg />}
+                icon={<DeclarationWithOneActionSvg className="h-24 w-24" />}
                 theme="dark-green"
                 className="flex-1"
                 tooltip={
@@ -87,7 +88,7 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
                 title={`${numberWithThousand(
                   selectedRupturesTotalActionsRepartition?.totalMesures ?? 0
                 )}`}
-                icon={<FolderSVG />}
+                icon={<FolderSVG className="h-24 w-24" />}
                 theme="dark-green"
                 className="flex-1"
               >

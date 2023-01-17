@@ -335,9 +335,9 @@ const SectionMedicinalErrors = () => {
         <div className="flex-1 flex-shrink">
           <GraphBox title="Répartition de la population concernée" className="h-full max-w-[100%]">
             <PieChartRepartition
-              theme="primary-full"
+              theme="primary"
               data={populationRepartition}
-              className="h-64 justify-center items-center"
+              className="h-64 w-full flex justify-center items-center"
             />
           </GraphBox>
         </div>
@@ -349,7 +349,7 @@ const SectionMedicinalErrors = () => {
               <div className="flex justify-center text-center gap-2 w-full">
                 <div className="w-full flex flex-col justify-center items-center gap-1">
                   <ManFaceYes className="w-32" />
-                  <span className="text-3xl text-dark-violet-800 mt-3">
+                  <span className="text-2xl lg:text-3xl text-dark-violet-800 mt-3">
                     {currentEntity.medicalErrors?.sideEffectsOriginRepartition?.with?.valuePercent}%
                   </span>
                   <span className="text-base">Sans effets indésirables</span>
@@ -357,7 +357,7 @@ const SectionMedicinalErrors = () => {
 
                 <div className="w-full flex flex-col justify-center items-center gap-1">
                   <ManFaceNo className="w-32" />
-                  <span className="text-3xl text-dark-violet-800 mt-3">
+                  <span className="text-2xl lg:text-3xl text-dark-violet-800 mt-3">
                     {
                       currentEntity.medicalErrors?.sideEffectsOriginRepartition?.without
                         ?.valuePercent

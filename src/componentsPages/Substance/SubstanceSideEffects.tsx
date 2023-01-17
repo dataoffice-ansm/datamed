@@ -114,7 +114,7 @@ export const SubstanceSideEffects = ({
         title={`${
           numberWithThousand(substance.exposition?.consumption ?? 0) ?? 'Aucune'
         } déclarations reçues`}
-        icon={<FolderSVG />}
+        icon={<FolderSVG className="h-24 w-24" />}
         theme="secondary"
         className="my-8"
       >
@@ -279,7 +279,7 @@ export const SubstanceSideEffects = ({
       )}
 
       <CardWithImage
-        className="mb-8"
+        className="mt-8 mb-4"
         imageClassName="w-52"
         title="Comment déclarer un effet indésirable ?"
         image={<SickPersonSvg className="h-48 w-44 m-auto" />}

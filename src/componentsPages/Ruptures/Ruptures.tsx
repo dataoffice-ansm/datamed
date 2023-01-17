@@ -2,11 +2,11 @@ import { HeadlessHeroHeader } from '../../components/HeroHeader/HeadlessHeroHead
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
 import { Tooltip } from '../../components/Tooltip/Tooltip';
 import RupturesSVG from '../../assets/pictos/ruptures.svg';
-import { DeclarationsPerYearSection } from './DeclarationByYear.tsx/DeclarationsPerYearSection';
-import { DeclarationNatureCountSection } from './DeclarationNatureCount/DeclarationNatureCountSection';
-import { RupturesDeclarationActionByYearSection } from './DeclarationActionByYear/DeclarationActionByYear';
-import { DataOriginSection } from './DataOrigin/DataOriginSection';
-import { RepartitionPerTherapeuticClassSection } from './DeclarationNatureCount/RepartitionPerTherapeuticClassSection';
+import { DeclarationsPerYearSection } from './DeclarationsPerYearSection';
+import { DeclarationNatureCountSection } from './DeclarationNatureCountSection';
+import { RupturesDeclarationActionByYearSection } from './DeclarationActionByYear';
+import { DataOriginSection } from './DataOriginSection';
+import { RepartitionPerTherapeuticClassSection } from './RepartitionPerTherapeuticClassSection';
 import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
 
 const useGetGlobalRupturesPeriod = () => {

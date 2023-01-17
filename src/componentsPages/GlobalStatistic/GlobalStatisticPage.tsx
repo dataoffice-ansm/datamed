@@ -44,7 +44,7 @@ const SectionDemography = () => {
     <div className="GlobalStatisticDemographySection text-left">
       <BoxInfo
         title={`${numberWithThousand(exposition?.consumption ?? 0)} déclarations cumulées`}
-        icon={<FolderSVG />}
+        icon={<FolderSVG className="h-24 w-24" />}
         theme="dark-green"
         className="my-8"
         // tooltip={

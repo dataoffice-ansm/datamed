@@ -127,7 +127,7 @@ export const EntityPageLayout = ({
 
   const renderContent = useMemo(
     () => (
-      <div className="EntityPageLayout flex-1 my-8">
+      <div className="EntityPageLayout flex-1 my-12">
         {render(
           sections.map(({ id, content }) => (
             <section

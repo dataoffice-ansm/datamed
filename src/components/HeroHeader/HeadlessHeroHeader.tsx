@@ -77,7 +77,12 @@ export const HeadlessHeroHeader = ({
       </div>
       <div ref={ref} className="HeadlessHeroHeader flex flex-col w-full">
         <Link href="/">
-          <a className={classNames('flex justify-start items-center my-12 gap-4', textColor)}>
+          <a
+            className={classNames(
+              'flex justify-start items-center mt-12 mt-4 md:mb-12 gap-4',
+              textColor
+            )}
+          >
             <div className="h-8 w-8">
               <BackArrowSVG className={classNames('h-8 w-8', backNavigationColor)} />
             </div>
@@ -87,13 +92,15 @@ export const HeadlessHeroHeader = ({
         <div
           className={classNames(
             'HeroHeader flex flex-col md:flex-row justify-center min-h[20rem]',
-            'pt-24 md:pt-16 pb-16 md:pb-24 lg:pb-32 gap-16',
+            'px-4 py-8 gap-8',
+            'md:px-2 md:pt-16 md:pb-24 md:gap-16',
+            'lg:pb-32',
             textColor
           )}
         >
-          <div className="w-24 h-24 md:w-36 md:h-36">{icon}</div>
+          <div className="w-36 h-36">{icon}</div>
           <div className="flex flex-col justify-center">
-            <div className="text-3xl font-medium mb-4">{title}</div>
+            <div className="text-2xl lg:text-3xl font-medium mb-4">{title}</div>
             {description && <div className="text-2xl mb-4">{description}</div>}
             {tooltip && <div className="text-lg mb-4">{tooltip}</div>}
           </div>

@@ -1,17 +1,17 @@
 import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
-import type { SelectOption } from '../../../components/Select';
-import { GraphFiguresGrid } from '../../../components/GraphFiguresGrid';
-import { GraphFigure } from '../../../components/GraphFigure';
-import { getRuptureCauseIcon } from '../../../utils/iconsMapping';
-import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
-import { buildSortedRangeData } from '../../../utils/entities';
+import type { SelectOption } from '../../components/Select';
+import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
+import { GraphFigure } from '../../components/GraphFigure';
+import { getRuptureCauseIcon } from '../../utils/iconsMapping';
+import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
+import { buildSortedRangeData } from '../../utils/entities';
 import {
   type Cause,
   type RuptureCauseRepartition,
   type RuptureYear,
-} from '../../../graphql/__generated__/generated-documents';
-import { GraphBoxSelect } from '../../../components/GraphBoxSelect';
+} from '../../graphql/__generated__/generated-documents';
+import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 
 export const DeclarationCauseByYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { ruptures } = useRupturesPageContext();
@@ -31,7 +31,7 @@ export const DeclarationCauseByYearSection = (_props: HTMLAttributes<HTMLDivElem
   );
 
   return (
-    <div className="DeclarationCauseByYear my-12">
+    <div className="DeclarationCauseByYear mb-12">
       <GraphBoxSelect
         title="Causes des signalements de ruptures et risques de rupture de stock"
         className="max-w-full"

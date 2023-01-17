@@ -43,7 +43,7 @@ export const GraphFigure = ({
     {...props}
   >
     {icon}
-    <div className={classnames('GraphFigureCountUp text-3xl', valueClassName)}>
+    <div className={classnames('GraphFigureCountUp text-2xl lg:text-3xl', valueClassName)}>
       <CountUp formattingFn={(n) => formatDecimalToUnit(n, unit)} end={value} />
     </div>
     {contentTooltip ? (
@@ -55,7 +55,7 @@ export const GraphFigure = ({
               {label}
             </span>
           )}
-          content={<div className="p-4">{contentTooltip}</div>}
+          content={<div className="p-2">{contentTooltip}</div>}
         />
         {action}
       </div>

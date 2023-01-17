@@ -77,7 +77,7 @@ export const GraphBoxSelect = ({
 
   return (
     <div className={classNames('GraphBoxSelect rounded-lg bg-white p-4', className)}>
-      <div className="GraphBoxHeader flex gap-4 justify-between items-start px-4 mb-4">
+      <div className="GraphBoxHeader flex flex-wrap gap-4 justify-between items-start px-4 mb-4">
         <div className="GraphBoxTitle flex items-start gap-2 w-full text-left">
           <div className="flex items-start gap-2">
             <span className="text-lg font-medium">{title}</span>

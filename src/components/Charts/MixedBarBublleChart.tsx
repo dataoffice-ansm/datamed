@@ -1,12 +1,12 @@
 import type { HTMLAttributes } from 'react';
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
 
 ChartJS.register(...registerables);
 
 export type BarChartProps = {
-  labels: string[];
+  labels?: string[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   datasets: any[];
   leftLegend?: string;
@@ -15,7 +15,7 @@ export type BarChartProps = {
 
 export const MixedBarChart = ({
   className,
-  labels,
+  labels = [''],
   datasets,
   leftLegend = '',
   bottomLegend = '',
@@ -56,7 +56,15 @@ export const MixedBarChart = ({
               title: {
                 display: true,
                 text: bottomLegend,
+                // text: <ActeMedicauxFigure className="w-8 h-8" />,
               },
+              // ticks: {
+              //   // Include a dollar sign in the ticks
+              //   callback(value, index, ticks) {
+              //     console.log(value, index, ticks);
+              //     return `$${value}`;
+              //   },
+              // },
             },
             y: {
               title: {

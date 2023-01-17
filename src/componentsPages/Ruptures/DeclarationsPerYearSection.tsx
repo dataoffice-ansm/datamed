@@ -1,15 +1,15 @@
 import type { HTMLAttributes } from 'react';
 import { useCallback, useState } from 'react';
 import { useMemo } from 'react';
-import { SectionTitle } from '../../../components/SectionTitle';
-import type { SelectOption } from '../../../components/Select';
-import { Select } from '../../../components/Select';
+import { SectionTitle } from '../../components/SectionTitle';
+import type { SelectOption } from '../../components/Select';
+import { Select } from '../../components/Select';
 import { NotEnoughData } from 'components/NotEnoughData';
-import { BoxInfo } from '../../../components/BoxInfo';
-import FolderSVG from '../../../assets/pictos/folder.svg';
-import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
-import { KPIBoxProgression } from '../../../components/KPIBoxProgression';
-import { numberWithThousand } from '../../../utils/format';
+import { BoxInfo } from '../../components/BoxInfo';
+import FolderSVG from '../../assets/pictos/folder.svg';
+import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
+import { KPIBoxProgression } from '../../components/KPIBoxProgression';
+import { formatDate, numberWithThousand } from '../../utils/format';
 
 export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { ruptures } = useRupturesPageContext();
@@ -61,11 +61,11 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
 
   const sectionSubtitlePeriod =
     ruptures.config?.minYear && ruptures.config.maxYear
-      ? `${ruptures.config?.minYear} - ${ruptures.config.maxYear}`
+      ? `${formatDate(ruptures.config?.minYear)} - ${formatDate(ruptures.config.maxYear)}`
       : 'Année non disponible';
 
   return (
-    <div className="DeclarationByYear my-12">
+    <div className="DeclarationByYear mb-12">
       <SectionTitle
         title="Déclarations de ruptures et risques de rupture de stock depuis le début de l'année civile en cours"
         subTitle={`Données mises à jour mensuellement, issues de la période ${sectionSubtitlePeriod}`}
@@ -79,7 +79,7 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
             title={`${numberWithThousand(
               rupturesDeclarationsForSelectedYear?.nbDeclarations ?? 0
             )} déclarations reçues`}
-            icon={<FolderSVG />}
+            icon={<FolderSVG className="h-24 w-24" />}
             theme="dark-green"
             tooltip={
               <>

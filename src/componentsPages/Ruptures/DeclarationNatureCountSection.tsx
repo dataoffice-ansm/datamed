@@ -2,11 +2,11 @@ import type { HTMLAttributes } from 'react';
 import { useMemo } from 'react';
 import { NotEnoughData } from 'components/NotEnoughData';
 import { LineChart } from 'components/Charts/LineChart';
-import tailwindPaletteConfig from '../../../../tailwind.palette.config';
-import { useRupturesPageContext } from '../../../contexts/RupturesPageContext';
-import { SectionTitle } from '../../../components/SectionTitle';
-import { DeclarationCauseByYearSection } from '../DeclarationCauseByYear/DeclarationCauseByYearSection';
-import { GraphBox } from '../../../components/GraphBox/GraphBox';
+import tailwindPaletteConfig from '../../../tailwind.palette.config';
+import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
+import { SectionTitle } from '../../components/SectionTitle';
+import { DeclarationCauseByYearSection } from './DeclarationCauseByYearSection';
+import { GraphBox } from '../../components/GraphBox/GraphBox';
 
 /**
  *
@@ -51,7 +51,7 @@ export const DeclarationNatureCountSection = ({
   );
 
   return (
-    <div className="DeclarationNatureCount my-12">
+    <div className="DeclarationNatureCount mb-12">
       <SectionTitle
         title="Nombre et nature des déclarations de ruptures et risques de rupture de stock"
         subTitle={periodString}
