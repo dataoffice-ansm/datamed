@@ -19,10 +19,7 @@ export const DeclarationNatureCountSection = ({
   const { ruptures } = useRupturesPageContext();
 
   const years = useMemo(
-    () =>
-      (ruptures?.ruptureYears ?? [])
-        .map((ruptureYear) => ruptureYear?.value?.toString() ?? '')
-        .reverse(),
+    () => (ruptures?.ruptureYears ?? []).sort((a, b) => Number(a) - Number(b)).reverse(),
     [ruptures?.ruptureYears]
   );
 
@@ -56,6 +53,8 @@ export const DeclarationNatureCountSection = ({
         title="Nombre et nature des déclarations de ruptures et risques de rupture de stock"
         subTitle={periodString}
       />
+
+      <DeclarationCauseByYearSection />
 
       {ruptures?.repartitionPerClassification ? (
         <GraphBox
@@ -97,8 +96,6 @@ export const DeclarationNatureCountSection = ({
           <NotEnoughData />
         </div>
       )}
-
-      <DeclarationCauseByYearSection />
     </div>
   );
 };

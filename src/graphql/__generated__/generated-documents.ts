@@ -27,15 +27,15 @@ export type EntityExpositionPeriod = {
   description: Scalars['String'];
   expositionCode: Scalars['Int'];
   expositionLevel: Scalars['String'];
-  maxYear: Scalars['Int'];
-  minYear: Scalars['Int'];
+  maxYear: Scalars['String'];
+  minYear: Scalars['String'];
 };
 
 export type GlobalExpositionPeriod = {
   __typename?: 'GlobalExpositionPeriod';
   consumption: Scalars['Int'];
-  maxYear?: Maybe<Scalars['Int']>;
-  minYear?: Maybe<Scalars['Int']>;
+  maxYear: Scalars['Int'];
+  minYear: Scalars['Int'];
 };
 
 export type GlobalRuptures = {
@@ -46,14 +46,14 @@ export type GlobalRuptures = {
   repartitionPerClassification?: Maybe<Array<Maybe<RuptureClassificationRepartition>>>;
   repartitionPerTherapeuticClass?: Maybe<Array<Maybe<TherapeuticClassesRupturesPerYear>>>;
   ruptureStocks?: Maybe<Array<Maybe<RuptureStock>>>;
-  ruptureYears?: Maybe<Array<Maybe<RuptureYear>>>;
-  totalActions?: Maybe<Array<Maybe<RuptureTotalAction>>>;
+  ruptureYears: Array<Scalars['String']>;
+  totalActions?: Maybe<Array<Maybe<RupturesTotalActionPerYear>>>;
 };
 
 export type GlobalRupturesConfig = {
   __typename?: 'GlobalRupturesConfig';
-  maxYear?: Maybe<Scalars['String']>;
-  minYear?: Maybe<Scalars['String']>;
+  maxYear: Scalars['String'];
+  minYear: Scalars['String'];
 };
 
 export type GlobalStatistic = {
@@ -314,7 +314,7 @@ export type RuptureActionRepartition = {
   __typename?: 'RuptureActionRepartition';
   actions?: Maybe<Array<Maybe<RuptureAction>>>;
   total?: Maybe<Scalars['Int']>;
-  year?: Maybe<Scalars['Int']>;
+  year: Scalars['String'];
 };
 
 export type RuptureCause = {
@@ -327,7 +327,7 @@ export type RuptureCauseRepartition = {
   __typename?: 'RuptureCauseRepartition';
   causes?: Maybe<Array<Maybe<Cause>>>;
   total?: Maybe<Scalars['Int']>;
-  year?: Maybe<Scalars['Int']>;
+  year: Scalars['String'];
 };
 
 export type RuptureClass = {
@@ -340,7 +340,7 @@ export type RuptureClassificationRepartition = {
   __typename?: 'RuptureClassificationRepartition';
   classification?: Maybe<Scalars['String']>;
   value?: Maybe<Scalars['Int']>;
-  year?: Maybe<Scalars['Int']>;
+  year: Scalars['String'];
 };
 
 export type RuptureStock = {
@@ -350,19 +350,14 @@ export type RuptureStock = {
   nbRisqueClosed?: Maybe<Scalars['Int']>;
   nbRupture?: Maybe<Scalars['Int']>;
   nbRuptureClosed?: Maybe<Scalars['Int']>;
-  year?: Maybe<Scalars['Int']>;
+  year: Scalars['String'];
 };
 
-export type RuptureTotalAction = {
-  __typename?: 'RuptureTotalAction';
-  totalDeclarationsWithMesure?: Maybe<Scalars['Int']>;
-  totalMesures?: Maybe<Scalars['Int']>;
-  year?: Maybe<Scalars['Int']>;
-};
-
-export type RuptureYear = {
-  __typename?: 'RuptureYear';
-  value: Scalars['Int'];
+export type RupturesTotalActionPerYear = {
+  __typename?: 'RupturesTotalActionPerYear';
+  totalDeclarationsWithMeasure?: Maybe<TotalDeclarationsWithMeasure>;
+  totalMeasures?: Maybe<Scalars['Int']>;
+  year: Scalars['String'];
 };
 
 export type SpecialitiesReturn = {
@@ -479,7 +474,13 @@ export type TherapeuticClassesRupturesPerYear = {
   __typename?: 'TherapeuticClassesRupturesPerYear';
   repartition?: Maybe<Array<Maybe<TherapeuticClassRupture>>>;
   total?: Maybe<Scalars['Int']>;
-  year?: Maybe<Scalars['Int']>;
+  year: Scalars['String'];
+};
+
+export type TotalDeclarationsWithMeasure = {
+  __typename?: 'TotalDeclarationsWithMeasure';
+  value: Scalars['Int'];
+  valuePercent: Scalars['Float'];
 };
 
 export type WithRepartition = {
@@ -574,8 +575,8 @@ export type SpecialityFragmentFragment = {
       expositionCode: number;
       expositionLevel: string;
       description: string;
-      minYear: number;
-      maxYear: number;
+      minYear: string;
+      maxYear: string;
     } | null;
   } | null> | null;
   dosageSubstances?: Array<{
@@ -610,8 +611,8 @@ export type SpecialityFragmentFragment = {
     expositionCode: number;
     expositionLevel: string;
     description: string;
-    minYear: number;
-    maxYear: number;
+    minYear: string;
+    maxYear: string;
   } | null;
   medicalErrors?: {
     __typename?: 'MedicalErrors';
@@ -730,8 +731,8 @@ export type SubstanceFragmentFragment = {
     expositionCode: number;
     expositionLevel: string;
     description: string;
-    minYear: number;
-    maxYear: number;
+    minYear: string;
+    maxYear: string;
   } | null;
 };
 
@@ -827,8 +828,8 @@ export type SpecialityQuery = {
         expositionCode: number;
         expositionLevel: string;
         description: string;
-        minYear: number;
-        maxYear: number;
+        minYear: string;
+        maxYear: string;
       } | null;
     } | null> | null;
     dosageSubstances?: Array<{
@@ -863,8 +864,8 @@ export type SpecialityQuery = {
       expositionCode: number;
       expositionLevel: string;
       description: string;
-      minYear: number;
-      maxYear: number;
+      minYear: string;
+      maxYear: string;
     } | null;
     medicalErrors?: {
       __typename?: 'MedicalErrors';
@@ -1006,8 +1007,8 @@ export type SubstanceQuery = {
       expositionCode: number;
       expositionLevel: string;
       description: string;
-      minYear: number;
-      maxYear: number;
+      minYear: string;
+      maxYear: string;
     } | null;
   } | null;
 };
@@ -1049,8 +1050,8 @@ export type GlobalStatisticQuery = {
     exposition?: {
       __typename?: 'GlobalExpositionPeriod';
       consumption: number;
-      minYear?: number | null;
-      maxYear?: number | null;
+      minYear: number;
+      maxYear: number;
     } | null;
     repartitionPerSeriousEffect?: Array<{
       __typename?: 'GlobalStatsUsagePerSeriousEffect';
@@ -1086,30 +1087,26 @@ export type GlobalRupturesQuery = {
   __typename?: 'Query';
   getGlobalRuptures?: {
     __typename?: 'GlobalRuptures';
-    config?: {
-      __typename?: 'GlobalRupturesConfig';
-      minYear?: string | null;
-      maxYear?: string | null;
-    } | null;
+    ruptureYears: Array<string>;
+    config?: { __typename?: 'GlobalRupturesConfig'; minYear: string; maxYear: string } | null;
     ruptureStocks?: Array<{
       __typename?: 'RuptureStock';
-      year?: number | null;
+      year: string;
       nbDeclarations?: number | null;
       nbRisque?: number | null;
       nbRisqueClosed?: number | null;
       nbRuptureClosed?: number | null;
       nbRupture?: number | null;
     } | null> | null;
-    ruptureYears?: Array<{ __typename?: 'RuptureYear'; value: number } | null> | null;
     repartitionPerClassification?: Array<{
       __typename?: 'RuptureClassificationRepartition';
       value?: number | null;
       classification?: string | null;
-      year?: number | null;
+      year: string;
     } | null> | null;
     repartitionPerTherapeuticClass?: Array<{
       __typename?: 'TherapeuticClassesRupturesPerYear';
-      year?: number | null;
+      year: string;
       total?: number | null;
       repartition?: Array<{
         __typename?: 'TherapeuticClassRupture';
@@ -1121,13 +1118,13 @@ export type GlobalRupturesQuery = {
     } | null> | null;
     repartitionPerCause?: Array<{
       __typename?: 'RuptureCauseRepartition';
-      year?: number | null;
+      year: string;
       total?: number | null;
       causes?: Array<{ __typename?: 'Cause'; value: number; range: string } | null> | null;
     } | null> | null;
     repartitionPerAction?: Array<{
       __typename?: 'RuptureActionRepartition';
-      year?: number | null;
+      year: string;
       total?: number | null;
       actions?: Array<{
         __typename?: 'RuptureAction';
@@ -1137,10 +1134,14 @@ export type GlobalRupturesQuery = {
       } | null> | null;
     } | null> | null;
     totalActions?: Array<{
-      __typename?: 'RuptureTotalAction';
-      year?: number | null;
-      totalDeclarationsWithMesure?: number | null;
-      totalMesures?: number | null;
+      __typename?: 'RupturesTotalActionPerYear';
+      year: string;
+      totalMeasures?: number | null;
+      totalDeclarationsWithMeasure?: {
+        __typename?: 'TotalDeclarationsWithMeasure';
+        value: number;
+        valuePercent: number;
+      } | null;
     } | null> | null;
   } | null;
 };
@@ -1642,9 +1643,7 @@ export const GlobalRupturesDocument = gql`
         nbRuptureClosed
         nbRupture
       }
-      ruptureYears {
-        value
-      }
+      ruptureYears
       repartitionPerClassification {
         value
         classification
@@ -1679,8 +1678,11 @@ export const GlobalRupturesDocument = gql`
       }
       totalActions {
         year
-        totalDeclarationsWithMesure
-        totalMesures
+        totalMeasures
+        totalDeclarationsWithMeasure {
+          value
+          valuePercent
+        }
       }
     }
   }

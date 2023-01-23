@@ -130,6 +130,7 @@ const SectionOneGlobalInformation = () => {
             )}
           </GraphBox>
         </div>
+
         <div className="flex-1 flex-shrink">
           <GraphBox
             title="Répartition par âge des patients traités"

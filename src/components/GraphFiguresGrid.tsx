@@ -16,7 +16,7 @@ type GraphFiguresContainerProps<T> = HTMLAttributes<HTMLDivElement> & {
 export const GraphFiguresGrid = <T,>({ data, renderItem }: GraphFiguresContainerProps<T>) => (
   <div className="GraphFiguresGrid w-full">
     {data.length ? (
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 m-auto mt-8 p-4">
+      <div className="grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-8 m-auto mt-8 p-4">
         {data.map((item, index) => (
           <div key={`graphFigureIndex_${index.toString()}`} className="flex justify-center">
             {renderItem(item)}

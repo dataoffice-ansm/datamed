@@ -224,8 +224,8 @@ type EntityExpositionPeriod {
     expositionCode: Int!
     expositionLevel: String!
     description: String!
-    minYear: Int!
-    maxYear: Int!
+    minYear: String!
+    maxYear: String!
 }
 
 type Substance {
@@ -291,8 +291,8 @@ type GlobalStatsUsagePerAge {
 
 type GlobalExpositionPeriod {
     consumption: Int!
-    minYear: Int
-    maxYear: Int
+    minYear: Int!
+    maxYear: Int!
 }
 
 type GlobalStatistic {
@@ -305,12 +305,8 @@ type GlobalStatistic {
     repartitionPerGravity: [GlobalStatsUsagePerGravity]
 }
 
-type RuptureYear {
-    value: Int!
-}
-
 type RuptureStock {
-    year: Int
+    year: String!
     nbDeclarations: Int
     nbRisque: Int
     nbRupture: Int
@@ -319,7 +315,7 @@ type RuptureStock {
 }
 
 type RuptureClassificationRepartition {
-    year: Int
+    year: String!
     classification: String
     value: Int
 }
@@ -332,7 +328,7 @@ type TherapeuticClassRupture {
 }
 
 type TherapeuticClassesRupturesPerYear {
-    year: Int
+    year: String!
     repartition: [TherapeuticClassRupture]
     total: Int
 }
@@ -343,15 +339,20 @@ type Cause {
 }
 
 type RuptureCauseRepartition {
+    year: String!
     causes: [Cause]
-    year: Int
     total: Int
 }
 
-type RuptureTotalAction {
-    totalDeclarationsWithMesure: Int
-    totalMesures: Int
-    year: Int
+type TotalDeclarationsWithMeasure {
+    value: Int!
+    valuePercent: Float!
+}
+
+type RupturesTotalActionPerYear {
+    year: String!
+    totalDeclarationsWithMeasure: TotalDeclarationsWithMeasure
+    totalMeasures: Int
 }
 
 type RuptureAction {
@@ -361,25 +362,25 @@ type RuptureAction {
 }
 
 type RuptureActionRepartition {
-    year: Int
+    year: String!
     actions: [RuptureAction]
     total: Int
 }
 
 type GlobalRupturesConfig {
-    minYear: String
-    maxYear: String
+    minYear: String!
+    maxYear: String!
 }
 
 type GlobalRuptures {
     config: GlobalRupturesConfig
     ruptureStocks: [RuptureStock]
-    ruptureYears: [RuptureYear]
+    ruptureYears: [String!]!
     repartitionPerClassification: [RuptureClassificationRepartition]
     repartitionPerTherapeuticClass: [TherapeuticClassesRupturesPerYear]
     repartitionPerCause: [RuptureCauseRepartition]
     repartitionPerAction: [RuptureActionRepartition]
-    totalActions: [RuptureTotalAction]
+    totalActions: [RupturesTotalActionPerYear]
 }
 
 ##### QUERIES #####

@@ -295,9 +295,7 @@ query GlobalRuptures {
             nbRuptureClosed
             nbRupture
         }
-        ruptureYears {
-            value
-        }
+        ruptureYears
         repartitionPerClassification {
             value
             classification
@@ -332,8 +330,11 @@ query GlobalRuptures {
         }
         totalActions {
             year
-            totalDeclarationsWithMesure
-            totalMesures
+            totalMeasures
+            totalDeclarationsWithMeasure{
+                value
+                valuePercent
+            }
         }
     }
 }

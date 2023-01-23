@@ -21,6 +21,8 @@ const selectOptions: Array<SelectOption<UnitOptionsValue>> = Object.entries(opti
 
 type GraphFiguresContainerProps = HTMLAttributes<HTMLDivElement> & {
   title: string;
+  subtitle?: string;
+  layoutSection?: boolean;
   tooltip?: JSX.Element | ReactNode;
   renderHeader?: ReactNode;
   yearsOptions?: SelectOption[];
@@ -32,7 +34,7 @@ type GraphFiguresContainerProps = HTMLAttributes<HTMLDivElement> & {
     selectedYearOption,
   }: {
     selectedUnitOption: UnitOptionsValue;
-    selectedYearOption: number;
+    selectedYearOption: string;
   }) => ReactNode;
   defaultOption?: UnitOptionsValue;
   theme?: 'primary' | 'secondary' | 'secondary-variant' | 'gray';
@@ -53,8 +55,10 @@ const findOptionIndex = (selectedOption: UnitOptionsValue) =>
  */
 export const GraphBoxSelect = ({
   title,
+  subtitle,
   render,
   renderHeader,
+  layoutSection,
   tooltip,
   className,
   yearsOptions,
@@ -62,12 +66,13 @@ export const GraphBoxSelect = ({
   defaultOption = 'number',
   theme = 'secondary',
 }: GraphFiguresContainerProps) => {
-  const [selectedYearOption, setSelectedYearOption] = useState<number>(
-    yearsOptions ? (yearsOptions[0].value as number) : 0
+  const [selectedYearOption, setSelectedYearOption] = useState<string>(
+    yearsOptions ? (yearsOptions[0].value as string) : ''
   );
+
   const [selectedUnitOption, setSelectedUnitOption] = useState<UnitOptionsValue>(defaultOption);
 
-  const onChangeYear = useCallback((optionKey: number) => {
+  const onChangeYear = useCallback((optionKey: string) => {
     setSelectedYearOption(optionKey);
   }, []);
 
@@ -76,44 +81,54 @@ export const GraphBoxSelect = ({
   }, []);
 
   return (
-    <div className={classNames('GraphBoxSelect rounded-lg bg-white p-4', className)}>
-      <div className="GraphBoxHeader flex flex-wrap gap-4 justify-between items-start px-4 mb-4">
-        <div className="GraphBoxTitle flex items-start gap-2 w-full text-left">
-          <div className="flex items-start gap-2">
-            <span className="text-lg font-medium">{title}</span>
+    <div
+      className={classNames(
+        'GraphBoxSelect p-4',
+        !layoutSection && 'rounded-lg shadow bg-white',
+        className
+      )}
+    >
+      <div className="GraphBoxHeader flex flex-col px-4">
+        <div className="GraphBoxTitle flex flex-col sm:flex-row gap-4 justify-between items-start mb-4">
+          <div className="GraphBoxTitle flex items-start gap-2 w-full text-left w-full md:w-2/3">
+            <span className={classNames(layoutSection ? 'text-xl font-bold' : 'font-medium')}>
+              {title}
+            </span>
             {tooltip && (
               <TooltipInformation>
                 <div className="p-2">{tooltip}</div>
               </TooltipInformation>
             )}
           </div>
+
+          <div className="flex gap-2">
+            {!disableUnitSelect && (
+              <div className="GraphFiguresContainerSelect max-w-xs">
+                <Select
+                  theme={theme}
+                  defaultOptionIndex={findOptionIndex(defaultOption)}
+                  options={selectOptions}
+                  onSelectOption={(index, option) => {
+                    onChangeUnit(option.value as UnitOptionsValue);
+                  }}
+                />
+              </div>
+            )}
+            {yearsOptions && (
+              <div className="GraphFiguresContainerSelect max-w-xs">
+                <Select
+                  options={yearsOptions}
+                  theme="secondary-variant"
+                  onSelectOption={(index, option) => {
+                    onChangeYear(option.value as string);
+                  }}
+                />
+              </div>
+            )}
+          </div>
         </div>
-
-        <div className="flex gap-2">
-          {yearsOptions && (
-            <div className="GraphFiguresContainerSelect max-w-xs">
-              <Select
-                options={yearsOptions}
-                theme="secondary-variant"
-                onSelectOption={(index, option) => {
-                  onChangeYear(option.value as number);
-                }}
-              />
-            </div>
-          )}
-
-          {!disableUnitSelect && (
-            <div className="GraphFiguresContainerSelect max-w-xs">
-              <Select
-                theme={theme}
-                defaultOptionIndex={findOptionIndex(defaultOption)}
-                options={selectOptions}
-                onSelectOption={(index, option) => {
-                  onChangeUnit(option.value as UnitOptionsValue);
-                }}
-              />
-            </div>
-          )}
+        <div className="GraphBoxSubtitle">
+          {subtitle && <h6 className="mt-0 mb-6 text-left">{subtitle}</h6>}
         </div>
       </div>
 

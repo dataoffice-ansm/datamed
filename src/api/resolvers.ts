@@ -2,7 +2,7 @@ import type { Resolvers } from './graphql/__generated__/generated-types';
 import jwt from 'jsonwebtoken';
 import { config } from '../config/config';
 
-const users = [{ id: 1, username: 'beta', password: 'dem0_123' }];
+const users = [{ id: 1, username: 'beta', password: 'demo_123' }];
 
 export const resolvers: Resolvers = {
   Mutation: {
@@ -75,8 +75,8 @@ export const resolvers: Resolvers = {
         config,
         ruptureYears,
         ruptureStocks: await Promise.all(
-          ruptureYears.map(async ({ value }) =>
-            context.dataSources.postgresOperations.getRuptureStockTotalExposition(value ?? 0)
+          ruptureYears.map(async (year) =>
+            context.dataSources.postgresOperations.getRuptureStockTotalExposition(year)
           )
         ),
 
@@ -93,10 +93,10 @@ export const resolvers: Resolvers = {
             ruptureYears
           ),
 
+        totalActions: await context.dataSources.postgresOperations.getRupturesTotalActions(),
+
         repartitionPerAction:
           await context.dataSources.postgresOperations.getRuptureStockRepartitionPerAction(),
-
-        totalActions: await context.dataSources.postgresOperations.getRupturesTotalActions(),
       };
     },
   },

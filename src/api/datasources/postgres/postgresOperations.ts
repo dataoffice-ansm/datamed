@@ -25,8 +25,7 @@ import type {
   RuptureCauseRepartition,
   RuptureClassificationRepartition,
   RuptureStock,
-  RuptureTotalAction,
-  RuptureYear,
+  RupturesTotalActionPerYear,
   Speciality,
   SpecialityRupture,
   SpecialitySubstance,
@@ -134,8 +133,8 @@ export class PostgresOperations {
                 consumption,
                 expositionCode,
                 ...getExpositionByLevelId(expositionCode),
-                minYear: 2014,
-                maxYear: 2021,
+                minYear: '2014',
+                maxYear: '2021',
               }
             : null,
       };
@@ -279,11 +278,11 @@ export class PostgresOperations {
     return {
       with: {
         value: Math.round(withSideEffect?.number ?? 0),
-        valuePercent: roundFloat(withSideEffect?.percentage ?? 0),
+        valuePercent: Math.round(withSideEffect?.percentage ?? 0),
       },
       without: {
         value: Math.round(withoutSideEffect?.number ?? 0),
-        valuePercent: roundFloat(withoutSideEffect?.percentage ?? 0),
+        valuePercent: Math.round(withoutSideEffect?.percentage ?? 0),
       },
     };
   }
@@ -745,8 +744,8 @@ export class PostgresOperations {
       return {
         consumption: row.consumption,
         expositionCode: row.expositionCode,
-        minYear: row.minYear as number,
-        maxYear: row.maxYear as number,
+        minYear: String(row.minYear),
+        maxYear: String(row.maxYear),
         ...getExpositionByLevelId(row.expositionCode),
       };
     }
@@ -967,7 +966,7 @@ export class PostgresOperations {
       : null;
   }
 
-  async getRuptureYears(): Promise<RuptureYear[]> {
+  async getRuptureYears(): Promise<string[]> {
     const rowTotal = await dbInstance
       .selectFrom('sold_out_all')
       .select('year')
@@ -975,13 +974,23 @@ export class PostgresOperations {
       .distinct()
       .execute();
 
-    return rowTotal.reduce<RuptureYear[]>(
-      (carry, { year }) => (year ? [...carry, { value: parseInt(year, 10) }] : carry),
-      []
-    );
+    return rowTotal.reduce<string[]>((carry, { year }) => (year ? [...carry, year] : carry), []);
   }
 
-  async getRuptureStockTotalExposition(year: number): Promise<RuptureStock> {
+  async _getRupturesWithMeasureYears(): Promise<string[]> {
+    const rows = await dbInstance
+      .selectFrom('actions')
+      .select(['year'])
+      // With actions filter should output only 2021 and 2022
+      .where('with_action', '=', 'Avec mesure')
+      .orderBy('year', 'desc')
+      .groupBy('year')
+      .execute();
+
+    return rows.reduce<string[]>((carry, row) => (row.year ? [...carry, row.year] : carry), []);
+  }
+
+  async getRuptureStockTotalExposition(year: string): Promise<RuptureStock> {
     const rows = await dbInstance
       .selectFrom('sold_out_all')
       .where('year', '=', year.toString())
@@ -1049,7 +1058,7 @@ export class PostgresOperations {
 
       if (classification && value && year) {
         result.push({
-          year: parseInt(year, 10),
+          year,
           value: parseInt(value as string, 10),
           classification,
         });
@@ -1061,7 +1070,7 @@ export class PostgresOperations {
 
       if (classification && value && year) {
         result.push({
-          year: parseInt(year, 10),
+          year,
           value: parseInt(value as string, 10),
           classification,
         });
@@ -1071,14 +1080,11 @@ export class PostgresOperations {
     return result;
   }
 
-  async getRuptureStockRepartitionPerCause(
-    years: RuptureYear[]
-  ): Promise<RuptureCauseRepartition[]> {
+  async getRuptureStockRepartitionPerCause(years: string[]): Promise<RuptureCauseRepartition[]> {
     const { count } = dbInstance.fn;
 
     return Promise.all(
-      years.map(async ({ value }) => {
-        const year = String(value);
+      years.map(async (year) => {
         const rowsTotal = await dbInstance
           .selectFrom('sold_out_all')
           .leftJoin('causes_all as ca', 'sold_out_all.id', 'ca.sold_out_id')
@@ -1097,7 +1103,7 @@ export class PostgresOperations {
           .execute();
 
         return {
-          year: Number(value),
+          year,
           causes: rows.reduce<Cause[]>((carry, row) => {
             const { type, value } = row;
             return type && value && value >= 10
@@ -1155,16 +1161,15 @@ export class PostgresOperations {
   }
 
   async getRuptureStockRepartitionPerAction(): Promise<RuptureActionRepartition[]> {
-    const years = await this.getRuptureYears();
+    const years = await this._getRupturesWithMeasureYears();
 
     return Promise.all(
-      years.map(async ({ value }) => {
-        const year = String(value);
+      years.map(async (year) => {
         const total = await this._getRupturesTotalActionByYear(year);
         const actions = await this._getRuptureActionsByYear(year);
 
         return {
-          year: value,
+          year,
           actions,
           total,
         };
@@ -1221,16 +1226,15 @@ export class PostgresOperations {
   }
 
   async getRupturesPerTherapeuticClassesPerYearRepartition(
-    years: RuptureYear[]
+    years: string[]
   ): Promise<TherapeuticClassesRupturesPerYear[]> {
     return Promise.all(
-      years.map(async ({ value }) => {
-        const year = String(value);
+      years.map(async (year) => {
         const countRupturesPerYear = await this._getRupturesTotalActionByYear(year);
         const repartitionPerTherapeuticClass = await this._getRuptureStockByTherapeuticClass(year);
 
         return {
-          year: value,
+          year,
           repartition: repartitionPerTherapeuticClass,
           total: countRupturesPerYear,
         };
@@ -1238,40 +1242,44 @@ export class PostgresOperations {
     );
   }
 
-  async getRupturesTotalActions(): Promise<RuptureTotalAction[]> {
+  async getRupturesTotalActions(): Promise<RupturesTotalActionPerYear[]> {
     const { count } = dbInstance.fn;
+    const years = await this._getRupturesWithMeasureYears();
 
-    //declarations avec au moins 1 mesure
-    const totalDeclarationsWithMesure = await dbInstance
+    //total des dossiers de ruptures par année, (avec et sans mesure)
+    const rows = await dbInstance
       .selectFrom('actions')
-      .select([count('actions.sold_out_id').distinct().as('value'), 'actions.year'])
-      .where('actions.with_action', '=', 'Avec mesure')
-      .groupBy('actions.year')
+      .select([
+        // nombre de dossiers uniques (avec 1 ou plusieurs mesures)
+        count('sold_out_id').distinct().as('cases'),
+        // nombre de mesures total (tout  dossiers confondus)
+        count('id').as('total'),
+        'with_action',
+        'actions.year',
+      ])
+      // .where('with_action', '=', 'Avec mesure')
+      .where('year', 'in', years)
+      .groupBy('with_action')
+      .groupBy('year')
       .execute();
 
-    // toutes les mesures
-    const totalMesures = await dbInstance
-      .selectFrom('actions')
-      .select([count('actions.id').as('value'), 'actions.year'])
-      .where('actions.with_action', '=', 'Avec mesure')
-      .groupBy('actions.year')
-      .execute();
+    return years.map((year) => {
+      const reps = rows.filter((row) => row.year === year);
+      const withMeasures = reps.find((row) => row.with_action === 'Avec mesure');
+      const withoutMeasures = reps.find((row) => row.with_action === 'Sans mesure');
+      const casesWithMeasures = Number(withMeasures?.cases ?? 0);
+      const totalCases = casesWithMeasures + Number(withoutMeasures?.cases ?? 0);
 
-    return totalDeclarationsWithMesure.reduce<RuptureTotalAction[]>((carry, row) => {
-      const { value, year } = row;
-
-      const totalWithAtLeastOneAction = totalMesures.find((r) => Number(r.year) === Number(year));
-
-      return value && year && totalWithAtLeastOneAction?.value
-        ? [
-            ...carry,
-            {
-              totalDeclarationsWithMesure: Number(value),
-              totalMesures: Number(totalWithAtLeastOneAction?.value),
-              year: Number(year),
-            },
-          ]
-        : carry;
-    }, []);
+      return {
+        year,
+        totalDeclarationsWithMeasure: totalCases
+          ? {
+              value: Number(withMeasures?.cases ?? 0),
+              valuePercent: Math.round((casesWithMeasures / totalCases) * 100),
+            }
+          : null,
+        totalMeasures: Number(withMeasures?.total ?? 0),
+      };
+    });
   }
 }

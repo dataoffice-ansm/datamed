@@ -15,7 +15,6 @@ export type AccordionThemeColor =
 
 export type AccordionProps = {
   title: string;
-  forceDefaultOpen?: boolean;
   theme?: AccordionThemeColor;
   disabled?: boolean;
   classNameTitle?: string;

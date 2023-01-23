@@ -92,7 +92,7 @@ export const PaginatedList = <T,>({
 
   return (
     <div className="PaginatedListContainer">
-      <div className="PaginatedListItems flex flex-col rounded-md border border-grey-100">
+      <div className="PaginatedListItems flex flex-col rounded-lg border border-grey-100">
         {renderedItems.map((item, index) => (
           <div
             key={`rendered_item_page_${pageIndex}_index_${index.toString()}`}

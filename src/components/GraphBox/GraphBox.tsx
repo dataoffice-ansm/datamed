@@ -18,12 +18,12 @@ export const GraphBox = ({
   children,
   className,
 }: HTMLAttributes<HTMLDivElement> & {
+  title?: string;
   tooltip?: JSX.Element | ReactNode;
-  title: string;
 }) => (
   <div className={classnames('GraphBox rounded-lg shadow bg-white p-4', className)}>
     <div className="GraphBoxTitle flex items-start gap-4 w-full text-left mb-4">
-      <span className="text-lg font-medium">{title}</span>
+      {title && <span className="text-lg font-medium">{title}</span>}
       {tooltip && (
         <TooltipInformation>
           <div className="TooltipContent p-2 max-w-md">{tooltip}</div>

@@ -4,10 +4,7 @@ import tailwindPaletteConfig from '../../../tailwind.palette.config';
 import type { SelectOption } from 'components/Select';
 import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
 import { buildSortedRangeData } from '../../utils/entities';
-import {
-  type TherapeuticClassesRupturesPerYear,
-  type TherapeuticClassRupture,
-} from '../../graphql/__generated__/generated-documents';
+import { type TherapeuticClassRupture } from '../../graphql/__generated__/generated-documents';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { MixedBarChart } from '../../components/Charts/MixedBarBublleChart';
 import { type ChartDataset } from 'chart.js';
@@ -15,20 +12,17 @@ import { type ChartDataset } from 'chart.js';
 export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { ruptures } = useRupturesPageContext();
 
-  const options: SelectOption[] = useMemo(
+  const rupturesYearsOptions: SelectOption[] = useMemo(
     () =>
       ruptures?.ruptureYears
         ? ruptures.ruptureYears.reduce<SelectOption[]>(
-            (carry, ruptureYear) =>
-              ruptureYear?.value
-                ? [
-                    ...carry,
-                    {
-                      value: ruptureYear.value,
-                      label: ruptureYear.value.toString(),
-                    },
-                  ]
-                : carry,
+            (carry, year) => [
+              ...carry,
+              {
+                value: year,
+                label: year,
+              },
+            ],
             []
           )
         : [],
@@ -41,7 +35,7 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
       className="RepartitionPerTherapeuticClass"
       theme="secondary-variant"
       title="Nombre de déclarations de ruptures et risques de rupture de stock par classe thérapeutique"
-      yearsOptions={options}
+      yearsOptions={rupturesYearsOptions}
       tooltip={
         <>
           <p className="font-medium text-xl">
@@ -73,10 +67,10 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
             ? ruptures.repartitionPerTherapeuticClass.find(
                 (element) => element?.year === selectedYearOption
               )
-            : ([] as TherapeuticClassesRupturesPerYear);
+            : null;
 
         const therapeuticRepartitionForSelectedYear = buildSortedRangeData<TherapeuticClassRupture>(
-          therapeuticClassDataForSelectedYear?.repartition,
+          therapeuticClassDataForSelectedYear?.repartition ?? [],
           'number'
         );
 

@@ -15,7 +15,9 @@ const useGetGlobalRupturesPeriod = () => {
   if (ruptureYears && ruptureYears.length > 0) {
     const max = ruptureYears[0];
     const min = ruptureYears[ruptureYears.length - 1];
-    return `Données issues de la période courante ${String(min?.value)} - ${String(max?.value)}`;
+    return min && max
+      ? `Données issues de la période courante ${String(min)} - ${String(max)}`
+      : '';
   }
 
   return 'Aucune période courant disponible';

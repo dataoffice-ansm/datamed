@@ -34,7 +34,7 @@ export const BoxInfo = ({
 }: BoxInfoTitleProps) => (
   <div
     className={classNames(
-      'BoxInfo flex flex-row justify-center align-center shadow p-4 gap-8 bg-white',
+      'BoxInfo flex flex-row justify-center align-center rounded-lg shadow p-4 gap-8 bg-white',
       className
     )}
   >

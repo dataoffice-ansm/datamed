@@ -15,20 +15,17 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
   const { ruptures } = useRupturesPageContext();
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
-  const options: SelectOption[] = useMemo(
+  const rupturesYearsOptions: SelectOption[] = useMemo(
     () =>
       ruptures?.ruptureYears
-        ? ruptures?.ruptureYears.reduce<SelectOption[]>(
-            (carry, ruptureYear) =>
-              ruptureYear?.value
-                ? [
-                    ...carry,
-                    {
-                      value: ruptureYear?.value,
-                      label: (ruptureYear?.value ?? '').toString(),
-                    },
-                  ]
-                : carry,
+        ? ruptures.ruptureYears.reduce<SelectOption[]>(
+            (carry, year) => [
+              ...carry,
+              {
+                value: year,
+                label: year,
+              },
+            ],
             []
           )
         : [],
@@ -42,9 +39,9 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
   const rupturesDeclarationsForSelectedYear = useMemo(
     () =>
       (ruptures?.ruptureStocks ?? []).find(
-        (element) => element?.year === options[selectedIndex].value
+        (element) => element?.year === rupturesYearsOptions[selectedIndex].value
       ),
-    [options, ruptures?.ruptureStocks, selectedIndex]
+    [rupturesYearsOptions, ruptures?.ruptureStocks, selectedIndex]
   );
 
   const percentRisk = Math.trunc(
@@ -70,7 +67,11 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
         title="Déclarations de ruptures et risques de rupture de stock depuis le début de l'année civile en cours"
         subTitle={`Données mises à jour mensuellement, issues de la période ${sectionSubtitlePeriod}`}
       >
-        <Select options={options} theme="secondary-variant" onSelectOption={onSelectedYear} />
+        <Select
+          options={rupturesYearsOptions}
+          theme="secondary-variant"
+          onSelectOption={onSelectedYear}
+        />
       </SectionTitle>
 
       {(ruptures?.ruptureYears ?? []).length > 0 ? (
@@ -102,8 +103,8 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
               </>
             }
           >
-            Nombre de déclarations de ruptures et risques de rupture de stock et de décret sans
-            risque depuis le début de l’année civile en cours
+            Nombre de déclarations de ruptures et risques de rupture de stock depuis le début de
+            l’année civile en cours
           </BoxInfo>
 
           <div className="flex gap-8 flex-col md:flex-row">

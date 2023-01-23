@@ -2,17 +2,17 @@ import { SectionTitle } from '../../components/SectionTitle';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 
 export const DataOriginSection = () => (
-  <div className="DataOriginSection mb-12">
+  <div className="DataOriginSection">
     <SectionTitle title="Origine des données" />
 
-    <GraphBox title="">
+    <GraphBox>
       <div className="flex flex-col justify-start items-start flex-auto text-left">
-        <div className="mb-8">
+        <div className="mb-12">
           <h4 className="mt-0 mb-2">Bases de données exploitées</h4>
           <p>Plateforme de télédéclaration des ruptures et risques de rupture de stock des MITM</p>
         </div>
 
-        <div className="mb-8">
+        <div className="mb-12">
           <h4 className="mt-0 mb-2">D&apos;où viennent les données ? Quelle est leur nature ?</h4>
           <p>
             Les laboratoires pharmaceutiques ont l&apos;obligation de déclarer toute rupture ou
@@ -38,7 +38,7 @@ export const DataOriginSection = () => (
           </p>
         </div>
 
-        <div className="mb-8">
+        <div className="mb-12">
           <h4 className="mt-0 mb-2">Avertissements</h4>
           <p>
             La publication de ces données fait partie de l&apos;objectif de transparence de
@@ -58,7 +58,7 @@ export const DataOriginSection = () => (
           </p>
         </div>
 
-        <div className="mb-8">
+        <div className="mb-12">
           <h4 className="mt-0 mb-2">Pour aller plus loin</h4>
           <p>
             La sécurisation de l&apos;approvisionnement en médicaments d&apos;intérêt thérapeutique
