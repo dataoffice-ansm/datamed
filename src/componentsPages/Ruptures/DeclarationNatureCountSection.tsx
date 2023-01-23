@@ -16,12 +16,7 @@ import { GraphBox } from '../../components/GraphBox/GraphBox';
 export const DeclarationNatureCountSection = ({
   periodString,
 }: { periodString: string } & HTMLAttributes<HTMLDivElement>) => {
-  const { ruptures } = useRupturesPageContext();
-
-  const years = useMemo(
-    () => (ruptures?.ruptureYears ?? []).sort((a, b) => Number(a) - Number(b)).reverse(),
-    [ruptures?.ruptureYears]
-  );
+  const { ruptureYears, repartitionPerClassification } = useRupturesPageContext();
 
   const datasets = useMemo(
     () => [
@@ -30,7 +25,7 @@ export const DeclarationNatureCountSection = ({
         label: 'Ruptures',
         backgroundColor: tailwindPaletteConfig.teal[900],
         borderColor: tailwindPaletteConfig.teal[900],
-        data: (ruptures?.repartitionPerClassification ?? [])
+        data: (repartitionPerClassification ?? [])
           .filter((element) => element?.classification === 'rupture')
           .map((element) => element?.value),
       },
@@ -39,12 +34,12 @@ export const DeclarationNatureCountSection = ({
         label: 'Risques de ruptures',
         backgroundColor: tailwindPaletteConfig.green[900],
         borderColor: tailwindPaletteConfig.green[900],
-        data: (ruptures?.repartitionPerClassification ?? [])
+        data: (repartitionPerClassification ?? [])
           .filter((element) => element?.classification === 'risque')
           .map((element) => element?.value),
       },
     ],
-    [ruptures?.repartitionPerClassification]
+    [repartitionPerClassification]
   );
 
   return (
@@ -56,7 +51,7 @@ export const DeclarationNatureCountSection = ({
 
       <DeclarationCauseByYearSection />
 
-      {ruptures?.repartitionPerClassification ? (
+      {repartitionPerClassification ? (
         <GraphBox
           title="Historique du nombre de déclarations de ruptures et de risques de rupture de stock"
           className="DeclarationNatureCountContent"
@@ -84,7 +79,7 @@ export const DeclarationNatureCountSection = ({
           <div className="min-h-[256px] md:min-h-[512px] lg:min-h-[600px] w-full relative">
             <LineChart
               className="flex justify-center mt-4 w-full h-full absolute"
-              labels={years}
+              labels={ruptureYears}
               datasets={datasets}
               leftLegend="Nombre de déclarations"
               bottomLegend="Année"

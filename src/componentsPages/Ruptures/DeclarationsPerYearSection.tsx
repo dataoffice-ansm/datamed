@@ -12,13 +12,14 @@ import { KPIBoxProgression } from '../../components/KPIBoxProgression';
 import { formatDate, numberWithThousand } from '../../utils/format';
 
 export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
-  const { ruptures } = useRupturesPageContext();
+  const { config, ruptureYears, ruptureStocks } = useRupturesPageContext();
+
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
   const rupturesYearsOptions: SelectOption[] = useMemo(
     () =>
-      ruptures?.ruptureYears
-        ? ruptures.ruptureYears.reduce<SelectOption[]>(
+      ruptureYears
+        ? ruptureYears.reduce<SelectOption[]>(
             (carry, year) => [
               ...carry,
               {
@@ -29,7 +30,7 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
             []
           )
         : [],
-    [ruptures?.ruptureYears]
+    [ruptureYears]
   );
 
   const onSelectedYear = useCallback((index: number) => {
@@ -38,10 +39,10 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
 
   const rupturesDeclarationsForSelectedYear = useMemo(
     () =>
-      (ruptures?.ruptureStocks ?? []).find(
+      (ruptureStocks ?? []).find(
         (element) => element?.year === rupturesYearsOptions[selectedIndex].value
       ),
-    [rupturesYearsOptions, ruptures?.ruptureStocks, selectedIndex]
+    [rupturesYearsOptions, ruptureStocks, selectedIndex]
   );
 
   const percentRisk = Math.trunc(
@@ -57,8 +58,8 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
   );
 
   const sectionSubtitlePeriod =
-    ruptures.config?.minYear && ruptures.config.maxYear
-      ? `${formatDate(ruptures.config?.minYear)} - ${formatDate(ruptures.config.maxYear)}`
+    config?.minYear && config.maxYear
+      ? `${formatDate(config?.minYear)} - ${formatDate(config.maxYear)}`
       : 'Année non disponible';
 
   return (
@@ -74,7 +75,7 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
         />
       </SectionTitle>
 
-      {(ruptures?.ruptureYears ?? []).length > 0 ? (
+      {(ruptureYears ?? []).length > 0 ? (
         <div className="DeclarationByYearSectionContent flex flex-col gap-4">
           <BoxInfo
             title={`${numberWithThousand(
@@ -86,6 +87,10 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
               <>
                 <p className="font-medium mb-4 text-lg">
                   Historique du nombre de déclarations de ruptures et de risques de rupture de stock
+                </p>
+                <p>
+                  Les ruptures, les risques de rupture de stock sont déclarés à l’ANSM par les
+                  entreprises pharmaceutiques.
                 </p>
                 <p>
                   Les industriels qui produisent des Médicaments d’Intérêt Thérapeutique Majeur

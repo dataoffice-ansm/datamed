@@ -244,7 +244,7 @@ export const SubstanceSideEffects = ({
 
       {substance.sideEffects?.repartitionPerPathology && (
         <GraphBoxSelect
-          title="Effets indésirables suspectés de la substance active"
+          title="Cumul des effets indésirables suspectés sur la période totale"
           render={({ selectedUnitOption }) => {
             const repartitionPerPathology = buildSortedRangeData<RepartitionPerPathology>(
               substance.sideEffects?.repartitionPerPathology,

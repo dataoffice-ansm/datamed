@@ -6,16 +6,16 @@ import { GraphFigure } from '../../components/GraphFigure';
 import { getRuptureCauseIcon } from '../../utils/iconsMapping';
 import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
 import { buildSortedRangeData } from '../../utils/entities';
-import { type Cause } from '../../graphql/__generated__/generated-documents';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
+import { type RuptureCauseRepartitionCause } from '../../graphql/__generated__/generated-documents';
 
 export const DeclarationCauseByYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
-  const { ruptures } = useRupturesPageContext();
+  const { ruptureYears, repartitionPerCause } = useRupturesPageContext();
 
   const rupturesYearsOptions: SelectOption[] = useMemo(
     () =>
-      ruptures?.ruptureYears
-        ? ruptures.ruptureYears.reduce<SelectOption[]>(
+      ruptureYears
+        ? ruptureYears.reduce<SelectOption[]>(
             (carry, year) => [
               ...carry,
               {
@@ -26,7 +26,7 @@ export const DeclarationCauseByYearSection = (_props: HTMLAttributes<HTMLDivElem
             []
           )
         : [],
-    [ruptures?.ruptureYears]
+    [ruptureYears]
   );
 
   return (
@@ -37,11 +37,11 @@ export const DeclarationCauseByYearSection = (_props: HTMLAttributes<HTMLDivElem
         yearsOptions={rupturesYearsOptions}
         render={({ selectedUnitOption, selectedYearOption }) => {
           const selectedRupturesCausesRep =
-            ruptures.repartitionPerCause && selectedYearOption
-              ? ruptures.repartitionPerCause.find((action) => action?.year === selectedYearOption)
+            repartitionPerCause && selectedYearOption
+              ? repartitionPerCause.find((action) => action?.year === selectedYearOption)
               : null;
 
-          const selectedRupturesCauses = buildSortedRangeData<Cause>(
+          const selectedRupturesCauses = buildSortedRangeData<RuptureCauseRepartitionCause>(
             selectedRupturesCausesRep?.causes ?? [],
             selectedUnitOption
           );
@@ -57,6 +57,7 @@ export const DeclarationCauseByYearSection = (_props: HTMLAttributes<HTMLDivElem
                     label={cause.range}
                     icon={getRuptureCauseIcon(cause.range)}
                     valueClassName="text-dark-green-900"
+                    contentTooltip={cause.description ?? ''}
                     value={
                       selectedUnitOption === 'number'
                         ? cause.value

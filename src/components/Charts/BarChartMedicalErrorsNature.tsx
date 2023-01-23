@@ -68,6 +68,7 @@ export const BarChartMedicalErrorsNature = ({
           datasets: [
             {
               data,
+              label: 'Nature des erreurs médicamenteuses',
               backgroundColor,
               borderWidth: 1,
             },

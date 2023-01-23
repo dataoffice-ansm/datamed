@@ -55,7 +55,7 @@ export const GraphFigure = ({
               {label}
             </span>
           )}
-          content={<div className="p-2">{contentTooltip}</div>}
+          content={<div className="p-2 max-w-xl">{contentTooltip}</div>}
         />
         {action}
       </div>

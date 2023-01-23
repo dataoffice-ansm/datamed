@@ -2,6 +2,7 @@ import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/Enti
 import { HeroHeader } from '../../components/HeroHeader/HeroHeader';
 import type { EntityCis } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
+import TarketBlankIcon from '../../assets/pictos/targetBlank.svg';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import type {
@@ -71,14 +72,12 @@ const SectionOneGlobalInformation = () => {
           ))}
         </div>
       </div>
-
       {currentEntity.atc && (
         <div className="sectionPart mt-4 mb-8">
           <h5>Classe ATC</h5>
           <span>{currentEntity.atc?.name}</span> - <span>{currentEntity.atc?.code}</span>
         </div>
       )}
-
       {currentEntity.commercialisationState && (
         <div className="sectionPart mt-4 mb-8">
           <h5>État de commercialisation</h5>
@@ -87,60 +86,77 @@ const SectionOneGlobalInformation = () => {
           </span>
         </div>
       )}
-
       {currentEntity.laboratory && (
         <div className="sectionPart mt-4 mb-8">
           <h5>Laboratoire</h5>
           <span>{currentEntity.laboratory.name}</span>
         </div>
       )}
-
-      {currentEntity.description && (
-        <div className="sectionPart mt-4 mb-8">
-          <h5>Description</h5>
-          <p>{currentEntity.description}</p>
-        </div>
-      )}
-
-      <div className="flex justify-center items-center gap-3">
-        <div className="flex-1">
-          <h5>Infos pour les patients</h5>
+      <div className="sectionPart mt-4 mb-8">
+        <h5>Informations de la Base de Données Publique des Médicaments (BDPM)</h5>
+        <p>
+          Retrouvez des informations de référence sur ce médicament, notamment ses indications
+          thérapeutiques, les données de remboursement, la notice pour le patient, le RCP pour les
+          professionnels, les avis rendus par la Commission de la Transparence et bien d’autres
+          informations.
+        </p>
+        <p>
           <a
             rel="external noreferrer"
             target="_blank"
             href={`https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=${currentEntity.code}&typedoc=N`}
-            className="text-sm text-primary"
+            className="text-sm text-primary flex items-center gap-1"
           >
-            Afficher la notice
+            <TarketBlankIcon className="w-3 h-3" />
+            <span>Fiche info de la BDPM</span>
           </a>
-        </div>
-
-        <div className="flex-1">
-          <h5>Infos pour les professionnels de santé</h5>
-          <a
-            rel="external noreferrer"
-            target="_blank"
-            href={`https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=${currentEntity.code}&typedoc=R`}
-            className="text-sm text-primary"
-          >
-            Afficher le RCP
-          </a>
-        </div>
-
-        {/*<div>*/}
-        {/*  <h5>Avis de la commission transparence</h5>*/}
-        {/*  <a*/}
-        {/*    rel="external noreferrer"*/}
-        {/*    target="_blank"*/}
-        {/*    href={`https://www.has-sante.fr/jcms/fc_2875171/fr/resultat-de-recherche?text=${encodeURI(*/}
-        {/*      currentEntity.name.split(' ')?.[0]*/}
-        {/*    )}&tmpParam=&opSearch=&types=guidelines`}*/}
-        {/*    className="text-sm text-primary"*/}
-        {/*  >*/}
-        {/*    Afficher les recommandations*/}
-        {/*  </a>*/}
-        {/*</div>*/}
+        </p>
       </div>
+
+      {/*{currentEntity.description && (*/}
+      {/*  <div className="sectionPart mt-4 mb-8">*/}
+      {/*    <h5>Description</h5>*/}
+      {/*    <p>{currentEntity.description}</p>*/}
+      {/*  </div>*/}
+      {/*)}*/}
+
+      {/*<div className="flex justify-center items-center gap-3">*/}
+      {/*  <h5>Infos pour les patients</h5>*/}
+      {/*  <a*/}
+      {/*    rel="external noreferrer"*/}
+      {/*    target="_blank"*/}
+      {/*    href={`https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=${currentEntity.code}&typedoc=N`}*/}
+      {/*    className="text-sm text-primary"*/}
+      {/*  >*/}
+      {/*    Afficher la notice*/}
+      {/*  </a>*/}
+
+      {/*<div className="flex-1">*/}
+      {/*  <h5>Infos pour les professionnels de santé</h5>*/}
+      {/*  <a*/}
+      {/*    rel="external noreferrer"*/}
+      {/*    target="_blank"*/}
+      {/*    href={`https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=${currentEntity.code}&typedoc=R`}*/}
+      {/*    className="text-sm text-primary"*/}
+      {/*  >*/}
+      {/*    Afficher le RCP*/}
+      {/*  </a>*/}
+      {/*</div>*/}
+
+      {/*<div>*/}
+      {/*  <h5>Avis de la commission transparence</h5>*/}
+      {/*  <a*/}
+      {/*    rel="external noreferrer"*/}
+      {/*    target="_blank"*/}
+      {/*    href={`https://www.has-sante.fr/jcms/fc_2875171/fr/resultat-de-recherche?text=${encodeURI(*/}
+      {/*      currentEntity.name.split(' ')?.[0]*/}
+      {/*    )}&tmpParam=&opSearch=&types=guidelines`}*/}
+      {/*    className="text-sm text-primary"*/}
+      {/*  >*/}
+      {/*    Afficher les recommandations*/}
+      {/*  </a>*/}
+      {/*</div>*/}
+      {/*</div>*/}
     </div>
   );
 };
@@ -398,8 +414,7 @@ const SectionMedicinalErrors = () => {
                           : apparitionStep.value) ?? 0
                       }
                       label={apparitionStep.label}
-                      // TODO
-                      // contentTooltip=""
+                      contentTooltip={apparitionStep.description ?? ''}
                       icon={getMedErrorApparitionStepIcon(step)}
                     />
                   );

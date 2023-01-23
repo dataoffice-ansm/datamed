@@ -2,7 +2,6 @@ fragment SpecialityFragment on Speciality {
     id
     name
     code
-    description
     atc {
         id
         name
@@ -85,6 +84,7 @@ fragment SpecialityFragment on Speciality {
             label
             value
             valuePercent
+            description
         }
         natureRepartition {
             id
@@ -127,7 +127,6 @@ fragment SubstanceFragment on Substance {
             id
             code
             name
-            description
         }
     }
     repartitionPerGender {
@@ -316,6 +315,7 @@ query GlobalRuptures {
             causes {
                 value
                 range
+                description
             }
             total
         }

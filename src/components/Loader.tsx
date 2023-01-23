@@ -15,7 +15,9 @@ export const Loader = () => {
         {React.createElement(pictos[selected], {
           className: 'animate-bounce w-20 h-20',
         })}
-        <h1 className="mt-3 opacity-50">Chargement des données en cours...</h1>
+        <p className="mt-3 text-lg md:text-2xl opacity-75 text-center">
+          Chargement des données en cours...
+        </p>
       </div>
     </div>
   );

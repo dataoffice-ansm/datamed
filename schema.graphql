@@ -108,6 +108,7 @@ type MedicalErrorsApparitionStep {
     label: String!
     value: Int!
     valuePercent: Float!
+    description: String
 
 }
 
@@ -130,7 +131,7 @@ type RuptureClass {
     label: String @capitalize
 }
 
-type RuptureCause {
+type SpecialityRuptureCause {
     id: Int!
     type: String @capitalize
 }
@@ -140,7 +141,7 @@ type SpecialityRupture {
     num: String
     name: String @capitalize
     active: Boolean
-    cause: RuptureCause @capitalize
+    cause: SpecialityRuptureCause @capitalize
     classification: RuptureClass
     date: String
 }
@@ -253,6 +254,7 @@ type SpecialityUsagePerAge {
     valuePercent: Float!
     description: String
 }
+
 type Speciality {
     id: Int!
     code: String!
@@ -262,7 +264,6 @@ type Speciality {
     substances: [Substance]
     dosageSubstances: [SpecialitySubstance]
     pharmaForm: PharmaForm
-    description: String
     commercialisationState: String @capitalize
     commercialisationType: String @capitalize
     laboratory: Laboratory @capitalize
@@ -278,7 +279,6 @@ type SpecialityLight {
     id: Int!
     code: String!
     name: String! @capitalize
-    description: String
 }
 
 type GlobalStatsUsagePerAge {
@@ -333,14 +333,15 @@ type TherapeuticClassesRupturesPerYear {
     total: Int
 }
 
-type Cause {
+type RuptureCauseRepartitionCause {
     range: String!
     value: Int!
+    description: String
 }
 
 type RuptureCauseRepartition {
     year: String!
-    causes: [Cause]
+    causes: [RuptureCauseRepartitionCause]
     total: Int
 }
 

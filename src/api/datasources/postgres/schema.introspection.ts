@@ -33,6 +33,7 @@ export type ActionsStatus = {
 export type ActionsTypes = {
   id: Generated<number>;
   type: string | null;
+  definition: string | null;
 };
 
 export type AdminRoutes = {
@@ -74,6 +75,7 @@ export type CausesAll = {
 export type CausesTypes = {
   id: Generated<number>;
   type: string | null;
+  definition: string | null;
 };
 
 export type Config = {
@@ -82,14 +84,9 @@ export type Config = {
   c_date: Timestamp | null;
 };
 
-export type Descriptions = {
-  id: Generated<number>;
-  description: string | null;
-  mp_id: number | null;
-};
-
 export type ErrorMedDenomination = {
   id: Generated<number>;
+  number: number | null;
   denomination: string | null;
   mp_id: number | null;
 };
@@ -206,6 +203,7 @@ export type Icons = {
 export type InitialErrors = {
   id: Generated<number>;
   label: string | null;
+  definition: string | null;
 };
 
 export type Laboratories = {
@@ -489,7 +487,6 @@ export type DB = {
   causes_all: CausesAll;
   causes_types: CausesTypes;
   config: Config;
-  descriptions: Descriptions;
   error_med_denomination: ErrorMedDenomination;
   error_med_gravity: ErrorMedGravity;
   error_med_initial: ErrorMedInitial;

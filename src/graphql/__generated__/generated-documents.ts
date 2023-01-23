@@ -15,12 +15,6 @@ export type Scalars = {
   Float: number;
 };
 
-export type Cause = {
-  __typename?: 'Cause';
-  range: Scalars['String'];
-  value: Scalars['Int'];
-};
-
 export type EntityExpositionPeriod = {
   __typename?: 'EntityExpositionPeriod';
   consumption: Scalars['Int'];
@@ -172,6 +166,7 @@ export type MedicalErrors = {
 
 export type MedicalErrorsApparitionStep = {
   __typename?: 'MedicalErrorsApparitionStep';
+  description?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   label: Scalars['String'];
   step: Scalars['String'];
@@ -317,17 +312,18 @@ export type RuptureActionRepartition = {
   year: Scalars['String'];
 };
 
-export type RuptureCause = {
-  __typename?: 'RuptureCause';
-  id: Scalars['Int'];
-  type?: Maybe<Scalars['String']>;
-};
-
 export type RuptureCauseRepartition = {
   __typename?: 'RuptureCauseRepartition';
-  causes?: Maybe<Array<Maybe<Cause>>>;
+  causes?: Maybe<Array<Maybe<RuptureCauseRepartitionCause>>>;
   total?: Maybe<Scalars['Int']>;
   year: Scalars['String'];
+};
+
+export type RuptureCauseRepartitionCause = {
+  __typename?: 'RuptureCauseRepartitionCause';
+  description?: Maybe<Scalars['String']>;
+  range: Scalars['String'];
+  value: Scalars['Int'];
 };
 
 export type RuptureClass = {
@@ -372,7 +368,6 @@ export type Speciality = {
   code: Scalars['String'];
   commercialisationState?: Maybe<Scalars['String']>;
   commercialisationType?: Maybe<Scalars['String']>;
-  description?: Maybe<Scalars['String']>;
   dosageIndication?: Maybe<Scalars['String']>;
   dosageSubstances?: Maybe<Array<Maybe<SpecialitySubstance>>>;
   exposition?: Maybe<EntityExpositionPeriod>;
@@ -391,7 +386,6 @@ export type Speciality = {
 export type SpecialityLight = {
   __typename?: 'SpecialityLight';
   code: Scalars['String'];
-  description?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   name: Scalars['String'];
 };
@@ -399,12 +393,18 @@ export type SpecialityLight = {
 export type SpecialityRupture = {
   __typename?: 'SpecialityRupture';
   active?: Maybe<Scalars['Boolean']>;
-  cause?: Maybe<RuptureCause>;
+  cause?: Maybe<SpecialityRuptureCause>;
   classification?: Maybe<RuptureClass>;
   date?: Maybe<Scalars['String']>;
   id: Scalars['Int'];
   name?: Maybe<Scalars['String']>;
   num?: Maybe<Scalars['String']>;
+};
+
+export type SpecialityRuptureCause = {
+  __typename?: 'SpecialityRuptureCause';
+  id: Scalars['Int'];
+  type?: Maybe<Scalars['String']>;
 };
 
 export type SpecialityRupturesHistory = {
@@ -494,7 +494,6 @@ export type SpecialityFragmentFragment = {
   id: number;
   name: string;
   code: string;
-  description?: string | null;
   dosageIndication?: string | null;
   commercialisationState?: string | null;
   commercialisationType?: string | null;
@@ -518,7 +517,6 @@ export type SpecialityFragmentFragment = {
         id: number;
         code: string;
         name: string;
-        description?: string | null;
       } | null> | null;
     } | null;
     repartitionPerGender?: {
@@ -636,6 +634,7 @@ export type SpecialityFragmentFragment = {
       label: string;
       value: number;
       valuePercent: number;
+      description?: string | null;
     } | null> | null;
     natureRepartition?: Array<{
       __typename?: 'MedicalErrorsNature';
@@ -654,7 +653,7 @@ export type SpecialityFragmentFragment = {
       name?: string | null;
       active?: boolean | null;
       date?: string | null;
-      cause?: { __typename?: 'RuptureCause'; id: number; type?: string | null } | null;
+      cause?: { __typename?: 'SpecialityRuptureCause'; id: number; type?: string | null } | null;
       classification?: { __typename?: 'RuptureClass'; id: number; label?: string | null } | null;
     } | null> | null;
     meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -674,7 +673,6 @@ export type SubstanceFragmentFragment = {
       id: number;
       code: string;
       name: string;
-      description?: string | null;
     } | null> | null;
   } | null;
   repartitionPerGender?: {
@@ -747,7 +745,6 @@ export type SpecialityQuery = {
     id: number;
     name: string;
     code: string;
-    description?: string | null;
     dosageIndication?: string | null;
     commercialisationState?: string | null;
     commercialisationType?: string | null;
@@ -771,7 +768,6 @@ export type SpecialityQuery = {
           id: number;
           code: string;
           name: string;
-          description?: string | null;
         } | null> | null;
       } | null;
       repartitionPerGender?: {
@@ -889,6 +885,7 @@ export type SpecialityQuery = {
         label: string;
         value: number;
         valuePercent: number;
+        description?: string | null;
       } | null> | null;
       natureRepartition?: Array<{
         __typename?: 'MedicalErrorsNature';
@@ -907,7 +904,7 @@ export type SpecialityQuery = {
         name?: string | null;
         active?: boolean | null;
         date?: string | null;
-        cause?: { __typename?: 'RuptureCause'; id: number; type?: string | null } | null;
+        cause?: { __typename?: 'SpecialityRuptureCause'; id: number; type?: string | null } | null;
         classification?: { __typename?: 'RuptureClass'; id: number; label?: string | null } | null;
       } | null> | null;
       meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -950,7 +947,6 @@ export type SubstanceQuery = {
         id: number;
         code: string;
         name: string;
-        description?: string | null;
       } | null> | null;
     } | null;
     repartitionPerGender?: {
@@ -1120,7 +1116,12 @@ export type GlobalRupturesQuery = {
       __typename?: 'RuptureCauseRepartition';
       year: string;
       total?: number | null;
-      causes?: Array<{ __typename?: 'Cause'; value: number; range: string } | null> | null;
+      causes?: Array<{
+        __typename?: 'RuptureCauseRepartitionCause';
+        value: number;
+        range: string;
+        description?: string | null;
+      } | null> | null;
     } | null> | null;
     repartitionPerAction?: Array<{
       __typename?: 'RuptureActionRepartition';
@@ -1169,7 +1170,6 @@ export const SubstanceFragmentFragmentDoc = gql`
         id
         code
         name
-        description
       }
     }
     repartitionPerGender {
@@ -1241,7 +1241,6 @@ export const SpecialityFragmentFragmentDoc = gql`
     id
     name
     code
-    description
     atc {
       id
       name
@@ -1324,6 +1323,7 @@ export const SpecialityFragmentFragmentDoc = gql`
         label
         value
         valuePercent
+        description
       }
       natureRepartition {
         id
@@ -1664,6 +1664,7 @@ export const GlobalRupturesDocument = gql`
         causes {
           value
           range
+          description
         }
         total
       }

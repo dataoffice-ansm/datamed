@@ -12,20 +12,20 @@ import { type RuptureAction } from '../../graphql/__generated__/generated-docume
 import { buildSortedRangeData } from '../../utils/entities';
 import { numberWithThousand } from '../../utils/format';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
-import { getRuptureActionTypeDescription } from '../../api/utils/mapping';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 
 export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
-  const { ruptures } = useRupturesPageContext();
+  const { totalActions, repartitionPerAction } = useRupturesPageContext();
+
   const yearsOptions: Array<SelectOption<string>> = useMemo(
     () =>
-      (ruptures?.totalActions ?? [])
+      (totalActions ?? [])
         .filter((r) => r?.year)
         .map((ruptureYear) => ({
           value: ruptureYear?.year ?? '',
           label: ruptureYear?.year ?? '',
         })),
-    [ruptures?.totalActions]
+    [totalActions]
   );
 
   return (
@@ -40,13 +40,13 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
         yearsOptions={yearsOptions}
         render={({ selectedYearOption, selectedUnitOption }) => {
           const selectedRupturesTotalActionsRepartition =
-            ruptures?.totalActions && selectedYearOption
-              ? ruptures?.totalActions.find((element) => element?.year === selectedYearOption)
+            totalActions && selectedYearOption
+              ? totalActions.find((element) => element?.year === selectedYearOption)
               : null;
 
           const selectedRupturesActionsRepartition =
-            ruptures.repartitionPerAction && selectedYearOption
-              ? ruptures.repartitionPerAction.find(
+            repartitionPerAction && selectedYearOption
+              ? repartitionPerAction.find(
                   (ruptureActionsRep) => ruptureActionsRep?.year === selectedYearOption
                 )
               : null;
@@ -132,7 +132,7 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
                       label={action.range}
                       icon={getDeclarationActionIcon(action.range)}
                       valueClassName="text-dark-green-900"
-                      contentTooltip={getRuptureActionTypeDescription(action.range)}
+                      contentTooltip={action.description ?? ''}
                       value={
                         selectedUnitOption === 'number'
                           ? action.value

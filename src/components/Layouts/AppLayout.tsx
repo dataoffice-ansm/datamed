@@ -33,7 +33,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
           className="ease-linear transition-padding duration-200"
           style={{ paddingTop: navBarHeight + stickyHeroHeight }}
         >
-          <div className="max-md:px-3 md:container max-w-[1920px] md:mx-auto">{children}</div>
+          <div className="px-2 max-md:px-3 md:container max-w-[1920px] md:mx-auto">{children}</div>
         </main>
         <Footer />
         <Overlay />

@@ -1,5 +1,4 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import { useEffect } from 'react';
 import { useRef } from 'react';
 import classnames from 'classnames';
 import { stickyHeroHeightPx, useLayoutContext } from '../../contexts/LayoutContext';
@@ -45,15 +44,11 @@ export const HeadlessHeroHeader = ({
   backNavigationIconColor: backNavigationColor = 'fill-white',
   tooltip,
 }: HeadlessHeroHeaderProps) => {
-  const { navBarHeight, setStickyHeroHeight } = useLayoutContext();
+  const { navBarHeight } = useLayoutContext();
   const { scrollY } = useScrollPosition();
   const ref = useRef<HTMLDivElement>(null);
   const heightRef = useRefHeight(ref);
-  const pageScrolled = heightRef && scrollY >= heightRef;
-
-  useEffect(() => {
-    setStickyHeroHeight(pageScrolled ? stickyHeroHeightPx : 0);
-  }, [heightRef, pageScrolled, setStickyHeroHeight]);
+  const pageScrolled = heightRef && scrollY + stickyHeroHeightPx >= heightRef;
 
   return (
     <FullWidthRow id={id} className={theme}>
@@ -68,11 +63,11 @@ export const HeadlessHeroHeader = ({
           top: heightRef && pageScrolled ? `${navBarHeight}px` : `-${navBarHeight}px`,
         }}
       >
-        <div className="max-md:px-3 md:container max-w-[1920px] md:mx-auto flex gap-8 h-full items-center text-xl">
+        <div className="max-md:px-3 md:container max-w-[1920px] md:mx-auto flex gap-4 h-full items-center">
           <div className="w-10 h-10">{icon}</div>
-          <div className="text-xl font-medium text-ellipsis overflow-hidden whitespace-nowrap">
+          <span className="text-md sm:text-xl font-medium text-ellipsis overflow-hidden whitespace-nowrap">
             {title}
-          </div>
+          </span>
         </div>
       </div>
       <div ref={ref} className="HeadlessHeroHeader flex flex-col w-full">
@@ -89,6 +84,7 @@ export const HeadlessHeroHeader = ({
             <div className="text-md font-medium">Accueil / {backNavigationLabel}</div>
           </a>
         </Link>
+
         <div
           className={classNames(
             'HeroHeader flex flex-col md:flex-row justify-center min-h[20rem]',

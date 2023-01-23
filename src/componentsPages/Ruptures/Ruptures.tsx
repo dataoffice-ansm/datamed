@@ -10,8 +10,8 @@ import { RepartitionPerTherapeuticClassSection } from './RepartitionPerTherapeut
 import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
 
 const useGetGlobalRupturesPeriod = () => {
-  const { ruptures } = useRupturesPageContext();
-  const { ruptureYears } = ruptures;
+  const { ruptureYears } = useRupturesPageContext();
+
   if (ruptureYears && ruptureYears.length > 0) {
     const max = ruptureYears[0];
     const min = ruptureYears[ruptureYears.length - 1];

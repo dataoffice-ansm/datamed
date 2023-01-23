@@ -6,17 +6,14 @@ type RupturesContextData = {
   ruptures: GlobalRuptures;
 };
 
-export const RupturesContext = createContext<RupturesContextData>({
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  ruptures: {
-    ruptureYears: {},
-    ruptureStocks: {},
-    repartitionPerAction: {},
-    repartitionPerCause: {},
-    repartitionPerClassification: {},
-    repartitionPerTherapeuticClass: {},
-  } as GlobalRuptures,
-});
+export const RupturesContext = createContext<GlobalRuptures>({
+  ruptureYears: {},
+  ruptureStocks: {},
+  repartitionPerAction: {},
+  repartitionPerCause: {},
+  repartitionPerClassification: {},
+  repartitionPerTherapeuticClass: {},
+} as GlobalRuptures);
 
 /**
  *
@@ -30,7 +27,7 @@ export const RupturesPageContextProvider = ({
 }: HTMLAttributes<HTMLDivElement> & RupturesContextData) => {
   const value = useMemo(
     () => ({
-      ruptures,
+      ...ruptures,
     }),
     [ruptures]
   );
@@ -39,9 +36,7 @@ export const RupturesPageContextProvider = ({
 };
 
 export const useRupturesPageContext = () => {
-  const context = useContext<RupturesContextData>(
-    RupturesContext as unknown as Context<RupturesContextData>
-  );
+  const context = useContext<GlobalRuptures>(RupturesContext as unknown as Context<GlobalRuptures>);
 
   if (!context) {
     throw new Error(

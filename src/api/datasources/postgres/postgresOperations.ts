@@ -1,6 +1,5 @@
 import { dbInstance } from './postgreDb';
 import type {
-  Cause,
   EntityExpositionPeriod,
   GlobalExpositionPeriod,
   GlobalRupturesConfig,
@@ -23,6 +22,7 @@ import type {
   RuptureAction,
   RuptureActionRepartition,
   RuptureCauseRepartition,
+  RuptureCauseRepartitionCause,
   RuptureClassificationRepartition,
   RuptureStock,
   RupturesTotalActionPerYear,
@@ -41,7 +41,6 @@ import {
   getMedicalErrorApparitionStep,
   getPublicationsTypeLabel,
   getRuptureTypeLabel,
-  getRuptureActionTypeDescription,
 } from '../../utils/mapping';
 import { roundFloat } from '../../utils/format';
 
@@ -51,7 +50,6 @@ export class PostgresOperations {
       .selectFrom('medicinal_products as mp')
       .where('mp.cis', 'in', cisCodes)
       .leftJoin('mp_atc as mp_a', 'mp.id', 'mp_a.mp_id')
-      .leftJoin('descriptions as d', 'mp.id', 'd.mp_id')
       .leftJoin('marketing_authorization_status as mka_s', 'mka_s.id', 'mp.ma_status_id')
       .leftJoin('marketing_authorization_types as mka_t', 'mka_t.id', 'mp.ma_type_id')
       .leftJoin('laboratories as lab', 'lab.id', 'mp.laboratory_id')
@@ -75,7 +73,6 @@ export class PostgresOperations {
         'ph_f.form as pharmaFormLabel',
         'ph_f.id as pharmaFormId',
         'i.name as iconName',
-        'd.description',
       ])
       .execute();
 
@@ -88,7 +85,6 @@ export class PostgresOperations {
         actCode,
         atcName,
         iconName,
-        description,
         commercialisationState,
         commercialisationType,
         laboratoryId,
@@ -118,7 +114,6 @@ export class PostgresOperations {
                 type: getCisPharmaFormType(iconName),
               }
             : null,
-        description,
         commercialisationState,
         commercialisationType,
         laboratory: laboratoryId
@@ -295,15 +290,16 @@ export class PostgresOperations {
       .leftJoin('initial_errors as ini', 'ini.id', 'err.initial_error_id')
       .where('err.mp_id', '=', cisId)
       .select([
-        'ini.id as stepId',
-        'ini.label',
         'err.number as value',
         'err.percentage as valuePercent',
+        'ini.id as stepId',
+        'ini.label',
+        'ini.definition as description',
       ])
       .execute();
 
     return rows.reduce<MedicalErrorsApparitionStep[]>((carry, row) => {
-      const { stepId, label, value, valuePercent } = row;
+      const { stepId, label, value, valuePercent, description } = row;
 
       return stepId && label && value && value >= 10 && valuePercent
         ? [
@@ -314,6 +310,7 @@ export class PostgresOperations {
               label,
               value: Math.round(value),
               valuePercent: roundFloat(valuePercent),
+              description,
             },
           ]
         : carry;
@@ -366,11 +363,12 @@ export class PostgresOperations {
         'so_c.id as classId',
         'ct.id as causeId',
         'ct.type as causeType',
+        'ct.type as causeDescription',
       ])
       .execute();
 
     return rows.reduce<SpecialityRupture[]>((carry, row) => {
-      const { id, num, name, state, date, classId, causeId, causeType } = row;
+      const { id, num, name, state, date, classId, causeId, causeType, causeDescription } = row;
 
       return id && classId && causeId
         ? [
@@ -388,6 +386,7 @@ export class PostgresOperations {
               cause: {
                 id: causeId,
                 type: causeType,
+                description: causeDescription,
               },
             },
           ]
@@ -1104,7 +1103,7 @@ export class PostgresOperations {
 
         return {
           year,
-          causes: rows.reduce<Cause[]>((carry, row) => {
+          causes: rows.reduce<RuptureCauseRepartitionCause[]>((carry, row) => {
             const { type, value } = row;
             return type && value && value >= 10
               ? [
@@ -1139,21 +1138,22 @@ export class PostgresOperations {
     const rows = await dbInstance
       .selectFrom('actions')
       .leftJoin('actions_types as at', 'actions.type_id', 'at.id')
-      .select([count('actions.id').as('value'), 'at.type as label'])
+      .select([count('actions.id').as('value'), 'at.type as type', 'at.definition as description'])
       .where('actions.year', '=', year)
       .groupBy('at.type')
+      .groupBy('at.definition')
       .execute();
 
     return rows.reduce<RuptureAction[]>((carry, row) => {
-      const { label, value } = row;
+      const { value, type, description } = row;
 
-      return label && value && value >= 10 && label !== 'Pas de mesure'
+      return value && value >= 10 && type && type !== 'Pas de mesure'
         ? [
             ...carry,
             {
-              range: label,
+              range: type,
               value: Number(value),
-              description: getRuptureActionTypeDescription(label),
+              description,
             },
           ]
         : carry;

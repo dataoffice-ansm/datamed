@@ -18,6 +18,7 @@ import { navIconSize } from '../../config/layoutConfig';
 /**
  *
  * @param embedded
+ * @param autoFocus
  * @param handleOnSelected
  * @constructor
  */
@@ -47,7 +48,7 @@ export const Autocomplete = ({
       const filteredCis = specialities
         ? (specialities
             .filter((cis) => cis !== null)
-            .filter((cis) => cis?.name.toLowerCase().startsWith(formattedQuery))
+            .filter((cis) => cis?.name.toLowerCase().includes(formattedQuery))
             .slice(0, 50)
             .map((row) => ({ type: 'cis', ...row, code: row?.code ?? '' })) as EntityCis[])
         : [];
@@ -55,7 +56,7 @@ export const Autocomplete = ({
       const filteredSub = substances
         ? (substances
             .filter((sub) => sub !== null)
-            .filter((sub) => sub?.name.toLowerCase().startsWith(formattedQuery))
+            .filter((sub) => sub?.name.toLowerCase().includes(formattedQuery))
             .slice(0, 50)
             .map((row) => ({ type: 'sub', ...row, code: row?.code ?? '' })) as EntitySub[])
         : [];

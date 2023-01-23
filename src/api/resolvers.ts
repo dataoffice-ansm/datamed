@@ -36,11 +36,10 @@ export const resolvers: Resolvers = {
     async getSpecialities(parent, args, context) {
       const rows = await context.dataSources.postgresOperations.getSpecialities();
       return {
-        specialities: rows.map(({ id, name, code, description }) => ({
+        specialities: rows.map(({ id, name, code }) => ({
           id,
           name,
           code,
-          description,
         })),
         meta: {
           count: rows.length,
@@ -190,11 +189,10 @@ export const resolvers: Resolvers = {
       );
 
       return {
-        specialities: specialities.map(({ id, name, code, description }) => ({
+        specialities: specialities.map(({ id, name, code }) => ({
           id,
           name,
           code,
-          description,
         })),
         meta: {
           count: specialities.length,

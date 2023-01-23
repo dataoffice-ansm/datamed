@@ -10,12 +10,12 @@ import { MixedBarChart } from '../../components/Charts/MixedBarBublleChart';
 import { type ChartDataset } from 'chart.js';
 
 export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTMLDivElement>) => {
-  const { ruptures } = useRupturesPageContext();
+  const { ruptureYears, repartitionPerTherapeuticClass } = useRupturesPageContext();
 
   const rupturesYearsOptions: SelectOption[] = useMemo(
     () =>
-      ruptures?.ruptureYears
-        ? ruptures.ruptureYears.reduce<SelectOption[]>(
+      ruptureYears
+        ? ruptureYears.reduce<SelectOption[]>(
             (carry, year) => [
               ...carry,
               {
@@ -26,7 +26,7 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
             []
           )
         : [],
-    [ruptures?.ruptureYears]
+    [ruptureYears]
   );
 
   return (
@@ -63,10 +63,8 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
       }
       render={({ selectedYearOption }) => {
         const therapeuticClassDataForSelectedYear =
-          ruptures.repartitionPerTherapeuticClass && selectedYearOption
-            ? ruptures.repartitionPerTherapeuticClass.find(
-                (element) => element?.year === selectedYearOption
-              )
+          repartitionPerTherapeuticClass && selectedYearOption
+            ? repartitionPerTherapeuticClass.find((element) => element?.year === selectedYearOption)
             : null;
 
         const therapeuticRepartitionForSelectedYear = buildSortedRangeData<TherapeuticClassRupture>(
