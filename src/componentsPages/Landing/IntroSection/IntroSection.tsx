@@ -10,7 +10,7 @@ export const IntroSection = () => {
 
   return (
     <FullScreenSection className="bg-white" appendixAnchor="#search" offsetHeight={navBarHeight}>
-      <div className="flex justify-center items-center md:flex-row gap-8 flex-col w-full pb-32">
+      <div className="flex justify-center items-center md:flex-row gap-8 flex-col w-full pt-8 pb-32">
         <div className="max-w-3xl">
           <Logo alt="Logo DATAMED ANSM" className="w-48" />
           <h2 className="pt-8 text-2xl md:text-3xl font-medium">

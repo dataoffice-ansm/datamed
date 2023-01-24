@@ -22,8 +22,8 @@ export const Footer = () => (
           </div>
         ))}
 
-        <div className="mb-4 flex flex-auto justify-center items-center md:justify-end">
-          <LogoWhite height={200} width={200} />
+        <div className="flex flex-auto justify-center items-center md:justify-end">
+          <LogoWhite height={100} width={200} />
         </div>
       </div>
     </div>

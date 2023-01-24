@@ -3,7 +3,6 @@ import classnames from 'classnames';
 import Link from 'next/link';
 import { NavDrawerMobile } from './NavDrawerMobile';
 import LogoBrand from '../../assets/logo-ansm-beta.svg';
-import { useScrollPosition } from '../../hooks/useScrollPosition';
 import { useRefHeight } from '../../hooks/useRefHeight';
 import { useLayoutContext } from '../../contexts/LayoutContext';
 import { SearchBar } from '../SearchBar';
@@ -23,8 +22,6 @@ export const NavigationBar = () => {
   const navBarRefHeight = useRefHeight(navbarRef);
   const { navBarHeight, setNavBarHeight } = useLayoutContext();
   const { setScrollEnabled } = useBodyScrollContext();
-  const { scrollY } = useScrollPosition();
-  const pageScrolled = scrollY > navBarHeight;
 
   const isDesktop = useBreakpoint('md');
 
@@ -34,7 +31,6 @@ export const NavigationBar = () => {
   }, []);
 
   const closeNavDrawer = useCallback(() => {
-    console.log('sdfsef');
     setNavDrawerOpened(false);
     setSearchDrawerOpened(false);
   }, []);
@@ -73,10 +69,7 @@ export const NavigationBar = () => {
         'flex justify-between items-center gap-4',
         'z-[2] fixed px-6 left-0 right-0 bg-white top-0',
         'ease-in-out duration-200 transition-padding',
-        {
-          'h-20': !pageScrolled,
-          'h-14 md:h-16 py-2 md:py-3 shadow': pageScrolled,
-        }
+        'h-16 py-2 md:py-3 shadow'
       )}
     >
       <button
@@ -100,7 +93,7 @@ export const NavigationBar = () => {
         />
       )}
 
-      <div className="flex justify-center md:justify-between items-center gap-8">
+      <div className="navbarInner flex justify-center md:justify-between items-center gap-3">
         <Link href="/">
           <a className="flex justify-center items-center border-b-4 border-transparent">
             <LogoBrand width={128} height={46} alt="Logo DATAMED" />
@@ -116,7 +109,7 @@ export const NavigationBar = () => {
           style={{ top: navBarHeight }}
           className="AutocompleteMobileContainer fixed left-0 right-0 bottom-0 z-[3] overflow-auto"
         >
-          <div className="AutocompleteMobileContent bg-white flex flex-col justify-center align-center">
+          <div className="AutocompleteMobileContent flex flex-col justify-center align-center bg-white border-t border-grey-100">
             <Autocomplete embedded autoFocus handleOnSelected={handleSearchDrawer} />
           </div>
         </div>

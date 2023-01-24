@@ -22,7 +22,7 @@ export const NavDrawerMobile = ({
       }
     }}
   >
-    <div className="NavigationMenuLinkWrapper h-fit bg-white border-t-2 border-grey-100 flex flex-col justify-center align-center">
+    <div className="NavigationMenuLinkWrapper h-fit flex flex-col justify-center align-center bg-white border-t border-grey-100">
       <RenderNavLinks mobile links={links} />
     </div>
   </div>

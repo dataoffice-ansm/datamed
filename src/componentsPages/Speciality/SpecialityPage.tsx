@@ -2,7 +2,7 @@ import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/Enti
 import { HeroHeader } from '../../components/HeroHeader/HeroHeader';
 import type { EntityCis } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
-import TarketBlankIcon from '../../assets/pictos/targetBlank.svg';
+import TargetBlankIcon from '../../assets/pictos/targetBlank.svg';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import type {
@@ -21,7 +21,6 @@ import ManFaceNo from '../../assets/pictos/manFaceNo.svg';
 import ManFaceYes from '../../assets/pictos/manFaceYes.svg';
 import OutOfStockSvg from '../../assets/pictos/out_of_stock.svg';
 
-import { useLayoutContext } from '../../contexts/LayoutContext';
 import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { GraphFigure } from '../../components/GraphFigure';
@@ -46,18 +45,14 @@ import { UsageBarContainer } from '../../components/UsageBarContainer';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
-  const { stickyHeroHeight } = useLayoutContext();
+
   const substances = useMemo(
     () => currentEntity?.substances ?? [],
     [currentEntity?.substances]
   ) as Substance[];
 
   return (
-    <div
-      className="SectionOneGlobalInformation bg-white shadow rounded-lg p-4"
-      style={{ marginTop: stickyHeroHeight }}
-      id="sectionOneGlobalInformation"
-    >
+    <div className="SectionOneGlobalInformation bg-white shadow rounded-lg p-4">
       <div className="sectionPart mt-4 mb-8">
         {substances.length > 1 ? <h5>Substances actives</h5> : <h5>Substance active</h5>}
 
@@ -104,10 +99,10 @@ const SectionOneGlobalInformation = () => {
           <a
             rel="external noreferrer"
             target="_blank"
-            href={`https://base-donnees-publique.medicaments.gouv.fr/affichageDoc.php?specid=${currentEntity.code}&typedoc=N`}
+            href={`https://base-donnees-publique.medicaments.gouv.fr/extrait.php?specid=${currentEntity.code}`}
             className="text-sm text-primary flex items-center gap-1"
           >
-            <TarketBlankIcon className="w-3 h-3" />
+            <TargetBlankIcon className="w-3 h-3" />
             <span>Fiche info de la BDPM</span>
           </a>
         </p>
@@ -171,7 +166,7 @@ const SectionTreatedPatients = () => {
   );
 
   return (
-    <div className="SectionTreatedPatients sectionPart mt-4 mb-8" id="sectionTreatedPatients">
+    <div className="sectionPart mt-4 mb-8" id="sectionTreatedPatients">
       <SectionTitle
         title="Patients traités en ville"
         subTitle={
@@ -603,7 +598,7 @@ const SectionPublications = () => {
 export const SpecialityPage = ({ cis }: { cis: Speciality }) => (
   <EntityContextProvider entity={{ type: 'cis', ...cis }}>
     <EntityPageLayout
-      offsetContent={60}
+      offsetContent={40}
       colorMenu="primary"
       sections={[
         {

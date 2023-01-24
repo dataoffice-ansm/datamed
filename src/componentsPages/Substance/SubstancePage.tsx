@@ -32,7 +32,7 @@ const SectionOneGlobalInformation = () => {
   );
 
   return (
-    <div className="SectionTreatedPatients sectionPart mt-4 mb-8">
+    <div className="sectionPart mt-4 mb-8">
       <SectionTitle
         title="Patients traités en ville"
         subTitle={

@@ -23,7 +23,7 @@ const Overlay = () => {
  * @constructor
  */
 export const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  const { authed, navBarHeight, stickyHeroHeight } = useLayoutContext();
+  const { authed, navBarHeight } = useLayoutContext();
 
   if (authed) {
     return (
@@ -31,7 +31,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <NavigationBar />
         <main
           className="ease-linear transition-padding duration-200"
-          style={{ paddingTop: navBarHeight + stickyHeroHeight }}
+          style={{ paddingTop: navBarHeight }}
         >
           <div className="px-2 max-md:px-3 md:container max-w-[1920px] md:mx-auto">{children}</div>
         </main>

@@ -14,6 +14,7 @@ import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import { LoaderSpinner } from '../LoadingSpinner';
 import SearchIcon from '../../assets/nav/search.svg';
 import { navIconSize } from '../../config/layoutConfig';
+import { lookUpSearch } from '../../utils/autocomplete';
 
 /**
  *
@@ -48,7 +49,7 @@ export const Autocomplete = ({
       const filteredCis = specialities
         ? (specialities
             .filter((cis) => cis !== null)
-            .filter((cis) => cis?.name.toLowerCase().includes(formattedQuery))
+            .filter((cis) => lookUpSearch(cis?.name ?? '', formattedQuery))
             .slice(0, 50)
             .map((row) => ({ type: 'cis', ...row, code: row?.code ?? '' })) as EntityCis[])
         : [];
@@ -56,7 +57,7 @@ export const Autocomplete = ({
       const filteredSub = substances
         ? (substances
             .filter((sub) => sub !== null)
-            .filter((sub) => sub?.name.toLowerCase().includes(formattedQuery))
+            .filter((sub) => lookUpSearch(sub?.name ?? '', formattedQuery))
             .slice(0, 50)
             .map((row) => ({ type: 'sub', ...row, code: row?.code ?? '' })) as EntitySub[])
         : [];
@@ -71,20 +72,20 @@ export const Autocomplete = ({
     await router.push(url);
   };
 
-  const optionsContainerClassname = classnames(
-    'AutocompleteOptions bg-white z-[1] w-full border-grey-400 px-0',
-    embedded
-      ? 'm-0'
-      : 'rounded-lg absolute max-h-80 overflow-auto border mt-1 top-[48px] left-0 right-0'
-  );
-
   const debounceInputOnChange = debounce((e: ChangeEvent<HTMLInputElement>) => {
     setQuery(e.target.value);
   }, 200);
 
   const renderOptions = useCallback(
     () => (
-      <Combobox.Options className={optionsContainerClassname}>
+      <Combobox.Options
+        className={classnames(
+          'AutocompleteOptions bg-white z-[1] max-w-42 border-grey-400 px-0',
+          embedded
+            ? 'm-0'
+            : 'rounded-lg absolute max-h-80 overflow-auto border mt-1 top-[48px] left-0 right-0'
+        )}
+      >
         {results.length === 0 && (
           <div className={classnames('text-grey-400', embedded ? 'p-8' : 'py-2 px-4')}>
             Aucun résultat disponible
@@ -99,7 +100,7 @@ export const Autocomplete = ({
                 className={({ active }) =>
                   classnames(
                     'AutocompleteOption cursor-pointer list-none border-b last:border-none border-grey-400',
-                    'py-2 px-4  flex justify-between gap-4',
+                    'py-2 px-4 flex justify-between gap-4 hover:bg-grey-100',
                     {
                       'bg-grey-100': active,
                       'first:rounded-t-lg last:rounded-b-lg': !embedded,
@@ -115,7 +116,7 @@ export const Autocomplete = ({
         )}
       </Combobox.Options>
     ),
-    [embedded, optionsContainerClassname, results]
+    [embedded, results]
   );
 
   const isLoading = cisLoading || subLoading;
@@ -127,46 +128,35 @@ export const Autocomplete = ({
   return (
     <div
       className={classnames(
-        'AutocompleteContainer bg-white',
+        'AutocompleteContainer bg-white lg:min-w-[20rem]',
         embedded
-          ? 'border-grey-100 rounded-none sticky top-0 shadow-lg flex flex-col'
-          : 'rounded-lg border border-grey-400 pl-3 py-1 px-2 top-[48px] left-0 right-0'
+          ? 'embedded px-2 py-1 border-grey-100 rounded-none sticky top-0 shadow-lg flex flex-col'
+          : 'rounded-lg border border-grey-400 py-1 px-2 top-[48px] left-0 right-0'
       )}
     >
-      <div className={classnames({ 'relative flex': !embedded })}>
-        <Combobox onChange={onSelected}>
-          <Combobox.Input
-            autoFocus={autoFocus}
-            placeholder={cisLoading || subLoading ? loadingPlaceholder : placeholder}
-            disabled={cisLoading || subLoading}
-            className={classnames('AutocompleteInput flex-1 border-none', {
-              'p-4': embedded,
-            })}
-            value={query}
-            onChange={debounceInputOnChange}
-          />
-          {query.length >= 3 && renderOptions()}
-        </Combobox>
-        <div
-          className={classnames('afterElement flex justify-center items-center w-10 z-[1]', {
-            relative: !embedded,
-          })}
-        >
-          {isLoading ? (
-            <div className={classnames({ 'absolute right-[16px] top-[16px]': embedded })}>
-              <LoaderSpinner />
+      <Combobox onChange={onSelected}>
+        <div className="relative mt-1">
+          <div className="relative flex items-center w-full overflow-hidden sm:text-sm">
+            <Combobox.Input
+              autoFocus={autoFocus}
+              placeholder={cisLoading || subLoading ? loadingPlaceholder : placeholder}
+              disabled={cisLoading || subLoading}
+              className="AutocompleteInput flex-1 border-none !px-0"
+              value={query}
+              onChange={debounceInputOnChange}
+            />
+            <div className="afterElement w-8">
+              {(isLoading && <LoaderSpinner />) ||
+                (!embedded && (
+                  <div className="pointer-events-none">
+                    <SearchIcon width={navIconSize} height={navIconSize} alt="search" />
+                  </div>
+                ))}
             </div>
-          ) : (
-            <div className="afterElement">
-              {!embedded && (
-                <div className="pointer-events-none">
-                  <SearchIcon width={navIconSize} height={navIconSize} alt="search" />
-                </div>
-              )}
-            </div>
-          )}
+          </div>
         </div>
-      </div>
+        {query.length >= 3 && renderOptions()}
+      </Combobox>
     </div>
   );
 };

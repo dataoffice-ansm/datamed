@@ -6,15 +6,15 @@ export const stickyHeroHeightPx = 64;
 
 export const layoutContext = createContext<{
   navBarHeight: number;
-  stickyHeroHeight: number;
-  authed: boolean;
   setNavBarHeight: Dispatch<SetStateAction<number>>;
+  stickyHeroHeight: number;
   setStickyHeroHeight: Dispatch<SetStateAction<number>>;
+  authed: boolean;
   setAuthed: Dispatch<SetStateAction<boolean>>;
 }>({
   navBarHeight: navBarHeightPx,
-  stickyHeroHeight: 0,
   setNavBarHeight: () => null,
+  stickyHeroHeight: 0,
   setStickyHeroHeight: () => null,
   authed: false,
   setAuthed: () => null,
@@ -27,7 +27,7 @@ export const LayoutProvider = ({
   authSSR,
 }: HTMLAttributes<HTMLDivElement> & { authSSR: boolean }) => {
   const [navBarHeight, setNavBarHeight] = useState(navBarHeightPx);
-  const [stickyHeroHeight, setStickyHeroHeight] = useState(0);
+  const [stickyHeroHeight, setStickyHeroHeight] = useState(stickyHeroHeightPx);
   const [authed, setAuthed] = useState(authSSR);
 
   const value = useMemo(

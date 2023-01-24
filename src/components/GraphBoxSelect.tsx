@@ -91,9 +91,14 @@ export const GraphBoxSelect = ({
       <div className="GraphBoxHeader flex flex-col px-4">
         <div className="GraphBoxTitle flex flex-col sm:flex-row gap-4 justify-between items-start mb-4">
           <div className="GraphBoxTitle flex items-start gap-2 w-full text-left w-full md:w-2/3">
-            <span className={classNames(layoutSection ? 'text-xl font-bold' : 'font-medium')}>
+            <h2
+              className={classNames(
+                layoutSection && 'text-2xl lg:text-3xl',
+                'font-medium text-left mt-0 mb-2'
+              )}
+            >
               {title}
-            </span>
+            </h2>
             {tooltip && (
               <TooltipInformation>
                 <div className="p-2">{tooltip}</div>

@@ -82,11 +82,12 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
                         Déclarations donnant lieu à une mesure
                       </p>
                       <p>
-                        La pharmacovigilance est la surveillance, l’évaluation, la prévention et la
-                        gestion du risque d’effet indésirable résultant de l’utilisation des
-                        médicaments. Elle s’exerce en permanence, avant et après la
-                        commercialisation des médicaments, et constitue un élément essentiel du
-                        contrôle de la sécurité des médicaments.
+                        Toutes les déclarations reçues font l&apos;objet d&apos;une analyse de
+                        risque et génèrent l&apos;ouverture d&apos;un dossier qui sera suivi par les
+                        équipes de l&apos;ANSM jusqu&apos;à remise à disposition normale du
+                        médicament. Certaines situations, plus critiques nécessitent, la mise en
+                        place de mesures préventives ou palliatives afin de limiter au maximum
+                        l&apos;impact sur l&apos;accès au traitement.
                       </p>
                     </>
                   }

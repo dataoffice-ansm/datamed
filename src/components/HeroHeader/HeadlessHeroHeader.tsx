@@ -64,7 +64,7 @@ export const HeadlessHeroHeader = ({
         }}
       >
         <div className="max-md:px-3 md:container max-w-[1920px] md:mx-auto flex gap-4 h-full items-center">
-          <div className="w-10 h-10">{icon}</div>
+          <div className="w-10">{icon}</div>
           <span className="text-md sm:text-xl font-medium text-ellipsis overflow-hidden whitespace-nowrap">
             {title}
           </span>
@@ -74,7 +74,7 @@ export const HeadlessHeroHeader = ({
         <Link href="/">
           <a
             className={classNames(
-              'flex justify-start items-center mt-12 mt-4 md:mb-12 gap-4',
+              'flex justify-start items-center mt-10 mt-4 md:mb-8 gap-4',
               textColor
             )}
           >
@@ -87,18 +87,17 @@ export const HeadlessHeroHeader = ({
 
         <div
           className={classNames(
-            'HeroHeader flex flex-col md:flex-row justify-center min-h[20rem]',
-            'px-4 py-8 gap-8',
-            'md:px-2 md:pt-16 md:pb-24 md:gap-16',
-            'lg:pb-32',
+            'HeroHeader flex flex-col justify-center min-h[20rem] px-4 py-8 gap-8',
+            'md:flex-row md:px-2 md:pt-12 md:pb-24 md:gap-16',
+            'lg:pb-24',
             textColor
           )}
         >
           <div className="w-36 h-36">{icon}</div>
           <div className="flex flex-col justify-center">
-            <div className="text-2xl lg:text-3xl font-medium mb-4">{title}</div>
-            {description && <div className="text-2xl mb-4">{description}</div>}
-            {tooltip && <div className="text-lg mb-4">{tooltip}</div>}
+            <div className="text-xl lg:text-2xl font-medium mb-4">{title}</div>
+            {description && <div className="text-md mb-4">{description}</div>}
+            {tooltip && <div className="text-md mb-4">{tooltip}</div>}
           </div>
         </div>
       </div>

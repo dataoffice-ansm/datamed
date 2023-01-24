@@ -82,7 +82,7 @@ export const EntityPageLayout = ({
             className="no-underline"
             to={id}
             duration={100}
-            offset={-(navBarHeight + stickyHeroHeight + 10)}
+            offset={-(navBarHeight + stickyHeroHeight + 50)}
             onSetActive={() => {
               handleSelectedIndex(index);
             }}
@@ -127,7 +127,7 @@ export const EntityPageLayout = ({
 
   const renderContent = useMemo(
     () => (
-      <div className="EntityPageLayout flex-1 my-12">
+      <div className="EntityPageLayout flex-1">
         {render(
           sections.map(({ id, content }) => (
             <section
@@ -154,15 +154,18 @@ export const EntityPageLayout = ({
     return renderLayout(
       <div>
         {children}
-        <div className="desktopLayout flex gap-2 relative">
+        <div className="desktopLayout flex gap-2 relative px-2">
           <div className="sideMenuNav flex flex-col flex-1">
-            <div className="sideMenuInner sticky ease-in-out duration-700 transition-top">
+            <div
+              className="sideMenuInner sticky ease-in-out duration-700 transition-top"
+              style={{ top: navBarHeight + stickyHeroHeight }}
+            >
               <RenderNavigation vertical itemClassName="min:h-16 py-4" />
             </div>
           </div>
           <div
-            style={{ marginTop: stickyHeroHeight ? 0 : -offsetContent }}
             className="contentInner flex-[3] ease-linear transition-margin duration-200"
+            style={{ marginTop: -offsetContent }}
           >
             {renderContent}
           </div>

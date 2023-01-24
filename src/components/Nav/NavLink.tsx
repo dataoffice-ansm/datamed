@@ -33,7 +33,7 @@ export const NavLink = ({
             : 'hover:text-primary-700 focus:text-primary-700 border-transparent'
         )}
       >
-        <div className="block px-6 py-2">{children}</div>
+        <div className="block px-2 py-2">{children}</div>
         {enableAnimation && (
           <div
             className={classNames(

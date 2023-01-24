@@ -84,28 +84,10 @@ export const DeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement
             icon={<FolderSVG className="h-24 w-24" />}
             theme="dark-green"
             tooltip={
-              <>
-                <p className="font-medium mb-4 text-lg">
-                  Historique du nombre de déclarations de ruptures et de risques de rupture de stock
-                </p>
-                <p>
-                  Les ruptures, les risques de rupture de stock sont déclarés à l’ANSM par les
-                  entreprises pharmaceutiques.
-                </p>
-                <p>
-                  Les industriels qui produisent des Médicaments d’Intérêt Thérapeutique Majeur
-                  (MITM) sont tenus de signaler à l’ANSM toute rupture de stock ou risque de rupture
-                  de stock. les concernant (CSP Art. R. 5124-49-1).{' '}
-                </p>
-                <p>
-                  Depuis 2019, dans le cadre de la feuille de route ministérielle et de la loi de
-                  financement de la sécurité sociale qui renforce ses pouvoirs, l&apos;ANSM demande
-                  aux industriels de déclarer le plus en amont possible tout risque de rupture.
-                  Cette politique d&apos;anticipation maximale a pour conséquence une augmentation
-                  du nombre de déclarations reçues.
-                </p>
-                <p>Les déclarations de décret stock sans risque ne sont pas représentées ici.</p>
-              </>
+              <p>
+                Les ruptures, les risques de rupture de stock sont déclarés à l’ANSM par les
+                entreprises pharmaceutiques.
+              </p>
             }
           >
             Nombre de déclarations de ruptures et risques de rupture de stock depuis le début de
