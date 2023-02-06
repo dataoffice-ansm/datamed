@@ -19,8 +19,7 @@ export type EntityExpositionPeriod = {
   __typename?: 'EntityExpositionPeriod';
   consumption: Scalars['Int'];
   description: Scalars['String'];
-  expositionCode: Scalars['Int'];
-  expositionLevel: Scalars['String'];
+  level: Scalars['String'];
   maxYear: Scalars['String'];
   minYear: Scalars['String'];
 };
@@ -570,8 +569,7 @@ export type SpecialityFragmentFragment = {
     exposition?: {
       __typename?: 'EntityExpositionPeriod';
       consumption: number;
-      expositionCode: number;
-      expositionLevel: string;
+      level: string;
       description: string;
       minYear: string;
       maxYear: string;
@@ -606,8 +604,7 @@ export type SpecialityFragmentFragment = {
   exposition?: {
     __typename?: 'EntityExpositionPeriod';
     consumption: number;
-    expositionCode: number;
-    expositionLevel: string;
+    level: string;
     description: string;
     minYear: string;
     maxYear: string;
@@ -726,8 +723,7 @@ export type SubstanceFragmentFragment = {
   exposition?: {
     __typename?: 'EntityExpositionPeriod';
     consumption: number;
-    expositionCode: number;
-    expositionLevel: string;
+    level: string;
     description: string;
     minYear: string;
     maxYear: string;
@@ -821,8 +817,7 @@ export type SpecialityQuery = {
       exposition?: {
         __typename?: 'EntityExpositionPeriod';
         consumption: number;
-        expositionCode: number;
-        expositionLevel: string;
+        level: string;
         description: string;
         minYear: string;
         maxYear: string;
@@ -857,8 +852,7 @@ export type SpecialityQuery = {
     exposition?: {
       __typename?: 'EntityExpositionPeriod';
       consumption: number;
-      expositionCode: number;
-      expositionLevel: string;
+      level: string;
       description: string;
       minYear: string;
       maxYear: string;
@@ -1000,8 +994,7 @@ export type SubstanceQuery = {
     exposition?: {
       __typename?: 'EntityExpositionPeriod';
       consumption: number;
-      expositionCode: number;
-      expositionLevel: string;
+      level: string;
       description: string;
       minYear: string;
       maxYear: string;
@@ -1228,8 +1221,7 @@ export const SubstanceFragmentFragmentDoc = gql`
     }
     exposition {
       consumption
-      expositionCode
-      expositionLevel
+      level
       description
       minYear
       maxYear
@@ -1293,8 +1285,7 @@ export const SpecialityFragmentFragmentDoc = gql`
     }
     exposition {
       consumption
-      expositionCode
-      expositionLevel
+      level
       description
       minYear
       maxYear

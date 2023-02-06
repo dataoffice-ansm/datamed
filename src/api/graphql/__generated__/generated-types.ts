@@ -19,8 +19,7 @@ export type EntityExpositionPeriod = {
   __typename?: 'EntityExpositionPeriod';
   consumption: Scalars['Int'];
   description: Scalars['String'];
-  expositionCode: Scalars['Int'];
-  expositionLevel: Scalars['String'];
+  level: Scalars['String'];
   maxYear: Scalars['String'];
   minYear: Scalars['String'];
 };
@@ -731,8 +730,7 @@ export type EntityExpositionPeriodResolvers<
 > = {
   consumption?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  expositionCode?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  expositionLevel?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  level?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   maxYear?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   minYear?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;

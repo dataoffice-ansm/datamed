@@ -54,8 +54,7 @@ fragment SpecialityFragment on Speciality {
     }
     exposition {
         consumption
-        expositionCode
-        expositionLevel
+        level
         description
         minYear
         maxYear
@@ -186,8 +185,7 @@ fragment SubstanceFragment on Substance {
     }
     exposition {
         consumption
-        expositionCode
-        expositionLevel
+        level
         description
         minYear
         maxYear

@@ -108,24 +108,24 @@ export const getExpositionConsumptionLabels = (
   };
 };
 
-export const getExpositionByLevelId = (level: number | null) => {
+export const getExpositionInfosByLevelId = (level: number | null) => {
   switch (level) {
     case 1:
       return {
-        expositionLevel: ExpositionLevel.VERYLOW,
+        level: ExpositionLevel.VERYLOW,
         description: 'Utilisation très faible',
       };
     case 2:
-      return { expositionLevel: ExpositionLevel.LOW, description: 'Utilisation faible' };
+      return { level: ExpositionLevel.LOW, description: 'Utilisation faible' };
     case 3:
-      return { expositionLevel: ExpositionLevel.MODERED, description: 'Utilisation modérée' };
+      return { level: ExpositionLevel.MODERED, description: 'Utilisation modérée' };
     case 4:
-      return { expositionLevel: ExpositionLevel.HIGH, description: 'Utilisation élevée' };
+      return { level: ExpositionLevel.HIGH, description: 'Utilisation élevée' };
     case 5:
-      return { expositionLevel: ExpositionLevel.VERYHIGH, description: 'Utilisation très élevée' };
+      return { level: ExpositionLevel.VERYHIGH, description: 'Utilisation très élevée' };
     case 0:
     default:
-      return { expositionLevel: ExpositionLevel.UKNOWN, description: 'Utilisation inconnue' };
+      return { level: ExpositionLevel.UKNOWN, description: 'Utilisation inconnue' };
   }
 };
 

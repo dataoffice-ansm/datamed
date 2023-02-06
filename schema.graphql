@@ -222,8 +222,7 @@ type SubstanceSideEffects {
 
 type EntityExpositionPeriod {
     consumption: Int!
-    expositionCode: Int!
-    expositionLevel: String!
+    level: String!
     description: String!
     minYear: String!
     maxYear: String!

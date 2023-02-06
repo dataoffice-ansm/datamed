@@ -51,7 +51,7 @@ export const UsageBarContainer = ({
                 )}
                 style={{ height: 20 + 10 * index }}
               >
-                {exposition.expositionLevel === levelKey && (
+                {exposition.level === levelKey && (
                   <div className="bouncingPil animate-bounce absolute -top-8">
                     <PilIcon className="w-6 h-6" />
                   </div>

@@ -36,7 +36,7 @@ import type {
   TherapeuticClassRupture,
 } from '../../graphql/__generated__/generated-types';
 import {
-  getExpositionByLevelId,
+  getExpositionInfosByLevelId,
   getCisPharmaFormType,
   getMedicalErrorApparitionStep,
   getPublicationsTypeLabel,
@@ -76,6 +76,8 @@ export class PostgresOperations {
       ])
       .execute();
 
+    const openMedicExposition = await this.getOpenMedicExpositionConfig();
+
     return rows.map((row) => {
       const {
         id,
@@ -94,6 +96,8 @@ export class PostgresOperations {
         pharmaFormId,
         pharmaFormLabel,
       } = row;
+
+      const expositionInfos = getExpositionInfosByLevelId(expositionCode);
 
       return {
         id,
@@ -123,13 +127,17 @@ export class PostgresOperations {
             }
           : null,
         exposition:
-          expositionCode && consumption && consumption >= 10
+          expositionCode &&
+          consumption &&
+          consumption >= 10 &&
+          openMedicExposition?.minYear &&
+          openMedicExposition?.maxYear
             ? {
                 consumption,
-                expositionCode,
-                ...getExpositionByLevelId(expositionCode),
-                minYear: '2014',
-                maxYear: '2021',
+                level: expositionInfos.level,
+                description: expositionInfos.description,
+                minYear: openMedicExposition.minYear,
+                maxYear: openMedicExposition?.maxYear,
               }
             : null,
       };
@@ -718,34 +726,31 @@ export class PostgresOperations {
   }
 
   async getSubstanceExposition(subId: number): Promise<EntityExpositionPeriod | null> {
-    const { min, max } = dbInstance.fn;
+    const openMedicExposition = await this.getOpenMedicExpositionConfig();
 
     const row = await dbInstance
       .selectFrom('substances_exposition')
       .where('substance_id', '=', subId)
-      .select([
-        'consumption_year_trunc as consumption',
-        'exposition as expositionCode',
-        min('year').as('minYear'),
-        max('year').as('maxYear'),
-      ])
+      .select(['consumption_year_trunc as consumption', 'exposition as expositionCode'])
       .groupBy('consumption')
       .groupBy('expositionCode')
       .executeTakeFirst();
 
     if (
       row?.expositionCode &&
-      row?.minYear &&
-      row?.minYear &&
       row?.consumption &&
-      row?.consumption >= 10
+      row?.consumption >= 10 &&
+      openMedicExposition?.minYear &&
+      openMedicExposition?.maxYear
     ) {
+      const expositionInfos = getExpositionInfosByLevelId(row.expositionCode);
+
       return {
         consumption: row.consumption,
-        expositionCode: row.expositionCode,
-        minYear: String(row.minYear),
-        maxYear: String(row.maxYear),
-        ...getExpositionByLevelId(row.expositionCode),
+        level: expositionInfos.level,
+        description: expositionInfos.description,
+        minYear: openMedicExposition.minYear,
+        maxYear: openMedicExposition?.maxYear,
       };
     }
 
@@ -945,6 +950,24 @@ export class PostgresOperations {
       repartitionPerNotifier: await this.getGlobalStatisticRepPerNotifier(),
       repartitionPerGravity: await this.getGlobalStatisticGravity(),
     };
+  }
+
+  async getOpenMedicExpositionConfig(): Promise<GlobalRupturesConfig | null> {
+    const rows = await dbInstance
+      .selectFrom('config')
+      .select(['id', 'label', 'c_date'])
+      .where('label', 'in', ['openmedic_date_min', 'openmedic_date_max'])
+      .execute();
+
+    const minYear = rows.find((r) => r.label === 'openmedic_date_min')?.c_date ?? null;
+    const maxYear = rows.find((r) => r.label === 'openmedic_date_max')?.c_date ?? null;
+
+    return minYear && maxYear
+      ? {
+          minYear: minYear.toLocaleDateString(),
+          maxYear: maxYear.toLocaleDateString(),
+        }
+      : null;
   }
 
   async getRuptureConfig(): Promise<GlobalRupturesConfig | null> {
