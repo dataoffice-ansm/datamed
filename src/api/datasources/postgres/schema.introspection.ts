@@ -8,34 +8,6 @@ export type Int8 = ColumnType<string, string | number | bigint, string | number 
 
 export type Timestamp = ColumnType<Date, Date | string, Date | string>;
 
-export type Actions = {
-  id: Generated<number>;
-  identifier: string | null;
-  description: string | null;
-  name: string | null;
-  request_date: Timestamp | null;
-  implementation_date: Timestamp | null;
-  estimated_end_date: Timestamp | null;
-  closing_date: Timestamp | null;
-  justification: string | null;
-  year: string | null;
-  with_action: string | null;
-  sold_out_id: number | null;
-  action_status_id: number | null;
-  type_id: number | null;
-};
-
-export type ActionsStatus = {
-  id: Generated<number>;
-  status: string | null;
-};
-
-export type ActionsTypes = {
-  id: Generated<number>;
-  type: string | null;
-  definition: string | null;
-};
-
 export type AdminRoutes = {
   id: Generated<number>;
   route: string | null;
@@ -46,36 +18,16 @@ export type Ages = {
   range: string | null;
 };
 
+export type Atc1 = {
+  id: Generated<number>;
+  label: string | null;
+  code: string | null;
+};
+
 export type AtcClasses = {
   id: Generated<number>;
   code: string | null;
   label: string | null;
-};
-
-export type CasePv = {
-  id: Generated<number>;
-  year: Int8 | null;
-  pv_case: Int8 | null;
-};
-
-export type Causes = {
-  id: Generated<number>;
-  year: Int8 | null;
-  sold_out_id: number | null;
-  cause_id: number | null;
-};
-
-export type CausesAll = {
-  id: Generated<number>;
-  year: Int8 | null;
-  sold_out_id: number | null;
-  cause_id: number | null;
-};
-
-export type CausesTypes = {
-  id: Generated<number>;
-  type: string | null;
-  definition: string | null;
 };
 
 export type Config = {
@@ -183,6 +135,49 @@ export type GlobalSeSoc = {
   n: number | null;
   pct: number | null;
   soc_long_id: number | null;
+};
+
+export type GlobalShortages = {
+  id: Generated<number>;
+  year: number | null;
+  n_reports: number | null;
+  n_reports_actions: number | null;
+  percentage_reports_actions: number | null;
+  with_action: string | null;
+  n_actions: number | null;
+};
+
+export type GlobalShortagesActions = {
+  id: Generated<number>;
+  year: number | null;
+  n: number | null;
+  percentage: number | null;
+  actions_types_id: number | null;
+};
+
+export type GlobalShortagesAtc = {
+  id: Generated<number>;
+  year: number | null;
+  n_reports: number | null;
+  n_presentations: number | null;
+  atc1_id: number | null;
+};
+
+export type GlobalShortagesCauses = {
+  id: Generated<number>;
+  year: number | null;
+  n: number | null;
+  percentage_causes: number | null;
+  cause_id: number | null;
+};
+
+export type GlobalShortagesClasses = {
+  id: Generated<number>;
+  year: number | null;
+  n: number | null;
+  n_open: number | null;
+  percentage_close: number | null;
+  classification_id: number | null;
 };
 
 export type GravityErrors = {
@@ -328,12 +323,54 @@ export type RefDosages = {
   label: string | null;
 };
 
-export type Reports = {
+export type ShortagesActionsTypes = {
   id: Generated<number>;
+  type: string | null;
+  definition: string | null;
+};
+
+export type ShortagesAssociations = {
+  id: Generated<number>;
+  mp_id: number | null;
+  substance_id: number | null;
+  mp_associated_id: number | null;
+};
+
+export type ShortagesCauses = {
+  id: Generated<number>;
+  year: Int8 | null;
+  cause_id: number | null;
+};
+
+export type ShortagesCausesTypes = {
+  id: Generated<number>;
+  type: string | null;
+  definition: string | null;
+};
+
+export type ShortagesClasses = {
+  id: Generated<number>;
+  classification: string | null;
+};
+
+export type ShortagesHisto = {
+  id: Generated<number>;
+  num: string | null;
+  state: string | null;
+  date: Timestamp | null;
   year: string | null;
-  label: string | null;
-  nb_reports: number | null;
-  nb_presentations: number | null;
+  name: string | null;
+  mp_id: number | null;
+  classification_id: number | null;
+  cause_id: number | null;
+};
+
+export type ShortagesLink = {
+  id: Generated<number>;
+  association_id: number | null;
+  mp_associated_id: number | null;
+  histo_id: number | null;
+  mp_id: number | null;
 };
 
 export type SideEffects = {
@@ -344,49 +381,6 @@ export type SideEffects = {
 export type SocLongs = {
   id: Generated<number>;
   soc: string | null;
-};
-
-export type SoldOut = {
-  id: Generated<number>;
-  num: string | null;
-  state: string | null;
-  date: Timestamp | null;
-  year: string | null;
-  name: string | null;
-  dci: string | null;
-  cip13: string | null;
-  presentation: string | null;
-  atc: string | null;
-  atc1: string | null;
-  atc2: string | null;
-  name_atc: string | null;
-  mp_id: number | null;
-  classification_id: number | null;
-  laboratory_id: number | null;
-};
-
-export type SoldOutAll = {
-  id: Generated<number>;
-  num: string | null;
-  state: string | null;
-  date: Timestamp | null;
-  year: string | null;
-  classification: string | null;
-  ma_holder: string | null;
-  cis: string | null;
-  name: string | null;
-  dci: string | null;
-  cip13: string | null;
-  presentation: string | null;
-  atc: string | null;
-  atc1: string | null;
-  atc2: string | null;
-  name_atc: string | null;
-};
-
-export type SoldOutClasses = {
-  id: Generated<number>;
-  classification: string | null;
 };
 
 export type Substances = {
@@ -476,16 +470,10 @@ export type SubstancesSoclong = {
 };
 
 export type DB = {
-  actions: Actions;
-  actions_status: ActionsStatus;
-  actions_types: ActionsTypes;
   admin_routes: AdminRoutes;
   ages: Ages;
   atc_classes: AtcClasses;
-  case_pv: CasePv;
-  causes: Causes;
-  causes_all: CausesAll;
-  causes_types: CausesTypes;
+  atc1: Atc1;
   config: Config;
   error_med_denomination: ErrorMedDenomination;
   error_med_gravity: ErrorMedGravity;
@@ -501,6 +489,11 @@ export type DB = {
   global_se_notifiers: GlobalSeNotifiers;
   global_se_sex: GlobalSeSex;
   global_se_soc: GlobalSeSoc;
+  global_shortages: GlobalShortages;
+  global_shortages_actions: GlobalShortagesActions;
+  global_shortages_atc: GlobalShortagesAtc;
+  global_shortages_causes: GlobalShortagesCauses;
+  global_shortages_classes: GlobalShortagesClasses;
   gravity_errors: GravityErrors;
   hlt_effects: HltEffects;
   icons: Icons;
@@ -522,12 +515,15 @@ export type DB = {
   publication_types: PublicationTypes;
   publications: Publications;
   ref_dosages: RefDosages;
-  reports: Reports;
+  shortages_actions_types: ShortagesActionsTypes;
+  shortages_associations: ShortagesAssociations;
+  shortages_causes: ShortagesCauses;
+  shortages_causes_types: ShortagesCausesTypes;
+  shortages_classes: ShortagesClasses;
+  shortages_histo: ShortagesHisto;
+  shortages_link: ShortagesLink;
   side_effects: SideEffects;
   soc_longs: SocLongs;
-  sold_out: SoldOut;
-  sold_out_all: SoldOutAll;
-  sold_out_classes: SoldOutClasses;
   substances: Substances;
   substances_case_age: SubstancesCaseAge;
   substances_case_severe: SubstancesCaseSevere;

@@ -1,19 +1,33 @@
 import type { GetServerSidePropsContext } from 'next';
 import { addApolloState, initializeApolloClient } from '../config/apolloClient';
-import { GlobalRupturesDocument } from '../graphql/__generated__/generated-documents';
+import {
+  GlobalRupturesDocument,
+  type GlobalShortages,
+} from '../graphql/__generated__/generated-documents';
 import type {
-  GlobalRuptures,
   GlobalRupturesQuery,
   GlobalRupturesQueryVariables,
 } from '../graphql/__generated__/generated-documents';
-import { Ruptures } from '../componentsPages/Ruptures/Ruptures';
-import { RupturesPageContextProvider } from '../contexts/RupturesPageContext';
+import { GlobalShortagesPage } from '../componentsPages/GlobalShortages/GlobalShortagesPage';
+import { GlobalShortagesContextProvider } from '../contexts/GlobalShortagesContext';
+import toast from 'react-hot-toast';
 
-const PageGlobalRupturesServerSideRendered = ({ ruptures }: { ruptures: GlobalRuptures }) => (
-  <RupturesPageContextProvider ruptures={ruptures}>
-    <Ruptures />
-  </RupturesPageContextProvider>
-);
+type GlobalShortagesPageProps = {
+  shortages: GlobalShortages;
+  err?: string;
+};
+
+const PageGlobalRupturesServerSideRendered = ({ shortages, err }: GlobalShortagesPageProps) => {
+  if (err) {
+    toast.error(err);
+  }
+
+  return (
+    <GlobalShortagesContextProvider shortages={shortages}>
+      <GlobalShortagesPage />
+    </GlobalShortagesContextProvider>
+  );
+};
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const apolloClient = initializeApolloClient({ context });
@@ -25,15 +39,18 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     return addApolloState(apolloClient, {
       props: {
-        ruptures: data.getGlobalRuptures ?? null,
+        shortages: data.getGlobalShortages ?? null,
       },
     });
   } catch (err: unknown) {
+    console.log('Failed to fetch Global Shortages page');
     console.log(err);
 
-    return addApolloState(apolloClient, {
-      props: {},
-    });
+    return {
+      props: {
+        err: err instanceof Error ? err.message : err,
+      },
+    };
   }
 };
 

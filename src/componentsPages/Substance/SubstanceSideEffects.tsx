@@ -38,7 +38,7 @@ const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: Repartition
   const [openModal, setOpenModal] = useState(false);
 
   const htlEffects = useMemo(
-    () => buildSortedRangeData<HltEffect>(pathology.htlEffects, 'number'),
+    () => buildSortedRangeData<HltEffect>(pathology.htlEffects ?? [], 'number'),
     [pathology.htlEffects]
   );
 
@@ -104,7 +104,10 @@ export const SubstanceSideEffects = ({
 }: { substance: Substance } & HTMLAttributes<HTMLElement>) => {
   const repartitionPerAge = useMemo(
     () =>
-      buildSortedRangeData<RepartitionPerAge>(substance.sideEffects?.repartitionPerAge, 'number'),
+      buildSortedRangeData<RepartitionPerAge>(
+        substance.sideEffects?.repartitionPerAge ?? [],
+        'number'
+      ),
     [substance.sideEffects?.repartitionPerAge]
   );
 
@@ -180,7 +183,7 @@ export const SubstanceSideEffects = ({
           className="max-w-full my-8"
           render={({ selectedUnitOption }) => {
             const repartitionPerNotifier = buildSortedRangeData<RepartitionPerNotifier>(
-              substance.sideEffects?.repartitionPerNotifier,
+              substance.sideEffects?.repartitionPerNotifier ?? [],
               selectedUnitOption
             );
 
@@ -247,7 +250,7 @@ export const SubstanceSideEffects = ({
           title="Cumul des effets indésirables suspectés sur la période totale"
           render={({ selectedUnitOption }) => {
             const repartitionPerPathology = buildSortedRangeData<RepartitionPerPathology>(
-              substance.sideEffects?.repartitionPerPathology,
+              substance.sideEffects?.repartitionPerPathology ?? [],
               selectedUnitOption
             );
 

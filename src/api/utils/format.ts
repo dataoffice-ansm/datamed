@@ -1,1 +1,1 @@
-export const roundFloat = (v: number) => parseFloat(v.toFixed(2));
+export const roundFloat = (v: number, digits = 1) => parseFloat(v.toFixed(digits));

@@ -10,11 +10,11 @@ import {
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 
-import type { GlobalStatistic } from '../../graphql/__generated__/generated-documents';
 import { NotEnoughData } from '../NotEnoughData';
 import { numberWithThousand } from '../../utils/format';
 import { type RepartitionUsageCommon } from '../../utils/entities';
 import { type ChartPalette, chartThemeGradient } from '../../utils/charts';
+import { type GlobalStatistics } from '../../graphql/__generated__/generated-documents';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -29,7 +29,9 @@ export const BarChartRepartition = ({
   className,
   theme,
 }: {
-  data?: GlobalStatistic['repartitionPerSeriousEffect'] | GlobalStatistic['repartitionPerGravity'];
+  data?:
+    | GlobalStatistics['repartitionPerSeriousEffect']
+    | GlobalStatistics['repartitionPerGravity'];
   dataLabel?: string;
   theme: ChartPalette;
   className?: string;

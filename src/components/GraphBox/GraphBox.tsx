@@ -1,7 +1,7 @@
 import type { HTMLAttributes, ReactNode } from 'react';
 import React from 'react';
 import classnames from 'classnames';
-import { TooltipInformation } from '../../componentsPages/Ruptures/Tooltip';
+import { TooltipInformation } from '../TooltipInformation';
 
 /**
  *

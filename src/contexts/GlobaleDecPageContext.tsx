@@ -1,23 +1,20 @@
 import type { Context, HTMLAttributes } from 'react';
 import { createContext, useContext, useMemo } from 'react';
-import type { GlobalStatistic } from '../graphql/__generated__/generated-documents';
+import type { GlobalStatistics } from '../graphql/__generated__/generated-documents';
 
-type GlobalDecPageContextData = {
-  globalDec: GlobalStatistic;
+type GlobalStatisticsContextData = {
+  globalStatistics: GlobalStatistics;
 };
 
-export const RupturesContext = createContext<GlobalDecPageContextData>({
-  // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-  globalDec: {
-    exposition: {},
-    repartitionPerSeriousEffect: {},
-    repartitionPerGravity: {},
-    repartitionPerGender: {},
-    repartitionPerNotifier: {},
-    repartitionPerPathology: {},
-    repartitionPerAge: {},
-  } as GlobalStatistic,
-});
+export const GlobalStatisticsPageContext = createContext<GlobalStatistics>({
+  exposition: {},
+  repartitionPerSeriousEffect: {},
+  repartitionPerGravity: {},
+  repartitionPerGender: {},
+  repartitionPerNotifier: {},
+  repartitionPerPathology: {},
+  repartitionPerAge: {},
+} as GlobalStatistics);
 
 /**
  *
@@ -26,22 +23,25 @@ export const RupturesContext = createContext<GlobalDecPageContextData>({
  * @constructor
  */
 export const GlobalDecPageContextProvider = ({
-  globalDec,
+  globalStatistics,
   children,
-}: HTMLAttributes<HTMLDivElement> & GlobalDecPageContextData) => {
+}: HTMLAttributes<HTMLDivElement> & GlobalStatisticsContextData) => {
   const value = useMemo(
     () => ({
-      globalDec,
+      ...globalStatistics,
     }),
-    [globalDec]
+    [globalStatistics]
   );
-
-  return <RupturesContext.Provider value={value}>{children}</RupturesContext.Provider>;
+  return (
+    <GlobalStatisticsPageContext.Provider value={value}>
+      {children}
+    </GlobalStatisticsPageContext.Provider>
+  );
 };
 
 export const useGlobalDecPageContext = () => {
-  const context = useContext<GlobalDecPageContextData>(
-    RupturesContext as unknown as Context<GlobalDecPageContextData>
+  const context = useContext<GlobalStatistics>(
+    GlobalStatisticsPageContext as unknown as Context<GlobalStatistics>
   );
 
   if (!context) {

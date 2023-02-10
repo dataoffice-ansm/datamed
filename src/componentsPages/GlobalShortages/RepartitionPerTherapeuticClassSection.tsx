@@ -2,31 +2,31 @@ import type { HTMLAttributes } from 'react';
 import React, { useMemo } from 'react';
 import tailwindPaletteConfig from '../../../tailwind.palette.config';
 import type { SelectOption } from 'components/Select';
-import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
+import { useGlobalShortagesPageContext } from '../../contexts/GlobalShortagesContext';
 import { buildSortedRangeData } from '../../utils/entities';
-import { type TherapeuticClassRupture } from '../../graphql/__generated__/generated-documents';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { MixedBarChart } from '../../components/Charts/MixedBarBublleChart';
 import { type ChartDataset } from 'chart.js';
+import { type ShortagesAtcPerYear } from '../../graphql/__generated__/generated-documents';
 
 export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTMLDivElement>) => {
-  const { ruptureYears, repartitionPerTherapeuticClass } = useRupturesPageContext();
+  const { shortagesPerYear, shortagesAtcPerYear } = useGlobalShortagesPageContext();
 
   const rupturesYearsOptions: SelectOption[] = useMemo(
     () =>
-      ruptureYears
-        ? ruptureYears.reduce<SelectOption[]>(
-            (carry, year) => [
+      shortagesPerYear
+        ? shortagesPerYear.reduce<SelectOption[]>(
+            (carry, row) => [
               ...carry,
               {
-                value: year,
-                label: year,
+                value: row.year,
+                label: String(row.year),
               },
             ],
             []
           )
         : [],
-    [ruptureYears]
+    [shortagesPerYear]
   );
 
   return (
@@ -62,24 +62,26 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
         </>
       }
       render={({ selectedYearOption }) => {
-        const therapeuticClassDataForSelectedYear =
-          repartitionPerTherapeuticClass && selectedYearOption
-            ? repartitionPerTherapeuticClass.find((element) => element?.year === selectedYearOption)
-            : null;
+        const shortagesTypeRepForSelectedYear =
+          shortagesAtcPerYear && selectedYearOption
+            ? shortagesAtcPerYear.filter((element) => element?.year === selectedYearOption)
+            : [];
 
-        const therapeuticRepartitionForSelectedYear = buildSortedRangeData<TherapeuticClassRupture>(
-          therapeuticClassDataForSelectedYear?.repartition ?? [],
+        const therapeuticRepartitionForSelectedYear = buildSortedRangeData<ShortagesAtcPerYear>(
+          shortagesTypeRepForSelectedYear,
           'number'
         );
 
-        const labels = therapeuticRepartitionForSelectedYear.map((e) => e.atcName);
+        const labels = therapeuticRepartitionForSelectedYear
+          .map((e) => e?.label ?? null)
+          .filter(Boolean) as string[];
 
         const datasetBubble: ChartDataset<'scatter'> = {
           order: 1,
           type: 'scatter',
           label: 'Nombre de médicaments',
           borderColor: tailwindPaletteConfig.red[300],
-          data: therapeuticRepartitionForSelectedYear?.map((element) => element?.totalCis ?? 0),
+          data: therapeuticRepartitionForSelectedYear?.map((e) => e?.medicsCount ?? 0),
         };
 
         const datasetBar: ChartDataset<'bar'> = {
@@ -87,7 +89,7 @@ export const RepartitionPerTherapeuticClassSection = (_props: HTMLAttributes<HTM
           label: 'Nombre de signalements',
           backgroundColor: tailwindPaletteConfig.darkGreen[300],
           borderColor: tailwindPaletteConfig.darkGreen[300],
-          data: therapeuticRepartitionForSelectedYear?.map((element) => element?.value ?? 0),
+          data: therapeuticRepartitionForSelectedYear?.map((e) => e?.reportsCount ?? 0),
         };
 
         const datasets = [datasetBubble, datasetBar];

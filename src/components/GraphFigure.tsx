@@ -2,7 +2,7 @@ import classnames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
 import CountUp from 'react-countup';
 import { formatDecimalToUnit } from '../utils/format';
-import { Tooltip } from './Tooltip/Tooltip';
+import { Tooltip } from './Tooltip';
 
 /**
  *

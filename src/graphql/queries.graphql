@@ -92,20 +92,20 @@ fragment SpecialityFragment on Speciality {
             valuePercent
         }
     }
-    rupturesHistory {
-        ruptures {
-            id
+    shortagesHistory {
+        shortages {
+            cisCode
+            cisCode
+            cisName
             num
+            state
             name
-            active
             date
+            year
+            classification
             cause {
-                id
                 type
-            }
-            classification {
-                id
-                label
+                definition
             }
         }
         meta {
@@ -118,6 +118,13 @@ fragment SubstanceFragment on Substance {
     id
     code
     name
+    exposition {
+        consumption
+        level
+        description
+        minYear
+        maxYear
+    }
     retrievedSpecialities {
         meta {
             count
@@ -183,13 +190,6 @@ fragment SubstanceFragment on Substance {
             }
         }
     }
-    exposition {
-        consumption
-        level
-        description
-        minYear
-        maxYear
-    }
 }
 
 query Speciality($cisCode: String!) {
@@ -231,7 +231,7 @@ query Substances {
 }
 
 query GlobalStatistic {
-    getGlobalStatistic {
+    getGlobalStatistics {
         repartitionPerGender {
             male {
                 value
@@ -279,60 +279,43 @@ query GlobalStatistic {
 }
 
 query GlobalRuptures {
-    getGlobalRuptures {
-        config {
-            minYear
-            maxYear
+    getGlobalShortages {
+        period {
+            minDate
+            maxDate
         }
-        ruptureStocks {
+        shortagesPerYear {
             year
-            nbDeclarations
-            nbRisque
-            nbRisqueClosed
-            nbRuptureClosed
-            nbRupture
+            reportsCount
+            actionsCount
+            actionsCountPercent
         }
-        ruptureYears
-        repartitionPerClassification {
+        shortagesClassesPerYear {
+            year
             value
+            valuePercentClosed
             classification
-            year
         }
-        repartitionPerTherapeuticClass {
+        shortagesCausesPerYear {
             year
-            total
-            repartition {
-                atcId
-                atcName
-                value
-                totalCis
-            }
+            valuePercent
+            value
+            type
+            definition
         }
-        repartitionPerCause {
+        shortagesAtcPerYear {
             year
-            causes {
-                value
-                range
-                description
-            }
-            total
+            reportsCount
+            medicsCount
+            code
+            label
         }
-        repartitionPerAction {
+        shortagesMeasuresPerYear {
             year
-            total
-            actions {
-                value
-                range
-                description
-            }
-        }
-        totalActions {
-            year
-            totalMeasures
-            totalDeclarationsWithMeasure{
-                value
-                valuePercent
-            }
+            value
+            valuePercent
+            type
+            definition
         }
     }
 }

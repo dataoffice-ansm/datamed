@@ -61,42 +61,36 @@ export const resolvers: Resolvers = {
       };
     },
 
-    async getGlobalStatistic(parent, args, context) {
-      return context.dataSources.postgresOperations.getGlobalStatistic();
-    },
+    async getGlobalShortages(parent, args, context) {
+      const period = await context.dataSources.postgresOperations.getGlobalShortagesPeriod();
 
-    async getGlobalRuptures(parent, args, context) {
-      const config = await context.dataSources.postgresOperations.getRuptureConfig();
+      const shortagesPerYear =
+        await context.dataSources.postgresOperations.getGlobalShortagesPerYear();
 
-      const ruptureYears = await context.dataSources.postgresOperations.getRuptureYears();
+      const shortagesClassesPerYear =
+        await context.dataSources.postgresOperations.getGlobalShortagesClass();
+
+      const shortagesCausesPerYear =
+        await context.dataSources.postgresOperations.getShortagesCausesPerCause();
+
+      const shortagesAtcPerYear =
+        await context.dataSources.postgresOperations.getShortagesAtcPerYear();
+
+      const shortagesMeasuresPerYear =
+        await context.dataSources.postgresOperations.getShortagesMeasuresPerYear();
 
       return {
-        config,
-        ruptureYears,
-        ruptureStocks: await Promise.all(
-          ruptureYears.map(async (year) =>
-            context.dataSources.postgresOperations.getRuptureStockTotalExposition(year)
-          )
-        ),
-
-        repartitionPerClassification:
-          await context.dataSources.postgresOperations.getRuptureStockRepartitionPerClassification(),
-
-        repartitionPerTherapeuticClass:
-          await context.dataSources.postgresOperations.getRupturesPerTherapeuticClassesPerYearRepartition(
-            ruptureYears
-          ),
-
-        repartitionPerCause:
-          await context.dataSources.postgresOperations.getRuptureStockRepartitionPerCause(
-            ruptureYears
-          ),
-
-        totalActions: await context.dataSources.postgresOperations.getRupturesTotalActions(),
-
-        repartitionPerAction:
-          await context.dataSources.postgresOperations.getRuptureStockRepartitionPerAction(),
+        period,
+        shortagesPerYear,
+        shortagesClassesPerYear,
+        shortagesCausesPerYear,
+        shortagesAtcPerYear,
+        shortagesMeasuresPerYear,
       };
+    },
+
+    async getGlobalStatistics(parent, args, context) {
+      return context.dataSources.postgresOperations.getGlobalStatistics();
     },
   },
 
@@ -152,13 +146,13 @@ export const resolvers: Resolvers = {
       };
     },
 
-    async rupturesHistory(speciality, args, context) {
-      const rows = await context.dataSources.postgresOperations.getSpecialityRupturesHistory(
+    async shortagesHistory(speciality, args, context) {
+      const rows = await context.dataSources.postgresOperations.getSpecialityShortagesHistory(
         speciality.id
       );
 
       return {
-        ruptures: rows,
+        shortages: rows,
         meta: {
           count: rows.length,
         },

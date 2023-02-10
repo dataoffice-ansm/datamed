@@ -27,7 +27,7 @@ const SectionOneGlobalInformation = () => {
   const { exposition, repartitionPerGender } = currentEntity;
 
   const repartitionPerAge = useMemo(
-    () => buildSortedRangeData<RepartitionPerAge>(currentEntity.repartitionPerAge, 'number'),
+    () => buildSortedRangeData<RepartitionPerAge>(currentEntity.repartitionPerAge ?? [], 'number'),
     [currentEntity.repartitionPerAge]
   );
 

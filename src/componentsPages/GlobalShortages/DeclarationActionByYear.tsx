@@ -7,25 +7,35 @@ import DeclarationWithOneActionSvg from '../../assets/pictos/actions/declaration
 import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { GraphFigure } from '../../components/GraphFigure';
 import { getDeclarationActionIcon } from '../../utils/iconsMapping';
-import { useRupturesPageContext } from '../../contexts/RupturesPageContext';
-import { type RuptureAction } from '../../graphql/__generated__/generated-documents';
+import { useGlobalShortagesPageContext } from '../../contexts/GlobalShortagesContext';
+import { type ShortagesMeasuresPerYear } from '../../graphql/__generated__/generated-documents';
 import { buildSortedRangeData } from '../../utils/entities';
 import { numberWithThousand } from '../../utils/format';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 
 export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
-  const { totalActions, repartitionPerAction } = useRupturesPageContext();
+  const { shortagesPerYear, shortagesMeasuresPerYear } = useGlobalShortagesPageContext();
 
-  const yearsOptions: Array<SelectOption<string>> = useMemo(
+  const years = (shortagesMeasuresPerYear?.map((e) => e.year) ?? []).reverse();
+  const minYear = Math.min(...years);
+  const maxYear = Math.max(...years);
+
+  const globalShortagesYearsOptions: SelectOption[] = useMemo(
     () =>
-      (totalActions ?? [])
-        .filter((r) => r?.year)
-        .map((ruptureYear) => ({
-          value: ruptureYear?.year ?? '',
-          label: ruptureYear?.year ?? '',
-        })),
-    [totalActions]
+      shortagesMeasuresPerYear
+        ? shortagesMeasuresPerYear.reduce<SelectOption[]>(
+            (carry, row) => [
+              ...carry,
+              {
+                value: row.year,
+                label: String(row.year),
+              },
+            ],
+            []
+          )
+        : [],
+    [shortagesMeasuresPerYear]
   );
 
   return (
@@ -33,36 +43,31 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
       <GraphBoxSelect
         layoutSection
         title="Gestion des déclarations de ruptures et risques de rupture de stocks"
-        subtitle="Données issues de la période 2021 -2022"
-        // subTitle={`Données mises à jour mensuellement, issues de la période ${
-        //     selectedRupturesTotalActionsRepartition?.year ?? '- année non disponible'
-        // }`}
-        yearsOptions={yearsOptions}
+        subtitle={
+          minYear && maxYear
+            ? `Données issues de la période ${String(minYear)} - ${String(maxYear)}`
+            : 'Période non disponible'
+        }
+        yearsOptions={globalShortagesYearsOptions}
         render={({ selectedYearOption, selectedUnitOption }) => {
-          const selectedRupturesTotalActionsRepartition =
-            totalActions && selectedYearOption
-              ? totalActions.find((element) => element?.year === selectedYearOption)
-              : null;
-
-          const selectedRupturesActionsRepartition =
-            repartitionPerAction && selectedYearOption
-              ? repartitionPerAction.find(
-                  (ruptureActionsRep) => ruptureActionsRep?.year === selectedYearOption
-                )
-              : null;
-
-          const selectedRupturesActions = buildSortedRangeData<RuptureAction>(
-            selectedRupturesActionsRepartition?.actions ?? [],
-            'number'
-          );
-
-          const countCasesWithMeasure = numberWithThousand(
-            selectedRupturesTotalActionsRepartition?.totalDeclarationsWithMeasure?.value ?? 0
-          );
+          const countCasesWithMeasure =
+            shortagesPerYear?.find((e) => e.year === selectedYearOption)?.actionsCount ?? 0;
 
           const countCasesWithMeasurePercent =
-            selectedRupturesTotalActionsRepartition?.totalDeclarationsWithMeasure?.valuePercent ??
-            0;
+            shortagesPerYear?.find((e) => e.year === selectedYearOption)?.actionsCountPercent ?? 0;
+
+          const countReports =
+            shortagesPerYear?.find((e) => e.year === selectedYearOption)?.reportsCount ?? 0;
+
+          const shortagesActionForSelectedYear =
+            shortagesMeasuresPerYear && selectedYearOption
+              ? shortagesMeasuresPerYear.filter((element) => element?.year === selectedYearOption)
+              : [];
+
+          const shortagesActionsRepartition = buildSortedRangeData<ShortagesMeasuresPerYear>(
+            shortagesActionForSelectedYear,
+            'number'
+          );
 
           return (
             <div className="inner">
@@ -96,9 +101,7 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
                 </BoxInfo>
 
                 <BoxInfo
-                  title={`${numberWithThousand(
-                    selectedRupturesTotalActionsRepartition?.totalMeasures ?? 0
-                  )}`}
+                  title={`${numberWithThousand(countReports)}`}
                   icon={<FolderSVG className="h-24 w-24" />}
                   theme="dark-green"
                   className="flex-1"
@@ -125,26 +128,20 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
                 }
               >
                 <GraphFiguresGrid
-                  data={selectedRupturesActions}
-                  renderItem={(action) => (
-                    <GraphFigure
-                      className="pathologyGraphFigure"
-                      unit={selectedUnitOption === 'number' ? '' : '%'}
-                      label={action.range}
-                      icon={getDeclarationActionIcon(action.range)}
-                      valueClassName="text-dark-green-900"
-                      contentTooltip={action.description ?? ''}
-                      value={
-                        selectedUnitOption === 'number'
-                          ? action.value
-                          : Math.trunc(
-                              (Math.round(action.value ?? 0) /
-                                (selectedRupturesActionsRepartition?.total ?? 1)) *
-                                100
-                            )
-                      }
-                    />
-                  )}
+                  data={shortagesActionsRepartition}
+                  renderItem={(action) =>
+                    action?.type && action?.value && action.valuePercent ? (
+                      <GraphFigure
+                        className="pathologyGraphFigure"
+                        unit={selectedUnitOption === 'number' ? '' : '%'}
+                        label={action.type}
+                        icon={getDeclarationActionIcon(action.type)}
+                        valueClassName="text-dark-green-900"
+                        contentTooltip={action.definition ?? ''}
+                        value={selectedUnitOption === 'number' ? action.value : action.valuePercent}
+                      />
+                    ) : null
+                  }
                 />
               </GraphBox>
             </div>

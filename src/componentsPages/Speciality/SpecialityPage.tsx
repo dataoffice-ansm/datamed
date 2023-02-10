@@ -8,7 +8,6 @@ import { useMemo } from 'react';
 import type {
   MedicalErrorsApparitionStep,
   MedicalErrorApparitionStep,
-  SpecialityRupture,
   Substance,
   Speciality,
   MedicalErrorsNature,
@@ -25,7 +24,7 @@ import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { GraphFigure } from '../../components/GraphFigure';
 import { PublicationItem } from './PublicationItem';
-import { RuptureHistoryItem } from './RuptureHistoryItem';
+import { ShortageHistoryItem } from './ShortageHistoryItem';
 import { PaginatedList } from '../../components/PaginatedList';
 import { PieChartRepartition } from '../../components/Charts/PieChartRepartition';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
@@ -161,7 +160,8 @@ const SectionTreatedPatients = () => {
   const { exposition } = currentEntity;
 
   const repartitionPerAge = useMemo(
-    () => buildSortedRangeData<SpecialityUsagePerAge>(currentEntity?.repartitionPerAge, 'number'),
+    () =>
+      buildSortedRangeData<SpecialityUsagePerAge>(currentEntity?.repartitionPerAge ?? [], 'number'),
     [currentEntity?.repartitionPerAge]
   );
 
@@ -288,7 +288,7 @@ const SectionMedicinalErrors = () => {
   const populationRepartition = useMemo(
     () =>
       buildSortedRangeData<MedicalErrorsPopulation>(
-        currentEntity?.medicalErrors?.populationRepartition,
+        currentEntity?.medicalErrors?.populationRepartition ?? [],
         'number'
       ),
     [currentEntity?.medicalErrors?.populationRepartition]
@@ -390,7 +390,7 @@ const SectionMedicinalErrors = () => {
           title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
           render={({ selectedUnitOption }) => {
             const apparitionStepRepartition = buildSortedRangeData<MedicalErrorsApparitionStep>(
-              currentEntity.medicalErrors?.apparitionStepRepartition,
+              currentEntity.medicalErrors?.apparitionStepRepartition ?? [],
               selectedUnitOption
             );
 
@@ -426,7 +426,7 @@ const SectionMedicinalErrors = () => {
           className="max-w-full my-8"
           render={({ selectedUnitOption }) => {
             const natureRepartition = buildSortedRangeData<MedicalErrorsNature>(
-              currentEntity.medicalErrors?.natureRepartition,
+              currentEntity.medicalErrors?.natureRepartition ?? [],
               selectedUnitOption
             );
 
@@ -474,14 +474,11 @@ const SectionSideEffects = () => {
 
 const SectionRisksShortageHistory = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
-  const { exposition, rupturesHistory } = currentEntity;
+  const { exposition, shortagesHistory } = currentEntity;
 
-  const ruptures = useMemo(
-    () => (rupturesHistory?.ruptures ?? []) as SpecialityRupture[],
-    [rupturesHistory?.ruptures]
-  );
+  const shortages = useMemo(() => shortagesHistory?.shortages ?? [], [shortagesHistory?.shortages]);
 
-  const count = useMemo(() => rupturesHistory?.meta?.count ?? 0, [rupturesHistory?.meta?.count]);
+  const count = useMemo(() => shortagesHistory?.meta?.count ?? 0, [shortagesHistory?.meta?.count]);
 
   return (
     <div className="SectionRisksShortageHistory" id="sectionRisksShortageHistory">
@@ -533,9 +530,9 @@ const SectionRisksShortageHistory = () => {
             <div className="pt-6">
               <PaginatedList
                 theme="secondary"
-                data={ruptures}
+                data={shortages}
                 renderItem={(ruptureItem) => (
-                  <RuptureHistoryItem cisName={currentEntity?.name} ruptureItem={ruptureItem} />
+                  <ShortageHistoryItem cisName={currentEntity?.name} ruptureItem={ruptureItem} />
                 )}
               />
             </div>

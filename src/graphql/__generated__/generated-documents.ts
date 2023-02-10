@@ -17,40 +17,38 @@ export type Scalars = {
 
 export type EntityExpositionPeriod = {
   __typename?: 'EntityExpositionPeriod';
-  consumption: Scalars['Int'];
-  description: Scalars['String'];
-  level: Scalars['String'];
-  maxYear: Scalars['String'];
-  minYear: Scalars['String'];
-};
-
-export type GlobalExpositionPeriod = {
-  __typename?: 'GlobalExpositionPeriod';
-  consumption: Scalars['Int'];
+  consumption?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
+  level?: Maybe<Scalars['String']>;
   maxYear: Scalars['Int'];
   minYear: Scalars['Int'];
 };
 
-export type GlobalRuptures = {
-  __typename?: 'GlobalRuptures';
-  config?: Maybe<GlobalRupturesConfig>;
-  repartitionPerAction?: Maybe<Array<Maybe<RuptureActionRepartition>>>;
-  repartitionPerCause?: Maybe<Array<Maybe<RuptureCauseRepartition>>>;
-  repartitionPerClassification?: Maybe<Array<Maybe<RuptureClassificationRepartition>>>;
-  repartitionPerTherapeuticClass?: Maybe<Array<Maybe<TherapeuticClassesRupturesPerYear>>>;
-  ruptureStocks?: Maybe<Array<Maybe<RuptureStock>>>;
-  ruptureYears: Array<Scalars['String']>;
-  totalActions?: Maybe<Array<Maybe<RupturesTotalActionPerYear>>>;
+export type GlobalExpositionPeriod = {
+  __typename?: 'GlobalExpositionPeriod';
+  consumption?: Maybe<Scalars['Int']>;
+  maxYear: Scalars['Int'];
+  minYear: Scalars['Int'];
 };
 
-export type GlobalRupturesConfig = {
-  __typename?: 'GlobalRupturesConfig';
-  maxYear: Scalars['String'];
-  minYear: Scalars['String'];
+export type GlobalShortages = {
+  __typename?: 'GlobalShortages';
+  period?: Maybe<GlobalShortagesPeriod>;
+  shortagesAtcPerYear?: Maybe<Array<ShortagesAtcPerYear>>;
+  shortagesCausesPerYear?: Maybe<Array<ShortagesCausesPerYear>>;
+  shortagesClassesPerYear?: Maybe<Array<ShortagesClassPerYear>>;
+  shortagesMeasuresPerYear?: Maybe<Array<ShortagesMeasuresPerYear>>;
+  shortagesPerYear?: Maybe<Array<ShortagesPerYear>>;
 };
 
-export type GlobalStatistic = {
-  __typename?: 'GlobalStatistic';
+export type GlobalShortagesPeriod = {
+  __typename?: 'GlobalShortagesPeriod';
+  maxDate: Scalars['String'];
+  minDate: Scalars['String'];
+};
+
+export type GlobalStatistics = {
+  __typename?: 'GlobalStatistics';
   exposition?: Maybe<GlobalExpositionPeriod>;
   repartitionPerAge?: Maybe<Array<Maybe<GlobalStatsUsagePerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
@@ -248,8 +246,8 @@ export type PublicationType = {
 
 export type Query = {
   __typename?: 'Query';
-  getGlobalRuptures?: Maybe<GlobalRuptures>;
-  getGlobalStatistic?: Maybe<GlobalStatistic>;
+  getGlobalShortages?: Maybe<GlobalShortages>;
+  getGlobalStatistics?: Maybe<GlobalStatistics>;
   getSpecialities?: Maybe<SpecialitiesReturn>;
   getSpeciality?: Maybe<Speciality>;
   getSubstance?: Maybe<Substance>;
@@ -304,55 +302,63 @@ export type RuptureAction = {
   value: Scalars['Int'];
 };
 
-export type RuptureActionRepartition = {
-  __typename?: 'RuptureActionRepartition';
-  actions?: Maybe<Array<Maybe<RuptureAction>>>;
-  total?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
-};
-
-export type RuptureCauseRepartition = {
-  __typename?: 'RuptureCauseRepartition';
-  causes?: Maybe<Array<Maybe<RuptureCauseRepartitionCause>>>;
-  total?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
-};
-
-export type RuptureCauseRepartitionCause = {
-  __typename?: 'RuptureCauseRepartitionCause';
-  description?: Maybe<Scalars['String']>;
-  range: Scalars['String'];
-  value: Scalars['Int'];
-};
-
-export type RuptureClass = {
-  __typename?: 'RuptureClass';
-  id: Scalars['Int'];
-  label?: Maybe<Scalars['String']>;
-};
-
-export type RuptureClassificationRepartition = {
-  __typename?: 'RuptureClassificationRepartition';
-  classification?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
-};
-
-export type RuptureStock = {
-  __typename?: 'RuptureStock';
-  nbDeclarations?: Maybe<Scalars['Int']>;
-  nbRisque?: Maybe<Scalars['Int']>;
-  nbRisqueClosed?: Maybe<Scalars['Int']>;
-  nbRupture?: Maybe<Scalars['Int']>;
-  nbRuptureClosed?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
-};
-
 export type RupturesTotalActionPerYear = {
   __typename?: 'RupturesTotalActionPerYear';
   totalDeclarationsWithMeasure?: Maybe<TotalDeclarationsWithMeasure>;
   totalMeasures?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
+  year: Scalars['Int'];
+};
+
+export type ShortagesActionsPerYear = {
+  __typename?: 'ShortagesActionsPerYear';
+  actionsCount?: Maybe<Scalars['Int']>;
+  declarationsCount?: Maybe<Scalars['Int']>;
+  declarationsWithActionsCount?: Maybe<Scalars['Int']>;
+  declarationsWithActionsPercent?: Maybe<Scalars['Float']>;
+  year: Scalars['Int'];
+};
+
+export type ShortagesAtcPerYear = {
+  __typename?: 'ShortagesAtcPerYear';
+  code?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  medicsCount?: Maybe<Scalars['Int']>;
+  reportsCount?: Maybe<Scalars['Int']>;
+  year: Scalars['Int'];
+};
+
+export type ShortagesCausesPerYear = {
+  __typename?: 'ShortagesCausesPerYear';
+  definition?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Float']>;
+  year: Scalars['Int'];
+};
+
+export type ShortagesClassPerYear = {
+  __typename?: 'ShortagesClassPerYear';
+  classification?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercentClosed?: Maybe<Scalars['Float']>;
+  year: Scalars['Int'];
+};
+
+export type ShortagesMeasuresPerYear = {
+  __typename?: 'ShortagesMeasuresPerYear';
+  definition?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Float']>;
+  year: Scalars['Int'];
+};
+
+export type ShortagesPerYear = {
+  __typename?: 'ShortagesPerYear';
+  actionsCount?: Maybe<Scalars['Int']>;
+  actionsCountPercent?: Maybe<Scalars['Float']>;
+  reportsCount?: Maybe<Scalars['Int']>;
+  year: Scalars['Int'];
 };
 
 export type SpecialitiesReturn = {
@@ -378,8 +384,22 @@ export type Speciality = {
   publications?: Maybe<Array<Maybe<Publication>>>;
   repartitionPerAge?: Maybe<Array<Maybe<SpecialityUsagePerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
-  rupturesHistory?: Maybe<SpecialityRupturesHistory>;
+  shortagesHistory?: Maybe<SpecialityRupturesHistory>;
   substances?: Maybe<Array<Maybe<Substance>>>;
+};
+
+export type SpecialityAssociatedShortage = {
+  __typename?: 'SpecialityAssociatedShortage';
+  cause?: Maybe<SpecialityRuptureCause>;
+  cisCode?: Maybe<Scalars['String']>;
+  cisId: Scalars['Int'];
+  cisName?: Maybe<Scalars['String']>;
+  classification?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  num?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['Int']>;
 };
 
 export type SpecialityLight = {
@@ -389,27 +409,16 @@ export type SpecialityLight = {
   name: Scalars['String'];
 };
 
-export type SpecialityRupture = {
-  __typename?: 'SpecialityRupture';
-  active?: Maybe<Scalars['Boolean']>;
-  cause?: Maybe<SpecialityRuptureCause>;
-  classification?: Maybe<RuptureClass>;
-  date?: Maybe<Scalars['String']>;
-  id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
-  num?: Maybe<Scalars['String']>;
-};
-
 export type SpecialityRuptureCause = {
   __typename?: 'SpecialityRuptureCause';
-  id: Scalars['Int'];
+  definition?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
 };
 
 export type SpecialityRupturesHistory = {
   __typename?: 'SpecialityRupturesHistory';
   meta?: Maybe<Meta>;
-  ruptures?: Maybe<Array<Maybe<SpecialityRupture>>>;
+  shortages?: Maybe<Array<SpecialityAssociatedShortage>>;
 };
 
 export type SpecialitySubstance = {
@@ -461,21 +470,6 @@ export type SubstancesReturn = {
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
 
-export type TherapeuticClassRupture = {
-  __typename?: 'TherapeuticClassRupture';
-  atcId: Scalars['Int'];
-  atcName: Scalars['String'];
-  totalCis?: Maybe<Scalars['Int']>;
-  value?: Maybe<Scalars['Int']>;
-};
-
-export type TherapeuticClassesRupturesPerYear = {
-  __typename?: 'TherapeuticClassesRupturesPerYear';
-  repartition?: Maybe<Array<Maybe<TherapeuticClassRupture>>>;
-  total?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
-};
-
 export type TotalDeclarationsWithMeasure = {
   __typename?: 'TotalDeclarationsWithMeasure';
   value: Scalars['Int'];
@@ -486,6 +480,14 @@ export type WithRepartition = {
   __typename?: 'WithRepartition';
   with?: Maybe<IndicatorValues>;
   without?: Maybe<IndicatorValues>;
+};
+
+export type DeclarationsWithActionsCountShortagesPerYear = {
+  __typename?: 'declarationsWithActionsCountShortagesPerYear';
+  actionsCount?: Maybe<Scalars['Int']>;
+  actionsCountPercent?: Maybe<Scalars['Float']>;
+  reportsCount?: Maybe<Scalars['Int']>;
+  year: Scalars['Int'];
 };
 
 export type SpecialityFragmentFragment = {
@@ -508,6 +510,14 @@ export type SpecialityFragmentFragment = {
     id: number;
     code: string;
     name: string;
+    exposition?: {
+      __typename?: 'EntityExpositionPeriod';
+      consumption?: number | null;
+      level?: string | null;
+      description?: string | null;
+      minYear: number;
+      maxYear: number;
+    } | null;
     retrievedSpecialities?: {
       __typename?: 'SpecialitiesReturn';
       meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -566,14 +576,6 @@ export type SpecialityFragmentFragment = {
         } | null> | null;
       } | null> | null;
     } | null;
-    exposition?: {
-      __typename?: 'EntityExpositionPeriod';
-      consumption: number;
-      level: string;
-      description: string;
-      minYear: string;
-      maxYear: string;
-    } | null;
   } | null> | null;
   dosageSubstances?: Array<{
     __typename?: 'SpecialitySubstance';
@@ -603,11 +605,11 @@ export type SpecialityFragmentFragment = {
   laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
   exposition?: {
     __typename?: 'EntityExpositionPeriod';
-    consumption: number;
-    level: string;
-    description: string;
-    minYear: string;
-    maxYear: string;
+    consumption?: number | null;
+    level?: string | null;
+    description?: string | null;
+    minYear: number;
+    maxYear: number;
   } | null;
   medicalErrors?: {
     __typename?: 'MedicalErrors';
@@ -641,18 +643,24 @@ export type SpecialityFragmentFragment = {
       valuePercent: number;
     } | null> | null;
   } | null;
-  rupturesHistory?: {
+  shortagesHistory?: {
     __typename?: 'SpecialityRupturesHistory';
-    ruptures?: Array<{
-      __typename?: 'SpecialityRupture';
-      id: number;
+    shortages?: Array<{
+      __typename?: 'SpecialityAssociatedShortage';
+      cisCode?: string | null;
+      cisName?: string | null;
       num?: string | null;
+      state?: string | null;
       name?: string | null;
-      active?: boolean | null;
       date?: string | null;
-      cause?: { __typename?: 'SpecialityRuptureCause'; id: number; type?: string | null } | null;
-      classification?: { __typename?: 'RuptureClass'; id: number; label?: string | null } | null;
-    } | null> | null;
+      year?: number | null;
+      classification?: string | null;
+      cause?: {
+        __typename?: 'SpecialityRuptureCause';
+        type?: string | null;
+        definition?: string | null;
+      } | null;
+    }> | null;
     meta?: { __typename?: 'Meta'; count?: number | null } | null;
   } | null;
 };
@@ -662,6 +670,14 @@ export type SubstanceFragmentFragment = {
   id: number;
   code: string;
   name: string;
+  exposition?: {
+    __typename?: 'EntityExpositionPeriod';
+    consumption?: number | null;
+    level?: string | null;
+    description?: string | null;
+    minYear: number;
+    maxYear: number;
+  } | null;
   retrievedSpecialities?: {
     __typename?: 'SpecialitiesReturn';
     meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -720,14 +736,6 @@ export type SubstanceFragmentFragment = {
       } | null> | null;
     } | null> | null;
   } | null;
-  exposition?: {
-    __typename?: 'EntityExpositionPeriod';
-    consumption: number;
-    level: string;
-    description: string;
-    minYear: string;
-    maxYear: string;
-  } | null;
 };
 
 export type SpecialityQueryVariables = Exact<{
@@ -756,6 +764,14 @@ export type SpecialityQuery = {
       id: number;
       code: string;
       name: string;
+      exposition?: {
+        __typename?: 'EntityExpositionPeriod';
+        consumption?: number | null;
+        level?: string | null;
+        description?: string | null;
+        minYear: number;
+        maxYear: number;
+      } | null;
       retrievedSpecialities?: {
         __typename?: 'SpecialitiesReturn';
         meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -814,14 +830,6 @@ export type SpecialityQuery = {
           } | null> | null;
         } | null> | null;
       } | null;
-      exposition?: {
-        __typename?: 'EntityExpositionPeriod';
-        consumption: number;
-        level: string;
-        description: string;
-        minYear: string;
-        maxYear: string;
-      } | null;
     } | null> | null;
     dosageSubstances?: Array<{
       __typename?: 'SpecialitySubstance';
@@ -851,11 +859,11 @@ export type SpecialityQuery = {
     laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
     exposition?: {
       __typename?: 'EntityExpositionPeriod';
-      consumption: number;
-      level: string;
-      description: string;
-      minYear: string;
-      maxYear: string;
+      consumption?: number | null;
+      level?: string | null;
+      description?: string | null;
+      minYear: number;
+      maxYear: number;
     } | null;
     medicalErrors?: {
       __typename?: 'MedicalErrors';
@@ -889,18 +897,24 @@ export type SpecialityQuery = {
         valuePercent: number;
       } | null> | null;
     } | null;
-    rupturesHistory?: {
+    shortagesHistory?: {
       __typename?: 'SpecialityRupturesHistory';
-      ruptures?: Array<{
-        __typename?: 'SpecialityRupture';
-        id: number;
+      shortages?: Array<{
+        __typename?: 'SpecialityAssociatedShortage';
+        cisCode?: string | null;
+        cisName?: string | null;
         num?: string | null;
+        state?: string | null;
         name?: string | null;
-        active?: boolean | null;
         date?: string | null;
-        cause?: { __typename?: 'SpecialityRuptureCause'; id: number; type?: string | null } | null;
-        classification?: { __typename?: 'RuptureClass'; id: number; label?: string | null } | null;
-      } | null> | null;
+        year?: number | null;
+        classification?: string | null;
+        cause?: {
+          __typename?: 'SpecialityRuptureCause';
+          type?: string | null;
+          definition?: string | null;
+        } | null;
+      }> | null;
       meta?: { __typename?: 'Meta'; count?: number | null } | null;
     } | null;
   } | null;
@@ -933,6 +947,14 @@ export type SubstanceQuery = {
     id: number;
     code: string;
     name: string;
+    exposition?: {
+      __typename?: 'EntityExpositionPeriod';
+      consumption?: number | null;
+      level?: string | null;
+      description?: string | null;
+      minYear: number;
+      maxYear: number;
+    } | null;
     retrievedSpecialities?: {
       __typename?: 'SpecialitiesReturn';
       meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -991,14 +1013,6 @@ export type SubstanceQuery = {
         } | null> | null;
       } | null> | null;
     } | null;
-    exposition?: {
-      __typename?: 'EntityExpositionPeriod';
-      consumption: number;
-      level: string;
-      description: string;
-      minYear: string;
-      maxYear: string;
-    } | null;
   } | null;
 };
 
@@ -1022,8 +1036,8 @@ export type GlobalStatisticQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GlobalStatisticQuery = {
   __typename?: 'Query';
-  getGlobalStatistic?: {
-    __typename?: 'GlobalStatistic';
+  getGlobalStatistics?: {
+    __typename?: 'GlobalStatistics';
     repartitionPerGender?: {
       __typename?: 'RepartitionPerGender';
       male?: { __typename?: 'IndicatorValues'; value: number; valuePercent: number } | null;
@@ -1038,7 +1052,7 @@ export type GlobalStatisticQuery = {
     } | null> | null;
     exposition?: {
       __typename?: 'GlobalExpositionPeriod';
-      consumption: number;
+      consumption?: number | null;
       minYear: number;
       maxYear: number;
     } | null;
@@ -1074,69 +1088,47 @@ export type GlobalRupturesQueryVariables = Exact<{ [key: string]: never }>;
 
 export type GlobalRupturesQuery = {
   __typename?: 'Query';
-  getGlobalRuptures?: {
-    __typename?: 'GlobalRuptures';
-    ruptureYears: Array<string>;
-    config?: { __typename?: 'GlobalRupturesConfig'; minYear: string; maxYear: string } | null;
-    ruptureStocks?: Array<{
-      __typename?: 'RuptureStock';
-      year: string;
-      nbDeclarations?: number | null;
-      nbRisque?: number | null;
-      nbRisqueClosed?: number | null;
-      nbRuptureClosed?: number | null;
-      nbRupture?: number | null;
-    } | null> | null;
-    repartitionPerClassification?: Array<{
-      __typename?: 'RuptureClassificationRepartition';
+  getGlobalShortages?: {
+    __typename?: 'GlobalShortages';
+    period?: { __typename?: 'GlobalShortagesPeriod'; minDate: string; maxDate: string } | null;
+    shortagesPerYear?: Array<{
+      __typename?: 'ShortagesPerYear';
+      year: number;
+      reportsCount?: number | null;
+      actionsCount?: number | null;
+      actionsCountPercent?: number | null;
+    }> | null;
+    shortagesClassesPerYear?: Array<{
+      __typename?: 'ShortagesClassPerYear';
+      year: number;
       value?: number | null;
+      valuePercentClosed?: number | null;
       classification?: string | null;
-      year: string;
-    } | null> | null;
-    repartitionPerTherapeuticClass?: Array<{
-      __typename?: 'TherapeuticClassesRupturesPerYear';
-      year: string;
-      total?: number | null;
-      repartition?: Array<{
-        __typename?: 'TherapeuticClassRupture';
-        atcId: number;
-        atcName: string;
-        value?: number | null;
-        totalCis?: number | null;
-      } | null> | null;
-    } | null> | null;
-    repartitionPerCause?: Array<{
-      __typename?: 'RuptureCauseRepartition';
-      year: string;
-      total?: number | null;
-      causes?: Array<{
-        __typename?: 'RuptureCauseRepartitionCause';
-        value: number;
-        range: string;
-        description?: string | null;
-      } | null> | null;
-    } | null> | null;
-    repartitionPerAction?: Array<{
-      __typename?: 'RuptureActionRepartition';
-      year: string;
-      total?: number | null;
-      actions?: Array<{
-        __typename?: 'RuptureAction';
-        value: number;
-        range: string;
-        description?: string | null;
-      } | null> | null;
-    } | null> | null;
-    totalActions?: Array<{
-      __typename?: 'RupturesTotalActionPerYear';
-      year: string;
-      totalMeasures?: number | null;
-      totalDeclarationsWithMeasure?: {
-        __typename?: 'TotalDeclarationsWithMeasure';
-        value: number;
-        valuePercent: number;
-      } | null;
-    } | null> | null;
+    }> | null;
+    shortagesCausesPerYear?: Array<{
+      __typename?: 'ShortagesCausesPerYear';
+      year: number;
+      valuePercent?: number | null;
+      value?: number | null;
+      type?: string | null;
+      definition?: string | null;
+    }> | null;
+    shortagesAtcPerYear?: Array<{
+      __typename?: 'ShortagesAtcPerYear';
+      year: number;
+      reportsCount?: number | null;
+      medicsCount?: number | null;
+      code?: string | null;
+      label?: string | null;
+    }> | null;
+    shortagesMeasuresPerYear?: Array<{
+      __typename?: 'ShortagesMeasuresPerYear';
+      year: number;
+      value?: number | null;
+      valuePercent?: number | null;
+      type?: string | null;
+      definition?: string | null;
+    }> | null;
   } | null;
 };
 
@@ -1155,6 +1147,13 @@ export const SubstanceFragmentFragmentDoc = gql`
     id
     code
     name
+    exposition {
+      consumption
+      level
+      description
+      minYear
+      maxYear
+    }
     retrievedSpecialities {
       meta {
         count
@@ -1218,13 +1217,6 @@ export const SubstanceFragmentFragmentDoc = gql`
           valuePercent
         }
       }
-    }
-    exposition {
-      consumption
-      level
-      description
-      minYear
-      maxYear
     }
   }
 `;
@@ -1323,20 +1315,20 @@ export const SpecialityFragmentFragmentDoc = gql`
         valuePercent
       }
     }
-    rupturesHistory {
-      ruptures {
-        id
+    shortagesHistory {
+      shortages {
+        cisCode
+        cisCode
+        cisName
         num
+        state
         name
-        active
         date
+        year
+        classification
         cause {
-          id
           type
-        }
-        classification {
-          id
-          label
+          definition
         }
       }
       meta {
@@ -1533,7 +1525,7 @@ export type SubstancesLazyQueryHookResult = ReturnType<typeof useSubstancesLazyQ
 export type SubstancesQueryResult = Apollo.QueryResult<SubstancesQuery, SubstancesQueryVariables>;
 export const GlobalStatisticDocument = gql`
   query GlobalStatistic {
-    getGlobalStatistic {
+    getGlobalStatistics {
       repartitionPerGender {
         male {
           value
@@ -1621,60 +1613,43 @@ export type GlobalStatisticQueryResult = Apollo.QueryResult<
 >;
 export const GlobalRupturesDocument = gql`
   query GlobalRuptures {
-    getGlobalRuptures {
-      config {
-        minYear
-        maxYear
+    getGlobalShortages {
+      period {
+        minDate
+        maxDate
       }
-      ruptureStocks {
+      shortagesPerYear {
         year
-        nbDeclarations
-        nbRisque
-        nbRisqueClosed
-        nbRuptureClosed
-        nbRupture
+        reportsCount
+        actionsCount
+        actionsCountPercent
       }
-      ruptureYears
-      repartitionPerClassification {
+      shortagesClassesPerYear {
+        year
         value
+        valuePercentClosed
         classification
-        year
       }
-      repartitionPerTherapeuticClass {
+      shortagesCausesPerYear {
         year
-        total
-        repartition {
-          atcId
-          atcName
-          value
-          totalCis
-        }
+        valuePercent
+        value
+        type
+        definition
       }
-      repartitionPerCause {
+      shortagesAtcPerYear {
         year
-        causes {
-          value
-          range
-          description
-        }
-        total
+        reportsCount
+        medicsCount
+        code
+        label
       }
-      repartitionPerAction {
+      shortagesMeasuresPerYear {
         year
-        total
-        actions {
-          value
-          range
-          description
-        }
-      }
-      totalActions {
-        year
-        totalMeasures
-        totalDeclarationsWithMeasure {
-          value
-          valuePercent
-        }
+        value
+        valuePercent
+        type
+        definition
       }
     }
   }

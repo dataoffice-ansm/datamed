@@ -1,7 +1,7 @@
 import { ExpositionLevel } from '../api/graphql/enums';
 import classnames from 'classnames';
 import PilIcon from '../assets/pictos/gellule.svg';
-import { Tooltip } from './Tooltip/Tooltip';
+import { Tooltip } from './Tooltip';
 import { type EntityExpositionPeriod } from '../graphql/__generated__/generated-documents';
 import { type EntityType } from '../contexts/EntityContext';
 import { getExpositionConsumptionLabels } from '../api/utils/mapping';

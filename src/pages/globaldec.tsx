@@ -2,18 +2,33 @@ import type { GetServerSidePropsContext } from 'next';
 import { addApolloState, initializeApolloClient } from '../config/apolloClient';
 import { GlobalStatisticPage } from '../componentsPages/GlobalStatistic/GlobalStatisticPage';
 import type {
-  GlobalStatistic,
   GlobalStatisticQuery,
   GlobalStatisticQueryVariables,
+  GlobalStatistics,
 } from '../graphql/__generated__/generated-documents';
 import { GlobalStatisticDocument } from '../graphql/__generated__/generated-documents';
 import { GlobalDecPageContextProvider } from '../contexts/GlobaleDecPageContext';
+import toast from 'react-hot-toast';
 
-const PageGlobalStatisticServerSideRendered = ({ globalStat }: { globalStat: GlobalStatistic }) => (
-  <GlobalDecPageContextProvider globalDec={globalStat}>
-    <GlobalStatisticPage />
-  </GlobalDecPageContextProvider>
-);
+type GlobalStatisticsPageProps = {
+  globalStatistics: GlobalStatistics;
+  err?: string;
+};
+
+const PageGlobalStatisticServerSideRendered = ({
+  globalStatistics,
+  err,
+}: GlobalStatisticsPageProps) => {
+  if (err) {
+    toast.error(err);
+  }
+
+  return (
+    <GlobalDecPageContextProvider globalStatistics={globalStatistics}>
+      <GlobalStatisticPage />
+    </GlobalDecPageContextProvider>
+  );
+};
 
 export const getServerSideProps = async (context: GetServerSidePropsContext) => {
   const apolloClient = initializeApolloClient({ context });
@@ -25,15 +40,18 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
 
     return addApolloState(apolloClient, {
       props: {
-        globalStat: data.getGlobalStatistic ?? null,
+        globalStatistics: data.getGlobalStatistics ?? null,
       },
     });
   } catch (err: unknown) {
+    console.log('Failed to fetch Global Stats page');
     console.log(err);
 
-    return addApolloState(apolloClient, {
-      props: {},
-    });
+    return {
+      props: {
+        err: err instanceof Error ? err.message : err,
+      },
+    };
   }
 };
 

@@ -1,4 +1,4 @@
-import { Tooltip } from '../../components/Tooltip/Tooltip';
+import { Tooltip } from '../../components/Tooltip';
 
 const tooltipTriggerText = "Qu'est-ce qu'une spécialité de médicament ?";
 

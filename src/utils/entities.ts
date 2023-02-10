@@ -12,7 +12,7 @@ export type RepartitionUsageCommon = {
   valuePercent: number;
 };
 
-export const buildSortedRangeData = <T>(data: any, selectedOption?: UnitOptionsValue) => {
+export const buildSortedRangeData = <T>(data: any[], selectedOption?: UnitOptionsValue) => {
   const rows =
     (data as RepartitionUsageCommon[])?.filter(
       (row) => row?.value !== null && row?.valuePercent !== null

@@ -1,6 +1,5 @@
 import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
 import { HeadlessHeroHeader } from '../../components/HeroHeader/HeadlessHeroHeader';
-import Page404 from '../../pages/[404]';
 import { NotEnoughData } from '../../components/NotEnoughData';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
@@ -16,7 +15,7 @@ import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { Accordion } from '../../components/Accordion';
 import GlobStatSvg from '../../assets/pictos/sick_transparent_person.svg';
-import { Tooltip } from '../../components/Tooltip/Tooltip';
+import { Tooltip } from '../../components/Tooltip';
 import { useGlobalDecPageContext } from '../../contexts/GlobaleDecPageContext';
 import { useMemo } from 'react';
 import { buildSortedRangeData } from '../../utils/entities';
@@ -31,12 +30,11 @@ import { numberWithThousand } from '../../utils/format';
 import { SectionDataOrigin } from './DataOriginSection';
 
 const SectionDemography = () => {
-  const { globalDec } = useGlobalDecPageContext();
-  const { repartitionPerGender, exposition } = globalDec;
+  const { repartitionPerAge, repartitionPerGender, exposition } = useGlobalDecPageContext();
 
-  const repartitionPerAge = useMemo(
-    () => buildSortedRangeData<GlobalStatsUsagePerAge>(globalDec.repartitionPerAge, 'number'),
-    [globalDec.repartitionPerAge]
+  const globalDecAgeRep = useMemo(
+    () => buildSortedRangeData<GlobalStatsUsagePerAge>(repartitionPerAge ?? [], 'number'),
+    [repartitionPerAge]
   );
 
   return (
@@ -109,7 +107,7 @@ const SectionDemography = () => {
             <PieChartRepartition
               theme="green"
               className="h-64 w-full flex justify-center items-center"
-              data={repartitionPerAge}
+              data={globalDecAgeRep}
             />
           </GraphBox>
         </div>
@@ -119,22 +117,21 @@ const SectionDemography = () => {
 };
 
 const SectionSeriousEffect = () => {
-  const { globalDec } = useGlobalDecPageContext();
-  const { exposition } = globalDec;
+  const { exposition, repartitionPerGravity, repartitionPerSeriousEffect } =
+    useGlobalDecPageContext();
 
-  const repartitionPerGravity = useMemo(
-    () =>
-      buildSortedRangeData<GlobalStatsUsagePerGravity>(globalDec.repartitionPerGravity, 'number'),
-    [globalDec.repartitionPerGravity]
+  const globalDecGravityRep = useMemo(
+    () => buildSortedRangeData<GlobalStatsUsagePerGravity>(repartitionPerGravity ?? [], 'number'),
+    [repartitionPerGravity]
   );
 
-  const repartitionPerSeriousEffect = useMemo(
+  const globalDecSeriousEffectsRep = useMemo(
     () =>
       buildSortedRangeData<GlobalStatsUsagePerSeriousEffect>(
-        globalDec.repartitionPerSeriousEffect,
+        repartitionPerSeriousEffect ?? [],
         'number'
       ),
-    [globalDec.repartitionPerSeriousEffect]
+    [repartitionPerSeriousEffect]
   );
 
   return (
@@ -176,7 +173,7 @@ const SectionSeriousEffect = () => {
             <PieChartRepartition
               className="h-64 w-full flex justify-center items-center"
               theme="green"
-              data={repartitionPerGravity}
+              data={globalDecGravityRep}
             />
           </GraphBox>
         </div>
@@ -188,7 +185,7 @@ const SectionSeriousEffect = () => {
           >
             <BarChartRepartition
               className="h-64 w-full flex justify-center items-center"
-              data={repartitionPerSeriousEffect}
+              data={globalDecSeriousEffectsRep}
               dataLabel="Détail des déclarations d'effets indésirables graves"
               theme="green-full"
             />
@@ -200,21 +197,21 @@ const SectionSeriousEffect = () => {
 };
 
 const SectionRepartitionNotifiers = () => {
-  const { globalDec } = useGlobalDecPageContext();
+  const { repartitionPerNotifier } = useGlobalDecPageContext();
 
   return (
     <GraphBoxSelect
       title="Répartition par type de déclarants"
       theme="secondary-variant"
       render={({ selectedUnitOption }) => {
-        const repartitionPerNotifier = buildSortedRangeData<GlobalStatsUsagePerNotifier>(
-          globalDec.repartitionPerNotifier,
+        const globalDecNotifiersRep = buildSortedRangeData<GlobalStatsUsagePerNotifier>(
+          repartitionPerNotifier ?? [],
           selectedUnitOption
         );
 
         return (
           <GraphFiguresGrid
-            data={repartitionPerNotifier}
+            data={globalDecNotifiersRep}
             renderItem={(notifier) => (
               <GraphFigure
                 key={notifier.id}
@@ -236,8 +233,8 @@ const SectionRepartitionNotifiers = () => {
 };
 
 const SectionTypesOfSideEffects = () => {
-  const { globalDec } = useGlobalDecPageContext();
-  const { exposition } = globalDec;
+  const { exposition, repartitionPerPathology } = useGlobalDecPageContext();
+
   return (
     <div className="GlobalStatTypesOfSideEffects text-left">
       <SectionTitle
@@ -285,14 +282,14 @@ const SectionTypesOfSideEffects = () => {
         theme="secondary-variant"
         title="Répartition des déclarations d'effets indésirables par système d'organe"
         render={({ selectedUnitOption }) => {
-          const repartitionPerPathology = buildSortedRangeData<GlobalStatsUsagePerPathology>(
-            globalDec.repartitionPerPathology,
+          const globalDecPathologyRep = buildSortedRangeData<GlobalStatsUsagePerPathology>(
+            repartitionPerPathology ?? [],
             selectedUnitOption
           );
 
           return (
             <GraphFiguresGrid
-              data={repartitionPerPathology}
+              data={globalDecPathologyRep}
               className="GraphBoxSelectContent"
               renderItem={(pathologyRepartition) =>
                 pathologyRepartition?.range &&
@@ -320,75 +317,67 @@ const SectionTypesOfSideEffects = () => {
   );
 };
 
-export const GlobalStatisticPage = () => {
-  const { globalDec } = useGlobalDecPageContext();
-
-  if (!globalDec) {
-    return <Page404 />;
-  }
-
-  return (
-    <EntityPageLayout
-      colorMenu="green"
-      sections={[
-        {
-          id: 'demographie',
-          label: 'DÉMOGRAPHIE',
-          content: <SectionDemography />,
-        },
-        {
-          id: 'effets-grave-et-non-graves',
-          label: 'effets graves et non graves',
-          content: <SectionSeriousEffect />,
-        },
-        {
-          id: 'declarants',
-          label: 'Déclarants',
-          content: <SectionRepartitionNotifiers />,
-        },
-        {
-          id: 'types-effets-indesirables',
-          label: "TYPES D'EFFETS INDÉSIRABLES",
-          content: <SectionTypesOfSideEffects />,
-        },
-        {
-          id: 'originine-des-donnees',
-          label: 'ORIGINE DES DONNÉES',
-          content: <SectionDataOrigin />,
-        },
-      ]}
-      render={(content) => content}
-    >
-      <HeadlessHeroHeader
-        theme="bg-secondary-variant"
-        icon={<GlobStatSvg className="h-full" />}
-        backNavigationLabel="Données globales"
-        title="Déclarations d'effets indésirables suspectés"
-        description="Statistiques globales"
-        textColor="text-black"
-        backNavigationIconColor="fill-black"
-        tooltip={
-          <Tooltip
-            placement="bottom"
-            content={
-              <div className="max-w-md">
-                <p className="font-medium mb-4 text-lg">Qu’est-ce que la pharmacovigilance ?</p>
-                <p>
-                  La pharmacovigilance est la surveillance, l’évaluation, la prévention et la
-                  gestion du risque d’effet indésirable résultant de l’utilisation des médicaments.
-                  Elle s’exerce en permanence, avant et après la commercialisation des médicaments,
-                  et constitue un élément essentiel du contrôle de la sécurité des médicaments.
-                </p>
-              </div>
-            }
-            render={(refCb) => (
-              <span ref={refCb} className="underline cursor-help">
-                Qu’est-ce que la pharmacovigilance ?
-              </span>
-            )}
-          />
-        }
-      />
-    </EntityPageLayout>
-  );
-};
+export const GlobalStatisticPage = () => (
+  <EntityPageLayout
+    colorMenu="green"
+    sections={[
+      {
+        id: 'demographie',
+        label: 'DÉMOGRAPHIE',
+        content: <SectionDemography />,
+      },
+      {
+        id: 'effets-grave-et-non-graves',
+        label: 'effets graves et non graves',
+        content: <SectionSeriousEffect />,
+      },
+      {
+        id: 'declarants',
+        label: 'Déclarants',
+        content: <SectionRepartitionNotifiers />,
+      },
+      {
+        id: 'types-effets-indesirables',
+        label: "TYPES D'EFFETS INDÉSIRABLES",
+        content: <SectionTypesOfSideEffects />,
+      },
+      {
+        id: 'originine-des-donnees',
+        label: 'ORIGINE DES DONNÉES',
+        content: <SectionDataOrigin />,
+      },
+    ]}
+    render={(content) => content}
+  >
+    <HeadlessHeroHeader
+      theme="bg-secondary-variant"
+      icon={<GlobStatSvg className="h-full" />}
+      backNavigationLabel="Données globales"
+      title="Déclarations d'effets indésirables suspectés"
+      description="Statistiques globales"
+      textColor="text-black"
+      backNavigationIconColor="fill-black"
+      tooltip={
+        <Tooltip
+          placement="bottom"
+          content={
+            <div className="max-w-md">
+              <p className="font-medium mb-4 text-lg">Qu’est-ce que la pharmacovigilance ?</p>
+              <p>
+                La pharmacovigilance est la surveillance, l’évaluation, la prévention et la gestion
+                du risque d’effet indésirable résultant de l’utilisation des médicaments. Elle
+                s’exerce en permanence, avant et après la commercialisation des médicaments, et
+                constitue un élément essentiel du contrôle de la sécurité des médicaments.
+              </p>
+            </div>
+          }
+          render={(refCb) => (
+            <span ref={refCb} className="underline cursor-help">
+              Qu’est-ce que la pharmacovigilance ?
+            </span>
+          )}
+        />
+      }
+    />
+  </EntityPageLayout>
+);

@@ -126,28 +126,28 @@ type MedicalErrors {
     natureRepartition: [MedicalErrorsNature]
 }
 
-type RuptureClass {
-    id: Int!
-    label: String @capitalize
-}
-
 type SpecialityRuptureCause {
-    id: Int!
     type: String @capitalize
+    definition: String @capitalize
 }
 
-type SpecialityRupture {
-    id: Int!
+type SpecialityAssociatedShortage {
+    cisId: Int!
+    cisCode: String
+    cisName: String @capitalize
+
     num: String
-    name: String @capitalize
-    active: Boolean
-    cause: SpecialityRuptureCause @capitalize
-    classification: RuptureClass
+    state: String
     date: String
+    year: Int
+    name: String
+
+    cause: SpecialityRuptureCause
+    classification:  String @capitalize
 }
 
 type SpecialityRupturesHistory {
-    ruptures: [SpecialityRupture]
+    shortages: [SpecialityAssociatedShortage!]
     meta: Meta
 }
 
@@ -221,11 +221,11 @@ type SubstanceSideEffects {
 }
 
 type EntityExpositionPeriod {
-    consumption: Int!
-    level: String!
-    description: String!
-    minYear: String!
-    maxYear: String!
+    minYear: Int!
+    maxYear: Int!
+    consumption: Int
+    level: String
+    description: String
 }
 
 type Substance {
@@ -271,7 +271,7 @@ type Speciality {
     exposition: EntityExpositionPeriod
     medicalErrors: MedicalErrors
     publications: [Publication]
-    rupturesHistory: SpecialityRupturesHistory
+    shortagesHistory: SpecialityRupturesHistory
 }
 
 type SpecialityLight {
@@ -289,12 +289,12 @@ type GlobalStatsUsagePerAge {
 }
 
 type GlobalExpositionPeriod {
-    consumption: Int!
+    consumption: Int
     minYear: Int!
     maxYear: Int!
 }
 
-type GlobalStatistic {
+type GlobalStatistics {
     exposition: GlobalExpositionPeriod
     repartitionPerGender: RepartitionPerGender
     repartitionPerAge: [GlobalStatsUsagePerAge]
@@ -304,83 +304,82 @@ type GlobalStatistic {
     repartitionPerGravity: [GlobalStatsUsagePerGravity]
 }
 
-type RuptureStock {
-    year: String!
-    nbDeclarations: Int
-    nbRisque: Int
-    nbRupture: Int
-    nbRisqueClosed: Int
-    nbRuptureClosed: Int
-}
-
-type RuptureClassificationRepartition {
-    year: String!
-    classification: String
-    value: Int
-}
-
-type TherapeuticClassRupture {
-    atcId: Int!
-    atcName: String!
-    value: Int
-    totalCis: Int
-}
-
-type TherapeuticClassesRupturesPerYear {
-    year: String!
-    repartition: [TherapeuticClassRupture]
-    total: Int
-}
-
-type RuptureCauseRepartitionCause {
-    range: String!
-    value: Int!
-    description: String
-}
-
-type RuptureCauseRepartition {
-    year: String!
-    causes: [RuptureCauseRepartitionCause]
-    total: Int
-}
-
 type TotalDeclarationsWithMeasure {
     value: Int!
     valuePercent: Float!
 }
 
 type RupturesTotalActionPerYear {
-    year: String!
+    year: Int!
     totalDeclarationsWithMeasure: TotalDeclarationsWithMeasure
     totalMeasures: Int
 }
 
-type RuptureAction {
-    range: String!
-    value: Int!
-    description: String
+type GlobalShortagesPeriod {
+    minDate: String!
+    maxDate: String!
 }
 
-type RuptureActionRepartition {
-    year: String!
-    actions: [RuptureAction]
-    total: Int
+type ShortagesPerYear {
+    year: Int!
+    reportsCount: Int
+    actionsCount: Int
+    actionsCountPercent: Float
 }
 
-type GlobalRupturesConfig {
-    minYear: String!
-    maxYear: String!
+type declarationsWithActionsCountShortagesPerYear {
+    year: Int!
+    reportsCount: Int
+    actionsCount: Int
+    actionsCountPercent: Float
 }
 
-type GlobalRuptures {
-    config: GlobalRupturesConfig
-    ruptureStocks: [RuptureStock]
-    ruptureYears: [String!]!
-    repartitionPerClassification: [RuptureClassificationRepartition]
-    repartitionPerTherapeuticClass: [TherapeuticClassesRupturesPerYear]
-    repartitionPerCause: [RuptureCauseRepartition]
-    repartitionPerAction: [RuptureActionRepartition]
-    totalActions: [RupturesTotalActionPerYear]
+type ShortagesClassPerYear {
+    year: Int!
+    value: Int
+    valuePercentClosed: Float
+    classification: String
+}
+
+type ShortagesActionsPerYear {
+    year: Int!
+    declarationsCount: Int,
+    declarationsWithActionsCount: Int,
+    declarationsWithActionsPercent: Float,
+    actionsCount: Int,
+}
+
+type ShortagesAtcPerYear {
+    year: Int!
+    reportsCount: Int
+    medicsCount: Int
+    code: String
+    label: String
+}
+
+type ShortagesCausesPerYear {
+    year: Int!
+    value: Int
+    valuePercent: Float
+    type: String
+    definition: String
+}
+
+type ShortagesMeasuresPerYear {
+    year: Int!
+    value: Int,
+    valuePercent: Float,
+    type: String,
+    definition: String,
+}
+
+type GlobalShortages {
+    period: GlobalShortagesPeriod
+    shortagesPerYear: [ShortagesPerYear!]
+    shortagesClassesPerYear: [ShortagesClassPerYear!]
+    shortagesCausesPerYear: [ShortagesCausesPerYear!]
+    shortagesAtcPerYear: [ShortagesAtcPerYear!]
+    shortagesMeasuresPerYear: [ShortagesMeasuresPerYear!]
 }
 
 ##### QUERIES #####
@@ -400,8 +399,8 @@ type Query {
     getSpecialities: SpecialitiesReturn
     getSubstance(subCode: String!): Substance
     getSubstances: SubstancesReturn
-    getGlobalStatistic: GlobalStatistic
-    getGlobalRuptures: GlobalRuptures
+    getGlobalShortages: GlobalShortages
+    getGlobalStatistics: GlobalStatistics
 }
 
 type LoginResult {

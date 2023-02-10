@@ -1,4 +1,4 @@
-import { Tooltip } from '../../components/Tooltip/Tooltip';
+import { Tooltip } from '../../components/Tooltip';
 
 const tooltipContent =
   "La substance active d'un médicament est une substance chimique entrant dans la composition du médicament et ayant un effet thérapeutique ou préventif.";

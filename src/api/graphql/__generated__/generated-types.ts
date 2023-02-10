@@ -17,40 +17,38 @@ export type Scalars = {
 
 export type EntityExpositionPeriod = {
   __typename?: 'EntityExpositionPeriod';
-  consumption: Scalars['Int'];
-  description: Scalars['String'];
-  level: Scalars['String'];
-  maxYear: Scalars['String'];
-  minYear: Scalars['String'];
-};
-
-export type GlobalExpositionPeriod = {
-  __typename?: 'GlobalExpositionPeriod';
-  consumption: Scalars['Int'];
+  consumption?: Maybe<Scalars['Int']>;
+  description?: Maybe<Scalars['String']>;
+  level?: Maybe<Scalars['String']>;
   maxYear: Scalars['Int'];
   minYear: Scalars['Int'];
 };
 
-export type GlobalRuptures = {
-  __typename?: 'GlobalRuptures';
-  config?: Maybe<GlobalRupturesConfig>;
-  repartitionPerAction?: Maybe<Array<Maybe<RuptureActionRepartition>>>;
-  repartitionPerCause?: Maybe<Array<Maybe<RuptureCauseRepartition>>>;
-  repartitionPerClassification?: Maybe<Array<Maybe<RuptureClassificationRepartition>>>;
-  repartitionPerTherapeuticClass?: Maybe<Array<Maybe<TherapeuticClassesRupturesPerYear>>>;
-  ruptureStocks?: Maybe<Array<Maybe<RuptureStock>>>;
-  ruptureYears: Array<Scalars['String']>;
-  totalActions?: Maybe<Array<Maybe<RupturesTotalActionPerYear>>>;
+export type GlobalExpositionPeriod = {
+  __typename?: 'GlobalExpositionPeriod';
+  consumption?: Maybe<Scalars['Int']>;
+  maxYear: Scalars['Int'];
+  minYear: Scalars['Int'];
 };
 
-export type GlobalRupturesConfig = {
-  __typename?: 'GlobalRupturesConfig';
-  maxYear: Scalars['String'];
-  minYear: Scalars['String'];
+export type GlobalShortages = {
+  __typename?: 'GlobalShortages';
+  period?: Maybe<GlobalShortagesPeriod>;
+  shortagesAtcPerYear?: Maybe<Array<ShortagesAtcPerYear>>;
+  shortagesCausesPerYear?: Maybe<Array<ShortagesCausesPerYear>>;
+  shortagesClassesPerYear?: Maybe<Array<ShortagesClassPerYear>>;
+  shortagesMeasuresPerYear?: Maybe<Array<ShortagesMeasuresPerYear>>;
+  shortagesPerYear?: Maybe<Array<ShortagesPerYear>>;
 };
 
-export type GlobalStatistic = {
-  __typename?: 'GlobalStatistic';
+export type GlobalShortagesPeriod = {
+  __typename?: 'GlobalShortagesPeriod';
+  maxDate: Scalars['String'];
+  minDate: Scalars['String'];
+};
+
+export type GlobalStatistics = {
+  __typename?: 'GlobalStatistics';
   exposition?: Maybe<GlobalExpositionPeriod>;
   repartitionPerAge?: Maybe<Array<Maybe<GlobalStatsUsagePerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
@@ -248,8 +246,8 @@ export type PublicationType = {
 
 export type Query = {
   __typename?: 'Query';
-  getGlobalRuptures?: Maybe<GlobalRuptures>;
-  getGlobalStatistic?: Maybe<GlobalStatistic>;
+  getGlobalShortages?: Maybe<GlobalShortages>;
+  getGlobalStatistics?: Maybe<GlobalStatistics>;
   getSpecialities?: Maybe<SpecialitiesReturn>;
   getSpeciality?: Maybe<Speciality>;
   getSubstance?: Maybe<Substance>;
@@ -304,55 +302,63 @@ export type RuptureAction = {
   value: Scalars['Int'];
 };
 
-export type RuptureActionRepartition = {
-  __typename?: 'RuptureActionRepartition';
-  actions?: Maybe<Array<Maybe<RuptureAction>>>;
-  total?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
-};
-
-export type RuptureCauseRepartition = {
-  __typename?: 'RuptureCauseRepartition';
-  causes?: Maybe<Array<Maybe<RuptureCauseRepartitionCause>>>;
-  total?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
-};
-
-export type RuptureCauseRepartitionCause = {
-  __typename?: 'RuptureCauseRepartitionCause';
-  description?: Maybe<Scalars['String']>;
-  range: Scalars['String'];
-  value: Scalars['Int'];
-};
-
-export type RuptureClass = {
-  __typename?: 'RuptureClass';
-  id: Scalars['Int'];
-  label?: Maybe<Scalars['String']>;
-};
-
-export type RuptureClassificationRepartition = {
-  __typename?: 'RuptureClassificationRepartition';
-  classification?: Maybe<Scalars['String']>;
-  value?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
-};
-
-export type RuptureStock = {
-  __typename?: 'RuptureStock';
-  nbDeclarations?: Maybe<Scalars['Int']>;
-  nbRisque?: Maybe<Scalars['Int']>;
-  nbRisqueClosed?: Maybe<Scalars['Int']>;
-  nbRupture?: Maybe<Scalars['Int']>;
-  nbRuptureClosed?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
-};
-
 export type RupturesTotalActionPerYear = {
   __typename?: 'RupturesTotalActionPerYear';
   totalDeclarationsWithMeasure?: Maybe<TotalDeclarationsWithMeasure>;
   totalMeasures?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
+  year: Scalars['Int'];
+};
+
+export type ShortagesActionsPerYear = {
+  __typename?: 'ShortagesActionsPerYear';
+  actionsCount?: Maybe<Scalars['Int']>;
+  declarationsCount?: Maybe<Scalars['Int']>;
+  declarationsWithActionsCount?: Maybe<Scalars['Int']>;
+  declarationsWithActionsPercent?: Maybe<Scalars['Float']>;
+  year: Scalars['Int'];
+};
+
+export type ShortagesAtcPerYear = {
+  __typename?: 'ShortagesAtcPerYear';
+  code?: Maybe<Scalars['String']>;
+  label?: Maybe<Scalars['String']>;
+  medicsCount?: Maybe<Scalars['Int']>;
+  reportsCount?: Maybe<Scalars['Int']>;
+  year: Scalars['Int'];
+};
+
+export type ShortagesCausesPerYear = {
+  __typename?: 'ShortagesCausesPerYear';
+  definition?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Float']>;
+  year: Scalars['Int'];
+};
+
+export type ShortagesClassPerYear = {
+  __typename?: 'ShortagesClassPerYear';
+  classification?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercentClosed?: Maybe<Scalars['Float']>;
+  year: Scalars['Int'];
+};
+
+export type ShortagesMeasuresPerYear = {
+  __typename?: 'ShortagesMeasuresPerYear';
+  definition?: Maybe<Scalars['String']>;
+  type?: Maybe<Scalars['String']>;
+  value?: Maybe<Scalars['Int']>;
+  valuePercent?: Maybe<Scalars['Float']>;
+  year: Scalars['Int'];
+};
+
+export type ShortagesPerYear = {
+  __typename?: 'ShortagesPerYear';
+  actionsCount?: Maybe<Scalars['Int']>;
+  actionsCountPercent?: Maybe<Scalars['Float']>;
+  reportsCount?: Maybe<Scalars['Int']>;
+  year: Scalars['Int'];
 };
 
 export type SpecialitiesReturn = {
@@ -378,8 +384,22 @@ export type Speciality = {
   publications?: Maybe<Array<Maybe<Publication>>>;
   repartitionPerAge?: Maybe<Array<Maybe<SpecialityUsagePerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
-  rupturesHistory?: Maybe<SpecialityRupturesHistory>;
+  shortagesHistory?: Maybe<SpecialityRupturesHistory>;
   substances?: Maybe<Array<Maybe<Substance>>>;
+};
+
+export type SpecialityAssociatedShortage = {
+  __typename?: 'SpecialityAssociatedShortage';
+  cause?: Maybe<SpecialityRuptureCause>;
+  cisCode?: Maybe<Scalars['String']>;
+  cisId: Scalars['Int'];
+  cisName?: Maybe<Scalars['String']>;
+  classification?: Maybe<Scalars['String']>;
+  date?: Maybe<Scalars['String']>;
+  name?: Maybe<Scalars['String']>;
+  num?: Maybe<Scalars['String']>;
+  state?: Maybe<Scalars['String']>;
+  year?: Maybe<Scalars['Int']>;
 };
 
 export type SpecialityLight = {
@@ -389,27 +409,16 @@ export type SpecialityLight = {
   name: Scalars['String'];
 };
 
-export type SpecialityRupture = {
-  __typename?: 'SpecialityRupture';
-  active?: Maybe<Scalars['Boolean']>;
-  cause?: Maybe<SpecialityRuptureCause>;
-  classification?: Maybe<RuptureClass>;
-  date?: Maybe<Scalars['String']>;
-  id: Scalars['Int'];
-  name?: Maybe<Scalars['String']>;
-  num?: Maybe<Scalars['String']>;
-};
-
 export type SpecialityRuptureCause = {
   __typename?: 'SpecialityRuptureCause';
-  id: Scalars['Int'];
+  definition?: Maybe<Scalars['String']>;
   type?: Maybe<Scalars['String']>;
 };
 
 export type SpecialityRupturesHistory = {
   __typename?: 'SpecialityRupturesHistory';
   meta?: Maybe<Meta>;
-  ruptures?: Maybe<Array<Maybe<SpecialityRupture>>>;
+  shortages?: Maybe<Array<SpecialityAssociatedShortage>>;
 };
 
 export type SpecialitySubstance = {
@@ -461,21 +470,6 @@ export type SubstancesReturn = {
   substances?: Maybe<Array<Maybe<Substance>>>;
 };
 
-export type TherapeuticClassRupture = {
-  __typename?: 'TherapeuticClassRupture';
-  atcId: Scalars['Int'];
-  atcName: Scalars['String'];
-  totalCis?: Maybe<Scalars['Int']>;
-  value?: Maybe<Scalars['Int']>;
-};
-
-export type TherapeuticClassesRupturesPerYear = {
-  __typename?: 'TherapeuticClassesRupturesPerYear';
-  repartition?: Maybe<Array<Maybe<TherapeuticClassRupture>>>;
-  total?: Maybe<Scalars['Int']>;
-  year: Scalars['String'];
-};
-
 export type TotalDeclarationsWithMeasure = {
   __typename?: 'TotalDeclarationsWithMeasure';
   value: Scalars['Int'];
@@ -486,6 +480,14 @@ export type WithRepartition = {
   __typename?: 'WithRepartition';
   with?: Maybe<IndicatorValues>;
   without?: Maybe<IndicatorValues>;
+};
+
+export type DeclarationsWithActionsCountShortagesPerYear = {
+  __typename?: 'declarationsWithActionsCountShortagesPerYear';
+  actionsCount?: Maybe<Scalars['Int']>;
+  actionsCountPercent?: Maybe<Scalars['Float']>;
+  reportsCount?: Maybe<Scalars['Int']>;
+  year: Scalars['Int'];
 };
 
 export type ResolverTypeWrapper<T> = Promise<T> | T;
@@ -576,9 +578,9 @@ export type ResolversTypes = {
   EntityExpositionPeriod: ResolverTypeWrapper<EntityExpositionPeriod>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   GlobalExpositionPeriod: ResolverTypeWrapper<GlobalExpositionPeriod>;
-  GlobalRuptures: ResolverTypeWrapper<GlobalRuptures>;
-  GlobalRupturesConfig: ResolverTypeWrapper<GlobalRupturesConfig>;
-  GlobalStatistic: ResolverTypeWrapper<GlobalStatistic>;
+  GlobalShortages: ResolverTypeWrapper<GlobalShortages>;
+  GlobalShortagesPeriod: ResolverTypeWrapper<GlobalShortagesPeriod>;
+  GlobalStatistics: ResolverTypeWrapper<GlobalStatistics>;
   GlobalStatsUsagePerAge: ResolverTypeWrapper<GlobalStatsUsagePerAge>;
   GlobalStatsUsagePerGravity: ResolverTypeWrapper<GlobalStatsUsagePerGravity>;
   GlobalStatsUsagePerNotifier: ResolverTypeWrapper<GlobalStatsUsagePerNotifier>;
@@ -609,17 +611,17 @@ export type ResolversTypes = {
   RepartitionPerNotifier: ResolverTypeWrapper<RepartitionPerNotifier>;
   RepartitionPerPathology: ResolverTypeWrapper<RepartitionPerPathology>;
   RuptureAction: ResolverTypeWrapper<RuptureAction>;
-  RuptureActionRepartition: ResolverTypeWrapper<RuptureActionRepartition>;
-  RuptureCauseRepartition: ResolverTypeWrapper<RuptureCauseRepartition>;
-  RuptureCauseRepartitionCause: ResolverTypeWrapper<RuptureCauseRepartitionCause>;
-  RuptureClass: ResolverTypeWrapper<RuptureClass>;
-  RuptureClassificationRepartition: ResolverTypeWrapper<RuptureClassificationRepartition>;
-  RuptureStock: ResolverTypeWrapper<RuptureStock>;
   RupturesTotalActionPerYear: ResolverTypeWrapper<RupturesTotalActionPerYear>;
+  ShortagesActionsPerYear: ResolverTypeWrapper<ShortagesActionsPerYear>;
+  ShortagesAtcPerYear: ResolverTypeWrapper<ShortagesAtcPerYear>;
+  ShortagesCausesPerYear: ResolverTypeWrapper<ShortagesCausesPerYear>;
+  ShortagesClassPerYear: ResolverTypeWrapper<ShortagesClassPerYear>;
+  ShortagesMeasuresPerYear: ResolverTypeWrapper<ShortagesMeasuresPerYear>;
+  ShortagesPerYear: ResolverTypeWrapper<ShortagesPerYear>;
   SpecialitiesReturn: ResolverTypeWrapper<SpecialitiesReturn>;
   Speciality: ResolverTypeWrapper<Speciality>;
+  SpecialityAssociatedShortage: ResolverTypeWrapper<SpecialityAssociatedShortage>;
   SpecialityLight: ResolverTypeWrapper<SpecialityLight>;
-  SpecialityRupture: ResolverTypeWrapper<SpecialityRupture>;
   SpecialityRuptureCause: ResolverTypeWrapper<SpecialityRuptureCause>;
   SpecialityRupturesHistory: ResolverTypeWrapper<SpecialityRupturesHistory>;
   SpecialitySubstance: ResolverTypeWrapper<SpecialitySubstance>;
@@ -629,10 +631,9 @@ export type ResolversTypes = {
   SubstanceSideEffects: ResolverTypeWrapper<SubstanceSideEffects>;
   SubstanceSideEffectsDeclarations: ResolverTypeWrapper<SubstanceSideEffectsDeclarations>;
   SubstancesReturn: ResolverTypeWrapper<SubstancesReturn>;
-  TherapeuticClassRupture: ResolverTypeWrapper<TherapeuticClassRupture>;
-  TherapeuticClassesRupturesPerYear: ResolverTypeWrapper<TherapeuticClassesRupturesPerYear>;
   TotalDeclarationsWithMeasure: ResolverTypeWrapper<TotalDeclarationsWithMeasure>;
   WithRepartition: ResolverTypeWrapper<WithRepartition>;
+  declarationsWithActionsCountShortagesPerYear: ResolverTypeWrapper<DeclarationsWithActionsCountShortagesPerYear>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
@@ -641,9 +642,9 @@ export type ResolversParentTypes = {
   EntityExpositionPeriod: EntityExpositionPeriod;
   Float: Scalars['Float'];
   GlobalExpositionPeriod: GlobalExpositionPeriod;
-  GlobalRuptures: GlobalRuptures;
-  GlobalRupturesConfig: GlobalRupturesConfig;
-  GlobalStatistic: GlobalStatistic;
+  GlobalShortages: GlobalShortages;
+  GlobalShortagesPeriod: GlobalShortagesPeriod;
+  GlobalStatistics: GlobalStatistics;
   GlobalStatsUsagePerAge: GlobalStatsUsagePerAge;
   GlobalStatsUsagePerGravity: GlobalStatsUsagePerGravity;
   GlobalStatsUsagePerNotifier: GlobalStatsUsagePerNotifier;
@@ -671,17 +672,17 @@ export type ResolversParentTypes = {
   RepartitionPerNotifier: RepartitionPerNotifier;
   RepartitionPerPathology: RepartitionPerPathology;
   RuptureAction: RuptureAction;
-  RuptureActionRepartition: RuptureActionRepartition;
-  RuptureCauseRepartition: RuptureCauseRepartition;
-  RuptureCauseRepartitionCause: RuptureCauseRepartitionCause;
-  RuptureClass: RuptureClass;
-  RuptureClassificationRepartition: RuptureClassificationRepartition;
-  RuptureStock: RuptureStock;
   RupturesTotalActionPerYear: RupturesTotalActionPerYear;
+  ShortagesActionsPerYear: ShortagesActionsPerYear;
+  ShortagesAtcPerYear: ShortagesAtcPerYear;
+  ShortagesCausesPerYear: ShortagesCausesPerYear;
+  ShortagesClassPerYear: ShortagesClassPerYear;
+  ShortagesMeasuresPerYear: ShortagesMeasuresPerYear;
+  ShortagesPerYear: ShortagesPerYear;
   SpecialitiesReturn: SpecialitiesReturn;
   Speciality: Speciality;
+  SpecialityAssociatedShortage: SpecialityAssociatedShortage;
   SpecialityLight: SpecialityLight;
-  SpecialityRupture: SpecialityRupture;
   SpecialityRuptureCause: SpecialityRuptureCause;
   SpecialityRupturesHistory: SpecialityRupturesHistory;
   SpecialitySubstance: SpecialitySubstance;
@@ -691,10 +692,9 @@ export type ResolversParentTypes = {
   SubstanceSideEffects: SubstanceSideEffects;
   SubstanceSideEffectsDeclarations: SubstanceSideEffectsDeclarations;
   SubstancesReturn: SubstancesReturn;
-  TherapeuticClassRupture: TherapeuticClassRupture;
-  TherapeuticClassesRupturesPerYear: TherapeuticClassesRupturesPerYear;
   TotalDeclarationsWithMeasure: TotalDeclarationsWithMeasure;
   WithRepartition: WithRepartition;
+  declarationsWithActionsCountShortagesPerYear: DeclarationsWithActionsCountShortagesPerYear;
 };
 
 export type CapitalizeDirectiveArgs = {};
@@ -728,11 +728,11 @@ export type EntityExpositionPeriodResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['EntityExpositionPeriod'] = ResolversParentTypes['EntityExpositionPeriod']
 > = {
-  consumption?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  description?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  level?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  maxYear?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  minYear?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  consumption?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  level?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  maxYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  minYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -740,63 +740,57 @@ export type GlobalExpositionPeriodResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['GlobalExpositionPeriod'] = ResolversParentTypes['GlobalExpositionPeriod']
 > = {
-  consumption?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  consumption?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   maxYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   minYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type GlobalRupturesResolvers<
+export type GlobalShortagesResolvers<
   ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['GlobalRuptures'] = ResolversParentTypes['GlobalRuptures']
+  ParentType extends ResolversParentTypes['GlobalShortages'] = ResolversParentTypes['GlobalShortages']
 > = {
-  config?: Resolver<Maybe<ResolversTypes['GlobalRupturesConfig']>, ParentType, ContextType>;
-  repartitionPerAction?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RuptureActionRepartition']>>>,
+  period?: Resolver<Maybe<ResolversTypes['GlobalShortagesPeriod']>, ParentType, ContextType>;
+  shortagesAtcPerYear?: Resolver<
+    Maybe<Array<ResolversTypes['ShortagesAtcPerYear']>>,
     ParentType,
     ContextType
   >;
-  repartitionPerCause?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RuptureCauseRepartition']>>>,
+  shortagesCausesPerYear?: Resolver<
+    Maybe<Array<ResolversTypes['ShortagesCausesPerYear']>>,
     ParentType,
     ContextType
   >;
-  repartitionPerClassification?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RuptureClassificationRepartition']>>>,
+  shortagesClassesPerYear?: Resolver<
+    Maybe<Array<ResolversTypes['ShortagesClassPerYear']>>,
     ParentType,
     ContextType
   >;
-  repartitionPerTherapeuticClass?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['TherapeuticClassesRupturesPerYear']>>>,
+  shortagesMeasuresPerYear?: Resolver<
+    Maybe<Array<ResolversTypes['ShortagesMeasuresPerYear']>>,
     ParentType,
     ContextType
   >;
-  ruptureStocks?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RuptureStock']>>>,
-    ParentType,
-    ContextType
-  >;
-  ruptureYears?: Resolver<Array<ResolversTypes['String']>, ParentType, ContextType>;
-  totalActions?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RupturesTotalActionPerYear']>>>,
+  shortagesPerYear?: Resolver<
+    Maybe<Array<ResolversTypes['ShortagesPerYear']>>,
     ParentType,
     ContextType
   >;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type GlobalRupturesConfigResolvers<
+export type GlobalShortagesPeriodResolvers<
   ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['GlobalRupturesConfig'] = ResolversParentTypes['GlobalRupturesConfig']
+  ParentType extends ResolversParentTypes['GlobalShortagesPeriod'] = ResolversParentTypes['GlobalShortagesPeriod']
 > = {
-  maxYear?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  minYear?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  maxDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  minDate?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type GlobalStatisticResolvers<
+export type GlobalStatisticsResolvers<
   ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['GlobalStatistic'] = ResolversParentTypes['GlobalStatistic']
+  ParentType extends ResolversParentTypes['GlobalStatistics'] = ResolversParentTypes['GlobalStatistics']
 > = {
   exposition?: Resolver<Maybe<ResolversTypes['GlobalExpositionPeriod']>, ParentType, ContextType>;
   repartitionPerAge?: Resolver<
@@ -1059,8 +1053,12 @@ export type QueryResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']
 > = {
-  getGlobalRuptures?: Resolver<Maybe<ResolversTypes['GlobalRuptures']>, ParentType, ContextType>;
-  getGlobalStatistic?: Resolver<Maybe<ResolversTypes['GlobalStatistic']>, ParentType, ContextType>;
+  getGlobalShortages?: Resolver<Maybe<ResolversTypes['GlobalShortages']>, ParentType, ContextType>;
+  getGlobalStatistics?: Resolver<
+    Maybe<ResolversTypes['GlobalStatistics']>,
+    ParentType,
+    ContextType
+  >;
   getSpecialities?: Resolver<Maybe<ResolversTypes['SpecialitiesReturn']>, ParentType, ContextType>;
   getSpeciality?: Resolver<
     Maybe<ResolversTypes['Speciality']>,
@@ -1132,72 +1130,6 @@ export type RuptureActionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type RuptureActionRepartitionResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['RuptureActionRepartition'] = ResolversParentTypes['RuptureActionRepartition']
-> = {
-  actions?: Resolver<Maybe<Array<Maybe<ResolversTypes['RuptureAction']>>>, ParentType, ContextType>;
-  total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  year?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type RuptureCauseRepartitionResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['RuptureCauseRepartition'] = ResolversParentTypes['RuptureCauseRepartition']
-> = {
-  causes?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['RuptureCauseRepartitionCause']>>>,
-    ParentType,
-    ContextType
-  >;
-  total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  year?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type RuptureCauseRepartitionCauseResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['RuptureCauseRepartitionCause'] = ResolversParentTypes['RuptureCauseRepartitionCause']
-> = {
-  description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type RuptureClassResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['RuptureClass'] = ResolversParentTypes['RuptureClass']
-> = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type RuptureClassificationRepartitionResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['RuptureClassificationRepartition'] = ResolversParentTypes['RuptureClassificationRepartition']
-> = {
-  classification?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  year?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type RuptureStockResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['RuptureStock'] = ResolversParentTypes['RuptureStock']
-> = {
-  nbDeclarations?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  nbRisque?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  nbRisqueClosed?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  nbRupture?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  nbRuptureClosed?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  year?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type RupturesTotalActionPerYearResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RupturesTotalActionPerYear'] = ResolversParentTypes['RupturesTotalActionPerYear']
@@ -1208,7 +1140,81 @@ export type RupturesTotalActionPerYearResolvers<
     ContextType
   >;
   totalMeasures?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  year?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ShortagesActionsPerYearResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['ShortagesActionsPerYear'] = ResolversParentTypes['ShortagesActionsPerYear']
+> = {
+  actionsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  declarationsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  declarationsWithActionsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  declarationsWithActionsPercent?: Resolver<
+    Maybe<ResolversTypes['Float']>,
+    ParentType,
+    ContextType
+  >;
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ShortagesAtcPerYearResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['ShortagesAtcPerYear'] = ResolversParentTypes['ShortagesAtcPerYear']
+> = {
+  code?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  label?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  medicsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  reportsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ShortagesCausesPerYearResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['ShortagesCausesPerYear'] = ResolversParentTypes['ShortagesCausesPerYear']
+> = {
+  definition?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  valuePercent?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ShortagesClassPerYearResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['ShortagesClassPerYear'] = ResolversParentTypes['ShortagesClassPerYear']
+> = {
+  classification?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  valuePercentClosed?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ShortagesMeasuresPerYearResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['ShortagesMeasuresPerYear'] = ResolversParentTypes['ShortagesMeasuresPerYear']
+> = {
+  definition?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  valuePercent?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ShortagesPerYearResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['ShortagesPerYear'] = ResolversParentTypes['ShortagesPerYear']
+> = {
+  actionsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  actionsCountPercent?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  reportsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1260,12 +1266,29 @@ export type SpecialityResolvers<
     ParentType,
     ContextType
   >;
-  rupturesHistory?: Resolver<
+  shortagesHistory?: Resolver<
     Maybe<ResolversTypes['SpecialityRupturesHistory']>,
     ParentType,
     ContextType
   >;
   substances?: Resolver<Maybe<Array<Maybe<ResolversTypes['Substance']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type SpecialityAssociatedShortageResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['SpecialityAssociatedShortage'] = ResolversParentTypes['SpecialityAssociatedShortage']
+> = {
+  cause?: Resolver<Maybe<ResolversTypes['SpecialityRuptureCause']>, ParentType, ContextType>;
+  cisCode?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  cisId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  cisName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  classification?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  num?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  state?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  year?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1279,25 +1302,11 @@ export type SpecialityLightResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type SpecialityRuptureResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['SpecialityRupture'] = ResolversParentTypes['SpecialityRupture']
-> = {
-  active?: Resolver<Maybe<ResolversTypes['Boolean']>, ParentType, ContextType>;
-  cause?: Resolver<Maybe<ResolversTypes['SpecialityRuptureCause']>, ParentType, ContextType>;
-  classification?: Resolver<Maybe<ResolversTypes['RuptureClass']>, ParentType, ContextType>;
-  date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  num?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type SpecialityRuptureCauseResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SpecialityRuptureCause'] = ResolversParentTypes['SpecialityRuptureCause']
 > = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  definition?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   type?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1307,8 +1316,8 @@ export type SpecialityRupturesHistoryResolvers<
   ParentType extends ResolversParentTypes['SpecialityRupturesHistory'] = ResolversParentTypes['SpecialityRupturesHistory']
 > = {
   meta?: Resolver<Maybe<ResolversTypes['Meta']>, ParentType, ContextType>;
-  ruptures?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['SpecialityRupture']>>>,
+  shortages?: Resolver<
+    Maybe<Array<ResolversTypes['SpecialityAssociatedShortage']>>,
     ParentType,
     ContextType
   >;
@@ -1414,31 +1423,6 @@ export type SubstancesReturnResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type TherapeuticClassRuptureResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['TherapeuticClassRupture'] = ResolversParentTypes['TherapeuticClassRupture']
-> = {
-  atcId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  atcName?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  totalCis?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  value?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type TherapeuticClassesRupturesPerYearResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['TherapeuticClassesRupturesPerYear'] = ResolversParentTypes['TherapeuticClassesRupturesPerYear']
-> = {
-  repartition?: Resolver<
-    Maybe<Array<Maybe<ResolversTypes['TherapeuticClassRupture']>>>,
-    ParentType,
-    ContextType
-  >;
-  total?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
-  year?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
 export type TotalDeclarationsWithMeasureResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['TotalDeclarationsWithMeasure'] = ResolversParentTypes['TotalDeclarationsWithMeasure']
@@ -1457,12 +1441,23 @@ export type WithRepartitionResolvers<
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
+export type DeclarationsWithActionsCountShortagesPerYearResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['declarationsWithActionsCountShortagesPerYear'] = ResolversParentTypes['declarationsWithActionsCountShortagesPerYear']
+> = {
+  actionsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  actionsCountPercent?: Resolver<Maybe<ResolversTypes['Float']>, ParentType, ContextType>;
+  reportsCount?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
+  year?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type Resolvers<ContextType = ContextValue> = {
   EntityExpositionPeriod?: EntityExpositionPeriodResolvers<ContextType>;
   GlobalExpositionPeriod?: GlobalExpositionPeriodResolvers<ContextType>;
-  GlobalRuptures?: GlobalRupturesResolvers<ContextType>;
-  GlobalRupturesConfig?: GlobalRupturesConfigResolvers<ContextType>;
-  GlobalStatistic?: GlobalStatisticResolvers<ContextType>;
+  GlobalShortages?: GlobalShortagesResolvers<ContextType>;
+  GlobalShortagesPeriod?: GlobalShortagesPeriodResolvers<ContextType>;
+  GlobalStatistics?: GlobalStatisticsResolvers<ContextType>;
   GlobalStatsUsagePerAge?: GlobalStatsUsagePerAgeResolvers<ContextType>;
   GlobalStatsUsagePerGravity?: GlobalStatsUsagePerGravityResolvers<ContextType>;
   GlobalStatsUsagePerNotifier?: GlobalStatsUsagePerNotifierResolvers<ContextType>;
@@ -1489,17 +1484,17 @@ export type Resolvers<ContextType = ContextValue> = {
   RepartitionPerNotifier?: RepartitionPerNotifierResolvers<ContextType>;
   RepartitionPerPathology?: RepartitionPerPathologyResolvers<ContextType>;
   RuptureAction?: RuptureActionResolvers<ContextType>;
-  RuptureActionRepartition?: RuptureActionRepartitionResolvers<ContextType>;
-  RuptureCauseRepartition?: RuptureCauseRepartitionResolvers<ContextType>;
-  RuptureCauseRepartitionCause?: RuptureCauseRepartitionCauseResolvers<ContextType>;
-  RuptureClass?: RuptureClassResolvers<ContextType>;
-  RuptureClassificationRepartition?: RuptureClassificationRepartitionResolvers<ContextType>;
-  RuptureStock?: RuptureStockResolvers<ContextType>;
   RupturesTotalActionPerYear?: RupturesTotalActionPerYearResolvers<ContextType>;
+  ShortagesActionsPerYear?: ShortagesActionsPerYearResolvers<ContextType>;
+  ShortagesAtcPerYear?: ShortagesAtcPerYearResolvers<ContextType>;
+  ShortagesCausesPerYear?: ShortagesCausesPerYearResolvers<ContextType>;
+  ShortagesClassPerYear?: ShortagesClassPerYearResolvers<ContextType>;
+  ShortagesMeasuresPerYear?: ShortagesMeasuresPerYearResolvers<ContextType>;
+  ShortagesPerYear?: ShortagesPerYearResolvers<ContextType>;
   SpecialitiesReturn?: SpecialitiesReturnResolvers<ContextType>;
   Speciality?: SpecialityResolvers<ContextType>;
+  SpecialityAssociatedShortage?: SpecialityAssociatedShortageResolvers<ContextType>;
   SpecialityLight?: SpecialityLightResolvers<ContextType>;
-  SpecialityRupture?: SpecialityRuptureResolvers<ContextType>;
   SpecialityRuptureCause?: SpecialityRuptureCauseResolvers<ContextType>;
   SpecialityRupturesHistory?: SpecialityRupturesHistoryResolvers<ContextType>;
   SpecialitySubstance?: SpecialitySubstanceResolvers<ContextType>;
@@ -1508,10 +1503,9 @@ export type Resolvers<ContextType = ContextValue> = {
   SubstanceSideEffects?: SubstanceSideEffectsResolvers<ContextType>;
   SubstanceSideEffectsDeclarations?: SubstanceSideEffectsDeclarationsResolvers<ContextType>;
   SubstancesReturn?: SubstancesReturnResolvers<ContextType>;
-  TherapeuticClassRupture?: TherapeuticClassRuptureResolvers<ContextType>;
-  TherapeuticClassesRupturesPerYear?: TherapeuticClassesRupturesPerYearResolvers<ContextType>;
   TotalDeclarationsWithMeasure?: TotalDeclarationsWithMeasureResolvers<ContextType>;
   WithRepartition?: WithRepartitionResolvers<ContextType>;
+  declarationsWithActionsCountShortagesPerYear?: DeclarationsWithActionsCountShortagesPerYearResolvers<ContextType>;
 };
 
 export type DirectiveResolvers<ContextType = ContextValue> = {

@@ -1,7 +1,7 @@
 import { Pie } from 'react-chartjs-2';
 import { ArcElement, Chart as ChartJS, Legend, Tooltip, type TooltipItem } from 'chart.js';
 import type {
-  GlobalStatistic,
+  GlobalStatistics,
   Speciality,
   Substance,
 } from '../../graphql/__generated__/generated-documents';
@@ -28,8 +28,8 @@ export const PieChartRepartition = ({
   data:
     | Speciality['repartitionPerAge']
     | Substance['repartitionPerAge']
-    | GlobalStatistic['repartitionPerAge']
-    | GlobalStatistic['repartitionPerGravity']
+    | GlobalStatistics['repartitionPerAge']
+    | GlobalStatistics['repartitionPerGravity']
     | MedicalErrors['populationRepartition'];
   theme: ChartPalette;
   className?: string;

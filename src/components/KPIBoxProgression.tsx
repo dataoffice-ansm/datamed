@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
-import { TooltipInformation } from '../componentsPages/Ruptures/Tooltip';
+import { TooltipInformation } from './TooltipInformation';
 import { numberWithThousand } from '../utils/format';
 
 type PercentageBoxProps = {

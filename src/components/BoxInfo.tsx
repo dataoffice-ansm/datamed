@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
-import { TooltipInformation } from '../componentsPages/Ruptures/Tooltip';
+import { TooltipInformation } from './TooltipInformation';
 
 export type BoxInfoTitleThemeColor = 'primary' | 'secondary' | 'success' | 'dark-green';
 

@@ -3,7 +3,7 @@ import { Select } from './Select';
 import type { ReactNode, HTMLAttributes } from 'react';
 import { useCallback, useState } from 'react';
 import classNames from 'classnames';
-import { TooltipInformation } from '../componentsPages/Ruptures/Tooltip';
+import { TooltipInformation } from './TooltipInformation';
 
 const options = {
   percent: { label: 'Pourcentage' },
@@ -34,7 +34,7 @@ type GraphFiguresContainerProps = HTMLAttributes<HTMLDivElement> & {
     selectedYearOption,
   }: {
     selectedUnitOption: UnitOptionsValue;
-    selectedYearOption: string;
+    selectedYearOption: number | null;
   }) => ReactNode;
   defaultOption?: UnitOptionsValue;
   theme?: 'primary' | 'secondary' | 'secondary-variant' | 'gray';
@@ -66,13 +66,13 @@ export const GraphBoxSelect = ({
   defaultOption = 'number',
   theme = 'secondary',
 }: GraphFiguresContainerProps) => {
-  const [selectedYearOption, setSelectedYearOption] = useState<string>(
-    yearsOptions ? (yearsOptions[0].value as string) : ''
+  const [selectedYearOption, setSelectedYearOption] = useState<number | null>(
+    yearsOptions && yearsOptions.length > 0 ? (yearsOptions[0].value as number) : null
   );
 
   const [selectedUnitOption, setSelectedUnitOption] = useState<UnitOptionsValue>(defaultOption);
 
-  const onChangeYear = useCallback((optionKey: string) => {
+  const onChangeYear = useCallback((optionKey: number) => {
     setSelectedYearOption(optionKey);
   }, []);
 
@@ -125,7 +125,7 @@ export const GraphBoxSelect = ({
                   options={yearsOptions}
                   theme="secondary-variant"
                   onSelectOption={(index, option) => {
-                    onChangeYear(option.value as string);
+                    onChangeYear(option.value as number);
                   }}
                 />
               </div>
