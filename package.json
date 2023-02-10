@@ -60,6 +60,7 @@
     "@graphql-codegen/typescript-operations": "^2.5.12",
     "@graphql-codegen/typescript-resolvers": "^2.7.12",
     "@graphql-tools/jest-transform": "^1.2.2",
+    "@next/bundle-analyzer": "^13.1.6",
     "@svgr/webpack": "^6.5.1",
     "@testing-library/dom": "^8.19.1",
     "@testing-library/jest-dom": "^5.16.5",

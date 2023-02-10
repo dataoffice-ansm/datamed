@@ -10,7 +10,6 @@ import { SpecialityPage } from '../../componentsPages/Speciality/SpecialityPage'
 import { addApolloState, initializeApolloClient } from '../../config/apolloClient';
 import { getServerSideErrors } from '../../utils/errors';
 import toast from 'react-hot-toast';
-import Page404 from '../[404]';
 
 type CisSSRPageProps = {
   cis: Speciality;
@@ -22,13 +21,8 @@ type ContextParams = {
 } & ParsedUrlQuery;
 
 const PageCisServerSideRendered = ({ cis, err }: CisSSRPageProps) => {
-  if (!cis) {
-    console.log(err);
-    if (err) {
-      toast.error(err);
-    }
-
-    return <Page404 />;
+  if (err) {
+    toast.error(err);
   }
 
   return <SpecialityPage cis={cis} />;
@@ -45,6 +39,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
         cisCode,
       },
     });
+
+    if (!data.getSpeciality) {
+      return {
+        notFound: true,
+      };
+    }
 
     return addApolloState(apolloClient, {
       props: {

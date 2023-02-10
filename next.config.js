@@ -1,15 +1,12 @@
+const withBundleAnalyzer = require('@next/bundle-analyzer')({
+  enabled: process.env.ANALYZE === 'true',
+  openAnalyzer: false,
+});
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: false,
-  // rewrites: () => {
-  //   return [
-  //     {
-  //       source: '/api/:path*",',
-  //       destination: 'http://data.ansm.sante.fr/api/:path*',
-  //     },
-  //   ];
-  // },
   webpack(config) {
     config.module.rules.push(
       {
@@ -28,4 +25,4 @@ const nextConfig = {
   },
 };
 
-module.exports = nextConfig;
+module.exports = withBundleAnalyzer(nextConfig);

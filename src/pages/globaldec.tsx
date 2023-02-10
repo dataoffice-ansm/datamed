@@ -9,6 +9,7 @@ import type {
 import { GlobalStatisticDocument } from '../graphql/__generated__/generated-documents';
 import { GlobalDecPageContextProvider } from '../contexts/GlobaleDecPageContext';
 import toast from 'react-hot-toast';
+import { getServerSideErrors } from '../utils/errors';
 
 type GlobalStatisticsPageProps = {
   globalStatistics: GlobalStatistics;
@@ -45,13 +46,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     });
   } catch (err: unknown) {
     console.log('Failed to fetch Global Stats page');
-    console.log(err);
-
-    return {
-      props: {
-        err: err instanceof Error ? err.message : err,
-      },
-    };
+    return getServerSideErrors(err);
   }
 };
 

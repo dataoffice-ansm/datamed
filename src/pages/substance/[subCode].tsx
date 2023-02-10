@@ -9,7 +9,6 @@ import { SubstanceDocument } from '../../graphql/__generated__/generated-documen
 import type { GetServerSidePropsContext } from 'next';
 import { addApolloState, initializeApolloClient } from '../../config/apolloClient';
 import toast from 'react-hot-toast';
-import Page404 from '../[404]';
 
 type SubSSRPageProps = {
   sub: Substance;
@@ -21,12 +20,8 @@ type ContextParams = {
 } & ParsedUrlQuery;
 
 const PageSubServerSideRendered = ({ sub, err }: SubSSRPageProps) => {
-  if (!sub) {
-    if (err) {
-      toast.error(err);
-    }
-
-    return <Page404 />;
+  if (err) {
+    toast.error(err);
   }
 
   return <SubstancePage sub={sub} />;
@@ -43,6 +38,12 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
         subCode,
       },
     });
+
+    if (!data.getSubstance) {
+      return {
+        notFound: true,
+      };
+    }
 
     return addApolloState(apolloClient, {
       props: {

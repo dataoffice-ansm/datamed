@@ -11,6 +11,7 @@ import type {
 import { GlobalShortagesPage } from '../componentsPages/GlobalShortages/GlobalShortagesPage';
 import { GlobalShortagesContextProvider } from '../contexts/GlobalShortagesContext';
 import toast from 'react-hot-toast';
+import { getServerSideErrors } from '../utils/errors';
 
 type GlobalShortagesPageProps = {
   shortages: GlobalShortages;
@@ -44,13 +45,7 @@ export const getServerSideProps = async (context: GetServerSidePropsContext) => 
     });
   } catch (err: unknown) {
     console.log('Failed to fetch Global Shortages page');
-    console.log(err);
-
-    return {
-      props: {
-        err: err instanceof Error ? err.message : err,
-      },
-    };
+    return getServerSideErrors(err);
   }
 };
 

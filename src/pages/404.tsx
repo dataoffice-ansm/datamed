@@ -1,10 +1,12 @@
-import { FullScreenSection } from '../../../components/FullScreenSection/FullScreenSection';
-import Error404SVG from '../../../assets/landing/404.svg';
-import Link from 'next/link';
-import { Button } from '../../../components/Button/Button';
+import { FullScreenSection } from '../components/FullScreenSection/FullScreenSection';
+import { Button } from '../components/Button/Button';
+import Error404SVG from '../assets/landing/404.svg';
 
-export const ErrorPage404 = () => {
+import Link from 'next/link';
+
+const Page404 = () => {
   const enableReport = false;
+
   return (
     <FullScreenSection className="bg-background">
       <div className="flex justify-center items-center gap-8 flex-col w-full pb-32">
@@ -32,3 +34,5 @@ export const ErrorPage404 = () => {
     </FullScreenSection>
   );
 };
+
+export default Page404;

@@ -27,6 +27,7 @@
     ".cache",
     "dist",
     "build",
+    "public",
     "node_modules",
     ".next",
     ".swc",
