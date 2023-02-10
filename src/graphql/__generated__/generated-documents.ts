@@ -43,8 +43,8 @@ export type GlobalShortages = {
 
 export type GlobalShortagesPeriod = {
   __typename?: 'GlobalShortagesPeriod';
-  maxDate: Scalars['String'];
-  minDate: Scalars['String'];
+  maxYear: Scalars['Int'];
+  minYear: Scalars['Int'];
 };
 
 export type GlobalStatistics = {
@@ -295,18 +295,18 @@ export type RepartitionPerPathology = {
   valuePercent: Scalars['Float'];
 };
 
-export type RuptureAction = {
-  __typename?: 'RuptureAction';
-  description?: Maybe<Scalars['String']>;
-  range: Scalars['String'];
-  value: Scalars['Int'];
-};
-
 export type RupturesTotalActionPerYear = {
   __typename?: 'RupturesTotalActionPerYear';
   totalDeclarationsWithMeasure?: Maybe<TotalDeclarationsWithMeasure>;
   totalMeasures?: Maybe<Scalars['Int']>;
   year: Scalars['Int'];
+};
+
+export type ShortageCis = {
+  __typename?: 'ShortageCis';
+  code?: Maybe<Scalars['String']>;
+  id: Scalars['Int'];
+  name?: Maybe<Scalars['String']>;
 };
 
 export type ShortagesActionsPerYear = {
@@ -355,8 +355,9 @@ export type ShortagesMeasuresPerYear = {
 
 export type ShortagesPerYear = {
   __typename?: 'ShortagesPerYear';
-  actionsCount?: Maybe<Scalars['Int']>;
-  actionsCountPercent?: Maybe<Scalars['Float']>;
+  casesWithMeasuresCount?: Maybe<Scalars['Int']>;
+  casesWithMeasuresCountPercent?: Maybe<Scalars['Float']>;
+  measuresCount?: Maybe<Scalars['Int']>;
   reportsCount?: Maybe<Scalars['Int']>;
   year: Scalars['Int'];
 };
@@ -391,12 +392,9 @@ export type Speciality = {
 export type SpecialityAssociatedShortage = {
   __typename?: 'SpecialityAssociatedShortage';
   cause?: Maybe<SpecialityRuptureCause>;
-  cisCode?: Maybe<Scalars['String']>;
-  cisId: Scalars['Int'];
-  cisName?: Maybe<Scalars['String']>;
+  cis?: Maybe<ShortageCis>;
   classification?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
-  name?: Maybe<Scalars['String']>;
   num?: Maybe<Scalars['String']>;
   state?: Maybe<Scalars['String']>;
   year?: Maybe<Scalars['Int']>;
@@ -480,14 +478,6 @@ export type WithRepartition = {
   __typename?: 'WithRepartition';
   with?: Maybe<IndicatorValues>;
   without?: Maybe<IndicatorValues>;
-};
-
-export type DeclarationsWithActionsCountShortagesPerYear = {
-  __typename?: 'declarationsWithActionsCountShortagesPerYear';
-  actionsCount?: Maybe<Scalars['Int']>;
-  actionsCountPercent?: Maybe<Scalars['Float']>;
-  reportsCount?: Maybe<Scalars['Int']>;
-  year: Scalars['Int'];
 };
 
 export type SpecialityFragmentFragment = {
@@ -647,14 +637,17 @@ export type SpecialityFragmentFragment = {
     __typename?: 'SpecialityRupturesHistory';
     shortages?: Array<{
       __typename?: 'SpecialityAssociatedShortage';
-      cisCode?: string | null;
-      cisName?: string | null;
       num?: string | null;
       state?: string | null;
-      name?: string | null;
       date?: string | null;
       year?: number | null;
       classification?: string | null;
+      cis?: {
+        __typename?: 'ShortageCis';
+        id: number;
+        code?: string | null;
+        name?: string | null;
+      } | null;
       cause?: {
         __typename?: 'SpecialityRuptureCause';
         type?: string | null;
@@ -901,14 +894,17 @@ export type SpecialityQuery = {
       __typename?: 'SpecialityRupturesHistory';
       shortages?: Array<{
         __typename?: 'SpecialityAssociatedShortage';
-        cisCode?: string | null;
-        cisName?: string | null;
         num?: string | null;
         state?: string | null;
-        name?: string | null;
         date?: string | null;
         year?: number | null;
         classification?: string | null;
+        cis?: {
+          __typename?: 'ShortageCis';
+          id: number;
+          code?: string | null;
+          name?: string | null;
+        } | null;
         cause?: {
           __typename?: 'SpecialityRuptureCause';
           type?: string | null;
@@ -1090,13 +1086,14 @@ export type GlobalRupturesQuery = {
   __typename?: 'Query';
   getGlobalShortages?: {
     __typename?: 'GlobalShortages';
-    period?: { __typename?: 'GlobalShortagesPeriod'; minDate: string; maxDate: string } | null;
+    period?: { __typename?: 'GlobalShortagesPeriod'; minYear: number; maxYear: number } | null;
     shortagesPerYear?: Array<{
       __typename?: 'ShortagesPerYear';
       year: number;
       reportsCount?: number | null;
-      actionsCount?: number | null;
-      actionsCountPercent?: number | null;
+      casesWithMeasuresCount?: number | null;
+      casesWithMeasuresCountPercent?: number | null;
+      measuresCount?: number | null;
     }> | null;
     shortagesClassesPerYear?: Array<{
       __typename?: 'ShortagesClassPerYear';
@@ -1317,14 +1314,15 @@ export const SpecialityFragmentFragmentDoc = gql`
     }
     shortagesHistory {
       shortages {
-        cisCode
-        cisCode
-        cisName
         num
         state
-        name
         date
         year
+        cis {
+          id
+          code
+          name
+        }
         classification
         cause {
           type
@@ -1615,14 +1613,15 @@ export const GlobalRupturesDocument = gql`
   query GlobalRuptures {
     getGlobalShortages {
       period {
-        minDate
-        maxDate
+        minYear
+        maxYear
       }
       shortagesPerYear {
         year
         reportsCount
-        actionsCount
-        actionsCountPercent
+        casesWithMeasuresCount
+        casesWithMeasuresCountPercent
+        measuresCount
       }
       shortagesClassesPerYear {
         year

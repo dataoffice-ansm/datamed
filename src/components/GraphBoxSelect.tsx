@@ -88,17 +88,17 @@ export const GraphBoxSelect = ({
         className
       )}
     >
-      <div className="GraphBoxHeader flex flex-col px-4">
-        <div className="GraphBoxTitle flex flex-col sm:flex-row gap-4 justify-between items-start mb-4">
-          <div className="GraphBoxTitle flex items-start gap-2 w-full text-left w-full md:w-2/3">
-            <h2
+      <div className="GraphBoxSelectHeader flex flex-col px-4">
+        <div className="GraphBoxSelectTitle flex flex-col sm:flex-row gap-4 justify-between items-start">
+          <div className="inner flex items-start gap-2 w-full text-left w-full md:w-2/3">
+            <span
               className={classNames(
-                layoutSection && 'text-2xl lg:text-3xl',
+                layoutSection && 'font-medium text-2xl',
                 'font-medium text-left mt-0 mb-2'
               )}
             >
               {title}
-            </h2>
+            </span>
             {tooltip && (
               <TooltipInformation>
                 <div className="p-2">{tooltip}</div>
@@ -133,7 +133,7 @@ export const GraphBoxSelect = ({
           </div>
         </div>
         <div className="GraphBoxSubtitle">
-          {subtitle && <h6 className="mt-0 mb-6 text-left">{subtitle}</h6>}
+          {subtitle && <h6 className="mt-0 mb-6 font-normal text-left">{subtitle}</h6>}
         </div>
       </div>
 

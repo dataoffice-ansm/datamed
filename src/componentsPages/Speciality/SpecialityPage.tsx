@@ -19,6 +19,7 @@ import ManIllustration from '../../assets/pictos/man_illustration.svg';
 import ManFaceNo from '../../assets/pictos/manFaceNo.svg';
 import ManFaceYes from '../../assets/pictos/manFaceYes.svg';
 import OutOfStockSvg from '../../assets/pictos/out_of_stock.svg';
+import CommuniqueSvg from '../../assets/pictos/communique.svg';
 
 import { numberWithThousand } from '../../utils/format';
 import { NotEnoughData } from '../../components/NotEnoughData';
@@ -464,6 +465,74 @@ const SectionSideEffects = () => {
         }
       />
 
+      <Accordion
+        className="shadow rounded-lg"
+        classNameTitle="text-primary"
+        theme="primary"
+        title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
+      >
+        <p>
+          La pharmacovigilance est la surveillance, l’évaluation, la prévention et la gestion du
+          risque d’effet indésirable résultant de l’utilisation des médicaments. Elle s’exerce en
+          permanence, avant et après la commercialisation des médicaments, et constitue un élément
+          essentiel du contrôle de la sécurité des médicaments.
+        </p>
+        <p>
+          Afin de respecter la confidentialité des données des patients, si un critère (âge,
+          sexe,...) représente moins de 11 cas, l&apos;information ne sera pas affichée avec ce
+          niveau de détail.
+        </p>
+
+        <p>
+          Ces données sont issues de la Base Nationale de Pharmacovigilance (BNPV), qui est la base
+          de données de l&apos;ANSM alimentée par les Centres Régionaux de Pharmacovigilance (CRPV).
+          Elle inclut l&apos;ensemble des déclarations suspectées comme étant en lien avec
+          l&apos;usage d&apos;un ou plusieurs médicaments. Ces dernières sont notifiées par les
+          professionnels de santé ou par les patients et association agréées via un portail dédié:{' '}
+          <a
+            rel="external noreferrer"
+            target="_blank"
+            href="https://signalement.social-sante.gouv.fr"
+            className="text-primary"
+          >
+            https://signalement.social-sante.gouv.fr
+          </a>
+        </p>
+
+        <p className="text-md font-medium mt-8">
+          Précision sur les déclarations d’effets indésirables
+        </p>
+
+        <CardWithImage
+          imageClassName="!w-32"
+          contentClassName="!p-0"
+          image={<CommuniqueSvg className="h-32 w-32 m-auto" />}
+        >
+          <p>
+            La déclaration en pharmacovigilance permet la détection de signal. Ces données
+            déclaratives ne permettent pas d&apos;estimer la fréquence des effets indésirables, les
+            déclarations ne sont ni exhaustives ni représentatives dans la population.
+          </p>
+
+          <p>
+            Le nombre exact de patients traités n&apos;étant pas connu sur la période de déclaration
+            l&apos;établissement de statistiques de fréquence d&apos;effets indésirables n&apos;est
+            pas possible à partir des données de déclaration.
+          </p>
+          <p>
+            Pour plus d’information, consultez:{' '}
+            <a
+              rel="external noreferrer"
+              target="_blank"
+              href="https://ansm.sante.fr/page/la-surveillance-renforcee-des-medicaments"
+              className="text-primary"
+            >
+              https://ansm.sante.fr/page/la-surveillance-renforcee-des-medicaments
+            </a>
+          </p>
+        </CardWithImage>
+      </Accordion>
+
       <SpecialitySubstancesContainer
         substances={substances}
         className="mt-4 mb-32 shadow rounded-lg"
@@ -521,7 +590,7 @@ const SectionRisksShortageHistory = () => {
 
       <div className="my-8 RupturesHistory">
         {count ? (
-          <div className="p-4 border border-grey-200 rounded-lg bg-white">
+          <div className="p-4 border border-grey-100 rounded-lg bg-white">
             <div className="text-primary font-medium">
               <span>{`${numberWithThousand(count)} ${
                 count === 1 ? 'déclaration' : 'déclarations'
@@ -529,11 +598,9 @@ const SectionRisksShortageHistory = () => {
             </div>
             <div className="pt-6">
               <PaginatedList
-                theme="secondary"
+                theme="primary"
                 data={shortages}
-                renderItem={(ruptureItem) => (
-                  <ShortageHistoryItem cisName={currentEntity?.name} ruptureItem={ruptureItem} />
-                )}
+                renderItem={(shortageItem) => <ShortageHistoryItem shortageItem={shortageItem} />}
               />
             </div>
           </div>
@@ -545,7 +612,7 @@ const SectionRisksShortageHistory = () => {
       </div>
 
       <CardWithImage
-        className="my-8 border border-grey-100"
+        className="my-8 border border-grey-100 rounded-lg"
         imageClassName="w-48 px-2"
         title="Rupture ou risque de rupture des produits de santé"
         image={<OutOfStockSvg className="h-48 w-32 m-auto" />}

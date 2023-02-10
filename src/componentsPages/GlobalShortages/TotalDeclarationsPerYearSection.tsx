@@ -9,7 +9,7 @@ import { BoxInfo } from '../../components/BoxInfo';
 import FolderSVG from '../../assets/pictos/folder.svg';
 import { useGlobalShortagesPageContext } from '../../contexts/GlobalShortagesContext';
 import { KPIBoxProgression } from '../../components/KPIBoxProgression';
-import { formatDate, numberWithThousand } from '../../utils/format';
+import { numberWithThousand } from '../../utils/format';
 
 export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { period, shortagesPerYear, shortagesClassesPerYear } = useGlobalShortagesPageContext();
@@ -37,7 +37,7 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
     setSelectedIndex(index);
   }, []);
 
-  const totalShortageForSelectedYear = shortagesPerYear?.find(
+  const totalShortagesForSelectedYear = shortagesPerYear?.find(
     (e) => e.year === globalShortagesYearsOptions[selectedIndex].value
   )?.reportsCount;
 
@@ -58,10 +58,8 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
   );
 
   const sectionSubtitlePeriod =
-    period?.minDate && period.maxDate
-      ? `Données mises à jour mensuellement, issues de la période ${formatDate(
-          period?.minDate
-        )} - ${formatDate(period.maxDate)}`
+    period?.minYear && period.maxYear
+      ? `Données mises à jour annuellement, issues de la période ${period?.minYear} - ${period.maxYear}`
       : 'Période non disponible';
 
   return (
@@ -77,10 +75,10 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
         />
       </SectionTitle>
 
-      {totalShortageForSelectedYear ? (
+      {totalShortagesForSelectedYear ? (
         <div className="DeclarationByYearSectionContent flex flex-col gap-4">
           <BoxInfo
-            title={`${numberWithThousand(totalShortageForSelectedYear)} déclarations reçues`}
+            title={`${numberWithThousand(totalShortagesForSelectedYear)} déclarations reçues`}
             icon={<FolderSVG className="h-24 w-24" />}
             theme="dark-green"
             tooltip={

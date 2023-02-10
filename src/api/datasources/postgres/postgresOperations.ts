@@ -357,7 +357,7 @@ export class PostgresOperations {
       .leftJoin('shortages_histo as sh', 'sh.mp_id', 'sa.mp_associated_id')
       .leftJoin('shortages_classes as sc', 'sc.id', 'sh.classification_id')
       .leftJoin('shortages_causes_types as sct', 'sct.id', 'sh.cause_id')
-      .leftJoin('medicinal_products as mp', 'mp.id', 'sa.mp_id')
+      .leftJoin('medicinal_products as mp', 'mp.id', 'sh.mp_id')
 
       .select([
         //cis
@@ -369,7 +369,6 @@ export class PostgresOperations {
         'sh.state',
         'sh.date',
         'sh.year',
-        'sh.name',
         // classes
         'sc.classification as classification',
         // cause
@@ -389,7 +388,6 @@ export class PostgresOperations {
         state,
         date,
         year,
-        name,
         // classes
         classification,
         // cause
@@ -401,12 +399,12 @@ export class PostgresOperations {
         ? [
             ...carry,
             {
-              cisId,
-              cisCode,
-              cisName,
-
+              cis: {
+                id: cisId,
+                code: cisCode,
+                name: cisName,
+              },
               num,
-              name,
               state,
               date: date?.toLocaleDateString(),
               year: Number(year),
@@ -1000,8 +998,8 @@ export class PostgresOperations {
 
     return minDate && maxDate
       ? {
-          minDate: minDate.toLocaleDateString(),
-          maxDate: maxDate.toLocaleDateString(),
+          minYear: minDate.getFullYear(),
+          maxYear: maxDate.getFullYear(),
         }
       : null;
   }
@@ -1012,22 +1010,30 @@ export class PostgresOperations {
       .select([
         'year',
         'n_reports as reportsCount',
-        'n_reports_actions as actionsCount',
-        'percentage_reports_actions as actionsCountPercent',
+        'n_reports_actions as casesWithMeasuresCount',
+        'n_actions as measuresCount',
+        'percentage_reports_actions as casesWithMeasuresCountPercent',
       ])
       .orderBy('year', 'desc')
       .execute();
 
     return rows.reduce<ShortagesPerYear[]>((carry, row) => {
-      const { year, reportsCount, actionsCount, actionsCountPercent } = row;
+      const {
+        year,
+        reportsCount,
+        measuresCount,
+        casesWithMeasuresCount,
+        casesWithMeasuresCountPercent,
+      } = row;
       return year
         ? [
             ...carry,
             {
               year,
               reportsCount,
-              actionsCount,
-              actionsCountPercent: roundFloat(actionsCountPercent ?? 0, 0),
+              measuresCount,
+              casesWithMeasuresCount,
+              casesWithMeasuresCountPercent: roundFloat(casesWithMeasuresCountPercent ?? 0, 0),
             },
           ]
         : carry;

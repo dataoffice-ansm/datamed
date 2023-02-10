@@ -69,7 +69,7 @@ export const PaginatedList = <T,>({
 }: PaginatedListProps<T>) => {
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
-  const sizeOptions = [5, 10, 25, 50, 100];
+  const sizeOptions = useMemo(() => [5, 10, 25, 50, 100], []);
 
   const maxPages = useMemo(
     () => Math.ceil(data.length / itemsPerPage),
@@ -82,11 +82,84 @@ export const PaginatedList = <T,>({
     return data.slice(trimStart, trimEnd);
   }, [data, itemsPerPage, pageIndex]);
 
-  const handleSelectPageSize = useCallback((size: string) => {
-    setItemsPerPage(Number(size));
+  const handleSelectPageSize = useCallback((number: number) => {
+    setItemsPerPage(number);
   }, []);
 
-  if (!renderedItems?.length) {
+  const handleSelectPage = useCallback((page: number) => {
+    setPageIndex(page);
+    // ref?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, []);
+
+  const pagination = useMemo(
+    () => (
+      <div className="PaginatedListPaginatorContainer flex flex-wrap gap-2 py-4 items-center">
+        <div className="PaginatedListPaginator flex justify-center items-center gap-1">
+          <label htmlFor="selectSizePageOption" className="m-0 font-normal">
+            Nombre de lignes par page:
+          </label>
+          <select
+            defaultValue={itemsPerPage}
+            name="selectSizePageOption"
+            onChange={({ target }) => {
+              handleSelectPageSize(Number(target.value));
+            }}
+          >
+            {sizeOptions.map((size) => (
+              <option key={size} value={size}>
+                {size}
+              </option>
+            ))}
+          </select>
+        </div>
+        <div className="flex-auto" />
+        <div className="flex justify-center items-center gap-1">
+          <NavigationButton
+            disabled={pageIndex === 0}
+            onClick={() => {
+              handleSelectPage(0);
+            }}
+          >
+            <FirstPageSVG className={classNames('h-6 w-6', hoverAndFocusFillColor(theme))} />
+          </NavigationButton>
+
+          <NavigationButton
+            disabled={pageIndex === 0}
+            onClick={() => {
+              handleSelectPage(pageIndex - 1);
+            }}
+          >
+            <PreviousPageSVG className="hover:fill-white h-6 w-6" />
+          </NavigationButton>
+
+          <span className="px-2">
+            {pageIndex + 1} sur {maxPages}
+          </span>
+
+          <NavigationButton
+            disabled={pageIndex + 1 === maxPages}
+            onClick={() => {
+              handleSelectPage(pageIndex + 1);
+            }}
+          >
+            <NextPageSVG className="hover:fill-white h-6 w-6" />
+          </NavigationButton>
+
+          <NavigationButton
+            disabled={pageIndex + 1 === maxPages}
+            onClick={() => {
+              handleSelectPageSize(maxPages);
+            }}
+          >
+            <LastPageSVG className="hover:fill-white h-6 w-6" />
+          </NavigationButton>
+        </div>
+      </div>
+    ),
+    [handleSelectPage, handleSelectPageSize, itemsPerPage, maxPages, pageIndex, sizeOptions, theme]
+  );
+
+  if (!data?.length) {
     return <NotEnoughData />;
   }
 
@@ -104,69 +177,7 @@ export const PaginatedList = <T,>({
           </div>
         ))}
       </div>
-
-      <div className="PaginatedListPaginatorContainer flex gap-2 py-4 flex-col lg:flex-row items-center">
-        <div className="PaginatedListPaginator flex justify-center items-center gap-1">
-          <label htmlFor="selectSizePageOption" className="m-0 font-normal">
-            Nombre de lignes par page :
-          </label>
-          <select
-            defaultValue={itemsPerPage}
-            name="selectSizePageOption"
-            onChange={({ target }) => {
-              handleSelectPageSize(target.value);
-            }}
-          >
-            {sizeOptions.map((size) => (
-              <option key={size} value={size}>
-                {size}
-              </option>
-            ))}
-          </select>
-        </div>
-        <div className="flex-auto" />
-        <div className="flex justify-center items-center gap-1">
-          <NavigationButton
-            disabled={pageIndex === 0}
-            onClick={() => {
-              setPageIndex(0);
-            }}
-          >
-            <FirstPageSVG className={classNames('h-6 w-6', hoverAndFocusFillColor(theme))} />
-          </NavigationButton>
-
-          <NavigationButton
-            disabled={pageIndex === 0}
-            onClick={() => {
-              setPageIndex(pageIndex - 1);
-            }}
-          >
-            <PreviousPageSVG className="hover:fill-secondary h-6 w-6" />
-          </NavigationButton>
-
-          <span className="px-2">
-            {pageIndex + 1} sur {maxPages}
-          </span>
-
-          <NavigationButton
-            disabled={pageIndex + 1 === maxPages}
-            onClick={() => {
-              setPageIndex(pageIndex + 1);
-            }}
-          >
-            <NextPageSVG className="hover:fill-secondary h-6 w-6" />
-          </NavigationButton>
-
-          <NavigationButton
-            disabled={pageIndex + 1 === maxPages}
-            onClick={() => {
-              setPageIndex(maxPages);
-            }}
-          >
-            <LastPageSVG className="hover:fill-secondary h-6 w-6" />
-          </NavigationButton>
-        </div>
-      </div>
+      {pagination}
     </div>
   );
 };

@@ -24,16 +24,18 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
   const globalShortagesYearsOptions: SelectOption[] = useMemo(
     () =>
       shortagesMeasuresPerYear
-        ? shortagesMeasuresPerYear.reduce<SelectOption[]>(
-            (carry, row) => [
-              ...carry,
-              {
-                value: row.year,
-                label: String(row.year),
-              },
-            ],
-            []
-          )
+        ? shortagesMeasuresPerYear.reduce<SelectOption[]>((carry, row) => {
+            const already = carry.find((e) => e.value === row.year);
+            return already
+              ? carry
+              : [
+                  ...carry,
+                  {
+                    value: row.year,
+                    label: String(row.year),
+                  },
+                ];
+          }, [])
         : [],
     [shortagesMeasuresPerYear]
   );
@@ -50,14 +52,16 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
         }
         yearsOptions={globalShortagesYearsOptions}
         render={({ selectedYearOption, selectedUnitOption }) => {
-          const countCasesWithMeasure =
-            shortagesPerYear?.find((e) => e.year === selectedYearOption)?.actionsCount ?? 0;
+          const casesWithMeasureCount =
+            shortagesPerYear?.find((e) => e.year === selectedYearOption)?.casesWithMeasuresCount ??
+            0;
 
-          const countCasesWithMeasurePercent =
-            shortagesPerYear?.find((e) => e.year === selectedYearOption)?.actionsCountPercent ?? 0;
+          const casesWithMeasuresCountPercent =
+            shortagesPerYear?.find((e) => e.year === selectedYearOption)
+              ?.casesWithMeasuresCountPercent ?? 0;
 
-          const countReports =
-            shortagesPerYear?.find((e) => e.year === selectedYearOption)?.reportsCount ?? 0;
+          const measuresCount =
+            shortagesPerYear?.find((e) => e.year === selectedYearOption)?.measuresCount ?? 0;
 
           const shortagesActionForSelectedYear =
             shortagesMeasuresPerYear && selectedYearOption
@@ -75,8 +79,8 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
                 <BoxInfo
                   title={`${
                     selectedUnitOption === 'number'
-                      ? countCasesWithMeasure
-                      : `${countCasesWithMeasurePercent} %`
+                      ? casesWithMeasureCount
+                      : `${casesWithMeasuresCountPercent} %`
                   }`}
                   icon={<DeclarationWithOneActionSvg className="h-24 w-24" />}
                   theme="dark-green"
@@ -101,7 +105,7 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
                 </BoxInfo>
 
                 <BoxInfo
-                  title={`${numberWithThousand(countReports)}`}
+                  title={`${numberWithThousand(measuresCount)}`}
                   icon={<FolderSVG className="h-24 w-24" />}
                   theme="dark-green"
                   className="flex-1"

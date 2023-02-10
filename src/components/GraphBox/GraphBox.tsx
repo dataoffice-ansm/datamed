@@ -22,7 +22,7 @@ export const GraphBox = ({
   tooltip?: JSX.Element | ReactNode;
 }) => (
   <div className={classnames('GraphBox rounded-lg shadow bg-white p-4', className)}>
-    <div className="GraphBoxTitle flex items-start gap-4 w-full text-left mb-4">
+    <div className="GraphBoxTitle flex items-start gap-4 w-full text-left">
       {title && <span className="text-lg font-medium">{title}</span>}
       {tooltip && (
         <TooltipInformation>

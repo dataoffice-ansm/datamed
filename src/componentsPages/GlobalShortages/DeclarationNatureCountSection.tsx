@@ -1,17 +1,11 @@
-import { type HTMLAttributes, useMemo } from 'react';
+import { useMemo } from 'react';
 import { NotEnoughData } from 'components/NotEnoughData';
 import { LineChart } from 'components/Charts/LineChart';
 import tailwindPaletteConfig from '../../../tailwind.palette.config';
 import { useGlobalShortagesPageContext } from '../../contexts/GlobalShortagesContext';
 import { SectionTitle } from '../../components/SectionTitle';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
-import { type SelectOption } from '../../components/Select';
-import { GraphBoxSelect } from '../../components/GraphBoxSelect';
-import { buildSortedRangeData } from '../../utils/entities';
-import { type ShortagesCausesPerYear } from '../../graphql/__generated__/generated-documents';
-import { GraphFiguresGrid } from '../../components/GraphFiguresGrid';
-import { GraphFigure } from '../../components/GraphFigure';
-import { getRuptureCauseIcon } from '../../utils/iconsMapping';
+import { RepartitionPerTherapeuticClass } from './RepartitionPerTherapeuticClass';
 
 const DeclarationsNatureHistoryLineChart = () => {
   const { shortagesPerYear, shortagesClassesPerYear } = useGlobalShortagesPageContext();
@@ -67,7 +61,7 @@ const DeclarationsNatureHistoryLineChart = () => {
           </>
         }
       >
-        <div className="min-h-[256px] md:min-h-[512px] lg:min-h-[600px] w-full relative">
+        <div className="min-h-[350px] w-full relative">
           <LineChart
             className="flex justify-center mt-4 w-full h-full absolute"
             labels={years.map((y) => String(y))}
@@ -87,67 +81,6 @@ const DeclarationsNatureHistoryLineChart = () => {
   );
 };
 
-const DeclarationsCausesFiguresGraph = (_props: HTMLAttributes<HTMLDivElement>) => {
-  const { shortagesPerYear, shortagesCausesPerYear } = useGlobalShortagesPageContext();
-
-  const globalShortagesYearsOptions: SelectOption[] = useMemo(
-    () =>
-      shortagesPerYear
-        ? shortagesPerYear.reduce<SelectOption[]>(
-            (carry, row) => [
-              ...carry,
-              {
-                value: row.year,
-                label: String(row.year),
-              },
-            ],
-            []
-          )
-        : [],
-    [shortagesPerYear]
-  );
-
-  return (
-    <div className="DeclarationCauseByYear my-8">
-      <GraphBoxSelect
-        title="Causes des signalements de ruptures et risques de rupture de stock"
-        className="max-w-full"
-        yearsOptions={globalShortagesYearsOptions}
-        render={({ selectedUnitOption, selectedYearOption }) => {
-          const shortagesCauseForSelectedYear =
-            shortagesCausesPerYear && selectedYearOption
-              ? shortagesCausesPerYear.filter((action) => action?.year === selectedYearOption)
-              : [];
-
-          const selectedShortagesCausesRep = buildSortedRangeData<ShortagesCausesPerYear>(
-            shortagesCauseForSelectedYear,
-            selectedUnitOption
-          );
-
-          return (
-            <GraphFiguresGrid
-              data={selectedShortagesCausesRep}
-              renderItem={(cause) =>
-                cause?.type && cause?.value && cause.valuePercent ? (
-                  <GraphFigure
-                    className="pathologyGraphFigure"
-                    unit={selectedUnitOption === 'number' ? '' : '%'}
-                    label={cause.type}
-                    icon={getRuptureCauseIcon(cause.type)}
-                    valueClassName="text-dark-green-900"
-                    contentTooltip={cause.definition ?? ''}
-                    value={selectedUnitOption === 'number' ? cause.value : cause.valuePercent}
-                  />
-                ) : null
-              }
-            />
-          );
-        }}
-      />
-    </div>
-  );
-};
-
 /**
  *
  * @constructor
@@ -159,8 +92,8 @@ export const DeclarationNatureCountSection = () => {
   const maxYear = Math.max(...years);
 
   const periodString =
-    period?.minDate && period?.maxDate
-      ? `Données issues de la période courante ${String(minYear)} - ${String(maxYear)}`
+    period?.minYear && period?.maxYear
+      ? `Données issues de la période courante ${minYear} - ${maxYear}`
       : 'Aucune période courant disponible';
 
   return (
@@ -171,7 +104,7 @@ export const DeclarationNatureCountSection = () => {
       />
 
       <DeclarationsNatureHistoryLineChart />
-      <DeclarationsCausesFiguresGraph />
+      <RepartitionPerTherapeuticClass />
     </div>
   );
 };

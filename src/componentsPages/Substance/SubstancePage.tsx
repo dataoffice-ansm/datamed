@@ -174,7 +174,7 @@ const SectionAssociatedSpecialities = () => {
     <div className="min-h-screen">
       <SectionTitle title={`Spécialités de médicaments contenant: ${currentEntity.name}`} />
 
-      <div className="p-4 border border-grey-200 rounded-lg bg-white">
+      <div className="p-4 border border-grey-100 rounded-lg bg-white">
         <div className="text-secondary-900 font-medium">
           {currentEntity.retrievedSpecialities?.meta?.count} médicaments identifiés
         </div>

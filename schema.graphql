@@ -131,16 +131,18 @@ type SpecialityRuptureCause {
     definition: String @capitalize
 }
 
-type SpecialityAssociatedShortage {
-    cisId: Int!
-    cisCode: String
-    cisName: String @capitalize
+type ShortageCis {
+    id: Int!
+    code: String
+    name: String @capitalize
+}
 
+type SpecialityAssociatedShortage {
     num: String
     state: String
     date: String
     year: Int
-    name: String
+    cis: ShortageCis
 
     cause: SpecialityRuptureCause
     classification:  String @capitalize
@@ -316,22 +318,16 @@ type RupturesTotalActionPerYear {
 }
 
 type GlobalShortagesPeriod {
-    minDate: String!
-    maxDate: String!
+    minYear: Int!
+    maxYear: Int!
 }
 
 type ShortagesPerYear {
     year: Int!
     reportsCount: Int
-    actionsCount: Int
-    actionsCountPercent: Float
-}
-
-type declarationsWithActionsCountShortagesPerYear {
-    year: Int!
-    reportsCount: Int
-    actionsCount: Int
-    actionsCountPercent: Float
+    measuresCount: Int
+    casesWithMeasuresCount: Int
+    casesWithMeasuresCountPercent: Float
 }
 
 type ShortagesClassPerYear {

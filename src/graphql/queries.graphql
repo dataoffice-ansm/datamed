@@ -94,14 +94,16 @@ fragment SpecialityFragment on Speciality {
     }
     shortagesHistory {
         shortages {
-            cisCode
-            cisCode
-            cisName
+
             num
             state
-            name
             date
             year
+            cis{
+                id
+                code
+                name
+            }
             classification
             cause {
                 type
@@ -281,14 +283,15 @@ query GlobalStatistic {
 query GlobalRuptures {
     getGlobalShortages {
         period {
-            minDate
-            maxDate
+            minYear
+            maxYear
         }
         shortagesPerYear {
             year
             reportsCount
-            actionsCount
-            actionsCountPercent
+            casesWithMeasuresCount
+            casesWithMeasuresCountPercent
+            measuresCount
         }
         shortagesClassesPerYear {
             year
