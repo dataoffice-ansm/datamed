@@ -14,6 +14,7 @@ export type FaqType = {
   title: string;
   id: string;
   parts: FaqSectionPart[];
+  disabled?: boolean;
 };
 
 type FaqEntry = {
@@ -42,6 +43,33 @@ const iconColor = (color?: string): string => {
   }
 };
 
+const faq = faqData.reduce<FaqType[]>((faqSections, faqSection) => {
+  if (faqSection.disabled) {
+    return faqSections;
+  }
+
+  const filteredSectionParts = faqSection.parts.reduce<FaqSectionPart[]>(
+    (sectionParts, sectionPart) => {
+      if (sectionPart.disabled) {
+        return sectionParts;
+      }
+
+      const filteredEntries = sectionPart.entries.reduce<FaqEntry[]>(
+        (sectionPartEntries, sectionPartEntry) =>
+          sectionPartEntry.disabled
+            ? sectionPartEntries
+            : [...sectionPartEntries, sectionPartEntry],
+        []
+      );
+
+      return [...sectionParts, { ...sectionPart, entries: filteredEntries }];
+    },
+    []
+  );
+
+  return [...faqSections, { ...faqSection, parts: filteredSectionParts }];
+}, []);
+
 export const FaqEntryQuestion = ({
   title,
   color,
@@ -64,23 +92,15 @@ export const FaqEntryQuestion = ({
 );
 
 const filterSections = (formattedSearch: string) =>
-  faqData.reduce<FaqType[]>((faqSections, faqSection) => {
+  faq.reduce<FaqType[]>((faqSections, faqSection) => {
     const filteredSectionParts = faqSection.parts.reduce<FaqSectionPart[]>(
       (sectionParts, sectionPart) => {
-        if (sectionPart.disabled) {
-          return sectionParts;
-        }
-
         if (toNormalForm(sectionPart.title.toLowerCase()).includes(toNormalForm(formattedSearch))) {
           return [...sectionParts, sectionPart];
         }
 
         const filteredEntries = sectionPart.entries.reduce<FaqEntry[]>(
           (sectionPartEntries, sectionPartEntry) => {
-            if (sectionPartEntry.disabled) {
-              return sectionPartEntries;
-            }
-
             if (
               toNormalForm(sectionPartEntry.title.toLowerCase()).includes(
                 toNormalForm(formattedSearch)
