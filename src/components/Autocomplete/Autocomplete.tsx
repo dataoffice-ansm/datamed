@@ -80,16 +80,14 @@ export const Autocomplete = ({
     () => (
       <Combobox.Options
         className={classnames(
-          'AutocompleteOptions bg-white z-[1] max-w-42 border-grey-400 px-0',
+          'AutocompleteOptions bg-white z-[1] max-w-42 border-t border-grey-100 px-0',
           embedded
             ? 'm-0'
             : 'rounded-lg absolute max-h-80 overflow-auto border mt-1 top-[48px] left-0 right-0'
         )}
       >
         {results.length === 0 && (
-          <div className={classnames('text-grey-400', embedded ? 'p-8' : 'py-2 px-4')}>
-            Aucun résultat disponible
-          </div>
+          <div className={classnames('text-grey-400 py-2 px-4')}>Aucun résultat disponible</div>
         )}
         {results.length > 0 && (
           <div>
@@ -149,7 +147,7 @@ export const Autocomplete = ({
               {(isLoading && <LoaderSpinner />) ||
                 (!embedded && (
                   <div className="pointer-events-none">
-                    <SearchIcon width={navIconSize} height={navIconSize} alt="search" />
+                    <SearchIcon className="w-8 h-8" alt="search" />
                   </div>
                 ))}
             </div>

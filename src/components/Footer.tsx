@@ -23,7 +23,7 @@ export const Footer = () => (
         ))}
 
         <div className="flex flex-auto justify-center items-center md:justify-end">
-          <LogoWhite height={100} width={200} />
+          <LogoWhite className="h-[100px] w-[200px]" />
         </div>
       </div>
     </div>

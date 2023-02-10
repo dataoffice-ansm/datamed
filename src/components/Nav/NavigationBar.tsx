@@ -11,41 +11,42 @@ import MenuIcon from '../../assets/nav/menu.svg';
 import CloseIcon from '../../assets/nav/close.svg';
 import { useBodyScrollContext } from '../../contexts/BodyScrollContext';
 import { Autocomplete } from '../Autocomplete/Autocomplete';
-import { navBarLinks, navIconSize } from '../../config/layoutConfig';
+import { navBarLinks } from '../../config/layoutConfig';
 import { RenderNavLinks } from '../../utils/nav';
+import { useClickOutsideRef } from '../../hooks/useRefClickOutside';
 
 export const NavigationBar = () => {
+  const navbarRef = useRef<HTMLDivElement>(null);
+  const navbarSearchRef = useRef<HTMLDivElement>(null);
+
   const [navDrawerOpened, setNavDrawerOpened] = useState(false);
   const [searchDrawerOpened, setSearchDrawerOpened] = useState(false);
 
-  const navbarRef = useRef<HTMLDivElement>(null);
   const navBarRefHeight = useRefHeight(navbarRef);
   const { navBarHeight, setNavBarHeight } = useLayoutContext();
   const { setScrollEnabled } = useBodyScrollContext();
 
   const isDesktop = useBreakpoint('md');
 
+  const handleCloseDrawers = useCallback(() => {
+    setNavDrawerOpened(false);
+    setSearchDrawerOpened(false);
+  }, []);
+
   const toggleOpenNavDrawer = useCallback(() => {
     setNavDrawerOpened((v) => !v);
     setSearchDrawerOpened(false);
   }, []);
 
-  const closeNavDrawer = useCallback(() => {
-    setNavDrawerOpened(false);
-    setSearchDrawerOpened(false);
-  }, []);
-
-  const handleSearchDrawer = useCallback(() => {
+  const toggleOpenSearchDrawer = useCallback(() => {
     setSearchDrawerOpened((v) => !v);
     setNavDrawerOpened(false);
   }, []);
 
+  useClickOutsideRef(navbarSearchRef, handleCloseDrawers);
+
   useEffect(() => {
-    if (navDrawerOpened || searchDrawerOpened) {
-      setScrollEnabled(false);
-    } else {
-      setScrollEnabled(true);
-    }
+    setScrollEnabled(!(navDrawerOpened || searchDrawerOpened));
   }, [navDrawerOpened, searchDrawerOpened, setScrollEnabled]);
 
   useEffect(() => {
@@ -78,39 +79,36 @@ export const NavigationBar = () => {
         className="flex justify-center align-center p-2 md:hidden"
         onClick={toggleOpenNavDrawer}
       >
-        {navDrawerOpened ? (
-          <CloseIcon height={navIconSize} width={navIconSize} />
-        ) : (
-          <MenuIcon height={navIconSize} width={navIconSize} />
-        )}
+        {navDrawerOpened ? <CloseIcon className="w-8 h-8" /> : <MenuIcon className="w-8 h-8" />}
       </button>
 
       {navDrawerOpened && (
         <NavDrawerMobile
           links={navBarLinks}
           topFromNavbar={navBarHeight}
-          handleOnClick={closeNavDrawer}
+          handleOnClick={handleCloseDrawers}
         />
       )}
 
       <div className="navbarInner flex justify-center md:justify-between items-center gap-3">
         <Link href="/">
           <a className="flex justify-center items-center border-b-4 border-transparent">
-            <LogoBrand width={128} height={46} alt="Logo DATAMED" />
+            <LogoBrand className="w-[128px] h-[46px]" alt="Logo DATAMED" />
           </a>
         </Link>
         <RenderNavLinks links={navBarLinks} />
       </div>
       <span className="hidden md:block flex-auto" />
 
-      <SearchBar handleSearchDrawer={handleSearchDrawer} />
+      <SearchBar handleSearchDrawer={toggleOpenSearchDrawer} />
       {searchDrawerOpened && (
         <div
+          ref={navbarSearchRef}
+          className="AutocompleteMobileContainer fixed left-0 right-0 z-[3] overflow-auto"
           style={{ top: navBarHeight }}
-          className="AutocompleteMobileContainer fixed left-0 right-0 bottom-0 z-[3] overflow-auto"
         >
           <div className="AutocompleteMobileContent flex flex-col justify-center align-center bg-white border-t border-grey-100">
-            <Autocomplete embedded autoFocus handleOnSelected={handleSearchDrawer} />
+            <Autocomplete embedded autoFocus handleOnSelected={toggleOpenSearchDrawer} />
           </div>
         </div>
       )}

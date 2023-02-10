@@ -15,7 +15,7 @@ export const SearchBar = ({ handleSearchDrawer }: { handleSearchDrawer: () => vo
       aria-label="Rechercher"
       onClick={handleSearchDrawer}
     >
-      <SearchIcon width={navIconSize} height={navIconSize} alt="search" />
+      <SearchIcon className="w-8 h-8" alt="search" />
     </button>
     <form className="flex-auto hidden md:block">
       <div className="relative">

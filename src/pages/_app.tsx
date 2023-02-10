@@ -41,9 +41,18 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
     });
     Router.events.on('routeChangeComplete', () => {
       setIsLoading(false);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     });
+
     Router.events.on('routeChangeError', () => {
       setIsLoading(false);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     });
 
     return () => {
@@ -62,7 +71,10 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
   return (
     <>
       <Head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, viewport-fit=cover"
+        />
       </Head>
       <Toaster toastOptions={toastConfig} />
       <ApolloProvider client={apolloClient}>
