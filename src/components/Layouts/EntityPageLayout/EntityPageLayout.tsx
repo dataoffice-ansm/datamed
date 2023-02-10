@@ -133,7 +133,7 @@ export const EntityPageLayout = ({
             <section
               key={id}
               id={id}
-              className="sectionContent ease-linear duration-300 transition-padding mb-32"
+              className="sectionContent ease-linear duration-300 transition-padding mb-16 lg:mb-32"
             >
               {content}
             </section>
@@ -177,7 +177,7 @@ export const EntityPageLayout = ({
   return renderLayout(
     <div>
       {children}
-      <div className="mobileLayout flex flex-col gap-2 relative">{renderContent}</div>
+      <div className="mobileLayout flex flex-col gap-2 relative mt-4">{renderContent}</div>
     </div>
   );
 };

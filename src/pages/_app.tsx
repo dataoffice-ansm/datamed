@@ -41,9 +41,18 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
     });
     Router.events.on('routeChangeComplete', () => {
       setIsLoading(false);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     });
+
     Router.events.on('routeChangeError', () => {
       setIsLoading(false);
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
     });
 
     return () => {
