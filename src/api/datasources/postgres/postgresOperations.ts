@@ -217,19 +217,23 @@ export class PostgresOperations {
       .selectFrom('mp_patient_ages as mp_a')
       .where('mp_a.mp_id', '=', cisId)
       .leftJoin('ages', 'ages.id', 'mp_a.age_id')
-      .select(['mp_a.patients_consumption', 'mp_a.patients_percentage', 'ages.range'])
+      .select([
+        'mp_a.patients_consumption as value',
+        'mp_a.patients_percentage as valuePercent',
+        'ages.range',
+      ])
       .execute();
 
     return rows.reduce<SpecialityUsagePerAge[]>((carry, row) => {
-      const { range, patients_consumption, patients_percentage } = row;
+      const { range, value, valuePercent } = row;
 
-      return range && patients_consumption && patients_percentage
+      return range && value && value >= 10 && valuePercent
         ? [
             ...carry,
             {
               range,
-              value: Math.round(patients_consumption),
-              valuePercent: roundFloat(patients_percentage),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -241,19 +245,19 @@ export class PostgresOperations {
       .selectFrom('error_med_population as err')
       .leftJoin('population_errors as pop', 'pop.id', 'err.population_error_id')
       .where('err.mp_id', '=', cisId)
-      .select(['err.number', 'err.percentage', 'pop.label as range'])
+      .select(['err.number as value', 'err.percentage as valuePercent', 'pop.label as range'])
       .execute();
 
     return rows.reduce<MedicalErrorsPopulation[]>((carry, row) => {
-      const { range, number, percentage } = row;
+      const { range, value, valuePercent } = row;
 
-      return range && number && percentage
+      return range && value && value >= 10 && valuePercent
         ? [
             ...carry,
             {
               range,
-              value: Math.round(number),
-              valuePercent: roundFloat(percentage),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -311,8 +315,8 @@ export class PostgresOperations {
               id: stepId,
               step: getMedicalErrorApparitionStep(stepId),
               label,
-              value: Math.round(value),
-              valuePercent: roundFloat(valuePercent),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
               description,
             },
           ]
@@ -336,14 +340,14 @@ export class PostgresOperations {
     return rows.reduce<MedicalErrorsNature[]>((carry, row) => {
       const { natureId, nature, value, valuePercent } = row;
 
-      return natureId && nature && value && value >= 10 && valuePercent
+      return natureId && nature && value && value >= 10
         ? [
             ...carry,
             {
               id: natureId,
               nature,
-              value: Math.round(value),
-              valuePercent: roundFloat(valuePercent),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -548,20 +552,20 @@ export class PostgresOperations {
       .leftJoin('ages', 'ages.id', 's_p_a.age_id')
       .select([
         'ages.range',
-        's_p_a.patients_percentage as percentage',
-        's_p_a.patients_consumption as consumption',
+        's_p_a.patients_consumption as value',
+        's_p_a.patients_percentage as valuePercent',
       ])
       .execute();
 
     return rows.reduce<RepartitionPerAge[]>((carry, row) => {
-      const { range, consumption, percentage } = row;
-      return range && consumption && percentage
+      const { range, value, valuePercent } = row;
+      return range && value && value >= 10
         ? [
             ...carry,
             {
               range,
-              value: Math.round(consumption),
-              valuePercent: roundFloat(percentage),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -622,18 +626,18 @@ export class PostgresOperations {
       .selectFrom('substances_case_age as sca')
       .where('sca.substance_id', '=', subId)
       .leftJoin('ages', 'ages.id', 'sca.age_id')
-      .select(['ages.range', 'sca.nb_cases as consumption', 'sca.case_percentage as percentage'])
+      .select(['ages.range', 'sca.nb_cases as value', 'sca.case_percentage as valuePercent'])
       .execute();
 
     return rows.reduce<RepartitionPerAge[]>((carry, row) => {
-      const { range, consumption, percentage } = row;
-      return range && percentage && consumption && consumption >= 10
+      const { range, value, valuePercent } = row;
+      return range && value && value >= 10
         ? [
             ...carry,
             {
               range,
-              value: Math.round(consumption),
-              valuePercent: roundFloat(percentage),
+              value: Math.round(value),
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -657,7 +661,7 @@ export class PostgresOperations {
 
     return rows.reduce<RepartitionPerNotifier[]>((carry, row) => {
       const { id, job, value, valuePercent } = row;
-      return id && job && value && valuePercent
+      return id && job && value && value >= 10 && valuePercent
         ? [
             ...carry,
             {
@@ -691,15 +695,15 @@ export class PostgresOperations {
     return rows.reduce<RepartitionPerPathology[]>((carry, row) => {
       const { socId, range, value, valuePercent } = row;
       // hide results under 11 declarations
-      return socId && range && value && value > 11 && valuePercent
+      return socId && range && value && value > 11
         ? [
             ...carry,
             {
               id: socId,
               subId,
               range,
-              value: Math.round(value),
-              valuePercent: roundFloat(valuePercent),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
               htlEffects: htlEffects
                 .filter((htfEffect) => htfEffect.socId === socId)
                 // hide results under 10 declarations
@@ -733,7 +737,7 @@ export class PostgresOperations {
               id: hltEffectId,
               socId,
               range,
-              value: Math.round(value),
+              value,
               valuePercent: roundFloat(valuePercent),
             },
           ]
@@ -840,18 +844,18 @@ export class PostgresOperations {
     const rows = await dbInstance
       .selectFrom('global_se_ages as gsa')
       .leftJoin('ages', 'gsa.age_id', 'ages.id')
-      .select(['ages.id', 'ages.range as range', 'gsa.pct as percentage', 'gsa.n as consumption'])
+      .select(['ages.id', 'ages.range as range', 'gsa.n as value', 'gsa.pct as valuePercent'])
       .execute();
 
     return rows.reduce<GlobalStatsUsagePerAge[]>((carry, row) => {
-      const { range, consumption, percentage } = row;
-      return range && percentage && consumption && consumption >= 10
+      const { range, value, valuePercent } = row;
+      return range && value && value >= 10
         ? [
             ...carry,
             {
               range,
-              value: Math.round(consumption),
-              valuePercent: roundFloat(percentage),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -861,18 +865,18 @@ export class PostgresOperations {
   async getGlobalStatisticSeriousEffects(): Promise<GlobalStatsUsagePerSeriousEffect[]> {
     const rows = await dbInstance
       .selectFrom('global_se_gravity_types as gsg')
-      .select(['label as range', 'pct as valuePercent', 'n as value'])
+      .select(['label as range', 'n as value', 'pct as valuePercent'])
       .execute();
 
     return rows.reduce<GlobalStatsUsagePerSeriousEffect[]>((carry, row) => {
       const { range, value, valuePercent } = row;
-      return range && value && valuePercent
+      return range && value && value >= 10
         ? [
             ...carry,
             {
               range,
-              value: Math.round(value),
-              valuePercent: roundFloat(valuePercent),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -887,13 +891,13 @@ export class PostgresOperations {
 
     return rows.reduce<GlobalStatsUsagePerGravity[]>((carry, row) => {
       const { range, value, valuePercent } = row;
-      return range && value && valuePercent
+      return range && value && value >= 10
         ? [
             ...carry,
             {
               range: range === 'OUI' ? 'Grave' : 'Non grave',
-              value: Math.round(value),
-              valuePercent: roundFloat(valuePercent),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -906,22 +910,22 @@ export class PostgresOperations {
       .leftJoin('soc_longs', 'soc_longs.id', 'gsoc.soc_long_id')
       .select([
         'gsoc.id as id',
-        'gsoc.pct as valuePercent',
         'gsoc.n as value',
+        'gsoc.pct as valuePercent',
         'soc_longs.soc as range',
       ])
       .execute();
 
     return rows.reduce<GlobalStatsUsagePerPathology[]>((carry, row) => {
       const { id, range, value, valuePercent } = row;
-      return id && range && value && value >= 10 && valuePercent
+      return id && range && value && value >= 10
         ? [
             ...carry,
             {
               id,
               range,
-              value: Math.round(value),
-              valuePercent: roundFloat(valuePercent),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
@@ -934,22 +938,22 @@ export class PostgresOperations {
       .leftJoin('notifiers', 'notifiers.id', 'gnotif.notifier_id')
       .select([
         'gnotif.id as id',
-        'gnotif.pct as valuePercent',
         'gnotif.n as value',
+        'gnotif.pct as valuePercent',
         'notifiers.job as job',
       ])
       .execute();
 
     return rows.reduce<GlobalStatsUsagePerNotifier[]>((carry, row) => {
       const { id, job, value, valuePercent } = row;
-      return id && job && value && value >= 10 && valuePercent
+      return id && job && value && value >= 10
         ? [
             ...carry,
             {
               id,
               job,
-              value: Math.round(value),
-              valuePercent: roundFloat(valuePercent),
+              value,
+              valuePercent: roundFloat(valuePercent ?? 0),
             },
           ]
         : carry;
