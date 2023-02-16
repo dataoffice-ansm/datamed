@@ -80,7 +80,7 @@ export const NavigationBar = () => {
           className="flex justify-center align-center p-2 md:hidden"
           onClick={toggleOpenNavDrawer}
         >
-          {navDrawerOpened ? <CloseIcon className="w-8 h-8" /> : <MenuIcon className="w-8 h-8" />}
+          {navDrawerOpened ? <CloseIcon className="w-6 h-6" /> : <MenuIcon className="w-6 h-6" />}
         </button>
 
         {navDrawerOpened && (

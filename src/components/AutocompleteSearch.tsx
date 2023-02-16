@@ -146,7 +146,7 @@ export const AutocompleteSearch = ({
               {(isLoading && <LoaderSpinner />) ||
                 (!embedded && (
                   <div className="pointer-events-none">
-                    <SearchIcon className="w-8 h-8" alt="search" />
+                    <SearchIcon className="w-6 h-6" alt="search" />
                   </div>
                 ))}
             </div>
