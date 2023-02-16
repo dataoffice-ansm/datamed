@@ -360,8 +360,10 @@ export class PostgresOperations {
       .where('sa.mp_id', '=', cisId)
       .leftJoin('shortages_histo as sh', 'sh.mp_id', 'sa.mp_associated_id')
       .leftJoin('shortages_classes as sc', 'sc.id', 'sh.classification_id')
-      .leftJoin('shortages_causes_types as sct', 'sct.id', 'sh.cause_id')
+      .leftJoin('shortages_causes as sca', 'sca.id', 'sh.cause_id')
+      .leftJoin('shortages_causes_types as sct', 'sct.id', 'sca.cause_id')
       .leftJoin('medicinal_products as mp', 'mp.id', 'sh.mp_id')
+      .orderBy('sh.date', 'desc')
 
       .select([
         //cis
@@ -374,8 +376,9 @@ export class PostgresOperations {
         'sh.date',
         'sh.year',
         // classes
-        'sc.classification as classification',
-        // cause
+        'sc.classification',
+        //cause
+        'sct.id as causeId',
         'sct.type as causeType',
         'sct.definition as causeDefinition',
       ])
@@ -395,6 +398,7 @@ export class PostgresOperations {
         // classes
         classification,
         // cause
+        causeId,
         causeType,
         causeDefinition,
       } = row;
