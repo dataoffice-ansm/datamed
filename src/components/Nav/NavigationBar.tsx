@@ -10,10 +10,10 @@ import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
 import MenuIcon from '../../assets/nav/menu.svg';
 import CloseIcon from '../../assets/nav/close.svg';
 import { useBodyScrollContext } from '../../contexts/BodyScrollContext';
-import { Autocomplete } from '../Autocomplete/Autocomplete';
 import { navBarLinks } from '../../config/layoutConfig';
 import { RenderNavLinks } from '../../utils/nav';
 import { useClickOutsideRef } from '../../hooks/useRefClickOutside';
+import { AutocompleteSearch } from '../AutocompleteSearch';
 
 export const NavigationBar = () => {
   const navbarRef = useRef<HTMLDivElement>(null);
@@ -109,7 +109,7 @@ export const NavigationBar = () => {
             style={{ top: navBarHeight }}
           >
             <div className="AutocompleteMobileContent flex flex-col justify-center align-center bg-white border-t border-grey-100">
-              <Autocomplete embedded autoFocus handleOnSelected={toggleOpenSearchDrawer} />
+              <AutocompleteSearch embedded autoFocus handleOnSelected={toggleOpenSearchDrawer} />
             </div>
           </div>
         )}

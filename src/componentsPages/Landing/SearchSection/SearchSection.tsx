@@ -1,5 +1,5 @@
 import { FullWidthRow } from '../../../components/FullWidthRow';
-import { Autocomplete } from '../../../components/Autocomplete/Autocomplete';
+import { AutocompleteSearch } from '../../../components/AutocompleteSearch';
 import LandingIllustrationSearch from '../../../assets/landing/landing_illustration_search.svg';
 
 export const SearchSection = () => (
@@ -12,11 +12,11 @@ export const SearchSection = () => (
         className="md:min-w-[320px] lg:min-w-[256px] max-w-md"
         alt="Illustration de microscope et analyse"
       />
-      <div className="lg:flex-col flex-col-reverse flex pt-12 gap-4 max-w-3xl">
-        <h2 className="lg:pt-8 text-xl lg:text-3xl font-medium">
+      <div className="flex flex-col lg:pt-12 gap-4 max-w-3xl">
+        <h2 className="lg:pt-8 text-2xl md:text-3xl font-medium text-center">
           Trouvez des données statistiques autour du médicament
         </h2>
-        <Autocomplete />
+        <AutocompleteSearch />
       </div>
     </div>
   </FullWidthRow>

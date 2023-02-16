@@ -4,17 +4,16 @@ import { useRouter } from 'next/router';
 import type { ChangeEvent, HTMLAttributes } from 'react';
 import { useCallback, useEffect, useState } from 'react';
 import debounce from 'lodash/debounce';
-import { entityTypeLabel } from '../../utils/entities';
-import type { Entity, EntityCis, EntitySub } from '../../contexts/EntityContext';
+import { entityTypeLabel } from '../utils/entities';
+import type { Entity, EntityCis, EntitySub } from '../contexts/EntityContext';
 import {
   useSpecialitiesQuery,
   useSubstancesQuery,
-} from '../../graphql/__generated__/generated-documents';
-import { useBreakpoint } from '../../hooks/useTailwindBreakpoint';
-import { LoaderSpinner } from '../LoadingSpinner';
-import SearchIcon from '../../assets/nav/search.svg';
-import { navIconSize } from '../../config/layoutConfig';
-import { lookUpSearch } from '../../utils/autocomplete';
+} from '../graphql/__generated__/generated-documents';
+import { useBreakpoint } from '../hooks/useTailwindBreakpoint';
+import { LoaderSpinner } from './LoadingSpinner';
+import SearchIcon from '../assets/nav/search.svg';
+import { lookUpSearch } from '../utils/autocomplete';
 
 /**
  *
@@ -23,7 +22,7 @@ import { lookUpSearch } from '../../utils/autocomplete';
  * @param handleOnSelected
  * @constructor
  */
-export const Autocomplete = ({
+export const AutocompleteSearch = ({
   embedded,
   autoFocus,
   handleOnSelected,
@@ -80,7 +79,7 @@ export const Autocomplete = ({
     () => (
       <Combobox.Options
         className={classnames(
-          'AutocompleteOptions bg-white z-[1] max-w-42 border-t border-grey-100 px-0',
+          'AutocompleteOptions bg-white z-[1] border-t border-grey-100 px-0',
           embedded
             ? 'm-0'
             : 'rounded-lg absolute max-h-80 overflow-auto border mt-1 top-[48px] left-0 right-0'
@@ -98,7 +97,7 @@ export const Autocomplete = ({
                 className={({ active }) =>
                   classnames(
                     'AutocompleteOption cursor-pointer list-none border-b last:border-none border-grey-400',
-                    'py-2 px-4 flex justify-between gap-4 hover:bg-grey-100',
+                    'flex items-center justify-between gap-4 hover:bg-grey-100 text-md py-2 px-2 ',
                     {
                       'bg-grey-100': active,
                       'first:rounded-t-lg last:rounded-b-lg': !embedded,
@@ -107,7 +106,7 @@ export const Autocomplete = ({
                 }
               >
                 <div>{result?.name}</div>
-                <div className="text-grey-400">{entityTypeLabel(result?.type)}</div>
+                <div className="text-grey-400 text-sm">{entityTypeLabel(result?.type)}</div>
               </Combobox.Option>
             ))}
           </div>
@@ -126,14 +125,14 @@ export const Autocomplete = ({
   return (
     <div
       className={classnames(
-        'AutocompleteContainer bg-white lg:min-w-[20rem]',
+        'AutocompleteContainer bg-white min-w-[10rem] max-w-2xl',
         embedded
           ? 'embedded px-2 py-1 border-grey-100 rounded-none sticky top-0 shadow-lg flex flex-col'
           : 'rounded-lg border border-grey-400 py-1 px-2 top-[48px] left-0 right-0'
       )}
     >
       <Combobox onChange={onSelected}>
-        <div className="relative mt-1">
+        <div className="relative">
           <div className="relative flex items-center w-full overflow-hidden sm:text-sm">
             <Combobox.Input
               autoFocus={autoFocus}
@@ -152,8 +151,8 @@ export const Autocomplete = ({
                 ))}
             </div>
           </div>
+          {query.length >= 3 && renderOptions()}
         </div>
-        {query.length >= 3 && renderOptions()}
       </Combobox>
     </div>
   );

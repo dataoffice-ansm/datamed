@@ -1,5 +1,5 @@
 import SearchIcon from '../assets/nav/search.svg';
-import { Autocomplete } from './Autocomplete/Autocomplete';
+import { AutocompleteSearch } from './AutocompleteSearch';
 import { navIconSize } from '../config/layoutConfig';
 
 /**
@@ -17,10 +17,8 @@ export const SearchBar = ({ handleSearchDrawer }: { handleSearchDrawer: () => vo
     >
       <SearchIcon className="w-8 h-8" alt="search" />
     </button>
-    <form className="flex-auto hidden md:block">
-      <div className="relative">
-        <Autocomplete />
-      </div>
+    <form className="flex-auto hidden md:block lg:min-w-[22rem] max-w-2xl">
+      <AutocompleteSearch />
     </form>
   </>
 );
