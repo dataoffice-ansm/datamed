@@ -17,28 +17,29 @@ import { GraphBox } from '../../components/GraphBox/GraphBox';
 export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { shortagesPerYear, shortagesMeasuresPerYear } = useGlobalShortagesPageContext();
 
-  const years = (shortagesMeasuresPerYear?.map((e) => e.year) ?? []).reverse();
+  const years = useMemo(
+    () => shortagesMeasuresPerYear?.map((e) => e.year) ?? [],
+    [shortagesMeasuresPerYear]
+  );
+
   const minYear = Math.min(...years);
   const maxYear = Math.max(...years);
 
-  const globalShortagesYearsOptions: SelectOption[] = useMemo(
-    () =>
-      shortagesMeasuresPerYear
-        ? shortagesMeasuresPerYear.reduce<SelectOption[]>((carry, row) => {
-            const already = carry.find((e) => e.value === row.year);
-            return already
-              ? carry
-              : [
-                  ...carry,
-                  {
-                    value: row.year,
-                    label: String(row.year),
-                  },
-                ];
-          }, [])
-        : [],
-    [shortagesMeasuresPerYear]
-  );
+  const globalShortagesYearsOptions: SelectOption[] = useMemo(() => {
+    const measuresYears = years.reduce<Array<SelectOption<number>>>((carry, year) => {
+      const already = carry.find((e) => e.value === year);
+      return already
+        ? carry
+        : [
+            ...carry,
+            {
+              value: year,
+              label: String(year),
+            },
+          ];
+    }, []);
+    return measuresYears.sort((a, b) => a.value - b.value).reverse();
+  }, [years]);
 
   return (
     <div className="RupturesDeclarationActionByYearSection">
