@@ -4,8 +4,9 @@ import tailwindPaletteConfig from '../../../tailwind.palette.config';
 import type { SelectOption } from 'components/Select';
 import { useGlobalShortagesPageContext } from '../../contexts/GlobalShortagesContext';
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
-import { MixedBarChart } from '../../components/Charts/MixedBarBublleChart';
+import { BarChart } from '../../components/Charts/BarChart';
 import { type ChartDataset } from 'chart.js';
+import { BubbleChart } from '../../components/Charts/BubbleChart';
 
 export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { shortagesPerYear, shortagesAtcPerYear } = useGlobalShortagesPageContext();
@@ -93,17 +94,23 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
             data: therapeuticRepartitionForSelectedYear?.map((e) => e?.reportsCount ?? 0),
           };
 
-          const datasets = [
-            // datasetBubble,
-            datasetBar,
-          ];
+          console.log(therapeuticRepartitionForSelectedYear);
 
           return (
-            <div className="min-h-[350px] w-full relative">
-              <MixedBarChart
+            <div className="w-full relative">
+              <BarChart
+                className="my-8"
                 labels={labels}
-                datasets={datasets}
+                datasets={[datasetBar]}
                 leftLegend="Nombre de signalements"
+                bottomLegend="Classe thérapeutique"
+              />
+
+              <BubbleChart
+                className="my-8"
+                labels={labels}
+                datasets={[datasetBubble]}
+                leftLegend="Nombre de médicaments"
                 bottomLegend="Classe thérapeutique"
               />
             </div>

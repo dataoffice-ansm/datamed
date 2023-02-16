@@ -1,11 +1,11 @@
 import type { HTMLAttributes } from 'react';
 import React from 'react';
-import { Bar } from 'react-chartjs-2';
-import { Chart as ChartJS, registerables } from 'chart.js';
+import { Bubble } from 'react-chartjs-2';
+import { Chart as ChartJS, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
 
-ChartJS.register(...registerables);
+ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
 
-export type BarChartProps = {
+export type BubbleChartProps = {
   labels?: string[];
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   datasets: any[];
@@ -13,15 +13,15 @@ export type BarChartProps = {
   bottomLegend?: string;
 } & HTMLAttributes<HTMLElement>;
 
-export const MixedBarChart = ({
+export const BubbleChart = ({
   className,
-  labels = [''],
+  labels,
   datasets,
   leftLegend = '',
   bottomLegend = '',
-}: BarChartProps) => (
+}: BubbleChartProps) => (
   <div className={className}>
-    <Bar
+    <Bubble
       data={{
         labels,
         datasets,
@@ -29,23 +29,23 @@ export const MixedBarChart = ({
       options={{
         responsive: true,
         maintainAspectRatio: false,
-        elements: {
-          point: {
-            radius: 4,
-            hoverRadius: 6,
-          },
-        },
         scales: {
           x: {
             title: {
               display: true,
               text: bottomLegend,
             },
+            grid: {
+              display: false,
+            },
           },
           y: {
             title: {
               display: true,
               text: leftLegend,
+            },
+            grid: {
+              display: true,
             },
           },
         },
