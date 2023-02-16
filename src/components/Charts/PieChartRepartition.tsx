@@ -34,12 +34,8 @@ export const PieChartRepartition = ({
   theme: ChartPalette;
   className?: string;
 }) => {
-  if (!data?.length) {
-    return <NotEnoughData />;
-  }
-
-  const labels = data.map((row) => row?.range);
-  const rows = data?.map((row) => row?.valuePercent);
+  const labels = data?.map((row) => row?.range) ?? [];
+  const rows = data?.map((row) => row?.valuePercent) ?? [];
 
   const tooltip = (tooltipItems: Array<TooltipItem<'pie'>>) => {
     const tooltipItem = tooltipItems[0];
@@ -52,6 +48,10 @@ export const PieChartRepartition = ({
 
   const backgroundColor = chartThemeGradient(theme);
 
+  if (!data?.length) {
+    return <NotEnoughData />;
+  }
+
   return (
     <div className={className}>
       <Pie
@@ -59,6 +59,7 @@ export const PieChartRepartition = ({
         height={50}
         options={{
           responsive: true,
+          maintainAspectRatio: false,
           plugins: {
             tooltip: {
               callbacks: {

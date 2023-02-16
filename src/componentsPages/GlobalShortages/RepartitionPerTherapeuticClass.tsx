@@ -101,7 +101,6 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
           return (
             <div className="min-h-[350px] w-full relative">
               <MixedBarChart
-                className="flex justify-center mt-4 w-full h-full absolute"
                 labels={labels}
                 datasets={datasets}
                 leftLegend="Nombre de signalements"

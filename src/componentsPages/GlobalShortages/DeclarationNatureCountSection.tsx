@@ -61,15 +61,12 @@ const DeclarationsNatureHistoryLineChart = () => {
           </>
         }
       >
-        <div className="min-h-[350px] w-full relative">
-          <LineChart
-            className="flex justify-center mt-4 w-full h-full absolute"
-            labels={years.map((y) => String(y))}
-            datasets={datasets}
-            leftLegend="Nombre de déclarations"
-            bottomLegend="Année"
-          />
-        </div>
+        <LineChart
+          labels={years.map((y) => String(y))}
+          datasets={datasets}
+          leftLegend="Nombre de déclarations"
+          bottomLegend="Année"
+        />
       </GraphBox>
     );
   }

@@ -1,5 +1,5 @@
 import type { HTMLAttributes } from 'react';
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
 
@@ -19,62 +19,37 @@ export const MixedBarChart = ({
   datasets,
   leftLegend = '',
   bottomLegend = '',
-}: BarChartProps) => {
-  const ref = useRef<ChartJS<'bar'>>(null);
-
-  useEffect(() => {
-    const resize = () => {
-      ref.current?.resize();
-    };
-
-    window.addEventListener('resize', resize);
-    return () => {
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
-  return (
-    <div className={className}>
-      <Bar
-        ref={ref}
-        redraw
-        updateMode="resize"
-        data={{
-          labels,
-          datasets,
-        }}
-        options={{
-          responsive: true,
-          elements: {
-            point: {
-              radius: 4,
-              hoverRadius: 6,
+}: BarChartProps) => (
+  <div className={className}>
+    <Bar
+      data={{
+        labels,
+        datasets,
+      }}
+      options={{
+        responsive: true,
+        maintainAspectRatio: false,
+        elements: {
+          point: {
+            radius: 4,
+            hoverRadius: 6,
+          },
+        },
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: bottomLegend,
             },
           },
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: bottomLegend,
-                // text: <ActeMedicauxFigure className="w-8 h-8" />,
-              },
-              // ticks: {
-              //   // Include a dollar sign in the ticks
-              //   callback(value, index, ticks) {
-              //     console.log(value, index, ticks);
-              //     return `$${value}`;
-              //   },
-              // },
-            },
-            y: {
-              title: {
-                display: true,
-                text: leftLegend,
-              },
+          y: {
+            title: {
+              display: true,
+              text: leftLegend,
             },
           },
-        }}
-      />
-    </div>
-  );
-};
+        },
+      }}
+    />
+  </div>
+);

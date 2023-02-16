@@ -1,7 +1,7 @@
 import type { HTMLAttributes } from 'react';
-import { useEffect, useRef } from 'react';
 import { Line } from 'react-chartjs-2';
 import { Chart as ChartJS, registerables } from 'chart.js';
+import classNames from 'classnames';
 
 ChartJS.register(...registerables);
 
@@ -19,54 +19,37 @@ export const LineChart = ({
   datasets,
   leftLegend = '',
   bottomLegend = '',
-}: LineChartProps) => {
-  const ref = useRef<ChartJS<'line'>>(null);
-
-  useEffect(() => {
-    const resize = () => {
-      ref.current?.resize();
-    };
-
-    window.addEventListener('resize', resize);
-    return () => {
-      window.removeEventListener('resize', resize);
-    };
-  }, []);
-
-  return (
-    <div className={className}>
-      <Line
-        ref={ref}
-        redraw
-        updateMode="resize"
-        data={{
-          labels,
-          datasets,
-        }}
-        options={{
-          responsive: true,
-          scales: {
-            x: {
-              title: {
-                display: true,
-                text: bottomLegend,
-              },
-              grid: {
-                display: false,
-              },
+}: LineChartProps) => (
+  <div className={classNames('relative', className)}>
+    <Line
+      data={{
+        labels,
+        datasets,
+      }}
+      options={{
+        responsive: true,
+        maintainAspectRatio: false,
+        scales: {
+          x: {
+            title: {
+              display: true,
+              text: bottomLegend,
             },
-            y: {
-              title: {
-                display: true,
-                text: leftLegend,
-              },
-              grid: {
-                display: true,
-              },
+            grid: {
+              display: false,
             },
           },
-        }}
-      />
-    </div>
-  );
-};
+          y: {
+            title: {
+              display: true,
+              text: leftLegend,
+            },
+            grid: {
+              display: true,
+            },
+          },
+        },
+      }}
+    />
+  </div>
+);

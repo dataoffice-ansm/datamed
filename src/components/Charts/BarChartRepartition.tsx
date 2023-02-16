@@ -61,6 +61,7 @@ export const BarChartRepartition = ({
       <Bar
         options={{
           responsive: true,
+          maintainAspectRatio: false,
           indexAxis: 'y' as const,
           plugins: {
             tooltip: {
