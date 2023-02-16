@@ -197,38 +197,47 @@ const SectionSeriousEffect = () => {
 };
 
 const SectionRepartitionNotifiers = () => {
-  const { repartitionPerNotifier } = useGlobalDecPageContext();
+  const { exposition, repartitionPerNotifier } = useGlobalDecPageContext();
+
+  const periodString =
+    exposition?.minYear && exposition?.maxYear
+      ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
+      : 'Période des données issues non renseignée';
 
   return (
-    <GraphBoxSelect
-      title="Répartition par type de déclarants"
-      theme="secondary-variant"
-      render={({ selectedUnitOption }) => {
-        const globalDecNotifiersRep = buildSortedRangeData<GlobalStatsUsagePerNotifier>(
-          repartitionPerNotifier ?? [],
-          selectedUnitOption
-        );
+    <>
+      <SectionTitle title="Caractéristiques des déclarants" subTitle={periodString} />
 
-        return (
-          <GraphFiguresGrid
-            data={globalDecNotifiersRep}
-            renderItem={(notifier) => (
-              <GraphFigure
-                key={notifier.id}
-                className="NotifierRepartitionFigure"
-                unit={selectedUnitOption === 'percent' ? ' % ' : ''}
-                label={notifier.job}
-                icon={getNotifierIcon(notifier.id)}
-                valueClassName="text-dark-green-900"
-                value={
-                  (selectedUnitOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0
-                }
-              />
-            )}
-          />
-        );
-      }}
-    />
+      <GraphBoxSelect
+        title="Répartition par type de déclarants d'effets indésirables"
+        theme="secondary-variant"
+        render={({ selectedUnitOption }) => {
+          const globalDecNotifiersRep = buildSortedRangeData<GlobalStatsUsagePerNotifier>(
+            repartitionPerNotifier ?? [],
+            selectedUnitOption
+          );
+
+          return (
+            <GraphFiguresGrid
+              data={globalDecNotifiersRep}
+              renderItem={(notifier) => (
+                <GraphFigure
+                  key={notifier.id}
+                  className="NotifierRepartitionFigure"
+                  unit={selectedUnitOption === 'percent' ? ' % ' : ''}
+                  label={notifier.job}
+                  icon={getNotifierIcon(notifier.id)}
+                  valueClassName="text-dark-green-900"
+                  value={
+                    (selectedUnitOption === 'percent' ? notifier.valuePercent : notifier.value) ?? 0
+                  }
+                />
+              )}
+            />
+          );
+        }}
+      />
+    </>
   );
 };
 

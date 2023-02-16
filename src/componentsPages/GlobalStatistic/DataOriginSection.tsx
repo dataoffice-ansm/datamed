@@ -86,7 +86,7 @@ export const SectionDataOrigin = () => (
           >
             {' '}
             https://ansm.sante.fr/page/la-surveillance-renforcee-des-medicaments
-          </a>
+          </a>{' '}
           et les bonnes pratiques de pharmacovigilance{' '}
           <a
             rel="external noreferrer"

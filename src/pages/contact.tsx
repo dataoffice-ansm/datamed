@@ -63,7 +63,7 @@ const SectionGuichetUsager = () => (
       href="https://ansm.sante.fr/contact"
       className="uppercase"
     >
-      accéder au formulaire contact de contact
+      accéder au formulaire de contact
     </Button>
   </SectionContact>
 );

@@ -34,7 +34,7 @@ const SectionEditor = () => (
 );
 
 const SectionServer = () => (
-  <Section title="Numéro du standart de l'ANSM">
+  <Section title="Numéro du standard de l'ANSM">
     <div className="py-4">
       <div>ITS Integra</div>
       <div>42, rue de Bellevue</div>
