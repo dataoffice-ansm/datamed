@@ -65,53 +65,55 @@ export const NavigationBar = () => {
   return (
     <nav
       ref={navbarRef}
-      className={classnames(
-        'navbar',
-        'flex justify-between items-center gap-4',
-        'z-[2] fixed px-6 left-0 right-0 bg-white top-0',
-        'ease-in-out duration-200 transition-padding',
-        'h-16 py-2 md:py-3 shadow'
-      )}
+      className="navbar z-[2] fixed flex items-center left-0 right-0 top-0 w-full h-16 bg-white shadow"
     >
-      <button
-        aria-label={navDrawerOpened ? 'Fermer menu' : 'Ouvrir menu'}
-        type="button"
-        className="flex justify-center align-center p-2 md:hidden"
-        onClick={toggleOpenNavDrawer}
+      <div
+        className={classnames(
+          'navbarInner container max-w-[1920px]',
+          'flex justify-between items-center gap-4',
+          'ease-in-out duration-200 transition-padding px-2'
+        )}
       >
-        {navDrawerOpened ? <CloseIcon className="w-8 h-8" /> : <MenuIcon className="w-8 h-8" />}
-      </button>
-
-      {navDrawerOpened && (
-        <NavDrawerMobile
-          links={navBarLinks}
-          topFromNavbar={navBarHeight}
-          handleOnClick={handleCloseDrawers}
-        />
-      )}
-
-      <div className="navbarInner flex justify-center md:justify-between items-center gap-3">
-        <Link href="/">
-          <a className="flex justify-center items-center border-b-4 border-transparent">
-            <LogoBrand className="w-[128px] h-[46px]" alt="Logo DATAMED" />
-          </a>
-        </Link>
-        <RenderNavLinks links={navBarLinks} />
-      </div>
-      <span className="hidden md:block flex-auto" />
-
-      <SearchBar handleSearchDrawer={toggleOpenSearchDrawer} />
-      {searchDrawerOpened && (
-        <div
-          ref={navbarSearchRef}
-          className="AutocompleteMobileContainer fixed left-0 right-0 z-[3] overflow-auto"
-          style={{ top: navBarHeight }}
+        <button
+          aria-label={navDrawerOpened ? 'Fermer menu' : 'Ouvrir menu'}
+          type="button"
+          className="flex justify-center align-center p-2 md:hidden"
+          onClick={toggleOpenNavDrawer}
         >
-          <div className="AutocompleteMobileContent flex flex-col justify-center align-center bg-white border-t border-grey-100">
-            <Autocomplete embedded autoFocus handleOnSelected={toggleOpenSearchDrawer} />
-          </div>
+          {navDrawerOpened ? <CloseIcon className="w-8 h-8" /> : <MenuIcon className="w-8 h-8" />}
+        </button>
+
+        {navDrawerOpened && (
+          <NavDrawerMobile
+            links={navBarLinks}
+            topFromNavbar={navBarHeight}
+            handleOnClick={handleCloseDrawers}
+          />
+        )}
+
+        <div className="navbarInner flex justify-center md:justify-between items-center gap-3">
+          <Link href="/">
+            <a className="flex justify-center items-center border-b-4 border-transparent">
+              <LogoBrand className="w-[128px] h-[46px]" alt="Logo DATAMED" />
+            </a>
+          </Link>
+          <RenderNavLinks links={navBarLinks} />
         </div>
-      )}
+        <span className="hidden md:block flex-auto" />
+
+        <SearchBar handleSearchDrawer={toggleOpenSearchDrawer} />
+        {searchDrawerOpened && (
+          <div
+            ref={navbarSearchRef}
+            className="AutocompleteMobileContainer fixed left-0 right-0 z-[3] overflow-auto"
+            style={{ top: navBarHeight }}
+          >
+            <div className="AutocompleteMobileContent flex flex-col justify-center align-center bg-white border-t border-grey-100">
+              <Autocomplete embedded autoFocus handleOnSelected={toggleOpenSearchDrawer} />
+            </div>
+          </div>
+        )}
+      </div>
     </nav>
   );
 };
