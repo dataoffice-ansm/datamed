@@ -39,6 +39,7 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
         behavior: 'smooth',
       });
     });
+
     Router.events.on('routeChangeComplete', () => {
       setIsLoading(false);
       window.scrollTo({
