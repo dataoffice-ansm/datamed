@@ -22,6 +22,7 @@ export const LineChart = ({
 }: LineChartProps) => (
   <div className={classNames('relative', className)}>
     <Line
+      height={500}
       data={{
         labels,
         datasets,

@@ -6,7 +6,6 @@ import { useGlobalShortagesPageContext } from '../../contexts/GlobalShortagesCon
 import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { BarChart } from '../../components/Charts/BarChart';
 import { type ChartDataset } from 'chart.js';
-import { BubbleChart } from '../../components/Charts/BubbleChart';
 
 export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { shortagesPerYear, shortagesAtcPerYear } = useGlobalShortagesPageContext();
@@ -78,38 +77,34 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
             //
             .filter(Boolean) as string[];
 
-          const datasetBubble: ChartDataset<'scatter'> = {
-            order: 1,
-            type: 'scatter',
-            label: 'Nombre de médicaments',
-            borderColor: tailwindPaletteConfig.red[300],
-            data: therapeuticRepartitionForSelectedYear?.map((e) => e?.medicsCount ?? 0),
-          };
-
           const datasetBar: ChartDataset<'bar'> = {
-            order: 2,
             label: 'Nombre de signalements',
-            backgroundColor: tailwindPaletteConfig.darkGreen[300],
-            borderColor: tailwindPaletteConfig.darkGreen[300],
+            backgroundColor: tailwindPaletteConfig.darkGreen[400],
+            borderColor: tailwindPaletteConfig.darkGreen[400],
             data: therapeuticRepartitionForSelectedYear?.map((e) => e?.reportsCount ?? 0),
           };
 
-          console.log(therapeuticRepartitionForSelectedYear);
+          const datasetBubble: ChartDataset<'bar'> = {
+            label: 'Nombre de médicaments',
+            backgroundColor: tailwindPaletteConfig.blue[400],
+            borderColor: tailwindPaletteConfig.blue[400],
+            data: therapeuticRepartitionForSelectedYear?.map((e) => e?.medicsCount ?? 0),
+          };
 
           return (
-            <div className="w-full relative">
+            <div className="w-full relative w-full">
               <BarChart
                 className="my-8"
                 labels={labels}
-                datasets={[datasetBar]}
+                dataset={datasetBar}
                 leftLegend="Nombre de signalements"
                 bottomLegend="Classe thérapeutique"
               />
 
-              <BubbleChart
+              <BarChart
                 className="my-8"
                 labels={labels}
-                datasets={[datasetBubble]}
+                dataset={datasetBubble}
                 leftLegend="Nombre de médicaments"
                 bottomLegend="Classe thérapeutique"
               />

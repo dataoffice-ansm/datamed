@@ -1,14 +1,21 @@
 import type { HTMLAttributes } from 'react';
 import React from 'react';
-import { Bubble } from 'react-chartjs-2';
-import { Chart as ChartJS, LinearScale, PointElement, Tooltip, Legend } from 'chart.js';
+import { Scatter } from 'react-chartjs-2';
+import {
+  Chart as ChartJS,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Tooltip,
+  Legend,
+  type ChartDataset,
+} from 'chart.js';
 
-ChartJS.register(LinearScale, PointElement, Tooltip, Legend);
+ChartJS.register(LinearScale, PointElement, LineElement, Tooltip, Legend);
 
 export type BubbleChartProps = {
   labels?: string[];
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  datasets: any[];
+  dataset: ChartDataset<'scatter'>;
   leftLegend?: string;
   bottomLegend?: string;
 } & HTMLAttributes<HTMLElement>;
@@ -16,16 +23,17 @@ export type BubbleChartProps = {
 export const BubbleChart = ({
   className,
   labels,
-  datasets,
+  dataset,
   leftLegend = '',
   bottomLegend = '',
 }: BubbleChartProps) => (
   <div className={className}>
-    <Bubble
+    <Scatter
       data={{
         labels,
-        datasets,
+        datasets: [dataset],
       }}
+      height={500}
       options={{
         responsive: true,
         maintainAspectRatio: false,
