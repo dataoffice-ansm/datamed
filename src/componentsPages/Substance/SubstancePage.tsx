@@ -91,8 +91,8 @@ const SectionOneGlobalInformation = () => {
               : 'Données insuffisantes'}
           </h3>
           <p>
-            Moyenne annuelle du nombre de remboursements de médicament par patient et par
-            conditionnement de médicament.
+            Moyenne annuelle du nombre de patients ayant reçu au moins un remboursement de
+            médicament par conditionnement.
           </p>
         </div>
       </div>
