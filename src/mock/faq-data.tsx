@@ -1,8 +1,7 @@
 /* eslint-disable no-warning-comments */
 import Link from 'next/link';
-import type { FaqType } from '../FaqPage';
 
-export const faqData: FaqType[] = [
+export const faqData = [
   {
     index: 0,
     title: "DATA.ANSM c'est quoi ?",
@@ -1065,7 +1064,7 @@ export const faqData: FaqType[] = [
                 grave/non grave des déclarations d&apos;effets indésirables présents sur data.ansm.{' '}
                 <br />
                 Les critères des cas graves en pharmacovigilance sont affichés dans la{' '}
-                <Link href="/globaldec">
+                <Link href="/src/pages/globaldec">
                   <a>section des données globales</a>
                 </Link>
               </p>

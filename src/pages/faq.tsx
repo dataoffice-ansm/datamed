@@ -1,16 +1,17 @@
-import { FaqContent } from '../componentsPages/Faq/FaqPage';
-import { useCallback, useLayoutEffect, useState } from 'react';
+import { FaqContent } from '../componentsPages/FaqPage';
+import { useCallback, useEffect, useState } from 'react';
 import { useLayoutContext } from '../contexts/LayoutContext';
 import { FullWidthRow } from '../components/FullWidthRow';
 import FaqSVG from '../assets/landing/landing-faq.svg';
+import { type FaqData, handleFetchFAQ } from '../faq/service';
 
-const PageFaq = () => {
+const PageFaq = ({ faqData }: { faqData: FaqData }) => {
   const [search, setSearch] = useState<string>('');
   const [count, setCount] = useState<number>();
 
   const { setStickyHeroHeight } = useLayoutContext();
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setStickyHeroHeight(0);
   }, [setStickyHeroHeight]);
 
@@ -24,6 +25,7 @@ const PageFaq = () => {
 
   return (
     <FullWidthRow className="FaqPage bg-background" flexContent={false}>
+      <button onClick={handleFetchFAQ}>CLICK</button>
       <div className="max-w-7xl m-auto">
         <div className="FaqHeader flex flex-col justify-center items-center py-16">
           <h1 className="text-center">Questions fréquemment posées</h1>
@@ -43,13 +45,40 @@ const PageFaq = () => {
           </div>
         </div>
 
-        <FaqContent search={search} notifyEntriesCount={updateCountResults} />
+        <FaqContent search={search} notifyEntriesCount={updateCountResults} faqData={faqData} />
         <FullWidthRow className="bg-background">
           <div className="h-96" />
         </FullWidthRow>
       </div>
     </FullWidthRow>
   );
+};
+
+export const getServerSideProps = async () => {
+  try {
+    const { websitefaq } = await handleFetchFAQ();
+
+    if (websitefaq) {
+      return {
+        props: {
+          faqData: websitefaq,
+        },
+      };
+    }
+
+    return {
+      props: {
+        err: 'missing data',
+      },
+    };
+  } catch (err: unknown) {
+    console.log(err);
+    return {
+      props: {
+        err: err instanceof Error ? err.message : err,
+      },
+    };
+  }
 };
 
 export default PageFaq;
