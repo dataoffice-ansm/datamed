@@ -197,8 +197,8 @@ export class PostgresOperations {
       .select(['id', 'sex', 'patients_consumption', 'patients_percentage'])
       .execute();
 
-    const male = rows.find((row) => row.sex === 1);
-    const female = rows.find((row) => row.sex === 2);
+    const male = rows.find((row) => row.sex === 'male');
+    const female = rows.find((row) => row.sex === 'female');
 
     return {
       male: {
@@ -529,9 +529,8 @@ export class PostgresOperations {
       .select(['sex', 'patients_consumption', 'patients_percentage'])
       .execute();
 
-    //TODO: to be fixed in bdd
-    const male = rows.find((row) => row.sex === 1);
-    const female = rows.find((row) => row.sex === 2);
+    const male = rows.find((row) => row.sex === 'male');
+    const female = rows.find((row) => row.sex === 'female');
 
     return {
       male: male
@@ -605,9 +604,8 @@ export class PostgresOperations {
       .select(['id', 'sex', 'case_percentage', 'nb_cases'])
       .execute();
 
-    //TODO: to be fixed in bdd
-    const male = rows.find((row) => row.sex === 'Homme');
-    const female = rows.find((row) => row.sex === 'Femme');
+    const male = rows.find((row) => row.sex === 'male');
+    const female = rows.find((row) => row.sex === 'female');
 
     return {
       male: male
@@ -818,13 +816,13 @@ export class PostgresOperations {
   async getGlobalStatisticRepGender(): Promise<RepartitionPerGender> {
     const male = await dbInstance
       .selectFrom('global_se_sex')
-      .where('label', '=', 'M')
+      .where('label', '=', 'male')
       .select(['n as value', 'pct as valuePercent'])
       .executeTakeFirst();
 
     const female = await dbInstance
       .selectFrom('global_se_sex')
-      .where('label', '=', 'F')
+      .where('label', '=', 'female')
       .select(['n as value', 'pct as valuePercent'])
       .executeTakeFirst();
 

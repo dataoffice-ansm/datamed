@@ -257,7 +257,7 @@ export type MpPatientAges = {
 
 export type MpPatientSex = {
   id: Generated<number>;
-  sex: number | null;
+  sex: string | null;
   patients_consumption: number | null;
   patients_percentage: number | null;
   mp_id: number | null;
@@ -455,7 +455,7 @@ export type SubstancesPatientAge = {
 
 export type SubstancesPatientSex = {
   id: Generated<number>;
-  sex: number | null;
+  sex: string | null;
   patients_consumption: number | null;
   patients_percentage: number | null;
   substance_id: number | null;
