@@ -1,17 +1,16 @@
-import { FaqContent } from '../componentsPages/Faq/FaqPage';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useLayoutEffect, useState } from 'react';
 import { useLayoutContext } from '../contexts/LayoutContext';
 import { FullWidthRow } from '../components/FullWidthRow';
 import FaqSVG from '../assets/landing/landing-faq.svg';
-import { type FaqData, handleFetchFAQ } from '../faq/service';
+import { FaqContentLegacy } from '../componentsPages/Faq/legacy/FaqContentLegacy';
 
-const PageFaq = ({ faqData }: { faqData: FaqData }) => {
+const PageFaq = () => {
   const [search, setSearch] = useState<string>('');
   const [count, setCount] = useState<number>();
 
   const { setStickyHeroHeight } = useLayoutContext();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setStickyHeroHeight(0);
   }, [setStickyHeroHeight]);
 
@@ -44,40 +43,13 @@ const PageFaq = ({ faqData }: { faqData: FaqData }) => {
           </div>
         </div>
 
-        <FaqContent search={search} notifyEntriesCount={updateCountResults} faqData={faqData} />
+        <FaqContentLegacy search={search} notifyEntriesCount={updateCountResults} />
         <FullWidthRow className="bg-background">
           <div className="h-96" />
         </FullWidthRow>
       </div>
     </FullWidthRow>
   );
-};
-
-export const getServerSideProps = async () => {
-  try {
-    const { websitefaq } = await handleFetchFAQ();
-
-    if (websitefaq) {
-      return {
-        props: {
-          faqData: websitefaq,
-        },
-      };
-    }
-
-    return {
-      props: {
-        err: 'missing data',
-      },
-    };
-  } catch (err: unknown) {
-    console.log(err);
-    return {
-      props: {
-        err: err instanceof Error ? err.message : err,
-      },
-    };
-  }
 };
 
 export default PageFaq;

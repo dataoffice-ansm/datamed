@@ -1,11 +1,11 @@
 import { useEffect, useMemo } from 'react';
-import { EntityPageLayout } from '../components/Layouts/EntityPageLayout/EntityPageLayout';
-import { Accordion } from '../components/Accordion';
+import { EntityPageLayout } from '../../components/Layouts/EntityPageLayout/EntityPageLayout';
+import { Accordion } from '../../components/Accordion';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
-import SparkSVG from '../assets/pictos/icons/spark.svg';
-import { type FaqData, type FaqSectionPart } from '../faq/service';
-import { filterFaqEntries, findResultsInFaq } from '../faq/utils';
+import SparkSVG from '../../assets/pictos/icons/spark.svg';
+import { type FaqData, type FaqSectionPart } from '../../faq/service';
+import { filterFaqEntries, findResultsInFaq } from '../../faq/utils';
 import { type Document } from '@contentful/rich-text-types';
 
 const iconColor = (color?: string): string => {
