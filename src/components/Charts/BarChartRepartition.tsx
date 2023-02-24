@@ -64,6 +64,9 @@ export const BarChartRepartition = ({
           maintainAspectRatio: false,
           indexAxis: 'y' as const,
           plugins: {
+            legend: {
+              display: false
+            },
             tooltip: {
               callbacks: {
                 afterBody: tooltip,
