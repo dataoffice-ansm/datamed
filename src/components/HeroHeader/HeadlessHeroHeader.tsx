@@ -13,9 +13,11 @@ export type HeadlessHeroHeaderProps = {
   theme: string;
   icon: JSX.Element | ReactNode;
   title: string;
+  description: string;
   textColor?: string;
   backNavigationLabel: string;
   backNavigationIconColor?: string;
+  tooltip?: JSX.Element | ReactNode;
 } & HTMLAttributes<HTMLDivElement>;
 
 /**
@@ -25,8 +27,10 @@ export type HeadlessHeroHeaderProps = {
  * @param theme
  * @param title
  * @param backNavigationLabel
+ * @param description
  * @param textColor
  * @param backNavigationColor
+ * @param tooltip
  * @constructor
  */
 export const HeadlessHeroHeader = ({
@@ -35,8 +39,10 @@ export const HeadlessHeroHeader = ({
   theme,
   title,
   backNavigationLabel,
+  description,
   textColor = 'text-white',
   backNavigationIconColor: backNavigationColor = 'fill-white',
+  tooltip,
 }: HeadlessHeroHeaderProps) => {
   const { navBarHeight } = useLayoutContext();
   const { scrollY } = useScrollPosition();
@@ -79,6 +85,21 @@ export const HeadlessHeroHeader = ({
           </a>
         </Link>
 
+        <div
+          className={classNames(
+            'HeroHeader flex flex-col justify-center min-h[20rem] px-4 py-8 gap-8',
+            'md:flex-row md:px-2 md:pt-12 md:pb-24 md:gap-16',
+            'lg:pb-24',
+            textColor
+          )}
+        >
+          <div className="w-36 h-36">{icon}</div>
+          <div className="flex flex-col justify-center">
+            <div className="text-xl lg:text-2xl font-medium mb-4">{title}</div>
+            {description && <div className="text-md mb-4">{description}</div>}
+            {tooltip && <div className="text-md mb-4">{tooltip}</div>}
+          </div>
+        </div>
       </div>
     </FullWidthRow>
   );
