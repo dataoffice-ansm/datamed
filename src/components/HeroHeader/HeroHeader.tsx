@@ -9,6 +9,7 @@ type EntityOptions = {
   theme: string;
   icon: ReactNode;
   type: 'Substance' | 'Spécialité';
+  description: string;
 };
 
 const getEntityTypeParams = (entity: Entity): EntityOptions => {
@@ -17,6 +18,7 @@ const getEntityTypeParams = (entity: Entity): EntityOptions => {
       theme: 'bg-secondary-900',
       icon: <SubSvg />,
       type: 'Substance',
+      description: 'Substance active',
     };
   }
 
@@ -26,6 +28,7 @@ const getEntityTypeParams = (entity: Entity): EntityOptions => {
     theme: 'bg-primary',
     icon: cisPharmaFormIcon,
     type: 'Spécialité',
+    description: 'Spécialité de médicament',
   };
 };
 
@@ -36,7 +39,7 @@ const getEntityTypeParams = (entity: Entity): EntityOptions => {
  */
 export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
   const { currentEntity } = useEntityContext();
-  const { theme, icon, type } = getEntityTypeParams(currentEntity);
+  const { description, theme, icon, type } = getEntityTypeParams(currentEntity);
 
   return (
     <HeadlessHeroHeader
@@ -44,6 +47,7 @@ export const HeroHeader = ({ id }: HTMLAttributes<HTMLDivElement>) => {
       theme={theme}
       title={currentEntity.name}
       backNavigationLabel={`${type}: ${currentEntity.name}`}
+      description={description}
       icon={icon}
     />
   );
