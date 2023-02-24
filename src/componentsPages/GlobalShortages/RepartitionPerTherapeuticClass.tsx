@@ -98,7 +98,6 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
                 labels={labels}
                 dataset={datasetBar}
                 leftLegend="Nombre de signalements"
-                bottomLegend="Classe thérapeutique"
               />
 
               <BarChart
@@ -106,7 +105,6 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
                 labels={labels}
                 dataset={datasetBubble}
                 leftLegend="Nombre de médicaments"
-                bottomLegend="Classe thérapeutique"
               />
             </div>
           );
