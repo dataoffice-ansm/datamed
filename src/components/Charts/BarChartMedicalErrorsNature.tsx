@@ -62,6 +62,11 @@ export const BarChartMedicalErrorsNature = ({
               borderWidth: 2,
             },
           },
+          plugins: {
+            legend: {
+              display: false
+            },
+          }
         }}
         data={{
           labels,
