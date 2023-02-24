@@ -5,7 +5,6 @@ import tailwindPaletteConfig from '../../../tailwind.palette.config';
 import { useGlobalShortagesPageContext } from '../../contexts/GlobalShortagesContext';
 import { SectionTitle } from '../../components/SectionTitle';
 import { GraphBox } from '../../components/GraphBox/GraphBox';
-import { RepartitionPerTherapeuticClass } from './RepartitionPerTherapeuticClass';
 
 const DeclarationsNatureHistoryLineChart = () => {
   const { shortagesPerYear, shortagesClassesPerYear } = useGlobalShortagesPageContext();
@@ -101,7 +100,6 @@ export const DeclarationNatureCountSection = () => {
       />
 
       <DeclarationsNatureHistoryLineChart />
-      <RepartitionPerTherapeuticClass />
     </div>
   );
 };
