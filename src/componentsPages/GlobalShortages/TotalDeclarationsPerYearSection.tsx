@@ -65,7 +65,7 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
   return (
     <div className="DeclarationByYear mb-12">
       <SectionTitle
-        title="Déclarations de ruptures et risques de rupture de stock depuis le début de l'année civile en cours"
+        title="Déclarations de ruptures et risques de rupture de stock de l'année civile :"
         subTitle={sectionSubtitlePeriod}
       >
         <Select
@@ -88,14 +88,14 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
               </p>
             }
           >
-            Nombre de déclarations de ruptures et risques de rupture de stock depuis le début de
-            l’année civile en cours
+            Nombre de déclarations de ruptures et risques de rupture de stock de
+            l’année civile
           </BoxInfo>
 
           <div className="flex gap-8 flex-col md:flex-row">
             <KPIBoxProgression
               key="declar-ruptures"
-              title="Déclarations de ruptures depuis le début de l’année civile en cours"
+              title="Déclarations de ruptures de l’année civile"
               total={shortagePercent?.value ?? 0}
               percentageTitle="ont été clôturées à ce jour"
               percent={shortagePercent?.valuePercentClosed ?? 0}
@@ -112,7 +112,7 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
             />
             <KPIBoxProgression
               key="declar-risques-ruptures"
-              title="Déclarations de risques de rupture depuis le début de l’année civile en cours"
+              title="Déclarations de risques de rupture de l’année civile"
               total={shortageRiskPercent?.value ?? 0}
               percentageTitle="ont été clôturées à ce jour"
               percent={shortageRiskPercent?.valuePercentClosed ?? 0}
