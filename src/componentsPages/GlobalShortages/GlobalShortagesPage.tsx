@@ -7,6 +7,7 @@ import { DeclarationNatureCountSection } from './DeclarationNatureCountSection';
 import { RupturesDeclarationActionByYearSection } from './DeclarationActionByYear';
 import { DataOriginSection } from './DataOriginSection';
 import { DeclarationsCausesFiguresGraphSection } from './DeclarationsCausesFiguresGraphSection';
+import { RepartitionPerTherapeuticClass } from './RepartitionPerTherapeuticClass';
 
 export const GlobalShortagesPage = () => (
   <div className="RupturesPage">
@@ -52,8 +53,9 @@ export const GlobalShortagesPage = () => (
           label: 'DÉCLARATIONS',
           content: (
             <div className="SectionDeclarations mt-4 mb-8">
-              <TotalDeclarationsPerYearSection />
               <DeclarationNatureCountSection />
+              <TotalDeclarationsPerYearSection />
+              <RepartitionPerTherapeuticClass />
               <DeclarationsCausesFiguresGraphSection />
             </div>
           ),
