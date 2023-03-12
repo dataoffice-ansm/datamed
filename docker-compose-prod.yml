@@ -3,9 +3,9 @@ version: '3.8'
 services:
   nextjs:
     container_name: datamed-nextjs
-    image: "datamed-nextjs:cle-0.3"
+    image: "datamed-nextjs:1.0.2"
     env_file:
-      - ./.env.recette
+      - ./.env.production
     ports:
       - "80:80"
     networks:

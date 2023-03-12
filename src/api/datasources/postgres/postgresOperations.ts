@@ -939,7 +939,7 @@ export class PostgresOperations {
       .selectFrom('global_se_notifiers as gnotif')
       .leftJoin('notifiers', 'notifiers.id', 'gnotif.notifier_id')
       .select([
-        'gnotif.id as id',
+        'notifiers.id as id',
         'gnotif.n as value',
         'gnotif.pct as valuePercent',
         'notifiers.job as job',

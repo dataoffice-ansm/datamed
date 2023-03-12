@@ -33,12 +33,12 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
         disableUnitSelect
         className="RepartitionPerTherapeuticClass"
         theme="secondary-variant"
-        title="Nombre de déclarations de ruptures et risques de rupture de stock par classe thérapeutique"
+        title="Nombre de déclarations de ruptures ou risques de rupture de stock et nombre de médicaments par classe thérapeutique"
         yearsOptions={rupturesYearsOptions}
         tooltip={
           <>
             <p className="font-medium text-xl">
-              Nombre de déclarations de ruptures ou de risques de rupture de stock par classe
+              Nombre de déclarations de ruptures ou de risques de rupture de stock et nombre de médicaments par classe
               thérapeutique
             </p>
             <p>
@@ -50,12 +50,12 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
               caractéristiques thérapeutiques et chimiques.
             </p>
             <p>
-              Ce graphique représente le nombre de déclarations reçues par classe thérapeutique
-              (classification ATC). La courbe bleue indique le nombre de présentations de
+              L&apos;histogramme vert représente le nombre de déclarations reçues par classe thérapeutique
+              (classification ATC). L&apos;histogramme bleu indique le nombre de présentations de
               médicaments (une présentation correspond à un conditionnement précis d&apos;un
               médicament, par exemple une boîte de 30 gélules et une boîte de 90 gélules d&apos;un
-              même médicament sont deux présentations différentes) que contient la classe. Dans sa
-              globalité, ce graphique permet d&apos;apprécier le nombre de déclarations reçues par
+              même médicament sont deux présentations différentes) que contient la classe. Dans leur
+              globalité, ces graphiques permettent d&apos;apprécier le nombre de déclarations reçues par
               rapport au nombre de médicaments disponibles.
             </p>
           </>
@@ -69,7 +69,6 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
           const therapeuticRepartitionForSelectedYear = shortagesTypeRepForSelectedYear
             ? shortagesTypeRepForSelectedYear
                 .sort((a, b) => (a.label && b.label ? a.label.localeCompare(b.label) : 1))
-                .reverse()
             : [];
 
           const labels = therapeuticRepartitionForSelectedYear

@@ -163,7 +163,7 @@ export const getNotifierIcon = (id: number) => {
       return <DoctorFemaleFigure className="w-24 md:w-32" />;
     case 4:
       return <PharmacistFigure className="w-24 md:w-32" />;
-    case 5:
+    case 6:
       return <JuristeFigure className="w-24 md:w-32" />;
     // TODO en BDD
     // case 5:
