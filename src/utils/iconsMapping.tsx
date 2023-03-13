@@ -273,7 +273,7 @@ export const getSideEffectPathologyIconByName = (name: string) => {
       return <AffectionRespiratoiresFigure className="w-24 md:w-32" />;
     case 'Affections vasculaires':
       return <AffectionVasculaireFigure className="w-24 md:w-32" />;
-    case 'Investigations':
+    case 'Explorations complémentaires':
       return <InvestigationsFigure className="w-24 md:w-32" />;
     case "Lésions, intoxications et complications d'interventions":
       return <LesionsFigure className="w-24 md:w-32" />;
