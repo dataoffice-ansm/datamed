@@ -3,8 +3,8 @@ import {
   type FaqSection,
   type FaqSectionPart,
   type FaqSectionPartEntry,
-} from './service';
-import { toNormalForm } from '../utils/format';
+} from '../services/faq';
+import { toNormalForm } from './format';
 
 export const filterFaqEntries = (faqData: FaqData) => {
   if (!faqData?.sectionsCollection?.items) {
