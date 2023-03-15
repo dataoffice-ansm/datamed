@@ -3,7 +3,7 @@ version: '3.8'
 services:
   nextjs:
     container_name: datamed-nextjs
-    image: "datamed-nextjs:1.0.2"
+    image: "datamed-nextjs:prod"
     env_file:
       - ./.env.production
     ports:
