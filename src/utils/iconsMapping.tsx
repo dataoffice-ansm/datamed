@@ -163,7 +163,7 @@ export const getNotifierIcon = (id: number) => {
       return <DoctorFemaleFigure className="w-24 md:w-32" />;
     case 4:
       return <PharmacistFigure className="w-24 md:w-32" />;
-    case 5:
+    case 6:
       return <JuristeFigure className="w-24 md:w-32" />;
     // TODO en BDD
     // case 5:
@@ -273,7 +273,7 @@ export const getSideEffectPathologyIconByName = (name: string) => {
       return <AffectionRespiratoiresFigure className="w-24 md:w-32" />;
     case 'Affections vasculaires':
       return <AffectionVasculaireFigure className="w-24 md:w-32" />;
-    case 'Investigations':
+    case 'Explorations complémentaires':
       return <InvestigationsFigure className="w-24 md:w-32" />;
     case "Lésions, intoxications et complications d'interventions":
       return <LesionsFigure className="w-24 md:w-32" />;

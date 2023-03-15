@@ -49,6 +49,11 @@ export const BarChart = ({
             },
           },
         },
+        plugins: {
+          legend: {
+            display: false
+         },
+       }
       }}
     />
   </div>

@@ -1,19 +1,30 @@
 version: '3.8'
 
 services:
-  nginx:
-    build: ./nginx
-    restart: unless-stopped
-    container_name: datamed-nginx
-    ports:
-      - "8080:80"
-
   nextjs:
     container_name: datamed-nextjs
-    image: "datamed-nextjs"
-    build:
-      context: .
+    image: "datamed-nextjs:prod"
     env_file:
       - ./.env.production
     ports:
       - "80:80"
+    networks:
+      - datamed
+    build:
+      context: .
+
+  nginx:
+    image: nginx:1.22.1
+    volumes:
+      - /production/nginx/conf:/etc/nginx/conf.d:ro
+      - /production/nginx/ssl/:/etc/nginx/ssl/:ro
+    ports:
+      - 443:443
+    networks:
+      - datamed
+    restart: always
+
+networks:
+    datamed:
+        name: datamed_network
+        external: true

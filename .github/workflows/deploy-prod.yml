@@ -5,7 +5,7 @@ name: Build and Deploy
 on:
   push:
     branches: [ "develop" ]
-    # Publish semver tags as releases.
+    # Publish server tags as releases.
     tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "develop" ]
@@ -14,13 +14,12 @@ env:
   REGISTRY: ghcr.io
 
 jobs:
-
   # This workflow contains a single job called "build"
-  build-web:
+  build:
     environment: production
     env:
       # github.repository as <account>/<repo>
-      IMAGE_NAME: ${{ github.repository }}/datamed-web
+      IMAGE_NAME: ${{ github.repository }}/datamed-nextjs
 
     runs-on: ubuntu-latest
     permissions:
