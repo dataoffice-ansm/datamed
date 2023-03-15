@@ -38,16 +38,16 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-#RUN addgroup -g 1001 -S nodejs
-#RUN adduser --system --uid 1001 nextjs
+RUN addgroup -g 1001 -S nodejs
+RUN adduser --system --uid 1001 nextjs
 
 # You only need to copy next.config.js if you are NOT using the default configuration.
 # Copy all necessary files used by nex.config as well otherwise the build will fail.
 COPY --from=builder /app/next.config.js ./next.config.js
+COPY --from=builder /app/.env ./.env
 COPY --from=builder /app/.env.production ./.env.production
 COPY --from=builder /app/public ./public
-COPY --from=builder --chown=nextjs:nodejs /app/.next ./.next
-COPY --from=builder /app/node_modules ./node_modules
+COPY --from=builder --chown=nodejs /app/.next ./.next
 COPY --from=builder /app/package.json ./package.json
 COPY --from=builder /app/schema.graphql ./schema.graphql
 
