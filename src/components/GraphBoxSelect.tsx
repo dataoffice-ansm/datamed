@@ -123,7 +123,7 @@ export const GraphBoxSelect = ({
               <div className="GraphFiguresContainerSelect max-w-xs">
                 <Select
                   options={yearsOptions}
-                  theme="secondary-variant"
+                  theme={theme}
                   onSelectOption={(index, option) => {
                     onChangeYear(option.value as number);
                   }}
