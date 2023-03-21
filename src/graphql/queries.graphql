@@ -56,10 +56,16 @@ fragment SpecialityFragment on Speciality {
         consumption
         level
         description
-        minYear
-        maxYear
+        openMedicPeriod {
+            minYear
+            maxYear
+        }
     }
     medicalErrors {
+        errMedPeriod {
+            minYear
+            maxYear
+        }
         populationRepartition {
             id
             range
@@ -93,8 +99,11 @@ fragment SpecialityFragment on Speciality {
         }
     }
     shortagesHistory {
+        trustMedPeriod {
+            minYear
+            maxYear
+        }
         shortages {
-
             num
             state
             date
@@ -124,8 +133,10 @@ fragment SubstanceFragment on Substance {
         consumption
         level
         description
-        minYear
-        maxYear
+        openMedicPeriod {
+            minYear
+            maxYear
+        }
     }
     retrievedSpecialities {
         meta {
@@ -153,6 +164,10 @@ fragment SubstanceFragment on Substance {
         valuePercent
     }
     sideEffects {
+        bnpvPeriod {
+            minYear
+            maxYear
+        }
         declarations {
             total
         }

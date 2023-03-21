@@ -36,8 +36,8 @@ const SectionOneGlobalInformation = () => {
       <SectionTitle
         title="Patients traités en ville"
         subTitle={
-          exposition?.maxYear && exposition?.minYear
-            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
+          exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
+            ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -157,8 +157,8 @@ const SectionSideEffects = () => {
       <SectionTitle
         title="Déclarations d’effets indésirables suspectés de la substance active"
         subTitle={
-          exposition?.maxYear && exposition?.minYear
-            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
+          exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
+            ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />

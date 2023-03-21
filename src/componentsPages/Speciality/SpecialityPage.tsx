@@ -171,8 +171,8 @@ const SectionTreatedPatients = () => {
       <SectionTitle
         title="Patients traités en ville"
         subTitle={
-          exposition?.maxYear && exposition?.minYear
-            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
+          exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
+            ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -300,8 +300,8 @@ const SectionMedicinalErrors = () => {
       <SectionTitle
         title="Déclarations d’erreurs médicamenteuses"
         subTitle={
-          exposition?.maxYear && exposition?.minYear
-            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
+          exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
+            ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -459,8 +459,8 @@ const SectionSideEffects = () => {
       <SectionTitle
         title="Déclarations d&lsquo;effets indésirables suspectés, par substance active"
         subTitle={
-          exposition?.maxYear && exposition?.minYear
-            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
+          exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
+            ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -553,8 +553,8 @@ const SectionRisksShortageHistory = () => {
       <SectionTitle
         title="Historique des déclarations de ruptures et de risques de rupture de stock cloturées"
         subTitle={
-          exposition?.maxYear && exposition?.minYear
-            ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`
+          exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
+            ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />

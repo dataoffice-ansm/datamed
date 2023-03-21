@@ -1,8 +1,8 @@
 import { dbInstance } from './postgreDb';
 import type {
-  EntityExpositionPeriod,
+  EntityExposition,
   GlobalExpositionPeriod,
-  GlobalShortagesPeriod,
+  Period,
   GlobalStatistics,
   GlobalStatsUsagePerAge,
   GlobalStatsUsagePerGravity,
@@ -131,8 +131,10 @@ export class PostgresOperations {
                 consumption,
                 level: expositionInfos.level,
                 description: expositionInfos.description,
-                minYear: openMedicExposition.minYear,
-                maxYear: openMedicExposition?.maxYear,
+                openMedicPeriod: {
+                  minYear: openMedicExposition.minYear,
+                  maxYear: openMedicExposition?.maxYear,
+                },
               }
             : null,
       };
@@ -746,7 +748,7 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSubstanceExposition(subId: number): Promise<EntityExpositionPeriod | null> {
+  async getSubstanceExposition(subId: number): Promise<EntityExposition | null> {
     const openMedicExposition = await this._getOpenMedicExpositionPeriod();
 
     const row = await dbInstance
@@ -770,8 +772,10 @@ export class PostgresOperations {
         consumption: row.consumption,
         level: expositionInfos.level,
         description: expositionInfos.description,
-        minYear: openMedicExposition.minYear,
-        maxYear: openMedicExposition?.maxYear,
+        openMedicPeriod: {
+          minYear: openMedicExposition.minYear,
+          maxYear: openMedicExposition?.maxYear,
+        },
       };
     }
 
@@ -991,7 +995,7 @@ export class PostgresOperations {
       : null;
   }
 
-  async getTrustMedExpositionPeriod(): Promise<GlobalShortagesPeriod | null> {
+  async getTrustMedExpositionPeriod(): Promise<Period | null> {
     const rows = await dbInstance
       .selectFrom('config')
       .select(['id', 'label', 'c_date'])
@@ -1009,7 +1013,25 @@ export class PostgresOperations {
       : null;
   }
 
-  async getBNPVExpositionPeriod(): Promise<GlobalShortagesPeriod | null> {
+  async getErrMedExpositionPeriod(): Promise<Period | null> {
+    const rows = await dbInstance
+      .selectFrom('config')
+      .select(['id', 'label', 'c_date'])
+      .where('label', 'in', ['emed_date_min', 'emed_date_max'])
+      .execute();
+
+    const minDate = rows.find((r) => r.label === 'emed_date_min')?.c_date ?? null;
+    const maxDate = rows.find((r) => r.label === 'emed_date_max')?.c_date ?? null;
+
+    return minDate && maxDate
+      ? {
+          minYear: minDate.getFullYear(),
+          maxYear: maxDate.getFullYear(),
+        }
+      : null;
+  }
+
+  async getBNPVExpositionPeriod(): Promise<Period | null> {
     const rows = await dbInstance
       .selectFrom('config')
       .select(['id', 'label', 'c_date'])
