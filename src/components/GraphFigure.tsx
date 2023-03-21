@@ -37,7 +37,7 @@ export const GraphFigure = ({
 }) => (
   <div
     className={classnames(
-      'GraphFigure flex flex-col justify-start items-center gap-1 max-w-max text-center',
+      'GraphFigure flex flex-col justify-start items-center gap-1 max-w-max text-center break-all',
       className
     )}
     {...props}

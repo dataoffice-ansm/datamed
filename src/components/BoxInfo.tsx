@@ -67,7 +67,7 @@ export const BoxInfo = ({
       <div className="flex items-center align-center  gap-2">
         <div
           className={classNames(
-            'BoxInfoIcon flex items-center align-center h-20 w-20',
+            'BoxInfoIcon flex items-center align-center h-16 w-16 sm:h-20 sm:w-20',
             iconClassName
           )}
         >
@@ -82,7 +82,9 @@ export const BoxInfo = ({
               'text-success': theme === 'success',
             })}
           >
-            <span className="BoxInfoTitle text-2xl lg:text-3xl font-medium">{title}</span>
+            <span className="BoxInfoTitle text-lg sm:text-2xl lg:text-3xl font-medium">
+              {title}
+            </span>
             {tooltip && (
               <TooltipInformation>
                 <div className="TooltipContent p-2 max-w-md">{tooltip}</div>

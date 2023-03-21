@@ -79,7 +79,7 @@ const SectionOneGlobalInformation = () => {
       </Accordion>
 
       <div className="expositionChart my-4 flex rounded-lg shadow bg-white overflow-hidden">
-        <div className="expositionChartLeft flex flex-col items-center justify-between p-4 min:h-20 flex-1 bg-secondary-900 py-6">
+        <div className="expositionChartLeft flex flex-col w-1/3 sm:w-1/2 items-center justify-between px-2 sm:px-4 py-6 min:h-20 bg-secondary-900">
           <span className="text-white">{exposition?.description}</span>
           {exposition && <UsageBarContainer exposition={exposition} entityType="sub" />}
         </div>
@@ -111,7 +111,7 @@ const SectionOneGlobalInformation = () => {
                     value={repartitionPerGender.female.valuePercent}
                     label="Femmes"
                     valueClassName="mt-2 text-secondary"
-                    icon={<WomanIllustration className="w-32" />}
+                    icon={<WomanIllustration className="w-24 sm:w-32" />}
                   />
                 )}
                 {repartitionPerGender?.male?.valuePercent && (
@@ -119,7 +119,7 @@ const SectionOneGlobalInformation = () => {
                     value={repartitionPerGender.male.valuePercent}
                     valueClassName="mt-2 text-secondary"
                     label="Hommes"
-                    icon={<ManIllustration className="w-32" />}
+                    icon={<ManIllustration className="w-24 sm:w-32" />}
                   />
                 )}
               </div>

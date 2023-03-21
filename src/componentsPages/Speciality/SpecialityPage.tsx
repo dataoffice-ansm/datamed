@@ -246,7 +246,7 @@ const SectionTreatedPatients = () => {
                     value={currentEntity.repartitionPerGender?.female?.valuePercent}
                     label="Femmes"
                     valueClassName="mt-2 text-primary"
-                    icon={<WomanIllustration className="w-32" />}
+                    icon={<WomanIllustration className="w-24 sm:w-32" />}
                   />
                 )}
                 {currentEntity.repartitionPerGender?.male?.valuePercent && (
@@ -254,7 +254,7 @@ const SectionTreatedPatients = () => {
                     value={currentEntity.repartitionPerGender.male?.valuePercent}
                     valueClassName="mt-2 text-primary"
                     label="Hommes"
-                    icon={<ManIllustration className="w-32" />}
+                    icon={<ManIllustration className="w-24 sm: w-32" />}
                   />
                 )}
               </div>
@@ -506,7 +506,7 @@ const SectionSideEffects = () => {
         <CardWithImage
           imageClassName="!w-32"
           contentClassName="!p-0"
-          image={<CommuniqueSvg className="h-32 w-32 m-auto" />}
+          image={<CommuniqueSvg className="sm:h-48 sm:w-48 m-auto" />}
         >
           <p>
             La déclaration en pharmacovigilance permet la détection de signal. Ces données
@@ -612,10 +612,10 @@ const SectionRisksShortageHistory = () => {
       </div>
 
       <CardWithImage
-        className="my-8 border border-grey-100 rounded-lg"
+        className="border border-grey-100 rounded-lg"
         imageClassName="w-48 px-2"
         title="Rupture ou risque de rupture des produits de santé"
-        image={<OutOfStockSvg className="h-48 w-32 m-auto" />}
+        image={<OutOfStockSvg className="sm:h-48 sm:w-48 m-auto" />}
         button={
           <Button
             externalLink

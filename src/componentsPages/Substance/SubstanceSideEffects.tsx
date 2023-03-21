@@ -142,7 +142,7 @@ export const SubstanceSideEffects = ({
                     value={substance.sideEffects?.repartitionPerGender.female.valuePercent}
                     label="Femmes"
                     valueClassName="mt-2 text-secondary"
-                    icon={<WomanFigure className="w-32" />}
+                    icon={<WomanFigure className="w-24 sm:w-32" />}
                   />
                 )}
                 {substance.sideEffects?.repartitionPerGender?.male?.valuePercent && (
@@ -150,7 +150,7 @@ export const SubstanceSideEffects = ({
                     value={substance.sideEffects?.repartitionPerGender.male.valuePercent}
                     valueClassName="mt-2 text-secondary"
                     label="Hommes"
-                    icon={<ManFigure className="w-32" />}
+                    icon={<ManFigure className="w-24 sm:w-32" />}
                   />
                 )}
               </div>
@@ -283,9 +283,9 @@ export const SubstanceSideEffects = ({
 
       <CardWithImage
         className="border border-grey-100 rounded-lg mt-8 mb-4"
-        imageClassName="w-52"
+        imageClassName="sm:w-52"
         title="Comment déclarer un effet indésirable ?"
-        image={<SickPersonSvg className="h-48 w-44 m-auto" />}
+        image={<SickPersonSvg className="sm:h-48 sm:w-48 m-auto" />}
         button={
           <Button
             externalLink

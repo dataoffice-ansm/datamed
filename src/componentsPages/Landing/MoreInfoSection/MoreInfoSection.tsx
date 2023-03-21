@@ -18,7 +18,7 @@ export const MoreInfoSection = () => (
         className="mb-8 border border-grey-100"
         imageClassName="w-56 lg:w-72"
         title="Déclarations de ruptures et risques de rupture de stock de médicament"
-        image={<OutOfStockSvg />}
+        image={<OutOfStockSvg className="sm:h-48 sm:w-48 m-auto" />}
         button={<Button href="/ruptures">Découvrir les données</Button>}
       >
         <p>
@@ -36,7 +36,7 @@ export const MoreInfoSection = () => (
         className="mb-8 border border-grey-100"
         imageClassName="w-56 lg:w-72"
         title="Déclarations d'effets indésirables suspectés d’être liés aux médicaments"
-        image={<SickPersonSvg />}
+        image={<SickPersonSvg className="sm:h-48 sm:w-48 m-auto" />}
         button={<Button href="/globaldec">Découvrir les données</Button>}
       >
         <p>
