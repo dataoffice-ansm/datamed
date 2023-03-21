@@ -120,6 +120,7 @@ export const resolvers: Resolvers = {
     },
 
     async medicalErrors(speciality, args, context) {
+      const errMedPeriod = await context.dataSources.postgresOperations.getErrMedExpositionPeriod();
       const populationRepartition =
         await context.dataSources.postgresOperations.getErrorsMedRepPopulation(speciality.id);
 
@@ -139,6 +140,7 @@ export const resolvers: Resolvers = {
         );
 
       return {
+        errMedPeriod,
         populationRepartition,
         sideEffectsOriginRepartition,
         apparitionStepRepartition,
@@ -147,12 +149,15 @@ export const resolvers: Resolvers = {
     },
 
     async shortagesHistory(speciality, args, context) {
+      const trustMedPeriod =
+        await context.dataSources.postgresOperations.getTrustMedExpositionPeriod();
       const rows = await context.dataSources.postgresOperations.getSpecialityShortagesHistory(
         speciality.id
       );
 
       return {
         shortages: rows,
+        trustMedPeriod,
         meta: {
           count: rows.length,
         },
@@ -195,6 +200,7 @@ export const resolvers: Resolvers = {
     },
 
     async sideEffects(substance, args, context) {
+      const bnpvPeriod = await context.dataSources.postgresOperations.getBNPVExpositionPeriod();
       const declarations =
         await context.dataSources.postgresOperations.getSubstanceSideEffectsDeclarations(
           substance.id
@@ -221,6 +227,7 @@ export const resolvers: Resolvers = {
         );
 
       return {
+        bnpvPeriod,
         declarations,
         repartitionPerGender,
         repartitionPerAge,
