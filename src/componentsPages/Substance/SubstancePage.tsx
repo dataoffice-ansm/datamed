@@ -17,7 +17,7 @@ import { PieChartRepartition } from '../../components/Charts/PieChartRepartition
 import { GraphBox } from '../../components/GraphBox/GraphBox';
 import { GraphFigure } from '../../components/GraphFigure';
 import { SectionTitle } from '../../components/SectionTitle';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import { buildSortedRangeData } from '../../utils/entities';
 import { Button } from '../../components/Button/Button';
 import { UsageBarContainer } from '../../components/UsageBarContainer';
@@ -168,10 +168,11 @@ const SectionSideEffects = () => {
 };
 
 const SectionAssociatedSpecialities = () => {
+  const refList = useRef<HTMLDivElement | null>(null);
   const { currentEntity } = useEntityContext<EntitySub>();
 
   return (
-    <div className="min-h-screen">
+    <div ref={refList} className="min-h-screen">
       <SectionTitle title={`Spécialités de médicaments contenant: ${currentEntity.name}`} />
 
       <div className="p-4 border border-grey-100 rounded-lg bg-white">
@@ -182,6 +183,7 @@ const SectionAssociatedSpecialities = () => {
           <PaginatedList
             theme="secondary"
             data={currentEntity.retrievedSpecialities?.specialities ?? []}
+            listRef={refList}
             renderItem={(item) =>
               item?.code ? (
                 <Button variant="none" theme="grey" href={`/specialite/${item.code}`}>

@@ -4,7 +4,7 @@ import type { EntityCis } from '../../contexts/EntityContext';
 import { EntityContextProvider, useEntityContext } from '../../contexts/EntityContext';
 import TargetBlankIcon from '../../assets/pictos/targetBlank.svg';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
 import type {
   MedicalErrorsApparitionStep,
   MedicalErrorApparitionStep,
@@ -542,11 +542,10 @@ const SectionSideEffects = () => {
 };
 
 const SectionRisksShortageHistory = () => {
+  const refList = useRef<HTMLDivElement | null>(null);
   const { currentEntity } = useEntityContext<EntityCis>();
   const { exposition, shortagesHistory } = currentEntity;
-
   const shortages = useMemo(() => shortagesHistory?.shortages ?? [], [shortagesHistory?.shortages]);
-
   const count = useMemo(() => shortagesHistory?.meta?.count ?? 0, [shortagesHistory?.meta?.count]);
 
   return (
@@ -598,6 +597,7 @@ const SectionRisksShortageHistory = () => {
             </div>
             <div className="pt-6">
               <PaginatedList
+                listRef={refList}
                 theme="primary"
                 data={shortages}
                 renderItem={(shortageItem) => <ShortageHistoryItem shortageItem={shortageItem} />}
