@@ -62,7 +62,7 @@ export const resolvers: Resolvers = {
     },
 
     async getGlobalShortages(parent, args, context) {
-      const period = await context.dataSources.postgresOperations.getGlobalShortagesPeriod();
+      const period = await context.dataSources.postgresOperations.getTrustMedExpositionPeriod();
 
       const shortagesPerYear =
         await context.dataSources.postgresOperations.getGlobalShortagesPerYear();

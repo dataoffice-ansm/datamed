@@ -398,7 +398,6 @@ export class PostgresOperations {
         // classes
         classification,
         // cause
-        causeId,
         causeType,
         causeDefinition,
       } = row;
@@ -992,7 +991,7 @@ export class PostgresOperations {
       : null;
   }
 
-  async getGlobalShortagesPeriod(): Promise<GlobalShortagesPeriod | null> {
+  async getTrustMedExpositionPeriod(): Promise<GlobalShortagesPeriod | null> {
     const rows = await dbInstance
       .selectFrom('config')
       .select(['id', 'label', 'c_date'])
@@ -1001,6 +1000,24 @@ export class PostgresOperations {
 
     const minDate = rows.find((r) => r.label === 'trustmed_date_min')?.c_date ?? null;
     const maxDate = rows.find((r) => r.label === 'trustmed_date_max')?.c_date ?? null;
+
+    return minDate && maxDate
+      ? {
+          minYear: minDate.getFullYear(),
+          maxYear: maxDate.getFullYear(),
+        }
+      : null;
+  }
+
+  async getBNPVExpositionPeriod(): Promise<GlobalShortagesPeriod | null> {
+    const rows = await dbInstance
+      .selectFrom('config')
+      .select(['id', 'label', 'c_date'])
+      .where('label', 'in', ['bnpv_date_min', 'bnpv_date_max'])
+      .execute();
+
+    const minDate = rows.find((r) => r.label === 'bnpv_date_min')?.c_date ?? null;
+    const maxDate = rows.find((r) => r.label === 'bnpv_date_max')?.c_date ?? null;
 
     return minDate && maxDate
       ? {
