@@ -371,6 +371,7 @@ export type SpecialitiesReturn = {
 export type Speciality = {
   __typename?: 'Speciality';
   atc?: Maybe<MedicalAtc>;
+  bnpvPeriod?: Maybe<Period>;
   code: Scalars['String'];
   commercialisationState?: Maybe<Scalars['String']>;
   commercialisationType?: Maybe<Scalars['String']>;
@@ -1227,6 +1228,7 @@ export type SpecialityResolvers<
   ParentType extends ResolversParentTypes['Speciality'] = ResolversParentTypes['Speciality']
 > = {
   atc?: Resolver<Maybe<ResolversTypes['MedicalATC']>, ParentType, ContextType>;
+  bnpvPeriod?: Resolver<Maybe<ResolversTypes['Period']>, ParentType, ContextType>;
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   commercialisationState?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   commercialisationType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

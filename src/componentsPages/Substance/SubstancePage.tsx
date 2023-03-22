@@ -150,15 +150,15 @@ const SectionOneGlobalInformation = () => {
 
 const SectionSideEffects = () => {
   const { currentEntity } = useEntityContext<EntitySub>();
-  const { exposition } = currentEntity;
+  const { sideEffects } = currentEntity;
 
   return (
     <div className="min-h-screen text-center">
       <SectionTitle
         title="Déclarations d’effets indésirables suspectés de la substance active"
         subTitle={
-          exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
-            ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
+          sideEffects?.bnpvPeriod?.maxYear && sideEffects?.bnpvPeriod?.minYear
+            ? `Données issues de la période ${sideEffects?.bnpvPeriod?.minYear} - ${sideEffects?.bnpvPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />

@@ -45,7 +45,6 @@ export class PostgresOperations {
       .selectFrom('medicinal_products as mp')
       .where('mp.cis', 'in', cisCodes)
       .leftJoin('mp_atc as mp_a', 'mp.id', 'mp_a.mp_id')
-      .leftJoin('marketing_authorization_status as mka_s', 'mka_s.id', 'mp.ma_status_id')
       .leftJoin('marketing_authorization_types as mka_t', 'mka_t.id', 'mp.ma_type_id')
       .leftJoin('laboratories as lab', 'lab.id', 'mp.laboratory_id')
       .leftJoin('mp_exposition as mp_exp', 'mp.id', 'mp_exp.mp_id')
@@ -58,7 +57,7 @@ export class PostgresOperations {
         'mp_a.id as atcId',
         'mp_a.atc as actCode',
         'mp_a.atc_name as atcName',
-        'mka_s.status as commercialisationState',
+        'mp.marketing_status as commercialisationState',
         'mka_t.type as commercialisationType',
         'lab.id as laboratoryId',
         'lab.name as laboratoryName',
@@ -72,6 +71,7 @@ export class PostgresOperations {
       .execute();
 
     const openMedicExposition = await this._getOpenMedicExpositionPeriod();
+    const bnpvPeriod = await this.getBNPVExpositionPeriod();
 
     return rows.map((row) => {
       const {
@@ -137,6 +137,7 @@ export class PostgresOperations {
                 },
               }
             : null,
+        bnpvPeriod,
       };
     });
   }
@@ -999,11 +1000,11 @@ export class PostgresOperations {
     const rows = await dbInstance
       .selectFrom('config')
       .select(['id', 'label', 'c_date'])
-      .where('label', 'in', ['trustmed_date_min', 'trustmed_date_max'])
+      .where('label', 'in', ['trustmed_histo_date_min', 'trustmed_histo_date_max'])
       .execute();
 
-    const minDate = rows.find((r) => r.label === 'trustmed_date_min')?.c_date ?? null;
-    const maxDate = rows.find((r) => r.label === 'trustmed_date_max')?.c_date ?? null;
+    const minDate = rows.find((r) => r.label === 'trustmed_histo_date_min')?.c_date ?? null;
+    const maxDate = rows.find((r) => r.label === 'trustmed_histo_date_max')?.c_date ?? null;
 
     return minDate && maxDate
       ? {

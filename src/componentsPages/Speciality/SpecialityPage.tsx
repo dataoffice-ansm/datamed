@@ -42,6 +42,7 @@ import {
   type SpecialityUsagePerAge,
 } from '../../graphql/__generated__/generated-documents';
 import { UsageBarContainer } from '../../components/UsageBarContainer';
+import classNames from 'classnames';
 
 const SectionOneGlobalInformation = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
@@ -76,7 +77,14 @@ const SectionOneGlobalInformation = () => {
       {currentEntity.commercialisationState && (
         <div className="sectionPart mt-4 mb-8">
           <h5>État de commercialisation</h5>
-          <span className="py-2 px-3 rounded-lg bg-dark-green-100">
+          <span
+            className={classNames(
+              'py-2 px-3 rounded-lg',
+              currentEntity.commercialisationState === 'Commercialisée'
+                ? 'bg-dark-green-100'
+                : 'bg-red-100'
+            )}
+          >
             {currentEntity.commercialisationState}
           </span>
         </div>
@@ -300,8 +308,9 @@ const SectionMedicinalErrors = () => {
       <SectionTitle
         title="Déclarations d’erreurs médicamenteuses"
         subTitle={
-          exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
-            ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
+          currentEntity?.medicalErrors?.errMedPeriod?.maxYear &&
+          currentEntity?.medicalErrors?.errMedPeriod?.minYear
+            ? `Données issues de la période ${currentEntity?.medicalErrors?.errMedPeriod?.minYear} - ${currentEntity?.medicalErrors?.errMedPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -447,7 +456,7 @@ const SectionMedicinalErrors = () => {
 
 const SectionSideEffects = () => {
   const { currentEntity } = useEntityContext<EntityCis>();
-  const { exposition } = currentEntity;
+  const { bnpvPeriod } = currentEntity;
 
   const substances = useMemo(
     () => currentEntity?.substances ?? [],
@@ -459,8 +468,8 @@ const SectionSideEffects = () => {
       <SectionTitle
         title="Déclarations d&lsquo;effets indésirables suspectés, par substance active"
         subTitle={
-          exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
-            ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
+          bnpvPeriod?.maxYear && bnpvPeriod?.minYear
+            ? `Données issues de la période ${bnpvPeriod?.minYear} - ${bnpvPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -553,8 +562,9 @@ const SectionRisksShortageHistory = () => {
       <SectionTitle
         title="Historique des déclarations de ruptures et de risques de rupture de stock cloturées"
         subTitle={
-          exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
-            ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
+          currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear &&
+          currentEntity?.shortagesHistory?.trustMedPeriod?.minYear
+            ? `Données issues de la période ${currentEntity?.shortagesHistory?.trustMedPeriod?.minYear} - ${currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
@@ -690,11 +700,11 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => (
           label: 'Historique des risques et des ruptures de stocks',
           content: <SectionRisksShortageHistory />,
         },
-        {
-          id: 'publications',
-          label: 'Publications',
-          content: <SectionPublications />,
-        },
+        // {
+        //   id: 'publications',
+        //   label: 'Publications',
+        //   content: <SectionPublications />,
+        // },
       ]}
       render={(content) => content}
     >
