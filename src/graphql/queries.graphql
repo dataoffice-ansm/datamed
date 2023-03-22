@@ -15,6 +15,10 @@ fragment SpecialityFragment on Speciality {
     substances {
         ...SubstanceFragment
     }
+    bnpvPeriod {
+        minYear
+        maxYear
+    }
     dosageIndication
     dosageSubstances {
         id

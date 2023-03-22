@@ -265,6 +265,7 @@ type Speciality {
     atc: MedicalATC
     dosageIndication: String
     substances: [Substance]
+    bnpvPeriod: Period
     dosageSubstances: [SpecialitySubstance]
     pharmaForm: PharmaForm
     commercialisationState: String @capitalize

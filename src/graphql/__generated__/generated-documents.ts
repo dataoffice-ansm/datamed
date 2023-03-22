@@ -371,6 +371,7 @@ export type SpecialitiesReturn = {
 export type Speciality = {
   __typename?: 'Speciality';
   atc?: Maybe<MedicalAtc>;
+  bnpvPeriod?: Maybe<Period>;
   code: Scalars['String'];
   commercialisationState?: Maybe<Scalars['String']>;
   commercialisationType?: Maybe<Scalars['String']>;
@@ -569,6 +570,7 @@ export type SpecialityFragmentFragment = {
       } | null> | null;
     } | null;
   } | null> | null;
+  bnpvPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
   dosageSubstances?: Array<{
     __typename?: 'SpecialitySubstance';
     id: number;
@@ -827,6 +829,7 @@ export type SpecialityQuery = {
         } | null> | null;
       } | null;
     } | null> | null;
+    bnpvPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
     dosageSubstances?: Array<{
       __typename?: 'SpecialitySubstance';
       id: number;
@@ -1244,6 +1247,10 @@ export const SpecialityFragmentFragmentDoc = gql`
     }
     substances {
       ...SubstanceFragment
+    }
+    bnpvPeriod {
+      minYear
+      maxYear
     }
     dosageIndication
     dosageSubstances {
