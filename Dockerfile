@@ -53,20 +53,20 @@ COPY --from=builder /app/schema.graphql ./schema.graphql
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-#COPY --from=builder --chown=bloguser:nextjs /app/.next/standalone ./
-#COPY --from=builder --chown=bloguser:nextjs /app/.next/static ./.next/static
+COPY --from=builder --chown=nextjs:nextjs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nextjs /app/.next/static ./.next/static
 
 # TODO temporally run with root privileges (default)
 # Run container as non-root (unprivileged) user
-#USER nextjs
+USER nodejs/nextjs
 
-ENV PORT 80
-EXPOSE 80
+# default value fallback
+ARG PORT=3000
+EXPOSE ${PORT}
 
 # Next.js collects completely anonymous telemetry data about general usage.
 # Learn more here: https://nextjs.org/telemetry
 # Uncomment the following line in case you want to disable telemetry.
 ENV NEXT_TELEMETRY_DISABLED 1
 
-CMD [ "yarn", "start", "-p", "80" ]
-
+CMD [ "yarn", "start", "-p", "$PORT" ]
