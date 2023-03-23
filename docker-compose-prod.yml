@@ -2,14 +2,12 @@ version: '3.8'
 
 services:
   nextjs:
-    container_name: datamed-nextjs
-    image: "datamed-nextjs"
+    container_name: datamed
+    image: "datamed"
     env_file:
       - ./.env.production
     ports:
       - "80:80"
-    networks:
-      - datamed
     build:
       context: .
 
@@ -20,11 +18,4 @@ services:
       - /production/nginx/ssl/:/etc/nginx/ssl/:ro
     ports:
       - 443:443
-    networks:
-      - datamed
     restart: always
-
-networks:
-    datamed:
-        name: datamed_network
-        external: true
