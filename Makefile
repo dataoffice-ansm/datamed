@@ -16,7 +16,7 @@ down:
 	${DC} -f docker-compose-prod.yml down
 
 pull:
-	docker pull ${REG}/${ORG}/${PROJECT_NAME}/${APP_NAME}:${TAG}
+	docker pull ${REG}/${ORG}/${APP_NAME}:${TAG}
 
 clean:
 	docker container prune -f && docker image prune -f && echo Container updated successfully.
