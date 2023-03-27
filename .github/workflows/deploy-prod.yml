@@ -5,7 +5,6 @@ name: Build and Deploy
 on:
   push:
     branches: [ "develop", "master" ]
-    tags: [ 'v*.*.*' ]
   pull_request:
     branches: [ "develop", "master" ]
 
@@ -47,8 +46,9 @@ jobs:
         uses: docker/build-push-action@v3
         with:
           context: .
+          push: ${{ github.event_name != 'pull_request' }}
           platforms: linux/amd64
-          push: true
+          addLatest: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
