@@ -3,7 +3,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useLayoutContext } from '../contexts/LayoutContext';
 import { FullWidthRow } from '../components/FullWidthRow';
 import FaqSVG from '../assets/landing/landing-faq.svg';
-import { type FaqData, handleFetchFAQ } from '../faq/service';
+import { type FaqData, handleFetchFAQ } from '../services/faq';
 
 const PageFaq = ({ faqData }: { faqData: FaqData }) => {
   const [search, setSearch] = useState<string>('');

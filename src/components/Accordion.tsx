@@ -77,7 +77,7 @@ export const Accordion = ({
           <>
             <Disclosure.Button
               className={classNames(
-                'AccordionTriggerButton py-4 w-full flex gap-4 px-4 items-center font-medium justify-between',
+                'AccordionTriggerButton w-full flex gap-4 py-4 px-2 sm:px-4 items-center font-medium justify-between',
                 { 'opacity-50': disabled }
               )}
               disabled={disabled}

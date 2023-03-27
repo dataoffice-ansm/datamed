@@ -6,7 +6,7 @@ services:
     image: 'postgres:14'
     env_file:
       - ./.env
-      - ./.env.development
+      - .env.development
     volumes: # volume
       - ${POPULATE_HOST_DATA_PATH:?err}:/data
     ports:

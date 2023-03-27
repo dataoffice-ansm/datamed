@@ -52,6 +52,7 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
             : 'Période non disponible'
         }
         yearsOptions={globalShortagesYearsOptions}
+        theme="secondary-variant"
         render={({ selectedYearOption, selectedUnitOption }) => {
           const casesWithMeasureCount =
             shortagesPerYear?.find((e) => e.year === selectedYearOption)?.casesWithMeasuresCount ??

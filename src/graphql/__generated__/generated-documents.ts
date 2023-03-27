@@ -15,13 +15,12 @@ export type Scalars = {
   Float: number;
 };
 
-export type EntityExpositionPeriod = {
-  __typename?: 'EntityExpositionPeriod';
+export type EntityExposition = {
+  __typename?: 'EntityExposition';
   consumption?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['String']>;
   level?: Maybe<Scalars['String']>;
-  maxYear: Scalars['Int'];
-  minYear: Scalars['Int'];
+  openMedicPeriod?: Maybe<Period>;
 };
 
 export type GlobalExpositionPeriod = {
@@ -33,18 +32,12 @@ export type GlobalExpositionPeriod = {
 
 export type GlobalShortages = {
   __typename?: 'GlobalShortages';
-  period?: Maybe<GlobalShortagesPeriod>;
+  period?: Maybe<Period>;
   shortagesAtcPerYear?: Maybe<Array<ShortagesAtcPerYear>>;
   shortagesCausesPerYear?: Maybe<Array<ShortagesCausesPerYear>>;
   shortagesClassesPerYear?: Maybe<Array<ShortagesClassPerYear>>;
   shortagesMeasuresPerYear?: Maybe<Array<ShortagesMeasuresPerYear>>;
   shortagesPerYear?: Maybe<Array<ShortagesPerYear>>;
-};
-
-export type GlobalShortagesPeriod = {
-  __typename?: 'GlobalShortagesPeriod';
-  maxYear: Scalars['Int'];
-  minYear: Scalars['Int'];
 };
 
 export type GlobalStatistics = {
@@ -156,6 +149,7 @@ export enum MedicalErrorNature {
 export type MedicalErrors = {
   __typename?: 'MedicalErrors';
   apparitionStepRepartition?: Maybe<Array<Maybe<MedicalErrorsApparitionStep>>>;
+  errMedPeriod?: Maybe<Period>;
   natureRepartition?: Maybe<Array<Maybe<MedicalErrorsNature>>>;
   populationRepartition?: Maybe<Array<Maybe<MedicalErrorsPopulation>>>;
   sideEffectsOriginRepartition?: Maybe<WithRepartition>;
@@ -201,6 +195,12 @@ export type Mutation = {
 export type MutationLoginArgs = {
   password?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
+};
+
+export type Period = {
+  __typename?: 'Period';
+  maxYear: Scalars['Int'];
+  minYear: Scalars['Int'];
 };
 
 export type PharmaForm = {
@@ -371,12 +371,13 @@ export type SpecialitiesReturn = {
 export type Speciality = {
   __typename?: 'Speciality';
   atc?: Maybe<MedicalAtc>;
+  bnpvPeriod?: Maybe<Period>;
   code: Scalars['String'];
   commercialisationState?: Maybe<Scalars['String']>;
   commercialisationType?: Maybe<Scalars['String']>;
   dosageIndication?: Maybe<Scalars['String']>;
   dosageSubstances?: Maybe<Array<Maybe<SpecialitySubstance>>>;
-  exposition?: Maybe<EntityExpositionPeriod>;
+  exposition?: Maybe<EntityExposition>;
   id: Scalars['Int'];
   laboratory?: Maybe<Laboratory>;
   medicalErrors?: Maybe<MedicalErrors>;
@@ -417,6 +418,7 @@ export type SpecialityRupturesHistory = {
   __typename?: 'SpecialityRupturesHistory';
   meta?: Maybe<Meta>;
   shortages?: Maybe<Array<SpecialityAssociatedShortage>>;
+  trustMedPeriod?: Maybe<Period>;
 };
 
 export type SpecialitySubstance = {
@@ -439,7 +441,7 @@ export type SpecialityUsagePerAge = {
 export type Substance = {
   __typename?: 'Substance';
   code: Scalars['String'];
-  exposition?: Maybe<EntityExpositionPeriod>;
+  exposition?: Maybe<EntityExposition>;
   id: Scalars['Int'];
   name: Scalars['String'];
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionPerAge>>>;
@@ -450,6 +452,7 @@ export type Substance = {
 
 export type SubstanceSideEffects = {
   __typename?: 'SubstanceSideEffects';
+  bnpvPeriod?: Maybe<Period>;
   declarations?: Maybe<SubstanceSideEffectsDeclarations>;
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionPerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
@@ -501,12 +504,11 @@ export type SpecialityFragmentFragment = {
     code: string;
     name: string;
     exposition?: {
-      __typename?: 'EntityExpositionPeriod';
+      __typename?: 'EntityExposition';
       consumption?: number | null;
       level?: string | null;
       description?: string | null;
-      minYear: number;
-      maxYear: number;
+      openMedicPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
     } | null;
     retrievedSpecialities?: {
       __typename?: 'SpecialitiesReturn';
@@ -531,6 +533,7 @@ export type SpecialityFragmentFragment = {
     } | null> | null;
     sideEffects?: {
       __typename?: 'SubstanceSideEffects';
+      bnpvPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
       declarations?: { __typename?: 'SubstanceSideEffectsDeclarations'; total: number } | null;
       repartitionPerGender?: {
         __typename?: 'RepartitionPerGender';
@@ -567,6 +570,7 @@ export type SpecialityFragmentFragment = {
       } | null> | null;
     } | null;
   } | null> | null;
+  bnpvPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
   dosageSubstances?: Array<{
     __typename?: 'SpecialitySubstance';
     id: number;
@@ -594,15 +598,15 @@ export type SpecialityFragmentFragment = {
   } | null> | null;
   laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
   exposition?: {
-    __typename?: 'EntityExpositionPeriod';
+    __typename?: 'EntityExposition';
     consumption?: number | null;
     level?: string | null;
     description?: string | null;
-    minYear: number;
-    maxYear: number;
+    openMedicPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
   } | null;
   medicalErrors?: {
     __typename?: 'MedicalErrors';
+    errMedPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
     populationRepartition?: Array<{
       __typename?: 'MedicalErrorsPopulation';
       id?: number | null;
@@ -635,6 +639,7 @@ export type SpecialityFragmentFragment = {
   } | null;
   shortagesHistory?: {
     __typename?: 'SpecialityRupturesHistory';
+    trustMedPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
     shortages?: Array<{
       __typename?: 'SpecialityAssociatedShortage';
       num?: string | null;
@@ -664,12 +669,11 @@ export type SubstanceFragmentFragment = {
   code: string;
   name: string;
   exposition?: {
-    __typename?: 'EntityExpositionPeriod';
+    __typename?: 'EntityExposition';
     consumption?: number | null;
     level?: string | null;
     description?: string | null;
-    minYear: number;
-    maxYear: number;
+    openMedicPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
   } | null;
   retrievedSpecialities?: {
     __typename?: 'SpecialitiesReturn';
@@ -694,6 +698,7 @@ export type SubstanceFragmentFragment = {
   } | null> | null;
   sideEffects?: {
     __typename?: 'SubstanceSideEffects';
+    bnpvPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
     declarations?: { __typename?: 'SubstanceSideEffectsDeclarations'; total: number } | null;
     repartitionPerGender?: {
       __typename?: 'RepartitionPerGender';
@@ -758,12 +763,11 @@ export type SpecialityQuery = {
       code: string;
       name: string;
       exposition?: {
-        __typename?: 'EntityExpositionPeriod';
+        __typename?: 'EntityExposition';
         consumption?: number | null;
         level?: string | null;
         description?: string | null;
-        minYear: number;
-        maxYear: number;
+        openMedicPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
       } | null;
       retrievedSpecialities?: {
         __typename?: 'SpecialitiesReturn';
@@ -788,6 +792,7 @@ export type SpecialityQuery = {
       } | null> | null;
       sideEffects?: {
         __typename?: 'SubstanceSideEffects';
+        bnpvPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
         declarations?: { __typename?: 'SubstanceSideEffectsDeclarations'; total: number } | null;
         repartitionPerGender?: {
           __typename?: 'RepartitionPerGender';
@@ -824,6 +829,7 @@ export type SpecialityQuery = {
         } | null> | null;
       } | null;
     } | null> | null;
+    bnpvPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
     dosageSubstances?: Array<{
       __typename?: 'SpecialitySubstance';
       id: number;
@@ -851,15 +857,15 @@ export type SpecialityQuery = {
     } | null> | null;
     laboratory?: { __typename?: 'Laboratory'; id: number; name?: string | null } | null;
     exposition?: {
-      __typename?: 'EntityExpositionPeriod';
+      __typename?: 'EntityExposition';
       consumption?: number | null;
       level?: string | null;
       description?: string | null;
-      minYear: number;
-      maxYear: number;
+      openMedicPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
     } | null;
     medicalErrors?: {
       __typename?: 'MedicalErrors';
+      errMedPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
       populationRepartition?: Array<{
         __typename?: 'MedicalErrorsPopulation';
         id?: number | null;
@@ -892,6 +898,7 @@ export type SpecialityQuery = {
     } | null;
     shortagesHistory?: {
       __typename?: 'SpecialityRupturesHistory';
+      trustMedPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
       shortages?: Array<{
         __typename?: 'SpecialityAssociatedShortage';
         num?: string | null;
@@ -944,12 +951,11 @@ export type SubstanceQuery = {
     code: string;
     name: string;
     exposition?: {
-      __typename?: 'EntityExpositionPeriod';
+      __typename?: 'EntityExposition';
       consumption?: number | null;
       level?: string | null;
       description?: string | null;
-      minYear: number;
-      maxYear: number;
+      openMedicPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
     } | null;
     retrievedSpecialities?: {
       __typename?: 'SpecialitiesReturn';
@@ -974,6 +980,7 @@ export type SubstanceQuery = {
     } | null> | null;
     sideEffects?: {
       __typename?: 'SubstanceSideEffects';
+      bnpvPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
       declarations?: { __typename?: 'SubstanceSideEffectsDeclarations'; total: number } | null;
       repartitionPerGender?: {
         __typename?: 'RepartitionPerGender';
@@ -1086,7 +1093,7 @@ export type GlobalRupturesQuery = {
   __typename?: 'Query';
   getGlobalShortages?: {
     __typename?: 'GlobalShortages';
-    period?: { __typename?: 'GlobalShortagesPeriod'; minYear: number; maxYear: number } | null;
+    period?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
     shortagesPerYear?: Array<{
       __typename?: 'ShortagesPerYear';
       year: number;
@@ -1148,8 +1155,10 @@ export const SubstanceFragmentFragmentDoc = gql`
       consumption
       level
       description
-      minYear
-      maxYear
+      openMedicPeriod {
+        minYear
+        maxYear
+      }
     }
     retrievedSpecialities {
       meta {
@@ -1177,6 +1186,10 @@ export const SubstanceFragmentFragmentDoc = gql`
       valuePercent
     }
     sideEffects {
+      bnpvPeriod {
+        minYear
+        maxYear
+      }
       declarations {
         total
       }
@@ -1235,6 +1248,10 @@ export const SpecialityFragmentFragmentDoc = gql`
     substances {
       ...SubstanceFragment
     }
+    bnpvPeriod {
+      minYear
+      maxYear
+    }
     dosageIndication
     dosageSubstances {
       id
@@ -1276,10 +1293,16 @@ export const SpecialityFragmentFragmentDoc = gql`
       consumption
       level
       description
-      minYear
-      maxYear
+      openMedicPeriod {
+        minYear
+        maxYear
+      }
     }
     medicalErrors {
+      errMedPeriod {
+        minYear
+        maxYear
+      }
       populationRepartition {
         id
         range
@@ -1313,6 +1336,10 @@ export const SpecialityFragmentFragmentDoc = gql`
       }
     }
     shortagesHistory {
+      trustMedPeriod {
+        minYear
+        maxYear
+      }
       shortages {
         num
         state

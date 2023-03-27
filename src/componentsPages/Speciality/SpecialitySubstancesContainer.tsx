@@ -53,7 +53,7 @@ export const SpecialitySubstancesContainer = ({
           />
         </div>
       </div>
-      <div className="SubstancesContainerContent p-6">
+      <div className="SubstancesContainerContent py-4 px-2 sm:px-6 sm-py-6">
         {!substances.length || !selectedSubstance ? (
           <div>Aucune substances disponibles</div>
         ) : (

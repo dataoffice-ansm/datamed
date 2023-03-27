@@ -1,19 +1,28 @@
 version: '3.8'
 
 services:
-  nginx:
-    build: ./nginx
-    restart: unless-stopped
-    container_name: datamed-nginx
-    ports:
-      - "8080:80"
-
-  nextjs:
-    container_name: datamed-nextjs
-    image: "datamed-nextjs"
-    build:
-      context: .
+  app:
+    container_name: datamed-app
+    image: "ghcr.io/dataoffice-ansm/datamed:latest"
+    platform: linux/amd64
     env_file:
-      - ./.env.production
+      - .env.production
+    ports:
+      - "3000:3000"
+    #build:
+    #  context: .
+
+  nginx:
+    container_name: datamed-nginx
+    image: nginx:latest
     ports:
       - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    #volumes:
+    #  - /production/nginx/conf:/etc/nginx/conf.d:ro
+    #  - /production/nginx/ssl/:/etc/nginx/ssl/:ro
+    depends_on:
+      - app
+    restart: always

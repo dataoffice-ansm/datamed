@@ -1,5 +1,5 @@
 import type { HTMLAttributes, ReactNode } from 'react';
-import { useCallback, useMemo, useState } from 'react';
+import { type MutableRefObject, useCallback, useEffect, useMemo, useState } from 'react';
 import classNames from 'classnames';
 
 import FirstPageSVG from '../assets/pictos/icons/pagination/first.svg';
@@ -7,11 +7,13 @@ import LastPageSVG from '../assets/pictos/icons/pagination/last.svg';
 import PreviousPageSVG from '../assets/pictos/icons/pagination/previous.svg';
 import NextPageSVG from '../assets/pictos/icons/pagination/next.svg';
 import { NotEnoughData } from './NotEnoughData';
+import { useLayoutContext } from '../contexts/LayoutContext';
 
 export type PaginatedListThemeColor = 'primary' | 'secondary' | 'grey';
 
 export type PaginatedListProps<T> = {
   data: T[];
+  listRef?: MutableRefObject<HTMLDivElement | null>;
   renderItem: (_item: T, _index: number) => ReactNode | JSX.Element;
   theme?: PaginatedListThemeColor;
 };
@@ -55,18 +57,13 @@ const NavigationButton = ({
   </button>
 );
 
-/**
- *
- * @param data
- * @param renderItem
- * @param theme
- * @constructor
- */
 export const PaginatedList = <T,>({
   data,
   renderItem,
+  listRef,
   theme = 'primary',
 }: PaginatedListProps<T>) => {
+  const { navBarHeight, stickyHeroHeight } = useLayoutContext();
   const [pageIndex, setPageIndex] = useState<number>(0);
   const [itemsPerPage, setItemsPerPage] = useState<number>(10);
   const sizeOptions = useMemo(() => [5, 10, 25, 50, 100], []);
@@ -88,8 +85,24 @@ export const PaginatedList = <T,>({
 
   const handleSelectPage = useCallback((page: number) => {
     setPageIndex(page);
-    // ref?.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }, []);
+
+  const scrollTopList = useCallback(() => {
+    if (listRef?.current) {
+      const y =
+        (listRef.current.getBoundingClientRect().top ?? 0) +
+        window.scrollY -
+        (navBarHeight + stickyHeroHeight);
+      window.scrollTo({
+        top: y,
+        behavior: 'smooth',
+      });
+    }
+  }, [listRef, navBarHeight, stickyHeroHeight]);
+
+  useEffect(() => {
+    scrollTopList();
+  }, [pageIndex, scrollTopList]);
 
   const pagination = useMemo(
     () => (
@@ -148,7 +161,7 @@ export const PaginatedList = <T,>({
           <NavigationButton
             disabled={pageIndex + 1 === maxPages}
             onClick={() => {
-              handleSelectPageSize(maxPages);
+              handleSelectPage(maxPages - 1);
             }}
           >
             <LastPageSVG className="hover:fill-white h-6 w-6" />

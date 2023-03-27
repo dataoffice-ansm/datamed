@@ -4,8 +4,8 @@ import { Accordion } from '../../components/Accordion';
 import { documentToReactComponents } from '@contentful/rich-text-react-renderer';
 
 import SparkSVG from '../../assets/pictos/icons/spark.svg';
-import { type FaqData, type FaqSectionPart } from '../../faq/service';
-import { filterFaqEntries, findResultsInFaq } from '../../faq/utils';
+import { type FaqData, type FaqSectionPart } from '../../services/faq';
+import { filterFaqEntries, findResultsInFaq } from '../../utils/faq';
 import { type Document } from '@contentful/rich-text-types';
 
 const iconColor = (color?: string): string => {

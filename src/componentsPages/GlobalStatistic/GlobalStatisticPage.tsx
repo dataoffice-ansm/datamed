@@ -79,7 +79,7 @@ const SectionDemography = () => {
                     value={repartitionPerGender?.female?.valuePercent}
                     label="Femmes"
                     valueClassName="mt-2 text-dark-green"
-                    icon={<WomanIllustration className="w-32" />}
+                    icon={<WomanIllustration className="w-24 sm:w-32" />}
                   />
                 )}
                 {repartitionPerGender?.male?.valuePercent && (
@@ -87,7 +87,7 @@ const SectionDemography = () => {
                     value={repartitionPerGender.male?.valuePercent}
                     valueClassName="mt-2 text-dark-green"
                     label="Hommes"
-                    icon={<ManIllustration className="w-32" />}
+                    icon={<ManIllustration className="w-24 sm:w-32" />}
                   />
                 )}
               </div>

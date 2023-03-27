@@ -1,5 +1,4 @@
 import { config } from '../config/config';
-import { faqQuery } from './query';
 import axios from 'axios';
 import { type Document } from '@contentful/rich-text-types';
 
@@ -40,6 +39,42 @@ export type FaqSectionPartEntry = {
     json: Document;
   };
 };
+
+export const faqQuery = `
+   query getFAQ($entryId: String!) {
+      websitefaq(id: $entryId) {
+        title
+        sectionsCollection(limit: 20) {
+          items {
+            title
+            htmlId
+            disabled
+            sectionsCollection(limit: 20) {
+              items {
+                title
+                htmlId
+                disabled
+                style
+                bubbleColor
+                entriesCollection(limit: 20) {
+                  items {
+                    title
+                    disabled
+                    content {
+                      json
+                    }
+                    subContent {
+                      json
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+`;
 
 const fetchContentfulFAQ = async () => {
   if (!config.contentful.spaceId || !config.contentful.accessToken) {

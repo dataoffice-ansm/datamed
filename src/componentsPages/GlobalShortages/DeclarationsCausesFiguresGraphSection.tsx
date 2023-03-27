@@ -34,6 +34,7 @@ export const DeclarationsCausesFiguresGraphSection = (_props: HTMLAttributes<HTM
         title="Causes des signalements de ruptures et risques de rupture de stock"
         className="max-w-full"
         yearsOptions={globalShortagesYearsOptions}
+        theme="secondary-variant"
         render={({ selectedUnitOption, selectedYearOption }) => {
           const shortagesCauseForSelectedYear =
             shortagesCausesPerYear && selectedYearOption

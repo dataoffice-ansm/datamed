@@ -1,8 +1,8 @@
 import { dbInstance } from './postgreDb';
 import type {
-  EntityExpositionPeriod,
+  EntityExposition,
   GlobalExpositionPeriod,
-  GlobalShortagesPeriod,
+  Period,
   GlobalStatistics,
   GlobalStatsUsagePerAge,
   GlobalStatsUsagePerGravity,
@@ -45,7 +45,6 @@ export class PostgresOperations {
       .selectFrom('medicinal_products as mp')
       .where('mp.cis', 'in', cisCodes)
       .leftJoin('mp_atc as mp_a', 'mp.id', 'mp_a.mp_id')
-      .leftJoin('marketing_authorization_status as mka_s', 'mka_s.id', 'mp.ma_status_id')
       .leftJoin('marketing_authorization_types as mka_t', 'mka_t.id', 'mp.ma_type_id')
       .leftJoin('laboratories as lab', 'lab.id', 'mp.laboratory_id')
       .leftJoin('mp_exposition as mp_exp', 'mp.id', 'mp_exp.mp_id')
@@ -58,7 +57,7 @@ export class PostgresOperations {
         'mp_a.id as atcId',
         'mp_a.atc as actCode',
         'mp_a.atc_name as atcName',
-        'mka_s.status as commercialisationState',
+        'mp.marketing_status as commercialisationState',
         'mka_t.type as commercialisationType',
         'lab.id as laboratoryId',
         'lab.name as laboratoryName',
@@ -72,6 +71,7 @@ export class PostgresOperations {
       .execute();
 
     const openMedicExposition = await this._getOpenMedicExpositionPeriod();
+    const bnpvPeriod = await this.getBNPVExpositionPeriod();
 
     return rows.map((row) => {
       const {
@@ -131,10 +131,13 @@ export class PostgresOperations {
                 consumption,
                 level: expositionInfos.level,
                 description: expositionInfos.description,
-                minYear: openMedicExposition.minYear,
-                maxYear: openMedicExposition?.maxYear,
+                openMedicPeriod: {
+                  minYear: openMedicExposition.minYear,
+                  maxYear: openMedicExposition?.maxYear,
+                },
               }
             : null,
+        bnpvPeriod,
       };
     });
   }
@@ -398,7 +401,6 @@ export class PostgresOperations {
         // classes
         classification,
         // cause
-        causeId,
         causeType,
         causeDefinition,
       } = row;
@@ -747,7 +749,7 @@ export class PostgresOperations {
     }, []);
   }
 
-  async getSubstanceExposition(subId: number): Promise<EntityExpositionPeriod | null> {
+  async getSubstanceExposition(subId: number): Promise<EntityExposition | null> {
     const openMedicExposition = await this._getOpenMedicExpositionPeriod();
 
     const row = await dbInstance
@@ -771,8 +773,10 @@ export class PostgresOperations {
         consumption: row.consumption,
         level: expositionInfos.level,
         description: expositionInfos.description,
-        minYear: openMedicExposition.minYear,
-        maxYear: openMedicExposition?.maxYear,
+        openMedicPeriod: {
+          minYear: openMedicExposition.minYear,
+          maxYear: openMedicExposition?.maxYear,
+        },
       };
     }
 
@@ -939,7 +943,7 @@ export class PostgresOperations {
       .selectFrom('global_se_notifiers as gnotif')
       .leftJoin('notifiers', 'notifiers.id', 'gnotif.notifier_id')
       .select([
-        'gnotif.id as id',
+        'notifiers.id as id',
         'gnotif.n as value',
         'gnotif.pct as valuePercent',
         'notifiers.job as job',
@@ -992,15 +996,51 @@ export class PostgresOperations {
       : null;
   }
 
-  async getGlobalShortagesPeriod(): Promise<GlobalShortagesPeriod | null> {
+  async getTrustMedExpositionPeriod(): Promise<Period | null> {
     const rows = await dbInstance
       .selectFrom('config')
       .select(['id', 'label', 'c_date'])
-      .where('label', 'in', ['trustmed_date_min', 'trustmed_date_max'])
+      .where('label', 'in', ['trustmed_histo_date_min', 'trustmed_histo_date_max'])
       .execute();
 
-    const minDate = rows.find((r) => r.label === 'trustmed_date_min')?.c_date ?? null;
-    const maxDate = rows.find((r) => r.label === 'trustmed_date_max')?.c_date ?? null;
+    const minDate = rows.find((r) => r.label === 'trustmed_histo_date_min')?.c_date ?? null;
+    const maxDate = rows.find((r) => r.label === 'trustmed_histo_date_max')?.c_date ?? null;
+
+    return minDate && maxDate
+      ? {
+          minYear: minDate.getFullYear(),
+          maxYear: maxDate.getFullYear(),
+        }
+      : null;
+  }
+
+  async getErrMedExpositionPeriod(): Promise<Period | null> {
+    const rows = await dbInstance
+      .selectFrom('config')
+      .select(['id', 'label', 'c_date'])
+      .where('label', 'in', ['emed_date_min', 'emed_date_max'])
+      .execute();
+
+    const minDate = rows.find((r) => r.label === 'emed_date_min')?.c_date ?? null;
+    const maxDate = rows.find((r) => r.label === 'emed_date_max')?.c_date ?? null;
+
+    return minDate && maxDate
+      ? {
+          minYear: minDate.getFullYear(),
+          maxYear: maxDate.getFullYear(),
+        }
+      : null;
+  }
+
+  async getBNPVExpositionPeriod(): Promise<Period | null> {
+    const rows = await dbInstance
+      .selectFrom('config')
+      .select(['id', 'label', 'c_date'])
+      .where('label', 'in', ['bnpv_date_min', 'bnpv_date_max'])
+      .execute();
+
+    const minDate = rows.find((r) => r.label === 'bnpv_date_min')?.c_date ?? null;
+    const maxDate = rows.find((r) => r.label === 'bnpv_date_max')?.c_date ?? null;
 
     return minDate && maxDate
       ? {

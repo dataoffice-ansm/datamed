@@ -120,6 +120,7 @@ type MedicalErrorsNature {
 }
 
 type MedicalErrors {
+    errMedPeriod: Period
     populationRepartition: [MedicalErrorsPopulation]
     sideEffectsOriginRepartition: WithRepartition
     apparitionStepRepartition: [MedicalErrorsApparitionStep]
@@ -151,6 +152,7 @@ type SpecialityAssociatedShortage {
 type SpecialityRupturesHistory {
     shortages: [SpecialityAssociatedShortage!]
     meta: Meta
+    trustMedPeriod: Period
 }
 
 type HltEffect {
@@ -215,6 +217,7 @@ type SubstanceSideEffectsDeclarations {
 }
 
 type SubstanceSideEffects {
+    bnpvPeriod: Period
     declarations: SubstanceSideEffectsDeclarations
     repartitionPerGender: RepartitionPerGender
     repartitionPerAge: [RepartitionPerAge]
@@ -222,9 +225,8 @@ type SubstanceSideEffects {
     repartitionPerPathology: [RepartitionPerPathology]
 }
 
-type EntityExpositionPeriod {
-    minYear: Int!
-    maxYear: Int!
+type EntityExposition {
+    openMedicPeriod: Period
     consumption: Int
     level: String
     description: String
@@ -234,7 +236,7 @@ type Substance {
     id: Int!
     code: String!
     name: String! @capitalize
-    exposition: EntityExpositionPeriod
+    exposition: EntityExposition
     repartitionPerGender: RepartitionPerGender
     repartitionPerAge: [RepartitionPerAge]
     sideEffects: SubstanceSideEffects
@@ -263,6 +265,7 @@ type Speciality {
     atc: MedicalATC
     dosageIndication: String
     substances: [Substance]
+    bnpvPeriod: Period
     dosageSubstances: [SpecialitySubstance]
     pharmaForm: PharmaForm
     commercialisationState: String @capitalize
@@ -270,7 +273,7 @@ type Speciality {
     laboratory: Laboratory @capitalize
     repartitionPerGender: RepartitionPerGender
     repartitionPerAge: [SpecialityUsagePerAge]
-    exposition: EntityExpositionPeriod
+    exposition: EntityExposition
     medicalErrors: MedicalErrors
     publications: [Publication]
     shortagesHistory: SpecialityRupturesHistory
@@ -317,7 +320,7 @@ type RupturesTotalActionPerYear {
     totalMeasures: Int
 }
 
-type GlobalShortagesPeriod {
+type Period {
     minYear: Int!
     maxYear: Int!
 }
@@ -370,7 +373,7 @@ type ShortagesMeasuresPerYear {
 }
 
 type GlobalShortages {
-    period: GlobalShortagesPeriod
+    period: Period
     shortagesPerYear: [ShortagesPerYear!]
     shortagesClassesPerYear: [ShortagesClassPerYear!]
     shortagesCausesPerYear: [ShortagesCausesPerYear!]

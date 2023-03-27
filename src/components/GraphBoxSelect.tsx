@@ -83,18 +83,18 @@ export const GraphBoxSelect = ({
   return (
     <div
       className={classNames(
-        'GraphBoxSelect p-4',
+        'GraphBoxSelect p-2 sm:p-4',
         !layoutSection && 'rounded-lg shadow bg-white',
         className
       )}
     >
-      <div className="GraphBoxSelectHeader flex flex-col px-4">
-        <div className="GraphBoxSelectTitle flex flex-col sm:flex-row gap-4 justify-between items-start">
+      <div className="GraphBoxSelectHeader flex flex-col px-2 sm:px-4">
+        <div className="GraphBoxSelectTitle flex flex-col sm:flex-row gap-2 sm:gap-4 justify-between items-start">
           <div className="inner flex items-start gap-2 w-full text-left w-full md:w-2/3">
             <span
               className={classNames(
                 layoutSection && 'font-medium text-2xl',
-                'font-medium text-left mt-0 mb-2'
+                'font-medium text-left mt-0 sm:mb-2'
               )}
             >
               {title}
@@ -123,7 +123,7 @@ export const GraphBoxSelect = ({
               <div className="GraphFiguresContainerSelect max-w-xs">
                 <Select
                   options={yearsOptions}
-                  theme="secondary-variant"
+                  theme={theme}
                   onSelectOption={(index, option) => {
                     onChangeYear(option.value as number);
                   }}

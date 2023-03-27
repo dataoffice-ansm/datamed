@@ -15,13 +15,12 @@ export type Scalars = {
   Float: number;
 };
 
-export type EntityExpositionPeriod = {
-  __typename?: 'EntityExpositionPeriod';
+export type EntityExposition = {
+  __typename?: 'EntityExposition';
   consumption?: Maybe<Scalars['Int']>;
   description?: Maybe<Scalars['String']>;
   level?: Maybe<Scalars['String']>;
-  maxYear: Scalars['Int'];
-  minYear: Scalars['Int'];
+  openMedicPeriod?: Maybe<Period>;
 };
 
 export type GlobalExpositionPeriod = {
@@ -33,18 +32,12 @@ export type GlobalExpositionPeriod = {
 
 export type GlobalShortages = {
   __typename?: 'GlobalShortages';
-  period?: Maybe<GlobalShortagesPeriod>;
+  period?: Maybe<Period>;
   shortagesAtcPerYear?: Maybe<Array<ShortagesAtcPerYear>>;
   shortagesCausesPerYear?: Maybe<Array<ShortagesCausesPerYear>>;
   shortagesClassesPerYear?: Maybe<Array<ShortagesClassPerYear>>;
   shortagesMeasuresPerYear?: Maybe<Array<ShortagesMeasuresPerYear>>;
   shortagesPerYear?: Maybe<Array<ShortagesPerYear>>;
-};
-
-export type GlobalShortagesPeriod = {
-  __typename?: 'GlobalShortagesPeriod';
-  maxYear: Scalars['Int'];
-  minYear: Scalars['Int'];
 };
 
 export type GlobalStatistics = {
@@ -156,6 +149,7 @@ export enum MedicalErrorNature {
 export type MedicalErrors = {
   __typename?: 'MedicalErrors';
   apparitionStepRepartition?: Maybe<Array<Maybe<MedicalErrorsApparitionStep>>>;
+  errMedPeriod?: Maybe<Period>;
   natureRepartition?: Maybe<Array<Maybe<MedicalErrorsNature>>>;
   populationRepartition?: Maybe<Array<Maybe<MedicalErrorsPopulation>>>;
   sideEffectsOriginRepartition?: Maybe<WithRepartition>;
@@ -201,6 +195,12 @@ export type Mutation = {
 export type MutationLoginArgs = {
   password?: InputMaybe<Scalars['String']>;
   username?: InputMaybe<Scalars['String']>;
+};
+
+export type Period = {
+  __typename?: 'Period';
+  maxYear: Scalars['Int'];
+  minYear: Scalars['Int'];
 };
 
 export type PharmaForm = {
@@ -371,12 +371,13 @@ export type SpecialitiesReturn = {
 export type Speciality = {
   __typename?: 'Speciality';
   atc?: Maybe<MedicalAtc>;
+  bnpvPeriod?: Maybe<Period>;
   code: Scalars['String'];
   commercialisationState?: Maybe<Scalars['String']>;
   commercialisationType?: Maybe<Scalars['String']>;
   dosageIndication?: Maybe<Scalars['String']>;
   dosageSubstances?: Maybe<Array<Maybe<SpecialitySubstance>>>;
-  exposition?: Maybe<EntityExpositionPeriod>;
+  exposition?: Maybe<EntityExposition>;
   id: Scalars['Int'];
   laboratory?: Maybe<Laboratory>;
   medicalErrors?: Maybe<MedicalErrors>;
@@ -417,6 +418,7 @@ export type SpecialityRupturesHistory = {
   __typename?: 'SpecialityRupturesHistory';
   meta?: Maybe<Meta>;
   shortages?: Maybe<Array<SpecialityAssociatedShortage>>;
+  trustMedPeriod?: Maybe<Period>;
 };
 
 export type SpecialitySubstance = {
@@ -439,7 +441,7 @@ export type SpecialityUsagePerAge = {
 export type Substance = {
   __typename?: 'Substance';
   code: Scalars['String'];
-  exposition?: Maybe<EntityExpositionPeriod>;
+  exposition?: Maybe<EntityExposition>;
   id: Scalars['Int'];
   name: Scalars['String'];
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionPerAge>>>;
@@ -450,6 +452,7 @@ export type Substance = {
 
 export type SubstanceSideEffects = {
   __typename?: 'SubstanceSideEffects';
+  bnpvPeriod?: Maybe<Period>;
   declarations?: Maybe<SubstanceSideEffectsDeclarations>;
   repartitionPerAge?: Maybe<Array<Maybe<RepartitionPerAge>>>;
   repartitionPerGender?: Maybe<RepartitionPerGender>;
@@ -565,11 +568,10 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
-  EntityExpositionPeriod: ResolverTypeWrapper<EntityExpositionPeriod>;
+  EntityExposition: ResolverTypeWrapper<EntityExposition>;
   Float: ResolverTypeWrapper<Scalars['Float']>;
   GlobalExpositionPeriod: ResolverTypeWrapper<GlobalExpositionPeriod>;
   GlobalShortages: ResolverTypeWrapper<GlobalShortages>;
-  GlobalShortagesPeriod: ResolverTypeWrapper<GlobalShortagesPeriod>;
   GlobalStatistics: ResolverTypeWrapper<GlobalStatistics>;
   GlobalStatsUsagePerAge: ResolverTypeWrapper<GlobalStatsUsagePerAge>;
   GlobalStatsUsagePerGravity: ResolverTypeWrapper<GlobalStatsUsagePerGravity>;
@@ -591,6 +593,7 @@ export type ResolversTypes = {
   MedicalErrorsPopulation: ResolverTypeWrapper<MedicalErrorsPopulation>;
   Meta: ResolverTypeWrapper<Meta>;
   Mutation: ResolverTypeWrapper<{}>;
+  Period: ResolverTypeWrapper<Period>;
   PharmaForm: ResolverTypeWrapper<PharmaForm>;
   PharmaFormType: PharmaFormType;
   Publication: ResolverTypeWrapper<Publication>;
@@ -628,11 +631,10 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Boolean: Scalars['Boolean'];
-  EntityExpositionPeriod: EntityExpositionPeriod;
+  EntityExposition: EntityExposition;
   Float: Scalars['Float'];
   GlobalExpositionPeriod: GlobalExpositionPeriod;
   GlobalShortages: GlobalShortages;
-  GlobalShortagesPeriod: GlobalShortagesPeriod;
   GlobalStatistics: GlobalStatistics;
   GlobalStatsUsagePerAge: GlobalStatsUsagePerAge;
   GlobalStatsUsagePerGravity: GlobalStatsUsagePerGravity;
@@ -652,6 +654,7 @@ export type ResolversParentTypes = {
   MedicalErrorsPopulation: MedicalErrorsPopulation;
   Meta: Meta;
   Mutation: {};
+  Period: Period;
   PharmaForm: PharmaForm;
   Publication: Publication;
   PublicationType: PublicationType;
@@ -712,15 +715,14 @@ export type UppercaseDirectiveResolver<
   Args = UppercaseDirectiveArgs
 > = DirectiveResolverFn<Result, Parent, ContextType, Args>;
 
-export type EntityExpositionPeriodResolvers<
+export type EntityExpositionResolvers<
   ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['EntityExpositionPeriod'] = ResolversParentTypes['EntityExpositionPeriod']
+  ParentType extends ResolversParentTypes['EntityExposition'] = ResolversParentTypes['EntityExposition']
 > = {
   consumption?: Resolver<Maybe<ResolversTypes['Int']>, ParentType, ContextType>;
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   level?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  maxYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  minYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  openMedicPeriod?: Resolver<Maybe<ResolversTypes['Period']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -738,7 +740,7 @@ export type GlobalShortagesResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['GlobalShortages'] = ResolversParentTypes['GlobalShortages']
 > = {
-  period?: Resolver<Maybe<ResolversTypes['GlobalShortagesPeriod']>, ParentType, ContextType>;
+  period?: Resolver<Maybe<ResolversTypes['Period']>, ParentType, ContextType>;
   shortagesAtcPerYear?: Resolver<
     Maybe<Array<ResolversTypes['ShortagesAtcPerYear']>>,
     ParentType,
@@ -764,15 +766,6 @@ export type GlobalShortagesResolvers<
     ParentType,
     ContextType
   >;
-  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
-};
-
-export type GlobalShortagesPeriodResolvers<
-  ContextType = ContextValue,
-  ParentType extends ResolversParentTypes['GlobalShortagesPeriod'] = ResolversParentTypes['GlobalShortagesPeriod']
-> = {
-  maxYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
-  minYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -933,6 +926,7 @@ export type MedicalErrorsResolvers<
     ParentType,
     ContextType
   >;
+  errMedPeriod?: Resolver<Maybe<ResolversTypes['Period']>, ParentType, ContextType>;
   natureRepartition?: Resolver<
     Maybe<Array<Maybe<ResolversTypes['MedicalErrorsNature']>>>,
     ParentType,
@@ -1005,6 +999,15 @@ export type MutationResolvers<
     ContextType,
     Partial<MutationLoginArgs>
   >;
+};
+
+export type PeriodResolvers<
+  ContextType = ContextValue,
+  ParentType extends ResolversParentTypes['Period'] = ResolversParentTypes['Period']
+> = {
+  maxYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  minYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type PharmaFormResolvers<
@@ -1225,6 +1228,7 @@ export type SpecialityResolvers<
   ParentType extends ResolversParentTypes['Speciality'] = ResolversParentTypes['Speciality']
 > = {
   atc?: Resolver<Maybe<ResolversTypes['MedicalATC']>, ParentType, ContextType>;
+  bnpvPeriod?: Resolver<Maybe<ResolversTypes['Period']>, ParentType, ContextType>;
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   commercialisationState?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   commercialisationType?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
@@ -1234,7 +1238,7 @@ export type SpecialityResolvers<
     ParentType,
     ContextType
   >;
-  exposition?: Resolver<Maybe<ResolversTypes['EntityExpositionPeriod']>, ParentType, ContextType>;
+  exposition?: Resolver<Maybe<ResolversTypes['EntityExposition']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   laboratory?: Resolver<Maybe<ResolversTypes['Laboratory']>, ParentType, ContextType>;
   medicalErrors?: Resolver<Maybe<ResolversTypes['MedicalErrors']>, ParentType, ContextType>;
@@ -1307,6 +1311,7 @@ export type SpecialityRupturesHistoryResolvers<
     ParentType,
     ContextType
   >;
+  trustMedPeriod?: Resolver<Maybe<ResolversTypes['Period']>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
@@ -1338,7 +1343,7 @@ export type SubstanceResolvers<
   ParentType extends ResolversParentTypes['Substance'] = ResolversParentTypes['Substance']
 > = {
   code?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  exposition?: Resolver<Maybe<ResolversTypes['EntityExpositionPeriod']>, ParentType, ContextType>;
+  exposition?: Resolver<Maybe<ResolversTypes['EntityExposition']>, ParentType, ContextType>;
   id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   repartitionPerAge?: Resolver<
@@ -1364,6 +1369,7 @@ export type SubstanceSideEffectsResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SubstanceSideEffects'] = ResolversParentTypes['SubstanceSideEffects']
 > = {
+  bnpvPeriod?: Resolver<Maybe<ResolversTypes['Period']>, ParentType, ContextType>;
   declarations?: Resolver<
     Maybe<ResolversTypes['SubstanceSideEffectsDeclarations']>,
     ParentType,
@@ -1428,10 +1434,9 @@ export type WithRepartitionResolvers<
 };
 
 export type Resolvers<ContextType = ContextValue> = {
-  EntityExpositionPeriod?: EntityExpositionPeriodResolvers<ContextType>;
+  EntityExposition?: EntityExpositionResolvers<ContextType>;
   GlobalExpositionPeriod?: GlobalExpositionPeriodResolvers<ContextType>;
   GlobalShortages?: GlobalShortagesResolvers<ContextType>;
-  GlobalShortagesPeriod?: GlobalShortagesPeriodResolvers<ContextType>;
   GlobalStatistics?: GlobalStatisticsResolvers<ContextType>;
   GlobalStatsUsagePerAge?: GlobalStatsUsagePerAgeResolvers<ContextType>;
   GlobalStatsUsagePerGravity?: GlobalStatsUsagePerGravityResolvers<ContextType>;
@@ -1450,6 +1455,7 @@ export type Resolvers<ContextType = ContextValue> = {
   MedicalErrorsPopulation?: MedicalErrorsPopulationResolvers<ContextType>;
   Meta?: MetaResolvers<ContextType>;
   Mutation?: MutationResolvers<ContextType>;
+  Period?: PeriodResolvers<ContextType>;
   PharmaForm?: PharmaFormResolvers<ContextType>;
   Publication?: PublicationResolvers<ContextType>;
   PublicationType?: PublicationTypeResolvers<ContextType>;
