@@ -1,7 +1,7 @@
 SHELL := /bin/bash
 DOCKER := $(shell type -p docker)
 DC := $(shell type -p docker-compose)
-TAG := master
+TAG := latest
 APP_NAME := datamed
 PROJECT_NAME := datamed
 ORG := dataoffice-ansm
