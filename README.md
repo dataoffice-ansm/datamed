@@ -1,49 +1,79 @@
 ## Datamed - Documentations
 
-First, run the development server:
+L’Agence nationale de sécurité des médicaments et des produits de santé (ANSM) souhaite mettre en place des outils lui permettant de rendre plus accessibles aux patients, professionnels de santé et plus largement au grand public ses données sur les médicaments.
+cf: [défi EIG](https://eig.etalab.gouv.fr/defis/datamed)
+
+#Installation
+
+1. Installation des dépendances
 
 ```bash
-npm run dev
-# or
+yarn
+```
+
+2. Variables d'environnement
+
+A partir du fichier `.example.env`, créer un fichier `.env.developement` avec les variables adéquates
+
+3. Lancement de l'application:
+
+```bash
 yarn dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+# Fonctionnement
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+L'application est construite avec les outils suivants:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- NextJS 12
+- Typescript
+- Kysely
+- GraphQL
+- Graphql-codegen
+- Tailwindcss
 
-## Learn More
+L'application exploite la technologie SSR de NextJS afin de rendre les pages coté serveur, ce qui notamment aux pages d'être indexables par les moteurs de recherches
 
-To learn more about Next.js, take a look at the following resources:
+L'application est construite sur une architecture schema-driven, elle est intégralement typée et la seule source de vérité est le schéma GraphQL (`schema.graphql`)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+# Datasources
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Postgres:
+Une seule source de données est présente au sein de l'application et ceci est assuré par l'ORM `Kysely` qui permet un typage fort du modèle de la base de données avec Typescript
 
-## Deploy on Vercel
+L'application permet d'écouter le schéma SQL de cette source de données afin de faciliter ses migrations éventuelles
+Pour ce faire, il suffit de:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- Exéctuter la commande `yarn kyselygen`
+- Récupérer le fichier `.d.ts`
+- Le copier dans le fichier `schema.introspection.ts`
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+# API GraphQL
 
-## Conventional Commit format for Datamed
+L'API est directement intégré au projet grâce à NextJS (cd répertoire `/api`)
 
-When you work on a branch, you need to respect a commit message the conventional commit format:
+Cette API a ensuite été construite avec GraphQL.
 
-- [JIRA_PROJECT]-[JIRA_TICKET_NUMBER] (build|chore|ci|docs|feat|fix|perf|refactor|revert|style|test): some feature
+Pour mettre à jour le schéma, éxécuter la commande: `yarn generate-types` (cf `codegen-api.ts`)
 
-we used [commitlint](https://github.com/conventional-changelog/commitlint#what-is-commitlint) to check commit's message.
+Une fois le schema et les resolvers mis à jour, il s'agit de mettre à jour les queries Graphql qui sont consommés par l'application frontend
 
-Exemples:
+Pour mettre à jour les queries grahQL, éxécuter la commande: `yarn generate-queries` (cf `codegen-front.ts`)
 
-- DATS-211 feat: commitling improve config
-- DATS-34 fix: commitling fix bug + card fix padding
+# Contribuer
 
-For quick fix (hotFix) without JIRA relating issue, naming convention prefix is DATS-0000
+Des régles commitlint ont été mises en place afin de respecter un certain nommage des commits
 
-- DATS-000 fix: commitling fix bug
+# CI/CD
+
+La pipeline de CI/CD est assurée par les Github Actions
+
+Il n'est pas possible de commiter directement sur la branche master, seules des PR depuis la branche develop sont autorisées
+
+Un commit de merge sur la branche master va lancer la génération d'une image docker de l'application
+
+Il est néamnois possible de lancer manuellement le build de l'application depuis la branche `develop` en se rendant sur la page [https://github.com/dataoffice-ansm/datamed/actions](https://github.com/dataoffice-ansm/datamed/actions)
+
+Une fois l'image Docker de production buildée, l'image est prête a être déployée, cf projet d'intégrations du dataoffice: [https://github.com/dataoffice-ansm/dataoffice-config/tree/main/datamed/production](https://github.com/dataoffice-ansm/dataoffice-config/tree/main/datamed/production)
