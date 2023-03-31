@@ -62,8 +62,8 @@ const SectionOneGlobalInformation = () => {
           </a>
         </p>
         <p>
-          <strong>Mode de calcul:</strong> Pour une même substance active ou une spécialité de
-          médicament, lorsque le patient achète différents conditionnements, le décompte
+          <strong>Mode de calcul:</strong> Pour une même substance active ou une spécialité
+          pharmaceutique, lorsque le patient achète différents conditionnements, le décompte
           correspondra à la somme des types de conditionnements remboursés pour ce patient.
         </p>
         <p>
@@ -173,7 +173,7 @@ const SectionAssociatedSpecialities = () => {
 
   return (
     <div ref={refList} className="min-h-screen">
-      <SectionTitle title={`Spécialités de médicaments contenant: ${currentEntity.name}`} />
+      <SectionTitle title={`Spécialités pharmaceutiques contenant: ${currentEntity.name}`} />
 
       <div className="p-4 border border-grey-100 rounded-lg bg-white">
         <div className="text-secondary-900 font-medium">

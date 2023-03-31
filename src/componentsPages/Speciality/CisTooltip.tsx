@@ -1,6 +1,6 @@
 import { Tooltip } from '../../components/Tooltip';
 
-const tooltipTriggerText = "Qu'est-ce qu'une spécialité de médicament ?";
+const tooltipTriggerText = "Qu'est-ce qu'une spécialité pharmaceutique ?";
 
 export const CisTooltip = () => (
   <Tooltip

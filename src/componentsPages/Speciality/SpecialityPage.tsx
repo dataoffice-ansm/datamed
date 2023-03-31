@@ -205,8 +205,8 @@ const SectionTreatedPatients = () => {
           </a>
         </p>
         <p>
-          <strong>Mode de calcul:</strong> Pour une même substance active ou une spécialité de
-          médicament, lorsque le patient achète différents conditionnements, le décompte
+          <strong>Mode de calcul:</strong> Pour une même substance active ou une spécialité
+          pharmaceutique, lorsque le patient achète différents conditionnements, le décompte
           correspondra à la somme des types de conditionnements remboursés pour ce patient.
         </p>
         <p>
