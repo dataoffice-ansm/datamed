@@ -28,7 +28,7 @@ const getEntityTypeParams = (entity: Entity): EntityOptions => {
     theme: 'bg-primary',
     icon: cisPharmaFormIcon,
     type: 'Spécialité',
-    description: 'Spécialité de médicament',
+    description: 'Spécialité pharmaceutique',
   };
 };
 

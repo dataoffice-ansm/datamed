@@ -56,20 +56,20 @@ const SectionOneGlobalInformation = () => {
             rel="external noreferrer"
             target="_blank"
             className="text-primary"
-            href="http://open-data-assurance-maladie.ameli.fr/medicaments/index.php"
+            href="https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-base-complete-depenses-medicaments"
           >
-            http://open-data-assurance-maladie.ameli.fr/medicaments/index.php
+            https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-base-complete-depenses-medicaments
           </a>
         </p>
         <p>
-          <strong>Mode de calcul:</strong> Pour une même substance active ou une spécialité de
-          médicament, lorsque le patient achète différents conditionnements, le décompte
+          <strong>Mode de calcul:</strong> Pour une même substance active ou une spécialité
+          pharmaceutique, lorsque le patient achète différents conditionnements, le décompte
           correspondra à la somme des types de conditionnements remboursés pour ce patient.
         </p>
         <p>
-          Par exemple, la spécialité Doliprane 500 mg, gélule, un patient qui aura acheté 2 boîtes
-          de 16 gélules et 3 boîtes de 100 gélules au cours de l’année 2016 sera comptabilisé 2 fois
-          pour 2016.
+          Par exemple, si un patient achète 2 boîtes de 16 gélules et 3 boîtes de 100 gélules d’un
+          médicament au cours de l’année 2016, il sera comptabilisé 2 fois en 2016 pour ce
+          médicament
         </p>
         <p>
           La donnée statistique présentée ci-dessous est une moyenne annuelle et arrondie, du nombre
@@ -173,7 +173,7 @@ const SectionAssociatedSpecialities = () => {
 
   return (
     <div ref={refList} className="min-h-screen">
-      <SectionTitle title={`Spécialités de médicaments contenant: ${currentEntity.name}`} />
+      <SectionTitle title={`Spécialités pharmaceutiques contenant: ${currentEntity.name}`} />
 
       <div className="p-4 border border-grey-100 rounded-lg bg-white">
         <div className="text-secondary-900 font-medium">
