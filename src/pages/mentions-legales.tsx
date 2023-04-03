@@ -68,8 +68,8 @@ const SectionCopyRight = () => (
   <Section title="Utilisation des données et Copyright">
     <div className="py-4">
       <div>
-        Les données et les informations présentes sur le site Internet www.data.ansm.sante.fr sont
-        mises à disposition du public par l&apos;Agence nationale de sécurité du médicament et des
+        Les données et les informations présentes sur le site Internet data.ansm.sante.fr sont mises
+        à disposition du public par l&apos;Agence nationale de sécurité du médicament et des
         produits de santé. Ces informations sont protégées par la Convention de Berne sur la
         Protection des œuvres littéraires et artistiques, par d&apos;autres conventions
         internationales et par les législations nationales sur le droit d&apos;auteur et les droits
