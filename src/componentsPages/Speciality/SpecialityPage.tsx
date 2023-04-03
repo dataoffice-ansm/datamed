@@ -210,9 +210,9 @@ const SectionTreatedPatients = () => {
           correspondra à la somme des types de conditionnements remboursés pour ce patient.
         </p>
         <p>
-          Par exemple, la spécialité Doliprane 500 mg, gélule, un patient qui aura acheté 2 boîtes
-          de 16 gélules et 3 boîtes de 100 gélules au cours de l’année 2016 sera comptabilisé 2 fois
-          pour 2016.
+          Par exemple, si un patient achète 2 boîtes de 16 gélules et 3 boîtes de 100 gélules d’un
+          médicament au cours de l’année 2016, il sera comptabilisé 2 fois en 2016 pour ce
+          médicament.
         </p>
         <p>
           La donnée statistique présentée ci-dessous est une moyenne annuelle et arrondie, du nombre
