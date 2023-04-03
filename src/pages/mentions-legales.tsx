@@ -34,7 +34,7 @@ const SectionEditor = () => (
 );
 
 const SectionServer = () => (
-  <Section title="Numéro du standard de l'ANSM">
+  <Section title="Hébergeur">
     <div className="py-4">
       <div>ITS Integra</div>
       <div>42, rue de Bellevue</div>
@@ -56,20 +56,25 @@ const SectionAuthor = () => (
         Entrepreneurs d&apos;Intérêt Général
       </a>
     </div>
-    <div>
+    <div className="pb-4">
       <a rel="external noreferrer" target="_blank" href="https://www.health-data-hub.fr/">
         Health Data Hub
+      </a>
+    </div>
+    <div>
+      <a rel="external noreferrer" target="_blank" href="https://ansm.sante.fr/">
+        ANSM
       </a>
     </div>
   </Section>
 );
 
 const SectionCopyRight = () => (
-  <Section title="Utilisation des données et Copyright">
+  <Section title="Propriété intellectuelle">
     <div className="py-4">
       <div>
-        Les données et les informations présentes sur le site Internet www.data.ansm.sante.fr sont
-        mises à disposition du public par l&apos;Agence nationale de sécurité du médicament et des
+        Les données et les informations présentes sur le site Internet data.ansm.sante.fr sont mises
+        à disposition du public par l&apos;Agence nationale de sécurité du médicament et des
         produits de santé. Ces informations sont protégées par la Convention de Berne sur la
         Protection des œuvres littéraires et artistiques, par d&apos;autres conventions
         internationales et par les législations nationales sur le droit d&apos;auteur et les droits
@@ -77,6 +82,31 @@ const SectionCopyRight = () => (
         l&apos;objet de revues, ou être reproduites ou traduites à des fins de recherche ou
         d&apos;étude personnelle, mais ne peuvent être ni vendues ni utilisées à des fins
         commerciales.
+      </div>
+      <div className="pt-4">
+        Le régime de la réutilisation d’informations publiques fixé par le titre II du livre III du
+        code des relations entre le public et l’administration (CRPA) pose en particulier deux
+        règles :
+        <ul>
+          <li>
+            <cite>
+              «les informations publiques figurant dans des documents communiqués ou publiés par les
+              administrations … peuvent être utilisées par toute personne qui le souhaite à
+              d&apos;autres fins que celles de la mission de service public pour les besoins de
+              laquelle les documents ont été produits ou reçus.»
+            </cite>{' '}
+            (Article L321-1 du CRPA)
+          </li>
+          <li>
+            <cite>
+              «sauf accord de l&apos;administration, la réutilisation des informations publiques est
+              soumise à la condition que ces dernières ne soient pas altérées, que leur sens ne soit
+              pas dénaturé et que leurs sources et la date de leur dernière mise à jour soient
+              mentionnées.»
+            </cite>{' '}
+            (Article L322-1 du CRPA)
+          </li>
+        </ul>
       </div>
       <div className="py-4 font-bold">
         Toute utilisation des données ou des informations provenant du site data.ansm doit
@@ -99,16 +129,16 @@ const SectionEtablisment = () => (
         Tout site public ou privé est autorisé à établir, sans autorisation préalable, un lien vers
         la page d’accueil ou directement vers les informations diffusées par le site{' '}
         <Link href="/">
-          <a>www.data.ansm.sante.fr</a>
+          <a>data.ansm.sante.fr</a>
         </Link>
         . Mais en aucun cas les pages du site{' '}
         <Link href="/">
-          <a>www.data.ansm.sante.fr</a>
+          <a>data.ansm.sante.fr</a>
         </Link>{' '}
         ne doivent se retrouver imbriquées à l&apos;intérieur des pages d&apos;un autre site. Tout
         doit être fait pour indiquer clairement à l’internaute qu’il se trouve sur le site{' '}
         <Link href="/">
-          <a>www.data.ansm.sante.fr</a>
+          <a>data.ansm.sante.fr</a>
         </Link>{' '}
         et lui permettre d’y naviguer librement.
       </div>
@@ -136,12 +166,12 @@ const SectionAnnoucement = () => (
 const SectionDataProtect = () => (
   <Section title="Protection des données à caractère personnel">
     <div className="py-4">
-      Le site data.ansm ne contient aucune donnée à caractère personnel. Les données publiées sont
-      issues des bases (à compléter) de l&apos;ANSM et ont fait l&apos;objet d&apos;une
-      anonymisation afin de garantir la protection de la vie privée des patients. Pour cela, seules
-      des données agrégées sont mises en ligne. Lorsqu&apos;un effet indésirable concerne moins de
-      10 patients, le nombre de personnes concernées n&apos;est pas affiché, afin d&apos;éviter
-      toute réidentification possible des patients.
+      Les données publiées sur le site data.ansm sont issues de bases de données de l&apos;ANSM et
+      d&apos;autres institutions françaises (Cnam) et ont fait l&apos;objet d&apos;une
+      pseudonymisation afin de garantir la protection de la vie privée des patients. Pour cela,
+      seules des données agrégées sont mises en ligne. Lorsqu&apos;un effet indésirable concerne
+      moins de 11 patients, le nombre de personnes concernées n&apos;est pas affiché, afin
+      d&apos;éviter toute réidentification possible des patients
     </div>
   </Section>
 );
