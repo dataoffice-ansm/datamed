@@ -56,9 +56,9 @@ const SectionOneGlobalInformation = () => {
             rel="external noreferrer"
             target="_blank"
             className="text-primary"
-            href="http://open-data-assurance-maladie.ameli.fr/medicaments/index.php"
+            href="https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-base-complete-depenses-medicaments"
           >
-            http://open-data-assurance-maladie.ameli.fr/medicaments/index.php
+            https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-base-complete-depenses-medicaments
           </a>
         </p>
         <p>
