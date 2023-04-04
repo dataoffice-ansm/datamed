@@ -125,10 +125,10 @@ export const AutocompleteSearch = ({
   return (
     <div
       className={classnames(
-        'AutocompleteContainer bg-white min-w-[10rem] max-w-2xl',
+        'AutocompleteContainer bg-white min-w-[10rem] w-full',
         embedded
-          ? 'embedded px-2 py-1 border-grey-100 rounded-none sticky top-0 shadow-lg flex flex-col'
-          : 'rounded-lg border border-grey-400 py-1 px-2 top-[48px] left-0 right-0'
+          ? 'embedded flex flex-col py-1 border-grey-100 rounded-none sticky top-0 shadow-lg '
+          : 'rounded-lg border border-grey-400 py-1 top-[48px] left-0 right-0'
       )}
     >
       <Combobox onChange={onSelected}>
@@ -138,7 +138,7 @@ export const AutocompleteSearch = ({
               autoFocus={autoFocus}
               placeholder={cisLoading || subLoading ? loadingPlaceholder : placeholder}
               disabled={cisLoading || subLoading}
-              className="AutocompleteInput flex-1 border-none !px-0"
+              className="AutocompleteInput flex-1 border-none"
               value={query}
               onChange={debounceInputOnChange}
             />
