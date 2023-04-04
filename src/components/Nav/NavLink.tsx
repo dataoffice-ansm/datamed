@@ -29,8 +29,8 @@ export const NavLink = ({
           'navbarLink group no-underline border-l-4 md:border-none',
           className,
           isActive
-            ? 'hover:text-primary focus:text-primary border-primary'
-            : 'hover:text-primary-700 focus:text-primary-700 border-transparent'
+            ? 'hover:text-primary focus-visible:text-primary border-primary'
+            : 'hover:text-primary-700 focus-visible:text-primary-700 border-transparent'
         )}
       >
         <div className="block px-2 py-2">{children}</div>
@@ -42,7 +42,7 @@ export const NavLink = ({
               'transition-all duration-200 ease-in-out',
               isActive
                 ? 'isActive w-full bg-primary'
-                : 'isNotActive w-0 group-hover:w-full group-focus:w-full bg-primary-700'
+                : 'isNotActive w-0 group-hover:w-full group-focus-visible:w-full bg-primary-700'
             )}
           />
         )}

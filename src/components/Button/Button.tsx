@@ -32,24 +32,24 @@ export const Button = (props: CallToActionProps) => {
 
   const computedVariantStyles = classnames(
     'btn cursor:pointer py-2 px-4 rounded',
-    variant === 'none' ? 'hover:font-medium focus:font-medium underline' : 'no-underline',
+    variant === 'none' ? 'hover:font-medium focus-visible:font-medium underline' : 'no-underline',
     {
       'text-primary underline': theme === 'primary' && variant === 'none',
-      'text-secondary hover:bg-secondary-500 focus:bg-secondary-500':
+      'text-secondary hover:bg-secondary-500 focus-visible:bg-secondary-500':
         theme === 'secondary' && variant === 'none',
       'text-grey': theme === 'grey' && variant === 'none',
 
-      'bg-primary text-white hover:bg-primary-500 focus:bg-primary-500':
+      'bg-primary text-white hover:bg-primary-500 focus-visible:bg-primary-500':
         theme === 'primary' && variant === 'contained',
-      'bg-secondary-800 text-white hover:bg-secondary focus:bg-secondary':
+      'bg-secondary-800 text-white hover:bg-secondary focus-visible:bg-secondary':
         theme === 'secondary' && variant === 'contained',
       'bg-grey text-white hover:bg-grey-500': theme === 'grey' && variant === 'contained',
 
-      'border border-primary text-primary hover:text-white hover:bg-primary focus:bg-primary':
+      'border border-primary text-primary hover:text-white hover:bg-primary focus-visible:bg-primary':
         theme === 'primary' && variant === 'outlined',
-      'border border-secondary text-secondary hover:bg-secondary focus:bg-secondary':
+      'border border-secondary text-secondary hover:bg-secondary focus-visible:bg-secondary':
         theme === 'secondary' && variant === 'outlined',
-      'border border-grey text-grey hover:bg-grey focus:bg-grey':
+      'border border-grey text-grey hover:bg-grey focus-visible:bg-grey':
         theme === 'grey' && variant === 'outlined',
     }
   );

@@ -21,22 +21,22 @@ export type PaginatedListProps<T> = {
 const hoverAndFocusFillColor = (theme: PaginatedListThemeColor) => {
   switch (theme) {
     case 'primary':
-      return 'hover:fill-primary focus:fill-primary';
+      return 'hover:fill-primary focus-visible:fill-primary';
     case 'secondary':
-      return 'hover:fill-secondary-900 focus:fill-secondary-900';
+      return 'hover:fill-secondary-900 focus-visible:fill-secondary-900';
     default:
-      return 'hover:fill-gray focus:fill-gray';
+      return 'hover:fill-gray focus-visible:fill-gray';
   }
 };
 
 const hoverAndFocusBackgroundColor = (theme: PaginatedListThemeColor) => {
   switch (theme) {
     case 'primary':
-      return 'hover:bg-primary focus:bg-primary';
+      return 'hover:bg-primary focus-visible:bg-primary';
     case 'secondary':
-      return 'hover:bg-secondary-50 focus:bg-secondary-50';
+      return 'hover:bg-secondary-50 focus-visible:bg-secondary-50';
     default:
-      return 'hover:bg-gray focus:bg-gray';
+      return 'hover:bg-gray focus-visible:bg-gray';
   }
 };
 
