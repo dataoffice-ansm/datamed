@@ -92,7 +92,7 @@ export type GlobalStatsUsagePerSeriousEffect = {
 
 export type HltEffect = {
   __typename?: 'HltEffect';
-  id: Scalars['Int'];
+  hltEffectId: Scalars['Int'];
   range: Scalars['String'];
   socId: Scalars['Int'];
   value: Scalars['Int'];
@@ -158,9 +158,9 @@ export type MedicalErrors = {
 export type MedicalErrorsApparitionStep = {
   __typename?: 'MedicalErrorsApparitionStep';
   description?: Maybe<Scalars['String']>;
-  id: Scalars['Int'];
   label: Scalars['String'];
   step: Scalars['String'];
+  stepId: Scalars['Int'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
 };
@@ -279,8 +279,8 @@ export type RepartitionPerGender = {
 
 export type RepartitionPerNotifier = {
   __typename?: 'RepartitionPerNotifier';
-  id: Scalars['Int'];
   job: Scalars['String'];
+  notifierId: Scalars['Int'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
 };
@@ -288,8 +288,8 @@ export type RepartitionPerNotifier = {
 export type RepartitionPerPathology = {
   __typename?: 'RepartitionPerPathology';
   htlEffects?: Maybe<Array<Maybe<HltEffect>>>;
-  id: Scalars['Int'];
   range: Scalars['String'];
+  socId: Scalars['Int'];
   subId: Scalars['Int'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
@@ -548,20 +548,20 @@ export type SpecialityFragmentFragment = {
       } | null> | null;
       repartitionPerNotifier?: Array<{
         __typename?: 'RepartitionPerNotifier';
-        id: number;
+        notifierId: number;
         job: string;
         value: number;
         valuePercent: number;
       } | null> | null;
       repartitionPerPathology?: Array<{
         __typename?: 'RepartitionPerPathology';
-        id: number;
+        socId: number;
         range: string;
         value: number;
         valuePercent: number;
         htlEffects?: Array<{
           __typename?: 'HltEffect';
-          id: number;
+          hltEffectId: number;
           socId: number;
           range: string;
           value: number;
@@ -622,7 +622,7 @@ export type SpecialityFragmentFragment = {
     } | null;
     apparitionStepRepartition?: Array<{
       __typename?: 'MedicalErrorsApparitionStep';
-      id: number;
+      stepId: number;
       step: string;
       label: string;
       value: number;
@@ -713,20 +713,20 @@ export type SubstanceFragmentFragment = {
     } | null> | null;
     repartitionPerNotifier?: Array<{
       __typename?: 'RepartitionPerNotifier';
-      id: number;
+      notifierId: number;
       job: string;
       value: number;
       valuePercent: number;
     } | null> | null;
     repartitionPerPathology?: Array<{
       __typename?: 'RepartitionPerPathology';
-      id: number;
+      socId: number;
       range: string;
       value: number;
       valuePercent: number;
       htlEffects?: Array<{
         __typename?: 'HltEffect';
-        id: number;
+        hltEffectId: number;
         socId: number;
         range: string;
         value: number;
@@ -807,20 +807,20 @@ export type SpecialityQuery = {
         } | null> | null;
         repartitionPerNotifier?: Array<{
           __typename?: 'RepartitionPerNotifier';
-          id: number;
+          notifierId: number;
           job: string;
           value: number;
           valuePercent: number;
         } | null> | null;
         repartitionPerPathology?: Array<{
           __typename?: 'RepartitionPerPathology';
-          id: number;
+          socId: number;
           range: string;
           value: number;
           valuePercent: number;
           htlEffects?: Array<{
             __typename?: 'HltEffect';
-            id: number;
+            hltEffectId: number;
             socId: number;
             range: string;
             value: number;
@@ -881,7 +881,7 @@ export type SpecialityQuery = {
       } | null;
       apparitionStepRepartition?: Array<{
         __typename?: 'MedicalErrorsApparitionStep';
-        id: number;
+        stepId: number;
         step: string;
         label: string;
         value: number;
@@ -995,20 +995,20 @@ export type SubstanceQuery = {
       } | null> | null;
       repartitionPerNotifier?: Array<{
         __typename?: 'RepartitionPerNotifier';
-        id: number;
+        notifierId: number;
         job: string;
         value: number;
         valuePercent: number;
       } | null> | null;
       repartitionPerPathology?: Array<{
         __typename?: 'RepartitionPerPathology';
-        id: number;
+        socId: number;
         range: string;
         value: number;
         valuePercent: number;
         htlEffects?: Array<{
           __typename?: 'HltEffect';
-          id: number;
+          hltEffectId: number;
           socId: number;
           range: string;
           value: number;
@@ -1209,18 +1209,18 @@ export const SubstanceFragmentFragmentDoc = gql`
         valuePercent
       }
       repartitionPerNotifier {
-        id
+        notifierId
         job
         value
         valuePercent
       }
       repartitionPerPathology {
-        id
+        socId
         range
         value
         valuePercent
         htlEffects {
-          id
+          hltEffectId
           socId
           range
           value
@@ -1321,7 +1321,7 @@ export const SpecialityFragmentFragmentDoc = gql`
         }
       }
       apparitionStepRepartition {
-        id
+        stepId
         step
         label
         value

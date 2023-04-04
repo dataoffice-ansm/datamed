@@ -88,7 +88,7 @@ fragment SpecialityFragment on Speciality {
             }
         }
         apparitionStepRepartition {
-            id
+            stepId
             step
             label
             value
@@ -191,19 +191,19 @@ fragment SubstanceFragment on Substance {
             valuePercent
         }
         repartitionPerNotifier {
-            id
+            notifierId
             job
             value
             valuePercent
         }
 
         repartitionPerPathology {
-            id
+            socId
             range
             value
             valuePercent
             htlEffects {
-                id
+                hltEffectId
                 socId
                 range
                 value
