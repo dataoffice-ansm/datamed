@@ -66,7 +66,7 @@ const PathologyOrgansRepartitionModal = ({ pathology }: { pathology: Repartition
         >
           <div className="flex justify-center items-center py-4">
             <div className="h-24 w-24 md:h-32 md:w-32">
-              {getSideEffectPathologyIcon(pathology.id)}
+              {getSideEffectPathologyIcon(pathology.socId)}
             </div>
           </div>
           <div className="text-xl text-center font-medium">
@@ -192,12 +192,12 @@ export const SubstanceSideEffects = ({
                 data={repartitionPerNotifier}
                 renderItem={(notifier) => (
                   <GraphFigure
-                    key={notifier.id}
+                    key={notifier.notifierId}
                     className="NotifierRepartition"
                     unit={selectedUnitOption === 'percent' ? ' % ' : ''}
                     label={notifier.job}
                     valueClassName="text-secondary my-2"
-                    icon={getNotifierIcon(notifier.id)}
+                    icon={getNotifierIcon(notifier.notifierId)}
                     value={
                       (selectedUnitOption === 'percent' ? notifier.valuePercent : notifier.value) ??
                       0
@@ -260,11 +260,11 @@ export const SubstanceSideEffects = ({
                   data={repartitionPerPathology}
                   renderItem={(pathologyRepartition) => (
                     <GraphFigure
-                      key={pathologyRepartition.id}
-                      className={`PathologyRepartition_${pathologyRepartition.id}`}
+                      key={pathologyRepartition.socId}
+                      className={`PathologyRepartition_${pathologyRepartition.socId}`}
                       unit={selectedUnitOption === 'percent' ? ' % ' : ''}
                       label={pathologyRepartition.range}
-                      icon={getSideEffectPathologyIcon(pathologyRepartition.id)}
+                      icon={getSideEffectPathologyIcon(pathologyRepartition.socId)}
                       action={<PathologyOrgansRepartitionModal pathology={pathologyRepartition} />}
                       valueClassName="text-secondary-900"
                       value={
@@ -285,7 +285,7 @@ export const SubstanceSideEffects = ({
         className="border border-grey-100 rounded-lg mt-8 mb-4"
         imageClassName="sm:w-52"
         title="Comment déclarer un effet indésirable ?"
-        image={<SickPersonSvg className="sm:h-48 sm:w-48 m-auto" />}
+        image={<SickPersonSvg />}
         button={
           <Button
             externalLink

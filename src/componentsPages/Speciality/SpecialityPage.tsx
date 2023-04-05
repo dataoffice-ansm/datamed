@@ -262,7 +262,7 @@ const SectionTreatedPatients = () => {
                     value={currentEntity.repartitionPerGender.male?.valuePercent}
                     valueClassName="mt-2 text-primary"
                     label="Hommes"
-                    icon={<ManIllustration className="w-24 sm: w-32" />}
+                    icon={<ManIllustration className="w-24 sm:w-32" />}
                   />
                 )}
               </div>
@@ -512,11 +512,7 @@ const SectionSideEffects = () => {
           Précision sur les déclarations d’effets indésirables
         </p>
 
-        <CardWithImage
-          imageClassName="!w-32"
-          contentClassName="!p-0"
-          image={<CommuniqueSvg className="sm:h-48 sm:w-48 m-auto" />}
-        >
+        <CardWithImage contentClassName="!p-0" image={<CommuniqueSvg />}>
           <p>
             La déclaration en pharmacovigilance permet la détection de signal. Ces données
             déclaratives ne permettent pas d&apos;estimer la fréquence des effets indésirables, les
@@ -625,7 +621,7 @@ const SectionRisksShortageHistory = () => {
         className="border border-grey-100 rounded-lg"
         imageClassName="w-48 px-2"
         title="Rupture ou risque de rupture des produits de santé"
-        image={<OutOfStockSvg className="sm:h-48 sm:w-48 m-auto" />}
+        image={<OutOfStockSvg />}
         button={
           <Button
             externalLink

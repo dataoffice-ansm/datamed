@@ -92,7 +92,7 @@ export type GlobalStatsUsagePerSeriousEffect = {
 
 export type HltEffect = {
   __typename?: 'HltEffect';
-  id: Scalars['Int'];
+  hltEffectId: Scalars['Int'];
   range: Scalars['String'];
   socId: Scalars['Int'];
   value: Scalars['Int'];
@@ -158,9 +158,9 @@ export type MedicalErrors = {
 export type MedicalErrorsApparitionStep = {
   __typename?: 'MedicalErrorsApparitionStep';
   description?: Maybe<Scalars['String']>;
-  id: Scalars['Int'];
   label: Scalars['String'];
   step: Scalars['String'];
+  stepId: Scalars['Int'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
 };
@@ -279,8 +279,8 @@ export type RepartitionPerGender = {
 
 export type RepartitionPerNotifier = {
   __typename?: 'RepartitionPerNotifier';
-  id: Scalars['Int'];
   job: Scalars['String'];
+  notifierId: Scalars['Int'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
 };
@@ -288,8 +288,8 @@ export type RepartitionPerNotifier = {
 export type RepartitionPerPathology = {
   __typename?: 'RepartitionPerPathology';
   htlEffects?: Maybe<Array<Maybe<HltEffect>>>;
-  id: Scalars['Int'];
   range: Scalars['String'];
+  socId: Scalars['Int'];
   subId: Scalars['Int'];
   value: Scalars['Int'];
   valuePercent: Scalars['Float'];
@@ -865,7 +865,7 @@ export type HltEffectResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['HltEffect'] = ResolversParentTypes['HltEffect']
 > = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  hltEffectId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   socId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
@@ -950,9 +950,9 @@ export type MedicalErrorsApparitionStepResolvers<
   ParentType extends ResolversParentTypes['MedicalErrorsApparitionStep'] = ResolversParentTypes['MedicalErrorsApparitionStep']
 > = {
   description?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   label?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
   step?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  stepId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   valuePercent?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1091,8 +1091,8 @@ export type RepartitionPerNotifierResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['RepartitionPerNotifier'] = ResolversParentTypes['RepartitionPerNotifier']
 > = {
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   job?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  notifierId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   valuePercent?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
@@ -1103,8 +1103,8 @@ export type RepartitionPerPathologyResolvers<
   ParentType extends ResolversParentTypes['RepartitionPerPathology'] = ResolversParentTypes['RepartitionPerPathology']
 > = {
   htlEffects?: Resolver<Maybe<Array<Maybe<ResolversTypes['HltEffect']>>>, ParentType, ContextType>;
-  id?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   range?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  socId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   subId?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   value?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   valuePercent?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;

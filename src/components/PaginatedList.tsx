@@ -21,22 +21,22 @@ export type PaginatedListProps<T> = {
 const hoverAndFocusFillColor = (theme: PaginatedListThemeColor) => {
   switch (theme) {
     case 'primary':
-      return 'hover:fill-primary focus:fill-primary';
+      return 'hover:fill-primary focus-visible:fill-primary';
     case 'secondary':
-      return 'hover:fill-secondary-900 focus:fill-secondary-900';
+      return 'hover:fill-secondary-900 focus-visible:fill-secondary-900';
     default:
-      return 'hover:fill-gray focus:fill-gray';
+      return 'hover:fill-gray focus-visible:fill-gray';
   }
 };
 
 const hoverAndFocusBackgroundColor = (theme: PaginatedListThemeColor) => {
   switch (theme) {
     case 'primary':
-      return 'hover:bg-primary focus:bg-primary';
+      return 'hover:bg-primary focus-visible:bg-primary';
     case 'secondary':
-      return 'hover:bg-secondary-50 focus:bg-secondary-50';
+      return 'hover:bg-secondary-50 focus-visible:bg-secondary-50';
     default:
-      return 'hover:bg-gray focus:bg-gray';
+      return 'hover:bg-gray focus-visible:bg-gray';
   }
 };
 
@@ -45,7 +45,10 @@ const NavigationButton = ({
   onClick,
   children,
   theme = 'primary',
-}: { disabled: boolean; theme?: PaginatedListThemeColor } & HTMLAttributes<HTMLButtonElement>) => (
+}: {
+  disabled: boolean;
+  theme?: PaginatedListThemeColor;
+} & HTMLAttributes<HTMLButtonElement>) => (
   <button
     className={classNames('rounded-[50%]', hoverAndFocusBackgroundColor(theme), {
       'opacity-25 cursor-not-allowed': disabled,
@@ -83,10 +86,6 @@ export const PaginatedList = <T,>({
     setItemsPerPage(number);
   }, []);
 
-  const handleSelectPage = useCallback((page: number) => {
-    setPageIndex(page);
-  }, []);
-
   const scrollTopList = useCallback(() => {
     if (listRef?.current) {
       const y =
@@ -100,11 +99,15 @@ export const PaginatedList = <T,>({
     }
   }, [listRef, navBarHeight, stickyHeroHeight]);
 
-  useEffect(() => {
-    scrollTopList();
-  }, [pageIndex, scrollTopList]);
+  const handleSelectPage = useCallback(
+    (page: number) => {
+      setPageIndex(page);
+      scrollTopList();
+    },
+    [scrollTopList]
+  );
 
-  const pagination = useMemo(
+  const renderPagination = useMemo(
     () => (
       <div className="PaginatedListPaginatorContainer flex flex-wrap gap-2 py-4 items-center">
         <div className="PaginatedListPaginator flex justify-center items-center gap-1">
@@ -190,7 +193,7 @@ export const PaginatedList = <T,>({
           </div>
         ))}
       </div>
-      {pagination}
+      {renderPagination}
     </div>
   );
 };

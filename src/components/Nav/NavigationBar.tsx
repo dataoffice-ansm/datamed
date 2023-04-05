@@ -14,8 +14,10 @@ import { navBarLinks } from '../../config/layoutConfig';
 import { RenderNavLinks } from '../../utils/nav';
 import { useClickOutsideRef } from '../../hooks/useRefClickOutside';
 import { AutocompleteSearch } from '../AutocompleteSearch';
+import { useRouter } from 'next/router';
 
 export const NavigationBar = () => {
+  const { pathname } = useRouter();
   const navbarRef = useRef<HTMLDivElement>(null);
   const navbarSearchRef = useRef<HTMLDivElement>(null);
 
@@ -48,6 +50,12 @@ export const NavigationBar = () => {
   useEffect(() => {
     setScrollEnabled(!(navDrawerOpened || searchDrawerOpened));
   }, [navDrawerOpened, searchDrawerOpened, setScrollEnabled]);
+
+  useEffect(() => {
+    // automatically close when route changes
+    setNavDrawerOpened(false);
+    setSearchDrawerOpened(false);
+  }, [pathname]);
 
   useEffect(() => {
     if (isDesktop) {

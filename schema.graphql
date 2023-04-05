@@ -103,7 +103,7 @@ type MedicalErrorsPopulation {
 }
 
 type MedicalErrorsApparitionStep {
-    id: Int!
+    stepId: Int!
     step: String!
     label: String!
     value: Int!
@@ -156,7 +156,7 @@ type SpecialityRupturesHistory {
 }
 
 type HltEffect {
-    id: Int!
+    hltEffectId: Int!
     socId: Int!
     range: String! @capitalize
     value: Int!
@@ -169,7 +169,7 @@ type RepartitionPerGender {
 }
 
 type RepartitionPerNotifier {
-    id: Int!
+    notifierId: Int!
     job: String! @capitalize
     value: Int!
     valuePercent: Float!
@@ -183,7 +183,7 @@ type GlobalStatsUsagePerNotifier {
 }
 
 type RepartitionPerPathology {
-    id: Int!
+    socId: Int!
     subId: Int!
     range: String! @capitalize
     value: Int!

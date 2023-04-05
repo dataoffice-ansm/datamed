@@ -315,7 +315,7 @@ export class PostgresOperations {
         ? [
             ...carry,
             {
-              id: stepId,
+              stepId,
               step: getMedicalErrorApparitionStep(stepId),
               label,
               value,
@@ -656,7 +656,7 @@ export class PostgresOperations {
       .where('sn.substance_id', '=', subId)
       .leftJoin('notifiers', 'notifiers.id', 'sn.notifier_id')
       .select([
-        'notifiers.id',
+        'notifiers.id as notifierId',
         'notifiers.job',
         'sn.notification_number as value',
         'sn.notification_percentage as valuePercent',
@@ -664,12 +664,12 @@ export class PostgresOperations {
       .execute();
 
     return rows.reduce<RepartitionPerNotifier[]>((carry, row) => {
-      const { id, job, value, valuePercent } = row;
-      return id && job && value && value >= 10 && valuePercent
+      const { notifierId, job, value, valuePercent } = row;
+      return notifierId && job && value && value >= 10 && valuePercent
         ? [
             ...carry,
             {
-              id,
+              notifierId,
               job,
               value: Math.round(value),
               valuePercent: roundFloat(valuePercent),
@@ -703,7 +703,7 @@ export class PostgresOperations {
         ? [
             ...carry,
             {
-              id: socId,
+              socId,
               subId,
               range,
               value,
@@ -738,7 +738,7 @@ export class PostgresOperations {
         ? [
             ...carry,
             {
-              id: hltEffectId,
+              hltEffectId,
               socId,
               range,
               value,
