@@ -24,9 +24,9 @@ const SectionEditor = () => (
       <strong>Agence nationale de sécurité du médicament et des produits de santé</strong>
       <div>
         <p>143-147, Boulevard Anatole France 93285 Saint-Denis Cedex</p>
-        <p>Tél: +33(0)1 55 87 30 00</p>
-        <p>Fax: +33(0)1 55 87 30 12</p>
-        <p>Directeur de la publication: Direction générale de l’ANSM </p>
+        <p>Tél : +33(0)1 55 87 30 00</p>
+        <p>Fax : +33(0)1 55 87 30 12</p>
+        <p>Directeur de la publication : Direction générale de l’ANSM </p>
         <p>Pour contacter les webmasters : webmaster@ansm.sante.fr</p>
       </div>
     </div>
@@ -52,18 +52,18 @@ const SectionServer = () => (
 const SectionAuthor = () => (
   <Section title="Conception & Développements">
     <div className="py-4">
+      <a rel="external noreferrer" target="_blank" href="https://ansm.sante.fr/">
+        ANSM
+      </a>
+    </div>
+    <div className="pb-4">
       <a rel="external noreferrer" target="_blank" href="https://eig.etalab.gouv.fr/">
         Entrepreneurs d&apos;Intérêt Général
       </a>
     </div>
-    <div className="pb-4">
+    <div>
       <a rel="external noreferrer" target="_blank" href="https://www.health-data-hub.fr/">
         Health Data Hub
-      </a>
-    </div>
-    <div>
-      <a rel="external noreferrer" target="_blank" href="https://ansm.sante.fr/">
-        ANSM
       </a>
     </div>
   </Section>
