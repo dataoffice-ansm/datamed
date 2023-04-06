@@ -556,7 +556,7 @@ const SectionRisksShortageHistory = () => {
   return (
     <div className="SectionRisksShortageHistory" id="sectionRisksShortageHistory">
       <SectionTitle
-        title="Historique des déclarations de ruptures et de risques de rupture de stock cloturées"
+        title="Historique des déclarations de ruptures et de risques de rupture de stock clôturées"
         subTitle={
           currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear &&
           currentEntity?.shortagesHistory?.trustMedPeriod?.minYear
@@ -573,9 +573,9 @@ const SectionRisksShortageHistory = () => {
       >
         <p>
           Cette rubrique recense l&apos;historique des déclarations de ruptures et de risques de
-          rupture concernant les <b>médicaments d’intérêt thérapeutique majeur (MITM)</b>, pour
-          lesquelles les industriels ont une obligation de déclaration auprès de l&apos;ANSM depuis
-          le 3 Mai 2021.
+          rupture clôturées concernant les <b>médicaments d’intérêt thérapeutique majeur (MITM)</b>,
+          pour lesquelles les industriels ont une obligation de déclaration auprès de l&apos;ANSM
+          depuis le 3 Mai 2021.
         </p>
 
         <p>

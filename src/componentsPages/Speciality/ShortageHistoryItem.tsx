@@ -26,7 +26,6 @@ export const ShortageHistoryItem = ({
       </div>
       <div className="flex-1 flex flex-col gap-1">
         <span>{shortageItem?.cause?.type}</span>
-        <span className="text-sm">{shortageItem?.cause?.definition}</span>
       </div>
     </div>
     <div className="flex items-center">
