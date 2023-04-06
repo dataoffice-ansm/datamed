@@ -14,7 +14,7 @@ export const SearchSection = () => (
       />
       <div className="flex flex-col lg:pt-12 gap-4 max-w-3xl">
         <h2 className="lg:pt-8 text-2xl md:text-3xl font-medium text-center">
-          Trouvez des données statistiques autour du médicament
+          Trouvez des statistiques autour du médicament
         </h2>
         <AutocompleteSearch />
       </div>

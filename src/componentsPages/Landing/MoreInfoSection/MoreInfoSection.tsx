@@ -8,9 +8,9 @@ export const MoreInfoSection = () => (
   <div className="w-full flex justify-center items-center flex-col py-16">
     <h2 className="py-4 text-2xl md:text-3xl font-medium">Statistiques globales</h2>
     <p className="text-lg md:text-xl text-center mb-16">
-      Envie d’en savoir plus sur les données qui constituent ce site ? Consultez les données
-      statistiques autour des déclarations reçues par l’ANSM pour l’ensemble des médicaments et
-      substances actives autorisés sur le territoire national.
+      Envie d’en savoir plus sur les données qui constituent ce site ? Consultez les statistiques
+      issues des déclarations reçues par l’ANSM pour l’ensemble des médicaments et substances
+      actives autorisés sur le territoire national.
     </p>
 
     <div className="m-auto max-w-xl lg:max-w-3xl">
