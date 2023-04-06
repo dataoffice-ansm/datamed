@@ -14,13 +14,13 @@ export const IntroSection = () => {
         <div className="max-w-3xl">
           <Logo alt="Logo DATAMED ANSM" className="w-48" />
           <h2 className="pt-8 text-2xl md:text-3xl font-medium">
-            Accès public aux données de
+            Accès public à l'historique des données de
             <br /> l'Agence du Médicament (ANSM)
           </h2>
           <p className="max-w-2xl text-lg md:text-xl">
-            data.ansm est un site d'information et de transparence sur les déclarations relatives à
-            la pharmacovigilance et aux ruptures de stock. Il est destiné aux particuliers,
-            professionnels de santé ou industriels.
+            data.ansm est un site d'information et de transparence sur l'historique des déclarations
+            relatives à la pharmacovigilance et aux ruptures de stock. Il est destiné aux
+            particuliers, professionnels de santé ou industriels.
           </p>
           <div className="flex flex-col md:flex-row justify-center align-center gap-4 pt-2 max-w-2xl text-lg md:text-xl">
             <div className="w-20 min-w-[56px] m-auto">

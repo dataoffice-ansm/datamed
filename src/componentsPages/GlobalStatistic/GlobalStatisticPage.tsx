@@ -152,20 +152,17 @@ const SectionSeriousEffect = () => {
             className="h-full max-w-[100%]"
             tooltip={
               <>
-                <p className="font-medium mb-4 text-lg">Répartition par gravité</p>
-                <b>
-                  <p>Non grave</p>
-                </b>
-                <p>Tout effet indésirable qui n&apos;est pas grave</p>
-
-                <b>
-                  <p>Grave</p>
-                </b>
                 <p>
-                  Un effet indésirable est grave en cas de décès, de mise en jeu du pronostic vital,
-                  d&apos;hospitalisation ou prolongement d&apos;hospitalisation, d&apos;invalidité
-                  ou d&apos;incapacité importante ou durable, d&apos;anomalie ou de malformation
-                  congénitale, ou s&apos;il est considéré comme médicalement pertinent{' '}
+                  La définition réglementaire de gravité en pharmacovigilance est très précise : un
+                  effet indésirable grave est un effet indésirable létal, ou susceptible de mettre
+                  la vie en danger, ou entraînant une invalidité ou une incapacité importantes ou
+                  durables, ou provoquant ou prolongeant une hospitalisation, ou se manifestant par
+                  une anomalie ou une malformation congénitale.
+                </p>
+                <p>
+                  Les effets graves ont tendance à être plus déclarés que les cas non graves. Les
+                  déclarations ne représentent pas la fréquence de survenue des effets indésirables.
+                  Celle-ci étant précisée dans la notice du médicament.
                 </p>
               </>
             }
@@ -182,6 +179,23 @@ const SectionSeriousEffect = () => {
           <GraphBox
             title="Détail des déclarations d'effets indésirables graves"
             className="h-full max-w-[100%]"
+            tooltip={
+              <>
+                <p>
+                  La définition réglementaire de gravité en pharmacovigilance est très précise : un
+                  effet indésirable grave est un effet indésirable létal, ou susceptible de mettre
+                  la vie en danger, ou entraînant une invalidité ou une incapacité importantes ou
+                  durables, ou provoquant ou prolongeant une hospitalisation, ou se manifestant par
+                  une anomalie ou une malformation congénitale.
+                </p>
+                <p>
+                  La catégorie &quot;Autre&quot; correspond aux déclarations d&apos;effets
+                  indésirables ayant été jugées comme grave par le déclarant, mais ne rentrant pas
+                  dans les catégories listées comme étant graves selon la définition réglementaire
+                  de gravité en pharmacovigilance.
+                </p>
+              </>
+            }
           >
             <BarChartRepartition
               className="h-64 w-full flex justify-center items-center"

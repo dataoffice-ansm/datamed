@@ -45,25 +45,23 @@ const SectionGuichetUsager = () => (
       des patients, professionnels de santé, industriels, et plus largement du grand public…
     </p>
     <p>
-      Si votre question concerne les effets indésirables, les ruptures de stocks ou tout autre
-      demande concernant data.ansm, nous vous invitons à remplir un formulaire de contact. Il sera
-      directement adressé à notre cellule Accueil des usagers qui le traitera dans les meilleurs
+      Si votre question concerne les effets indésirables, les erreurs médicamenteuses, les ruptures
+      de stocks ou tout autre demande concernant data.ansm, nous vous invitons à remplir le
+      formulaire, en sélectionnant « data.ansm.sante.fr » dans la question « Votre demande concerne
+      ». Il sera directement adressé à notre guichet usager qui le traitera dans les meilleurs
       délais.
     </p>
-    <p>
+    <p className="mb-8">
       Il est important de ne pas transmettre des données médicales non nécessaires au traitement de
       votre demande.
-    </p>
-    <p className="mb-8">
-      Pour les autres demandes, merci de contacter directement les services concernés.
     </p>
     <Button
       externalLink
       variant="outlined"
-      href="https://ansm.sante.fr/contact"
+      href="https://ansm.sante.fr/page/formulaire-medicaments"
       className="uppercase"
     >
-      accéder au formulaire de contact
+      accéder au formulaire
     </Button>
   </SectionContact>
 );
@@ -82,8 +80,8 @@ const PageContact = () => (
         </div>
         <div className="flex flex-col justify-center bg-white rounded shadow p-6 mb-4">
           <SectionAskFrequentlyQuestion />
-          <SectionNumStandard />
           <SectionGuichetUsager />
+          <SectionNumStandard />
         </div>
       </SmallContainer>
     </div>

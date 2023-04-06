@@ -23,7 +23,9 @@ export const Footer = () => (
         ))}
 
         <div className="flex flex-auto justify-center items-center md:justify-end">
-          <LogoWhite className="h-[100px] w-[200px]" />
+          <a rel="external noreferrer" target="_blank" href="https://ansm.sante.fr">
+            <LogoWhite className="h-[100px] w-[200px]" />
+          </a>
         </div>
       </div>
     </div>
