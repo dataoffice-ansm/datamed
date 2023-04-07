@@ -599,7 +599,7 @@ const SectionRisksShortageHistory = () => {
           <div className="p-4 border border-grey-100 rounded-lg bg-white">
             <div className="text-primary font-medium">
               <span>{`${numberWithThousand(count)} ${
-                count === 1 ? 'déclaration' : 'déclarations'
+                count === 1 ? 'déclaration' : 'déclarations concernant la substance active'
               }`}</span>
             </div>
             <div className="pt-6">
