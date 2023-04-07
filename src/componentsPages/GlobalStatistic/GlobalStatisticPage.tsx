@@ -157,7 +157,8 @@ const SectionSeriousEffect = () => {
                   effet indésirable grave est un effet indésirable létal, ou susceptible de mettre
                   la vie en danger, ou entraînant une invalidité ou une incapacité importantes ou
                   durables, ou provoquant ou prolongeant une hospitalisation, ou se manifestant par
-                  une anomalie ou une malformation congénitale.
+                  une anomalie ou une malformation congénitale. Sont aussi pris en compte les
+                  déclarations d&apos;effets indésirables ayant été jugés graves par le déclarant.
                 </p>
                 <p>
                   Les effets graves ont tendance à être plus déclarés que les cas non graves. Les
@@ -177,7 +178,7 @@ const SectionSeriousEffect = () => {
 
         <div className="flex-1">
           <GraphBox
-            title="Détail des déclarations d'effets indésirables graves"
+            title="Répartition par cause de gravité"
             className="h-full max-w-[100%]"
             tooltip={
               <>
@@ -190,7 +191,7 @@ const SectionSeriousEffect = () => {
                 </p>
                 <p>
                   La catégorie &quot;Autre&quot; correspond aux déclarations d&apos;effets
-                  indésirables ayant été jugées comme grave par le déclarant, mais ne rentrant pas
+                  indésirables ayant été jugés comme grave par le déclarant, mais ne rentrant pas
                   dans les catégories listées comme étant graves selon la définition réglementaire
                   de gravité en pharmacovigilance.
                 </p>
@@ -200,7 +201,7 @@ const SectionSeriousEffect = () => {
             <BarChartRepartition
               className="h-64 w-full flex justify-center items-center"
               data={globalDecSeriousEffectsRep}
-              dataLabel="Détail des déclarations d'effets indésirables graves"
+              dataLabel="Répartition par cause de gravité"
               theme="green-full"
             />
           </GraphBox>
