@@ -122,9 +122,9 @@ export const SubstanceSideEffects = ({
         className="my-8"
       >
         Nombre cumulé de déclarations d&lsquo;effets indésirables suspectés{' '}
-        {substance.exposition?.openMedicPeriod?.minYear &&
-          substance.exposition?.openMedicPeriod?.maxYear &&
-          `sur la période ${substance.exposition?.openMedicPeriod?.minYear} ${substance.exposition?.openMedicPeriod?.maxYear}`}
+        {substance.sideEffects?.bnpvPeriod?.minYear &&
+          substance.sideEffects?.bnpvPeriod?.maxYear &&
+          `sur la période ${substance.sideEffects?.bnpvPeriod?.minYear} - ${substance.sideEffects?.bnpvPeriod?.maxYear}`}
       </BoxInfo>
 
       <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto">
@@ -215,6 +215,7 @@ export const SubstanceSideEffects = ({
       <Accordion
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
         theme="secondary"
+        classNameTitle="text-secondary"
         className="my-8 shadow"
       >
         <p>

@@ -45,11 +45,14 @@ const SectionGuichetUsager = () => (
       des patients, professionnels de santé, industriels, et plus largement du grand public…
     </p>
     <p>
-      Si votre question concerne les effets indésirables, les erreurs médicamenteuses, les ruptures
-      de stocks ou tout autre demande concernant data.ansm, nous vous invitons à remplir le
-      formulaire, en sélectionnant « data.ansm.sante.fr » dans la question « Votre demande concerne
-      ». Il sera directement adressé à notre guichet usager qui le traitera dans les meilleurs
-      délais.
+      Si votre question concerne les effets indésirables, les erreurs médicamenteuses ou les
+      ruptures de stocks, nous vous invitons à remplir le formulaire en cliquant sur le bouton
+      ci-dessous. Il sera directement adressé à notre guichet usager qui le traitera dans les
+      meilleurs délais.
+    </p>
+    <p>
+      Si votre question porte sur le site data.ansm.sante.fr, vous pouvez le préciser en
+      sélectionnant « data.ansm.sante.fr » à la question « Votre demande concerne » du formulaire.
     </p>
     <p className="mb-8">
       Il est important de ne pas transmettre des données médicales non nécessaires au traitement de

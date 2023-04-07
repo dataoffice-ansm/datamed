@@ -362,7 +362,7 @@ export const getRuptureCauseIcon = (name: string) => {
     case 'Coronavirus':
       return <Coronavirus className="w-24 md:w-32" />;
     case "Défaut d'approvisionnement en Matière Première":
-      return <AutreSvg className="w-24 md:w-32" />;
+      return <DefautApprovisionnementMpSvg className="w-24 md:w-32" />;
     case 'Problème qualité : Analyse non conforme':
       return <AnalyseNonConformeSvg className="w-24 md:w-32" />;
     case "Défaut d'approvisionnement en Article de Conditionnement":
