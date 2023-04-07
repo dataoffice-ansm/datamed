@@ -498,7 +498,7 @@ const SectionSideEffects = () => {
           de données de l&apos;ANSM alimentée par les Centres Régionaux de Pharmacovigilance (CRPV).
           Elle inclut l&apos;ensemble des déclarations suspectées comme étant en lien avec
           l&apos;usage d&apos;un ou plusieurs médicaments. Ces dernières sont notifiées par les
-          professionnels de santé ou par les patients et association agréées via un portail dédié:{' '}
+          professionnels de santé ou par les patients et association agréées via un portail dédié :{' '}
           <a
             rel="external noreferrer"
             target="_blank"
@@ -513,7 +513,7 @@ const SectionSideEffects = () => {
           Précision sur les déclarations d’effets indésirables
         </p>
 
-        <CardWithImage contentClassName="!p-0" image={<CommuniqueSvg />}>
+        <CardWithImage className="px-4" contentClassName="!p-0" image={<CommuniqueSvg />}>
           <p>
             La déclaration en pharmacovigilance permet la détection de signal. Ces données
             déclaratives ne permettent pas d&apos;estimer la fréquence des effets indésirables, les
@@ -526,7 +526,7 @@ const SectionSideEffects = () => {
             pas possible à partir des données de déclaration.
           </p>
           <p>
-            Pour plus d’information, consultez:{' '}
+            Pour plus d’information, consultez :{' '}
             <a
               rel="external noreferrer"
               target="_blank"
@@ -583,7 +583,7 @@ const SectionRisksShortageHistory = () => {
           Pour retrouver les dernières informations destinées aux professionnels de santé et aux
           patients concernant les médicaments d’intérêt thérapeutique majeur faisant actuellement
           l’objet de difficultés d’approvisionnement et pour lesquels il n’y a pas d’alternative
-          thérapeutique disponible sur le marché français, vous pouvez vous référer au site:{' '}
+          thérapeutique disponible sur le marché français, vous pouvez vous référer au site :{' '}
           <a
             rel="external noreferrer"
             target="_blank"
@@ -619,8 +619,7 @@ const SectionRisksShortageHistory = () => {
       </div>
 
       <CardWithImage
-        className="border border-grey-100 rounded-lg"
-        imageClassName="w-48 px-2"
+        className="border border-grey-100 rounded-lg px-4 py-4 md:py-6"
         title="Rupture ou risque de rupture des produits de santé"
         image={<OutOfStockSvg />}
         button={

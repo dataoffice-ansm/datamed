@@ -107,7 +107,7 @@ export const Accordion = ({
               leaveFrom="transform h-full opacity-100"
               leaveTo="transform h-0 opacity-0"
             >
-              <Disclosure.Panel className="AccordionContent px-8 py-4 border-t-[1px] border-grey-50">
+              <Disclosure.Panel className="AccordionContent px-4 md:px-8 py-4 border-t-[1px] border-grey-50">
                 {children}
               </Disclosure.Panel>
             </Transition>
