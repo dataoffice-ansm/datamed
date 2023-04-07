@@ -16,6 +16,8 @@ import { GraphBoxSelect } from '../../components/GraphBoxSelect';
 import { Accordion } from '../../components/Accordion';
 import GlobStatSvg from '../../assets/pictos/sick_transparent_person.svg';
 import { Tooltip } from '../../components/Tooltip';
+import { CardWithImage } from '../../components/CardWithImage';
+import CommuniqueSvg from '../../assets/pictos/communique.svg';
 import { useGlobalDecPageContext } from '../../contexts/GlobaleDecPageContext';
 import { useMemo } from 'react';
 import { buildSortedRangeData } from '../../utils/entities';
@@ -60,6 +62,72 @@ const SectionDemography = () => {
           ${exposition.minYear} - ${exposition.maxYear}`
           : 'Période des données issues non renseignée'}
       </BoxInfo>
+
+      <Accordion
+        className="shadow rounded-lg"
+        theme="secondary-variant"
+        classNameTitle="text-dark-green-900"
+        title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
+      >
+        <p>
+          La pharmacovigilance est la surveillance, l’évaluation, la prévention et la gestion du
+          risque d’effet indésirable résultant de l’utilisation des médicaments. Elle s’exerce en
+          permanence, avant et après la commercialisation des médicaments, et constitue un élément
+          essentiel du contrôle de la sécurité des médicaments.
+        </p>
+        <p>
+          Afin de respecter la confidentialité des données des patients, si un critère (âge,
+          sexe,...) représente moins de 11 cas, l&apos;information ne sera pas affichée avec ce
+          niveau de détail. Les données manquantes ne sont pas affichées. Tenant compte de ces deux
+          conditions, le total des pourcentages n&apos;atteint pas toujours les 100%.
+        </p>
+
+        <p>
+          Ces données sont issues de la Base Nationale de Pharmacovigilance (BNPV), qui est la base
+          de données de l&apos;ANSM alimentée par les Centres Régionaux de Pharmacovigilance (CRPV).
+          Elle inclut l&apos;ensemble des déclarations suspectées comme étant en lien avec
+          l&apos;usage d&apos;un ou plusieurs médicaments. Ces dernières sont notifiées par les
+          professionnels de santé ou par les patients et association agréées via un portail dédié:{' '}
+          <a
+            rel="external noreferrer"
+            target="_blank"
+            href="https://signalement.social-sante.gouv.fr"
+            className="text-primary"
+          >
+            https://signalement.social-sante.gouv.fr
+          </a>
+        </p>
+
+        <p className="text-md font-medium mt-8">
+          Précision sur les déclarations d’effets indésirables
+        </p>
+
+        <CardWithImage contentClassName="!p-0" image={<CommuniqueSvg />}>
+          <p>
+            La déclaration en pharmacovigilance permet la détection de signal. Ces données
+            déclaratives ne permettent pas d&apos;estimer la fréquence des effets indésirables, les
+            déclarations ne sont ni exhaustives ni représentatives dans la population.
+          </p>
+
+          <p>
+            Le nombre exact de patients traités n&apos;étant pas connu sur la période de déclaration
+            l&apos;établissement de statistiques de fréquence d&apos;effets indésirables n&apos;est
+            pas possible à partir des données de déclaration.
+          </p>
+          <p>
+            Pour plus d’information, consultez:{' '}
+            <a
+              rel="external noreferrer"
+              target="_blank"
+              href="https://ansm.sante.fr/page/la-surveillance-renforcee-des-medicaments"
+              className="text-primary"
+            >
+              https://ansm.sante.fr/page/la-surveillance-renforcee-des-medicaments
+            </a>
+          </p>
+        </CardWithImage>
+      </Accordion>
+
       <SectionTitle
         title="Caractéristiques des patients"
         subTitle={

@@ -215,6 +215,7 @@ export const SubstanceSideEffects = ({
       <Accordion
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
         theme="secondary"
+        classNameTitle="text-secondary"
         className="my-8 shadow"
       >
         <p>
