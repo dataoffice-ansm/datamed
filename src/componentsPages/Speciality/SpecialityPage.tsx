@@ -489,7 +489,8 @@ const SectionSideEffects = () => {
         <p>
           Afin de respecter la confidentialité des données des patients, si un critère (âge,
           sexe,...) représente moins de 11 cas, l&apos;information ne sera pas affichée avec ce
-          niveau de détail.
+          niveau de détail. Les données manquantes ne sont pas affichées. Tenant compte de ces deux
+          conditions, le total des pourcentages n&apos;atteint pas toujours les 100%.
         </p>
 
         <p>
