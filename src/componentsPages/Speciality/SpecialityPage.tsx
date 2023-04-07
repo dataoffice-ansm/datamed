@@ -583,7 +583,7 @@ const SectionRisksShortageHistory = () => {
           Pour retrouver les dernières informations destinées aux professionnels de santé et aux
           patients concernant les médicaments d’intérêt thérapeutique majeur faisant actuellement
           l’objet de difficultés d’approvisionnement et pour lesquels il n’y a pas d’alternative
-          thérapeutique disponible sur le marché français, vous pouvez vous référer au site:{' '}
+          thérapeutique disponible sur le marché français, vous pouvez vous référer au site :{' '}
           <a
             rel="external noreferrer"
             target="_blank"
