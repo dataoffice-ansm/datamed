@@ -62,6 +62,7 @@ import CapaciteProductionInsuffisante from '../assets/pictos/causes/capacite-pro
 import Coronavirus from '../assets/pictos/causes/coronavirus.svg';
 import DefautApprovisionnementSvg from '../assets/pictos/causes/defaut-approvisionnement.svg';
 import DefautApprovisionnementMpSvg from '../assets/pictos/causes/defaut-approvisionnement-mp.svg';
+import DefautApprovisionnementMpAcSvg from '../assets/pictos/causes/defaut-approvisionnement-mpac.svg';
 import DefautQualiteSvg from '../assets/pictos/causes/defaut-qualite-produit-fini.svg';
 import IncidentProductionSvg from '../assets/pictos/causes/incident-production.svg';
 import MiseADispositionSvg from '../assets/pictos/causes/mise-a-disposition.svg';
@@ -352,7 +353,7 @@ export const getRuptureCauseIcon = (name: string) => {
     case 'Difficulté réglementaire':
       return <DifficulteReglementSvg className="w-24 md:w-32" />;
     case "Défaut d'approvisionnement MP/AC":
-      return <DefautApprovisionnementMpSvg className="w-24 md:w-32" />;
+      return <DefautApprovisionnementMpAcSvg className="w-24 md:w-32" />;
     case 'Analyses de libération non conformes':
       return <AnalyseLiberationNonConformesSvg className="w-24 md:w-32" />;
     case 'Problème de transport/logistique':
