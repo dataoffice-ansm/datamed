@@ -29,18 +29,21 @@ export const CardWithImage = ({
 }) => (
   <div
     className={classnames(
-      'CardWithImage bg-white w-full flex flex-col lg:flex-row gap-4 pt-6 lg:pt-0',
+      'CardWithImage bg-white w-full flex flex-col lg:flex-row gap-4',
       className
     )}
   >
     <div
-      className={classnames('flex-none m-auto min-w-fit max-w-xl overflow-hidden', imageClassName)}
+      className={classnames(
+        'flex-none m-auto min-w-[10rem] max-w-xl overflow-hidden',
+        imageClassName
+      )}
     >
       {image}
     </div>
     <div
       className={classnames(
-        'flex flex-col justify-center items-center text-center lg:text-left p-4',
+        'flex flex-col justify-center items-start text-left p-4',
         contentClassName
       )}
     >

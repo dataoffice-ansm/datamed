@@ -21,11 +21,11 @@ export const BarChart = ({
 }: BarChartProps) => (
   <div className={className}>
     <Bar
+      height={500}
       data={{
         labels,
         datasets: [dataset],
       }}
-      height={500}
       options={{
         responsive: true,
         maintainAspectRatio: false,
@@ -51,9 +51,9 @@ export const BarChart = ({
         },
         plugins: {
           legend: {
-            display: false
-         },
-       }
+            display: false,
+          },
+        },
       }}
     />
   </div>

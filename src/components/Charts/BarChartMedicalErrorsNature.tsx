@@ -44,10 +44,10 @@ export const BarChartMedicalErrorsNature = ({
   return (
     <div className={className}>
       <Bar
-        redraw
-        updateMode="resize"
+        height={500}
         options={{
           responsive: true,
+          maintainAspectRatio: false,
           indexAxis: 'y' as const,
           scales: {
             x: {
@@ -64,9 +64,9 @@ export const BarChartMedicalErrorsNature = ({
           },
           plugins: {
             legend: {
-              display: false
+              display: false,
             },
-          }
+          },
         }}
         data={{
           labels,
