@@ -9,7 +9,7 @@ export const SearchSection = () => (
       className="py-32 flex justify-center items-center lg:items-start flex-col-reverse lg:flex-row gap-16 w-full"
     >
       <LandingIllustrationSearch
-        className="md:min-w-[320px] lg:min-w-[256px] max-w-md"
+        className="md:min-w-[320px] lg:min-w-[256px] max-w-md w-full"
         alt="Illustration de microscope et analyse"
       />
       <div className="flex flex-col lg:pt-12 gap-4 max-w-3xl">

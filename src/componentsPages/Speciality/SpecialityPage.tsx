@@ -621,6 +621,7 @@ const SectionRisksShortageHistory = () => {
       <CardWithImage
         className="border border-grey-100 rounded-lg px-4 py-4 md:py-6"
         title="Rupture ou risque de rupture des produits de santé"
+        imageClassName="sm:w-52"
         image={<OutOfStockSvg />}
         button={
           <Button
