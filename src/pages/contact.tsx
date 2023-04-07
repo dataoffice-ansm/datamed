@@ -42,7 +42,7 @@ const SectionGuichetUsager = () => (
     <p>
       L’ANSM met en place un nouveau service destiné à faciliter la relation avec les usagers. Ce
       dispositif s’appuie sur une équipe spécialement recrutée pour prendre en charge les demandes
-      des patients, professionnels de santé, industriels, et plus largement du grand public…
+      des patients, professionnels de santé, industriels, et plus largement du grand public.
     </p>
     <p>
       Si votre question concerne les effets indésirables, les erreurs médicamenteuses ou les
