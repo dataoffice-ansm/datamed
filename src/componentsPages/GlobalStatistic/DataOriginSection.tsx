@@ -13,10 +13,6 @@ export const SectionDataOrigin = () => (
           pharmacovigilance gérée par l&apos;Agence Nationale de Sécurité du Médicament et des
           produits de santé.
         </p>
-        <p>
-          <strong>Open Medic</strong>: Base de données ouvertes par la Caisse Nationale
-          d&apos;Assurance Maladie.
-        </p>
       </div>
 
       <div className="mb-12">
@@ -44,18 +40,6 @@ export const SectionDataOrigin = () => (
             href="https://signalement.social-sante.gouv.fr"
           >
             https://signalement.social-sante.gouv.fr
-          </a>
-        </p>
-        <p>
-          Estimations obtenues à partir des données Open-Medic portant sur le nombre de patients
-          ayant bénéficié d&apos;un remboursement du médicament délivré en pharmacie de ville. Pour
-          plus d&apos;informations, consultez:{' '}
-          <a
-            rel="external noreferrer"
-            target="_blank"
-            href="http://open-data-assurance-maladie.ameli.fr/medicaments/index.php"
-          >
-            http://open-data-assurance-maladie.ameli.fr/medicaments/index.php
           </a>
         </p>
       </div>

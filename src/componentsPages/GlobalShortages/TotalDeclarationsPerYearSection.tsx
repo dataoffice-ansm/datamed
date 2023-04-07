@@ -13,6 +13,9 @@ import { numberWithThousand } from '../../utils/format';
 
 export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivElement>) => {
   const { period, shortagesPerYear, shortagesClassesPerYear } = useGlobalShortagesPageContext();
+  const years = (shortagesPerYear?.map((e) => e.year) ?? []).reverse();
+  const minYear = Math.min(...years);
+  const maxYear = Math.max(...years);
 
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
 
@@ -58,8 +61,8 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
   );
 
   const sectionSubtitlePeriod =
-    period?.minYear && period.maxYear
-      ? `Données mises à jour annuellement, issues de la période ${period?.minYear} - ${period.maxYear}`
+    minYear && maxYear
+      ? `Données mises à jour annuellement, issues de la période  ${minYear} - ${maxYear}`
       : 'Période non disponible';
 
   return (
@@ -88,8 +91,7 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
               </p>
             }
           >
-            Nombre de déclarations de ruptures et risques de rupture de stock de
-            l’année civile
+            Nombre de déclarations de ruptures et risques de rupture de stock de l’année civile
           </BoxInfo>
 
           <div className="flex gap-8 flex-col md:flex-row">
