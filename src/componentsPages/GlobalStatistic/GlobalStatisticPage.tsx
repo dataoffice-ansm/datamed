@@ -54,8 +54,11 @@ const SectionDemography = () => {
         //   </div>
         // }
       >
-        Cumul de toutes les déclarations d&apos;effets indésirables suspectés, tous médicaments
-        confondus, reçues par les centres régionaux de pharmacovigilance sur la période considérée
+        {exposition?.maxYear && exposition?.minYear
+          ? `Cumul de toutes les déclarations d'effets indésirables suspectés, tous médicaments
+          confondus, reçues par les centres régionaux de pharmacovigilance sur la période 
+          ${exposition.minYear} - ${exposition.maxYear}`
+          : 'Période des données issues non renseignée'}
       </BoxInfo>
       <SectionTitle
         title="Caractéristiques des patients"
