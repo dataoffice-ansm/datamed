@@ -38,8 +38,8 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
         tooltip={
           <>
             <p className="font-medium text-xl">
-              Nombre de déclarations de ruptures ou de risques de rupture de stock et nombre de médicaments par classe
-              thérapeutique
+              Nombre de déclarations de ruptures ou de risques de rupture de stock et nombre de
+              médicaments par classe thérapeutique
             </p>
             <p>
               Le Système de classification anatomique, thérapeutique et chimique (en anglais :
@@ -50,13 +50,13 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
               caractéristiques thérapeutiques et chimiques.
             </p>
             <p>
-              L&apos;histogramme vert représente le nombre de déclarations reçues par classe thérapeutique
-              (classification ATC). L&apos;histogramme bleu indique le nombre de présentations de
-              médicaments (une présentation correspond à un conditionnement précis d&apos;un
-              médicament, par exemple une boîte de 30 gélules et une boîte de 90 gélules d&apos;un
-              même médicament sont deux présentations différentes) que contient la classe. Dans leur
-              globalité, ces graphiques permettent d&apos;apprécier le nombre de déclarations reçues par
-              rapport au nombre de médicaments disponibles.
+              L&apos;histogramme vert représente le nombre de déclarations reçues par classe
+              thérapeutique (classification ATC). L&apos;histogramme bleu indique le nombre de
+              présentations de médicaments (une présentation correspond à un conditionnement précis
+              d&apos;un médicament, par exemple une boîte de 30 gélules et une boîte de 90 gélules
+              d&apos;un même médicament sont deux présentations différentes) que contient la classe.
+              Dans leur globalité, ces graphiques permettent d&apos;apprécier le nombre de
+              déclarations reçues par rapport au nombre de médicaments disponibles.
             </p>
           </>
         }
@@ -67,8 +67,9 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
               : [];
 
           const therapeuticRepartitionForSelectedYear = shortagesTypeRepForSelectedYear
-            ? shortagesTypeRepForSelectedYear
-                .sort((a, b) => (a.label && b.label ? a.label.localeCompare(b.label) : 1))
+            ? shortagesTypeRepForSelectedYear.sort((a, b) =>
+                a.label && b.label ? a.label.localeCompare(b.label) : 1
+              )
             : [];
 
           const labels = therapeuticRepartitionForSelectedYear
@@ -77,7 +78,7 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
             .filter(Boolean) as string[];
 
           const datasetBar: ChartDataset<'bar'> = {
-            label: 'Nombre de signalements',
+            label: 'Nombre de déclarations',
             backgroundColor: tailwindPaletteConfig.darkGreen[400],
             borderColor: tailwindPaletteConfig.darkGreen[400],
             data: therapeuticRepartitionForSelectedYear?.map((e) => e?.reportsCount ?? 0),
@@ -96,7 +97,7 @@ export const RepartitionPerTherapeuticClass = (_props: HTMLAttributes<HTMLDivEle
                 className="my-8"
                 labels={labels}
                 dataset={datasetBar}
-                leftLegend="Nombre de signalements"
+                leftLegend="Nombre de déclarations"
               />
 
               <BarChart

@@ -166,12 +166,16 @@ const SectionAnnoucement = () => (
 const SectionDataProtect = () => (
   <Section title="Protection des données à caractère personnel">
     <div className="py-4">
-      Les données publiées sur le site data.ansm sont issues de bases de données de l&apos;ANSM et
-      d&apos;autres institutions françaises (Cnam) et ont fait l&apos;objet d&apos;une
-      pseudonymisation afin de garantir la protection de la vie privée des patients. Pour cela,
-      seules des données agrégées sont mises en ligne. Lorsqu&apos;un effet indésirable concerne
-      moins de 11 patients, le nombre de personnes concernées n&apos;est pas affiché, afin
-      d&apos;éviter toute réidentification possible des patients
+      Les données publiées sur le site{' '}
+      <Link href="/">
+        <a>data.ansm.sante.fr</a>
+      </Link>{' '}
+      sont issues de bases de données de l&apos;ANSM et d&apos;autres institutions françaises (Cnam)
+      et ont fait l&apos;objet d&apos;une pseudonymisation afin de garantir la protection de la vie
+      privée des patients. Pour cela, seules des données agrégées sont mises en ligne.
+      Lorsqu&apos;un effet indésirable concerne moins de 11 patients, le nombre de personnes
+      concernées n&apos;est pas affiché, afin d&apos;éviter toute réidentification possible des
+      patients
     </div>
   </Section>
 );

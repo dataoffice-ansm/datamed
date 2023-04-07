@@ -489,7 +489,8 @@ const SectionSideEffects = () => {
         <p>
           Afin de respecter la confidentialité des données des patients, si un critère (âge,
           sexe,...) représente moins de 11 cas, l&apos;information ne sera pas affichée avec ce
-          niveau de détail.
+          niveau de détail. Les données manquantes ne sont pas affichées. Tenant compte de ces deux
+          conditions, le total des pourcentages n&apos;atteint pas toujours les 100%.
         </p>
 
         <p>
@@ -598,7 +599,7 @@ const SectionRisksShortageHistory = () => {
           <div className="p-4 border border-grey-100 rounded-lg bg-white">
             <div className="text-primary font-medium">
               <span>{`${numberWithThousand(count)} ${
-                count === 1 ? 'déclaration' : 'déclarations'
+                count === 1 ? 'déclaration' : 'déclarations concernant la substance active'
               }`}</span>
             </div>
             <div className="pt-6">
