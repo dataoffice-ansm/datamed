@@ -132,13 +132,13 @@ export const getExpositionInfosByLevelId = (level: number | null) => {
 export const getMedicalErrorApparitionStep = (initialErrorId: number) => {
   switch (initialErrorId) {
     case 1:
-      return MedicalErrorApparitionStep.PreparationStep;
+      return MedicalErrorApparitionStep.AdministrationStep;
     case 2:
-      return MedicalErrorApparitionStep.DeliveranceStep;
+      return MedicalErrorApparitionStep.PreparationStep;
     case 3:
       return MedicalErrorApparitionStep.PrescriptionStep;
     case 4:
-      return MedicalErrorApparitionStep.AdministrationStep;
+      return MedicalErrorApparitionStep.DeliveranceStep;
     case 6:
       return MedicalErrorApparitionStep.SurveillanceStep;
     case 5:
