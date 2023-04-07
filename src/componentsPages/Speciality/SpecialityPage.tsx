@@ -498,7 +498,7 @@ const SectionSideEffects = () => {
           de données de l&apos;ANSM alimentée par les Centres Régionaux de Pharmacovigilance (CRPV).
           Elle inclut l&apos;ensemble des déclarations suspectées comme étant en lien avec
           l&apos;usage d&apos;un ou plusieurs médicaments. Ces dernières sont notifiées par les
-          professionnels de santé ou par les patients et association agréées via un portail dédié:{' '}
+          professionnels de santé ou par les patients et association agréées via un portail dédié :{' '}
           <a
             rel="external noreferrer"
             target="_blank"
@@ -526,7 +526,7 @@ const SectionSideEffects = () => {
             pas possible à partir des données de déclaration.
           </p>
           <p>
-            Pour plus d’information, consultez:{' '}
+            Pour plus d’information, consultez :{' '}
             <a
               rel="external noreferrer"
               target="_blank"
@@ -583,7 +583,7 @@ const SectionRisksShortageHistory = () => {
           Pour retrouver les dernières informations destinées aux professionnels de santé et aux
           patients concernant les médicaments d’intérêt thérapeutique majeur faisant actuellement
           l’objet de difficultés d’approvisionnement et pour lesquels il n’y a pas d’alternative
-          thérapeutique disponible sur le marché français, vous pouvez vous référer au site:{' '}
+          thérapeutique disponible sur le marché français, vous pouvez vous référer au site :{' '}
           <a
             rel="external noreferrer"
             target="_blank"
