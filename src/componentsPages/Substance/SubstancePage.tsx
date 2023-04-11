@@ -53,7 +53,7 @@ const SectionOneGlobalInformation = () => {
         <p>
           Estimations obtenues à partir des données Open-Medic portant sur le nombre de patients
           ayant bénéficié d’un remboursement du médicament délivré en pharmacie de ville. Pour plus
-          d’informations, consultez:{' '}
+          d’informations, consultez :{' '}
           <a
             rel="external noreferrer"
             target="_blank"
@@ -64,7 +64,7 @@ const SectionOneGlobalInformation = () => {
           </a>
         </p>
         <p>
-          <strong>Mode de calcul:</strong> Pour une même substance active ou une spécialité
+          <strong>Mode de calcul :</strong> Pour une même substance active ou une spécialité
           pharmaceutique, lorsque le patient achète différents conditionnements, le décompte
           correspondra à la somme des types de conditionnements remboursés pour ce patient.
         </p>
@@ -77,6 +77,12 @@ const SectionOneGlobalInformation = () => {
           La donnée statistique présentée ci-dessous est une moyenne annuelle et arrondie, du nombre
           de remboursements de médicament par patient et par conditionnement de médicament par année
           civile.
+        </p>
+        <p>
+          Afin de respecter la confidentialité des données des patients, si un critère (âge,
+          sexe,...) représente moins de 11 cas, l&apos;information ne sera pas affichée avec ce
+          niveau de détail. Les données manquantes ne sont pas affichées. Tenant compte de ces deux
+          conditions, le total des pourcentages n&apos;atteint pas toujours les 100%.
         </p>
       </Accordion>
 

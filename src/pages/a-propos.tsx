@@ -44,33 +44,33 @@ const SectionToolForAll = () => (
 
 const SectionEIG = () => (
   <Section title="Plusieurs partenaires de l'ANSM">
-    <div className="py-4">
-      <div>
-        Cet outil est né d’une collaboration entre trois Entrepreneurs d’Intérêt Général et l’ANSM (
-        <a
-          rel="external noreferrer"
-          target="_blank"
-          href="https://eig.etalab.gouv.fr/defis/datamed/"
-        >
-          défi DataMed
-        </a>
-        ), d&apos;un appel à projet avec le Health Data Hub (
-        <a
-          rel="external noreferrer"
-          target="_blank"
-          href="https://www.health-data-hub.fr/partenariats/ordei"
-        >
-          projet Ordei
-        </a>
-        ), et d&apos;un hackathon initié par l&apos;ANSM (
+    <div>
+      <div className="py-4">
+        Cet outil est le fruit de l&apos;
         <a
           rel="external noreferrer"
           target="_blank"
           href="https://ansm.sante.fr/actualites/succes-du-premier-hackathon-e-med-consacre-aux-erreurs-medicamenteuses-communique"
         >
-          projet eMed
+          Hackthon eMed de l&apos;ANSM
         </a>
-        ).
+        , du{' '}
+        <a
+          rel="external noreferrer"
+          target="_blank"
+          href="https://www.health-data-hub.fr/partenariats/ordei"
+        >
+          projet ORDEI avec le Health Data Hub
+        </a>{' '}
+        et la collaboration avec trois Entrepreneurs d’Intérêt Général et l’ANSM, à travers{' '}
+        <a
+          rel="external noreferrer"
+          target="_blank"
+          href="https://eig.etalab.gouv.fr/defis/datamed/"
+        >
+          le défi DataMed
+        </a>
+        .
       </div>
       <div className="py-4">
         Porté par Etalab et la Direction Interministérielle du Numérique (DINUM), le programme
@@ -82,13 +82,13 @@ const SectionEIG = () => (
         numérique et des données.
       </div>
       <div className="py-4">
-        Le Health Data Hub (HDH) est un groupement d&apos;intérêt public qui garantit l&apos;accès
-        aisé et unifié, transparent et sécurisé, aux données de santé pour améliorer la qualité des
-        soins et l&apos;accompagnement des patients.
+        Le Health Data Hub est un groupement d&apos;intérêt public qui garantit l&apos;accès aisé et
+        unifié, transparent et sécurisé, aux données de santé pour améliorer la qualité des soins et
+        l&apos;accompagnement des patients.
       </div>
       <div className="pt-4">
-        L&apos;ANSM et le Health Data Hub (HDH) ont signé une convention-cadre pour favoriser le
-        partage des données dont dispose l&apos;ANSM et l&apos;open source tout en garantissant la
+        L&apos;ANSM et le Health Data Hub ont signé une convention-cadre pour favoriser le partage
+        des données dont dispose l&apos;ANSM et l&apos;open source tout en garantissant la
         protection des données personnelles. L&apos;objectif est double : faciliter pour tous
         l&apos;accès aux données sur les médicaments et assurer une plus grande transparence.
       </div>

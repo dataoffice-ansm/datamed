@@ -99,9 +99,8 @@ const SectionOneGlobalInformation = () => {
         <h5>Informations de la Base de Données Publique des Médicaments (BDPM)</h5>
         <p>
           Retrouvez des informations de référence sur ce médicament, notamment ses indications
-          thérapeutiques, les données de remboursement, la notice pour le patient, le RCP pour les
-          professionnels, les avis rendus par la Commission de la Transparence et bien d’autres
-          informations.
+          thérapeutiques, le remboursement, la notice, le RCP, les avis rendus par la Commission de
+          la Transparence et bien d’autres informations.
         </p>
         <p>
           <a
@@ -194,7 +193,7 @@ const SectionTreatedPatients = () => {
         <p>
           Estimations obtenues à partir des données Open-Medic portant sur le nombre de patients
           ayant bénéficié d’un remboursement du médicament délivré en pharmacie de ville. Pour plus
-          d’informations, consultez:{' '}
+          d’informations, consultez :{' '}
           <a
             rel="external noreferrer"
             target="_blank"
@@ -205,7 +204,7 @@ const SectionTreatedPatients = () => {
           </a>
         </p>
         <p>
-          <strong>Mode de calcul:</strong> Pour une même substance active ou une spécialité
+          <strong>Mode de calcul :</strong> Pour une même substance active ou une spécialité
           pharmaceutique, lorsque le patient achète différents conditionnements, le décompte
           correspondra à la somme des types de conditionnements remboursés pour ce patient.
         </p>
@@ -218,6 +217,12 @@ const SectionTreatedPatients = () => {
           La donnée statistique présentée ci-dessous est une moyenne annuelle et arrondie, du nombre
           de remboursements de médicament par patient et par conditionnement de médicament par année
           civile.
+        </p>
+        <p>
+          Afin de respecter la confidentialité des données des patients, si un critère (âge,
+          sexe,...) représente moins de 11 cas, l&apos;information ne sera pas affichée avec ce
+          niveau de détail. Les données manquantes ne sont pas affichées. Tenant compte de ces deux
+          conditions, le total des pourcentages n&apos;atteint pas toujours les 100%.
         </p>
       </Accordion>
 
