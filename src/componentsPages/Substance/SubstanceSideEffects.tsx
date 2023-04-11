@@ -178,7 +178,7 @@ export const SubstanceSideEffects = ({
 
       {substance.sideEffects?.repartitionPerNotifier && (
         <GraphBoxSelect
-          title="Répartition par type de déclarants"
+          title="Répartition par type de déclarant"
           theme="secondary"
           className="max-w-full my-8"
           render={({ selectedUnitOption }) => {
@@ -232,7 +232,7 @@ export const SubstanceSideEffects = ({
         </p>
         <p>
           À l&apos;inverse, si tous ces effets indésirables appartiennent au même SOC, ils ne seront
-          comptabilisés qu&apos;une fois dans ce SOC.
+          comptabilisés qu&apos;une fois dans ce SOC.{' '}
           <i>
             Par exemple, de l’acné et de l’eczéma seront comptabilisés une seule fois dans le SOC
             “Affections de la peau et du tissu sous-cutané”.

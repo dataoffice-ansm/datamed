@@ -78,10 +78,7 @@ const SectionCopyRight = () => (
         produits de santé. Ces informations sont protégées par la Convention de Berne sur la
         Protection des œuvres littéraires et artistiques, par d&apos;autres conventions
         internationales et par les législations nationales sur le droit d&apos;auteur et les droits
-        dérivés. L&apos;information et les données contenues sur le site Internet peuvent faire
-        l&apos;objet de revues, ou être reproduites ou traduites à des fins de recherche ou
-        d&apos;étude personnelle, mais ne peuvent être ni vendues ni utilisées à des fins
-        commerciales.
+        dérivés.
       </div>
       <div className="pt-4">
         Le régime de la réutilisation d’informations publiques fixé par le titre II du livre III du
@@ -90,19 +87,19 @@ const SectionCopyRight = () => (
         <ul>
           <li>
             <cite>
-              «les informations publiques figurant dans des documents communiqués ou publiés par les
-              administrations … peuvent être utilisées par toute personne qui le souhaite à
+              « les informations publiques figurant dans des documents communiqués ou publiés par
+              les administrations … peuvent être utilisées par toute personne qui le souhaite à
               d&apos;autres fins que celles de la mission de service public pour les besoins de
-              laquelle les documents ont été produits ou reçus.»
+              laquelle les documents ont été produits ou reçus. »
             </cite>{' '}
             (Article L321-1 du CRPA)
           </li>
           <li>
             <cite>
-              «sauf accord de l&apos;administration, la réutilisation des informations publiques est
-              soumise à la condition que ces dernières ne soient pas altérées, que leur sens ne soit
-              pas dénaturé et que leurs sources et la date de leur dernière mise à jour soient
-              mentionnées.»
+              « sauf accord de l&apos;administration, la réutilisation des informations publiques
+              est soumise à la condition que ces dernières ne soient pas altérées, que leur sens ne
+              soit pas dénaturé et que leurs sources et la date de leur dernière mise à jour soient
+              mentionnées. »
             </cite>{' '}
             (Article L322-1 du CRPA)
           </li>

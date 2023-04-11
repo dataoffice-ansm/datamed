@@ -9,7 +9,7 @@ export const SectionDataOrigin = () => (
       <div className="mb-12">
         <h4 className="mt-0 mb-2">Bases de données exploitées</h4>
         <p>
-          <strong>Base Nationale de PharmacoVigilance</strong>: Base de données des déclarations de
+          <strong>Base Nationale de PharmacoVigilance</strong> : Base de données des déclarations de
           pharmacovigilance gérée par l&apos;Agence Nationale de Sécurité du Médicament et des
           produits de santé.
         </p>
@@ -62,7 +62,7 @@ export const SectionDataOrigin = () => (
           indésirables liés à l&apos;exposition d&apos;un médicament.
         </p>
         <p>
-          Pour plus d&apos;informations, consultez:{' '}
+          Pour plus d&apos;informations, consultez :{' '}
           <a
             rel="external noreferrer"
             target="_blank"

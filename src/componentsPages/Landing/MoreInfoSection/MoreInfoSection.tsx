@@ -42,8 +42,8 @@ export const MoreInfoSection = () => (
         button={<Button href="/globaldec">Découvrir les données</Button>}
       >
         <p>
-          Consultez les données de déclarations d&apos;effets indésirables qu&apos;on suspecte
-          d&apos;être en lien avec l&apos;utilisation d&apos;un ou plusieurs médicaments
+          Consultez l&apos;historique des données de déclarations d&apos;effets indésirables
+          suspectées d&apos;être en lien avec l&apos;utilisation d&apos;un ou plusieurs médicaments
         </p>
 
         {/*<span>*/}
