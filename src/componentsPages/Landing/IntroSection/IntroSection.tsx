@@ -33,7 +33,10 @@ export const IntroSection = () => {
           </div>
         </div>
         <div className="md:min-w-[320px] lg:min-w-[512px]">
-          <LandingIllustration className="w-full" alt="Illustration de recherches et médicaments" />
+          <LandingIllustration
+            className="md:min-w-[320px] lg:min-w-[256px] max-w-md w-full"
+            alt="Illustration de recherches et médicaments"
+          />
         </div>
       </div>
     </FullScreenSection>

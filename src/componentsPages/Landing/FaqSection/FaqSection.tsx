@@ -9,7 +9,7 @@ export const FaqSection = () => (
       className="flex justify-center items-center lg:items-start md:flex-row gap-8 flex-col w-full py-32 px-4 md:px-0"
     >
       <FaqSvg
-        className="md:min-w-[320px] lg:min-w-[512px] max-w-md"
+        className="md:min-w-[320px] lg:min-w-[256px] max-w-md w-full"
         alt="Illustration de la section faq"
       />
       <div className="h-full">
