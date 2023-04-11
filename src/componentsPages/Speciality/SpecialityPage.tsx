@@ -518,7 +518,12 @@ const SectionSideEffects = () => {
           Précision sur les déclarations d’effets indésirables
         </p>
 
-        <CardWithImage className="px-4" contentClassName="!p-0" image={<CommuniqueSvg />}>
+        <CardWithImage
+          className="px-4"
+          contentClassName="!p-0"
+          image={<CommuniqueSvg />}
+          imageClassName="w-44"
+        >
           <p>
             La déclaration en pharmacovigilance permet la détection de signal. Ces données
             déclaratives ne permettent pas d&apos;estimer la fréquence des effets indésirables, les
@@ -624,9 +629,10 @@ const SectionRisksShortageHistory = () => {
       </div>
 
       <CardWithImage
-        className="border border-grey-100 rounded-lg px-4 py-4 md:py-6"
         title="Rupture ou risque de rupture des produits de santé"
-        imageClassName="sm:w-52"
+        className="border border-grey-100 rounded-lg px-4 py-2 md:py-4"
+        imageClassName="px-4 sm:w-52"
+        contentClassName="!py-2 gap-4"
         image={<OutOfStockSvg />}
         button={
           <Button
