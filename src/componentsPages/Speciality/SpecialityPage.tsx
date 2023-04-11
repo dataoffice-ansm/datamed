@@ -251,8 +251,11 @@ const SectionTreatedPatients = () => {
             title="Répartition par sexe des patients traités"
             className="h-full max-w-[100%]"
           >
-            {currentEntity.repartitionPerGender?.female?.valuePercent !== 0 &&
-            currentEntity.repartitionPerGender?.male?.valuePercent !== 0 ? (
+            {/* eslint-disable-next-line no-negated-condition */}
+            {!(
+              currentEntity.repartitionPerGender?.female === null &&
+              currentEntity.repartitionPerGender?.male?.valuePercent === null
+            ) ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
                 {currentEntity.repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
@@ -560,7 +563,7 @@ const SectionSideEffects = () => {
 const SectionRisksShortageHistory = () => {
   const refList = useRef<HTMLDivElement | null>(null);
   const { currentEntity } = useEntityContext<EntityCis>();
-  const { exposition, shortagesHistory } = currentEntity;
+  const { shortagesHistory } = currentEntity;
   const shortages = useMemo(() => shortagesHistory?.shortages ?? [], [shortagesHistory?.shortages]);
   const count = useMemo(() => shortagesHistory?.meta?.count ?? 0, [shortagesHistory?.meta?.count]);
 

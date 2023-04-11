@@ -204,14 +204,18 @@ export class PostgresOperations {
     const female = rows.find((row) => row.sex === 'female');
 
     return {
-      male: {
-        value: Math.round(male?.patients_consumption ?? 0),
-        valuePercent: roundFloat(male?.patients_percentage ?? 0),
-      },
-      female: {
-        value: Math.round(female?.patients_consumption ?? 0),
-        valuePercent: roundFloat(female?.patients_percentage ?? 0),
-      },
+      male: male
+        ? {
+            value: Math.round(male?.patients_consumption ?? 0),
+            valuePercent: roundFloat(male?.patients_percentage ?? 0),
+          }
+        : null,
+      female: female
+        ? {
+            value: Math.round(female?.patients_consumption ?? 0),
+            valuePercent: roundFloat(female?.patients_percentage ?? 0),
+          }
+        : null,
     };
   }
 

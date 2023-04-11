@@ -134,8 +134,11 @@ export const SubstanceSideEffects = ({
             title="Répartition par sexe des patients traités parmi les déclarations d'effets indésirables"
             className="h-full max-w-[100%]"
           >
-            {substance.sideEffects?.repartitionPerGender?.female?.valuePercent &&
-            substance.sideEffects?.repartitionPerGender?.male?.valuePercent ? (
+            {/* eslint-disable-next-line no-negated-condition */}
+            {!(
+              substance.sideEffects?.repartitionPerGender?.male === null &&
+              substance.sideEffects?.repartitionPerGender?.female === null
+            ) ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
                 {substance.sideEffects?.repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
