@@ -295,7 +295,7 @@ const SectionRepartitionNotifiers = () => {
       <SectionTitle title="Caractéristiques des déclarants" subTitle={periodString} />
 
       <GraphBoxSelect
-        title="Répartition par type de déclarants d'effets indésirables"
+        title="Répartition par type de déclarant d'effets indésirables"
         theme="secondary-variant"
         render={({ selectedUnitOption }) => {
           const globalDecNotifiersRep = buildSortedRangeData<GlobalStatsUsagePerNotifier>(
@@ -360,7 +360,7 @@ const SectionTypesOfSideEffects = () => {
         </p>
         <p>
           À l&apos;inverse, si tous ces effets indésirables appartiennent au même SOC, ils ne seront
-          comptabilisés qu&apos;une fois dans ce SOC.
+          comptabilisés qu&apos;une fois dans ce SOC.{' '}
           <i>
             Par exemple, de l’acné et de l’eczéma seront comptabilisés une seule fois dans le SOC
             “Affections de la peau et du tissu sous-cutané”. <br />
