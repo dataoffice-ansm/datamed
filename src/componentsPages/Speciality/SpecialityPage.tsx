@@ -251,8 +251,11 @@ const SectionTreatedPatients = () => {
             title="Répartition par sexe des patients traités"
             className="h-full max-w-[100%]"
           >
-            {currentEntity.repartitionPerGender?.female?.valuePercent !== 0 &&
-            currentEntity.repartitionPerGender?.male?.valuePercent !== 0 ? (
+            {/* eslint-disable-next-line no-negated-condition */}
+            {!(
+              currentEntity.repartitionPerGender?.female === null &&
+              currentEntity.repartitionPerGender?.male?.valuePercent === null
+            ) ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
                 {currentEntity.repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
@@ -518,7 +521,12 @@ const SectionSideEffects = () => {
           Précision sur les déclarations d’effets indésirables
         </p>
 
-        <CardWithImage className="px-4" contentClassName="!p-0" image={<CommuniqueSvg />}>
+        <CardWithImage
+          className="px-4"
+          contentClassName="!p-0"
+          image={<CommuniqueSvg />}
+          imageClassName="w-44"
+        >
           <p>
             La déclaration en pharmacovigilance permet la détection de signal. Ces données
             déclaratives ne permettent pas d&apos;estimer la fréquence des effets indésirables, les
@@ -555,7 +563,7 @@ const SectionSideEffects = () => {
 const SectionRisksShortageHistory = () => {
   const refList = useRef<HTMLDivElement | null>(null);
   const { currentEntity } = useEntityContext<EntityCis>();
-  const { exposition, shortagesHistory } = currentEntity;
+  const { shortagesHistory } = currentEntity;
   const shortages = useMemo(() => shortagesHistory?.shortages ?? [], [shortagesHistory?.shortages]);
   const count = useMemo(() => shortagesHistory?.meta?.count ?? 0, [shortagesHistory?.meta?.count]);
 
@@ -624,9 +632,10 @@ const SectionRisksShortageHistory = () => {
       </div>
 
       <CardWithImage
-        className="border border-grey-100 rounded-lg px-4 py-4 md:py-6"
         title="Rupture ou risque de rupture des produits de santé"
-        imageClassName="sm:w-52"
+        className="border border-grey-100 rounded-lg px-4 py-2 md:py-4"
+        imageClassName="px-4 sm:w-52"
+        contentClassName="!py-2 gap-4"
         image={<OutOfStockSvg />}
         button={
           <Button

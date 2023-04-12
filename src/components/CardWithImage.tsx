@@ -35,7 +35,7 @@ export const CardWithImage = ({
   >
     <div
       className={classnames(
-        'flex-none m-auto min-w-[10rem] max-w-xl overflow-hidden',
+        'flex-none m-auto min-w-[8rem] max-w-xl overflow-hidden',
         imageClassName
       )}
     >

@@ -134,8 +134,11 @@ export const SubstanceSideEffects = ({
             title="Répartition par sexe des patients traités parmi les déclarations d'effets indésirables"
             className="h-full max-w-[100%]"
           >
-            {substance.sideEffects?.repartitionPerGender?.female?.valuePercent &&
-            substance.sideEffects?.repartitionPerGender?.male?.valuePercent ? (
+            {/* eslint-disable-next-line no-negated-condition */}
+            {!(
+              substance.sideEffects?.repartitionPerGender?.male === null &&
+              substance.sideEffects?.repartitionPerGender?.female === null
+            ) ? (
               <div className="mt-8 flex gap-8 justify-center items-center">
                 {substance.sideEffects?.repartitionPerGender?.female?.valuePercent && (
                   <GraphFigure
@@ -283,9 +286,10 @@ export const SubstanceSideEffects = ({
       )}
 
       <CardWithImage
+        title="Comment déclarer un effet indésirable ?"
         className="border border-grey-100 rounded-lg mt-8 mb-4 px-4 py-4 md:py-6"
         imageClassName="sm:w-52"
-        title="Comment déclarer un effet indésirable ?"
+        contentClassName="!py-2 gap-4"
         image={<SickPersonSvg />}
         button={
           <Button
