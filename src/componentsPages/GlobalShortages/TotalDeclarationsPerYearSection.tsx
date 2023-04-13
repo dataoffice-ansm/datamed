@@ -68,7 +68,7 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
   return (
     <div className="DeclarationByYear mb-12">
       <SectionTitle
-        title="Déclarations de ruptures et risques de rupture de stock de l'année civile :"
+        title="Déclarations de ruptures et risques de rupture de stock par année civile"
         subTitle={sectionSubtitlePeriod}
       >
         <Select
@@ -91,7 +91,8 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
               </p>
             }
           >
-            Nombre de déclarations de ruptures et risques de rupture de stock de l’année civile
+            Nombre de déclarations de ruptures et risques de rupture de stock au cours de l’année
+            civile sélectionnée
           </BoxInfo>
 
           <div className="flex gap-8 flex-col md:flex-row">
@@ -105,11 +106,18 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
               percentBackgroundColor="bg-teal-300"
               percentForegroundColor="bg-teal-900"
               tooltip={
-                <p>
-                  Une déclaration de rupture de stock est faite par l&apos;exploitant lorsque le
-                  laboratoire ne dispose plus de stock ou d’un stock très limité réservé à une
-                  distribution d’urgence.
-                </p>
+                <>
+                  <p>
+                    Une déclaration de rupture de stock est faite par l&apos;exploitant lorsque le
+                    laboratoire ne dispose plus de stock ou d’un stock très limité réservé à une
+                    distribution d’urgence.
+                  </p>
+                  <p>
+                    Les déclarations sont clôturées lorsque la remise à disposition normale du
+                    produit est confirmée par le laboratoire et que plus aucune mesure de
+                    préservation des stocks n&apos;est nécessaire.
+                  </p>
+                </>
               }
             />
             <KPIBoxProgression
@@ -122,11 +130,18 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
               percentBackgroundColor="bg-green-300"
               percentForegroundColor="bg-green-900"
               tooltip={
-                <p>
-                  Une déclaration de risque de rupture de stock est faite par l&apos;exploitant
-                  lorsqu&apos;il est anticipé que le niveau de stock ne pourra pas répondre
-                  complètement aux besoins.
-                </p>
+                <>
+                  <p>
+                    Une déclaration de risque de rupture de stock est faite par l&apos;exploitant
+                    lorsqu&apos;il est anticipé que le niveau de stock ne pourra pas répondre
+                    complètement aux besoins.
+                  </p>
+                  <p>
+                    Les déclarations sont clôturées lorsque la remise à disposition normale du
+                    produit est confirmée par le laboratoire et que plus aucune mesure de
+                    préservation des stocks n&apos;est nécessaire.
+                  </p>
+                </>
               }
             />
           </div>
