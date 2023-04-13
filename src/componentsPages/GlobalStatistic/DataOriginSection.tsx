@@ -6,16 +6,16 @@ export const SectionDataOrigin = () => (
     <SectionTitle title="Origine des données" />
 
     <GraphBox>
-      <div className="mb-12">
+      <div className="mb-8">
         <h4 className="mt-0 mb-2">Bases de données exploitées</h4>
         <p>
-          <strong>Base Nationale de PharmacoVigilance</strong> : Base de données des déclarations de
+          Base Nationale de PharmacoVigilance : Base de données des déclarations de
           pharmacovigilance gérée par l&apos;Agence Nationale de Sécurité du Médicament et des
           produits de santé.
         </p>
       </div>
 
-      <div className="mb-12">
+      <div className="mb-8">
         <h4 className="mt-0 mb-2">D&apos;où viennent les données ? Quelle est leur nature ?</h4>
         <p>
           La pharmacovigilance est la surveillance, l&apos;évaluation, la prévention et la gestion
@@ -44,22 +44,19 @@ export const SectionDataOrigin = () => (
         </p>
       </div>
 
-      <div className="mb-12">
+      <div className="mb-8">
         <h4 className="mt-0 mb-2">Avertissements</h4>
         <p>
-          <strong>
-            Les données affichées sur les effets indésirables sont basées sur des déclarations
-            spontanées
-          </strong>{' '}
-          que font les patients ou les professionnels de santé. Elles concernent les effets
-          suspectés d&apos;être liés à l&apos;utilisation d&apos;un ou plusieurs médicaments et les
-          mésusages, abus ou erreurs médicamenteuses.
+          Les données affichées sur les effets indésirables sont basées sur des déclarations
+          spontanées que font les patients ou les professionnels de santé. Elles concernent les
+          effets suspectés d&apos;être liés à l&apos;utilisation d&apos;un ou plusieurs médicaments
+          et les mésusages, abus ou erreurs médicamenteuses.
         </p>
         <p>
-          Ces déclarations sont analysées par des experts afin de{' '}
-          <strong>détecter des signaux en pharmacovigilance</strong>. Ce système déclaratif ne
-          permet pas d&apos;être exhaustif et de déterminer la fréquence de survenue des effets
-          indésirables liés à l&apos;exposition d&apos;un médicament.
+          Ces déclarations sont analysées par des experts afin de détecter des signaux en
+          pharmacovigilance. Ce système déclaratif ne permet pas d&apos;être exhaustif et de
+          déterminer la fréquence de survenue des effets indésirables liés à l&apos;exposition
+          d&apos;un médicament.
         </p>
         <p>
           Pour plus d&apos;informations, consultez :{' '}

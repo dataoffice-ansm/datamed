@@ -191,9 +191,10 @@ const SectionTreatedPatients = () => {
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
       >
         <p>
-          Estimations obtenues à partir des données Open-Medic portant sur le nombre de patients
-          ayant bénéficié d’un remboursement du médicament délivré en pharmacie de ville. Pour plus
-          d’informations, consultez :{' '}
+          Estimations obtenues à partir des données ouvertes mises à disposition par la Caisse
+          nationale de l’Assurance Maladie : Open-Medic. Celles-ci contiennent notamment le nombre
+          de patients ayant bénéficié d’un remboursement du médicament délivré en pharmacie de
+          ville. Pour plus d’informations, consultez :{' '}
           <a
             rel="external noreferrer"
             target="_blank"
@@ -207,11 +208,12 @@ const SectionTreatedPatients = () => {
           <strong>Mode de calcul :</strong> Pour une même substance active ou une spécialité
           pharmaceutique, lorsque le patient achète différents conditionnements, le décompte
           correspondra à la somme des types de conditionnements remboursés pour ce patient.
-        </p>
-        <p>
-          Par exemple, si un patient achète 2 boîtes de 16 gélules et 3 boîtes de 100 gélules d’un
-          médicament au cours de l’année 2016, il sera comptabilisé 2 fois en 2016 pour ce
-          médicament.
+          <br />
+          <i>
+            Par exemple, si un patient achète 2 boîtes de 16 gélules et 3 boîtes de 100 gélules d’un
+            médicament au cours de l’année 2016, il sera comptabilisé 2 fois en 2016 pour ce
+            médicament.
+          </i>
         </p>
         <p>
           La donnée statistique présentée ci-dessous est une moyenne annuelle et arrondie, du nombre
@@ -586,16 +588,15 @@ const SectionRisksShortageHistory = () => {
         title="Quelles données sont affichées ? D’où viennent-elles ?"
       >
         <p>
-          Cette rubrique recense l&apos;historique des déclarations de ruptures et de risques de
-          rupture clôturées concernant les <b>médicaments d’intérêt thérapeutique majeur (MITM)</b>,
-          pour lesquelles les industriels ont une obligation de déclaration auprès de l&apos;ANSM
-          depuis le 3 Mai 2021.
+          Cette rubrique recense l’historique des déclarations de ruptures et de risques de rupture
+          des médicaments d’intérêt thérapeutique majeur (MITM), pour lesquels les industriels ont
+          une obligation de déclaration auprès de l’ANSM depuis le 3 Mai 2021 et clôturées.
         </p>
 
         <p>
           Pour retrouver les dernières informations destinées aux professionnels de santé et aux
-          patients concernant les médicaments d’intérêt thérapeutique majeur faisant actuellement
-          l’objet de difficultés d’approvisionnement et pour lesquels il n’y a pas d’alternative
+          patients concernant les MITM faisant actuellement l’objet de difficultés en termes de
+          disponibilité et pour lesquels il n’y a pas ou pas suffisamment d’alternative
           thérapeutique disponible sur le marché français, vous pouvez vous référer au site :{' '}
           <a
             rel="external noreferrer"
@@ -644,7 +645,7 @@ const SectionRisksShortageHistory = () => {
             href="https://ansm.sante.fr/disponibilites-des-produits-de-sante/medicaments"
             className="uppercase"
           >
-            disponiblité des produits de santé
+            disponibilité des produits de santé
           </Button>
         }
       >
@@ -708,7 +709,7 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => (
         },
         {
           id: 'shortage-risks-history',
-          label: 'Historique des risques et des ruptures de stocks',
+          label: 'Historique des risques et des ruptures de stock',
           content: <SectionRisksShortageHistory />,
         },
         // {

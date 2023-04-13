@@ -223,11 +223,12 @@ export const SubstanceSideEffects = ({
       >
         <p>
           Les effets indésirables peuvent être regroupés et classés selon l&apos;organe concerné. 27
-          systèmes d&apos;organes ont été définis (<strong>Système Organe Classe ou SOC</strong>).
+          systèmes d&apos;organes ont été définis (System Organ Class ou SOC).
         </p>
         <p>
           Si une déclaration concerne des effets indésirables appartenant à plusieurs SOC, elle sera
-          comptabilisée dans chacun de ces SOC.{' '}
+          comptabilisée dans chacun de ces SOC.
+          <br />
           <i>
             Par exemple, un mal de tête et acné seront comptabilisés chacun une fois dans
             “Affections du système nerveux” et “Affections de la peau et du tissu sous-cutané”.
@@ -235,7 +236,8 @@ export const SubstanceSideEffects = ({
         </p>
         <p>
           À l&apos;inverse, si tous ces effets indésirables appartiennent au même SOC, ils ne seront
-          comptabilisés qu&apos;une fois dans ce SOC.{' '}
+          comptabilisés qu&apos;une fois dans ce SOC.
+          <br />
           <i>
             Par exemple, de l’acné et de l’eczéma seront comptabilisés une seule fois dans le SOC
             “Affections de la peau et du tissu sous-cutané”.

@@ -125,7 +125,7 @@ const SectionOpenDataComplex = () => (
       <div className="py-4">
         C’est pourquoi, depuis 2019, l’ANSM a mis en place une stratégie d’ouverture de ses données
         pour communiquer sur ses actions et valoriser son expertise. Cependant, ces données issues
-        de déclarations (effets indésirables suspectés, erreurs médicamenteuses, ruptures de stocks
+        de déclarations (effets indésirables suspectés, erreurs médicamenteuses, ruptures de stock
         de médicament…) sont complexes et sensibles.
       </div>
     </div>
