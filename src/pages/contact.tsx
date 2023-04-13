@@ -46,7 +46,7 @@ const SectionGuichetUsager = () => (
     </p>
     <p>
       Si votre question concerne les effets indésirables, les erreurs médicamenteuses ou les
-      ruptures de stocks, nous vous invitons à remplir le formulaire en cliquant sur le bouton
+      ruptures de stock, nous vous invitons à remplir le formulaire en cliquant sur le bouton
       ci-dessous. Il sera directement adressé à notre guichet usager qui le traitera dans les
       meilleurs délais.
     </p>

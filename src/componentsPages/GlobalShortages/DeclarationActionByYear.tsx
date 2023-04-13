@@ -45,7 +45,7 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
     <div className="RupturesDeclarationActionByYearSection">
       <GraphBoxSelect
         layoutSection
-        title="Gestion des déclarations de ruptures et risques de rupture de stocks"
+        title="Gestion des déclarations de ruptures et risques de rupture de stock"
         subtitle={
           minYear && maxYear
             ? `Données issues de la période ${String(minYear)} - ${String(maxYear)}`
@@ -94,11 +94,11 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
                       </p>
                       <p>
                         Toutes les déclarations reçues font l&apos;objet d&apos;une analyse de
-                        risque et génèrent l&apos;ouverture d&apos;un dossier qui sera suivi par les
-                        équipes de l&apos;ANSM jusqu&apos;à remise à disposition normale du
+                        risques et génèrent l&apos;ouverture d&apos;un dossier qui sera suivi par
+                        les équipes de l&apos;ANSM jusqu&apos;à remise à disposition normale du
                         médicament. Certaines situations, plus critiques nécessitent, la mise en
-                        place de mesures préventives ou palliatives afin de limiter au maximum
-                        l&apos;impact sur l&apos;accès au traitement.
+                        place de mesures permettant de limiter au maximum l&apos;impact sur
+                        l&apos;accès au traitement.
                       </p>
                     </>
                   }
@@ -117,18 +117,17 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
               </div>
 
               <GraphBox
-                title="Répartition des mesures prises pour pallier ou prévenir les ruptures de stock"
+                title="Répartition des mesures prises pour limiter l’impact des ruptures de stock"
                 className="my-8"
                 tooltip={
                   <>
                     <p className="font-medium mb-4 text-lg">
-                      Mesures prises pour palier ou prévenir les ruptures de stock
+                      Mesures prises pour limiter l&apos;impact des ruptures de stock
                     </p>
                     <p>
-                      Lorsqu’un signalement arrive à l’ANSM, est mise en place une évaluation afin
-                      de déterminer les mesures les plus adaptées pour pallier l’insuffisance de
-                      stock. Plusieurs mesures peuvent être mobilisées pour une même situation de
-                      risque ou de rupture de stock, aussi le total peut dépasser 100%.
+                      Toute déclaration de rupture ou de risque de rupture de stock reçue par
+                      l&apos;ANSM fait l&apos;objet d&apos;une évaluation afin de déterminer les
+                      mesures les plus adaptées pour pallier l&apos;insuffisance de stock.
                     </p>
                   </>
                 }

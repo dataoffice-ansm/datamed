@@ -51,9 +51,10 @@ const SectionOneGlobalInformation = () => {
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
       >
         <p>
-          Estimations obtenues à partir des données Open-Medic portant sur le nombre de patients
-          ayant bénéficié d’un remboursement du médicament délivré en pharmacie de ville. Pour plus
-          d’informations, consultez :{' '}
+          Estimations obtenues à partir des données ouvertes mises à disposition par la Caisse
+          nationale de l’Assurance Maladie : Open-Medic. Celles-ci contiennent notamment le nombre
+          de patients ayant bénéficié d’un remboursement du médicament délivré en pharmacie de
+          ville. Pour plus d’informations, consultez :{' '}
           <a
             rel="external noreferrer"
             target="_blank"
@@ -67,11 +68,12 @@ const SectionOneGlobalInformation = () => {
           <strong>Mode de calcul :</strong> Pour une même substance active ou une spécialité
           pharmaceutique, lorsque le patient achète différents conditionnements, le décompte
           correspondra à la somme des types de conditionnements remboursés pour ce patient.
-        </p>
-        <p>
-          Par exemple, si un patient achète 2 boîtes de 16 gélules et 3 boîtes de 100 gélules d’un
-          médicament au cours de l’année 2016, il sera comptabilisé 2 fois en 2016 pour ce
-          médicament
+          <br />
+          <i>
+            Par exemple, si un patient achète 2 boîtes de 16 gélules et 3 boîtes de 100 gélules d’un
+            médicament au cours de l’année 2016, il sera comptabilisé 2 fois en 2016 pour ce
+            médicament
+          </i>
         </p>
         <p>
           La donnée statistique présentée ci-dessous est une moyenne annuelle et arrondie, du nombre
@@ -279,7 +281,7 @@ export const SubstancePage = ({ sub }: { sub: Substance }) => (
       sections={[
         {
           id: 'population-concernee',
-          label: 'POPULATION CONCERNÉÉ',
+          label: 'POPULATION CONCERNÉE',
           content: <SectionOneGlobalInformation />,
         },
         {
