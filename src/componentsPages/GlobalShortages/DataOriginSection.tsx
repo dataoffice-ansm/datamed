@@ -52,13 +52,9 @@ export const DataOriginSection = () => (
             pharmacie de dispenser un médicament à un patient dans un délai de 72 heures (après
             avoir effectué une demande d&apos;approvisionnement auprès de deux entreprises exerçant
             une activité de distribution de médicaments). Elles peuvent être causées par des
-            ruptures de stock (production du médicament) mais également par des ruptures dans le
-            circuit de distribution.{' '}
-          </p>
-          <p>
-            Seules les ruptures de stock définies à l&apos;article R. 5124-49-1 du code de la santé
-            publique font l&apos;objet d&apos;une déclaration à l&apos;ANSM. Les ruptures dans le
-            circuit de distribution ne font pas l&apos;objet de déclarations auprès de l&apos;ANSM.
+            ruptures de stock qui se définissent par l&apos;impossibilité de fabriquer ou
+            d&apos;exploiter un médicament. et qui font l&apos;objet d&apos;une déclaration à
+            l&apos;ANSM.
           </p>
           <p>
             Les données antérieures à mai 2021 n&apos;étant pas regroupées dans leur exhaustivité

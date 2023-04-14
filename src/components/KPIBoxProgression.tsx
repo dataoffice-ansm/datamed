@@ -1,6 +1,5 @@
 import classNames from 'classnames';
 import type { HTMLAttributes, ReactNode } from 'react';
-import { TooltipInformation } from './TooltipInformation';
 import { numberWithThousand } from '../utils/format';
 
 type PercentageBoxProps = {
@@ -11,7 +10,6 @@ type PercentageBoxProps = {
   percentForegroundColor: string;
   title: string;
   percentageTitle: string;
-  tooltip: JSX.Element | ReactNode;
 } & HTMLAttributes<HTMLElement>;
 
 /**
@@ -23,7 +21,6 @@ type PercentageBoxProps = {
  * @param percentageTitle
  * @param title
  * @param total
- * @param tooltip
  * @constructor
  */
 export const KPIBoxProgression = ({
@@ -34,15 +31,8 @@ export const KPIBoxProgression = ({
   percentageTitle,
   title,
   total,
-  tooltip,
 }: PercentageBoxProps) => (
   <div className="PercentageBox flex-1 relative shadow rounded-lg bg-white p-4 flex flex-col gap-2">
-    <div className="absolute top-4 right-4">
-      <TooltipInformation>
-        {/* // fixed width due to absolute positioning */}
-        <div className="TooltipContent p-2 w-72">{tooltip}</div>
-      </TooltipInformation>
-    </div>
     <div className="totalNumber">
       <div className={classNames('font-medium text-2xl md:text-3xl', numberColor)}>
         {numberWithThousand(total)}

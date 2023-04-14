@@ -45,18 +45,11 @@ const DeclarationsNatureHistoryLineChart = () => {
               Historique du nombre de déclarations de ruptures et de risques de rupture de stock
             </p>
             <p>
-              Les industriels qui produisent des Médicaments d’Intérêt Thérapeutique Majeur (MITM)
-              sont tenus de signaler à l’ANSM toute rupture de stock ou risque de rupture de stock
-              les concernant (CSP Art. R. 5124-49-1).
+              Les industriels qui fabriquent ou exploitent des médicaments d&apos;intérêt
+              thérapeutique majeur (MITM) sont tenus de signaler à l&apos;ANSM toute rupture de
+              stock ou risque de rupture de stock concernant les spécialités qu&apos;ils
+              commercialisent (article L. 5121-32 du code de la santé publique).
             </p>
-            <p>
-              Depuis 2019, dans le cadre de la feuille de route ministérielle et de la loi de
-              financement de la sécurité sociale qui renforce ses pouvoirs, l&apos;ANSM demande aux
-              industriels de déclarer le plus en amont possible tout risque de rupture. Cette
-              politique d&apos;anticipation maximale a pour conséquence une augmentation du nombre
-              de déclarations reçues.
-            </p>
-            <p>Les déclarations de décret stock sans risque ne sont pas représentées ici.</p>
           </>
         }
       >
