@@ -62,7 +62,7 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
 
   const sectionSubtitlePeriod =
     minYear && maxYear
-      ? `Données mises à jour annuellement, issues de la période  ${minYear} - ${maxYear}`
+      ? `Données issues de la période  ${minYear} - ${maxYear}`
       : 'Période non disponible';
 
   return (
