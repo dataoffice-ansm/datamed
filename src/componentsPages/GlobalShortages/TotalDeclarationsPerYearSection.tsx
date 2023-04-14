@@ -105,20 +105,20 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
               numberColor="text-teal-900"
               percentBackgroundColor="bg-teal-300"
               percentForegroundColor="bg-teal-900"
-              tooltip={
-                <>
-                  <p>
-                    Une déclaration de rupture de stock est faite par l&apos;exploitant lorsque le
-                    laboratoire ne dispose plus de stock ou d’un stock très limité réservé à une
-                    distribution d’urgence.
-                  </p>
-                  <p>
-                    Les déclarations sont clôturées lorsque la remise à disposition normale du
-                    produit est confirmée par le laboratoire et que plus aucune mesure de
-                    préservation des stocks n&apos;est nécessaire.
-                  </p>
-                </>
-              }
+              // tooltip={
+              //   <>
+              //     <p>
+              //       Une déclaration de rupture de stock est faite par l&apos;exploitant lorsque le
+              //       laboratoire ne dispose plus de stock ou d’un stock très limité réservé à une
+              //       distribution d’urgence.
+              //     </p>
+              //     <p>
+              //       Les déclarations sont clôturées lorsque la remise à disposition normale du
+              //       produit est confirmée par le laboratoire et que plus aucune mesure de
+              //       préservation des stocks n&apos;est nécessaire.
+              //     </p>
+              //   </>
+              // }
             />
             <KPIBoxProgression
               key="declar-risques-ruptures"
@@ -129,20 +129,20 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
               numberColor="text-green-900"
               percentBackgroundColor="bg-green-300"
               percentForegroundColor="bg-green-900"
-              tooltip={
-                <>
-                  <p>
-                    Une déclaration de risque de rupture de stock est faite par l&apos;exploitant
-                    lorsqu&apos;il est anticipé que le niveau de stock ne pourra pas répondre
-                    complètement aux besoins.
-                  </p>
-                  <p>
-                    Les déclarations sont clôturées lorsque la remise à disposition normale du
-                    produit est confirmée par le laboratoire et que plus aucune mesure de
-                    préservation des stocks n&apos;est nécessaire.
-                  </p>
-                </>
-              }
+              // tooltip={
+              //   <>
+              //     <p>
+              //       Une déclaration de risque de rupture de stock est faite par l&apos;exploitant
+              //       lorsqu&apos;il est anticipé que le niveau de stock ne pourra pas répondre
+              //       complètement aux besoins.
+              //     </p>
+              //     <p>
+              //       Les déclarations sont clôturées lorsque la remise à disposition normale du
+              //       produit est confirmée par le laboratoire et que plus aucune mesure de
+              //       préservation des stocks n&apos;est nécessaire.
+              //     </p>
+              //   </>
+              // }
             />
           </div>
         </div>
