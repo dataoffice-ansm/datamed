@@ -86,8 +86,8 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
             theme="dark-green"
             tooltip={
               <p>
-                Les ruptures, les risques de rupture de stock sont déclarés à l’ANSM par les
-                entreprises pharmaceutiques.
+                Les ruptures et les risques de rupture de stock sont déclarés à l&apos;ANSM par les
+                titulaires d&apos;AMM et les entreprises pharmaceutiques exploitant un MITM.
               </p>
             }
           >
