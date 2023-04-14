@@ -71,7 +71,7 @@ export const GlobalShortagesPage = () => (
         },
         {
           id: 'origine-des-donnees',
-          label: 'ORIGINES DES DONNÉES',
+          label: 'ORIGINE DES DONNÉES',
           content: <DataOriginSection />,
         },
       ]}

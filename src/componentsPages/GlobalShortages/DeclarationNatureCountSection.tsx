@@ -89,7 +89,7 @@ export const DeclarationNatureCountSection = () => {
 
   const periodString =
     minYear && maxYear
-      ? `Données issues de la période courante ${minYear} - ${maxYear}`
+      ? `Données issues de la période ${minYear} - ${maxYear}`
       : 'Aucune période courant disponible';
 
   return (

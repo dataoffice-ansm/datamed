@@ -350,7 +350,7 @@ export const getRuptureCauseIcon = (name: string) => {
       return <CapaciteProductionInsuffisante className="w-24 md:w-32" />;
     case 'Défaut qualité produit fini':
       return <DefautQualiteSvg className="w-24 md:w-32" />;
-    case 'Difficulté réglementaire':
+    case 'Problème réglementaire':
       return <DifficulteReglementSvg className="w-24 md:w-32" />;
     case "Défaut d'approvisionnement MP/AC":
       return <DefautApprovisionnementMpAcSvg className="w-24 md:w-32" />;
@@ -368,7 +368,7 @@ export const getRuptureCauseIcon = (name: string) => {
       return <AnalyseNonConformeSvg className="w-24 md:w-32" />;
     case "Défaut d'approvisionnement en Article de Conditionnement":
       return <DefautApprovisionnementSvg className="w-24 md:w-32" />;
-    case 'Problème qualité : Non conformité aux BPF':
+    case 'Non-conformité BPF':
       return <NonConformeSvg className="w-24 md:w-32" />;
     default:
       return <MiseADispositionSvg className="w-24 md:w-32" />;
