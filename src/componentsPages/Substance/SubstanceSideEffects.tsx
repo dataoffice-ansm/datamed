@@ -290,7 +290,7 @@ export const SubstanceSideEffects = ({
       <CardWithImage
         title="Comment déclarer un effet indésirable ?"
         className="border border-grey-100 rounded-lg mt-8 mb-4 px-4 py-4 md:py-6"
-        imageClassName="sm:w-52"
+        imageClassName="w-44 sm:w-52"
         contentClassName="!py-2 gap-4"
         image={<SickPersonSvg />}
         button={

@@ -17,7 +17,7 @@ export const MoreInfoSection = () => (
 
     <CardWithImage
       className="mb-8 border border-grey-100"
-      imageClassName="w-72 lg:w-80 py-4 md:py-0"
+      imageClassName="m-auto lg:m-unset w-72 lg:w-80 xl:w-96 py-4 md:py-0 lg:ml-4"
       contentClassName="items-center text-center lg:items-start lg:text-start !py-2"
       title="Déclarations de ruptures et risques de rupture de stock de médicament"
       image={<OutOfStockSvg />}
@@ -36,7 +36,7 @@ export const MoreInfoSection = () => (
 
     <CardWithImage
       className="mb-8 border border-grey-100"
-      imageClassName="w-72 lg:w-80 py-4 md:py-0"
+      imageClassName="m-auto lg:m-unset w-72 lg:w-80 xl:w-96 py-4 md:py-0 lg:ml-4"
       contentClassName="items-center text-center lg:items-start lg:text-start !py-2"
       title="Déclarations d'effets indésirables suspectés d’être liés aux médicaments"
       image={<SickPersonSvg />}
