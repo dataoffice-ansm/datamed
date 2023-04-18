@@ -59,7 +59,7 @@ export const SpecialitySubstancesContainer = ({
         ) : (
           <div>
             <span className="text-left text-xl">
-              Substance active sélectionnée:{' '}
+              Substance active sélectionnée :{' '}
               <span className="text-secondary-900 font-medium">{selectedSubstance?.name}</span>
             </span>
             <SubstanceSideEffects substance={selectedSubstance} />
