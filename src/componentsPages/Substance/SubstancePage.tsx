@@ -212,7 +212,7 @@ const SectionSideEffects = () => {
           Précision sur les déclarations d’effets indésirables
         </p>
 
-        <CardWithImage contentClassName="!p-0" image={<CommuniqueSvg />}>
+        <CardWithImage contentClassName="!p-0" image={<CommuniqueSvg />} imageClassName="w-44">
           <p>
             La déclaration en pharmacovigilance permet la détection de signal. Ces données
             déclaratives ne permettent pas d&apos;estimer la fréquence des effets indésirables, les

@@ -12,7 +12,7 @@ import PublicationSpeakSVG from '../assets/pictos/publications/speak.svg';
 import PublicationInfoSVG from '../assets/pictos/publications/info.svg';
 import OtherDoctorFigure from '../assets/pictos/notifiers/0.svg';
 import JuristeFigure from '../assets/pictos/notifiers/8.svg';
-import DoctorFemaleFigure from '../assets/pictos/notifiers/doctor_female_150.svg';
+import DoctorFemaleFigure from '../assets/pictos/notifiers/doctor_female_80.svg';
 import DentistFigure from '../assets/pictos/notifiers/dentist_male_150.svg';
 import NurseFemaleFigure from '../assets/pictos/notifiers/nurse_150.svg';
 import SpecialistFigure from '../assets/pictos/notifiers/specialist_150.svg';
