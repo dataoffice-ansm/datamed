@@ -19,9 +19,7 @@ export const SectionDataOrigin = () => (
         <h4 className="mt-0 mb-2">D&apos;où viennent les données ? Quelle est leur nature ?</h4>
         <p>
           La pharmacovigilance est la surveillance, l&apos;évaluation, la prévention et la gestion
-          du risque d&apos;effet indésirable résultant de l&apos;utilisation des médicaments. Elle
-          s&apos;exerce en permanence, avant et après la commercialisation des médicaments, et
-          constitue un élément essentiel du contrôle de la sécurité des médicaments.
+          du risque d&apos;effet indésirable résultant de l&apos;utilisation des médicaments.
         </p>
         <p>
           Afin de respecter la confidentialité des données des patients, si un critère (âge,
@@ -47,10 +45,10 @@ export const SectionDataOrigin = () => (
       <div className="mb-8">
         <h4 className="mt-0 mb-2">Avertissements</h4>
         <p>
-          Les données affichées sur les effets indésirables sont basées sur des déclarations
-          spontanées que font les patients ou les professionnels de santé. Elles concernent les
-          effets suspectés d&apos;être liés à l&apos;utilisation d&apos;un ou plusieurs médicaments
-          et les mésusages, abus ou erreurs médicamenteuses.
+          Les données affichées sur les effets indésirables sont basées sur des déclarations que
+          font les patients ou les professionnels de santé. Elles concernent les effets suspectés
+          d&apos;être liés à l&apos;utilisation d&apos;un ou plusieurs médicaments et les mésusages,
+          abus ou erreurs médicamenteuses.
         </p>
         <p>
           Ces déclarations sont analysées par des experts afin de détecter des signaux en

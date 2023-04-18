@@ -71,9 +71,7 @@ const SectionDemography = () => {
       >
         <p>
           La pharmacovigilance est la surveillance, l’évaluation, la prévention et la gestion du
-          risque d’effet indésirable résultant de l’utilisation des médicaments. Elle s’exerce en
-          permanence, avant et après la commercialisation des médicaments, et constitue un élément
-          essentiel du contrôle de la sécurité des médicaments.
+          risque d’effet indésirable résultant de l’utilisation des médicaments.
         </p>
         <p>
           Afin de respecter la confidentialité des données des patients, si un critère (âge,
@@ -229,7 +227,8 @@ const SectionSeriousEffect = () => {
                   la vie en danger, ou entraînant une invalidité ou une incapacité importantes ou
                   durables, ou provoquant ou prolongeant une hospitalisation, ou se manifestant par
                   une anomalie ou une malformation congénitale. Sont aussi pris en compte les
-                  déclarations d&apos;effets indésirables ayant été jugés graves par le déclarant.
+                  déclarations d&apos;effets indésirables ayant été jugés graves par le
+                  professionnel de santé.
                 </p>
                 <p>
                   Les effets graves ont tendance à être plus déclarés que les cas non graves. Les
@@ -262,9 +261,9 @@ const SectionSeriousEffect = () => {
                 </p>
                 <p>
                   La catégorie &quot;Autre&quot; correspond aux déclarations d&apos;effets
-                  indésirables ayant été jugés comme grave par le déclarant, mais ne rentrant pas
-                  dans les catégories listées comme étant graves selon la définition réglementaire
-                  de gravité en pharmacovigilance.
+                  indésirables ayant été jugés comme grave par le professionnel de santé, mais ne
+                  rentrant pas dans les catégories listées comme étant graves selon la définition
+                  réglementaire de gravité en pharmacovigilance.
                 </p>
               </>
             }
@@ -450,7 +449,7 @@ export const GlobalStatisticPage = () => (
       theme="bg-secondary-variant"
       icon={<GlobStatSvg className="h-full" />}
       backNavigationLabel="Données globales"
-      title="Déclarations d'effets indésirables suspectés"
+      title="Déclarations d'effets indésirables suspectés d’être dus à un médicament"
       description="Statistiques globales"
       textColor="text-black"
       backNavigationIconColor="fill-black"
@@ -462,9 +461,7 @@ export const GlobalStatisticPage = () => (
               <p className="font-medium mb-4 text-lg">Qu’est-ce que la pharmacovigilance ?</p>
               <p>
                 La pharmacovigilance est la surveillance, l’évaluation, la prévention et la gestion
-                du risque d’effet indésirable résultant de l’utilisation des médicaments. Elle
-                s’exerce en permanence, avant et après la commercialisation des médicaments, et
-                constitue un élément essentiel du contrôle de la sécurité des médicaments.
+                du risque d’effet indésirable résultant de l’utilisation des médicaments.
               </p>
             </div>
           }

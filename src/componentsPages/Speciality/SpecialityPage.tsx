@@ -328,11 +328,15 @@ const SectionMedicinalErrors = () => {
       <Accordion
         title="Comment sont calculés ces indicateurs ? D’où viennent ces données ?"
         className="rounded-lg shadow"
+        classNameTitle="text-primary"
+        theme="primary"
       >
         <p>
-          L’erreur médicamenteuse est l&lsquo;omission ou la réalisation non intentionnelle
-          d&lsquo;un acte au cours des soins impliquant un médicament, qui peut être à l’origine
-          d’un risque ou d’un événement indésirable pour le patient.
+          L&apos;erreur médicamenteuse est une erreur non intentionnelle d&apos;un professionnel de
+          santé, d&apos;un patient ou d&apos;un tiers, selon le cas, survenue au cours du processus
+          de soin impliquant un médicament, notamment lors de la prescription, de la dispensation ou
+          de l&apos;administration. L&apos;erreur médicamenteuse peut être à l&apos;origine d’un
+          risque ou d&apos;un événement indésirable pour le patient.
         </p>
         <p>
           Les données sur les erreurs médicamenteuses présentées ici, gérées par l’ANSM proviennent
@@ -492,9 +496,7 @@ const SectionSideEffects = () => {
       >
         <p>
           La pharmacovigilance est la surveillance, l’évaluation, la prévention et la gestion du
-          risque d’effet indésirable résultant de l’utilisation des médicaments. Elle s’exerce en
-          permanence, avant et après la commercialisation des médicaments, et constitue un élément
-          essentiel du contrôle de la sécurité des médicaments.
+          risque d’effet indésirable résultant de l’utilisation des médicaments.
         </p>
         <p>
           Afin de respecter la confidentialité des données des patients, si un critère (âge,
