@@ -81,7 +81,7 @@ const MyApp = ({ Component, authed, pageProps }: AppCustomProps) => {
       <ApolloProvider client={apolloClient}>
         <BodyScrollProvider>
           <LayoutProvider authSSR={authed}>
-            {/* <AuthModal /> */}
+            <AuthModal />
             <AppLayout>{isLoading ? <Loader /> : <Component {...pageProps} />}</AppLayout>
           </LayoutProvider>
         </BodyScrollProvider>
@@ -98,7 +98,7 @@ MyApp.getInitialProps = async (appContext: any) => {
   if (!token || !config?.ssr?.jwtToken) {
     return {
       ...ctx,
-      authed: true,
+      authed: false,
     };
   }
 
