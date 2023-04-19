@@ -45,10 +45,11 @@ const DeclarationsNatureHistoryLineChart = () => {
               Historique du nombre de déclarations de ruptures et de risques de rupture de stock
             </p>
             <p>
-              Les industriels qui fabriquent ou exploitent des médicaments d&apos;intérêt
-              thérapeutique majeur (MITM) sont tenus de signaler à l&apos;ANSM toute rupture de
-              stock ou risque de rupture de stock concernant les spécialités qu&apos;ils
-              commercialisent (article L. 5121-32 du code de la santé publique).
+              Les titulaires d&apos;autorisation de mise sur le marché et les entreprises
+              pharmaceutiques exploitant un médicament d&apos;intérêt thérapeutique majeur (MITM)
+              informent dès qu&apos;ils en ont connaissance l&apos;ANSM de tout risque de rupture de
+              stock ou de toute rupture de stock relatif à ce médicament (article L. 5121-32 du code
+              de la santé publique).
             </p>
           </>
         }

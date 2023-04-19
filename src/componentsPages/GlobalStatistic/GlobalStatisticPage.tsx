@@ -57,7 +57,7 @@ const SectionDemography = () => {
         // }
       >
         {exposition?.maxYear && exposition?.minYear
-          ? `Cumul de toutes les déclarations d'effets indésirables suspectés, tous médicaments
+          ? `Cumul de toutes les déclarations d'effets indésirables suspectés suspectés d’être dus à un médicament, tous médicaments
           confondus, reçues par les centres régionaux de pharmacovigilance sur la période 
           ${exposition.minYear} - ${exposition.maxYear}`
           : 'Période des données issues non renseignée'}
