@@ -121,7 +121,8 @@ export const SubstanceSideEffects = ({
         theme="secondary"
         className="my-8"
       >
-        Nombre cumulé de déclarations d&lsquo;effets indésirables suspectés{' '}
+        Nombre cumulé de déclarations d&lsquo;effets indésirables suspectés d’être dus à un
+        médicament{' '}
         {substance.sideEffects?.bnpvPeriod?.minYear &&
           substance.sideEffects?.bnpvPeriod?.maxYear &&
           `sur la période ${substance.sideEffects?.bnpvPeriod?.minYear} - ${substance.sideEffects?.bnpvPeriod?.maxYear}`}
@@ -253,7 +254,7 @@ export const SubstanceSideEffects = ({
 
       {substance.sideEffects?.repartitionPerPathology && (
         <GraphBoxSelect
-          title="Cumul des effets indésirables suspectés sur la période totale"
+          title="Cumul des effets indésirables suspectés d’être dus à un médicament sur la période totale"
           render={({ selectedUnitOption }) => {
             const repartitionPerPathology = buildSortedRangeData<RepartitionPerPathology>(
               substance.sideEffects?.repartitionPerPathology ?? [],

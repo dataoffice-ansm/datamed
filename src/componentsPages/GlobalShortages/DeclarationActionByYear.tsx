@@ -45,7 +45,7 @@ export const RupturesDeclarationActionByYearSection = (_props: HTMLAttributes<HT
     <div className="RupturesDeclarationActionByYearSection">
       <GraphBoxSelect
         layoutSection
-        title="Gestion des déclarations de ruptures et risques de rupture de stock"
+        title="Gestion des déclarations de ruptures de stock et risques de rupture de stock"
         subtitle={
           minYear && maxYear
             ? `Données issues de la période ${String(minYear)} - ${String(maxYear)}`

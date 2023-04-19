@@ -42,7 +42,7 @@ export const SpecialitySubstancesContainer = ({
       <div className="SubstancesContainerHeader bg-secondary-900 flex gap-4 justify-start items-center p-4 flex-wrap">
         <SubSVG className="SubstancesContainerHeaderIcon h-14 w-14" />
         <span className="SubstancesContainerHeaderTitle text-xl md:text-2xl text-white flex-auto flex justify-start font-medium text-left">
-          Effets indésirables suspectés de la substance active
+          Effets indésirables suspectés d’être dus à la substance active
         </span>
         <div className="SubstancesContainerHeaderSelect w-full max-w-xs">
           <Select

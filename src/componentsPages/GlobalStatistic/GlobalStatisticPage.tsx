@@ -206,7 +206,7 @@ const SectionSeriousEffect = () => {
   return (
     <div className="GlobalStatisticSeriousEffectSection text-left">
       <SectionTitle
-        title="Déclarations d'effets indésirables suspectés graves et non graves"
+        title="Déclarations d'effets indésirables suspectés d’être dus à un médicament graves et non graves"
         subTitle={
           exposition?.maxYear && exposition?.minYear
             ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`

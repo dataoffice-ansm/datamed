@@ -9,16 +9,19 @@ export const DataOriginSection = () => (
       <div className="flex flex-col justify-start items-start flex-auto text-left">
         <div className="mb-8">
           <h4 className="mt-0 mb-2">Bases de données exploitées</h4>
-          <p>Plateforme de télédéclaration des ruptures et risques de rupture de stock des MITM</p>
+          <p>
+            Plateforme de télédéclaration des ruptures de stock et risques de rupture de stock des
+            MITM
+          </p>
         </div>
 
         <div className="mb-8">
           <h4 className="mt-0 mb-2">D&apos;où viennent les données ? Quelle est leur nature ?</h4>
           <p>
-            Les laboratoires pharmaceutiques ont l&apos;obligation de déclarer toute rupture ou
-            risque de rupture de stock concernant des médicaments d&apos;intérêt thérapeutique
-            majeur (MITM) à l&apos;ANSM. Les laboratoires déclarent, pour tous leurs MITM, les
-            niveaux de stocks inférieurs au niveau de stock requis.
+            Les titulaires d&apos;autorisation de mise sur le marché et les entreprises
+            pharmaceutiques exploitant un MITM informent dès qu&apos;ils en ont connaissance
+            l&apos;ANSM de tout risque de rupture de stock ou de toute rupture de stock relatif à ce
+            médicament.
           </p>
           <p>
             Les MITM sont des médicaments pour lesquelles une interruption de traitement est

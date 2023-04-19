@@ -165,7 +165,7 @@ const SectionSideEffects = () => {
   return (
     <div className="min-h-screen">
       <SectionTitle
-        title="Déclarations d’effets indésirables suspectés de la substance active"
+        title="Déclarations d’effets indésirables suspectés d’être dus à la substance active"
         subTitle={
           sideEffects?.bnpvPeriod?.maxYear && sideEffects?.bnpvPeriod?.minYear
             ? `Données issues de la période ${sideEffects?.bnpvPeriod?.minYear} - ${sideEffects?.bnpvPeriod?.maxYear}`

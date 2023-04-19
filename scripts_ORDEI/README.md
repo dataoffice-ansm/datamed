@@ -13,5 +13,5 @@ Un travail d'analyse, de croisement et d'aggrégation de ces données a été r�
 
 ### Données d'utilisation des médicaments
 
-Afin de relativiser le nombre de déclarations d'effets indésirables suspectés, le niveau d'utilisation des médicaments a été estimé à partir des données de la Caisse Nationale de l'Assurance Maladie : OpenMedic (https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-base-complete-depenses-medicaments).
+Afin de relativiser le nombre de déclarations d'effets indésirables suspectés d’être dus à un médicament, le niveau d'utilisation des médicaments a été estimé à partir des données de la Caisse Nationale de l'Assurance Maladie : OpenMedic (https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-base-complete-depenses-medicaments).
 Ces données annuelles ont été cumulées et agrégées par spécialité et par substance.
