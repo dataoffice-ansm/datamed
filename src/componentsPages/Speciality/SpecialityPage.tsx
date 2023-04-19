@@ -480,7 +480,7 @@ const SectionSideEffects = () => {
   return (
     <div className="SectionSideEffects" id="sectionSideEffects">
       <SectionTitle
-        title="Déclarations d&lsquo;effets indésirables suspectés, par substance active"
+        title="Déclarations d&lsquo;effets indésirables suspectés d’être dus à un médicament, par substance active"
         subTitle={
           bnpvPeriod?.maxYear && bnpvPeriod?.minYear
             ? `Données issues de la période ${bnpvPeriod?.minYear} - ${bnpvPeriod?.maxYear}`
@@ -574,7 +574,7 @@ const SectionRisksShortageHistory = () => {
   return (
     <div className="SectionRisksShortageHistory" id="sectionRisksShortageHistory">
       <SectionTitle
-        title="Historique des déclarations de ruptures et de risques de rupture de stock clôturées"
+        title="Historique des déclarations de ruptures de stock et de risques de rupture de stock clôturées"
         subTitle={
           currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear &&
           currentEntity?.shortagesHistory?.trustMedPeriod?.minYear
@@ -590,9 +590,12 @@ const SectionRisksShortageHistory = () => {
         title="Quelles données sont affichées ? D’où viennent-elles ?"
       >
         <p>
-          Cette rubrique recense l’historique des déclarations de ruptures et de risques de rupture
-          des médicaments d’intérêt thérapeutique majeur (MITM), pour lesquels les industriels ont
-          une obligation de déclaration auprès de l’ANSM depuis le 3 Mai 2021 et clôturées.
+          Cette rubrique recense l’historique des déclarations de ruptures de stock et de risques de
+          rupture de stock des médicaments d’intérêt thérapeutique majeur (MITM). Les titulaires
+          d&apos;autorisation de mise sur le marché et les entreprises pharmaceutiques exploitant un
+          MITM informent dès qu&apos;ils en ont connaissance l&apos;ANSM de tout risque de rupture
+          de stock ou de toute rupture de stock relatif à ce médicament (article L. 5121-32 du code
+          de la santé publique).
         </p>
 
         <p>
@@ -652,8 +655,8 @@ const SectionRisksShortageHistory = () => {
         }
       >
         <p>
-          Accédez à l’actualité des ruptures et risques de rupture des produits de santé
-          (médicaments, dispositifs médicaux, vaccins) disponibles sur le site de l’ANSM.
+          Accédez à l’actualité des ruptures de stock et risques de rupture de stock des produits de
+          santé (médicaments, dispositifs médicaux, vaccins) disponibles sur le site de l’ANSM.
         </p>
       </CardWithImage>
     </div>
@@ -711,7 +714,7 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => (
         },
         {
           id: 'shortage-risks-history',
-          label: 'Historique des risques et des ruptures de stock',
+          label: 'Historique des ruptures de stock et des risques de rupture de stock',
           content: <SectionRisksShortageHistory />,
         },
         // {

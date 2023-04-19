@@ -31,7 +31,7 @@ export const DeclarationsCausesFiguresGraphSection = (_props: HTMLAttributes<HTM
   return (
     <div className="DeclarationCauseByYear">
       <GraphBoxSelect
-        title="Causes des déclarations de ruptures et risques de rupture de stock déclarées par les industriels"
+        title="Causes des déclarations de ruptures de stock et risques de rupture de stock déclarées par les industriels"
         className="max-w-full"
         yearsOptions={globalShortagesYearsOptions}
         theme="secondary-variant"
