@@ -23,7 +23,7 @@ const DeclarationsNatureHistoryLineChart = () => {
       },
       {
         id: 2,
-        label: 'Risques de ruptures',
+        label: 'Risques de rupture de stock',
         backgroundColor: tailwindPaletteConfig.green[900],
         borderColor: tailwindPaletteConfig.green[900],
         data: (shortagesClassesPerYear ?? [])
@@ -37,12 +37,13 @@ const DeclarationsNatureHistoryLineChart = () => {
   if (shortagesClassesPerYear) {
     return (
       <GraphBox
-        title="Historique du nombre de déclarations de ruptures et de risques de rupture de stock"
+        title="Historique du nombre de déclarations de ruptures de stock et de risques de rupture de stock"
         className="DeclarationNatureCountContent"
         tooltip={
           <>
             <p className="font-medium text-xl">
-              Historique du nombre de déclarations de ruptures et de risques de rupture de stock
+              Historique du nombre de déclarations de ruptures de stock et de risques de rupture de
+              stock
             </p>
             <p>
               Les titulaires d&apos;autorisation de mise sur le marché et les entreprises
@@ -89,7 +90,7 @@ export const DeclarationNatureCountSection = () => {
   return (
     <div className="DeclarationNatureCount mb-12">
       <SectionTitle
-        title="Nombre et nature des déclarations de ruptures et risques de rupture de stock"
+        title="Nombre et nature des déclarations de ruptures de stock et risques de rupture de stock"
         subTitle={periodString}
       />
 

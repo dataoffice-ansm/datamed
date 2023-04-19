@@ -68,7 +68,7 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
   return (
     <div className="DeclarationByYear mb-12">
       <SectionTitle
-        title="Déclarations de ruptures et risques de rupture de stock par année civile"
+        title="Déclarations de ruptures de stock et risques de rupture de stock par année civile"
         subTitle={sectionSubtitlePeriod}
       >
         <Select
@@ -86,13 +86,13 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
             theme="dark-green"
             tooltip={
               <p>
-                Les ruptures et les risques de rupture de stock sont déclarés à l&apos;ANSM par les
-                titulaires d&apos;AMM et les entreprises pharmaceutiques exploitant un MITM.
+                Les ruptures de stock et les risques de rupture de stock sont déclarés à l&apos;ANSM
+                par les titulaires d&apos;AMM et les entreprises pharmaceutiques exploitant un MITM.
               </p>
             }
           >
-            Nombre de déclarations de ruptures et risques de rupture de stock au cours de l’année
-            civile sélectionnée
+            Nombre de déclarations de ruptures de stock et risques de rupture de stock au cours de
+            l’année civile sélectionnée
           </BoxInfo>
 
           <div className="flex gap-8 flex-col md:flex-row">
@@ -122,7 +122,7 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
             />
             <KPIBoxProgression
               key="declar-risques-ruptures"
-              title="Déclarations de risques de rupture de l’année civile"
+              title="Déclarations de risques de rupture de stock de l’année civile"
               total={shortageRiskPercent?.value ?? 0}
               percentageTitle="ont été clôturées à ce jour"
               percent={shortageRiskPercent?.valuePercentClosed ?? 0}

@@ -19,13 +19,13 @@ export const MoreInfoSection = () => (
       className="mb-8 border border-grey-100"
       imageClassName="m-auto lg:m-unset w-72 lg:w-80 xl:w-96 py-4 md:py-0 lg:ml-4"
       contentClassName="items-center text-center lg:items-start lg:text-start !py-2"
-      title="Déclarations de ruptures et risques de rupture de stock de médicament"
+      title="Déclarations de ruptures de stock et risques de rupture de stock de médicament"
       image={<OutOfStockSvg />}
       button={<Button href="/ruptures">Découvrir les données</Button>}
     >
       <p>
-        Consultez les statistiques globales sur l&apos;historique des déclarations de ruptures et de
-        risques de rupture des médicaments d&apos;intérêt thérapeutique majeur
+        Consultez les statistiques globales sur l&apos;historique des déclarations de ruptures de
+        stock et de risques de rupture de stock des médicaments d&apos;intérêt thérapeutique majeur
       </p>
 
       {/*<span>*/}
@@ -38,13 +38,13 @@ export const MoreInfoSection = () => (
       className="mb-8 border border-grey-100"
       imageClassName="m-auto lg:m-unset w-72 lg:w-80 xl:w-96 py-4 md:py-0 lg:ml-4"
       contentClassName="items-center text-center lg:items-start lg:text-start !py-2"
-      title="Déclarations d'effets indésirables suspectés d’être liés aux médicaments"
+      title="Déclarations d'effets indésirables suspectés d’être dus à un médicament"
       image={<SickPersonSvg />}
       button={<Button href="/globaldec">Découvrir les données</Button>}
     >
       <p>
-        Consultez l&apos;historique des données de déclarations d&apos;effets indésirables
-        suspectées d&apos;être en lien avec l&apos;utilisation d&apos;un ou plusieurs médicaments
+        Consultez l&apos;historique des données de déclarations d&apos;effets indésirables suspectés
+        d&apos;être en lien avec l&apos;utilisation d&apos;un ou plusieurs médicaments
       </p>
 
       {/*<span>*/}
