@@ -57,7 +57,7 @@ const SectionDemography = () => {
         // }
       >
         {exposition?.maxYear && exposition?.minYear
-          ? `Cumul de toutes les déclarations d'effets indésirables suspectés suspectés d’être dus à un médicament, tous médicaments
+          ? `Cumul de toutes les déclarations d'effets indésirables suspectés d’être dus à un médicament, tous médicaments
           confondus, reçues par les centres régionaux de pharmacovigilance sur la période 
           ${exposition.minYear} - ${exposition.maxYear}`
           : 'Période des données issues non renseignée'}
@@ -206,7 +206,7 @@ const SectionSeriousEffect = () => {
   return (
     <div className="GlobalStatisticSeriousEffectSection text-left">
       <SectionTitle
-        title="Déclarations d'effets indésirables suspectés d’être dus à un médicament graves et non graves"
+        title="Déclarations d'effets indésirables graves et non graves suspectés d’être dus à un médicament"
         subTitle={
           exposition?.maxYear && exposition?.minYear
             ? `Données issues de la période ${exposition.minYear} - ${exposition.maxYear}`

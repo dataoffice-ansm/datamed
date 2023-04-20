@@ -52,7 +52,7 @@ const SectionEIG = () => (
           target="_blank"
           href="https://ansm.sante.fr/actualites/succes-du-premier-hackathon-e-med-consacre-aux-erreurs-medicamenteuses-communique"
         >
-          Hackthon eMed de l&apos;ANSM
+          Hackathon eMed de l&apos;ANSM
         </a>
         , du{' '}
         <a

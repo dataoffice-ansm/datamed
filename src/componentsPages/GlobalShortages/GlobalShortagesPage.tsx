@@ -15,7 +15,7 @@ export const GlobalShortagesPage = () => (
       theme="bg-secondary-variant"
       icon={<RupturesSVG className="h-full" />}
       backNavigationLabel="Ruptures"
-      title="Risques de rupture de stock et rupture de stock des médicaments d'intérêt thérapeutique majeur"
+      title="Risques de rupture de stock et ruptures de stock des médicaments d'intérêt thérapeutique majeur"
       description="Statistiques globales"
       textColor="text-black"
       backNavigationIconColor="fill-black"
