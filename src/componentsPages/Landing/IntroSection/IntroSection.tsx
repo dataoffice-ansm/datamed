@@ -15,7 +15,7 @@ export const IntroSection = () => {
           <Logo alt="Logo DATAMED ANSM" className="w-48" />
           <h2 className="pt-8 text-2xl md:text-3xl font-medium">
             Accès public à l'historique des données de
-            <br /> l'Agence du Médicament (ANSM)
+            <br /> l'Agence nationale de sécurité du médicament et des produits de santé
           </h2>
           <p className="max-w-2xl text-lg md:text-xl">
             data.ansm est un site d'information et de transparence sur l'historique des déclarations
