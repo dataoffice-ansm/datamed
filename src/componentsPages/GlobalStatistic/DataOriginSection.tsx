@@ -53,8 +53,8 @@ export const SectionDataOrigin = () => (
         <p>
           Ces déclarations sont analysées par des experts afin de détecter des signaux en
           pharmacovigilance. Ce système déclaratif ne permet pas d&apos;être exhaustif et de
-          déterminer la fréquence de survenue des effets indésirables liés à l&apos;exposition
-          d&apos;un médicament.
+          déterminer la fréquence de survenue des effets indésirables liés à l&apos;exposition à un
+          médicament.
         </p>
         <p>
           Pour plus d&apos;informations, consultez :{' '}

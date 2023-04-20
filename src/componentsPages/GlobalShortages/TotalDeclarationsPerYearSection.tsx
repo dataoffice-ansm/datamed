@@ -98,7 +98,7 @@ export const TotalDeclarationsPerYearSection = (_props: HTMLAttributes<HTMLDivEl
           <div className="flex gap-8 flex-col md:flex-row">
             <KPIBoxProgression
               key="declar-ruptures"
-              title="Déclarations de ruptures de l’année civile"
+              title="Déclarations de ruptures de stock de l’année civile"
               total={shortagePercent?.value ?? 0}
               percentageTitle="ont été clôturées à ce jour"
               percent={shortagePercent?.valuePercentClosed ?? 0}
