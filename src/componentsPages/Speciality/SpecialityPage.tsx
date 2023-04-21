@@ -176,7 +176,7 @@ const SectionTreatedPatients = () => {
   return (
     <div className="sectionPart mt-4 mb-8" id="sectionTreatedPatients">
       <SectionTitle
-        title="Patients traités en ville"
+        title="Estimation du nombre de patients traités en ville"
         subTitle={
           exposition?.openMedicPeriod?.maxYear && exposition?.openMedicPeriod?.minYear
             ? `Données issues de la période ${exposition?.openMedicPeriod?.minYear} - ${exposition?.openMedicPeriod?.maxYear}`
@@ -221,6 +221,11 @@ const SectionTreatedPatients = () => {
           civile.
         </p>
         <p>
+          Étant une estimation, ces chiffres ne peuvent pas être utilisés pour réaliser des calculs
+          d&apos;exposition ou de part de marché. Par ailleurs, elles ne prennent pas en compte
+          l&apos;utilisation en hôpital et les médicaments délivrés sans prescription.
+        </p>
+        <p>
           Afin de respecter la confidentialité des données des patients, si un critère (âge,
           sexe,...) représente moins de 11 cas, l&apos;information ne sera pas affichée avec ce
           niveau de détail. Les données manquantes ne sont pas affichées. Tenant compte de ces deux
@@ -237,12 +242,12 @@ const SectionTreatedPatients = () => {
         <div className="expositionChartRight flex flex-col flex-3 px-4 py-2">
           <h3 className="text-2xl text-primary">
             {exposition?.consumption
-              ? `${numberWithThousand(exposition?.consumption)} / an`
+              ? `Estimation : ${numberWithThousand(exposition?.consumption)} / an`
               : 'Données insuffisantes'}
           </h3>
           <p>
-            Moyenne annuelle du nombre de patients ayant reçu au moins un remboursement de
-            médicament par conditionnement.
+            Estimation de la moyenne annuelle du nombre de patients ayant reçu au moins un
+            remboursement de médicaments par conditionnement.
           </p>
         </div>
       </div>
@@ -250,7 +255,7 @@ const SectionTreatedPatients = () => {
       <div className="flex flex-shrink flex-col md:flex-row gap-8 mb-8 m-auto mt-8">
         <div className="flex-1 flex-shrink">
           <GraphBox
-            title="Répartition par sexe des patients traités"
+            title="Estimation de la répartition par sexe des patients traités"
             className="h-full max-w-[100%]"
           >
             {/* eslint-disable-next-line no-negated-condition */}
@@ -285,7 +290,7 @@ const SectionTreatedPatients = () => {
         </div>
         <div className="flex-1 flex-shrink">
           <GraphBox
-            title="Répartition par âge des patients traités"
+            title="Estimation de la répartition par âge des patients traités"
             className="h-full max-w-[100%]"
           >
             <PieChartRepartition
@@ -504,7 +509,6 @@ const SectionSideEffects = () => {
           niveau de détail. Les données manquantes ne sont pas affichées. Tenant compte de ces deux
           conditions, le total des pourcentages n&apos;atteint pas toujours les 100%.
         </p>
-
         <p>
           Ces données sont issues de la Base Nationale de Pharmacovigilance (BNPV), qui est la base
           de données de l&apos;ANSM alimentée par les Centres Régionaux de Pharmacovigilance (CRPV).
@@ -714,7 +718,7 @@ export const SpecialityPage = ({ cis }: { cis: Speciality }) => (
         },
         {
           id: 'shortage-risks-history',
-          label: 'Historique des ruptures de stock et des risques de rupture de stock',
+          label: 'Ruptures de stock et des risques de rupture de stock',
           content: <SectionRisksShortageHistory />,
         },
         // {
