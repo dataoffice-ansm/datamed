@@ -58,6 +58,10 @@ export const footerLinks: NavLinkItem[] = [
         title: 'HDH',
         url: 'https://www.health-data-hub.fr/',
       },
+      {
+        title: 'CNAM',
+        url: 'https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-base-complete-depenses-medicaments',
+      },
     ],
   },
   {
