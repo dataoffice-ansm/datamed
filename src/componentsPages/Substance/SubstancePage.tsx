@@ -86,11 +86,6 @@ const SectionOneGlobalInformation = () => {
           l&apos;utilisation en hôpital et les médicaments délivrés sans prescription.
         </p>
         <p>
-          Étant une estimation, ces chiffres ne peuvent pas être utilisés pour réaliser des calculs
-          d&apos;exposition ou de part de marché. Par ailleurs, elles ne prennent pas en compte
-          l&apos;utilisation en hôpital et les médicaments délivrés sans prescription.
-        </p>
-        <p>
           Afin de respecter la confidentialité des données des patients, si un critère (âge,
           sexe,...) représente moins de 11 cas, l&apos;information ne sera pas affichée avec ce
           niveau de détail. Les données manquantes ne sont pas affichées. Tenant compte de ces deux
