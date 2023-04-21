@@ -193,8 +193,8 @@ const SectionTreatedPatients = () => {
         <p>
           Estimations obtenues à partir des données ouvertes mises à disposition par la Caisse
           nationale de l’Assurance Maladie : Open-Medic. Celles-ci contiennent notamment le nombre
-          de patients ayant bénéficié d’un remboursement du médicament délivré en pharmacie de
-          ville. Pour plus d’informations, consultez :{' '}
+          de patients ayant bénéficié d’au moins un remboursement pour un médicament délivré en
+          pharmacie de ville dans l’année. Pour plus d’informations, consultez :{' '}
           <a
             rel="external noreferrer"
             target="_blank"
@@ -216,9 +216,14 @@ const SectionTreatedPatients = () => {
           </i>
         </p>
         <p>
-          La donnée statistique présentée ci-dessous est une moyenne annuelle et arrondie, du nombre
-          de remboursements de médicament par patient et par conditionnement de médicament par année
-          civile.
+          La donnée statistique présentée ci-dessous est une estimation de la moyenne annuelle du
+          nombre de patients ayant reçu au moins un remboursement de médicaments par
+          conditionnement.
+        </p>
+        <p>
+          Étant une estimation, ces chiffres ne peuvent pas être utilisés pour réaliser des calculs
+          d&apos;exposition ou de part de marché. Par ailleurs, elles ne prennent pas en compte
+          l&apos;utilisation en hôpital et les médicaments délivrés sans prescription.
         </p>
         <p>
           Étant une estimation, ces chiffres ne peuvent pas être utilisés pour réaliser des calculs
