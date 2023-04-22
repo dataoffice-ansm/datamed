@@ -45,15 +45,15 @@ export const getCisPharmaFormType = (v: string) => {
 const getExpositionConsumptionCis = (exposition: keyof typeof ExpositionLevel) => {
   switch (exposition) {
     case 'VERYLOW':
-      return '< 500';
+      return '< 200';
     case 'LOW':
-      return '< 2 500';
+      return '< 2 000';
     case 'MODERED':
-      return '< 10 000';
+      return '< 9 000';
     case 'HIGH':
-      return '< 45 000';
+      return '< 40 000';
     case 'VERYHIGH':
-      return '>= 45 000';
+      return '>= 40 000';
     default:
       return 'Inconnu';
   }
@@ -62,15 +62,15 @@ const getExpositionConsumptionCis = (exposition: keyof typeof ExpositionLevel) =
 const getExpositionConsumptionSub = (exposition: keyof typeof ExpositionLevel) => {
   switch (exposition) {
     case 'VERYLOW':
-      return '< 5 000';
+      return '< 3 000';
     case 'LOW':
-      return '5 000 - 25 000';
+      return '< 20 000';
     case 'MODERED':
-      return '25 000 - 100 000';
+      return '< 100 000';
     case 'HIGH':
-      return '100 000 - 500 000';
+      return '< 600 000';
     case 'VERYHIGH':
-      return '> 500 000';
+      return '>= 600 000';
     default:
       return 'Inconnu';
   }

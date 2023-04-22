@@ -298,7 +298,7 @@ export const getSideEffectPathologyIconByName = (name: string) => {
       return <ProblemeFigure className="w-24 md:w-32" />;
     case 'Affections congénitales, familiales et génétiques':
       return <AffectionCongenitalesFigure className="w-24 md:w-32" />;
-    case 'Tumeurs bénignes, malignes et non précisées (incl kystes et polypes)':
+    case 'Tumeurs bénignes, malignes et non précisées (inclus kystes et polypes)':
       return <TumeursBenignesFigure className="w-24 md:w-32" />;
     case 'Actes médicaux et chirurgicaux':
       return <ActeMedicauxFigure className="w-24 md:w-32" />;
