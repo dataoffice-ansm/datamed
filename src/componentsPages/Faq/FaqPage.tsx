@@ -34,8 +34,8 @@ const FaqEntryText = ({
   content?: Document;
   color?: string;
 }) => (
-  <div className="FaqEntryQuestion my-6 px-4">
-    <div className="w-full flex gap-4 items-center font-medium justify-between">
+  <div className="FaqEntryQuestion md:my-6 md:px-4">
+    <div className="w-full flex gap-2 md:gap-4 items-center font-medium justify-between">
       <div className="h-8 w-8">
         <SparkSVG className={iconColor(color)} />
       </div>
@@ -78,8 +78,8 @@ export const FaqContent = ({
         id: section.htmlId,
         label: section.title,
         content: (
-          <div className="bg-grey-50 p-8 rounded-lg">
-            <h2 className="py-4 m-0">{section.title}</h2>
+          <div className="px-4 py-2 md:px-8 md:py-8 bg-grey-50 rounded-lg">
+            <h2 className="py-2 md:py-4 m-0">{section.title}</h2>
             {section.sectionsCollection.items.map(
               (sectionPart: FaqSectionPart, sectionPartIndex) => (
                 <div

@@ -26,12 +26,12 @@ const PageFaq = ({ faqData }: { faqData: FaqData }) => {
   return (
     <FullWidthRow className="FaqPage bg-background" flexContent={false}>
       <div className="max-w-7xl m-auto">
-        <div className="FaqHeader flex flex-col justify-center items-center py-16">
+        <div className="FaqHeader flex flex-col justify-center items-center pb-8 md:py-16">
           <h1 className="text-center">Questions fréquemment posées</h1>
           <FaqSVG className="max-w-lg lg:max-w-xl xl:max-w-2xl" />
         </div>
-        <div className="faqSearch my-12 px-4 py-3 ">
-          <div className="flex flex-col m-auto max-w-3xl">
+        <div className="faqSearch md:my-12 px-4 py-3">
+          <div className="flex flex-col gap-2 m-auto max-w-3xl">
             <input
               className="w-full rounded-lg border-grey-400"
               type="text"
@@ -40,7 +40,9 @@ const PageFaq = ({ faqData }: { faqData: FaqData }) => {
                 handleSearch(target.value);
               }}
             />
-            <span className="faqCount text-primary my-2">{count} résultats</span>
+            <span className="faqCount text-primary font-bold my-2">
+              {count} {count === 1 ? 'résultat' : 'résultats'}
+            </span>
           </div>
         </div>
 
