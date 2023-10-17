@@ -121,8 +121,8 @@ export const SubstanceSideEffects = ({
         theme="secondary"
         className="my-8"
       >
-        Nombre cumulé de déclarations d&lsquo;effets indésirables suspectés d’être dus à un
-        médicament{' '}
+        Nombre cumulé de déclarations d&lsquo;effets indésirables suspectés d’être dus à cette
+        substance active{' '}
         {substance.sideEffects?.bnpvPeriod?.minYear &&
           substance.sideEffects?.bnpvPeriod?.maxYear &&
           `sur la période ${substance.sideEffects?.bnpvPeriod?.minYear} - ${substance.sideEffects?.bnpvPeriod?.maxYear}`}
