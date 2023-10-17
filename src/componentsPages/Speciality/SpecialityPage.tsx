@@ -74,7 +74,7 @@ const SectionOneGlobalInformation = () => {
           <span>{currentEntity.atc?.name}</span> - <span>{currentEntity.atc?.code}</span>
         </div>
       )}
-      {currentEntity.commercialisationState && (
+      {/* {currentEntity.commercialisationState && (
         <div className="sectionPart mt-4 mb-8">
           <h5>État de commercialisation</h5>
           <span
@@ -88,7 +88,7 @@ const SectionOneGlobalInformation = () => {
             {currentEntity.commercialisationState}
           </span>
         </div>
-      )}
+      )} */}
       {currentEntity.laboratory && (
         <div className="sectionPart mt-4 mb-8">
           <h5>Laboratoire</h5>
