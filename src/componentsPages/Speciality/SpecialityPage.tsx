@@ -582,7 +582,7 @@ const SectionRisksShortageHistory = () => {
         subTitle={
           currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear &&
           currentEntity?.shortagesHistory?.trustMedPeriod?.minYear
-            ? `Données issues de la période ${currentEntity?.shortagesHistory?.trustMedPeriod?.minYear} - ${currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear}`
+            ? `Données issues de la période mai ${currentEntity?.shortagesHistory?.trustMedPeriod?.minYear} - ${currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />
