@@ -376,7 +376,7 @@ export class PostgresOperations {
       .select([
         //cis
         'mp.id as cisId',
-        'mp.name as cisName',
+        'sh.name as cisName',
         'mp.cis as cisCode',
         // history
         'sh.num',
