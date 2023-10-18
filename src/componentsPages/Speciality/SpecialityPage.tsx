@@ -580,9 +580,11 @@ const SectionRisksShortageHistory = () => {
       <SectionTitle
         title="Historique des déclarations de ruptures de stock et de risques de rupture de stock clôturées"
         subTitle={
+          currentEntity?.shortagesHistory?.trustMedPeriod?.minMonth &&
           currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear &&
+          currentEntity?.shortagesHistory?.trustMedPeriod?.maxMonth &&
           currentEntity?.shortagesHistory?.trustMedPeriod?.minYear
-            ? `Données issues de la période mai ${currentEntity?.shortagesHistory?.trustMedPeriod?.minYear} - ${currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear}`
+            ? `Données issues de la période ${currentEntity?.shortagesHistory?.trustMedPeriod?.minMonth} ${currentEntity?.shortagesHistory?.trustMedPeriod?.minYear} - ${currentEntity?.shortagesHistory?.trustMedPeriod?.maxMonth} ${currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />

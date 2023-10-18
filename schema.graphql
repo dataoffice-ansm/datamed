@@ -322,7 +322,9 @@ type RupturesTotalActionPerYear {
 
 type Period {
     minYear: Int!
+    minMonth: String
     maxYear: Int!
+    maxMonth: String
 }
 
 type ShortagesPerYear {

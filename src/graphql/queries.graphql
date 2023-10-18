@@ -104,7 +104,9 @@ fragment SpecialityFragment on Speciality {
     }
     shortagesHistory {
         trustMedPeriod {
+            minMonth
             minYear
+            maxMonth
             maxYear
         }
         shortages {

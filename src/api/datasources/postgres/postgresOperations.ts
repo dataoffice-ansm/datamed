@@ -36,6 +36,7 @@ import {
   getCisPharmaFormType,
   getMedicalErrorApparitionStep,
   getPublicationsTypeLabel,
+  getMonthName,
 } from '../../utils/mapping';
 import { roundFloat } from '../../utils/format';
 
@@ -1012,7 +1013,9 @@ export class PostgresOperations {
 
     return minDate && maxDate
       ? {
+          minMonth: getMonthName(minDate.getMonth() + 1),
           minYear: minDate.getFullYear(),
+          maxMonth: getMonthName(maxDate.getMonth() + 1),
           maxYear: maxDate.getFullYear(),
         }
       : null;

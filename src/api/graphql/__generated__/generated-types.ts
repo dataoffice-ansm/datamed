@@ -199,7 +199,9 @@ export type MutationLoginArgs = {
 
 export type Period = {
   __typename?: 'Period';
+  maxMonth?: Maybe<Scalars['String']>;
   maxYear: Scalars['Int'];
+  minMonth?: Maybe<Scalars['String']>;
   minYear: Scalars['Int'];
 };
 
@@ -1005,7 +1007,9 @@ export type PeriodResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Period'] = ResolversParentTypes['Period']
 > = {
+  maxMonth?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   maxYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  minMonth?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   minYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };

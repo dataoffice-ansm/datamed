@@ -199,7 +199,9 @@ export type MutationLoginArgs = {
 
 export type Period = {
   __typename?: 'Period';
+  maxMonth?: Maybe<Scalars['String']>;
   maxYear: Scalars['Int'];
+  minMonth?: Maybe<Scalars['String']>;
   minYear: Scalars['Int'];
 };
 
@@ -639,7 +641,13 @@ export type SpecialityFragmentFragment = {
   } | null;
   shortagesHistory?: {
     __typename?: 'SpecialityRupturesHistory';
-    trustMedPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
+    trustMedPeriod?: {
+      __typename?: 'Period';
+      minMonth?: string | null;
+      minYear: number;
+      maxMonth?: string | null;
+      maxYear: number;
+    } | null;
     shortages?: Array<{
       __typename?: 'SpecialityAssociatedShortage';
       num?: string | null;
@@ -898,7 +906,13 @@ export type SpecialityQuery = {
     } | null;
     shortagesHistory?: {
       __typename?: 'SpecialityRupturesHistory';
-      trustMedPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
+      trustMedPeriod?: {
+        __typename?: 'Period';
+        minMonth?: string | null;
+        minYear: number;
+        maxMonth?: string | null;
+        maxYear: number;
+      } | null;
       shortages?: Array<{
         __typename?: 'SpecialityAssociatedShortage';
         num?: string | null;
@@ -1337,7 +1351,9 @@ export const SpecialityFragmentFragmentDoc = gql`
     }
     shortagesHistory {
       trustMedPeriod {
+        minMonth
         minYear
+        maxMonth
         maxYear
       }
       shortages {
