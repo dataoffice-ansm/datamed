@@ -104,7 +104,9 @@ fragment SpecialityFragment on Speciality {
     }
     shortagesHistory {
         trustMedPeriod {
+            minMonth
             minYear
+            maxMonth
             maxYear
         }
         shortages {
@@ -118,10 +120,7 @@ fragment SpecialityFragment on Speciality {
                 name
             }
             classification
-            cause {
-                type
-                definition
-            }
+            cause
         }
         meta {
             count

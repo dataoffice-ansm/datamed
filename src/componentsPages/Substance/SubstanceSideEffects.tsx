@@ -116,13 +116,13 @@ export const SubstanceSideEffects = ({
       <BoxInfo
         title={`${
           numberWithThousand(substance.sideEffects?.declarations?.total ?? 0) ?? 'Aucune'
-        } déclarations reçues`}
+        } déclarations reçues pour ${substance.name}`}
         icon={<FolderSVG className="h-24 w-24" />}
         theme="secondary"
         className="my-8"
       >
-        Nombre cumulé de déclarations d&lsquo;effets indésirables suspectés d’être dus à un
-        médicament{' '}
+        Nombre cumulé de déclarations d&lsquo;effets indésirables suspectés d’être dus à cette
+        substance active{' '}
         {substance.sideEffects?.bnpvPeriod?.minYear &&
           substance.sideEffects?.bnpvPeriod?.maxYear &&
           `sur la période ${substance.sideEffects?.bnpvPeriod?.minYear} - ${substance.sideEffects?.bnpvPeriod?.maxYear}`}
