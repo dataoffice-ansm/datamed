@@ -13,7 +13,7 @@ export const ShortageHistoryItem = ({
 }) => (
   <div className="flex flex-col gap-1">
     <div className="flex items-center">
-      <span className="flex-1 uppercase text-sm">Présentation du médicament</span>
+      <span className="flex-1 uppercase text-sm">Médicament</span>
       <span className="flex-1">{shortageItem.cis?.name}</span>
     </div>
     <div className="flex items-center">
