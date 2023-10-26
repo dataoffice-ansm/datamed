@@ -120,10 +120,7 @@ fragment SpecialityFragment on Speciality {
                 name
             }
             classification
-            cause {
-                type
-                definition
-            }
+            cause
         }
         meta {
             count

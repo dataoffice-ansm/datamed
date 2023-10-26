@@ -144,8 +144,8 @@ type SpecialityAssociatedShortage {
     date: String
     year: Int
     cis: ShortageCis
-
-    cause: SpecialityRuptureCause
+    cause: String
+    
     classification:  String @capitalize
 }
 

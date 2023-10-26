@@ -394,7 +394,7 @@ export type Speciality = {
 
 export type SpecialityAssociatedShortage = {
   __typename?: 'SpecialityAssociatedShortage';
-  cause?: Maybe<SpecialityRuptureCause>;
+  cause?: Maybe<Scalars['String']>;
   cis?: Maybe<ShortageCis>;
   classification?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
@@ -655,16 +655,12 @@ export type SpecialityFragmentFragment = {
       date?: string | null;
       year?: number | null;
       classification?: string | null;
+      cause?: string | null;
       cis?: {
         __typename?: 'ShortageCis';
         id: number;
         code?: string | null;
         name?: string | null;
-      } | null;
-      cause?: {
-        __typename?: 'SpecialityRuptureCause';
-        type?: string | null;
-        definition?: string | null;
       } | null;
     }> | null;
     meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -920,16 +916,12 @@ export type SpecialityQuery = {
         date?: string | null;
         year?: number | null;
         classification?: string | null;
+        cause?: string | null;
         cis?: {
           __typename?: 'ShortageCis';
           id: number;
           code?: string | null;
           name?: string | null;
-        } | null;
-        cause?: {
-          __typename?: 'SpecialityRuptureCause';
-          type?: string | null;
-          definition?: string | null;
         } | null;
       }> | null;
       meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -1367,10 +1359,7 @@ export const SpecialityFragmentFragmentDoc = gql`
           name
         }
         classification
-        cause {
-          type
-          definition
-        }
+        cause
       }
       meta {
         count

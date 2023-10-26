@@ -394,7 +394,7 @@ export type Speciality = {
 
 export type SpecialityAssociatedShortage = {
   __typename?: 'SpecialityAssociatedShortage';
-  cause?: Maybe<SpecialityRuptureCause>;
+  cause?: Maybe<Scalars['String']>;
   cis?: Maybe<ShortageCis>;
   classification?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
@@ -1276,7 +1276,7 @@ export type SpecialityAssociatedShortageResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SpecialityAssociatedShortage'] = ResolversParentTypes['SpecialityAssociatedShortage']
 > = {
-  cause?: Resolver<Maybe<ResolversTypes['SpecialityRuptureCause']>, ParentType, ContextType>;
+  cause?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   cis?: Resolver<Maybe<ResolversTypes['ShortageCis']>, ParentType, ContextType>;
   classification?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

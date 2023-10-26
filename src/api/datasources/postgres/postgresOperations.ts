@@ -368,8 +368,6 @@ export class PostgresOperations {
       .where('sa.mp_id', '=', cisId)
       .leftJoin('shortages_histo as sh', 'sh.mp_id', 'sa.mp_associated_id')
       .leftJoin('shortages_classes as sc', 'sc.id', 'sh.classification_id')
-      .leftJoin('shortages_causes as sca', 'sca.id', 'sh.cause_id')
-      .leftJoin('shortages_causes_types as sct', 'sct.id', 'sca.cause_id')
       .leftJoin('medicinal_products as mp', 'mp.id', 'sh.mp_id')
       .orderBy('sh.date', 'desc')
 
@@ -383,12 +381,9 @@ export class PostgresOperations {
         'sh.state',
         'sh.date',
         'sh.year',
+        'sh.cause',
         // classes
         'sc.classification',
-        //cause
-        'sct.id as causeId',
-        'sct.type as causeType',
-        'sct.definition as causeDefinition',
       ])
       .execute();
 
@@ -403,11 +398,9 @@ export class PostgresOperations {
         state,
         date,
         year,
+        cause,
         // classes
         classification,
-        // cause
-        causeType,
-        causeDefinition,
       } = row;
 
       return cisId
@@ -424,10 +417,7 @@ export class PostgresOperations {
               date: date?.toLocaleDateString(),
               year: Number(year),
               classification,
-              cause: {
-                type: causeType,
-                definition: causeDefinition,
-              },
+              cause,
             },
           ]
         : carry;
