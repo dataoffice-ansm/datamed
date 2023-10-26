@@ -362,7 +362,7 @@ export type ShortagesHisto = {
   name: string | null;
   mp_id: number | null;
   classification_id: number | null;
-  cause_id: number | null;
+  cause: string | null;
 };
 
 export type ShortagesLink = {

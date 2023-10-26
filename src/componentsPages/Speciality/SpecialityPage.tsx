@@ -74,7 +74,7 @@ const SectionOneGlobalInformation = () => {
           <span>{currentEntity.atc?.name}</span> - <span>{currentEntity.atc?.code}</span>
         </div>
       )}
-      {currentEntity.commercialisationState && (
+      {/* {currentEntity.commercialisationState && (
         <div className="sectionPart mt-4 mb-8">
           <h5>État de commercialisation</h5>
           <span
@@ -88,7 +88,7 @@ const SectionOneGlobalInformation = () => {
             {currentEntity.commercialisationState}
           </span>
         </div>
-      )}
+      )} */}
       {currentEntity.laboratory && (
         <div className="sectionPart mt-4 mb-8">
           <h5>Laboratoire</h5>
@@ -199,9 +199,9 @@ const SectionTreatedPatients = () => {
             rel="external noreferrer"
             target="_blank"
             className="text-primary"
-            href="https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-base-complete-depenses-medicaments"
+            href="https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-depenses-beneficiaires-medicaments"
           >
-            https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-base-complete-depenses-medicaments
+            https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-depenses-beneficiaires-medicaments
           </a>
         </p>
         <p>
@@ -580,9 +580,11 @@ const SectionRisksShortageHistory = () => {
       <SectionTitle
         title="Historique des déclarations de ruptures de stock et de risques de rupture de stock clôturées"
         subTitle={
+          currentEntity?.shortagesHistory?.trustMedPeriod?.minMonth &&
           currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear &&
+          currentEntity?.shortagesHistory?.trustMedPeriod?.maxMonth &&
           currentEntity?.shortagesHistory?.trustMedPeriod?.minYear
-            ? `Données issues de la période ${currentEntity?.shortagesHistory?.trustMedPeriod?.minYear} - ${currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear}`
+            ? `Données issues de la période ${currentEntity?.shortagesHistory?.trustMedPeriod?.minMonth} ${currentEntity?.shortagesHistory?.trustMedPeriod?.minYear} - ${currentEntity?.shortagesHistory?.trustMedPeriod?.maxMonth} ${currentEntity?.shortagesHistory?.trustMedPeriod?.maxYear}`
             : 'Période des données issues non renseignée'
         }
       />

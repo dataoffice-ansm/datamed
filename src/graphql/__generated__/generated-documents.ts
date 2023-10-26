@@ -199,7 +199,9 @@ export type MutationLoginArgs = {
 
 export type Period = {
   __typename?: 'Period';
+  maxMonth?: Maybe<Scalars['String']>;
   maxYear: Scalars['Int'];
+  minMonth?: Maybe<Scalars['String']>;
   minYear: Scalars['Int'];
 };
 
@@ -392,7 +394,7 @@ export type Speciality = {
 
 export type SpecialityAssociatedShortage = {
   __typename?: 'SpecialityAssociatedShortage';
-  cause?: Maybe<SpecialityRuptureCause>;
+  cause?: Maybe<Scalars['String']>;
   cis?: Maybe<ShortageCis>;
   classification?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
@@ -639,7 +641,13 @@ export type SpecialityFragmentFragment = {
   } | null;
   shortagesHistory?: {
     __typename?: 'SpecialityRupturesHistory';
-    trustMedPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
+    trustMedPeriod?: {
+      __typename?: 'Period';
+      minMonth?: string | null;
+      minYear: number;
+      maxMonth?: string | null;
+      maxYear: number;
+    } | null;
     shortages?: Array<{
       __typename?: 'SpecialityAssociatedShortage';
       num?: string | null;
@@ -647,16 +655,12 @@ export type SpecialityFragmentFragment = {
       date?: string | null;
       year?: number | null;
       classification?: string | null;
+      cause?: string | null;
       cis?: {
         __typename?: 'ShortageCis';
         id: number;
         code?: string | null;
         name?: string | null;
-      } | null;
-      cause?: {
-        __typename?: 'SpecialityRuptureCause';
-        type?: string | null;
-        definition?: string | null;
       } | null;
     }> | null;
     meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -898,7 +902,13 @@ export type SpecialityQuery = {
     } | null;
     shortagesHistory?: {
       __typename?: 'SpecialityRupturesHistory';
-      trustMedPeriod?: { __typename?: 'Period'; minYear: number; maxYear: number } | null;
+      trustMedPeriod?: {
+        __typename?: 'Period';
+        minMonth?: string | null;
+        minYear: number;
+        maxMonth?: string | null;
+        maxYear: number;
+      } | null;
       shortages?: Array<{
         __typename?: 'SpecialityAssociatedShortage';
         num?: string | null;
@@ -906,16 +916,12 @@ export type SpecialityQuery = {
         date?: string | null;
         year?: number | null;
         classification?: string | null;
+        cause?: string | null;
         cis?: {
           __typename?: 'ShortageCis';
           id: number;
           code?: string | null;
           name?: string | null;
-        } | null;
-        cause?: {
-          __typename?: 'SpecialityRuptureCause';
-          type?: string | null;
-          definition?: string | null;
         } | null;
       }> | null;
       meta?: { __typename?: 'Meta'; count?: number | null } | null;
@@ -1337,7 +1343,9 @@ export const SpecialityFragmentFragmentDoc = gql`
     }
     shortagesHistory {
       trustMedPeriod {
+        minMonth
         minYear
+        maxMonth
         maxYear
       }
       shortages {
@@ -1351,10 +1359,7 @@ export const SpecialityFragmentFragmentDoc = gql`
           name
         }
         classification
-        cause {
-          type
-          definition
-        }
+        cause
       }
       meta {
         count

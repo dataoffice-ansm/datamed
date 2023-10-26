@@ -39,7 +39,7 @@ export const KPIBoxProgression = ({
       </div>
       <div>{title}</div>
     </div>
-    <div className="percentageNumber">
+    {/* <div className="percentageNumber">
       <div className={classNames('font-medium text-2xl md:text-3xl', numberColor)}>{percent} %</div>
       <div>{percentageTitle}</div>
     </div>
@@ -54,6 +54,6 @@ export const KPIBoxProgression = ({
           }}
         />
       </div>
-    </div>
+    </div> */}
   </div>
 );

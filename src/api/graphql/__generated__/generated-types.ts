@@ -199,7 +199,9 @@ export type MutationLoginArgs = {
 
 export type Period = {
   __typename?: 'Period';
+  maxMonth?: Maybe<Scalars['String']>;
   maxYear: Scalars['Int'];
+  minMonth?: Maybe<Scalars['String']>;
   minYear: Scalars['Int'];
 };
 
@@ -392,7 +394,7 @@ export type Speciality = {
 
 export type SpecialityAssociatedShortage = {
   __typename?: 'SpecialityAssociatedShortage';
-  cause?: Maybe<SpecialityRuptureCause>;
+  cause?: Maybe<Scalars['String']>;
   cis?: Maybe<ShortageCis>;
   classification?: Maybe<Scalars['String']>;
   date?: Maybe<Scalars['String']>;
@@ -1005,7 +1007,9 @@ export type PeriodResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['Period'] = ResolversParentTypes['Period']
 > = {
+  maxMonth?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   maxYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  minMonth?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   minYear?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
@@ -1272,7 +1276,7 @@ export type SpecialityAssociatedShortageResolvers<
   ContextType = ContextValue,
   ParentType extends ResolversParentTypes['SpecialityAssociatedShortage'] = ResolversParentTypes['SpecialityAssociatedShortage']
 > = {
-  cause?: Resolver<Maybe<ResolversTypes['SpecialityRuptureCause']>, ParentType, ContextType>;
+  cause?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   cis?: Resolver<Maybe<ResolversTypes['ShortageCis']>, ParentType, ContextType>;
   classification?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
   date?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;

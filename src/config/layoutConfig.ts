@@ -60,7 +60,7 @@ export const footerLinks: NavLinkItem[] = [
       },
       {
         title: 'CNAM',
-        url: 'https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-base-complete-depenses-medicaments',
+        url: 'https://assurance-maladie.ameli.fr/etudes-et-donnees/open-medic-depenses-beneficiaires-medicaments',
       },
     ],
   },
