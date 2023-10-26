@@ -22,14 +22,14 @@ export const ShortageHistoryItem = ({
     </div>
     <div className="flex items-center">
       <div className="flex-1">
-        <span className="uppercase text-sm">Cause</span>
+        <span className="uppercase text-sm">Cause(s)</span>
       </div>
       <div className="flex-1 flex flex-col gap-1">
         <span>{shortageItem?.cause}</span>
       </div>
     </div>
     <div className="flex items-center">
-      <span className="flex-1 uppercase text-sm">Date de déclaration</span>
+      <span className="flex-1 uppercase text-sm">Date de début de la difficulté</span>
       <span className="flex-1">{formatDate(shortageItem?.date ?? '')}</span>
     </div>
     {/* eslint-disable-next-line no-warning-comments */}
