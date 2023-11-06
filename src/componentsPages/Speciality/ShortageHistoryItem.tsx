@@ -29,10 +29,9 @@ export const ShortageHistoryItem = ({
       </div>
     </div>
     <div className="flex items-center">
-      <span className="flex-1 uppercase text-sm">Date de début de la difficulté</span>
+      <span className="flex-1 uppercase text-sm">Date de début de difficulté</span>
       <span className="flex-1">{formatDate(shortageItem?.date ?? '')}</span>
     </div>
-    {/* Date de fin de la difficulté */}
     {/* eslint-disable-next-line no-warning-comments */}
     {/*TODO Récuperer date de fin de difficulté */}
     {/*<div className="flex items-center">*/}
