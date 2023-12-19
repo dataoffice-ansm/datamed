@@ -52,7 +52,11 @@ export const BoxInfo = ({
             'text-success': theme === 'success',
           })}
         >
-          <span className="BoxInfoTitle text-2xl lg:text-3xl font-medium">{title}</span>
+          {title.length < 50 ? (
+            <span className="BoxInfoTitle text-2xl lg:text-3xl font-medium">{title}</span>
+          ) : (
+            <span className="BoxInfoTitle text-2xl font-medium">{title}</span>
+          )}
           {tooltip && (
             <TooltipInformation>
               <div className="TooltipContent p-2 max-w-md">{tooltip}</div>
