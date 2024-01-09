@@ -596,15 +596,16 @@ const SectionRisksShortageHistory = () => {
         title="Quelles données sont affichées ? D’où viennent-elles ?"
       >
         <p>
-          Sont pris en compte toutes les déclarations ouvertes puis cl&ocirc;turées sur la période
-          d&apos;extraction. Ainsi, si une déclaration a été effectuée au cours de l&apos;année N-1
-          et qu&apos;elle est toujours en cours l&apos;année N, le cas n&apos;apparait pas dans
-          data.ansm. &Agrave; l&apos;inverse, si une déclaration a été effectuée au cours de
-          l&apos;année N-1 et qu&apos;elle a été clôturée au cours de l&apos;année N-1, le cas
-          apparaît dans data.ansm. En effet, dès qu&apos;ils ont connaissance d&apos;un risque de
-          rupture de stock ou d&apos;une rupture de stock d&apos;une de leurs spécialités, les
-          titulaires d&apos;AMM et les entreprises pharmaceutiques exploitant un MITM doivent en
-          informer l&apos;ANSM (article L. 5121-32 du code de la santé publique).
+          Cette rubrique recense l’historique des déclarations de ruptures de stock et de risques de
+          rupture de stock des médicaments d’intérêt thérapeutique majeur (MITM). Sont pris en
+          compte toutes les déclarations ouvertes puis clôturées sur la période d’extraction. Ainsi,
+          si une déclaration a été effectuée au cours de l’année N-1 et qu’elle est toujours en
+          cours l’année N, le cas n’apparait pas dans data.ansm. À l’inverse, si une déclaration a
+          été effectuée au cours de l’année N-1 et qu’elle a été clôturée au cours de l’année N-1,
+          le cas apparaît dans data.ansm. En effet, dès qu’ils ont connaissance d’un risque de
+          rupture de stock ou d’une rupture de stock d’une de leurs spécialités, les titulaires
+          d’AMM et les entreprises pharmaceutiques exploitant un MITM doivent en informer l’ANSM
+          (article L. 5121-32 du code de la santé publique).
         </p>
 
         <p>
