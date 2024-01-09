@@ -597,11 +597,15 @@ const SectionRisksShortageHistory = () => {
       >
         <p>
           Cette rubrique recense l’historique des déclarations de ruptures de stock et de risques de
-          rupture de stock des médicaments d’intérêt thérapeutique majeur (MITM). Les titulaires
-          d&apos;autorisation de mise sur le marché et les entreprises pharmaceutiques exploitant un
-          MITM informent dès qu&apos;ils en ont connaissance l&apos;ANSM de tout risque de rupture
-          de stock ou de toute rupture de stock relatif à ce médicament (article L. 5121-32 du code
-          de la santé publique).
+          rupture de stock des médicaments d’intérêt thérapeutique majeur (MITM). Sont pris en
+          compte toutes les déclarations ouvertes puis clôturées sur la période d’extraction. Ainsi,
+          si une déclaration a été effectuée au cours de l’année N-1 et qu’elle est toujours en
+          cours l’année N, le cas n’apparait pas dans data.ansm. À l’inverse, si une déclaration a
+          été effectuée au cours de l’année N-1 et qu’elle a été clôturée au cours de l’année N-1,
+          le cas apparaît dans data.ansm. En effet, dès qu’ils ont connaissance d’un risque de
+          rupture de stock ou d’une rupture de stock d’une de leurs spécialités, les titulaires
+          d’AMM et les entreprises pharmaceutiques exploitant un MITM doivent en informer l’ANSM
+          (article L. 5121-32 du code de la santé publique).
         </p>
 
         <p>
