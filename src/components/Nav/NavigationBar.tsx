@@ -2,7 +2,7 @@ import { useRef, useEffect, useState, useCallback } from 'react';
 import classnames from 'classnames';
 import Link from 'next/link';
 import { NavDrawerMobile } from './NavDrawerMobile';
-import LogoBrand from '../../assets/logo-ansm-beta.svg';
+import LogoBrand from '../../assets/logo_ansm.svg';
 import { useRefHeight } from '../../hooks/useRefHeight';
 import { useLayoutContext } from '../../contexts/LayoutContext';
 import { SearchBar } from '../SearchBar';
