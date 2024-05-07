@@ -190,6 +190,7 @@ export const getSideEffectPathologyIcon = (id: number) => {
     case 3:
       return <AffectionPeauFigure className="w-24 md:w-32" />;
     case 4:
+      return <AffectionOrganeFigure className="w-24 md:w-32" />;
     case 5:
       return <AffectionsReinFigure className="w-24 md:w-32" />;
     case 6:
