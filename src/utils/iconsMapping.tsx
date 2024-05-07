@@ -184,62 +184,54 @@ export const getNotifierIcon = (id: number) => {
 export const getSideEffectPathologyIcon = (id: number) => {
   switch (id) {
     case 1:
-      return <ActeMedicauxFigure className="w-24 md:w-32" />;
-    case 2:
-    case 30:
       return <AffectionsCardiaquesFigure className="w-24 md:w-32" />;
-    case 3:
+    case 2:
       return <AffectionOreilleFigure className="w-24 md:w-32" />;
-    case 4:
+    case 3:
       return <AffectionPeauFigure className="w-24 md:w-32" />;
+    case 4:
     case 5:
-      return <AffectionOrganeFigure className="w-24 md:w-32" />;
-    case 6:
       return <AffectionsReinFigure className="w-24 md:w-32" />;
-    case 7:
+    case 6:
       return <AffectionSystemeImmuFigure className="w-24 md:w-32" />;
-    case 8:
-    case 28:
+    case 7:
       return <AffectionsNerveuxFigure className="w-24 md:w-32" />;
-    case 9:
-    case 31:
+    case 8:
       return <AffectionEndocriFigure className="w-24 md:w-32" />;
-    case 10:
+    case 9:
       return <AffectionGastroFigure className="w-24 md:w-32" />;
-    case 11:
+    case 10:
       return <AffectionHematologiqueFigure className="w-24 md:w-32" />;
-    case 12:
+    case 11:
       return <AffectionHepatobilaireFigure className="w-24 md:w-32" />;
-    case 13:
-    case 34:
+    case 12:
       return <AffectionMusculosquelettiquesFigure className="w-24 md:w-32" />;
-    case 14:
-    case 33:
+    case 13:
       return <AffectionsOculaireFigure className="w-24 md:w-32" />;
-    case 15:
-    case 29:
-    case 32:
+    case 14:
       return <AffectionPsychiatriquesFigure className="w-24 md:w-32" />;
-    case 16:
+    case 15:
       return <AffectionRespiratoiresFigure className="w-24 md:w-32" />;
-    case 17:
+    case 16:
       return <AffectionVasculaireFigure className="w-24 md:w-32" />;
-    case 18:
+    case 17:
       return <CaracteristiqueSocioFigure className="w-24 md:w-32" />;
-    case 19:
+    case 18:
       return <InfectionFigure className="w-24 md:w-32" />;
-    case 20:
+    case 19:
       return <InvestigationsFigure className="w-24 md:w-32" />;
-    case 21:
+    case 20:
       return <LesionsFigure className="w-24 md:w-32" />;
-    case 22:
+    case 21:
       return <ProblemeFigure className="w-24 md:w-32" />;
-    case 23:
+    case 22:
       return <TroublesMetabolismeFigure className="w-24 md:w-32" />;
-    case 24:
+    case 23:
       return <TroublesGenerauxFigure className="w-24 md:w-32" />;
-    case 25:
+    case 24:
       return <TumeursBenignesFigure className="w-24 md:w-32" />;
+    case 25:
+      return <ActeMedicauxFigure className="w-24 md:w-32" />;
     case 26:
       return <AffectionCongenitalesFigure className="w-24 md:w-32" />;
     case 27:
