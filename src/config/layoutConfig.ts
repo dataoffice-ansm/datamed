@@ -8,6 +8,18 @@ export const navIconSize = 24;
 
 export const navBarLinks: NavLinkItem[] = [
   {
+    title: 'Effets Indésirables',
+    url: '/globaldec',
+  },
+  {
+    title: 'Risques et Ruptures',
+    url: '/ruptures',
+  },
+  {
+    title: 'Erreurs Médicamenteuses',
+    url: '/erreurs-med',
+  },
+  {
     title: 'FAQ',
     url: '/faq',
   },
@@ -15,14 +27,8 @@ export const navBarLinks: NavLinkItem[] = [
     title: 'A propos',
     url: '/a-propos',
   },
-  {
-    title: 'Ruptures',
-    url: '/ruptures',
-  },
-  {
-    title: 'Pharmacovigilance',
-    url: '/globaldec',
-  },
+
+
   // {
   //   title: 'Statistiques globales',
   //   links: [
