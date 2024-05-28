@@ -21,6 +21,7 @@ import {numberWithThousand} from "../utils/format";
 import FolderSVG from "../assets/pictos/folder.svg";
 import {BoxInfo} from "../components/BoxInfo";
 import MedicineList from "../components/MedicineList";
+import {PaginatedList} from "../components/PaginatedList";
 
 
 
@@ -250,7 +251,19 @@ const SectionListeSpecialites = () => {
     return (
         <div>
             <SectionTitle title="Spécialités de médicaments ayant reçu au moins 10 déclarations" />
-            <MedicineList medicines={medicines} />
+            {/*<MedicineList medicines={medicines} />*/}
+            <div className="p-4 my-4 border border-grey-100 rounded-lg bg-white">
+                <div className="text-dark-green font-medium my-4 mx-2">
+                    {medicines.length} médicaments identifiés
+                </div>
+                <PaginatedList
+                    data={medicines}
+                    renderItem={(medicine, index) => (
+                        <div key={index}>{medicine.name}</div>
+                    )}
+                />
+            </div>
+
         </div>
     );
 
