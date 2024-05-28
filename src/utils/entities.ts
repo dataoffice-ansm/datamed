@@ -34,3 +34,12 @@ export const buildSortedRangeData = <T>(data: any[], selectedOption?: UnitOption
 
   return rows as T[];
 };
+
+export const buildRangeData = <T>(data: any[], selectedOption?: UnitOptionsValue) => {
+  const rows =
+      (data as RepartitionUsageCommon[])?.filter(
+          (row) => row?.value !== null && row?.valuePercent !== null
+      ) ?? [];
+
+  return rows as T[];
+};
