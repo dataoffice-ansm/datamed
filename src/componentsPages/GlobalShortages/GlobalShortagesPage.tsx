@@ -36,7 +36,7 @@ export const GlobalShortagesPage = () => (
             </div>
           }
           render={(refCb) => (
-            <span ref={refCb} className="underline cursor-help">
+            <span ref={refCb} className="underline cursor-pointer">
               Qu&apos;est-ce qu&apos;un Médicament d&apos;Intérêt Thérapeutique Majeur ?
             </span>
           )}

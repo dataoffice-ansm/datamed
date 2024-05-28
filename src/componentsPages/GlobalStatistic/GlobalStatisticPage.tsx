@@ -466,7 +466,7 @@ export const GlobalStatisticPage = () => (
             </div>
           }
           render={(refCb) => (
-            <span ref={refCb} className="underline cursor-help">
+            <span ref={refCb} className="underline cursor-pointer">
               Qu’est-ce que la pharmacovigilance ?
             </span>
           )}

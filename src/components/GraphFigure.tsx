@@ -52,7 +52,7 @@ export const GraphFigure = ({
         <Tooltip
           placement="bottom"
           render={(refCb) => (
-            <span ref={refCb} className="underline cursor-help">
+            <span ref={refCb} className="underline cursor-pointer">
               {label}
             </span>
           )}

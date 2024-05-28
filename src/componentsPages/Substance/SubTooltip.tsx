@@ -9,7 +9,7 @@ export const SubTooltip = () => (
     content={<div className="p-4 max-w-lg">{tooltipContent}</div>}
     placement="bottom"
     render={(refCb) => (
-      <span ref={refCb} className="underline cursor-help">
+      <span ref={refCb} className="underline cursor-pointer">
         {tooltipTriggerText}
       </span>
     )}

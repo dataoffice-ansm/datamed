@@ -8,7 +8,7 @@ export const GlobStatTooltip = () => (
     content={<div className="p-4">{tooltipContent}</div>}
     placement="auto-start"
     render={(refCb) => (
-      <span ref={refCb} className="underline cursor-help">
+      <span ref={refCb} className="underline cursor-pointer">
         {tooltipTriggerText}
       </span>
     )}

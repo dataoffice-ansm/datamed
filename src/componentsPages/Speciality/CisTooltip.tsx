@@ -26,7 +26,7 @@ export const CisTooltip = () => (
     }
     placement="bottom"
     render={(refCb) => (
-      <span ref={refCb} className="underline cursor-help">
+      <span ref={refCb} className="underline cursor-pointer">
         {tooltipTriggerText}
       </span>
     )}

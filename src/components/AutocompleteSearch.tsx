@@ -142,7 +142,7 @@ export const AutocompleteSearch = ({
               value={query}
               onChange={debounceInputOnChange}
             />
-            <div className="afterElement w-8">
+            <div className="afterElement w-8 cursor-pointer">
               {(isLoading && <LoaderSpinner />) ||
                 (!embedded && (
                   <div className="pointer-events-none">
