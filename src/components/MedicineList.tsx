@@ -34,7 +34,7 @@ const MedicineList: React.FC<MedicineListProps> = ({medicines}) => {
     const totalPages = Math.ceil(medicines.length / itemsPerPage);
 
     return (
-        <div className="bg-white rounded-lg p-4 shadow">
+        <div className="bg-white rounded-lg p-4 shadow my-8">
             <p className="text-dark-green px-4">{medicines.length} médicaments identifiés</p>
             <div className="bg-white rounded-lg p-4 my-8 shadow">
                 {currentItems.map((medicine, index) => (
@@ -54,14 +54,14 @@ const MedicineList: React.FC<MedicineListProps> = ({medicines}) => {
                     </select>
                 </div>
 
-                <div className="flex justify-between">
+                <div className="flex justify-between align-middle gap-2">
                     <button onClick={() => handleChangePage(1)} disabled={currentPage === 1}>
                         <ArrowFirst style={{width: '24px'}}/>
                     </button>
                     <button onClick={() => handleChangePage(currentPage - 1)} disabled={currentPage === 1}>
                         <ArrowPrevious style={{width: '24px'}}/>
                     </button>
-                    <span>
+                    <span className="m-auto">
                         {currentPage}/{totalPages}
                     </span>
                     <button onClick={() => handleChangePage(currentPage + 1)} disabled={currentPage === totalPages}>
