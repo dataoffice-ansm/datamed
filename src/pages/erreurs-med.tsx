@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import { HeadlessHeroHeader } from '../components/HeroHeader/HeadlessHeroHeader';
 import ErrorPreparationSvg from "../assets/pictos/errors/errorPreparation.svg";
 import {Tooltip} from "../components/Tooltip";
-import {SectionDataOrigin} from "../componentsPages/GlobalStatistic/DataOriginSection";
+import {SectionDataOrigin} from "../componentsPages/ErrorsMed/DataOriginSection";
 import {EntityPageLayout} from "../components/Layouts/EntityPageLayout/EntityPageLayout";
 import {SectionTitle} from "../components/SectionTitle";
 import {GraphBox} from "../components/GraphBox/GraphBox";
@@ -16,6 +16,7 @@ import {GlobalStatsUsagePerNotifier, MedicalErrorApparitionStep} from "../graphq
 import {GraphFiguresGrid} from "../components/GraphFiguresGrid";
 import {getMedErrorApparitionStepIcon, getNotifierIcon} from "../utils/iconsMapping";
 import {GraphBoxSelect} from "../components/GraphBoxSelect";
+import {BarChartRepartition} from "../components/Charts/BarChartRepartition";
 
 
 
@@ -48,6 +49,24 @@ const SectionDeclarations = () => {
         { name: 'Suivi thérapeutique', step: MedicalErrorApparitionStep.SurveillanceStep, value: 1, valuePercent: 1 },
         { name: 'Autre étape', step: MedicalErrorApparitionStep.OtherStep, value: 1, valuePercent: 1 },
     ]);
+
+    const globalDecSeriousEffectsRep = [
+        { name: 'Erreur technique de préparation', valuePercent: 19.28 },
+        { name: 'Médicament périmé ou dérioré ou mal conservé', valuePercent: 19.02 },
+        { name: 'erreur de médicament', valuePercent: 8.51 },
+        { name: 'erreur de suivi thérapeutique et clinique', valuePercent: 6.38 },
+        { name: 'Erreur de voie d\'aministragion', valuePercent: 3.59 },
+        { name: 'Erreur de technique d\'administration', valuePercent: 2.53 },
+        { name: 'Erreur de posologie ou de concentration', valuePercent: 2.39 },
+        { name: 'Erreur de moment d\'administration', valuePercent: 1.99 },
+        { name: 'Autre', valuePercent: 1.33 },
+    ];
+
+    const transformedData = globalDecSeriousEffectsRep.map(item => ({
+        range: item.name,
+        valuePercent: item.valuePercent,
+        value: item.valuePercent // Vous pouvez remplacer ceci par la valeur réelle si vous l'avez
+    }));
 
 
     return (
@@ -110,38 +129,70 @@ const SectionDeclarations = () => {
                     </GraphBox>
                 </div>
 
-
             </div>
 
-            <GraphBoxSelect
-                title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
-                theme="secondary-variant"
-                render={({ selectedUnitOption }) => {
-                    const globalDecNotifiersRep = buildRangeData<GlobalStatsUsagePerNotifier>(
-                        repartitionPerStep ?? [],
-                        selectedUnitOption
-                    );
+            <div className="mb-8 m-auto mt-8">
+                <GraphBoxSelect
+                    title="À quelle étape sont survenues les erreurs médicamenteuses déclarées ?"
+                    theme="secondary-variant"
+                    render={({ selectedUnitOption }) => {
+                        const globalDecNotifiersRep = buildRangeData<GlobalStatsUsagePerNotifier>(
+                            repartitionPerStep ?? [],
+                            selectedUnitOption
+                        );
 
-                    return (
-                        <GraphFiguresGrid
-                            data={repartitionPerStep}
-                            renderItem={(MedErrorApparition) => (
-                                <GraphFigure
-                                    key={MedErrorApparition.step}
-                                    className="NotifierRepartitionFigure"
-                                    unit={selectedUnitOption === 'percent' ? ' % ' : ''}
-                                    label={MedErrorApparition.name}
-                                    icon={getMedErrorApparitionStepIcon(MedErrorApparition.step)}
-                                    valueClassName="text-dark-green-900"
-                                    value={
-                                        (selectedUnitOption === 'percent' ? MedErrorApparition.valuePercent : MedErrorApparition.value) ?? 0
-                                    }
-                                />
-                            )}
-                        />
-                    );
-                }}
-            />
+                        return (
+                            <GraphFiguresGrid
+                                data={repartitionPerStep}
+                                renderItem={(MedErrorApparition) => (
+                                    <GraphFigure
+                                        key={MedErrorApparition.step}
+                                        className="NotifierRepartitionFigure"
+                                        unit={selectedUnitOption === 'percent' ? ' % ' : ''}
+                                        label={MedErrorApparition.name}
+                                        icon={getMedErrorApparitionStepIcon(MedErrorApparition.step)}
+                                        valueClassName="text-dark-green-900"
+                                        value={
+                                            (selectedUnitOption === 'percent' ? MedErrorApparition.valuePercent : MedErrorApparition.value) ?? 0
+                                        }
+                                    />
+                                )}
+                            />
+                        );
+                    }}
+                />
+            </div>
+
+            <div className="flex-1">
+                <GraphBox
+                    title="Répartition par cause de gravité"
+                    className="h-full max-w-[100%]"
+                    tooltip={
+                        <>
+                            <p>
+                                La définition réglementaire de gravité en pharmacovigilance est très précise : un
+                                effet indésirable grave est un effet indésirable létal, ou susceptible de mettre
+                                la vie en danger, ou entraînant une invalidité ou une incapacité importantes ou
+                                durables, ou provoquant ou prolongeant une hospitalisation, ou se manifestant par
+                                une anomalie ou une malformation congénitale.
+                            </p>
+                            <p>
+                                La catégorie &quot;Autre&quot; correspond aux déclarations d&apos;effets
+                                indésirables ayant été jugés comme grave par le professionnel de santé, mais ne
+                                rentrant pas dans les catégories listées comme étant graves selon la définition
+                                réglementaire de gravité en pharmacovigilance.
+                            </p>
+                        </>
+                    }
+                >
+                    <BarChartRepartition
+                        className="h-64 w-full flex justify-center items-center"
+                        data={transformedData}
+                        dataLabel="Répartition par cause de gravité"
+                        theme="green-full"
+                    />
+                </GraphBox>
+            </div>
         </div>
     );
 }
@@ -149,10 +200,6 @@ const SectionDeclarations = () => {
 const ErreursMed = () => {
     return (
         <div>
-
-
-
-
 
             <EntityPageLayout
                 colorMenu="green"
