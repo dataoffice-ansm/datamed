@@ -17,6 +17,10 @@ import {GraphFiguresGrid} from "../components/GraphFiguresGrid";
 import {getMedErrorApparitionStepIcon, getNotifierIcon} from "../utils/iconsMapping";
 import {GraphBoxSelect} from "../components/GraphBoxSelect";
 import {BarChartRepartition} from "../components/Charts/BarChartRepartition";
+import {numberWithThousand} from "../utils/format";
+import FolderSVG from "../assets/pictos/folder.svg";
+import {BoxInfo} from "../components/BoxInfo";
+import MedicineList from "../components/MedicineList";
 
 
 
@@ -26,8 +30,9 @@ const SectionDeclarations = () => {
 
     // A remplacer par les données de la base de données
     const [exposition, setExposition] = useState({
-        maxYear: 2009,
-        minYear: 2021,
+        minYear: 2009,
+        maxYear: 2021,
+        consumption: 5623,
     });
 
     const [sideEffectsRepartition, setSideEffectsRepartition] = useState({
@@ -71,6 +76,27 @@ const SectionDeclarations = () => {
 
     return (
         <div>
+            <BoxInfo
+                title={`${numberWithThousand(exposition?.consumption ?? 0)} déclarations reçues`}
+                icon={<FolderSVG className="h-24 w-24" />}
+                theme="dark-green"
+                className="my-8"
+                // tooltip={
+                //   <div>
+                //     <strong>Déclarations cumulées</strong>
+                //     <div>
+                //       Travail réalisé sur une extraction de 5 ans de la BNPV, avec objectif de mise à jour
+                //       progressive des données.
+                //     </div>
+                //   </div>
+                // }
+            >
+                {exposition?.maxYear && exposition?.minYear
+                    ? `Nombre cumulé de déclarations d’effets indésirables suspectés sur la période
+          ${exposition.minYear} - ${exposition.maxYear}`
+                    : 'Période des données issues non renseignée'}
+            </BoxInfo>
+
             <SectionTitle
                 title="Déclarations d'erreurs médicamenteuses"
                 subTitle={
@@ -152,6 +178,7 @@ const SectionDeclarations = () => {
                                         label={MedErrorApparition.name}
                                         icon={getMedErrorApparitionStepIcon(MedErrorApparition.step)}
                                         valueClassName="text-dark-green-900"
+                                        contentTooltip={MedErrorApparition.name ?? ''} // TODO Créer un nouveau champ pour MedErrorApparition pour le contenu du tooltip (Seul le nom est affiché pour l'instant)
                                         value={
                                             (selectedUnitOption === 'percent' ? MedErrorApparition.valuePercent : MedErrorApparition.value) ?? 0
                                         }
@@ -197,6 +224,38 @@ const SectionDeclarations = () => {
     );
 }
 
+const SectionListeSpecialites = () => {
+    const medicines = [
+        { id: 1, name: 'Medicament 1' },
+        { id: 2, name: 'Medicament 2' },
+        { id: 3, name: 'Medicament 3' },
+        { id: 4, name: 'Medicament 4' },
+        { id: 5, name: 'Medicament 5' },
+        { id: 6, name: 'Medicament 6' },
+        { id: 7, name: 'Medicament 7' },
+        { id: 8, name: 'Medicament 8' },
+        { id: 9, name: 'Medicament 9' },
+        { id: 10, name: 'Medicament 10' },
+        { id: 11, name: 'Medicament 11' },
+        { id: 12, name: 'Medicament 12' },
+        { id: 13, name: 'Medicament 13' },
+        { id: 14, name: 'Medicament 14' },
+        { id: 15, name: 'Medicament 15' },
+        { id: 16, name: 'Medicament 16' },
+        { id: 17, name: 'Medicament 17' },
+        { id: 18, name: 'Medicament 18' },
+        { id: 19, name: 'Medicament 19' },
+        { id: 20, name: 'Medicament 20' },
+    ];
+    return (
+        <div>
+            <SectionTitle title="Spécialités de médicaments ayant reçu au moins 10 déclarations" />
+            <MedicineList medicines={medicines} />
+        </div>
+    );
+
+}
+
 const ErreursMed = () => {
     return (
         <div>
@@ -212,7 +271,7 @@ const ErreursMed = () => {
                     {
                         id: 'liste-des-specialites',
                         label: 'Liste des spécialités',
-                        content: <SectionDeclarations />,
+                        content: <SectionListeSpecialites />,
                     },
                     {
                         id: 'originine-des-donnees',
